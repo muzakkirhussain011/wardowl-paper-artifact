@@ -116,3 +116,21 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
   fields left out rather than guessed.
 - Experiment code: public, in the wardowl repository (benchmarks/paper/), so Kaggle can import it from a
   public GitHub URL; an anonymised mirror is made at submission time.
+
+## Progress log
+
+- 2026-10-26: literature review delivered (literature/). Bibliography merged and verified (bib/, 253 entries).
+- 2026-10-26: wardowl PR #166 (honest completeness: `exact_search`, short approximate results not
+  complete; docs for pgvector scan limits and Qdrant filtered traversal) passed all CI checks; the
+  auto-mode safety check refused an unreviewed merge, so it waits for Syed to merge. At release, the
+  acceptance scenarios that expect `complete` on approximate stores must be updated with it.
+- 2026-10-26: X1 (under-retrieval diagnosis) harness on branch paper/x1-underretrieval with
+  PREREGISTRATION.md committed before any code; running on Kaggle as notebook11401c38ff, version
+  "X1 under-retrieval run 1" (GPU T4 x2, input: notebookd8377caca8 output), about 7 hours.
+- 2026-10-26: Sections drafted: background, related work, system, conformance (with a 20-row fault
+  table built from the changelog and code). Honest gap: no table row is credited to the conformance
+  kit; the evidence credits review, the security audit and the acceptance runs. Contribution C2 now
+  depends on a fresh campaign: branch paper/conformance-campaign, GitHub Actions workflow
+  paper-conformance (manual trigger), results to be archived under evidence/.
+- 2026-10-26: PDF builds in GitHub Actions succeed from build #5 (fixes: no at-sign in bib comments;
+  provenance notes moved to annote).
