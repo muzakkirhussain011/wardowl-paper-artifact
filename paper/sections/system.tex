@@ -1,0 +1,202 @@
+% The Enforcement Layer Under Test: body of Section~\ref{sec:system} (the \section heading and its
+% label stay in main.tex). Labels defined here: tab:sys-precedents, sec:sys-contracts, eq:sys-in,
+% sec:sys-retrieval, sec:sys-complete, sec:sys-compose, sec:sys-identity.
+% Sources: the library's retriever.py, filters.py, authz.py, caching.py, events.py, mcp.py,
+% server.py, docs/security.md and CHANGELOG.md. Completeness is described as on the
+% honest-completeness change (the optional exact_search backend attribute, PR #166), which the
+% paper reports; the earlier behavior is stated because Section e2e ran before the change.
+
+\sys{}, the layer we test, is a Python library that implements steps (i) to (vi) of
+Section~\ref{sec:prob-setup} between a RAG application, an authorizer and a vector store.
+Table~\ref{tab:sys-precedents} separates what has precedent from what we add. The enforcement
+mechanism is not ours. We add a single reference semantics for permission filters, which makes the
+mechanism testable across stores, and a completeness flag that does not overstate what an
+approximate index returned.
+
+\begin{table}[tbp]
+\centering
+\scriptsize
+\newcommand{\sysrag}{\raggedright}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.21\linewidth}p{0.44\linewidth}p{0.3\linewidth}@{}}
+\toprule
+Component & Precedent & Role in this paper \\
+\midrule
+\sysrag Pre-filter: the access predicate pushed into the query
+ & \sysrag Query modification~\cite{stonebraker1974access}; query integration in multi-user
+   full-text search~\cite{buttcher2005security}; vendor pre-filter
+   integrations~\cite{cerbos2026implementing,authzed2026langchainspicedb}
+ & \sysrag Mechanism under test \tabularnewline
+\sysrag Widening post-filter
+ & \sysrag Late binding with growing candidate blocks~\cite{bailey2006secure,mangtani2006documentlevel};
+   over-fetching two to three times~\cite{openfga2026rag}
+ & \sysrag Mechanism under test; its rounds are a side channel (Section~\ref{sec:side}) \tabularnewline
+\sysrag Re-check of every candidate
+ & \sysrag Late-bound checks per result~\cite{pang2019zanzibar}; real-time verification of
+   pre-filtered documents~\cite{aws2026access}
+ & \sysrag Violations as an online count of filter false admits (Proposition~\ref{prop:reduction}) \tabularnewline
+\sysrag Failing closed
+ & \sysrag Withholding documents on transient errors~\cite{aws2026access}; an error instead of a
+   partially filtered result~\cite{microsoft2026querytime}
+ & \sysrag Mechanism under test \tabularnewline
+\sysrag Truman answers over the readable set
+ & \sysrag Truman and non-Truman semantics~\cite{rizvi2004extending}
+ & \sysrag The flag $c$ as a partial step toward non-Truman answers \tabularnewline
+\sysrag Three-operator filter algebra with one reference semantics
+ & \sysrag Per-store filter languages
+ & \sysrag \textbf{Contribution}: the oracle for differential testing across 14 stores
+   (Section~\ref{sec:conformance}) \tabularnewline
+\sysrag Honest completeness
+ & \sysrag Exact search when fewer than $k$ approximate results return~\cite{opensearch2026efficient}
+ & \sysrag \textbf{Contribution}: an exactness declaration and a flag that never reports a short
+   approximate answer as complete (Sections~\ref{sec:sys-complete} and~\ref{sec:repair}) \tabularnewline
+\sysrag Composition and tenant scopes
+ & \sysrag Policy-combining algorithms~\cite{oasis2013extensible}; denials that override
+   grants~\cite{aws2026access}
+ & \sysrag Engineering; described, not claimed \tabularnewline
+\sysrag Decision cache with a revocation bound
+ & \sysrag Snapshot tokens against applying stale ACLs~\cite{pang2019zanzibar}; revocation defeated
+   by a cached index~\cite{roychowdhury2024confusedpilot}
+ & \sysrag Engineering; described, not claimed \tabularnewline
+\sysrag Subject from a verified token
+ & \sysrag Token exchange~\cite{jones2020oauth}; MCP authorization~\cite{mcp2026model}
+ & \sysrag Adopted, not claimed \tabularnewline
+\bottomrule
+\end{tabular}
+\caption{Components of the enforcement layer, their precedents, and their role in this paper.}
+\label{tab:sys-precedents}
+\end{table}
+
+\subsection{Contracts and filter semantics}\label{sec:sys-contracts}
+
+For a subject $s$ and an action, an \emph{authorizer} offers $\mathrm{check}(s,H)$, which every
+authorizer implements and which returns one Boolean per hit, in order; $\mathrm{filter\_for}(s)$,
+which returns a filter $\varphi_s$ selecting \emph{exactly} what $s$ may read, or nothing; and,
+optionally, $\mathrm{scope\_for}(s)$, which returns a \emph{necessary} condition $\psi_s$, such as
+the subject's tenant, that every readable chunk satisfies. Besides ACLs copied into chunk metadata,
+user functions and tenants, \sys{} supports seven engines: OPA (through a filter document its policy
+returns), OpenFGA, SpiceDB and Cerbos offer
+filters~\cite{openfga2026perform,authzed2026protecting,cerbos2026cerbos}, and Ory Keto, Cedar and
+Casbin offer checks only. A \emph{search backend} declares whether
+$\mathrm{search}(q,k,\varphi)$ applies a filter inside the search, and returns at most $k$ hits,
+best first, with metadata exactly as stored, since the re-check decides on it (A2). Adapters cover
+14 stores (pgvector, Qdrant, Milvus, MongoDB Atlas, Weaviate, Redis, LanceDB, FAISS, Vespa,
+Cassandra, Pinecone, Elasticsearch, OpenSearch and Chroma), and an in-memory backend that evaluates
+the reference semantics is their oracle. One algorithm, written as a generator of operations, runs
+under a synchronous and an asynchronous driver, so both share the security logic.
+
+Filters are built from $\mathrm{In}(f,V)$, $\mathrm{And}$ and $\mathrm{Or}$. Let $\mathcal{V}$ be the
+strings and integers, Booleans excluded, with strings compared by code point, without case folding
+or Unicode normalization, and never equal to integers. One function, \texttt{matches}, defines, for
+metadata $m$ and $V \subseteq \mathcal{V}$,
+\begin{equation}\label{eq:sys-in}
+m \models \mathrm{In}(f,V) \iff
+\begin{cases}
+\exists x \in m(f):\ x \in \mathcal{V} \wedge x \in V & \text{if } m(f) \text{ is a list},\\
+m(f) \in \mathcal{V} \wedge m(f) \in V & \text{otherwise},
+\end{cases}
+\end{equation}
+with And and Or as conjunction and disjunction. Every store translation must agree with it, and it
+is the oracle of Section~\ref{sec:conformance}. Each design rule closes a leak. (i)~Empty And and Or
+are rejected, since an empty conjunction is vacuously true and would allow everything.
+(ii)~Values are strings or integers only: Python equates \texttt{True}, \texttt{1} and \texttt{1.0}
+while JSON-based stores compare by type, so floats, nulls, Booleans, nested lists and objects never
+match, and a bare string such as \texttt{"12"} is rejected rather than read as \texttt{"1"} and
+\texttt{"2"}. (iii)~A missing field never matches, so a chunk without permission metadata is readable
+by nobody. (iv)~A filter that can match nothing, such as an In with no values, makes translators
+raise \texttt{NothingMatches} and backends return nothing without a query, because Pinecone,
+MongoDB, Milvus, LanceDB, Redis and Vespa read a missing or empty filter as ``match everything''.
+Parsing rejects unknown operators and nesting deeper than 100 levels.
+
+\subsection{Retrieval}\label{sec:sys-retrieval}
+
+By default \sys{} pre-filters when the backend supports filters and the authorizer returns
+$\varphi_s$, and post-filters otherwise, inside $\psi_s$ when one is offered; a caller who demands
+pre-filtering gets an error rather than a silent fallback.
+
+\paragraph{Pre-filter and re-check.}
+One search with $\varphi_s$ returns the store's answer $H_0$, truncated to $k$ so that a store that
+ignores $k$ cannot widen the checks. Every hit is checked again; hits that fail are dropped, not
+replaced, and counted as \emph{violations}. Because filter and check are separate code paths, a
+violation is, at a single revision, a false admit by the filter or its translation, observed online
+(Proposition~\ref{prop:reduction}). With the re-check off, hits are still matched against
+$\varphi_s$ locally, so a store that ignores the filter still cannot leak.
+
+\paragraph{Widening post-filter.}
+Without a filter, \sys{} fetches $k \cdot o$ candidates ($o = 4$ by default), checks those not seen
+before, and multiplies the fetch by $o$ until $k$ hits are permitted, the store returns fewer
+candidates than requested, or a cap is reached (1,000 by default; a larger $k$ is refused). A
+redactor and a reranker, if configured, receive only permitted hits and cannot add one.
+
+\paragraph{Failing closed.}
+Any exception from the authorizer ends the request with an authorization error and no hits. The
+message is fixed (``authorizer failed''), the original exception kept only as its cause, because
+agent frameworks show tool errors to the model and exception text can name hosts or credentials.
+Malformed answers fail likewise: a filter that is not an In, And or Or, a decision list of the wrong
+length, or any decision that is not a Boolean (\texttt{1}, \texttt{"no"} and \texttt{None} are
+rejected, not coerced).
+
+\subsection{Honest completeness}\label{sec:sys-complete}
+
+Every result carries the flag $c$ of Section~\ref{sec:prob-setup}. Earlier releases set $c = 1$ for
+any pre-filtered result without violations, an empty one included, and for any post-filter whose
+last search came back short. In the run of Section~\ref{sec:e2e}, \sys{} thus reported empty answers
+as complete for least-privileged subjects who could read hundreds of chunks; the project's notes
+attribute them to pgvector's iterative scan stopping at its tuple or memory limit, a diagnosis that
+Section~\ref{sec:quality} tests. The version we evaluate lets a backend declare
+\texttt{exact\_search} when it ranks every chunk that satisfies the filter, so that a short answer
+proves nothing else matches; only the in-memory reference and FAISS over a flat index (its default)
+do. With $e$ the declaration and $v$ the number of violations, a pre-filtered result has
+$c = \bigl(|H_0| = k \vee e\bigr) \wedge (v = 0)$; a post-filtered one has $c = 1$ only if $k$ hits
+were permitted, or the last search came back short before the cap and either no scope applied or $e$
+holds. The flag is thus honest about under-retrieval, not mis-retrieval: a full answer is taken at
+the store's word, so $c = 1$ does not certify maximality (Definition~\ref{def:criteria}), and we
+measure mis-retrieval offline (Section~\ref{sec:quality}). An unfiltered post-filter also still reads
+a short list as the end of the store, which fails for pgvector with iterative scans off (at most
+\texttt{hnsw.ef\_search} rows, 40 by default). Count-based certification and a bounded exact
+fallback, as in OpenSearch~\cite{opensearch2026efficient}, are evaluated in Section~\ref{sec:repair}.
+
+\subsection{Composition, tenants and caching}\label{sec:sys-compose}
+
+\paragraph{Composition.}
+$\mathrm{AllOf}$ admits a chunk when every part does, asking each part only about chunks that the
+earlier parts admitted; $\mathrm{AnyOf}$ asks each part only about chunks still denied. Their
+filters, the conjunction or disjunction of the parts' filters, exist only when every part has one.
+Their scopes are asymmetric. A scope is valid when $R(s) \subseteq \{d : m_d \models \psi_s\}$.
+Since $\bigcap_i R_i \subseteq R_j$ for every $j$, AllOf may conjoin whichever filters or scopes its
+parts offer; since leaving a part out of a scope for $\bigcup_i R_i$ can hide readable chunks, AnyOf
+offers a scope only when every part offers a filter or a scope. Every candidate is still checked, so
+a wrong scope costs speed or recall, never security. The tenant authorizer admits chunks whose tenant
+field equals the subject's tenant and raises when the subject has no usable tenant, so a request
+that lost its tenant returns nothing rather than everything; combined with an engine that offers no
+filter, it becomes the post-filter's scope.
+
+\paragraph{Caching.}
+A caching wrapper stores, per subject and action, the filter, the scope, and each decision keyed by
+the chunk's identifier and metadata. Its time to live (30\,s by default) is a stated revocation
+bound, and an explicit invalidation ends it at once, also for answers that calls in flight obtained
+before it. Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
+never share an entry, and failures are never cached. Entries shared through Redis carry their
+absolute expiry, so the bound holds across replicas, and, with a signing key, an HMAC-SHA256 over key
+and content, so whoever can write to Redis cannot plant a decision. The bound covers the cache alone:
+engine staleness~\cite{authzed2026consistency} and the freshness of ACLs copied into chunks add to
+it. The cache weakens (A1) of Proposition~\ref{prop:reduction} to a decision at most one time to live
+old, and its invalidation needed three successive fixes for races that stored a pre-invalidation
+answer after the invalidation.
+
+\subsection{Identity and audit}\label{sec:sys-identity}
+
+No interface lets a client or a model choose the subject. The MCP search tool takes only a query and
+a bounded result count, derives the subject from the access token the server verified for the
+request, and refuses calls without one~\cite{mcp2026model}. When an agent acts for a user, the token
+is issued for the user, for example by token exchange, with the agent as the client or
+actor~\cite{jones2020oauth}; the agent then holds no permission its user lacks~\cite{mitre2026atlas},
+and no prompt can redirect the tool to another user's permissions, the confused-deputy
+pattern~\cite{hardy1988confused}. The HTTP service for other languages verifies OIDC bearer tokens,
+each with its key's own asymmetric algorithm, and refuses bodies with unknown fields, so a request
+cannot name a user, group or tenant. Every call, failed and cancelled ones included, emits one event
+with the subject's identifier, the returned identifiers, the counts, $c$, timings and the error's
+type, but never query text, query vectors or chunk text; given a key of at least 16 bytes, it adds an
+HMAC-SHA256 of the query, so queries can be correlated without being stored. The violation count and
+$c$ are the online signals that Sections~\ref{sec:quality}, \ref{sec:repair} and~\ref{sec:e2e}
+compare with offline oracles.

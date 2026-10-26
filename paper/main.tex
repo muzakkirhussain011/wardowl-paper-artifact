@@ -59,17 +59,10 @@ which 163,236 checked hits produced no leak. Security held everywhere; retrieval
 \input{sections/background}
 
 \section{The Enforcement Layer Under Test}\label{sec:system}
-% Summarise wardowl's design and credit precedents: query modification, Bailey's widening loop,
-% Zanzibar-style per-candidate checks, Bedrock KB pre-filter + live check. Three-operator filter
-% algebra with one reference semantics; scope; AllOf/AnyOf; fail-closed validation; identity from
-% verified tokens (MCP, HTTP); audit without content.
-\tbd{system description}
+\input{sections/system}
 
 \section{Differential Conformance Testing of Filter Semantics}\label{sec:conformance}
-% Generator, adversarial values (1 vs "1", Unicode, case, dotted fields), oracle = reference
-% semantics, 14 stores, bug/semantic-gap table with upstream status. Position vs SQLancer-style
-% differential testing~\cite{rigger2020testing} and vector-DB bug studies.
-\tbd{methodology and results}
+\input{sections/conformance}
 
 \section{Do Authorization Engines' Filters Agree With Their Checks?}\label{sec:engines}
 % OPA (partial evaluation / filter documents), Cerbos PlanResources, OpenFGA ListObjects,

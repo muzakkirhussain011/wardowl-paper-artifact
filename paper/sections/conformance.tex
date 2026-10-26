@@ -1,0 +1,269 @@
+% Differential Conformance Testing of Filter Semantics: body of Section~\ref{sec:conformance} (the
+% \section heading and its label stay in main.tex). Labels defined here: sec:conf-method,
+% sec:conf-results, tab:conf-faults.
+% Sources: the library's testing.py (check_backend, check_authorizer), tests/test_testing_kit.py,
+% backends/*, authorizers/*, CHANGELOG.md, docs/review.md and docs/security.md. Every row of
+% Table tab:conf-faults comes from those files; none was measured for this paper. "Review" means
+% the release notes attribute the fix to the project's own review or security audit, collectively
+% rather than per item (2.0.0: "the fixes from the project's own security audit of every module";
+% 1.4.0: "fail-closed gaps found by review"); "Accept." means the release notes attribute it to the
+% acceptance scenarios (2.1.0) or to the Kaggle scale run (the unreleased honest-completeness
+% change). Confirm each row with maintainers before publication.
+
+Proposition~\ref{prop:reduction} shields security from filter faults, but not maximality, and it
+rests on stores returning the metadata they stored (A2). A filter that admits too much shows up
+online as violations; one that admits too little, or a store that alters metadata, does not. We
+therefore test every store translation and every authorizer offline against
+Equation~\ref{eq:sys-in}: differential testing in the line of the logic-bug oracles for database
+engines~\cite{rigger2020testing,rigger2020detecting,rigger2020finding}, with property-based
+generation~\cite{claessen2000quickcheck,maciver2019hypothesis}, applied to metadata-filter semantics
+across vector stores, for which we found no such oracle~\cite{xie2025toward,wang2025towards}. The
+kit, \texttt{check\_backend} and \texttt{check\_authorizer}, ships with the library so that
+third-party adapters meet the same standard, and continuous integration runs it against a real
+instance of every built-in store and against the built-in authorizers.
+
+\subsection{Method}\label{sec:conf-method}
+
+\paragraph{Two oracles.}
+The reference gives the expected answer $E(\varphi) = \{d \in D : m_d \models \varphi\}$, which the
+in-memory backend computes. Because the reference is also code, end-to-end checks add an oracle
+written without the library's filter code: $s$ may read $d$ if $s$ is among $d$'s users, or if $d$'s
+groups contain the everyone marker or one of $s$'s groups. The retrieval checks use the metadata ACL
+authorizer, whose filter and check both evaluate the reference, so the second oracle also tests the
+first. Answers are compared as sets, and order is checked as a property, since stores score
+differently.
+
+\paragraph{An adversarial generator.}
+From a seed, the kit draws corpora of up to 20 documents (by default 25 corpora with four filters
+each), each document holding zero to four of seven fields, so missing fields are common. Values are
+strings, integers, Booleans, lists of either, nested lists or objects, drawn from confusable pairs:
+\texttt{1} and \texttt{"1"}; \texttt{"a"} and \texttt{"A"}; and \'e as one code point (U+00E9) or as
+\texttt{e} with a combining accent (U+0301). The ACL documents repeat the pairs in user and group
+names (\texttt{bob} and \texttt{Bob}, \texttt{eng} and \texttt{Eng}, a group named \texttt{"1"}). A
+pair is equal only for a store that converts types, folds case or normalizes Unicode. The field
+\texttt{team.name}, generated beside objects such as \texttt{\{"name": "a"\}} under \texttt{team},
+catches stores that read dots as paths, and \texttt{gr\"o\ss e-x} lies outside ASCII. Filters nest
+And and Or two levels deep; an In holds zero to three values, so empty In filters occur; about one In
+in ten adds 300 values that match nothing, and about one subject in five belongs to 300 extra groups.
+A store may refuse a field name it cannot express, returning nothing, but may not answer wrongly.
+Every failure reports its seed and example, so that it can be replayed.
+
+\paragraph{What the kit checks.}
+For each corpus, \texttt{check\_backend} fills a fresh store and checks (1)~unfiltered and
+(2)~filtered searches against $E(\varphi)$: at most $k$ hits, no duplicates, no document outside
+$E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, finite scores in non-increasing order, and text and
+metadata identical to what was stored, since the re-check decides on that metadata; (3)~that the
+asynchronous search returns the same identifiers, order, text, metadata and scores, and refuses the
+same filters; (4)~that replacing metadata keeps every text, leaves no old key, creates no document
+and changes what filters select as the reference says; and (5)~that retrieval through the layer,
+pre-filtered and post-filtered and through both drivers, returns no hit the second oracle denies, no
+violation, $\min(k,|R(s)|)$ readable hits, and the same answer from both drivers. The counts are
+required in exact mode. Stores whose index is approximate even on these small corpora (Cassandra, and
+Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but never wrong; a
+store that declares exact search is always checked exactly, because the layer reports its short
+answers as complete (Section~\ref{sec:sys-complete}). \texttt{check\_authorizer} requires one Boolean
+per hit; answers independent of the rest of the batch and its order (all hits, each hit alone, and
+the batch reversed); asynchronous answers equal to synchronous ones; and $\mathrm{check}$ agreeing with
+$m \models \varphi_s$ on every hit whenever a filter is offered. It empties every cache before each
+call, so that a cached answer cannot mask a batch-dependent one. It shows consistency, not a correct
+policy: an authorizer that lets everyone read everything passes, and so does a scope narrower than
+$R(s)$. OPA, OpenFGA, SpiceDB and Cerbos are additionally compared with a reference answer against
+their real servers.
+
+\paragraph{Translations without injection.}
+Ten stores (Elasticsearch, OpenSearch, Milvus, MongoDB, Weaviate, Redis, LanceDB, Vespa, Cassandra and
+Pinecone) index one field of type-tagged terms $f \triangleright t{:}v$, one for every string or
+integer value or list element, where $\triangleright$ is a control character (U+001F) and $t$ a type
+letter, as in \texttt{level}$\triangleright$\texttt{i:1}. An In becomes set membership on these
+terms, and And and Or become the store's own connectives; equality is exact in type and value,
+untagged values (Booleans, floats, nested values) never match, and the metadata itself is stored
+unindexed and returned as written. Where terms enter query text (Redis, LanceDB and Vespa), and in
+Pinecone, they are hex-encoded, so they contain only digits and the letters a to f. Elsewhere values
+are bound parameters (pgvector, Milvus and Cassandra) or data structures of the client API
+(Elasticsearch, OpenSearch, Qdrant, Weaviate, Chroma and MongoDB), and FAISS applies the reference in
+process. Filter parsing and the translators that write query text are fuzzed with
+Atheris~\cite{google2026atheris}: parsing must round-trip or raise, pgvector must bind every field
+name and value, and LanceDB and Redis queries must contain only hex-encoded terms.
+
+\paragraph{Testing the tester.}
+The kit's own suite plants 18 faulty backends and six faulty authorizers that the kit must reject,
+beside positive controls it must accept: the reference backend, the built-in authorizers, an
+approximate backend that misses matches but never errs, and a backend that refuses dotted names. The
+backends ignore the filter, alter metadata, ignore $k$, misorder hits, miss matches while checked as
+exact or while declaring exact search, diverge on the asynchronous path in six ways, match after case
+folding, Unicode normalization or conversion of integers to strings, read dots as paths, or replace
+metadata by merging old keys or by creating documents. The authorizers let filter and check
+disagree, depend on a hit's position in the batch (alone or behind a cache), or answer differently on
+the asynchronous path (alone or behind a cache). Several meta-tests record a gap the kit once had: no
+\texttt{1}/\texttt{"1"}, case or Unicode pairs in its data; comparing only the identifiers of filtered
+asynchronous searches; skipping the asynchronous search when the synchronous one refused a filter;
+and cached answers hiding batch dependence. In this history the kit's blind spots lay in what it
+generated and what it compared, never in its oracle.
+
+\subsection{Faults and semantic gaps}\label{sec:conf-results}
+
+Table~\ref{tab:conf-faults} lists the faults and semantic gaps in stores and engines that the
+project's release notes, code comments and documentation record, up to the version we evaluate.
+\emph{Found by} follows the release notes: \emph{Review}, attributed collectively to the project's
+own code review or security audit; \emph{Accept.}, to the acceptance scenarios against real servers
+or the scale run of Section~\ref{sec:e2e}; \tbd{}, not stated. \emph{Effect} is the consequence
+without the mitigation: \emph{Leak}, a false admit, which the re-check turns into a violation;
+\emph{Leak*}, wrong stored or returned metadata, which also passes a re-check that reads chunk
+metadata, because (A1) or (A2) fails; \emph{Leak\textdagger}, a check that itself admits, beyond any
+re-check; \emph{Recall}, readable chunks silently missing; \emph{Stale}, a revoked grant admitting
+until the store shows the write; \emph{Wrong rows}, a write reaching chunks it did not name; and
+\emph{Avail.}, requests failing closed. \emph{None (adapter)} marks a fault in \sys{}'s own adapter
+where the engine behaves as configured.
+
+\begin{table}[tbp]
+\centering
+\scriptsize
+\newcommand{\confrag}{\raggedright}
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{@{}p{0.115\linewidth}p{0.3\linewidth}p{0.075\linewidth}p{0.08\linewidth}p{0.24\linewidth}p{0.1\linewidth}@{}}
+\toprule
+Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys{} & Upstream \\
+\midrule
+\confrag Elasticsearch, OpenSearch
+ & \confrag Keyword fields compare as strings: a \texttt{terms} query for \texttt{1} matches
+   \texttt{"1"}
+ & \confrag \tbd{} & \confrag Leak
+ & \confrag Type-tagged terms in one keyword field; metadata unindexed
+ & \confrag \tbd{} \tabularnewline
+\confrag pgvector (jsonb)
+ & \confrag Numbers compare by value: $\mathrm{In}(\texttt{level},\{1\})$ matched a stored
+   \texttt{1.0}
+ & \confrag Review & \confrag Leak
+ & \confrag Compare integers by the stored number's text
+ & \confrag \tbd{} \tabularnewline
+\confrag pgvector (jsonb)
+ & \confrag A float of magnitude $\geq 10^{16}$, which Python's JSON encoder writes with an
+   exponent, is stored and returned as an integer
+ & \confrag Review & \confrag Leak*
+ & \confrag Write such floats with a fraction
+ & \confrag \tbd{} \tabularnewline
+\confrag pgvector 0.8
+ & \confrag Iterative HNSW scans stop at \texttt{hnsw.max\_scan\_tuples} or a memory limit: few or
+   no rows under selective filters
+ & \confrag Accept. & \confrag Recall
+ & \confrag Honest completeness; both limits documented
+ & \confrag \tbd{} \tabularnewline
+\confrag Chroma 1.5.x, local mode
+ & \confrag Array metadata of a deleted collection reappears on new records elsewhere and matches
+   \texttt{where} filters (chroma-core/chroma\#7594)
+ & \confrag \tbd{} & \confrag Leak*
+ & \confrag No array metadata; metadata rebuilt from an exact JSON copy
+ & \confrag Issue \#7594; status \tbd{} \tabularnewline
+\confrag Redis; Weaviate
+ & \confrag Distinct values merge: TAG matching ignores case; \texttt{field} tokenization may trim
+   whitespace, joining \texttt{"hr "} and \texttt{"hr"}
+ & \confrag \tbd{} & \confrag Leak
+ & \confrag Hex-encoded terms (Redis); a separator at both ends of each term (Weaviate)
+ & \confrag \tbd{} \tabularnewline
+\confrag Qdrant
+ & \confrag \texttt{.}, \texttt{[}, \texttt{]} and \texttt{"} in a field name are path syntax:
+   \texttt{team.name} reaches a nested object
+ & \confrag \tbd{} & \confrag Leak
+ & \confrag Refuse such field names
+ & \confrag \tbd{} \tabularnewline
+\confrag Pinecone, MongoDB, Milvus, LanceDB, Redis, Vespa
+ & \confrag A missing or empty filter means ``match everything''
+ & \confrag Review & \confrag Leak
+ & \confrag Raise \texttt{NothingMatches}; send no query
+ & \confrag \tbd{} \tabularnewline
+\confrag Elasticsearch, OpenSearch, Redis, Vespa
+ & \confrag Partial results as success: failed or timed-out shards under HTTP 200; RESP3 timeout
+   warnings; degraded coverage
+ & \confrag Review & \confrag Recall
+ & \confrag Disallow partial results; raise on each marker
+ & \confrag \tbd{} \tabularnewline
+\confrag Pinecone serverless; MongoDB Atlas
+ & \confrag Writes become searchable only after a delay (eventual consistency; index lag)
+ & \confrag \tbd{} & \confrag Stale
+ & \confrag Writes wait until a search sees them (Pinecone: up to 30\,s)
+ & \confrag \tbd{} \tabularnewline
+\confrag Cassandra 5.0
+ & \confrag Paxos timestamps of lightweight transactions do not order with plain writes: an older
+   permission could overwrite a newer one
+ & \confrag Review & \confrag Leak*
+ & \confrag Plain writes only
+ & \confrag \tbd{} \tabularnewline
+\confrag Milvus (pymilvus)
+ & \confrag Reads and deletes by identifier quote identifiers into an expression: the identifier
+   \texttt{a\textquotesingle,\textquotesingle b} also selects \texttt{a} and \texttt{b}
+ & \confrag Review & \confrag Wrong rows
+ & \confrag Identifiers as filter parameters
+ & \confrag \tbd{} \tabularnewline
+\midrule
+\confrag OpenFGA
+ & \confrag ListObjects stops at its result limit (1,000 by default) and returns a partial list
+   without saying so
+ & \confrag \tbd{} & \confrag Recall
+ & \confrag At the limit, no filter: post-filter
+ & \confrag Limits documented~\cite{openfga2026openfga} \tabularnewline
+\confrag OpenFGA
+ & \confrag ListObjects also stops at its deadline (3\,s by default), again without saying so
+ & \confrag Review & \confrag Recall
+ & \confrag After the deadline, no filter: post-filter
+ & \confrag Limits documented~\cite{openfga2026openfga} \tabularnewline
+\confrag SpiceDB
+ & \confrag LookupResources may stop at the request limit (1,000 by default) or return results
+   conditional on a caveat
+ & \confrag \tbd{} & \confrag Recall; Leak
+ & \confrag In either case, no filter: post-filter
+ & \confrag \tbd{} \tabularnewline
+\confrag SpiceDB (adapter)
+ & \confrag Groups checked as separate subjects bypass exclusion: under
+   \texttt{viewer - banned}, a banned user read through a group
+ & \confrag Accept. & \confrag Leak\textdagger
+ & \confrag Check the user only; SpiceDB resolves the memberships it stores
+ & \confrag None (adapter) \tabularnewline
+\confrag Cerbos
+ & \confrag CEL \texttt{==} compares a list field whole, and \texttt{in} or
+   \texttt{hasIntersection} on a single value is an error (denied); In matches lists by element
+ & \confrag \tbd{} & \confrag Leak
+ & \confrag Translate \texttt{and}, \texttt{or}, \texttt{hasIntersection}, \texttt{in} and
+   \texttt{==} only; else post-filter
+ & \confrag \tbd{} \tabularnewline
+\confrag Cedar (adapter)
+ & \confrag Values Cedar cannot hold (floats, nulls, integers beyond 64 bits) and keys starting with
+   \texttt{\_\_} were dropped, so a \texttt{forbid} on them stopped applying
+ & \confrag Review & \confrag Leak\textdagger
+ & \confrag Whole-number floats become Longs; a chunk with any other such value is denied
+ & \confrag None (adapter) \tabularnewline
+\confrag OpenFGA, SpiceDB
+ & \confrag An identifier outside the engine's syntax makes it refuse the whole request
+ & \confrag Review & \confrag Avail.
+ & \confrag Deny such a chunk without sending it
+ & \confrag \tbd{} \tabularnewline
+\confrag Ory Keto (adapter)
+ & \confrag Batches above \texttt{limit.max\_batch\_check\_size} (10 by default) are refused with
+   HTTP 400; the adapter sent 100
+ & \confrag Accept. & \confrag Avail.
+ & \confrag Batches of 10
+ & \confrag None (adapter) \tabularnewline
+\bottomrule
+\end{tabular}
+\caption{Faults and semantic gaps in vector stores (top) and authorization engines (bottom),
+collected from the project's release notes, code comments and documentation; the legend is in
+Section~\ref{sec:conf-results}. Every row will be confirmed with the maintainers of the store or
+engine before publication.}
+\label{tab:conf-faults}
+\end{table}
+
+The table records development, not a controlled campaign; that campaign, with fixed versions, seeds
+and counts, is \tbd{run the kit against current releases of the 14 stores and 7 engines and report
+what it finds}. Six entries are false admits, which leak without the re-check and become violations
+with it, as Proposition~\ref{prop:reduction} predicts. The five Leak* and Leak\textdagger{} entries
+lie beyond any re-check: the kit's exact comparison of returned with stored metadata targets the first
+kind, and only a test of the policy itself reaches the second. Seven entries cost recall or
+availability; where a fix was needed, the lost recall had been reported as a complete answer, the
+dishonesty that Section~\ref{sec:sys-complete} removes. Where the evidence says how an entry was
+found, it names review or the acceptance scenarios, never the kit, whose role in this record is to
+keep each class fixed once it has entered the generator and the meta-tests. Several entries, the
+three marked as adapter faults among them, are faults in \sys{}'s own code that a store's or
+engine's behavior exposed; any other integration meets the same behavior. Recall lost by approximate
+indexes under selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured
+in Section~\ref{sec:quality} instead. Every row will be confirmed with the maintainers of the store or
+engine before publication, and reported upstream where it reflects their behavior rather than an
+adapter fault.
