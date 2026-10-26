@@ -154,7 +154,7 @@ rather than a partially filtered result when evaluation fails. Yet its document 
 as the last synchronization, and earlier preview APIs returned all ACL-protected documents to callers
 who used an API key without a user token, until November 2025~\cite{microsoft2026querytime}.
 Elasticsearch and OpenSearch enforce document-level security through per-role
-queries~\tbd{cite Elastic and OpenSearch document-level security documentation}. Elsewhere,
+queries~\cite{elastic2026controlling,opensearch2026documentlevel}. Elsewhere,
 per-document permissions reduce to filters the application supplies: Milvus supports no RBAC at the
 partition-key level~\cite{milvus2026implement}, and Qdrant removed payload filters from its
 token-based RBAC in version 1.16, citing inconsistent read and write semantics~\cite{qdrant2025release}.

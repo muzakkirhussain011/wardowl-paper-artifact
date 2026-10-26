@@ -395,3 +395,11 @@ All titles were read from the live page (`PG`) on 2026-10-26 unless stated other
 All 24 core items (27 entries, since the SQLancer item covers three papers and Big-ANN two) were re-checked online on 2026-10-26. Status: `verified-now`, except Wang et al. 2007, which is `partial` because no page range could be verified.
 
 Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Hawking and Matson CIKM 2006 (CR, SR); Rizvi et al. SIGMOD 2004 (CR); Wang et al. VLDB 2007 (SR, partial); Kabra et al. SIGMOD 2006 (CR); Pang et al. Zanzibar ATC 2019 (UX); Cutler et al. Cedar OOPSLA 2024 (CR, AX); Malkov and Yashunin HNSW (CR, AX); Filtered-DiskANN (CR); ACORN (CR, AX); HoneyBee (CR, AX); Veda (AX); Yalamarthi and Pappachan (AX); Zeng et al. 2024 (ACL, CR, AX); Morris et al. vec2text (ACL, CR, AX); Rigger and Su PQS (UX), NoREC (CR, AX) and TLP (CR); Carlini et al. Secret Sharer (UX); Thakur et al. BEIR (NIPS, AX); MS MARCO (AX); Simhadri et al. Big-ANN 2023 (CR, NIPS, AX) and 2021 (PMLR, AX); OWASP LLM08:2025 (PG); RFC 8693 (RFC, CR); MCP specification 2026-07-28 (PG).
+
+## Added 2026-10-26 (after the merge)
+
+| Key | Short title | Status | Checked |
+|---|---|---|---|
+| lewis2020retrievalaugmented | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | verified-now | arXiv 2005.11401 abstract page: title, 12 authors in order, "Accepted at NeurIPS 2020"; pages not verified, left out |
+| elastic2026controlling | Controlling access at the document and field level | verified-now | page title and the sentence "Document level security restricts the documents that users have read access to" |
+| opensearch2026documentlevel | Document-level security | verified-now (title only) | page title; body text not read |

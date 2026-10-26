@@ -6,8 +6,7 @@
 
 \paragraph{Retrieval in RAG.}
 A retrieval-augmented generation (RAG) pipeline embeds a question, retrieves the $k$ stored chunks
-most similar to it, and places them in a language model's prompt~\tbd{cite Lewis et al.\ 2020 for
-RAG}. Let $D$ be a corpus of chunks, each with an embedding $\mathbf{x}_d$ and metadata $m_d$, and let
+most similar to it, and places them in a language model's prompt~\cite{lewis2020retrievalaugmented}. Let $D$ be a corpus of chunks, each with an embedding $\mathbf{x}_d$ and metadata $m_d$, and let
 $\sigma(q,d)$ be the similarity (cosine or inner product) between a query embedding $q$ and
 $\mathbf{x}_d$. For $X \subseteq D$, $\mathrm{top}_k(q,X)$ denotes the $\min(k,|X|)$ chunks of $X$ most
 similar to $q$, ties broken by a fixed order on chunk identifiers. Vector stores answer this query
