@@ -56,30 +56,7 @@ which 163,236 checked hits produced no leak. Security held everywhere; retrieval
 \tbd{introduction text}
 
 \section{Background and Problem Statement}\label{sec:problem}
-\subsection{Permission-aware top-$k$ retrieval}
-% Subjects, chunks, authorizer check(s, d) in {0,1}; readable set R(s); query q; similarity.
-% Exact answer: top-k of R(s) by similarity. Approximate store returns A(q, f, k).
-\begin{definition}[Secure, sound and maximal retrieval]
-Adapting Wang et al.~\cite{wang2007correctness} to top-$k$ vector retrieval: a result is \emph{secure} if
-every returned chunk $d$ satisfies $\mathrm{check}(s,d)=1$; \emph{maximal} if it equals the exact top-$k$
-of $R(s)$; and the system \emph{reports completeness honestly} if it never claims maximality it cannot
-establish. \tbd{finalise definitions; relate to Truman semantics~\cite{rizvi2004extending}}
-\end{definition}
-\begin{proposition}[Security reduces to the check API]
-If every returned hit is re-checked with the authorizer's check API and failures abort the request,
-the result is secure whenever the check API is correct, independent of how filters are compiled or
-executed. Filter errors that admit unreadable chunks are counted as violations; filter errors that
-exclude readable chunks are invisible to the re-check and cost only maximality.
-\end{proposition}
-\subsection{Threat model}
-% In scope: cross-user/tenant leakage via retrieval; store filter bugs; authorizer failures;
-% identity confusion for agents. Out of scope: prompt injection in permitted content, model output,
-% wrong upstream permissions, infrastructure. Side channels: measured in Sec.~\ref{sec:side}.
-\tbd{threat model}
-\subsection{Metrics}
-% leak rate with per-question upper bound; permission-recall@k vs exact over R(s);
-% under-retrieval rate; false-completeness rate; latency p50/p95/p99; measured correlation axis.
-\tbd{metrics}
+\input{sections/background}
 
 \section{The Enforcement Layer Under Test}\label{sec:system}
 % Summarise wardowl's design and credit precedents: query modification, Bailey's widening loop,
@@ -122,10 +99,7 @@ exclude readable chunks are invisible to the re-check and cost only maximality.
 \tbd{results}
 
 \section{Related Work}\label{sec:related}
-% Enterprise search security; database access control; authorization systems; filtered ANN and
-% access-aware vector indexes (HoneyBee, Veda, vision paper); RAG privacy and agent identity;
-% testing methodology.
-\tbd{related work}
+\input{sections/related}
 
 \section{Limitations, Ethics and Disclosure}\label{sec:limits}
 % No independent audit; synthetic permission layouts (no public ACL corpus); single-hardware runs;

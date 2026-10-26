@@ -1,0 +1,176 @@
+% Related Work: body of Section~\ref{sec:related} (the \section heading and its label stay in
+% main.tex). Each paragraph credits its precedents and ends by stating how this paper differs.
+% The enforcement design is not claimed as new; the contribution is verification and measurement.
+% Do not quote vec2text's 92% figure without first reading seputis2025rethinking (see bib/STATUS.md).
+
+Permission-aware retrieval draws on literatures that rarely cite one another; each settled part of
+the design we test, and none verifies the whole.
+
+\paragraph{Enterprise search and document-level security.}
+B\"{u}ttcher and Clarke gave the founding security model for multi-user full-text
+search~\cite{buttcher2005security}. Filtering results ranked with global BM25 statistics lets any user
+who can create files infer how many unreadable files contain a term (to within about 0.5\% from ranks
+alone, with roughly ten binary-search queries); their fix, query integration, restricts every posting
+list to the user's searchable set before ranking, at between 39\% faster and 17\% slower, and they
+require that no aspect of the output, including its order, depend on unsearchable content. Bailey,
+Hawking and Matson modeled late binding, whose cost grows with the results checked times the
+per-check latency divided by the visibility density $\mathit{VD}$ (a 6.4\,ms off-server check limits
+a one-second budget to 93 checked results), and fetched blocks of
+$2\,\mathit{NR}/\mathit{VD}$ candidates until a page of $\mathit{NR}$ results
+filled~\cite{bailey2006secure}. Google's Search Appliance team named early and late binding and
+warned that ACLs copied into an index drift out of sync and leak~\cite{mangtani2006documentlevel}.
+The pre-filter we test is query integration applied to approximate nearest-neighbor (ANN) search, and
+its widening post-filter is Bailey et al.'s loop; we claim neither. We use B\"{u}ttcher and Clarke's
+consistency definition to frame side channels of filtered vector search, which we found no prior work
+to measure.
+
+\paragraph{Database access control.}
+Stonebraker and Wong enforced access rules by query modification, conjoining the applicable rules'
+qualifications with the user's query~\cite{stonebraker1974access}, which is what a pushed-down
+permission filter does. Rizvi et al.\ separated Truman semantics, which silently answer over the
+user's restricted view as Oracle's Virtual Private Database does, from non-Truman semantics, which
+reject queries that authorized data cannot answer~\cite{rizvi2004extending,oracle2026using}. Wang et
+al.\ defined sound, secure and maximal answers and found no algorithm of the time that was both sound
+and secure~\cite{wang2007correctness}; Kabra et al.\ showed that functions evaluated before the
+authorization predicate leak through their values and error messages~\cite{kabra2006redundancy}; and
+optimal security-aware query processing is impossible for the full relational
+calculus~\cite{guarnieri2014optimal}. PostgreSQL row-level security brings these lessons to
+production with default deny, leakproof functions and documented covert channels through key
+checks~\cite{postgresql2026row}. The layer we test is query modification with Truman semantics, and
+its re-check deliberately keeps the redundancy that Kabra et al.\ remove, because its filter and its
+check come from different code paths. This lineage proves rewriting correct under exact evaluation; we
+adapt its criteria to top-$k$ retrieval (Section~\ref{sec:problem}) and test components that carry no
+such proofs, under approximate search, where maximality can fail even when the predicate is right.
+
+\paragraph{Authorization systems and policy-to-filter compilation.}
+Zanzibar stores more than two trillion ACL tuples and answers millions of checks per second at p95
+latency under 10\,ms, but has no API that lists what a user may read: Google's search is late-bound,
+with tens to hundreds of checks per result page, and snapshot tokens prevent the ``new enemy''
+problem of applying an old ACL to new content~\cite{pang2019zanzibar}. Its open-source descendants,
+built on relationship-based access control~\cite{fong2011relationshipbaseda}, added reverse lookups
+with caveats. OpenFGA recommends ListObjects for about 1,000 accessible objects and by default stops a
+non-streaming call at 1,000 results or 3 seconds~\cite{openfga2026search,openfga2026openfga}; SpiceDB
+recommends LookupResources below about 10,000 resources and otherwise a bulk-check loop pinned to one
+revision~\cite{authzed2026protecting}. A truncated allow-list is safe but silently loses recall.
+Policy engines compile filters through engineering artifacts: OPA's partial evaluation, available since
+2018, emits SQL conditions for a documented fragment of its
+language~\cite{sandall2018write,opa2026evaluating,opa2026writing}, and Cerbos's query plans return
+always-allowed, always-denied or a conditional syntax tree~\cite{cerbos2026cerbos}. The peer-reviewed
+Cedar paper does not discuss filtering~\cite{cutler2024cedar}, XACML 3.0 returns one decision per
+request~\cite{oasis2013extensible}, and we found no peer-reviewed semantics or correctness proof for
+any policy-to-filter translator. We propose no authorizer or filter API. We measure, at one revision
+token, how often each engine's filters disagree with its own check API and when its list APIs
+truncate (Section~\ref{sec:engines}), and rely on the re-check so that such faults cost recall, not
+security.
+
+\paragraph{Filtered ANN search and access-aware vector indexes.}
+Graph indexes such as HNSW~\cite{malkov2020efficient} answer filtered queries by filtering before,
+after or during traversal. With pass fraction $p$, a post-filter needs about $k/p$ candidates when passing items
+are spread evenly and $O(n)$ when they lie far from the query~\cite{patel2024acorn}, and the collapse
+is well measured: post-filtering stayed below 0.9 recall on LAION-1M even with positively correlated
+filters~\cite{patel2024acorn}, Faiss-HNSW and ACORN could not reach 0.9 recall@10 at 0.1\%
+selectivity~\cite{li2025attribute}, and without a fallback ACORN-1's recall falls to 0.03--0.10 at
+0.3\% pass fraction~\cite{kim2026racorn1}. pgvector filters after the index scan, so a filter matching
+10\% of rows yields about four matches at the default search depth~\cite{pgvector2026pgvector}.
+Engines now fall back to exact scoring for restrictive
+filters~\cite{aquino2024filtering,rodriguez2024how,trent2025filtered}; since version 3.5, OpenSearch
+does so whenever approximate search returns fewer than $k$ results while at least $k$ documents
+pass~\cite{opensearch2026efficient}. Filtered-DiskANN cites user privileges as motivation but
+evaluates single-label filters~\cite{gollapudi2023filtereddiskann}; the NeurIPS'23 Big-ANN filtered
+track uses conjunctions of one or two tags without analyzing correlation~\cite{simhadri2025results};
+later benchmarks sweep selectivity down to 0.1\%~\cite{li2025attribute,iff2026benchmarking,shi2025filtered}
+and control query-filter correlation~\cite{zhang2026vecbench,amanbayev2026filtered,lu2026indepth};
+and HCBGen shows that neither selectivity nor correlation alone is a stable proxy for
+difficulty~\cite{lim2026revisiting}. None uses real ACLs. Permission-specific indexes are recent and
+assume role-based access control. HoneyBee partitions by role structure, with up to 13.5$\times$ lower
+latency than PostgreSQL row-level security at 1.24$\times$ the memory, on synthetic permissions and
+with a cost model that ignores query-permission correlation~\cite{zhong2026honeybee}; Veda builds an
+access-aware lattice over 641 to 757 role combinations~\cite{han2026dont}; and the SeQureDB '26 vision
+paper finds on pgvector that pre-filtering gives the best recall and naive post-filtering near-zero
+recall for selective policies~\cite{yalamarthi2026policyaware}. Curator indexes tenants without a
+security model~\cite{jin2024curator}, and a recent preprint links per-tenant recall loss partly to the
+local density of a tenant's points~\cite{das2026recallbounded}. We propose no index, and claim neither the first permission-aware vector search, nor the post-filter collapse, nor
+alignment as a new axis, which we measure instead. We found no evaluation of per-query disjunctions
+over hundreds or thousands of group labels, the shape of a directory-group ACL, and no audit of
+production stores under such filters at documented, tuned and exact settings
+(Sections~\ref{sec:quality} and~\ref{sec:repair}). HoneyBee and Veda are physical designs on which an
+enforcement layer could run.
+
+\paragraph{RAG privacy and agent identity.}
+Anyone who can query a RAG system can drain its store. Composite prompts extract private retrieval
+data, and re-ranking barely helps~\cite{zeng2024good}; prompt injection leaked the datastores of 25 of
+25 custom GPTs with at most two queries each~\cite{qi2024follow}; interrogation attacks infer
+membership with about 30 natural-looking queries~\cite{naseh2025riddle}; and in a survey's testbed, an
+8-gram output guard cut verbatim copying to 0.0\% while an adaptive three-query attacker still
+recovered 48.3\% of hidden facts~\cite{liu2026protection}. Such defenses are probabilistic and
+model-side. Cross-tenant work reaches our premise: retrieval ranks by relevance, not authorization,
+and attribute-based gating at retrieval removed cross-tenant leakage~\cite{arceo2026securing};
+re-checking authorization at the graph-expansion boundary of hybrid RAG cut a retrieval-pivot risk of
+0.95 to near zero~\cite{thornton2026retrieval}; Microsoft researchers call prompt sanitization and
+output filtering fundamentally probabilistic~\cite{bhatt2025enterprise}; GPT-4.1 reaches only
+$F_1 = 0.27$ on OrgAccess's hardest set, so prompts cannot carry permissions~\cite{sanyal2025orgaccess};
+and OWASP's LLM08:2025 makes permission-aware vector and embedding stores its first prevention
+measure~\cite{owasp2025llm082025}. PermLLM enforces access control in model parameters
+instead~\cite{jayaraman2025permissioned}; ConfusedPilot showed revoked documents staying retrievable
+through a cached index~\cite{roychowdhury2024confusedpilot}; and embedding
+inversion~\cite{song2020information,li2023sentence,morris2023text,zhang2025universal} leaves storage
+protection to the deployment. For agents, the confused deputy~\cite{hardy1988confused} has a
+standards answer: RFC 8693's actor claim names the delegated agent while the subject's rights govern
+access~\cite{jones2020oauth}, the MCP authorization specification requires audience-bound tokens and
+forbids passing a client's token upstream~\cite{mcp2026model}, and MITRE ATLAS mitigation AML.M0027
+says an agent should never hold permissions its user would not~\cite{mitre2026atlas}; yet 40.55\% of
+7,973 live remote MCP servers exposed tools without authentication~\cite{zhou2026first}. This
+literature shows why enforcement must be deterministic and precede generation, but does not test
+whether an enforcement layer is faithful or what it costs in recall. We adopt token-bound identity
+rather than claim it, exclude extraction within the readable set and injection in permitted content
+(Section~\ref{sec:prob-threat}), and take the timing channel that SpliceLeak made practical in RAG
+infrastructure~\cite{sun2026agentassisted} as motivation to measure side channels of filtered
+retrieval.
+
+\paragraph{Testing methodology.}
+Database engines have mature oracles for logic bugs: Pivoted Query Synthesis found 121 bugs in
+SQLite, MySQL and PostgreSQL~\cite{rigger2020testing}; NoREC and Ternary Logic Partitioning compare a
+query with a non-optimizing or partitioned rewrite of itself~\cite{rigger2020detecting,rigger2020finding};
+and later oracles reach query plans and graph databases~\cite{ba2023testing,ba2024keep,kamm2023testing}.
+All are forms of differential or metamorphic testing~\cite{chen2018metamorphic,segura2016survey},
+often with property-based input generation~\cite{claessen2000quickcheck,maciver2019hypothesis}. Vector databases have no such oracles:
+a study of 1,671 bug-fix pull requests in 15 vector databases found 57.3\% of bugs to be functional
+failures, with filter abnormality as a fault class, but does not mention differential or metamorphic
+testing~\cite{xie2025toward}, and a testing roadmap lists oracle definition as an open
+challenge~\cite{wang2025towards}. The Secret Sharer inserted canaries to estimate unintended
+memorization~\cite{carlini2019secret}. In reporting, ANN work plots recall-throughput
+frontiers~\cite{aumuller2020annbenchmarks}, yet the Big-ANN results paper and HoneyBee give no error
+bars~\cite{simhadri2025results,zhong2026honeybee}, short of the practice recommended for ML
+benchmarks~\cite{bouthillier2021accounting,agarwal2021deep}. We found no differential or metamorphic
+testing of metadata-filter semantics across vector stores. Ours uses a reference semantics as a
+NoREC-style oracle and evaluates its relations under exact search, so that approximation cannot
+confound them (Section~\ref{sec:conformance}); we also turn canaries into a deterministic enforcement
+check over hits, prompts and answers, and report confidence intervals over repeated runs.
+
+\paragraph{Industry systems.}
+Among native store features, Azure AI Search (in preview) goes furthest: it builds filters from the
+caller's Entra token, expands groups through Microsoft Graph at query time, and returns a server error
+rather than a partially filtered result when evaluation fails. Yet its document ACLs are only as fresh
+as the last synchronization, and earlier preview APIs returned all ACL-protected documents to callers
+who used an API key without a user token, until November 2025~\cite{microsoft2026querytime}.
+Elasticsearch and OpenSearch enforce document-level security through per-role
+queries~\tbd{cite Elastic and OpenSearch document-level security documentation}. Elsewhere,
+per-document permissions reduce to filters the application supplies: Milvus supports no RBAC at the
+partition-key level~\cite{milvus2026implement}, and Qdrant removed payload filters from its
+token-based RBAC in version 1.16, citing inconsistent read and write semantics~\cite{qdrant2025release}.
+Authorization vendors ship one integration per engine, as a post-filter~\cite{auth02026authorization},
+a pre-filter~\cite{cerbos2026implementing} or both~\cite{authzed2026langchainspicedb}; none widens
+until $k$ authorized hits arrive or re-checks pre-filtered hits, and OpenFGA acknowledges that
+post-filtering may return fewer than $k$ results and suggests over-fetching two to three
+times~\cite{openfga2026rag}. Enterprise assistants mirror ACLs into their indexes, so revocation waits
+for the next connector synchronization, daily for Coveo's Dynamics 365 provider~\cite{coveo2026coveo}.
+The closest commercial analogue to the layer we test is Amazon Bedrock's managed knowledge-base ACL
+awareness: it pre-filters on crawled ACLs, verifies each returned document against the data source in
+real time, lets denials override grants and withholds documents on transient errors, while stating
+that the feature is not a security boundary~\cite{aws2026access}. Open-source projects cover several
+stores with metadata only~\cite{langchain2026pebbloretrieval}, or one store with self-reported
+tests~\cite{gelevanog2026permissionaware}. We claim no novelty for pre-filtering with a live re-check
+and failing closed, which Bedrock ships. We found no independent evaluation of permission
+correctness, and no published recall evaluation, for any of these products, and no project that
+combines many vector stores with many authorization engines; the latter is an engineering property of
+our harness, not a research claim, and the former is what our measurements supply.
