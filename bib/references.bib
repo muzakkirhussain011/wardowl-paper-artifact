@@ -1,0 +1,2012 @@
+% references.bib -- papers and standards for the wardowl permission-aware retrieval paper
+% Built 2026-10-26 from the six notes files in
+%   D:\CV_2\research_notes\Permission aware retrieval literature review\
+% Every entry was de-duplicated and re-keyed; see STATUS.md for the per-entry
+% verification record, the old-key -> new-key map, corrections and the do-not-cite list.
+%
+% Key rule: <first author's last name><year><first significant title word>, lowercase ASCII,
+% diacritics stripped, non-alphanumerics removed; leading stopwords skipped
+% (a, an, the, on, of, in, to, for, and, is, are). Corporate authors use a short org name.
+% Collisions get a/b suffixes.
+%
+% Field policy: only fields verified in the notes or re-verified on 2026-10-26 (arXiv API,
+% Crossref API, ACL Anthology, USENIX/PMLR/NeurIPS/MLSys/JMLR proceedings pages, RFC Editor,
+% official spec pages). Fields the notes marked unverified are omitted, never guessed.
+% arXiv-only works are @misc with eprint/archivePrefix/primaryClass (primary class from the arXiv API).
+
+% =====================================================================
+% A. Enterprise search, database access control, authorization systems
+% =====================================================================
+
+@inproceedings{buttcher2005security,
+  author    = {B{\"u}ttcher, Stefan and Clarke, Charles L. A.},
+  title     = {A Security Model for Full-Text File System Search in Multi-User Environments},
+  booktitle = {Proceedings of the 4th {USENIX} Conference on File and Storage Technologies ({FAST} '05)},
+  pages     = {169--182},
+  publisher = {USENIX Association},
+  year      = {2005},
+  url       = {https://www.usenix.org/legacy/events/fast05/tech/buettcher.html}
+}
+
+@inproceedings{bailey2006secure,
+  author    = {Bailey, Peter and Hawking, David and Matson, Brett},
+  title     = {Secure Search in Enterprise Webs: Tradeoffs in Efficient Implementation for Document Level Security},
+  booktitle = {Proceedings of the 15th {ACM} International Conference on Information and Knowledge Management ({CIKM} '06)},
+  address   = {Arlington, Virginia, USA},
+  pages     = {493--502},
+  year      = {2006},
+  doi       = {10.1145/1183614.1183686}
+}
+
+@inproceedings{zerr2008zerber,
+  author    = {Zerr, Sergej and Demidova, Elena and Olmedilla, Daniel and Nejdl, Wolfgang and Winslett, Marianne and Mitra, Soumyadeb},
+  title     = {Zerber: r-Confidential Indexing for Distributed Documents},
+  booktitle = {Proceedings of the 11th International Conference on Extending Database Technology: Advances in Database Technology ({EDBT} '08)},
+  pages     = {287--298},
+  year      = {2008},
+  doi       = {10.1145/1353343.1353380}
+}
+
+@inproceedings{zerr2009zerberr,
+  author    = {Zerr, Sergej and Olmedilla, Daniel and Nejdl, Wolfgang and Siberski, Wolf},
+  title     = {Zerber+{R}: Top-k Retrieval from a Confidential Index},
+  booktitle = {Proceedings of the 12th International Conference on Extending Database Technology: Advances in Database Technology ({EDBT} '09)},
+  pages     = {439--449},
+  year      = {2009},
+  doi       = {10.1145/1516360.1516412}
+}
+
+% Crossref lists only the start page (366); the end page is not verified and is omitted.
+@inproceedings{fagin2003searching,
+  author    = {Fagin, Ronald and Kumar, Ravi and McCurley, Kevin S. and Novak, Jasmine and Sivakumar, D. and Tomlin, John A. and Williamson, David P.},
+  title     = {Searching the Workplace Web},
+  booktitle = {Proceedings of the Twelfth International Conference on World Wide Web ({WWW} '03)},
+  year      = {2003},
+  doi       = {10.1145/775152.775204}
+}
+
+@inproceedings{stonebraker1974access,
+  author    = {Stonebraker, Michael and Wong, Eugene},
+  title     = {Access Control in a Relational Data Base Management System by Query Modification},
+  booktitle = {Proceedings of the 1974 Annual Conference ({ACM} '74)},
+  pages     = {180--186},
+  year      = {1974},
+  doi       = {10.1145/800182.810400}
+}
+
+@article{griffiths1976authorization,
+  author    = {Griffiths, Patricia P. and Wade, Bradford W.},
+  title     = {An Authorization Mechanism for a Relational Database System},
+  journal   = {ACM Transactions on Database Systems},
+  volume    = {1},
+  number    = {3},
+  pages     = {242--255},
+  year      = {1976},
+  doi       = {10.1145/320473.320482}
+}
+
+@inproceedings{motro1989access,
+  author    = {Motro, A.},
+  title     = {An Access Authorization Model for Relational Databases Based on Algebraic Manipulation of View Definitions},
+  booktitle = {Proceedings of the Fifth International Conference on Data Engineering ({ICDE} 1989)},
+  pages     = {339--347},
+  year      = {1989},
+  doi       = {10.1109/ICDE.1989.47234}
+}
+
+@inproceedings{rizvi2004extending,
+  author    = {Rizvi, Shariq and Mendelzon, Alberto and Sudarshan, S. and Roy, Prasan},
+  title     = {Extending Query Rewriting Techniques for Fine-Grained Access Control},
+  booktitle = {Proceedings of the 2004 {ACM} {SIGMOD} International Conference on Management of Data ({SIGMOD} '04)},
+  pages     = {551--562},
+  year      = {2004},
+  doi       = {10.1145/1007568.1007631}
+}
+
+@inproceedings{lefevre2004limiting,
+  author    = {LeFevre, Kristen and Agrawal, Rakesh and Ercegovac, Vuk and Ramakrishnan, Raghu and Xu, Yirong and DeWitt, David},
+  title     = {Limiting Disclosure in {Hippocratic} Databases},
+  booktitle = {Proceedings 2004 {VLDB} Conference},
+  pages     = {108--119},
+  year      = {2004},
+  doi       = {10.1016/B978-012088469-8.50013-9}
+}
+
+@inproceedings{kabra2006redundancy,
+  author    = {Kabra, Govind and Ramamurthy, Ravishankar and Sudarshan, S.},
+  title     = {Redundancy and Information Leakage in Fine-Grained Access Control},
+  booktitle = {Proceedings of the 2006 {ACM} {SIGMOD} International Conference on Management of Data ({SIGMOD} '06)},
+  pages     = {133--144},
+  year      = {2006},
+  doi       = {10.1145/1142473.1142489}
+}
+
+% No DOI exists. The page range could not be verified (the "p555" in the VLDB file name is not a
+% confirmed page number), so pages are omitted.
+@inproceedings{wang2007correctness,
+  author    = {Wang, Qihua and Yu, Ting and Li, Ninghui and Lobo, Jorge and Bertino, Elisa and Irwin, Keith and Byun, Ji-Won},
+  title     = {On the Correctness Criteria of Fine-Grained Access Control in Relational Databases},
+  booktitle = {Proceedings of the {VLDB} Conference ({VLDB} '07)},
+  address   = {Vienna, Austria},
+  publisher = {VLDB Endowment},
+  year      = {2007},
+  url       = {https://www.cs.purdue.edu/homes/ninghui/papers/fgdb_vldb07.pdf}
+}
+
+@article{guarnieri2014optimal,
+  author    = {Guarnieri, Marco and Basin, David},
+  title     = {Optimal Security-Aware Query Processing},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {7},
+  number    = {12},
+  pages     = {1307--1318},
+  year      = {2014},
+  doi       = {10.14778/2732977.2733003}
+}
+
+@article{pappachan2020sieve,
+  author    = {Pappachan, Primal and Yus, Roberto and Mehrotra, Sharad and Freytag, Johann-Christoph},
+  title     = {Sieve: A Middleware Approach to Scalable Access Control for Database Management Systems},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {13},
+  number    = {12},
+  pages     = {2424--2437},
+  year      = {2020},
+  doi       = {10.14778/3407790.3407835}
+}
+
+@inproceedings{pang2019zanzibar,
+  author    = {Pang, Ruoming and Caceres, Ramon and Burrows, Mike and Chen, Zhifeng and Dave, Pratik and Germer, Nathan and Golynski, Alexander and Graney, Kevin and Kang, Nina and Kissner, Lea and Korn, Jeffrey L. and Parmar, Abhishek and Richards, Christina D. and Wang, Mengzhi},
+  title     = {Zanzibar: {Google's} Consistent, Global Authorization System},
+  booktitle = {2019 {USENIX} Annual Technical Conference ({USENIX} {ATC} 19)},
+  address   = {Renton, WA},
+  pages     = {33--46},
+  publisher = {USENIX Association},
+  year      = {2019},
+  isbn      = {978-1-939133-03-8},
+  url       = {https://www.usenix.org/conference/atc19/presentation/pang}
+}
+
+@inproceedings{fong2011relationshipbaseda,
+  author    = {Fong, Philip W. L.},
+  title     = {Relationship-Based Access Control: Protection Model and Policy Language},
+  booktitle = {Proceedings of the First {ACM} Conference on Data and Application Security and Privacy ({CODASPY} '11)},
+  pages     = {191--202},
+  year      = {2011},
+  doi       = {10.1145/1943513.1943539}
+}
+
+@inproceedings{fong2011relationshipbasedb,
+  author    = {Fong, Philip W. L. and Siahaan, Ida},
+  title     = {Relationship-Based Access Control Policies and Their Policy Languages},
+  booktitle = {Proceedings of the 16th {ACM} Symposium on Access Control Models and Technologies ({SACMAT} '11)},
+  pages     = {51--60},
+  year      = {2011},
+  doi       = {10.1145/1998441.1998450}
+}
+
+@article{cutler2024cedar,
+  author        = {Cutler, Joseph W. and Disselkoen, Craig and Eline, Aaron and He, Shaobo and Headley, Kyle and Hicks, Michael and Hietala, Kesha and Ioannidis, Eleftherios and Kastner, John and Mamat, Anwar and McAdams, Darin and McCutchen, Matt and Rungta, Neha and Torlak, Emina and Wells, Andrew M.},
+  title         = {Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization},
+  journal       = {Proceedings of the ACM on Programming Languages},
+  volume        = {8},
+  number        = {OOPSLA1},
+  pages         = {670--697},
+  year          = {2024},
+  doi           = {10.1145/3649835},
+  eprint        = {2403.04651},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.PL},
+  note          = {Extended version on arXiv, titled ``... Authorization (Extended Version)''}
+}
+
+@inproceedings{disselkoen2024how,
+  author    = {Disselkoen, Craig and Eline, Aaron and He, Shaobo and Headley, Kyle and Hicks, Michael and Hietala, Kesha and Kastner, John and Mamat, Anwar and McCutchen, Matt and Rungta, Neha and Shah, Bhakti and Torlak, Emina and Wells, Andrew},
+  title     = {How We Built {Cedar}: A Verification-Guided Approach},
+  booktitle = {Companion Proceedings of the 32nd {ACM} International Conference on the Foundations of Software Engineering ({FSE} Companion '24)},
+  pages     = {351--357},
+  year      = {2024},
+  doi       = {10.1145/3663529.3663854}
+}
+
+@inproceedings{kastner2025cedar,
+  author    = {Kastner, John},
+  title     = {Cedar: An Expressive, Fast, Safe, and Analyzable Authorization Language for Modern Distributed Systems [Keynote Abstract]},
+  booktitle = {Proceedings of the 30th {ACM} Symposium on Access Control Models and Technologies ({SACMAT} '25)},
+  pages     = {3},
+  year      = {2025},
+  doi       = {10.1145/3734436.3734437}
+}
+
+% =====================================================================
+% B. Filtered ANN search, vector database systems, permission-aware vector search
+% =====================================================================
+
+@article{malkov2020efficient,
+  author        = {Malkov, Yu. A. and Yashunin, D. A.},
+  title         = {Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs},
+  journal       = {IEEE Transactions on Pattern Analysis and Machine Intelligence},
+  volume        = {42},
+  number        = {4},
+  pages         = {824--836},
+  year          = {2020},
+  doi           = {10.1109/TPAMI.2018.2889473},
+  eprint        = {1603.09320},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DS}
+}
+
+@inproceedings{subramanya2019diskann,
+  author    = {Subramanya, Suhas Jayaram and Devvrit, Fnu and Simhadri, Harsha Vardhan and Krishnaswamy, Ravishankar and Kadekodi, Rohan},
+  title     = {{DiskANN}: Fast Accurate Billion-point Nearest Neighbor Search on a Single Node},
+  booktitle = {Advances in Neural Information Processing Systems 32 ({NeurIPS} 2019)},
+  pages     = {13748--13758},
+  year      = {2019},
+  url       = {https://papers.nips.cc/paper_files/paper/2019/hash/09853c7fb1d3f8ee67a61b6bf4a7f8e6-Abstract.html}
+}
+
+@misc{singh2021freshdiskann,
+  author        = {Singh, Aditi and Subramanya, Suhas Jayaram and Krishnaswamy, Ravishankar and Simhadri, Harsha Vardhan},
+  title         = {{FreshDiskANN}: A Fast and Accurate Graph-Based {ANN} Index for Streaming Similarity Search},
+  year          = {2021},
+  eprint        = {2105.09613},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@misc{douze2024faiss,
+  author        = {Douze, Matthijs and Guzhva, Alexandr and Deng, Chengqi and Johnson, Jeff and Szilvasy, Gergely and Mazar{\'e}, Pierre-Emmanuel and Lomeli, Maria and Hosseini, Lucas and J{\'e}gou, Herv{\'e}},
+  title         = {The {Faiss} library},
+  year          = {2024},
+  eprint        = {2401.08281},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@inproceedings{gollapudi2023filtereddiskann,
+  author    = {Gollapudi, Siddharth and Karia, Neel and Sivashankar, Varun and Krishnaswamy, Ravishankar and Begwani, Nikit and Raz, Swapnil and Lin, Yiyong and Zhang, Yin and Mahapatro, Neelam and Srinivasan, Premkumar and Singh, Amit and Simhadri, Harsha Vardhan},
+  title     = {{Filtered-DiskANN}: Graph Algorithms for Approximate Nearest Neighbor Search with Filters},
+  booktitle = {Proceedings of the {ACM} Web Conference 2023 ({WWW} '23)},
+  pages     = {3406--3416},
+  year      = {2023},
+  doi       = {10.1145/3543507.3583552}
+}
+
+@article{patel2024acorn,
+  author        = {Patel, Liana and Kraft, Peter and Guestrin, Carlos and Zaharia, Matei},
+  title         = {{ACORN}: Performant and Predicate-Agnostic Search Over Vector Embeddings and Structured Data},
+  journal       = {Proceedings of the ACM on Management of Data},
+  volume        = {2},
+  number        = {3},
+  pages         = {1--27},
+  year          = {2024},
+  doi           = {10.1145/3654923},
+  eprint        = {2403.04871},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@inproceedings{wang2023efficient,
+  author    = {Wang, Mengzhao and Lv, Lingwei and Xu, Xiaoliang and Wang, Yuxiang and Yue, Qiang and Ni, Jiongkang},
+  title     = {An Efficient and Robust Framework for Approximate Nearest Neighbor Search with Attribute Constraint},
+  booktitle = {Advances in Neural Information Processing Systems 36 ({NeurIPS} 2023)},
+  pages     = {15738--15751},
+  year      = {2023},
+  doi       = {10.52202/075280-0692}
+}
+
+% Earlier preprint of wang2023efficient (NHQ) under a different title; cite the NeurIPS version.
+@misc{wang2022navigable,
+  author        = {Wang, Mengzhao and Lv, Lingwei and Xu, Xiaoliang and Wang, Yuxiang and Yue, Qiang and Ni, Jiongkang},
+  title         = {Navigable Proximity Graph-Driven Native Hybrid Queries with Structured and Unstructured Constraints},
+  year          = {2022},
+  eprint        = {2203.13601},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@inproceedings{wu2022hqann,
+  author        = {Wu, Wei and He, Junlin and Qiao, Yu and Fu, Guoheng and Liu, Li and Yu, Jin},
+  title         = {{HQANN}: Efficient and Robust Similarity Search for Hybrid Queries with Structured and Unstructured Constraints},
+  booktitle     = {Proceedings of the 31st {ACM} International Conference on Information and Knowledge Management ({CIKM} '22)},
+  pages         = {4580--4584},
+  year          = {2022},
+  doi           = {10.1145/3511808.3557610},
+  eprint        = {2207.07940},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{gupta2023caps,
+  author        = {Gupta, Gaurav and Yi, Jonah and Coleman, Benjamin and Luo, Chen and Lakshman, Vihan and Shrivastava, Anshumali},
+  title         = {{CAPS}: A Practical Partition Index for Filtered Similarity Search},
+  year          = {2023},
+  eprint        = {2308.15014},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@article{cai2024navigating,
+  author    = {Cai, Yuzheng and Shi, Jiayang and Chen, Yizhuo and Zheng, Weiguo},
+  title     = {Navigating Labels and Vectors: A Unified Approach to Filtered Approximate Nearest Neighbor Search},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {2},
+  number    = {6},
+  pages     = {1--27},
+  year      = {2024},
+  doi       = {10.1145/3698822}
+}
+
+@article{xu2024irangegraph,
+  author        = {Xu, Yuexuan and Gao, Jianyang and Gou, Yutong and Long, Cheng and Jensen, Christian S.},
+  title         = {{iRangeGraph}: Improvising Range-dedicated Graphs for Range-filtering Nearest Neighbor Search},
+  journal       = {Proceedings of the ACM on Management of Data},
+  volume        = {2},
+  number        = {6},
+  pages         = {1--26},
+  year          = {2024},
+  doi           = {10.1145/3698814},
+  eprint        = {2409.02571},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@article{zuo2024serf,
+  author    = {Zuo, Chaoji and Qiao, Miao and Zhou, Wenchao and Li, Feifei and Deng, Dong},
+  title     = {{SeRF}: Segment Graph for Range-Filtering Approximate Nearest Neighbor Search},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {2},
+  number    = {1},
+  pages     = {1--26},
+  year      = {2024},
+  doi       = {10.1145/3639324}
+}
+
+@inproceedings{engels2024approximate,
+  author        = {Engels, Joshua and Landrum, Ben and Yu, Shangdi and Dhulipala, Laxman and Shun, Julian},
+  title         = {Approximate Nearest Neighbor Search with Window Filters},
+  booktitle     = {Proceedings of the 41st International Conference on Machine Learning ({ICML} 2024)},
+  series        = {Proceedings of Machine Learning Research},
+  volume        = {235},
+  pages         = {12469--12490},
+  publisher     = {PMLR},
+  year          = {2024},
+  url           = {https://proceedings.mlr.press/v235/engels24a.html},
+  eprint        = {2402.00943},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DS}
+}
+
+@article{li2025sieve,
+  author        = {Li, Zhaoheng and Huang, Silu and Ding, Wei and Park, Yongjoo and Chen, Jianjun},
+  title         = {{SIEVE}: Effective Filtered Vector Search with Collection of Indexes},
+  journal       = {Proceedings of the VLDB Endowment},
+  volume        = {18},
+  number        = {11},
+  pages         = {4723--4736},
+  year          = {2025},
+  doi           = {10.14778/3749646.3749725},
+  eprint        = {2507.11907},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@article{aitaomar2025rwalks,
+  author    = {Ait Aomar, Anas and Echihabi, Karima and Arnaboldi, Marco and Alagiannis, Ioannis and Hilloulin, Damien and Cherkaoui, Manal},
+  title     = {{RWalks}: Random Walks as Attribute Diffusers for Filtered Vector Search},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {3},
+  number    = {3},
+  pages     = {1--26},
+  year      = {2025},
+  doi       = {10.1145/3725349}
+}
+
+@article{liang2024unify,
+  author    = {Liang, Anqi and Zhang, Pengcheng and Yao, Bin and Chen, Zhongpu and Song, Yitong and Cheng, Guangxu},
+  title     = {{UNIFY}: Unified Index for Range Filtered Approximate Nearest Neighbors Search},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {18},
+  number    = {4},
+  pages     = {1118--1130},
+  year      = {2024},
+  doi       = {10.14778/3717755.3717770}
+}
+
+@article{peng2025dynamic,
+  author    = {Peng, Zhencan and Qiao, Miao and Zhou, Wenchao and Li, Feifei and Deng, Dong},
+  title     = {Dynamic Range-Filtering Approximate Nearest Neighbor Search},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {18},
+  number    = {10},
+  pages     = {3256--3268},
+  year      = {2025},
+  doi       = {10.14778/3748191.3748193}
+}
+
+@article{jiang2025digra,
+  author    = {Jiang, Mengxu and Yang, Zhi and Zhang, Fangyuan and Hou, Guanhao and Shi, Jieming and Zhou, Wenchao and Li, Feifei and Wang, Sibo},
+  title     = {{DIGRA}: A Dynamic Graph Indexing for Approximate Nearest Neighbor Search with Range Filter},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {3},
+  number    = {3},
+  pages     = {1--26},
+  year      = {2025},
+  doi       = {10.1145/3725399}
+}
+
+@article{zhang2025efficient,
+  author    = {Zhang, Fangyuan and Jiang, Mengxu and Hou, Guanhao and Shi, Jieming and Fan, Hua and Zhou, Wenchao and Li, Feifei and Wang, Sibo},
+  title     = {Efficient Dynamic Indexing for Range Filtered Approximate Nearest Neighbor Search},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {3},
+  number    = {3},
+  pages     = {1--26},
+  year      = {2025},
+  doi       = {10.1145/3725401}
+}
+
+@article{wang2025wow,
+  author    = {Wang, Ziqi and Zhang, Jingzhe and Hu, Wei},
+  title     = {{WoW}: A Window-to-Window Incremental Index for Range-Filtering Approximate Nearest Neighbor Search},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {3},
+  number    = {6},
+  pages     = {1--27},
+  year      = {2025},
+  doi       = {10.1145/3769843}
+}
+
+@article{mohoney2023highthroughput,
+  author    = {Mohoney, Jason and Pacaci, Anil and Chowdhury, Shihabur Rahman and Mousavi, Ali and Ilyas, Ihab F. and Minhas, Umar Farooq and Pound, Jeffrey and Rekatsinas, Theodoros},
+  title     = {High-Throughput Vector Similarity Search in Knowledge Graphs},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {1},
+  number    = {2},
+  pages     = {1--25},
+  year      = {2023},
+  doi       = {10.1145/3589777}
+}
+
+@misc{sehgal2025navix,
+  author        = {Sehgal, Gaurav and Salihoglu, Semih},
+  title         = {{NaviX}: A Native Vector Index Design for Graph {DBMSs} With Robust Predicate-Agnostic Search Performance},
+  year          = {2025},
+  eprint        = {2506.23397},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@misc{ye2025compass,
+  author        = {Ye, Chunxiao and Yan, Xiao and Lo, Eric},
+  title         = {Compass: General Filtered Search across Vector and Structured Data},
+  year          = {2025},
+  eprint        = {2510.27141},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{yang2025elastic,
+  author        = {Yang, Mingyu and Xia, Wenxuan and Li, Wentao and Wong, Raymond Chi-Wing and Wang, Wei},
+  title         = {Elastic Index Selection for Label-Hybrid {AKNN} Search},
+  year          = {2025},
+  eprint        = {2505.03212},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@inproceedings{xia2026e2e,
+  author        = {Xia, Wenxuan and Yang, Mingyu and Li, Wentao and Wang, Wei},
+  title         = {{E2E}: Efficient Filtered {AKNN} Search via Adaptive Termination},
+  booktitle     = {Proceedings of the 32nd {ACM} {SIGKDD} Conference on Knowledge Discovery and Data Mining V.2 ({KDD} '26)},
+  pages         = {5602--5613},
+  year          = {2026},
+  doi           = {10.1145/3770855.3817860},
+  eprint        = {2602.06721},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{kim2026racorn1,
+  author        = {Kim, Yoonseok and Choe, Gyusik},
+  title         = {{RACORN-1}: Adaptive Recall-Preserving Speedup for Low-Selectivity Filtered Vector Search},
+  year          = {2026},
+  eprint        = {2607.00768},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{wang2026fast,
+  author        = {Wang, Ziqi and Zhang, Jingzhe and Shen, Shuo and Hu, Wei},
+  title         = {Fast Label-Filtering Approximate Nearest Neighbor Search via Progressive Label Set Stratification},
+  year          = {2026},
+  eprint        = {2609.15058},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {Accepted at SIGMOD 2027 per arXiv comment; no publisher DOI yet}
+}
+
+@inproceedings{zheng2026labelbalanced,
+  author    = {Zheng, Hanchao and Chen, Yang and Wu, Zhe},
+  title     = {Label-Balanced Graph Index for Filtered Approximate Nearest Neighbor Search with Low-Frequency Labels},
+  booktitle = {Proceedings of the 38th International Conference on Scalable Scientific Data Management ({SSDBM} 2026)},
+  pages     = {1--12},
+  year      = {2026},
+  doi       = {10.1145/3828820.3828830}
+}
+
+@inproceedings{ma2026gaaf,
+  author    = {Ma, Mengyang and Yin, Xizhe and Qiu, Junqiao},
+  title     = {{GAAF}: Fast and Scalable Graph-based Vector Similarity Search with Any-Match Label Filtering},
+  booktitle = {Proceedings of the 40th {ACM} International Conference on Supercomputing ({ICS} '26)},
+  pages     = {551--564},
+  year      = {2026},
+  doi       = {10.1145/3797905.3807855}
+}
+
+@misc{guo2026pipeannfilter,
+  author        = {Guo, Hao and Shu, Jiwu and Lu, Youyou},
+  title         = {{PipeANN-Filter}: An Efficient Filtered Vector Search System on {SSD}},
+  year          = {2026},
+  eprint        = {2605.17992},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.OS}
+}
+
+@misc{chatzakis2026vader,
+  author        = {Chatzakis, Manos and Lu, Duo and Caminal, Helena and Chronis, Yannis and {\"O}zcan, Fatma and Papakonstantinou, Yannis and Asyrkin, Timofey and Infante Murguia, Sebastian and Rosenblatt, Itai and Palpanas, Themis},
+  title         = {{VADER}: Filtered Vector Search with Declarative Recall},
+  year          = {2026},
+  eprint        = {2609.38053},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {arXiv comment states it appeared in VLDB 2027; publisher record not checked}
+}
+
+@misc{xiong2026queryaware,
+  author        = {Xiong, Qianqian and Zhang, Mengxuan},
+  title         = {Query-aware Routing for Filtered Approximate Nearest Neighbors Search},
+  year          = {2026},
+  eprint        = {2606.19898},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{almamun2026ifvs,
+  author        = {Al-Mamun, Abdullah and Rayhan, Yeasir and Aref, Walid G.},
+  title         = {{iFVS}: Towards Instance-Optimized Filtered Vector Search},
+  year          = {2026},
+  eprint        = {2607.22922},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{uemura2026simple,
+  author        = {Uemura, Reon and Kido, Keito and Amagata, Daichi},
+  title         = {Simple and Fast Algorithm for Graph-based Filtered Approximate Nearest Neighbor Search (Full Version)},
+  year          = {2026},
+  eprint        = {2607.24173},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {A shorter version was accepted to SISAP 2026 per arXiv comment}
+}
+
+@inproceedings{aslam2026adaptive,
+  author    = {Aslam, Adeel and Khan, Rizwan and Simonini, Giovanni and Konstantinidis, George},
+  title     = {Adaptive Query-Aware Hybrid Search in Vector Databases},
+  booktitle = {Proceedings of the International Conference on Extending Database Technology ({EDBT} 2026)},
+  publisher = {OpenProceedings.org},
+  year      = {2026},
+  doi       = {10.48786/edbt.2026.42}
+}
+
+@inproceedings{wang2021milvus,
+  author    = {Wang, Jianguo and Yi, Xiaomeng and Guo, Rentong and Jin, Hai and Xu, Peng and Li, Shengjun and Wang, Xiangyu and Guo, Xiangzhou and Li, Chengming and Xu, Xiaohai and Yu, Kun and Yuan, Yuxing and Zou, Yinghao and Long, Jiquan and Cai, Yudong and Li, Zhenxiang and Zhang, Zhifeng and Mo, Yihua and Gu, Jun and Jiang, Ruiyi and Wei, Yi and Xie, Charles},
+  title     = {Milvus: A Purpose-Built Vector Data Management System},
+  booktitle = {Proceedings of the 2021 International Conference on Management of Data ({SIGMOD} '21)},
+  pages     = {2614--2627},
+  year      = {2021},
+  doi       = {10.1145/3448016.3457550}
+}
+
+@article{wei2020analyticdbv,
+  author    = {Wei, Chuangxian and Wu, Bin and Wang, Sheng and Lou, Renjie and Zhan, Chaoqun and Li, Feifei and Cai, Yuanzhe},
+  title     = {{AnalyticDB-V}: A Hybrid Analytical Engine Towards Query Fusion for Structured and Unstructured Data},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {13},
+  number    = {12},
+  pages     = {3152--3165},
+  year      = {2020},
+  doi       = {10.14778/3415478.3415541}
+}
+
+@inproceedings{zhang2023vbase,
+  author    = {Zhang, Qianxi and Xu, Shuotao and Chen, Qi and Sui, Guoxin and Xie, Jiadong and Cai, Zhizhen and Chen, Yaoqi and He, Yinxuan and Yang, Yuqing and Yang, Fan and Yang, Mao and Zhou, Lidong},
+  title     = {{VBASE}: Unifying Online Vector Similarity Search and Relational Queries via Relaxed Monotonicity},
+  booktitle = {17th {USENIX} Symposium on Operating Systems Design and Implementation ({OSDI} 23)},
+  pages     = {377--395},
+  year      = {2023},
+  url       = {https://www.usenix.org/conference/osdi23/presentation/zhang-qianxi}
+}
+
+% Author list follows the Middleware record (Crossref, 7 authors); the arXiv version lists 6.
+@inproceedings{li2018design,
+  author        = {Li, Jie and Liu, Haifeng and Gui, Chuanghua and Chen, Jianyu and Ni, Zhenyuan and Wang, Ning and Chen, Yuan},
+  title         = {The Design and Implementation of a Real Time Visual Search System on {JD} E-commerce Platform},
+  booktitle     = {Proceedings of the 19th International Middleware Conference Industry (Middleware '18)},
+  pages         = {9--16},
+  year          = {2018},
+  doi           = {10.1145/3284028.3284030},
+  eprint        = {1908.07389},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@misc{ma2025chase,
+  author        = {Ma, Rui and Zhang, Kai and He, Zhenying and Jing, Yinan and Wang, X. Sean and Chen, Zhenqiang},
+  title         = {{CHASE}: A Native Relational Database for Hybrid Queries on Structured and Unstructured Data},
+  year          = {2025},
+  eprint        = {2501.05006},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@article{chen2026nova,
+  author    = {Chen, Dechuang and Chen, Bing and Lu, Jianwei and Wu, Zhiwei and Yang, Zeyu and Gu, Qiang and Zhang, Fangyuan and Wang, Sibo and Yu, Zeyuan and Yin, Caihua and Zhou, Wenchao and Li, Feifei},
+  title     = {Nova: A Multi-Purpose Vector Engine for Low-Latency, Multi-Tenant, and Cross-Table Hybrid Retrieval},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {19},
+  number    = {12},
+  pages     = {4453--4465},
+  year      = {2026},
+  doi       = {10.14778/3827998.3828045}
+}
+
+@inproceedings{zhang2024there,
+  author    = {Zhang, Yunan and Liu, Shige and Wang, Jianguo},
+  title     = {Are There Fundamental Limitations in Supporting Vector Data Management in Relational Databases? {A} Case Study of {PostgreSQL}},
+  booktitle = {2024 {IEEE} 40th International Conference on Data Engineering ({ICDE})},
+  pages     = {3640--3653},
+  year      = {2024},
+  doi       = {10.1109/ICDE60146.2024.00280}
+}
+
+@inproceedings{sanca2024efficient,
+  author    = {Sanca, Viktor and Ailamaki, Anastasia},
+  title     = {Efficient Data Access Paths for Mixed Vector-Relational Search},
+  booktitle = {Proceedings of the 20th International Workshop on Data Management on New Hardware ({DaMoN} '24)},
+  pages     = {1--9},
+  year      = {2024},
+  doi       = {10.1145/3662010.3663448}
+}
+
+@article{lu2026indepth,
+  author        = {Lu, Duo and Caminal, Helena and Chatzakis, Manos and Papakonstantinou, Yannis and Chronis, Yannis and Jain, Vaibhav and {\"O}zcan, Fatma},
+  title         = {An In-Depth Study of Filter-Agnostic Vector Search on a {PostgreSQL} Database System: [Experiments \& Analysis]},
+  journal       = {Proceedings of the ACM on Management of Data},
+  volume        = {4},
+  number        = {3},
+  pages         = {1--26},
+  year          = {2026},
+  doi           = {10.1145/3802011},
+  eprint        = {2603.23710},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{amanbayev2026filtered,
+  author        = {Amanbayev, Abylay and Tsan, Brian and Dang, Tri and Rusu, Florin},
+  title         = {Filtered Approximate Nearest Neighbor Search in Vector Databases: System Design and Performance Analysis},
+  year          = {2026},
+  eprint        = {2602.11443},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@article{pan2024survey,
+  author        = {Pan, James Jie and Wang, Jianguo and Li, Guoliang},
+  title         = {Survey of Vector Database Management Systems},
+  journal       = {The VLDB Journal},
+  volume        = {33},
+  number        = {5},
+  pages         = {1591--1615},
+  year          = {2024},
+  doi           = {10.1007/s00778-024-00864-x},
+  eprint        = {2310.14021},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{lin2025survey,
+  author        = {Lin, Yanjun and Zhang, Kai and He, Zhenying and Jing, Yinan and Wang, X. Sean},
+  title         = {Survey of Filtered Approximate Nearest Neighbor Search over the Vector-Scalar Hybrid Data},
+  year          = {2025},
+  eprint        = {2505.06501},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {Submitted to The VLDB Journal per arXiv comment}
+}
+
+@article{chronis2025filtered,
+  author    = {Chronis, Yannis and Caminal, Helena and Papakonstantinou, Yannis and {\"O}zcan, Fatma and Ailamaki, Anastasia},
+  title     = {Filtered Vector Search: State-of-the-Art and Research Opportunities},
+  journal   = {Proceedings of the VLDB Endowment},
+  volume    = {18},
+  number    = {12},
+  pages     = {5488--5492},
+  year      = {2025},
+  doi       = {10.14778/3750601.3750700}
+}
+
+% Author list and order follow the NeurIPS 2025 proceedings record (21 authors); arXiv v1 lists 23
+% authors in a different order (adds Frank Liu and Zihao Wan).
+@inproceedings{simhadri2025results,
+  author        = {Simhadri, Harsha Vardhan and Aum{\"u}ller, Martin and Douze, Matthijs and Baranchuk, Dmitry and Ingber, Amir and Liberty, Edo and Williams, George and Landrum, Ben and Manohar, Magdalen and Karjikar, Mazin and Dhulipala, Laxman and Chen, Meng and Chen, Yue and Ma, Rui and Zhang, Kai and Cai, Yuzheng and Shi, Jiayang and Zheng, Weiguo and Chen, Yizhuo and Yin, Jie and Huang, Ben},
+  title         = {Results of the Big {ANN}: {NeurIPS'23} Competition},
+  booktitle     = {Advances in Neural Information Processing Systems 38 ({NeurIPS} 2025), Datasets and Benchmarks Track},
+  pages         = {76394--76408},
+  year          = {2025},
+  doi           = {10.52202/085713-2303},
+  eprint        = {2409.17424},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@inproceedings{simhadri2022results,
+  author        = {Simhadri, Harsha Vardhan and Williams, George and Aum{\"u}ller, Martin and Douze, Matthijs and Babenko, Artem and Baranchuk, Dmitry and Chen, Qi and Hosseini, Lucas and Krishnaswamy, Ravishankar and Srinivasa, Gopal and Subramanya, Suhas Jayaram and Wang, Jingdong},
+  title         = {Results of the {NeurIPS'21} Challenge on Billion-Scale Approximate Nearest Neighbor Search},
+  booktitle     = {Proceedings of the NeurIPS 2021 Competitions and Demonstrations Track},
+  series        = {Proceedings of Machine Learning Research},
+  volume        = {176},
+  pages         = {177--189},
+  publisher     = {PMLR},
+  year          = {2022},
+  url           = {https://proceedings.mlr.press/v176/simhadri22a.html},
+  eprint        = {2205.03763},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@article{li2025attribute,
+  author        = {Li, Mocheng and Yan, Xiao and Lu, Baotong and Zhang, Yue and Cheng, James and Ma, Chenhao},
+  title         = {Attribute Filtering in Approximate Nearest Neighbor Search: An In-depth Experimental Study},
+  journal       = {Proceedings of the ACM on Management of Data},
+  volume        = {3},
+  number        = {6},
+  pages         = {1--26},
+  year          = {2025},
+  doi           = {10.1145/3769763},
+  eprint        = {2508.16263},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {SIGMOD 2026. A corrigendum appeared in PACMMOD 4(1), 2026, doi:10.1145/3803528}
+}
+
+@inproceedings{iff2026benchmarking,
+  author        = {Iff, Patrick and Br{\"u}gger, Paul and Chrapek, Marcin and Kochergin, David and Besta, Maciej and Hoefler, Torsten},
+  title         = {Benchmarking Filtered Approximate Nearest Neighbor Search Algorithms on Transformer-based Embedding Vectors},
+  booktitle     = {Proceedings of the 49th International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval ({SIGIR} '26)},
+  pages         = {610--622},
+  year          = {2026},
+  doi           = {10.1145/3805712.3809731},
+  eprint        = {2507.21989},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{shi2025filtered,
+  author        = {Shi, Jiayang and Cai, Yuzheng and Zheng, Weiguo},
+  title         = {Filtered Approximate Nearest Neighbor Search: A Unified Benchmark and Systematic Experimental Study [Experiment, Analysis \& Benchmark]},
+  year          = {2025},
+  eprint        = {2509.07789},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@article{zhang2026vecbench,
+  author    = {Zhang, Xiang and Zhang, Chao and Fan, Ju and Li, Guoliang and Du, Xiaoyong},
+  title     = {{VecBench}: A Controllable Benchmark for Filtered Vector Search: [Experiments \& Analysis]},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {4},
+  number    = {3},
+  pages     = {1--27},
+  year      = {2026},
+  doi       = {10.1145/3802125}
+}
+
+@misc{lim2026revisiting,
+  author        = {Lim, Mintaek and Kim, Dogeun and Kim, Minwoo and Do, Jaeyoung},
+  title         = {Revisiting Filtered {ANN} Benchmarks: A Hardness-Controlled Benchmark Generator for Realistic Evaluation},
+  year          = {2026},
+  eprint        = {2606.14193},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {Accepted for PVLDB Volume 19, Issue 10 (VLDB 2026) per arXiv comment; PVLDB DOI not checked}
+}
+
+% Permission-aware / multi-tenant vector search
+
+@article{zhong2026honeybee,
+  author        = {Zhong, Hongbin and Lentz, Matthew and Narodytska, Nina and Szekeres, Adriana and Rong, Kexin},
+  title         = {{HONEYBEE}: Efficient Role-based Access Control for Vector Databases via Dynamic Partitioning},
+  journal       = {Proceedings of the ACM on Management of Data},
+  volume        = {4},
+  number        = {1},
+  pages         = {1--26},
+  year          = {2026},
+  doi           = {10.1145/3786625},
+  eprint        = {2505.01538},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {SIGMOD 2026}
+}
+
+@misc{han2026dont,
+  author        = {Han, Shanshan and Chakraborty, Vishal and Mehrotra, Sharad},
+  title         = {Don't Stir the Pot! {Authorized} Vector Data Retrieval via Access-Aware Indexing},
+  year          = {2026},
+  eprint        = {2605.01342},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{yalamarthi2026policyaware,
+  author        = {Yalamarthi, Lakshmi Sahithi and Pappachan, Primal},
+  title         = {Policy-aware Vector Search: A Vision for Fine Grained Access Control in Vector Databases},
+  year          = {2026},
+  eprint        = {2606.19803},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {Accepted at SeQureDB '26 (SIGMOD 2026 workshop) per arXiv comment; no workshop proceedings record checked}
+}
+
+@misc{jin2024curator,
+  author        = {Jin, Yicheng and Wu, Yongji and Hu, Wenjun and Maggs, Bruce M. and Zhang, Xiao and Zhuo, Danyang},
+  title         = {Curator: Efficient Indexing for Multi-Tenant Vector Databases},
+  year          = {2024},
+  eprint        = {2401.07119},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@misc{das2026recallbounded,
+  author        = {Das, Namrata and Devadkar, Kailas and Godbole, Anand},
+  title         = {Recall-Bounded Staleness for Filtered Multi-Tenant {ANN} Graph Indexes under Concurrent Updates},
+  year          = {2026},
+  eprint        = {2610.15130},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB}
+}
+
+@inproceedings{thuillier2026keyparametrized,
+  author    = {Thuillier, Th{\'e}o and Lavaur, L{\'e}o and Fran{\c{c}}ois, J{\'e}r{\^o}me and State, Radu and Ferguson, William},
+  title     = {Key-Parametrized Embeddings for Access Control in Retrieval-Augmented Generation},
+  booktitle = {2026 {IEEE} 50th Annual Computers, Software, and Applications Conference ({COMPSAC})},
+  pages     = {2581--2586},
+  year      = {2026},
+  doi       = {10.1109/COMPSAC69091.2026.00386}
+}
+
+% =====================================================================
+% C. RAG privacy and security, access control for LLMs, embeddings, agents
+% =====================================================================
+
+% Author order follows the ACL Anthology record and arXiv (Crossref's order differs).
+@inproceedings{zeng2024good,
+  author        = {Zeng, Shenglai and Zhang, Jiankun and He, Pengfei and Xing, Yue and Liu, Yiding and Xu, Han and Ren, Jie and Wang, Shuaiqiang and Yin, Dawei and Chang, Yi and Tang, Jiliang},
+  title         = {The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation ({RAG})},
+  booktitle     = {Findings of the Association for Computational Linguistics: {ACL} 2024},
+  address       = {Bangkok, Thailand},
+  pages         = {4505--4524},
+  publisher     = {Association for Computational Linguistics},
+  year          = {2024},
+  doi           = {10.18653/v1/2024.findings-acl.267},
+  eprint        = {2402.16893},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{qi2024follow,
+  author        = {Qi, Zhenting and Zhang, Hanlin and Xing, Eric and Kakade, Sham and Lakkaraju, Himabindu},
+  title         = {Follow My Instruction and Spill the Beans: Scalable Data Extraction from Retrieval-Augmented Generation Systems},
+  year          = {2024},
+  eprint        = {2402.17840},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL},
+  note          = {arXiv preprint; a peer-reviewed venue (possibly ICLR 2025) could not be verified}
+}
+
+@misc{jiang2024feedbackguided,
+  author        = {Jiang, Changyue and Pan, Xudong and Hong, Geng and Bao, Chenfu and Chen, Yang and Yang, Min},
+  title         = {Feedback-Guided Extraction of Knowledge Base from Retrieval-Augmented {LLM} Applications},
+  year          = {2024},
+  eprint        = {2411.14110},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {v2 title; v1 (21 Nov 2024) was titled ``RAG-Thief: Scalable Extraction of Private Data from Retrieval-Augmented Generation Applications with Agent-based Attacks''}
+}
+
+@inproceedings{dimaio2025pirates,
+  author        = {Di Maio, Christian and Cosci, Cristian and Maggini, Marco and Poggioni, Valentina and Melacci, Stefano},
+  title         = {Pirates of the {RAG}: Adaptively Attacking {LLMs} to Leak Knowledge Bases},
+  booktitle     = {{ECAI} 2025},
+  series        = {Frontiers in Artificial Intelligence and Applications},
+  publisher     = {IOS Press},
+  year          = {2025},
+  doi           = {10.3233/FAIA251293},
+  eprint        = {2412.18295},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
+}
+
+@inproceedings{anderson2025my,
+  author        = {Anderson, Maya and Amit, Guy and Goldsteen, Abigail},
+  title         = {Is My Data in Your Retrieval Database? {Membership} Inference Attacks Against Retrieval Augmented Generation},
+  booktitle     = {Proceedings of the 11th International Conference on Information Systems Security and Privacy ({ICISSP} 2025), Volume 2},
+  pages         = {474--485},
+  publisher     = {SciTePress},
+  year          = {2025},
+  doi           = {10.5220/0013108300003899},
+  eprint        = {2405.20446},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{li2025generating,
+  author        = {Li, Yuying and Liu, Gaoyang and Wang, Chen and Yang, Yang},
+  title         = {Generating Is Believing: Membership Inference Attacks against Retrieval-Augmented Generation},
+  booktitle     = {{ICASSP} 2025 -- 2025 {IEEE} International Conference on Acoustics, Speech and Signal Processing ({ICASSP})},
+  pages         = {1--5},
+  year          = {2025},
+  doi           = {10.1109/ICASSP49660.2025.10889013},
+  eprint        = {2406.19234},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{liu2025maskbased,
+  author        = {Liu, Mingrui and Zhang, Sixiao and Long, Cheng},
+  title         = {Mask-based Membership Inference Attacks for Retrieval-Augmented Generation},
+  booktitle     = {Proceedings of the {ACM} Web Conference 2025 ({WWW} '25)},
+  pages         = {2894--2907},
+  year          = {2025},
+  doi           = {10.1145/3696410.3714771},
+  eprint        = {2410.20142},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{naseh2025riddle,
+  author        = {Naseh, Ali and Peng, Yuefeng and Suri, Anshuman and Chaudhari, Harsh and Oprea, Alina and Houmansadr, Amir},
+  title         = {Riddle Me This! {Stealthy} Membership Inference for Retrieval-Augmented Generation},
+  booktitle     = {Proceedings of the 2025 {ACM} {SIGSAC} Conference on Computer and Communications Security ({CCS} '25)},
+  pages         = {1245--1259},
+  year          = {2025},
+  doi           = {10.1145/3719027.3744840},
+  eprint        = {2502.00306},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{burnat2026auditing,
+  author        = {Burnat, Florian A. D.},
+  title         = {Auditing Privacy in Multi-Tenant {RAG} under Account Collusion},
+  year          = {2026},
+  eprint        = {2605.19847},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{liu2026protection,
+  author        = {Liu, Peiyang and Wang, Xi and Liang, Di and Li, Youru and Cai, Zhi and Ye, Wei},
+  title         = {Protection Is Not One Event: A Survey of {RAG} Protection Research by Measured Endpoint},
+  year          = {2026},
+  eprint        = {2610.30193},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {arXiv comment: ACL Rolling Review (August 2026 cycle) recommends acceptance at an *ACL conference; not yet published}
+}
+
+@misc{roychowdhury2024confusedpilot,
+  author        = {RoyChowdhury, Ayush and Luo, Mulong and Sahu, Prateek and Banerjee, Sarbartha and Tiwari, Mohit},
+  title         = {{ConfusedPilot}: Confused Deputy Risks in {RAG}-based {LLMs}},
+  year          = {2024},
+  eprint        = {2408.04870},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{thornton2026retrieval,
+  author        = {Thornton, Scott},
+  title         = {Retrieval Pivot Attacks in Hybrid {RAG}: Measuring and Mitigating Amplified Leakage from Vector Seeds to Graph Expansion},
+  year          = {2026},
+  eprint        = {2602.08668},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{bhatt2025enterprise,
+  author        = {Bhatt, Shashank Shreedhar and Rajore, Tanmay and Aggarwal, Khushboo and Ananthanarayanan, Ganesh and Chandra, Ranveer and Chandran, Nishanth and Choudhury, Suyash and Gupta, Divya and Kiciman, Emre and Pandey, Sumit Kumar and Setty, Srinath and Sharma, Rahul and Zhao, Teijia},
+  title         = {Enterprise {AI} Must Enforce Participant-Aware Access Control},
+  year          = {2025},
+  eprint        = {2509.14608},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{sun2026agentassisted,
+  author        = {Sun, He and Liu, Shinan and Ma, Siyuan and Li, Junhao and Xiao, Mingjun and Jiang, Wenhao},
+  title         = {Agent-Assisted Side-Channel Attacks on Non-Prefix {KV} Cache in {RAG}},
+  year          = {2026},
+  eprint        = {2606.21842},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{balashov2025multistage,
+  author        = {Balashov, Andrii and Ponomarova, Olena and Zhai, Xiaohua},
+  title         = {Multi-Stage Prompt Inference Attacks on Enterprise {LLM} Systems},
+  year          = {2025},
+  eprint        = {2507.15613},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{greshake2023not,
+  author        = {Greshake, Kai and Abdelnabi, Sahar and Mishra, Shailesh and Endres, Christoph and Holz, Thorsten and Fritz, Mario},
+  title         = {Not What You've Signed Up For: Compromising Real-World {LLM}-Integrated Applications with Indirect Prompt Injection},
+  booktitle     = {Proceedings of the 16th {ACM} Workshop on Artificial Intelligence and Security ({AISec} '23)},
+  pages         = {79--90},
+  year          = {2023},
+  doi           = {10.1145/3605764.3623985},
+  eprint        = {2302.12173},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{evertz2024whispers,
+  author        = {Evertz, Jonathan and Chlosta, Merlin and Sch{\"o}nherr, Lea and Eisenhofer, Thorsten},
+  title         = {Whispers in the Machine: Confidentiality in Agentic Systems},
+  year          = {2024},
+  eprint        = {2402.06922},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {Accepted at DIMVA 2026 per arXiv comment; publisher DOI not checked. Earlier versions were titled ``... in LLM-integrated Systems''}
+}
+
+@misc{reddy2025echoleak,
+  author        = {Reddy, Pavan and Gujral, Aditya Sanjay},
+  title         = {{EchoLeak}: The First Real-World Zero-Click Prompt Injection Exploit in a Production {LLM} System},
+  year          = {2025},
+  eprint        = {2509.10540},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {Published at the AAAI Fall Symposium Series 2025 per arXiv comment; proceedings record not checked}
+}
+
+@inproceedings{zou2025poisonedrag,
+  author        = {Zou, Wei and Geng, Runpeng and Wang, Binghui and Jia, Jinyuan},
+  title         = {{PoisonedRAG}: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models},
+  booktitle     = {34th {USENIX} Security Symposium ({USENIX} Security 25)},
+  pages         = {3827--3844},
+  publisher     = {USENIX Association},
+  year          = {2025},
+  isbn          = {978-1-939133-52-6},
+  url           = {https://www.usenix.org/conference/usenixsecurity25/presentation/zou},
+  eprint        = {2402.07867},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{zhong2023poisoning,
+  author        = {Zhong, Zexuan and Huang, Ziqing and Wettig, Alexander and Chen, Danqi},
+  title         = {Poisoning Retrieval Corpora by Injecting Adversarial Passages},
+  booktitle     = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing ({EMNLP})},
+  pages         = {13764--13775},
+  year          = {2023},
+  doi           = {10.18653/v1/2023.emnlp-main.849},
+  eprint        = {2310.19156},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@inproceedings{chen2024agentpoison,
+  author        = {Chen, Zhaorun and Xiang, Zhen and Xiao, Chaowei and Song, Dawn and Li, Bo},
+  title         = {{AgentPoison}: Red-teaming {LLM} Agents via Poisoning Memory or Knowledge Bases},
+  booktitle     = {Advances in Neural Information Processing Systems 37 ({NeurIPS} 2024)},
+  pages         = {130185--130213},
+  year          = {2024},
+  doi           = {10.52202/079017-4136},
+  eprint        = {2407.12784},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@misc{shafran2024machine,
+  author        = {Shafran, Avital and Schuster, Roei and Shmatikov, Vitaly},
+  title         = {Machine Against the {RAG}: Jamming Retrieval-Augmented Generation with Blocker Documents},
+  year          = {2024},
+  eprint        = {2406.05870},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {To appear in USENIX Security Symposium 2025 per arXiv comment; USENIX record not checked}
+}
+
+@inproceedings{arceo2026securing,
+  author        = {Arceo, Francisco Javier and Narsing, Varsha Prasad},
+  title         = {Securing the Agent: Vendor-Neutral, Multitenant Enterprise Retrieval and Tool Use},
+  booktitle     = {Proceedings of the {ACM} Conference on {AI} and Agentic Systems ({CAIS} '26)},
+  pages         = {862--872},
+  year          = {2026},
+  doi           = {10.1145/3786335.3813145},
+  eprint        = {2605.05287},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{jayaraman2025permissioned,
+  author        = {Jayaraman, Bargav and Marathe, Virendra J. and Mozaffari, Hamid and Shen, William F. and Kenthapadi, Krishnaram},
+  title         = {Permissioned {LLMs}: Enforcing Access Control in Large Language Models},
+  booktitle     = {Advances in Neural Information Processing Systems 38 ({NeurIPS} 2025)},
+  pages         = {90674--90704},
+  year          = {2025},
+  doi           = {10.52202/085713-2731},
+  eprint        = {2505.22860},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{lorenzo2025arbiter,
+  author        = {Lorenzo, Michele and Drago, Idilio and Salvadori, Dario and Vayr, Fabio Romolo},
+  title         = {{ARBITER}: {AI}-Driven Filtering for Role-Based Access Control},
+  year          = {2025},
+  eprint        = {2512.20535},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{ahmed2026beyond,
+  author        = {Ahmed, Sheikh Nazib},
+  title         = {Beyond Document Retrieval: Architectural Challenges When {LLM} Agents Query Structured Enterprise Data},
+  year          = {2026},
+  eprint        = {2608.19235},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DL}
+}
+
+@misc{almasoud2026sdrag,
+  author        = {Al Masoud, Aiman and Arazzi, Marco and Nocera, Antonino},
+  title         = {{SD-RAG}: A Prompt-Injection-Resilient Framework for Selective Disclosure in Retrieval-Augmented Generation},
+  year          = {2026},
+  eprint        = {2601.11199},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{zhou2025privacyaware,
+  author        = {Zhou, Pengcheng and Feng, Yinglun and Yang, Zhongliang},
+  title         = {Privacy-Aware {RAG}: Secure and Isolated Knowledge Retrieval},
+  year          = {2025},
+  eprint        = {2503.15548},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{zhang2026burnafteruse,
+  author        = {Zhang, Qiang and Wang, Elena Emma and Li, Jiaming and Wang, Xichun},
+  title         = {Burn-After-Use for Preventing Data Leakage through a Secure Multi-Tenant Architecture in Enterprise {LLM}},
+  year          = {2026},
+  eprint        = {2601.06627},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{byun2025secure,
+  author        = {Byun, Grace and Lee, Shinsun and Choi, Nayoung and Choi, Jinho D.},
+  title         = {Secure Multifaceted-{RAG} for Enterprise: Hybrid Knowledge Retrieval with Security Filtering},
+  year          = {2025},
+  eprint        = {2504.13425},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@misc{addison2024cfedrag,
+  author        = {Addison, Parker and Nguyen, Minh-Tuan H. and Medan, Tomislav and Shah, Jinali and Manzari, Mohammad T. and McElrone, Brendan and Lalwani, Laksh and More, Aboli and Sharma, Smita and Roth, Holger R. and Yang, Isaac and Chen, Chester and Xu, Daguang and Cheng, Yan and Feng, Andrew and Xu, Ziyue},
+  title         = {{C-FedRAG}: A Confidential Federated Retrieval-Augmented Generation System},
+  year          = {2024},
+  eprint        = {2412.13163},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DC}
+}
+
+@misc{koga2024privacypreserving,
+  author        = {Koga, Tatsuki and Wu, Ruihan and Zhang, Zhiyuan and Chaudhuri, Kamalika},
+  title         = {Privacy-Preserving Retrieval-Augmented Generation with Differential Privacy},
+  year          = {2024},
+  eprint        = {2412.04697},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{zeng2025mitigating,
+  author        = {Zeng, Shenglai and Zhang, Jiankun and He, Pengfei and Ren, Jie and Zheng, Tianqi and Lu, Hanqing and Xu, Han and Liu, Hui and Xing, Yue and Tang, Jiliang},
+  title         = {Mitigating the Privacy Issues in Retrieval-Augmented Generation ({RAG}) via Pure Synthetic Data},
+  booktitle     = {Proceedings of the 2025 Conference on Empirical Methods in Natural Language Processing ({EMNLP})},
+  pages         = {24538--24569},
+  year          = {2025},
+  doi           = {10.18653/v1/2025.emnlp-main.1247},
+  eprint        = {2406.14773},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{siddiqui2024permissive,
+  author        = {Siddiqui, Shoaib Ahmed and Gaonkar, Radhika and K{\"o}pf, Boris and Krueger, David and Paverd, Andrew and Salem, Ahmed and Tople, Shruti and Wutschitz, Lukas and Xia, Menglin and Zanella-B{\'e}guelin, Santiago},
+  title         = {Permissive Information-Flow Analysis for Large Language Models},
+  year          = {2024},
+  eprint        = {2410.03055},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@misc{costa2025securing,
+  author        = {Costa, Manuel and K{\"o}pf, Boris and Kolluri, Aashish and Paverd, Andrew and Russinovich, Mark and Salem, Ahmed and Tople, Shruti and Wutschitz, Lukas and Zanella-B{\'e}guelin, Santiago},
+  title         = {Securing {AI} Agents with Information-Flow Control},
+  year          = {2025},
+  eprint        = {2505.23643},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{wu2024systemlevel,
+  author        = {Wu, Fangzhou and Cecchetti, Ethan and Xiao, Chaowei},
+  title         = {System-Level Defense against Indirect Prompt Injection Attacks: An Information Flow Control Perspective},
+  year          = {2024},
+  eprint        = {2409.19091},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{wutschitz2023rethinking,
+  author        = {Wutschitz, Lukas and K{\"o}pf, Boris and Paverd, Andrew and Rajmohan, Saravan and Salem, Ahmed and Tople, Shruti and Zanella-B{\'e}guelin, Santiago and Xia, Menglin and R{\"u}hle, Victor},
+  title         = {Rethinking Privacy in Machine Learning Pipelines from an Information Flow Control Perspective},
+  year          = {2023},
+  eprint        = {2311.15792},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@misc{sanyal2025orgaccess,
+  author        = {Sanyal, Debdeep and Maharana, Umakanta and Sinha, Yash and Tan, Hong Ming and Karande, Shirish and Kankanhalli, Mohan and Mandal, Murari},
+  title         = {{OrgAccess}: A Benchmark for Role Based Access Control in Organization Scale {LLMs}},
+  year          = {2025},
+  eprint        = {2505.19165},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.AI}
+}
+
+@misc{fei2026benchmarking,
+  author        = {Fei, Yang and Jiang, Yangfan and Yang, Yin and Xiao, Xiaokui},
+  title         = {Benchmarking Text-to-{SQL} under Role-Based Access Control},
+  year          = {2026},
+  eprint        = {2607.22115},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.DB},
+  note          = {Accepted at ACM SIGMOD 2027 per arXiv comment; no publisher DOI yet}
+}
+
+@misc{mu2026towards,
+  author        = {Mu, Yanming and Hu, Hao and Li, Feiyang and Yuan, Qiao and Wu, Jiang and Liu, Zichuan and Liu, Pengcheng and Wang, Mei and Zhou, Hongwei and Liu, Yuling},
+  title         = {Towards Secure Retrieval-Augmented Generation: A Comprehensive Review of Threats, Defenses and Benchmarks},
+  year          = {2026},
+  eprint        = {2603.21654},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+% Embedding inversion
+
+@inproceedings{song2020information,
+  author        = {Song, Congzheng and Raghunathan, Ananth},
+  title         = {Information Leakage in Embedding Models},
+  booktitle     = {Proceedings of the 2020 {ACM} {SIGSAC} Conference on Computer and Communications Security ({CCS} '20)},
+  pages         = {377--390},
+  year          = {2020},
+  doi           = {10.1145/3372297.3417270},
+  eprint        = {2004.00053},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@inproceedings{li2023sentence,
+  author        = {Li, Haoran and Xu, Mingshi and Song, Yangqiu},
+  title         = {Sentence Embedding Leaks More Information than You Expect: Generative Embedding Inversion Attack to Recover the Whole Sentence},
+  booktitle     = {Findings of the Association for Computational Linguistics: {ACL} 2023},
+  pages         = {14022--14040},
+  year          = {2023},
+  doi           = {10.18653/v1/2023.findings-acl.881},
+  eprint        = {2305.03010},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@inproceedings{morris2023text,
+  author        = {Morris, John X. and Kuleshov, Volodymyr and Shmatikov, Vitaly and Rush, Alexander M.},
+  title         = {Text Embeddings Reveal (Almost) As Much As Text},
+  booktitle     = {Proceedings of the 2023 Conference on Empirical Methods in Natural Language Processing ({EMNLP})},
+  address       = {Singapore},
+  pages         = {12448--12460},
+  publisher     = {Association for Computational Linguistics},
+  year          = {2023},
+  doi           = {10.18653/v1/2023.emnlp-main.765},
+  eprint        = {2310.06816},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@inproceedings{seputis2025rethinking,
+  author    = {Seputis, Dominykas and Li, Yongkang and Langerak, Karsten and Mihailov, Serghei},
+  title     = {Rethinking the Privacy of Text Embeddings: A Reproducibility Study of ``{Text} Embeddings Reveal (Almost) As Much As Text''},
+  booktitle = {Proceedings of the Nineteenth {ACM} Conference on Recommender Systems ({RecSys} '25)},
+  pages     = {822--831},
+  year      = {2025},
+  doi       = {10.1145/3705328.3748155}
+}
+
+@inproceedings{huang2024transferable,
+  author        = {Huang, Yu-Hsiang and Tsai, Yuche and Hsiao, Hsiang and Lin, Hong-Yi and Lin, Shou-De},
+  title         = {Transferable Embedding Inversion Attack: Uncovering Privacy Risks in Text Embeddings without Model Queries},
+  booktitle     = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages         = {4193--4205},
+  year          = {2024},
+  doi           = {10.18653/v1/2024.acl-long.230},
+  eprint        = {2406.10280},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{chen2024text,
+  author        = {Chen, Yiyi and Lent, Heather and Bjerva, Johannes},
+  title         = {Text Embedding Inversion Security for Multilingual Language Models},
+  booktitle     = {Proceedings of the 62nd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages         = {7808--7827},
+  year          = {2024},
+  doi           = {10.18653/v1/2024.acl-long.422},
+  eprint        = {2401.12192},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@inproceedings{chen2025algen,
+  author        = {Chen, Yiyi and Xu, Qiongkai and Bjerva, Johannes},
+  title         = {{ALGEN}: Few-shot Inversion Attacks on Textual Embeddings via Cross-Model Alignment and Generation},
+  booktitle     = {Proceedings of the 63rd Annual Meeting of the Association for Computational Linguistics (Volume 1: Long Papers)},
+  pages         = {24330--24348},
+  year          = {2025},
+  doi           = {10.18653/v1/2025.acl-long.1185},
+  eprint        = {2502.11308},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{zhang2025universal,
+  author        = {Zhang, Collin and Morris, John X. and Shmatikov, Vitaly},
+  title         = {Universal Zero-shot Embedding Inversion},
+  year          = {2025},
+  eprint        = {2504.00147},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@misc{liu2024eguard,
+  author        = {Liu, Tiantian and Yao, Hongwei and Lin, Feng and Wu, Tong and Qin, Zhan and Ren, Kui},
+  title         = {Eguard: Defending {LLM} Embeddings Against Inversion Attacks via Text Mutual Information Optimization},
+  year          = {2024},
+  eprint        = {2411.05034},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+% Agents, identity, delegation, MCP
+
+@article{hardy1988confused,
+  author    = {Hardy, Norm},
+  title     = {The Confused Deputy: (or why capabilities might have been invented)},
+  journal   = {ACM SIGOPS Operating Systems Review},
+  volume    = {22},
+  number    = {4},
+  pages     = {36--38},
+  year      = {1988},
+  doi       = {10.1145/54289.871709}
+}
+
+@misc{south2025authenticated,
+  author        = {South, Tobin and Marro, Samuele and Hardjono, Thomas and Mahari, Robert and Whitney, Cedric Deslandes and Greenwood, Dazza and Chan, Alan and Pentland, Alex},
+  title         = {Authenticated Delegation and Authorized {AI} Agents},
+  year          = {2025},
+  eprint        = {2501.09674},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CY}
+}
+
+@misc{shi2025sok,
+  author        = {Shi, Guanquan and Du, Haohua and Wang, Zhiqiang and Liang, Xiaoyu and Liu, Weiwenpei and Bian, Song and Guan, Zhenyu},
+  title         = {{SoK}: Trust-Authorization Mismatch in {LLM} Agent Interactions},
+  year          = {2025},
+  eprint        = {2512.06914},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@article{hou2026model,
+  author        = {Hou, Xinyi and Zhao, Yanjie and Wang, Shenao and Wang, Haoyu},
+  title         = {Model Context Protocol ({MCP}): Landscape, Security Threats, and Future Research Directions},
+  journal       = {ACM Transactions on Software Engineering and Methodology},
+  volume        = {35},
+  number        = {10},
+  pages         = {1--37},
+  year          = {2026},
+  doi           = {10.1145/3796519},
+  eprint        = {2503.23278},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@article{song2026beyond,
+  author        = {Song, Hao and Shen, Yiming and Luo, Wenxuan and Guo, Leixin and Chen, Ting and Wang, Jiashui and Li, Beibei and Zhang, Xiaosong and Chen, Jiachi},
+  title         = {Beyond the Protocol: Unveiling Attack Vectors in the Model Context Protocol ({MCP}) Ecosystem},
+  journal       = {IEEE Transactions on Software Engineering},
+  volume        = {52},
+  number        = {8},
+  pages         = {2410--2426},
+  year          = {2026},
+  doi           = {10.1109/TSE.2026.3694876},
+  eprint        = {2506.02040},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{zhou2026first,
+  author        = {Zhou, Huijun and Zhang, Xiaohan and Zhang, Haozhe and Zhang, Haoyang and Zhang, Mi and Yang, Min},
+  title         = {A First Measurement Study on Authentication Security in Real-World Remote {MCP} Servers},
+  year          = {2026},
+  eprint        = {2605.22333},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{kumar2026gateway,
+  author        = {Kumar, Suraj and Wang, Amy and Manoharan, Srinivasan},
+  title         = {A Gateway Architecture for Enterprise {MCP} Authentication: Unifying Heterogeneous Auth, Identity Delegation, and the User / Non-User Persona Problem},
+  year          = {2026},
+  eprint        = {2608.10760},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+% A 2026 SPIE paper with the same title (doi:10.1117/12.3097390) has a different author list
+% (Halloran, Radosevich, Black); it is a separate record and is not merged here.
+@misc{radosevich2025mcp,
+  author        = {Radosevich, Brandon and Halloran, John},
+  title         = {{MCP} Safety Audit: {LLMs} with the Model Context Protocol Allow Major Security Exploits},
+  year          = {2025},
+  eprint        = {2504.03767},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{narajala2025enterprisegrade,
+  author        = {Narajala, Vineeth Sai and Habler, Idan},
+  title         = {Enterprise-Grade Security for the Model Context Protocol ({MCP}): Frameworks and Mitigation Strategies},
+  year          = {2025},
+  eprint        = {2504.08623},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{debenedetti2024agentdojo,
+  author        = {Debenedetti, Edoardo and Zhang, Jie and Balunovi{\'c}, Mislav and Beurer-Kellner, Luca and Fischer, Marc and Tram{\`e}r, Florian},
+  title         = {{AgentDojo}: A Dynamic Environment to Evaluate Prompt Injection Attacks and Defenses for {LLM} Agents},
+  booktitle     = {Advances in Neural Information Processing Systems 37 ({NeurIPS} 2024), Datasets and Benchmarks Track},
+  pages         = {82895--82920},
+  year          = {2024},
+  doi           = {10.52202/079017-2636},
+  eprint        = {2406.13352},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{zhan2024injecagent,
+  author        = {Zhan, Qiusi and Liang, Zhixiang and Ying, Zifan and Kang, Daniel},
+  title         = {{InjecAgent}: Benchmarking Indirect Prompt Injections in Tool-Integrated Large Language Model Agents},
+  booktitle     = {Findings of the Association for Computational Linguistics: {ACL} 2024},
+  pages         = {10471--10506},
+  year          = {2024},
+  doi           = {10.18653/v1/2024.findings-acl.624},
+  eprint        = {2403.02691},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@misc{zhang2024agent,
+  author        = {Zhang, Hanrong and Huang, Jingyuan and Mei, Kai and Yao, Yifei and Wang, Zhenting and Zhan, Chenlu and Wang, Hongwei and Zhang, Yongfeng},
+  title         = {Agent Security Bench ({ASB}): Formalizing and Benchmarking Attacks and Defenses in {LLM}-based Agents},
+  year          = {2024},
+  eprint        = {2410.02644},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR},
+  note          = {Accepted by ICLR 2025 per arXiv comment; proceedings record not checked}
+}
+
+@misc{debenedetti2025defeating,
+  author        = {Debenedetti, Edoardo and Shumailov, Ilia and Fan, Tianqi and Hayes, Jamie and Carlini, Nicholas and Fabian, Daniel and Kern, Christoph and Shi, Chongyang and Terzis, Andreas and Tram{\`e}r, Florian},
+  title         = {Defeating Prompt Injections by Design},
+  year          = {2025},
+  eprint        = {2503.18813},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@misc{shi2025progent,
+  author        = {Shi, Tianneng and He, Jingxuan and Wang, Zhun and Li, Hongwei and Wu, Linyu and Guo, Wenbo and Song, Dawn},
+  title         = {Progent: Securing {AI} Agents with Privilege Control},
+  year          = {2025},
+  eprint        = {2504.11703},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{wu2025isolategpt,
+  author        = {Wu, Yuhao and Roesner, Franziska and Kohno, Tadayoshi and Zhang, Ning and Iqbal, Umar},
+  title         = {{IsolateGPT}: An Execution Isolation Architecture for {LLM}-Based Systems},
+  booktitle     = {Proceedings 2025 Network and Distributed System Security Symposium ({NDSS} 2025)},
+  publisher     = {Internet Society},
+  year          = {2025},
+  doi           = {10.14722/ndss.2025.241131},
+  eprint        = {2403.04960},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{bagdasarian2024airgapagent,
+  author        = {Bagdasarian, Eugene and Yi, Ren and Ghalebikesabi, Sahra and Kairouz, Peter and Gruteser, Marco and Oh, Sewoong and Balle, Borja and Ramage, Daniel},
+  title         = {{AirGapAgent}: Protecting Privacy-Conscious Conversational Agents},
+  booktitle     = {Proceedings of the 2024 {ACM} {SIGSAC} Conference on Computer and Communications Security ({CCS} '24)},
+  pages         = {3868--3882},
+  year          = {2024},
+  doi           = {10.1145/3658644.3690350},
+  eprint        = {2405.05175},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{tsai2025contextual,
+  author        = {Tsai, Lillian and Bagdasarian, Eugene},
+  title         = {Contextual Agent Security: A Policy for Every Purpose},
+  booktitle     = {Proceedings of the Workshop on Hot Topics in Operating Systems ({HotOS} '25)},
+  pages         = {8--17},
+  year          = {2025},
+  doi           = {10.1145/3713082.3730378},
+  eprint        = {2501.17070},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+% =====================================================================
+% D. Evaluation, datasets, testing methodology, reporting
+% =====================================================================
+
+@inproceedings{thakur2021beir,
+  author        = {Thakur, Nandan and Reimers, Nils and R{\"u}ckl{\'e}, Andreas and Srivastava, Abhishek and Gurevych, Iryna},
+  title         = {{BEIR}: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models},
+  booktitle     = {Proceedings of the Neural Information Processing Systems Track on Datasets and Benchmarks},
+  volume        = {1},
+  year          = {2021},
+  url           = {https://datasets-benchmarks-proceedings.neurips.cc/paper/2021/hash/65b9eea6e1cc6bb9f0cd2a47751a186f-Abstract-round2.html},
+  eprint        = {2104.08663},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR},
+  note          = {The arXiv title spells ``Heterogenous''; the proceedings title is used here}
+}
+
+@inproceedings{maia2018www18,
+  author    = {Maia, Macedo and Handschuh, Siegfried and Freitas, Andr{\'e} and Davis, Brian and McDermott, Ross and Zarrouk, Manel and Balahur, Alexandra},
+  title     = {{WWW'18} Open Challenge: Financial Opinion Mining and Question Answering},
+  booktitle = {Companion Proceedings of The Web Conference 2018 ({WWW} '18)},
+  pages     = {1941--1942},
+  year      = {2018},
+  doi       = {10.1145/3184558.3192301}
+}
+
+@misc{bajaj2016ms,
+  author        = {Bajaj, Payal and Campos, Daniel and Craswell, Nick and Deng, Li and Gao, Jianfeng and Liu, Xiaodong and Majumder, Rangan and McNamara, Andrew and Mitra, Bhaskar and Nguyen, Tri and Rosenberg, Mir and Song, Xia and Stoica, Alina and Tiwary, Saurabh and Wang, Tong},
+  title         = {{MS} {MARCO}: A Human Generated {MAchine} Reading {COmprehension} Dataset},
+  year          = {2016},
+  eprint        = {1611.09268},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CL}
+}
+
+@article{aumuller2020annbenchmarks,
+  author    = {Aum{\"u}ller, Martin and Bernhardsson, Erik and Faithfull, Alexander},
+  title     = {{ANN-Benchmarks}: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms},
+  journal   = {Information Systems},
+  volume    = {87},
+  pages     = {101374},
+  year      = {2020},
+  doi       = {10.1016/j.is.2019.02.006}
+}
+
+@article{arora2023reasoning,
+  author        = {Arora, Simran and Lewis, Patrick and Fan, Angela and Kahn, Jacob and R{\'e}, Christopher},
+  title         = {Reasoning over Public and Private Data in Retrieval-Based Systems},
+  journal       = {Transactions of the Association for Computational Linguistics},
+  volume        = {11},
+  pages         = {902--921},
+  year          = {2023},
+  doi           = {10.1162/tacl_a_00580},
+  eprint        = {2203.11027},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@misc{ryan2025enronqa,
+  author        = {Ryan, Michael J. and Xu, Danmei and Nivera, Chris and Campos, Daniel},
+  title         = {{EnronQA}: Towards Personalized {RAG} over Private Documents},
+  year          = {2025},
+  eprint        = {2505.00263},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.IR}
+}
+
+@inproceedings{molloy2009evaluating,
+  author    = {Molloy, Ian and Li, Ninghui and Li, Tiancheng and Mao, Ziqing and Wang, Qihua and Lobo, Jorge},
+  title     = {Evaluating Role Mining Algorithms},
+  booktitle = {Proceedings of the 14th {ACM} Symposium on Access Control Models and Technologies ({SACMAT} '09)},
+  address   = {Stresa, Italy},
+  pages     = {95--104},
+  year      = {2009},
+  doi       = {10.1145/1542207.1542224}
+}
+
+@inproceedings{smetters2009how,
+  author    = {Smetters, D. K. and Good, Nathan},
+  title     = {How Users Use Access Control},
+  booktitle = {Proceedings of the 5th Symposium on Usable Privacy and Security ({SOUPS} '09)},
+  pages     = {1--12},
+  year      = {2009},
+  doi       = {10.1145/1572532.1572552}
+}
+
+@misc{nobi2022machine,
+  author        = {Nobi, Mohammad Nur and Gupta, Maanak and Praharaj, Lopamudra and Abdelsalam, Mahmoud and Krishnan, Ram and Sandhu, Ravi},
+  title         = {Machine Learning in Access Control: A Taxonomy and Survey},
+  year          = {2022},
+  eprint        = {2207.01739},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.CR}
+}
+
+@inproceedings{rigger2020testing,
+  author    = {Rigger, Manuel and Su, Zhendong},
+  title     = {Testing Database Engines via Pivoted Query Synthesis},
+  booktitle = {14th {USENIX} Symposium on Operating Systems Design and Implementation ({OSDI} 20)},
+  pages     = {667--682},
+  publisher = {USENIX Association},
+  year      = {2020},
+  isbn      = {978-1-939133-19-9},
+  url       = {https://www.usenix.org/conference/osdi20/presentation/rigger}
+}
+
+@inproceedings{rigger2020detecting,
+  author        = {Rigger, Manuel and Su, Zhendong},
+  title         = {Detecting Optimization Bugs in Database Engines via Non-Optimizing Reference Engine Construction},
+  booktitle     = {Proceedings of the 28th {ACM} Joint Meeting on European Software Engineering Conference and Symposium on the Foundations of Software Engineering ({ESEC/FSE} '20)},
+  pages         = {1140--1152},
+  year          = {2020},
+  doi           = {10.1145/3368089.3409710},
+  eprint        = {2007.08292},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SE}
+}
+
+@article{rigger2020finding,
+  author    = {Rigger, Manuel and Su, Zhendong},
+  title     = {Finding Bugs in Database Systems via Query Partitioning},
+  journal   = {Proceedings of the ACM on Programming Languages},
+  volume    = {4},
+  number    = {OOPSLA},
+  pages     = {1--30},
+  year      = {2020},
+  doi       = {10.1145/3428279}
+}
+
+@inproceedings{ba2023testing,
+  author    = {Ba, Jinsheng and Rigger, Manuel},
+  title     = {Testing Database Engines via Query Plan Guidance},
+  booktitle = {2023 {IEEE/ACM} 45th International Conference on Software Engineering ({ICSE})},
+  pages     = {2060--2071},
+  year      = {2023},
+  doi       = {10.1109/ICSE48619.2023.00174}
+}
+
+@article{ba2024keep,
+  author    = {Ba, Jinsheng and Rigger, Manuel},
+  title     = {Keep It Simple: Testing Databases via Differential Query Plans},
+  journal   = {Proceedings of the ACM on Management of Data},
+  volume    = {2},
+  number    = {3},
+  pages     = {1--26},
+  year      = {2024},
+  doi       = {10.1145/3654991}
+}
+
+@inproceedings{kamm2023testing,
+  author    = {Kamm, Matteo and Rigger, Manuel and Zhang, Chengyu and Su, Zhendong},
+  title     = {Testing Graph Database Engines via Query Partitioning},
+  booktitle = {Proceedings of the 32nd {ACM} {SIGSOFT} International Symposium on Software Testing and Analysis ({ISSTA} '23)},
+  pages     = {140--149},
+  year      = {2023},
+  doi       = {10.1145/3597926.3598044}
+}
+
+% Crossref: published online 4 Jan 2018; issue 51(1) dated January 2019 in print.
+@article{chen2018metamorphic,
+  author    = {Chen, Tsong Yueh and Kuo, Fei-Ching and Liu, Huai and Poon, Pak-Lok and Towey, Dave and Tse, T. H. and Zhou, Zhi Quan},
+  title     = {Metamorphic Testing: A Review of Challenges and Opportunities},
+  journal   = {ACM Computing Surveys},
+  volume    = {51},
+  number    = {1},
+  pages     = {1--27},
+  year      = {2018},
+  doi       = {10.1145/3143561}
+}
+
+@article{segura2016survey,
+  author    = {Segura, Sergio and Fraser, Gordon and Sanchez, Ana B. and Ruiz-Cort{\'e}s, Antonio},
+  title     = {A Survey on Metamorphic Testing},
+  journal   = {IEEE Transactions on Software Engineering},
+  volume    = {42},
+  number    = {9},
+  pages     = {805--824},
+  year      = {2016},
+  doi       = {10.1109/TSE.2016.2532875}
+}
+
+@misc{xie2025toward,
+  author        = {Xie, Yinglin and Hou, Xinyi and Zhao, Yanjie and Wang, Shenao and Chen, Kai and Wang, Haoyu},
+  title         = {Toward Understanding Bugs in Vector Database Management Systems},
+  year          = {2025},
+  eprint        = {2506.02617},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SE}
+}
+
+@misc{wang2025towards,
+  author        = {Wang, Shenao and Zhao, Yanjie and Xie, Yinglin and Liu, Zhao and Hou, Xinyi and Zou, Quanchen and Wang, Haoyu},
+  title         = {Towards Reliable Vector Database Management Systems: A Software Testing Roadmap for 2030},
+  year          = {2025},
+  eprint        = {2502.20812},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SE}
+}
+
+@inproceedings{claessen2000quickcheck,
+  author    = {Claessen, Koen and Hughes, John},
+  title     = {{QuickCheck}: A Lightweight Tool for Random Testing of {Haskell} Programs},
+  booktitle = {Proceedings of the Fifth {ACM} {SIGPLAN} International Conference on Functional Programming ({ICFP} '00)},
+  pages     = {268--279},
+  year      = {2000},
+  doi       = {10.1145/351240.351266}
+}
+
+@article{maciver2019hypothesis,
+  author    = {MacIver, David and Hatfield-Dodds, Zac and {Many Contributors}},
+  title     = {Hypothesis: A New Approach to Property-Based Testing},
+  journal   = {Journal of Open Source Software},
+  volume    = {4},
+  number    = {43},
+  pages     = {1891},
+  year      = {2019},
+  doi       = {10.21105/joss.01891}
+}
+
+@inproceedings{klees2018evaluating,
+  author    = {Klees, George and Ruef, Andrew and Cooper, Benji and Wei, Shiyi and Hicks, Michael},
+  title     = {Evaluating Fuzz Testing},
+  booktitle = {Proceedings of the 2018 {ACM} {SIGSAC} Conference on Computer and Communications Security ({CCS} '18)},
+  pages     = {2123--2138},
+  year      = {2018},
+  doi       = {10.1145/3243734.3243804}
+}
+
+@inproceedings{schloegel2024sok,
+  author        = {Schloegel, Moritz and Bars, Nils and Schiller, Nico and Bernhard, Lukas and Scharnowski, Tobias and Crump, Addison and Ale-Ebrahim, Arash and Bissantz, Nicolai and Muench, Marius and Holz, Thorsten},
+  title         = {{SoK}: Prudent Evaluation Practices for Fuzzing},
+  booktitle     = {2024 {IEEE} Symposium on Security and Privacy ({SP})},
+  pages         = {1974--1993},
+  year          = {2024},
+  doi           = {10.1109/SP54263.2024.00137},
+  eprint        = {2405.10220},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.SE}
+}
+
+@inproceedings{carlini2019secret,
+  author    = {Carlini, Nicholas and Liu, Chang and Erlingsson, {\'U}lfar and Kos, Jernej and Song, Dawn},
+  title     = {The Secret Sharer: Evaluating and Testing Unintended Memorization in Neural Networks},
+  booktitle = {28th {USENIX} Security Symposium ({USENIX} Security 19)},
+  address   = {Santa Clara, CA},
+  pages     = {267--284},
+  publisher = {USENIX Association},
+  year      = {2019},
+  isbn      = {978-1-939133-06-9},
+  url       = {https://www.usenix.org/conference/usenixsecurity19/presentation/carlini}
+}
+
+@inproceedings{dodge2019show,
+  author    = {Dodge, Jesse and Gururangan, Suchin and Card, Dallas and Schwartz, Roy and Smith, Noah A.},
+  title     = {Show Your Work: Improved Reporting of Experimental Results},
+  booktitle = {Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing ({EMNLP-IJCNLP})},
+  pages     = {2185--2194},
+  year      = {2019},
+  doi       = {10.18653/v1/D19-1224}
+}
+
+% Author list follows the MLSys proceedings (16 authors); the arXiv version lists 17.
+@inproceedings{bouthillier2021accounting,
+  author        = {Bouthillier, Xavier and Delaunay, Pierre and Bronzi, Mirko and Trofimov, Assya and Nichyporuk, Brennan and Szeto, Justin and Mohammadi Sepahvand, Nazanin and Raff, Edward and Madan, Kanika and Voleti, Vikram and Ebrahimi Kahou, Samira and Michalski, Vincent and Arbel, Tal and Pal, Chris and Varoquaux, Gael and Vincent, Pascal},
+  title         = {Accounting for Variance in Machine Learning Benchmarks},
+  booktitle     = {Proceedings of Machine Learning and Systems ({MLSys} 2021)},
+  volume        = {3},
+  pages         = {747--769},
+  year          = {2021},
+  url           = {https://proceedings.mlsys.org/paper_files/paper/2021/hash/0184b0cd3cfb185989f858a1d9f5c1eb-Abstract.html},
+  eprint        = {2103.03098},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+@inproceedings{agarwal2021deep,
+  author    = {Agarwal, Rishabh and Schwarzer, Max and Castro, Pablo Samuel and Courville, Aaron and Bellemare, Marc},
+  title     = {Deep Reinforcement Learning at the Edge of the Statistical Precipice},
+  booktitle = {Advances in Neural Information Processing Systems 34 ({NeurIPS} 2021)},
+  volume    = {34},
+  pages     = {29304--29320},
+  publisher = {Curran Associates, Inc.},
+  year      = {2021},
+  url       = {https://proceedings.neurips.cc/paper_files/paper/2021/hash/f514cec81cb148559cf475e7426eed5e-Abstract.html}
+}
+
+@article{pineau2021improving,
+  author    = {Pineau, Joelle and Vincent-Lamarre, Philippe and Sinha, Koustuv and Lariviere, Vincent and Beygelzimer, Alina and d'Alche-Buc, Florence and Fox, Emily and Larochelle, Hugo},
+  title     = {Improving Reproducibility in Machine Learning Research (A Report from the {NeurIPS} 2019 Reproducibility Program)},
+  journal   = {Journal of Machine Learning Research},
+  volume    = {22},
+  number    = {164},
+  pages     = {1--20},
+  year      = {2021},
+  url       = {http://jmlr.org/papers/v22/20-303.html}
+}
+
+@inproceedings{smucker2007comparison,
+  author    = {Smucker, Mark D. and Allan, James and Carterette, Ben},
+  title     = {A Comparison of Statistical Significance Tests for Information Retrieval Evaluation},
+  booktitle = {Proceedings of the Sixteenth {ACM} Conference on Information and Knowledge Management ({CIKM} '07)},
+  pages     = {623--632},
+  year      = {2007},
+  doi       = {10.1145/1321440.1321528}
+}
+
+@inproceedings{urbano2019statistical,
+  author    = {Urbano, Juli{\'a}n and Lima, Harlley and Hanjalic, Alan},
+  title     = {Statistical Significance Testing in Information Retrieval: An Empirical Analysis of Type {I}, Type {II} and Type {III} Errors},
+  booktitle = {Proceedings of the 42nd International {ACM} {SIGIR} Conference on Research and Development in Information Retrieval ({SIGIR} '19)},
+  pages     = {505--514},
+  year      = {2019},
+  doi       = {10.1145/3331184.3331259}
+}
+
+@inproceedings{akhtar2024croissant,
+  author        = {Akhtar, Mubashara and Benjelloun, Omar and Conforti, Costanza and Foschini, Luca and Gijsbers, Pieter and Giner-Miguelez, Joan and Goswami, Sujata and Jain, Nitisha and Karamousadakis, Michalis and Krishna, Satyapriya and Kuchnik, Michael and Lesage, Sylvain and Lhoest, Quentin and Marcenac, Pierre and Maskey, Manil and Mattson, Peter and Oala, Luis and Oderinwale, Hamidah and Ruyssen, Pierre and Santos, Tim and Shinde, Rajat and Simperl, Elena and Suresh, Arjun and Thomas, Goeffry and Tykhonov, Slava and Vanschoren, Joaquin and Varma, Susheel and Van Der Velde, Jos and Vogler, Steffen and Wu, Carole-Jean and Zhang, Luyao},
+  title         = {Croissant: A Metadata Format for {ML}-Ready Datasets},
+  booktitle     = {Advances in Neural Information Processing Systems 37 ({NeurIPS} 2024), Datasets and Benchmarks Track},
+  pages         = {82133--82148},
+  year          = {2024},
+  doi           = {10.52202/079017-2610},
+  eprint        = {2403.19546},
+  archivePrefix = {arXiv},
+  primaryClass  = {cs.LG}
+}
+
+% =====================================================================
+% E. Standards, specifications and threat frameworks
+% =====================================================================
+
+@techreport{oasis2013extensible,
+  author      = {{OASIS}},
+  title       = {{eXtensible Access Control Markup Language (XACML)} Version 3.0},
+  institution = {OASIS},
+  type        = {OASIS Standard},
+  year        = {2013},
+  month       = jan,
+  note        = {22 January 2013. Editor: Erik Rissanen},
+  url         = {http://docs.oasis-open.org/xacml/3.0/xacml-3.0-core-spec-os-en.html},
+  urldate     = {2026-10-26}
+}
+
+@techreport{jones2020oauth,
+  author      = {Jones, M. and Nadalin, A. and Campbell, B. and Bradley, J. and Mortimore, C.},
+  title       = {{OAuth} 2.0 Token Exchange},
+  institution = {Internet Engineering Task Force},
+  type        = {Request for Comments},
+  number      = {8693},
+  year        = {2020},
+  month       = jan,
+  doi         = {10.17487/RFC8693},
+  note        = {Standards Track. B. Campbell, Ed.},
+  url         = {https://www.rfc-editor.org/rfc/rfc8693}
+}
+
+@techreport{nist2024artificial,
+  author      = {{National Institute of Standards and Technology}},
+  title       = {Artificial Intelligence Risk Management Framework: Generative Artificial Intelligence Profile},
+  institution = {National Institute of Standards and Technology},
+  type        = {NIST AI},
+  number      = {600-1},
+  year        = {2024},
+  month       = jul,
+  doi         = {10.6028/NIST.AI.600-1}
+}
+
+@misc{mcp2026model,
+  author       = {{Model Context Protocol}},
+  title        = {Model Context Protocol Specification, Version 2026-07-28: Authorization},
+  year         = {2026},
+  howpublished = {\url{https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization}},
+  url          = {https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization},
+  urldate      = {2026-10-26},
+  note         = {Protocol revision 2026-07-28 (the version in the URL). The token-passthrough prohibition for upstream APIs is on the companion page ``Authorization Security Considerations'': \url{https://modelcontextprotocol.io/specification/2026-07-28/basic/authorization/security-considerations}}
+}
+
+@misc{owasp2025llm082025,
+  author       = {{OWASP Foundation}},
+  title        = {{LLM08:2025} Vector and Embedding Weaknesses},
+  year         = {2025},
+  howpublished = {OWASP Top 10 for LLM Applications 2025 (OWASP GenAI Security Project)},
+  url          = {https://genai.owasp.org/llmrisk/llm082025-vector-and-embedding-weaknesses/},
+  urldate      = {2026-10-26},
+  note         = {No publication date on the page; year from the risk identifier and the page's copyright line}
+}
+
+@misc{mitre2026atlas,
+  author       = {{MITRE}},
+  title        = {{ATLAS}: Adversarial Threat Landscape for {AI} Systems, data release 2026.09},
+  year         = {2026},
+  howpublished = {\url{https://github.com/mitre-atlas/atlas-data}},
+  url          = {https://raw.githubusercontent.com/mitre-atlas/atlas-data/main/dist/v6/ATLAS-2026.09.yaml},
+  urldate      = {2026-10-26},
+  note         = {Collection version 2026.09, modified 2026-09-15, format 6.0.0. Mitigations AML.M0026--M0028}
+}
+
+@misc{kasselman2026ai,
+  author       = {Kasselman, P. and Lombardo, J. and Rosomakho, Y. and Campbell, B. and Steele, N. and Parecki, A.},
+  title        = {{AI} Agent Authentication and Authorization},
+  howpublished = {Internet-Draft draft-klrc-aiagent-auth-03, IETF (individual submission, intended status Informational)},
+  year         = {2026},
+  month        = jul,
+  url          = {https://datatracker.ietf.org/doc/draft-klrc-aiagent-auth/},
+  urldate      = {2026-10-26},
+  note         = {Work in progress; no IETF standing. Dated 6 July 2026; expires 7 January 2027}
+}
+
+@misc{senarath2025oauth,
+  author       = {Senarath, T. S. and Dissanayaka, A.},
+  title        = {{OAuth} 2.0 Extension: On-Behalf-Of User Authorization for {AI} Agents},
+  howpublished = {Internet-Draft draft-oauth-ai-agents-on-behalf-of-user-02, IETF (individual submission, intended status Informational)},
+  year         = {2025},
+  month        = aug,
+  url          = {https://datatracker.ietf.org/doc/draft-oauth-ai-agents-on-behalf-of-user/},
+  urldate      = {2026-10-26},
+  note         = {Dated 26 August 2025; EXPIRED 27 February 2026. Cite only as an expired individual draft}
+}

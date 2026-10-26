@@ -1,0 +1,141 @@
+% Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG
+% Draft skeleton, 2026-10-26. Venue style is applied later (NeurIPS 2027 E&D style once released);
+% this preprint layout uses the standard article class. Numbers marked \tbd{} are not yet measured.
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+\usepackage[numbers,sort&compress]{natbib}
+
+\newcommand{\tbd}[1]{\textcolor{red}{[TBD: #1]}}
+\newcommand{\sys}{\textsc{wardowl}}
+\newtheorem{definition}{Definition}
+\newtheorem{proposition}{Proposition}
+
+\title{Leak-Free but Not Loss-Free:\\Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
+\author{Anonymous Authors}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Retrieval-augmented generation (RAG) places the chunks most similar to a question into a language
+model's prompt. Similarity ignores authorization, so any index shared by readers with different
+permissions can hand a user's question a chunk that user may not read; OWASP lists this as LLM08.
+The remedy is old: push the access predicate into the query and check what comes back. What is not
+known is whether today's stack implements it faithfully. We study permission-aware retrieval as
+deployed: an enforcement layer that compiles an organisation's existing authorization policy into
+filters for production vector stores, re-checks every hit against the authorizer, and fails closed.
+We contribute (i) a formulation of secure and maximal top-$k$ retrieval under an external authorizer,
+with metrics for leaks, permission-recall, under-retrieval and false completeness; (ii) differential
+conformance testing of filter semantics across 14 vector stores, which found \tbd{N} faults and
+semantic gaps; (iii) a measurement of disagreement between authorization engines' filter compilers
+and their own check APIs; (iv) an audit of retrieval quality under permission-shaped filters, where
+recall@10 at common settings ranged from 0.56 to 1.00 and some stores returned no results at all for
+least-privileged users without any signal; (v) detection and bounded repair of such under-retrieval;
+(vi) a measurement of side channels in filtered retrieval; and (vii) an end-to-end evaluation with
+canary documents over 107,540 chunks, 20 tenants and 1,105 questions including red-team prompts, in
+which 163,236 checked hits produced no leak. Security held everywhere; retrieval quality did not.
+\end{abstract}
+
+\section{Introduction}\label{sec:intro}
+% Story: shared index -> similarity ignores permission -> leak (Bob/Contoso/Northwind).
+% The fix is classic (query modification; Buettcher & Clarke 2005; Bailey et al. 2006).
+% The open question is verification: filters are compiled by unverified translators, executed by
+% approximate indexes with store-specific semantics, and failures are silent.
+% Claim: security can be made to depend only on the authorizer's check API (re-check), so filter
+% errors only cost recall; but recall losses are large, store-specific and invisible today.
+% Contributions list (C1-C7), mirroring the abstract.
+\tbd{introduction text}
+
+\section{Background and Problem Statement}\label{sec:problem}
+\subsection{Permission-aware top-$k$ retrieval}
+% Subjects, chunks, authorizer check(s, d) in {0,1}; readable set R(s); query q; similarity.
+% Exact answer: top-k of R(s) by similarity. Approximate store returns A(q, f, k).
+\begin{definition}[Secure, sound and maximal retrieval]
+Adapting Wang et al.~\cite{wang2007correctness} to top-$k$ vector retrieval: a result is \emph{secure} if
+every returned chunk $d$ satisfies $\mathrm{check}(s,d)=1$; \emph{maximal} if it equals the exact top-$k$
+of $R(s)$; and the system \emph{reports completeness honestly} if it never claims maximality it cannot
+establish. \tbd{finalise definitions; relate to Truman semantics~\cite{rizvi2004extending}}
+\end{definition}
+\begin{proposition}[Security reduces to the check API]
+If every returned hit is re-checked with the authorizer's check API and failures abort the request,
+the result is secure whenever the check API is correct, independent of how filters are compiled or
+executed. Filter errors that admit unreadable chunks are counted as violations; filter errors that
+exclude readable chunks are invisible to the re-check and cost only maximality.
+\end{proposition}
+\subsection{Threat model}
+% In scope: cross-user/tenant leakage via retrieval; store filter bugs; authorizer failures;
+% identity confusion for agents. Out of scope: prompt injection in permitted content, model output,
+% wrong upstream permissions, infrastructure. Side channels: measured in Sec.~\ref{sec:side}.
+\tbd{threat model}
+\subsection{Metrics}
+% leak rate with per-question upper bound; permission-recall@k vs exact over R(s);
+% under-retrieval rate; false-completeness rate; latency p50/p95/p99; measured correlation axis.
+\tbd{metrics}
+
+\section{The Enforcement Layer Under Test}\label{sec:system}
+% Summarise wardowl's design and credit precedents: query modification, Bailey's widening loop,
+% Zanzibar-style per-candidate checks, Bedrock KB pre-filter + live check. Three-operator filter
+% algebra with one reference semantics; scope; AllOf/AnyOf; fail-closed validation; identity from
+% verified tokens (MCP, HTTP); audit without content.
+\tbd{system description}
+
+\section{Differential Conformance Testing of Filter Semantics}\label{sec:conformance}
+% Generator, adversarial values (1 vs "1", Unicode, case, dotted fields), oracle = reference
+% semantics, 14 stores, bug/semantic-gap table with upstream status. Position vs SQLancer-style
+% differential testing~\cite{rigger2020testing} and vector-DB bug studies.
+\tbd{methodology and results}
+
+\section{Do Authorization Engines' Filters Agree With Their Checks?}\label{sec:engines}
+% OPA (partial evaluation / filter documents), Cerbos PlanResources, OpenFGA ListObjects,
+% SpiceDB LookupResources: disagreement rates at one revision token; truncation thresholds.
+\tbd{experiment X4}
+
+\section{Retrieval Quality Under Permission-Shaped Filters}\label{sec:quality}
+% Selectivity x measured correlation; OR over many groups; frontiers at default/tuned/exact settings;
+% FiQA and MS MARCO 1M; the enterprise scenario; causes (pgvector scan limits, Qdrant traversal).
+\tbd{experiments X2, X3}
+
+\section{Detecting and Repairing Under-Retrieval}\label{sec:repair}
+% Honest completeness; count-based certification; bounded exact fallback; recall/latency cost.
+% Credit OpenSearch 3.5's exact fallback.
+\tbd{experiment X5}
+
+\section{Side Channels in Filtered Retrieval}\label{sec:side}
+% Widening rounds, latency and the complete flag as functions of unauthorized density near the
+% query; attacker advantage; constant-work widening. Relate to Buettcher & Clarke's consistency
+% definition~\cite{buttcher2005security}.
+\tbd{experiment X6}
+
+\section{End-to-End Evaluation With Canaries}\label{sec:e2e}
+% 107,540 chunks; 20 tenants; 189 people; 1,105 questions (432 red-team); 10 store configurations;
+% 163,236 checked hits; 0 leaks; per-question upper bound; injection obeyed when retrieved
+% (outside the claim). Repeat runs (X8).
+\tbd{results}
+
+\section{Related Work}\label{sec:related}
+% Enterprise search security; database access control; authorization systems; filtered ANN and
+% access-aware vector indexes (HoneyBee, Veda, vision paper); RAG privacy and agent identity;
+% testing methodology.
+\tbd{related work}
+
+\section{Limitations, Ethics and Disclosure}\label{sec:limits}
+% No independent audit; synthetic permission layouts (no public ACL corpus); single-hardware runs;
+% vendor notification of faults before publication; AI-assistance disclosure per venue policy.
+\tbd{limitations}
+
+\section{Conclusion}\label{sec:conclusion}
+\tbd{conclusion}
+
+\bibliographystyle{plainnat}
+\bibliography{../bib/references,../bib/web}
+
+\end{document}

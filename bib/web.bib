@@ -1,0 +1,593 @@
+% web.bib -- vendor documentation, blogs, repositories, news and policy pages
+% Built 2026-10-26. All entries are @misc with url and urldate = 2026-10-26.
+% Titles were re-read from each page's <title>/og:title or heading on 2026-10-26 unless STATUS.md
+% says otherwise. A `year` field is set only when the page shows a publication date; for undated
+% documentation the key carries the access year (2026) and no `year` field is given.
+% Corporate authors are wrapped in double braces.
+%
+% Sections:
+%   W1  Databases, authorization engines and policy engines (vendor docs and blogs)
+%   W2  Vector stores and search engines (vendor docs and blogs)
+%   W3  Enterprise RAG products, integrations and repositories
+%   W4  Incidents, vulnerability records and press
+%   W5  Benchmarks and tools (repositories, track pages)
+%   W6  Venue, reviewing and arXiv policy pages (PLANNING ONLY -- not for the paper's bibliography)
+
+% =====================================================================
+% W1. Databases, authorization engines and policy engines
+% =====================================================================
+
+@misc{mangtani2006documentlevel,
+  author       = {Mangtani, Nitin},
+  title        = {Document-level security with Enterprise Search},
+  howpublished = {Official Google Cloud Blog},
+  year         = {2006},
+  month        = dec,
+  url          = {https://cloud.googleblog.com/2006/12/document-level-security-with-enterprise.html},
+  urldate      = {2026-10-26},
+  note         = {Posted by Nitin Mangtani, Google Search Appliance Product Manager, 7 December 2006}
+}
+
+@misc{byun2004access,
+  author       = {Byun, Ji-Won},
+  title        = {Access Control by Query Modification},
+  howpublished = {TruSec seminar slides, Purdue University},
+  year         = {2004},
+  month        = nov,
+  url          = {https://www.cs.purdue.edu/homes/ninghui/courses/Spring05/lectures/QueryModification.pdf},
+  urldate      = {2026-10-26},
+  note         = {Secondary source (slides) for Stonebraker and Wong (1974) and Rizvi et al. (2004); cite the primary papers for claims}
+}
+
+@misc{oracle2026using,
+  author       = {{Oracle}},
+  title        = {Using {Oracle} Virtual Private Database to Control Data Access},
+  howpublished = {Oracle Database Security Guide, 19c},
+  url          = {https://docs.oracle.com/en/database/oracle/oracle-database/19/dbseg/using-oracle-vpd-to-control-data-access.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{postgresql2026row,
+  author       = {{The PostgreSQL Global Development Group}},
+  title        = {Row Security Policies},
+  howpublished = {PostgreSQL Documentation, version 18, Section 5.9},
+  url          = {https://www.postgresql.org/docs/current/ddl-rowsecurity.html},
+  urldate      = {2026-10-26},
+  note         = {``current'' resolved to version 18 at access}
+}
+
+@misc{openfga2026search,
+  author       = {{OpenFGA}},
+  title        = {Search With Permissions},
+  howpublished = {OpenFGA documentation},
+  url          = {https://openfga.dev/docs/interacting/search-with-permissions},
+  urldate      = {2026-10-26}
+}
+
+@misc{openfga2026perform,
+  author       = {{OpenFGA}},
+  title        = {Perform a list objects call},
+  howpublished = {OpenFGA documentation},
+  url          = {https://openfga.dev/docs/getting-started/perform-list-objects},
+  urldate      = {2026-10-26}
+}
+
+@misc{openfga2026openfga,
+  author       = {{OpenFGA}},
+  title        = {{OpenFGA} Configuration Options},
+  howpublished = {OpenFGA documentation},
+  url          = {https://openfga.dev/docs/getting-started/setup-openfga/configuration},
+  urldate      = {2026-10-26},
+  note         = {Source for the ListObjects defaults (listObjectsMaxResults 1000, listObjectsDeadline 3s)}
+}
+
+@misc{openfga2026rag,
+  author       = {{OpenFGA}},
+  title        = {{RAG} Authorization},
+  howpublished = {OpenFGA documentation},
+  url          = {https://openfga.dev/docs/modeling/agents/rag-authorization},
+  urldate      = {2026-10-26}
+}
+
+@misc{authzed2026protecting,
+  author       = {{AuthZed}},
+  title        = {Protecting a List Endpoint},
+  howpublished = {AuthZed (SpiceDB) documentation},
+  url          = {https://authzed.com/docs/spicedb/modeling/protecting-a-list-endpoint},
+  urldate      = {2026-10-26}
+}
+
+@misc{authzed2026consistency,
+  author       = {{AuthZed}},
+  title        = {Consistency},
+  howpublished = {AuthZed (SpiceDB) documentation},
+  url          = {https://authzed.com/docs/spicedb/concepts/consistency},
+  urldate      = {2026-10-26}
+}
+
+@misc{sandall2018write,
+  author       = {Sandall, Torin},
+  title        = {Write Policy in {OPA}. Enforce Policy in {SQL}.},
+  howpublished = {Open Policy Agent blog},
+  year         = {2018},
+  month        = aug,
+  url          = {https://openpolicyagent.org/blog/write-policy-in-opa-enforce-policy-in-sql-d9d24db93bf4},
+  urldate      = {2026-10-26},
+  note         = {Published 17 August 2018}
+}
+
+@misc{opa2026evaluating,
+  author       = {{Open Policy Agent}},
+  title        = {Evaluating a Data Filter Policy},
+  howpublished = {Open Policy Agent documentation},
+  url          = {https://www.openpolicyagent.org/docs/filtering/partial-evaluation},
+  urldate      = {2026-10-26}
+}
+
+@misc{opa2026writing,
+  author       = {{Open Policy Agent}},
+  title        = {Writing valid Data Filtering Policies},
+  howpublished = {Open Policy Agent documentation},
+  url          = {https://openpolicyagent.org/docs/filtering/fragment},
+  urldate      = {2026-10-26}
+}
+
+@misc{cerbos2026cerbos,
+  author       = {{Cerbos}},
+  title        = {The {Cerbos} {API}},
+  howpublished = {Cerbos documentation (PlanResources / resources query plan)},
+  url          = {https://docs.cerbos.dev/cerbos/latest/api/index.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{oso2026list,
+  author       = {{Oso}},
+  title        = {List filtering},
+  howpublished = {Oso Cloud documentation},
+  url          = {https://www.osohq.com/docs/develop/enforce/list-filtering},
+  urldate      = {2026-10-26},
+  note         = {Title verified; the notes' content claims about this page are search-snippet level only}
+}
+
+% =====================================================================
+% W2. Vector stores and search engines
+% =====================================================================
+
+@misc{pgvector2026pgvector,
+  author       = {{pgvector contributors}},
+  title        = {pgvector: Open-source vector similarity search for {Postgres}},
+  howpublished = {GitHub repository pgvector/pgvector (README)},
+  url          = {https://github.com/pgvector/pgvector},
+  urldate      = {2026-10-26},
+  note         = {README sections on filtering and iterative index scans (0.8.0+)}
+}
+
+@misc{aquino2024filtering,
+  author       = {Aquino, Sabrina and Myriel, David},
+  title        = {Filtering in Vector Search: When to Use What},
+  howpublished = {Qdrant articles},
+  year         = {2024},
+  month        = sep,
+  url          = {https://qdrant.tech/articles/vector-search-filtering/},
+  urldate      = {2026-10-26},
+  note         = {Published 10 September 2024 (page metadata)}
+}
+
+@misc{qdrant2025release,
+  author       = {{Qdrant}},
+  title        = {Release v1.16.0},
+  howpublished = {GitHub release notes, qdrant/qdrant},
+  year         = {2025},
+  month        = nov,
+  url          = {https://github.com/qdrant/qdrant/releases/tag/v1.16.0},
+  urldate      = {2026-10-26},
+  note         = {Published 17 November 2025 (GitHub API). Removes payload filters from JWT RBAC (deprecated since v1.15.0, released 18 July 2025)}
+}
+
+@misc{rodriguez2024how,
+  author       = {Rodriguez, Abdel and Trengrove, John and Hwang, Joon-Pil},
+  title        = {How we speed up filtered vector search with {ACORN}},
+  howpublished = {Weaviate blog},
+  year         = {2024},
+  month        = nov,
+  url          = {https://weaviate.io/blog/speed-up-filtered-vector-search},
+  urldate      = {2026-10-26},
+  note         = {Published 19 November 2024 (page metadata)}
+}
+
+@misc{elastic2026filter,
+  author       = {{Elastic}},
+  title        = {Filter approximate {kNN} results},
+  howpublished = {Elastic Docs},
+  url          = {https://www.elastic.co/docs/solutions/search/vector/knn/filtered-knn-search},
+  urldate      = {2026-10-26}
+}
+
+@misc{trent2025filtered,
+  author       = {Trent, Benjamin},
+  title        = {Filtered {HNSW} \& {kNN} search in {Lucene} and {Elasticsearch}},
+  howpublished = {Elasticsearch Labs blog},
+  year         = {2025},
+  month        = feb,
+  url          = {https://www.elastic.co/search-labs/blog/filtered-hnsw-knn-search},
+  urldate      = {2026-10-26},
+  note         = {Published 27 February 2025 (page metadata)}
+}
+
+@misc{opensearch2026efficient,
+  author       = {{OpenSearch Project}},
+  title        = {Efficient k-{NN} filtering},
+  howpublished = {OpenSearch Documentation},
+  url          = {https://docs.opensearch.org/latest/vector-search/filter-search-knn/efficient-knn-filtering/},
+  urldate      = {2026-10-26}
+}
+
+@misc{milvus2026implement,
+  author       = {{Milvus}},
+  title        = {Implement Multi-tenancy},
+  howpublished = {Milvus Documentation, v3.0.x},
+  url          = {https://milvus.io/docs/multi_tenancy.md},
+  urldate      = {2026-10-26}
+}
+
+@misc{pinecone2026filter,
+  author       = {{Pinecone}},
+  title        = {Filter by metadata},
+  howpublished = {Pinecone Docs},
+  url          = {https://docs.pinecone.io/guides/search/filter-by-metadata},
+  urldate      = {2026-10-26}
+}
+
+@misc{microsoft2026querytime,
+  author       = {{Microsoft}},
+  title        = {Query-Time {ACL} and {RBAC} Enforcement -- {Azure AI Search}},
+  howpublished = {Microsoft Learn},
+  url          = {https://learn.microsoft.com/azure/search/search-query-access-control-rbac-enforcement},
+  urldate      = {2026-10-26},
+  note         = {Describes preview features (preview REST API versions)}
+}
+
+% =====================================================================
+% W3. Enterprise RAG products, integrations and repositories
+% =====================================================================
+
+@misc{aws2026access,
+  author       = {{Amazon Web Services}},
+  title        = {Access Control Lists awareness enablement},
+  howpublished = {Amazon Bedrock User Guide},
+  url          = {https://docs.aws.amazon.com/bedrock/latest/userguide/kb-managed-acl.html},
+  urldate      = {2026-10-26},
+  note         = {The report links the .md variant of the same page}
+}
+
+@misc{auth02026authorization,
+  author       = {{Auth0}},
+  title        = {Authorization for {RAG}},
+  howpublished = {Auth0 Docs (Auth0 for AI Agents)},
+  url          = {https://auth0.com/ai/docs/intro/authorization-for-rag},
+  urldate      = {2026-10-26}
+}
+
+@misc{authzed2026langchainspicedb,
+  author       = {{AuthZed}},
+  title        = {langchain-spicedb: Authorization library for {RAG} (Retrieval-Augmented Generation) pipelines using {SpiceDB}},
+  howpublished = {GitHub repository authzed/langchain-spicedb},
+  url          = {https://github.com/authzed/langchain-spicedb},
+  urldate      = {2026-10-26}
+}
+
+@misc{cerbos2026implementing,
+  author       = {{Cerbos}},
+  title        = {Implementing authorization in {RAG}-based {AI} systems},
+  howpublished = {Cerbos documentation (recipes)},
+  url          = {https://docs.cerbos.dev/cerbos/latest/recipes/ai/rag-authorization/},
+  urldate      = {2026-10-26}
+}
+
+@misc{coveo2026coveo,
+  author       = {{Coveo}},
+  title        = {Coveo, {Microsoft} {Dynamics} 365, and Security},
+  howpublished = {Coveo Platform documentation},
+  url          = {https://docs.coveo.com/en/448/},
+  urldate      = {2026-10-26}
+}
+
+@misc{langchain2026pebbloretrieval,
+  author       = {{LangChain}},
+  title        = {pebblo\_retrieval (langchain\_community)},
+  howpublished = {LangChain Reference},
+  url          = {https://reference.langchain.com/python/langchain-community/chains/pebblo_retrieval},
+  urldate      = {2026-10-26},
+  note         = {Replaces the page the report links (python.langchain.com/.../pebblo_retrieval_qa), which now redirects to a 404}
+}
+
+@misc{gelevanog2026permissionaware,
+  author       = {{gelevanog}},
+  title        = {permission-aware-rag (``Clearance''): private company {RAG} that answers each employee only from documents they may read},
+  howpublished = {GitHub repository gelevanog/permission-aware-rag},
+  url          = {https://github.com/gelevanog/permission-aware-rag},
+  urldate      = {2026-10-26},
+  note         = {Unreviewed open-source project; its leak figures are self-reported}
+}
+
+@misc{microsoft2026data,
+  author       = {{Microsoft}},
+  title        = {Data, Privacy, and Security for {Microsoft} {Copilot}},
+  howpublished = {Microsoft Learn},
+  url          = {https://learn.microsoft.com/en-us/copilot/microsoft-365/microsoft-365-copilot-privacy},
+  urldate      = {2026-10-26},
+  note         = {Page ms.date 2026-07-09 per the notes}
+}
+
+% =====================================================================
+% W4. Incidents, vulnerability records and press
+% =====================================================================
+
+@misc{nvd2025cve202532711,
+  author       = {{National Vulnerability Database}},
+  title        = {{CVE-2025-32711}},
+  howpublished = {NVD vulnerability record},
+  year         = {2025},
+  month        = jun,
+  url          = {https://nvd.nist.gov/vuln/detail/CVE-2025-32711},
+  urldate      = {2026-10-26},
+  note         = {Published 2025-06-11. Description: ``Ai command injection in M365 Copilot allows an unauthorized attacker to disclose information over a network.'' CVSS 3.1: 9.3 (Microsoft as CNA), 7.5 (NVD); CWE-74}
+}
+
+@misc{milanta2025github,
+  author       = {Milanta, Marco and Beurer-Kellner, Luca},
+  title        = {{GitHub} {MCP} Exploited: Accessing private repositories via {MCP}},
+  howpublished = {Invariant Labs blog},
+  year         = {2025},
+  month        = may,
+  url          = {https://invariantlabs.ai/blog/mcp-github-vulnerability},
+  urldate      = {2026-10-26},
+  note         = {Published 2025-05-26}
+}
+
+@misc{lyons2025asanas,
+  author       = {Lyons, Jessica},
+  title        = {{Asana's} cutting-edge {AI} feature ran into a little data leakage problem},
+  howpublished = {The Register},
+  year         = {2025},
+  month        = jun,
+  url          = {https://www.theregister.com/2025/06/18/asana_mcp_server_bug/},
+  urldate      = {2026-10-26},
+  note         = {Published 18 June 2025. Subheading: ``New MCP server was shut down for nearly two weeks''. News report; affected-customer count is reported, not confirmed by a primary source}
+}
+
+@misc{pogorelec2025genai,
+  author       = {Pogorelec, Anamarija},
+  title        = {{GenAI} is exposing sensitive data at scale},
+  howpublished = {Help Net Security},
+  year         = {2025},
+  month        = sep,
+  url          = {https://www.helpnetsecurity.com/2025/09/25/generative-ai-data-risk-exposure/},
+  urldate      = {2026-10-26},
+  note         = {Published 25 September 2025. Secondary coverage of Concentric AI's vendor data-risk report; figures not checked against the primary report}
+}
+
+% =====================================================================
+% W5. Benchmarks and tools
+% =====================================================================
+
+@misc{erikbern2026annbenchmarks,
+  author       = {{erikbern}},
+  title        = {ann-benchmarks: Benchmarks of approximate nearest neighbor libraries in {Python}},
+  howpublished = {GitHub repository erikbern/ann-benchmarks (README)},
+  url          = {https://github.com/erikbern/ann-benchmarks},
+  urldate      = {2026-10-26},
+  note         = {For the method itself cite aumuller2020annbenchmarks (references.bib)}
+}
+
+@misc{google2026atheris,
+  author       = {{Google}},
+  title        = {Atheris},
+  howpublished = {GitHub repository google/atheris},
+  url          = {https://github.com/google/atheris},
+  urldate      = {2026-10-26},
+  note         = {README describes it as a coverage-guided Python fuzzing engine}
+}
+
+@misc{nist2026overview,
+  author       = {{National Institute of Standards and Technology}},
+  title        = {Overview -- Enterprise 2008},
+  howpublished = {TREC Browser},
+  url          = {https://pages.nist.gov/trec-browser/trec17/enterprise/overview},
+  urldate      = {2026-10-26}
+}
+
+% =====================================================================
+% W6. Venue, reviewing and arXiv policy pages -- PLANNING ONLY
+% These support the report's venue and process advice. They are not expected in the paper's
+% reference list. Third-party trackers are marked as such.
+% =====================================================================
+
+@misc{neurips2026neurips,
+  author       = {{NeurIPS}},
+  title        = {{NeurIPS} Paper Checklist Guidelines},
+  url          = {https://neurips.cc/public/guides/PaperChecklist},
+  urldate      = {2026-10-26}
+}
+
+@misc{neurips2026call,
+  author       = {{NeurIPS}},
+  title        = {Call For Evaluations \& Datasets 2026},
+  url          = {https://neurips.cc/Conferences/2026/CallForEvaluationsDatasets},
+  urldate      = {2026-10-26}
+}
+
+@misc{neurips2026main,
+  author       = {{NeurIPS}},
+  title        = {Main Track Handbook 2026},
+  url          = {https://neurips.cc/Conferences/2026/MainTrackHandbook},
+  urldate      = {2026-10-26}
+}
+
+@misc{neurips2026evaluationsa,
+  author       = {{NeurIPS}},
+  title        = {Evaluations \& Datasets Hosting 2026},
+  url          = {https://neurips.cc/Conferences/2026/EvaluationsDatasetsHosting},
+  urldate      = {2026-10-26}
+}
+
+@misc{neurips2026evaluationsb,
+  author       = {{NeurIPS}},
+  title        = {Evaluations \& Datasets {FAQ} 2026},
+  url          = {https://neurips.cc/Conferences/2026/EvaluationsDatasetsFAQ},
+  urldate      = {2026-10-26}
+}
+
+@misc{neurips2026evaluationsc,
+  author       = {{NeurIPS}},
+  title        = {Evaluations and Datasets 2026 Reviewing Guidelines},
+  url          = {https://nips.cc/Conferences/2026/EvaluationsDatasetsReviewerGuidelines},
+  urldate      = {2026-10-26}
+}
+
+% Title could not be read (bot-verification page on 2026-10-26); taken from the notes' link label. Verify before use.
+@misc{neurips2026choice,
+  author       = {{NeurIPS}},
+  title        = {A Choice of Contribution Types at {NeurIPS} 2026},
+  howpublished = {NeurIPS blog},
+  year         = {2026},
+  month        = apr,
+  url          = {https://blog.neurips.cc/2026/04/16/a-choice-of-contribution-types-at-neurips-2026/},
+  urldate      = {2026-10-26},
+  note         = {Title and date from the URL and the notes; page not readable at access}
+}
+
+@misc{icml2026icmla,
+  author       = {{ICML}},
+  title        = {{ICML} 2026 Call for Papers},
+  url          = {https://icml.cc/Conferences/2026/CallForPapers},
+  urldate      = {2026-10-26}
+}
+
+@misc{icml2026icmlb,
+  author       = {{ICML}},
+  title        = {{ICML} 2026 Call For Position Papers},
+  url          = {https://icml.cc/Conferences/2026/CallForPositionPapers},
+  urldate      = {2026-10-26}
+}
+
+@misc{opencurious2026icml,
+  author       = {{OpenCurious}},
+  title        = {{ICML} 2027 Deadline: Jan 22, 2027 {AoE} (Expected)},
+  url          = {https://www.opencurious.com/ai-conference-deadlines/icml-2027},
+  urldate      = {2026-10-26},
+  note         = {Third-party estimate, not an official ICML announcement}
+}
+
+% Page timed out on 2026-10-26 (as in the notes); title is a descriptive label, not verified.
+@misc{vldb2026pvldb,
+  author       = {{VLDB Endowment}},
+  title        = {{PVLDB} Volume 20: Submission Guidelines},
+  url          = {https://www.vldb.org/pvldb/volumes/20/submission},
+  urldate      = {2026-10-26},
+  note         = {Page not reachable at access; content known only from search snippets}
+}
+
+@misc{usenix2026usenix,
+  author       = {{USENIX}},
+  title        = {{USENIX} {Security} '27 Call for Papers},
+  url          = {https://www.usenix.org/node/321195},
+  urldate      = {2026-10-26}
+}
+
+@misc{ieee2026ieee,
+  author       = {{IEEE Symposium on Security and Privacy}},
+  title        = {{IEEE} Symposium on Security and Privacy 2027: Call for Papers},
+  url          = {https://sp2027.ieee-security.org/cfpapers.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{myhuiban2026sigir,
+  author       = {{myhuiban}},
+  title        = {{SIGIR} 2027},
+  url          = {https://www.myhuiban.com/conference/141?lang=en-us},
+  urldate      = {2026-10-26},
+  note         = {Third-party conference listing; dates unverified}
+}
+
+@misc{iclr2026iclr,
+  author       = {{ICLR}},
+  title        = {{ICLR} 2027 {AI} Policy for Authors},
+  url          = {https://iclr.cc/Conferences/2027/AIPolicyForAuthors},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2026content,
+  author       = {{arXiv}},
+  title        = {Content Moderation},
+  howpublished = {arXiv info (help pages)},
+  url          = {https://info.arxiv.org/help/moderation/index.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2026endorsement,
+  author       = {{arXiv}},
+  title        = {Endorsement},
+  howpublished = {arXiv info (help pages)},
+  url          = {https://info.arxiv.org/help/endorsement.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2026licenses,
+  author       = {{arXiv}},
+  title        = {Licenses},
+  howpublished = {arXiv info (help pages)},
+  url          = {https://info.arxiv.org/help/license/index.html},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2025attentiona,
+  author       = {{arXiv}},
+  title        = {Attention Authors: Updated Practice for Review Articles and Position Papers in {arXiv} {CS} Category},
+  howpublished = {News from arXiv (blog)},
+  year         = {2025},
+  month        = oct,
+  url          = {https://blog.arxiv.org/2025/10/31/attention-authors-updated-practice-for-review-articles-and-position-papers-in-arxiv-cs-category/},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2025attentionb,
+  author       = {{arXiv}},
+  title        = {Attention Authors: updated endorsement policy for {arXiv} Mathematics},
+  howpublished = {News from arXiv (blog)},
+  year         = {2025},
+  month        = dec,
+  url          = {https://blog.arxiv.org/2025/12/10/updated-endorsement-policy-for-arxiv-mathematics/},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2019arxiv,
+  author       = {{arXiv}},
+  title        = {{arXiv} Machine Learning Classification Guide},
+  howpublished = {News from arXiv (blog)},
+  year         = {2019},
+  month        = dec,
+  url          = {https://blog.arxiv.org/2019/12/05/arxiv-machine-learning-classification-guide/},
+  urldate      = {2026-10-26}
+}
+
+@misc{arxiv2026fair,
+  author       = {{arXiv}},
+  title        = {Fair Moderation, Equitable Access, and {AI}: {arXiv's} Updated Rate Limit Policy},
+  howpublished = {News from arXiv (blog)},
+  year         = {2026},
+  month        = oct,
+  url          = {https://blog.arxiv.org/2026/10/01/updated-rate-limit-policy/},
+  urldate      = {2026-10-26}
+}
+
+@misc{singhchawla2026researchers,
+  author       = {Singh Chawla, Dalmeet},
+  title        = {Researchers who use hallucinated references to face {arXiv} ban},
+  howpublished = {Nature (news)},
+  year         = {2026},
+  month        = may,
+  url          = {https://www.nature.com/articles/d41586-026-01595-5},
+  urldate      = {2026-10-26},
+  note         = {Dated 2026-05-19 (page metadata). Press report; no arXiv policy page carries the rule}
+}

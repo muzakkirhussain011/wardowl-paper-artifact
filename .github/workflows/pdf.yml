@@ -1,0 +1,34 @@
+name: PDF
+
+# Builds the paper and the study material in the cloud on every push, so nothing is compiled on the
+# author's laptop. The PDFs are the run's artifacts.
+on:
+  push:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: pdf-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  paper:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Compile the paper
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: main.tex
+          working_directory: paper
+          latexmk_use_pdflatex: true
+      - uses: actions/upload-artifact@v4
+        with:
+          name: paper-pdf
+          path: paper/main.pdf
+          retention-days: 30
