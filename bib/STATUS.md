@@ -403,3 +403,7 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | lewis2020retrievalaugmented | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | verified-now | arXiv 2005.11401 abstract page: title, 12 authors in order, "Accepted at NeurIPS 2020"; pages not verified, left out |
 | elastic2026controlling | Controlling access at the document and field level | verified-now | page title and the sentence "Document level security restricts the documents that users have read access to" |
 | opensearch2026documentlevel | Document-level security | verified-now (title only) | page title; body text not read |
+
+## Build note (2026-10-26)
+
+All `note` fields were renamed to `annote` so that plainnat does not print internal provenance remarks (several contained raw underscores and broke the build). Before submission, move genuine venue information (for example accepted-at statements once confirmed by the publisher) into proper fields.
