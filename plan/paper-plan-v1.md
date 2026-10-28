@@ -134,3 +134,17 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
   paper-conformance (manual trigger), results to be archived under evidence/.
 - 2026-10-26: PDF builds in GitHub Actions succeed from build #5 (fixes: no at-sign in bib comments;
   provenance notes moved to annote).
+- 2026-10-28: X1 run 1 finished (26,313 s). Confirmed: Q1 (Qdrant islanded permitted subgraph; company-doc
+  recall@10 0.273 as run, 0.943 tenant-m0, 0.948 separate KB collection) and P1 (pgvector empties stop at a
+  median 20,083 scanned rows; max_scan_tuples >= 100k removes them). Falsified: Q2 (ACORN 0.4 engaged for
+  everyone, same recall as 1.0) and P4 (plan check only). Inconclusive: Q3, Q4, P2, P3. 12 pgvector items
+  skipped at the deadline. Open problem: X1 did not reproduce X0's pgvector loss (recall@5 0.998 vs 0.691).
+  Evidence: evidence/x1-underretrieval-run1.md.
+- 2026-10-28: Conformance campaign run 1 (Actions run 40313285885): 29 targets, 4,315 runs, no leaks, controls
+  pass. Violations: Cerbos filter vs check disagree on scalar ACL fields (39/40 runs); Redis (26) and MongoDB
+  (19) miss matching documents with long/huge strings (sound, recall only). Errors: OpenFGA/SpiceDB HTTP 400
+  in 84-89% of runs; Keto/Casbin hit the time budget; Pinecone skipped (no key). Evidence:
+  evidence/conformance-campaign-run1.md. These give contribution C2 its first kit-found faults.
+- Next: explain the X0/X1 pgvector gap; rerun skipped pgvector builds; triage the Cerbos and Redis/MongoDB
+  findings (minimise, confirm, report upstream); fix the harness for OpenFGA/SpiceDB 400s; second library
+  PR (under-retrieval detection and exact fallback); remaining experiments and sections.
