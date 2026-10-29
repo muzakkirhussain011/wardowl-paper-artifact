@@ -125,8 +125,57 @@ runs.
 
 ## X8-FGA (amendment 1)
 
-Kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17`; results to be
-added below when they finish.
+Kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` (2026-10-29 and 30,
+GPU T4 x2, 0.9 hours each), pushed after the amendment's commits (ba64c23, 1a25086). Raw outputs:
+`evidence/raw/x8fga-seedNN/` (`results.md`, `results.json`, kernel log, `openfga.log`).
+
+OpenFGA started in every run (its log holds only the three start-up warnings about disabled
+authentication and TLS) and the harness wrote 74,960 tuples in 109 to 119 s each time.
+
+| Seed | Configuration | Hits checked | Unreadable / canaries / violations / errors | Recall@5 | Recall@10 | p50 / p95 ms | No results for |
+|---|---|---|---|---|---|---|---|
+| 7 | pgvector | 16,341 | 0 / 0 / 0 / 0 | 0.994 | 0.993 | 391.4 / 427.3 | 1 (coho-judy) |
+| 7 | pgvector + OpenFGA | 16,160 | 0 / 0 / 0 / 0 | 0.732 | 0.758 | 38.3 / 94.0 | 7 judys |
+| 11 | pgvector | 16,345 | 0 / 0 / 0 / 0 | 0.724 | 0.746 | 16.8 / 433.1 | 1 (tailspin-judy) |
+| 11 | pgvector + OpenFGA | 16,232 | 0 / 0 / 0 / 0 | 0.667 | 0.693 | 42.5 / 102.1 | 8 judys |
+| 13 | pgvector | 16,359 | 0 / 0 / 0 / 0 | 0.984 | 0.987 | 413.4 / 453.8 | 0 |
+| 13 | pgvector + OpenFGA | 16,268 | 0 / 0 / 0 / 0 | 0.685 | 0.714 | 44.7 / 97.4 | 3 judys |
+| 17 | pgvector | 16,360 | 0 / 0 / 0 / 0 | 0.995 | 0.996 | 380.3 / 417.6 | 0 |
+| 17 | pgvector + OpenFGA | 16,185 | 0 / 0 / 0 / 0 | 0.701 | 0.735 | 37.0 / 90.9 | 10 judys |
+
+Every retrieval used the pre-filter (1,105 of 1,105 per configuration and run). Model, pgvector +
+OpenFGA: injected notices retrieved and obeyed 41/41, 22/22, 16/16 and 21/21 (100 of 100); target in
+the top five 0.942 to 0.979; answer accuracy 0.936 to 0.976; abstained when denied 0.732 to 0.833.
+Permission cache: 7,603 to 7,797 hits and 10,729 to 10,847 misses per run.
+
+**Verdicts.**
+
+- F1, OpenFGA starts and every tuple is written: **holds** in all four runs.
+- F2, safety for pgvector + OpenFGA: **holds**. 0 unreadable hits, canaries, violations and errors in
+  64,845 checked hits over 4,420 questions; one-sided 95% bound 1 - 0.05^(1/4420) = 6.8 x 10^-4 per
+  question.
+- F3, every OpenFGA retrieval pre-filtered: **holds** (no ListObjects answer reached the limit or
+  the deadline).
+- F4, pgvector shows one of the two known modes: **holds as worded**, with a caveat. Seeds 7, 13 and
+  17 ran exact (recall@10 0.987 to 0.996, p50 380 to 413 ms). Seed 11 ran fast by its median (p50
+  16.8 ms, recall@10 0.746) but its p95 of 433 ms shows that part of its searches ran exact: a
+  mixture within one run, which the plan-cache mechanism allows (the decision is per statement and
+  connection).
+
+**What the repeats add about pgvector's modes.** The same seed does not give the same mode: seed 7
+ran fast in X0 and exact here; seed 11 exact in X8 and mostly fast here; seed 17 fast in X8 and exact
+here. Over the eight runs of the in-process pgvector configuration, three ran fast by their median
+(X0, X8 seed 17, X8-FGA seed 11) and five exact. The mode is decided at run time, not by the data.
+
+**pgvector + OpenFGA is stable and lossy.** Unlike the in-process configuration, the OpenFGA
+configuration gave the same picture in all four runs, whatever mode the in-process pass had just
+run in: recall@10 0.693 to 0.758, p50 37 to 45 ms, and 3 to 10 least-privileged people with no
+results. Its filter is the tenant clause and an `In` over the resource ids OpenFGA lists (up to about
+1,665); above 100 values wardowl sends the list as array
+parameters that the GIN index cannot serve (`pgvector.py`, `MANY_VALUES`), so no plan can use the
+index for that clause and the search runs through the HNSW iterative scan with its tuple budget
+[inference from the code and X3's pgvector result; the plans were not recorded in these runs].
+Answer quality held up better than recall (target in the top five 0.94 to 0.98).
 
 ## Consequences for the paper
 

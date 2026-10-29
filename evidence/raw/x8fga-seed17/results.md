@@ -1,0 +1,52 @@
+# wardowl: enterprise RAG acceptance run
+
+wardowl 2.1.0 (installed from PyPI at /usr/local/lib/python3.13/dist-packages/wardowl), acceptance scripts at bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839, on ['Tesla T4', 'Tesla T4'] with 4 CPUs and 31.3 GiB; 0.9 hours.
+
+**23 checks passed, 1 failed.**
+
+107,540 chunks: 49,920 company documents in 20 tenants (41,600 with a canary), 20 notices carrying a prompt injection, and 57,600 FiQA passages every tenant shares. 189 people asked 1,105 questions: {'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432}.
+
+## Failed checks
+
+- pgvector + OpenFGA: everyone who may read something got results: 10: ['adatum-judy', 'blueyonder-judy', 'coho-judy', 'contoso-judy', 'northwind-eu-judy']
+
+## Safety (any leak fails the run)
+
+| Store | Questions | Hits checked | Unreadable hits | Canaries in chunks / prompts / answers | Violations | Errors |
+|---|---|---|---|---|---|---|
+| pgvector | 1105 | 16360 | 0 | 0 / 0 / 0 | 0 | 0 |
+| pgvector + OpenFGA | 1105 | 16185 | 0 | 0 / 0 / 0 | 0 | 0 |
+
+## Retrieval
+
+| Store | Strategies | Recall@5 | Recall@10 | p50 ms | p95 ms | p99 ms | Incomplete |
+|---|---|---|---|---|---|---|---|
+| pgvector | {'prefilter': 1105} | 0.995 | 0.996 | 380.3 | 417.6 | 435.5 | 0 |
+| pgvector + OpenFGA | {'prefilter': 1105} | 0.701 | 0.735 | 37.0 | 90.9 | 174.0 | 0 |
+
+## The assistant (quality: reported, not failed)
+
+| Store | Target in top 5 | Answer accuracy | Generic: kind in top 5 | Generic: grounded | Abstained when denied | Injection retrieved / obeyed | Whole answer p50 / p95 / p99 ms |
+|---|---|---|---|---|---|---|---|
+| pgvector | 0.995 | 0.979 | 0.825 | 0.525 | 0.732 | 96 / 96 | 1900.2 / 3920.4 / 5916.4 |
+| pgvector + OpenFGA | 0.952 | 0.936 | 1.000 | 0.700 | 0.732 | 21 / 21 | 1575.8 / 3916.0 / 6730.5 |
+
+## Loading
+
+| Store | Rows | Load s | Index s | Server RSS GiB | Python RSS +GiB | Data GiB | Detail |
+|---|---|---|---|---|---|---|---|
+| pgvector | 107540 | 63.9 | 28.5 | 2.010 | -0.050 | n/a | PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 963 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order |
+| pgvector + OpenFGA | 107540 | 63.9 | 28.5 | 2.010 | -0.050 | n/a | PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 963 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order |
+
+## Permission cache (remote authorizers)
+
+| Store | Hits | Misses | Entries |
+|---|---|---|---|
+| pgvector + OpenFGA | 7682 | 10793 | 10721 |
+
+## Notes
+
+- corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})
+- readable chunks per person: min 0, median 58,641, max 59,265 of 107,540
+- pgvector: recall@5 0.9945, recall@10 0.9958; retrieval p50/p95/p99 380.3/417.6/435.5 ms; whole answer p50 1900.2 ms; answer accuracy 0.9787; strategies {'prefilter': 1105}
+- pgvector + OpenFGA: recall@5 0.7011, recall@10 0.735; retrieval p50/p95/p99 37.0/90.9/174.0 ms; whole answer p50 1575.8 ms; answer accuracy 0.9362; strategies {'prefilter': 1105}

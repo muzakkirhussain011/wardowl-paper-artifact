@@ -89,9 +89,10 @@ user may read, and the application could not see the loss.
         scores (0.98 to 1.00). Exact pre-filtering returned identical answers, and padding removed
         every latency channel we tested, at five to seven times the latency.
   \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): four runs of 1,105
-        questions, 432 of them red-team prompts, over 189 people and ten store configurations, with
-        653,638 checked hits and no leak, a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per
-        question for each configuration. \tbd{X8-FGA: the OpenFGA configuration}
+        questions per configuration, 432 of them red-team prompts, over 189 people and eleven
+        configurations of nine stores and three ways to state the policy (in process, OPA and
+        OpenFGA), with 783,888 checked hits and no leak, a one-sided 95\% bound of
+        $6.8 \times 10^{-4}$ leaks per question for each configuration.
 \end{itemize}
 
 We do not propose an index: HoneyBee and Veda are physical designs whose recall our harness can

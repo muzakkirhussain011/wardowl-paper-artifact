@@ -2,7 +2,8 @@
 % label stay in main.tex). Labels defined here: sec:e2e-setup, sec:e2e-safety, tab:e2e-safety,
 % sec:e2e-model. Sources: evidence/kaggle-scale-run-2026-10-24.md (X0, seed 7, wardowl 2.1.0, before
 % the honest-completeness change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in
-% plan/x8-prereg.md). The OpenFGA configuration (X8-FGA, amendment 1) is pending and marked \tbd{}.
+% plan/x8-prereg.md), and the OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same
+% pre-registration, in evidence/x8-run.md).
 
 The previous sections test components in isolation. Here the whole pipeline runs as an organization
 would run it: many tenants and people in one index, a policy composed of a tenant boundary and
@@ -37,12 +38,14 @@ It runs against ten configurations: FAISS over a flat index (exact, the referenc
 pgvector with the same policy written in OPA, Qdrant, Elasticsearch, OpenSearch, Weaviate, Redis and
 LanceDB, each at the settings listed in Appendix~\ref{app:settings}. Each question retrieves with
 $k = 5$ for the answer and $k = 10$ for recall@10. Qwen2.5-3B-Instruct~\cite{yang2024qwen25} answers
-from the five chunks. An eleventh configuration, pgvector with OpenFGA behind the caching authorizer,
-did not start in these runs: our harness set OpenFGA's ListObjects deadline to 20\,s while leaving
-its request timeout at the default, and OpenFGA 1.22 refuses to start with a deadline longer than
-the request timeout. We had first recorded this as an infrastructure failure; the server's log shows
-otherwise. \tbd{X8-FGA: the configuration in four runs with the timeout raised, pre-registered as an
-amendment before they ran.}
+from the five chunks. An eleventh configuration, pgvector with the policy's ACLs held as 74,960
+OpenFGA relationship tuples behind the caching authorizer, pre-filters with ListObjects. It did not
+start in the runs below: our harness set OpenFGA's ListObjects deadline to 20\,s while leaving its
+request timeout at the default, and OpenFGA 1.22 refuses to start with a deadline longer than the
+request timeout. We had first recorded this as an infrastructure failure; the server's log shows
+otherwise. With the timeout raised and nothing else changed, the configuration ran in four further
+runs with the same seeds, pre-registered as an amendment before they started; each also repeated
+the in-process pgvector configuration.
 
 \paragraph{Runs.}
 The scenario ran four times with seeds 7, 11, 13 and 17 on the same software and hardware (one
@@ -83,17 +86,23 @@ Redis & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
 LanceDB & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
 \midrule
 Total & 44,200 & 653,638 & 0 & 0/0/0 & 0 \\
+\midrule
+pgvector + OpenFGA\textsuperscript{$\ast$} & 4,420 & 64,845 & 0 & 0/0/0 & 0 \\
+pgvector\textsuperscript{$\ast$} & 4,420 & 65,405 & 0 & 0/0/0 & 0 \\
 \bottomrule
 \end{tabular}
 \caption{End-to-end safety over four runs (seeds 7, 11, 13 and 17). Hits are counted over both
-retrievals per question. pgvector and pgvector + OPA checked fewer hits because some of their
-answers were short or empty (Section~\ref{sec:quality}). No configuration reported an error.}
+retrievals per question. pgvector and its variants checked fewer hits because some of their
+answers were short or empty (Section~\ref{sec:quality}). \textsuperscript{$\ast$}Four further runs
+with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration reported
+an error.}
 \label{tab:e2e-safety}
 \end{table}
 
 No configuration in any run returned an unreadable chunk or exposed a canary
-(Table~\ref{tab:e2e-safety}), and the first of the five pre-registered predictions for the repeats,
-that safety would hold everywhere, held. The hits are not independent trials: they cluster by
+(Table~\ref{tab:e2e-safety}): 783,888 checked hits, eleven configurations, no leak. The first of the
+five pre-registered predictions for the repeats, that safety would hold everywhere, held, and so did
+the amendment's for OpenFGA, which started in every run and pre-filtered every question. The hits are not independent trials: they cluster by
 question and by person, and a fault in the layer would affect a question, not a random hit. We
 therefore bound the leak rate per question, separately for each configuration, treating the
 questions of different runs, which are sampled afresh over fresh documents, as independent: with no
@@ -113,19 +122,23 @@ subject (Section~\ref{sec:sys-identity}). Second, safety held while quality did 
 not repeat. pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four
 runs, people who could each read 624 chunks, and the layer, before the change of
 Section~\ref{sec:sys-complete}, reported those empty answers as complete. The same configuration ran
-in one of two modes, fast and lossy in two runs and exact and about fifty times slower in the other two,
-for a reason Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache; we had predicted 3 to
-25 empty answers in every repeat, and two repeats fell outside. Qdrant answered every question, but
-with recall@10 between 0.535 and 0.561 in every run. The other stores varied little from run to run
-(Section~\ref{sec:qual-audit}).
+in one of two modes, fast and lossy or exact and about fifty times slower, for a reason
+Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache; we had predicted 3 to 25 empty
+answers in every repeat, and two repeats fell outside. Over its eight runs it ran fast in three and
+exact in five, and the seed did not decide which: seeds 7, 11 and 17 each ran fast in one run and
+exact in another. With OpenFGA, whose pre-filter lists the readable documents,
+pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 3 to 10
+least-privileged people without results, whatever mode the in-process configuration had just run
+in. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
+other stores varied little from run to run (Section~\ref{sec:qual-audit}).
 
 \subsection{What the model did with what it retrieved}\label{sec:e2e-model}
 
 Prompt injection in readable content is outside our threat model (Section~\ref{sec:prob-threat}),
 but the runs measure where the boundary lies. Each tenant's injected notice is readable by that
-tenant's employees and contractors, so retrieving it for them is correct. Over the four runs the
+tenant's employees and contractors, so retrieving it for them is correct. Over all eight runs the
 notice was retrieved between 1 and 117 times per configuration and run, depending on the store's
-ranking, and the 3B model followed its instruction every time it was retrieved: 2,643 of 2,643
+ranking, and the 3B model followed its instruction every time it was retrieved: 3,069 of 3,069
 times. Retrieval-time enforcement decides which content reaches the model, not what the model does
 with it; defenses against injected instructions in permitted
 content~\cite{greshake2023not,debenedetti2025defeating} are complementary.
@@ -133,6 +146,7 @@ content~\cite{greshake2023not,debenedetti2025defeating} are complementary.
 Answer quality followed retrieval quality. With FAISS the model found the target document of a
 targeted question in its top five for every question in every run and answered 98.4\% to 99.7\%
 correctly; with Qdrant the target was in the top five for 33.8\% to 39.9\% of targeted questions.
-When a person asked about a document they could not read, the model abstained in 68\% to 81\% of
-cases, depending on the store and run, and otherwise answered from readable documents only, as the
+With OpenFGA, despite its lower recall, the target was in the top five for 94.2\% to 97.9\%. When a
+person asked about a document they could not read, the model abstained in 68\% to 83\% of cases,
+depending on the store and run, and otherwise answered from readable documents only, as the
 canary checks confirm.

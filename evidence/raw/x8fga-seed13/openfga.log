@@ -1,0 +1,3 @@
+2026-10-29T23:18:27.777Z	[33mWARN[0m	authentication is disabled
+2026-10-29T23:18:27.777Z	[33mWARN[0m	gRPC TLS is disabled, serving connections using insecure plaintext
+2026-10-29T23:18:27.784Z	[33mWARN[0m	HTTP TLS is disabled, serving connections using insecure plaintext
