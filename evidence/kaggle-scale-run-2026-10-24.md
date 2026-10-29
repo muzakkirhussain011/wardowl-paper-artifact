@@ -22,7 +22,10 @@ and archived with the paper's artifact.
 1. pgvector: "everyone who may read something got results": 10 people failed
    (e.g. blueyonder-judy, coho-judy, contoso-judy, fabrikam-judy, northwind-eu-judy).
 2. pgvector + OPA: the same 10 people.
-3. pgvector + OpenFGA: did not run; OpenFGA's `/healthz` did not answer within 180 s (infrastructure).
+3. pgvector + OpenFGA: did not run; OpenFGA's `/healthz` did not answer within 180 s. (Corrected 2026-10-30:
+   not infrastructure. The harness sets the ListObjects deadline to 20 s above OpenFGA's request
+   timeout, and OpenFGA 1.22.0 refuses to start; the X8 runs' `openfga.log` shows the panic. See
+   `plan/x8-prereg.md`, amendment 1, and `evidence/x8-run.md`.)
 
 Failures 1 and 2 mean pre-filtered pgvector search returned no hits for some highly selective users
 who can read documents, while `complete` stayed True (0 incomplete reported). This is the documented

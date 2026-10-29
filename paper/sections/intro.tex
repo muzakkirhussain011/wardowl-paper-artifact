@@ -65,10 +65,16 @@ user may read, and the application could not see the loss.
         campaign of 4,480 runs.
   \item \emph{Filter-versus-check agreement of authorization engines} (Section~\ref{sec:engines}),
         measured at a single revision so that permission changes between calls are not counted as
-        faults. \tbd{X4 headline}
+        faults. Over 6.3 million user-document pairs from OpenFGA, SpiceDB, OPA and Cerbos we found
+        no translation fault; the disagreements seen in practice were revision skew between the two
+        calls. The revocation measurements falsified three of our predictions: SpiceDB's default
+        consistency served revoked chunks for up to 8.7\,s, invalidating a cache in front of a stale
+        engine merely refilled it, and a single ban rule removed OPA's pre-filter for everyone. No
+        request leaked in 1,090 fault episodes.
   \item \emph{An audit of retrieval quality under permission filters} (Section~\ref{sec:quality}).
-        In an enterprise scenario of 107,540 chunks and 20 tenants, recall@10 at common settings
-        ranged from 0.56 to 1.00 over ten store configurations. Pre-registered experiments trace
+        In an enterprise scenario of 107,540 chunks and 20 tenants, mean recall@10 at common
+        settings ranged from 0.55 to 1.00 over ten store configurations and four runs, and pgvector
+        ran either lossy or exact depending on a plan-cache decision. Pre-registered experiments trace
         Qdrant's loss to an islanded permitted subgraph (recall@10 of 0.27 on company documents,
         0.94 with a tenant-aware layout) and pgvector's empty answers to the tuple budget of its
         iterative scan. \tbd{X1 run 2 and X2 headline}
@@ -78,10 +84,10 @@ user may read, and the application could not see the loss.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}): what widening rounds,
         latency and the completeness flag reveal about unreadable chunks near a query.
         \tbd{X6 headline}
-  \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): 1,105 questions, 432
-        of them red-team prompts, over 189 people and ten store configurations, with 163,236 checked
-        hits and no leak, a one-sided 95\% bound of $2.7 \times 10^{-3}$ leaks per question for
-        each configuration. \tbd{X8 repeats}
+  \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): four runs of 1,105
+        questions, 432 of them red-team prompts, over 189 people and ten store configurations, with
+        653,638 checked hits and no leak, a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per
+        question for each configuration. \tbd{X8-FGA: the OpenFGA configuration}
 \end{itemize}
 
 We do not propose an index: HoneyBee and Veda are physical designs whose recall our harness can

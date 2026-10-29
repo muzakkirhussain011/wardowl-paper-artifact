@@ -1,0 +1,15 @@
+{
+  "id": "muzakkirhussain1/wardowl-x8fga-seed17",
+  "title": "wardowl-x8fga-seed17",
+  "code_file": "x8fga_seed17.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}

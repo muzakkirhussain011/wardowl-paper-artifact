@@ -16,38 +16,49 @@ filter size. Recall is permission-recall@$k$ against exact search over the reada
 \begin{table}[tbp]
 \centering
 \small
-\begin{tabular}{@{}lrrrrr@{}}
+\begin{tabular}{@{}lrrrrrr@{}}
 \toprule
-Store & Recall@5 & Recall@10 & Overlap@5, judy & Overlap@5, others & p50 (ms) \\
+ & \multicolumn{3}{c}{Four runs} & \multicolumn{2}{c}{Overlap@5, first run} & \\
+\cmidrule(lr){2-4}\cmidrule(lr){5-6}
+Store & Recall@5 & Recall@10 & Range@10 & judy & others & p50 (ms) \\
 \midrule
-FAISS (flat, exact) & 1.000 & 1.000 & 1.000 & 1.000 & 345.6 \\
-Redis & 0.985 & 0.980 & 0.998 & 0.982 & 28.3 \\
-Elasticsearch & 0.948 & 0.948 & 0.987 & 0.941 & 8.1 \\
-OpenSearch & 0.947 & 0.938 & 0.998 & 0.941 & 6.8 \\
-Weaviate & 0.888 & 0.892 & 1.000 & 0.876 & 7.1 \\
-Chroma & 0.887 & 0.883 & 0.987 & 0.876 & 1441.6 \\
-LanceDB & 0.833 & 0.860 & 0.949 & 0.821 & 22.4 \\
-pgvector & 0.691 & 0.732 & 0.724 & 0.686 & 6.5 \\
-Qdrant & 0.564 & 0.561 & 1.000 & 0.523 & 4.3 \\
+FAISS (flat, exact) & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 346--368 \\
+Redis & 0.983 & 0.981 & 0.012 & 0.998 & 0.982 & 28--30 \\
+Elasticsearch & 0.942 & 0.949 & 0.019 & 0.987 & 0.941 & 8--9 \\
+OpenSearch & 0.942 & 0.935 & 0.005 & 0.998 & 0.941 & 7 \\
+Weaviate & 0.899 & 0.902 & 0.021 & 1.000 & 0.876 & 7--8 \\
+Chroma & 0.877 & 0.879 & 0.010 & 0.987 & 0.876 & 1432--1481 \\
+LanceDB & 0.840 & 0.874 & 0.039 & 0.949 & 0.821 & 22--25 \\
+pgvector, fast mode (2 runs) & 0.695 & 0.732 & 0.000 & 0.724 & 0.686 & 6.5--8.1 \\
+pgvector, exact mode (2 runs) & 0.993 & 0.993 & 0.002 & & & 386--399 \\
+Qdrant & 0.557 & 0.551 & 0.026 & 1.000 & 0.523 & 4.3--4.7 \\
 \bottomrule
 \end{tabular}
-\caption{Retrieval quality in the enterprise scenario (Section~\ref{sec:e2e}), one run, 1,105
-questions. Overlap@5 is the share of the exact top five that a store returned, by person type;
-``judy'' are the least-privileged people (624 readable chunks). pgvector with OPA is identical to
-pgvector. Settings: Appendix~\ref{app:settings}.}
+\caption{Retrieval quality in the enterprise scenario (Section~\ref{sec:e2e}), four runs of 1,105
+questions (seeds 7, 11, 13, 17). Recall is the mean over runs; Range@10 is the largest minus the
+smallest recall@10; p50 is the range of per-run medians. pgvector ran in one of two modes per run
+(Section~\ref{sec:qual-pgvector}); each row averages the two runs in that mode. Overlap@5 is the
+share of the exact top five that a store returned, by person type, from a re-analysis of the first
+run (a fast-mode run for pgvector); ``judy'' are the least-privileged people (624 readable chunks).
+pgvector with OPA follows pgvector's mode in each run. Settings: Appendix~\ref{app:settings}.}
 \label{tab:qual-x0}
 \end{table}
 
-Table~\ref{tab:qual-x0} shows the spread. At settings a team would plausibly ship, recall@10 ranges
-from 0.56 for Qdrant to 0.98 for Redis, and every store's loss is concentrated where the readable set
-is far from the question. Two failures stand out. pgvector returned \emph{nothing} to ten of the
-least-privileged people, eight on red-team prompts and two on questions about documents they could
-not read, although each could read 624 chunks; the layer, before the change of
-Section~\ref{sec:sys-complete}, called these empty answers complete. Qdrant never returned a short
-answer, yet for ordinary employees it returned the right documents only about half the time
-(overlap@5 0.52), while for the least-privileged people it was perfect. On targeted questions,
-59.6\% of Qdrant's top five were shared FiQA passages where exact search returned none, and the
-model found the target document for only 39.9\% of targeted questions.
+Table~\ref{tab:qual-x0} shows the spread. At settings a team would plausibly ship, mean recall@10
+ranges from 0.55 for Qdrant to 0.98 for Redis, and every store's loss is concentrated where the
+readable set is far from the question. Most stores repeat closely: across four runs with fresh
+documents and questions, no store other than pgvector moved its recall@10 by more than 0.04. Two
+failures stand out. pgvector returned \emph{nothing} to some of the least-privileged people,
+although each could read 624 chunks: ten in the first run, eight on red-team prompts and two on
+questions about documents they could not read, and seven in another; the layer, before the change
+of Section~\ref{sec:sys-complete}, called these empty answers complete. In the other two runs the
+same configuration searched exactly, at fifty times the latency, and left one person without results
+in one of them. Qdrant never returned a
+short answer, yet for ordinary employees it returned the right documents only about half the time
+(overlap@5 0.52 in the first run), while for the least-privileged people it was perfect. On targeted
+questions in that run, 59.6\% of Qdrant's top five were shared FiQA passages where exact search
+returned none, and the model found the target document for only 39.9\% of targeted questions
+(33.8\% to 39.9\% over the four runs).
 
 The two patterns are opposite in kind. pgvector \emph{under-retrieves}: it returns fewer than $k$
 hits, which a count can detect. Qdrant \emph{mis-retrieves}: it returns $k$ hits, the wrong ones,

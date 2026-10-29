@@ -1,0 +1,13 @@
+panic: configured request timeout (6s) cannot be lower than 'listObjectsDeadline' config (20s)
+
+goroutine 1 [running]:
+github.com/openfga/openfga/cmd/run.run(0x322c25ee1b08?, {0x4370ea0?, 0x4?, 0x27fb760?})
+	github.com/openfga/openfga/cmd/run/run.go:427 +0xe6
+github.com/spf13/cobra.(*Command).execute(0x322c25ee1b08, {0x4370ea0, 0x0, 0x0})
+	github.com/spf13/cobra@v1.10.2/command.go:1019 +0xafb
+github.com/spf13/cobra.(*Command).ExecuteC(0x322c25ee1808)
+	github.com/spf13/cobra@v1.10.2/command.go:1148 +0x465
+github.com/spf13/cobra.(*Command).Execute(0x322c25ee1808?)
+	github.com/spf13/cobra@v1.10.2/command.go:1071 +0x13
+main.main()
+	github.com/openfga/openfga/cmd/openfga/main.go:28 +0x10f

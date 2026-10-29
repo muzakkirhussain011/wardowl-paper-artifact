@@ -188,9 +188,10 @@ found in a hit, a prompt or an answer; canaries follow the Secret Sharer's inser
 secrets~\cite{carlini2019secret}, used as a deterministic enforcement check rather than a memorization
 estimate. When no leak occurs, counting hits overstates confidence, because hits cluster by question
 and subject. We bound the leak rate per question and per subject with the one-sided 95\% bound
-$1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ trials: for the run of Section~\ref{sec:e2e},
-about $2.7 \times 10^{-3}$ per question (1,105 questions) and $1.6 \times 10^{-2}$ per subject (189
-subjects), not the $1.8 \times 10^{-5}$ that 163,236 hits would suggest. The \emph{violation rate},
+$1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ trials: for the four runs of
+Section~\ref{sec:e2e}, about $6.8 \times 10^{-4}$ per question for each configuration (4,420
+questions) and $1.6 \times 10^{-2}$ per subject (189 subjects, who recur across runs), not the
+$4.6 \times 10^{-6}$ that 653,638 checked hits would suggest. The \emph{violation rate},
 the share of store candidates the re-check rejects, measures the insecurity of the pushed-down
 filter, not of the layer.
 

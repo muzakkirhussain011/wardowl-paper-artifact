@@ -38,11 +38,12 @@ with metrics for leaks, permission-recall, under-retrieval and false completenes
 conformance testing of filter semantics across 14 vector stores and seven authorization engines,
 which found six classes of faults and semantic gaps; (iii) a measurement of disagreement between authorization engines' filter compilers
 and their own check APIs; (iv) an audit of retrieval quality under permission-shaped filters, where
-recall@10 at common settings ranged from 0.56 to 1.00 and some stores returned no results at all for
-least-privileged users without any signal; (v) detection and bounded repair of such under-retrieval;
-(vi) a measurement of side channels in filtered retrieval; and (vii) an end-to-end evaluation with
-canary documents over 107,540 chunks, 20 tenants and 1,105 questions including red-team prompts, in
-which 163,236 checked hits produced no leak. Security held everywhere; retrieval quality did not.
+recall@10 at common settings ranged from 0.55 to 1.00, and one store, in half of our runs, returned
+no results at all to least-privileged users without any signal; (v) detection and bounded repair of
+such under-retrieval; (vi) a measurement of side channels in filtered retrieval; and (vii) an
+end-to-end evaluation with canary documents, four runs over 107,540 chunks, 20 tenants and 1,105
+questions each, including red-team prompts, in which 653,638 checked hits produced no leak. Security
+held everywhere; retrieval quality did not.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
