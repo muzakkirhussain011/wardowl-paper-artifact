@@ -58,15 +58,16 @@ X0 or X8.
 F1. OpenFGA starts and the harness writes every tuple, in all four runs.
 F2. Safety: 0 unreadable hits, 0 canaries in chunks, prompts or answers, 0 violations and 0 errors
     for pgvector + OpenFGA in every run. Any leak falsifies the end-to-end claim for this engine.
-F3. Every retrieval with OpenFGA uses the pre-filter: the most a person may read is about 1,040
-    company documents plus the one knowledge-base document, under the 10,000-object limit, so no
+F3. Every retrieval with OpenFGA uses the pre-filter: the most a person may read is about 1,665
+    company documents (59,265 chunks less the 57,600 shared passages) plus the one knowledge-base
+    document, under the 10,000-object limit, so no
     ListObjects answer should reach the limit. A post-filter strategy on any question would mean
     an answer reached the 20 s deadline or the limit, and is reported with the person.
 F4. The pgvector in-process configuration in these runs again shows one of the two modes seen so
     far (recall@10 near 0.73 with p50 under 20 ms, or near 0.99 with p50 over 300 ms).
 
 Recall, latency and the model's behaviour for pgvector + OpenFGA are reported without a
-prediction: the filter is an `In` over up to about 1,040 resource ids, a shape no earlier run
+prediction: the filter is an `In` over up to about 1,665 resource ids (a median person about 1,040), a shape no earlier run
 measured on pgvector.
 
 **Analysis.** As above, per configuration; the leak bound for pgvector + OpenFGA over its own
