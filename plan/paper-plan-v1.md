@@ -172,3 +172,11 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
   in one harness on the enterprise corpus plus a second corpus with synthetic permission layouts of
   controlled selectivity and correlation (embeddings once on GPU, stores on CPU sessions); X8 three seeded
   end-to-end runs in one GPU session on the library version that includes PR 2.
+- 2026-10-30: X8 done (`evidence/x8-run.md`): 0 leaks in four runs, 653,638 checked hits; prediction 3
+  falsified because pgvector ran exact in seeds 11 and 13 and lossy in X0 and seed 17 (plan cache); the
+  other four predictions held. OpenFGA never started in any enterprise run: the harness set a 20 s
+  ListObjects deadline above OpenFGA's request timeout (panic in `openfga.log`). Amendment 1 (pre-registered
+  ba64c23, 1a25086) reruns pgvector + OpenFGA with the timeout raised, seeds 7, 11, 13, 17 (Kaggle kernels
+  muzakkirhussain1/wardowl-x8fga-seedNN; two GPU sessions at a time). Library fix: PR #185. Paper: e2e,
+  audit table, abstract, intro (X4 and X8 headlines), appendix versions updated (03e0c7a). X3/X6
+  (40940385704) and X2/X5 (40921769714) still running; X3's Chroma job crashed with SIGSEGV on every seed.
