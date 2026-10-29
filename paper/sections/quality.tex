@@ -155,5 +155,32 @@ enterprise scenario and a second corpus.}
 
 \subsection{Filter size}\label{sec:qual-size}
 
-\tbd{X3: groups per subject from 1 to 40,000; per store, whether the filter is accepted, its latency,
-and recall at fixed selectivity; documented limits that fail loudly.}
+A person in many directory groups turns the permission filter into a long disjunction: the filter of
+Section~\ref{sec:sys-contracts} holds one value per group, and enterprise users can belong to
+thousands. We vary only that length. Each of five seeds builds a corpus of 100,000 vectors of 384
+dimensions, the 57,638 FiQA passages embedded as in Section~\ref{sec:side-setup} and 42,362 synthetic
+vectors around 200 seeded cluster centers, and makes a fixed 10\% of it readable at every level: a
+readable document holds one group of each level, and the subject at level $G$ holds exactly that
+level's $G$ groups, for $G$ from 1 to 40,000. The readable set, and so the exact answer, is the same
+at every level; only the filter grows. Twelve stores run at default index settings, with FAISS
+over a flat index and the in-memory backend as controls, and each level is timed over 30 questions
+with $k = 10$ in three passes after a warm-up, a retrieval being allowed 120\,s. We record whether
+each store's translator returns and how fast, whether the store accepts the filter or refuses it,
+and with which error, the latency percentiles, and recall@10 against exact search over the readable
+set; for pgvector also the plan. The limits the stores document that could bind are a 65,536-term
+cap per \texttt{terms} query in Elasticsearch and OpenSearch, PostgreSQL's 65,535 bind parameters,
+SQLite's 32,766 host parameters and expression depth of 1,000 under Chroma, and the request sizes of
+MongoDB (16\,MB) and Qdrant (32\,MB); the layer's Cassandra adapter falls back to one unfiltered
+query filtered locally beyond 254 groups, as documented.
+
+We pre-registered that every translator returns within a second at every level; that at 40,000
+groups Elasticsearch, OpenSearch, Qdrant, pgvector, LanceDB, Cassandra, FAISS and the in-memory
+backend accept the filter and Chroma refuses it; that pgvector's median latency grows at least
+fiftyfold from one group to 40,000, because above 100 values the layer sends an array test that the
+GIN index cannot serve, while the controls' grows at most twofold; and that recall does not depend
+on the filter's length in any approximate store that accepts it (paired difference within
+$\pm 0.02$).
+\tbd{X3 full run (GitHub Actions run 40940385704): acceptance per store and level with error
+classes; latency against $G$; recall differences with intervals; pgvector's plans; Chroma's
+process ended with a segmentation fault (signal 11) in every seed it reached, rather than refusing
+the filter with an error, to be confirmed from the logs.}
