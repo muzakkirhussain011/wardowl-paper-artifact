@@ -148,3 +148,17 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
 - Next: explain the X0/X1 pgvector gap; rerun skipped pgvector builds; triage the Cerbos and Redis/MongoDB
   findings (minimise, confirm, report upstream); fix the harness for OpenFGA/SpiceDB 400s; second library
   PR (under-retrieval detection and exact fallback); remaining experiments and sections.
+- 2026-10-29: Syed authorised merging; PR #166 merged (main 438a176). Four tracks started: (1) X0/X1 pgvector
+  gap and X1 run 2 harness (branch paper/x1-underretrieval, report to investigations/x0-x1-pgvector-gap.md);
+  (2) conformance triage and engine-adapter fixes (branches fix/engine-limits and paper/conformance-campaign,
+  report to investigations/conformance-run1-triage.md, vendor drafts in disclosure/); (3) library PR 2,
+  under-retrieval detection and bounded exact fallback (branch feat/under-retrieval); (4) X3 filter-size and
+  X6 side-channel harnesses for GitHub Actions (branch paper/x3-x6, PREREG_X3_X6.md).
+- 2026-10-29: drafted Introduction, Retrieval quality (X0 audit, Qdrant diagnosis, pgvector mechanism),
+  End-to-end, Limitations/Ethics/AI disclosure/Reproducibility, Conclusion and an appendix (settings, grid,
+  kit variants, compute). Added verified references: C-Pack (BGE), Qwen2.5, Qdrant search and multitenancy
+  docs, Qdrant's ACORN article.
+- Plan for the remaining Kaggle work: X1 run 2 (CPU session if no GPU step); X2 frontiers and X5 mitigation
+  in one harness on the enterprise corpus plus a second corpus with synthetic permission layouts of
+  controlled selectivity and correlation (embeddings once on GPU, stores on CPU sessions); X8 three seeded
+  end-to-end runs in one GPU session on the library version that includes PR 2.
