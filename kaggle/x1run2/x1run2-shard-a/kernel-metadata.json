@@ -1,0 +1,1 @@
+{"id": "muzakkirhussain1/x1run2-shard-a", "title": "x1run2-shard-a", "code_file": "run.py", "language": "python", "kernel_type": "script", "is_private": true, "enable_gpu": false, "enable_internet": true, "dataset_sources": [], "kernel_sources": ["muzakkirhussain1/x1run2-prep-gpu"], "competition_sources": [], "machine_shape": "None"}
