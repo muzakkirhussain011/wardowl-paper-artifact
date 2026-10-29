@@ -59,9 +59,26 @@ the measured recall; the same fields reach the audit events and the OpenTelemetr
 
 \subsection{Evaluation}\label{sec:rep-eval}
 
-\tbd{X5 (pre-registered in PREREG\_X2\_X5.md): on pgvector and Qdrant, with the enterprise corpus and
-the MS MARCO layouts; arms report, count, exact with B = 1,000, 10,000 and unbounded, widen, the 1\%
-recall monitor, and the store-native alternatives (pgvector's raised scan limit, Qdrant's ACORN and
-per-tenant graphs). Metrics: detection rate, false-completeness rate, recall@5 and @10, empty-result
-rate, trigger rate, and latency overall and on triggered queries. Hypotheses H5.1 to H5.7 and their
-verdicts; Table tab:rep-results.}
+We evaluate the policies on pgvector and Qdrant, the two stores whose losses
+Section~\ref{sec:quality} diagnosed, on the enterprise scenario and on the MS MARCO layouts of
+Section~\ref{sec:qual-frontiers}, in the same jobs and builds as X2. The base configuration is the
+audit's: pgvector with relaxed-order iterative scans, \texttt{ef\_search} 100 and the default scan
+limits; Qdrant with \texttt{hnsw\_ef} 128 and no ACORN. Over the same backend and build we run
+\emph{report}; \emph{count}; \emph{exact} with $B$ of 1,000, 10,000 and unbounded; \emph{widen},
+whose wider search is pgvector with a million-tuple scan limit and \texttt{ef\_search} 400, or Qdrant
+with \texttt{hnsw\_ef} 512 and ACORN; the 1\% recall monitor; and, for comparison, the store-native
+alternatives alone (pgvector's raised limit, Qdrant's ACORN and per-tenant graphs). Each question
+retrieves with $k = 5$ and $k = 10$, every hit is re-checked by the layer and by an independent
+oracle, and latency is the median of three timed passes.
+
+Seven hypotheses were pre-registered. The count detects every short first search without a false
+alarm (H5.1); exact repair leaves no result empty or short and reaches recall@10 of at least 0.999
+on the queries it repairs (H5.2); no repair slows the queries that do not trigger it by more than
+5\% (H5.3); no repair changes Qdrant's false-completeness rate, because its loss is mis-retrieval
+(H5.4); the monitor samples 1\% of searches and its recall agrees with the harness's (H5.5);
+widening recovers less than exact repair on the searches that trigger it (H5.6); and on the
+enterprise corpus Qdrant's per-tenant layout reaches recall@10 of 0.90 while every library arm on
+the shared layout stays at or below 0.75 (H5.7).
+\tbd{X5 full run (GitHub Actions run 40921769714): verdicts on H5.1 to H5.7 with intervals;
+Table tab:rep-results with detection rate, false-completeness rate, recall@5 and @10, empty-result
+rate, trigger rate and latency overall and on triggered queries, per arm, store and corpus.}
