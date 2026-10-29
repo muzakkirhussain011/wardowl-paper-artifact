@@ -2,8 +2,9 @@
 % \section heading and its label stay in main.tex). Labels defined here: sec:conf-method,
 % sec:conf-results, tab:conf-faults.
 % Sources: the library's testing.py (check_backend, check_authorizer), tests/test_testing_kit.py,
-% backends/*, authorizers/*, CHANGELOG.md, docs/review.md and docs/security.md. Every row of
-% Table tab:conf-faults comes from those files; none was measured for this paper. "Review" means
+% backends/*, authorizers/*, CHANGELOG.md, docs/review.md and docs/security.md. Rows found by
+% "Kit" come from the campaign (evidence/conformance-campaign-run1.md,
+% investigations/conformance-run1-triage.md, run 2 pending); the other rows come from those files. "Review" means
 % the release notes attribute the fix to the project's own review or security audit, collectively
 % rather than per item (2.0.0: "the fixes from the project's own security audit of every module";
 % 1.4.0: "fail-closed gaps found by review"); "Accept." means the release notes attribute it to the
@@ -100,13 +101,70 @@ asynchronous searches; skipping the asynchronous search when the synchronous one
 and cached answers hiding batch dependence. In this history the kit's blind spots lay in what it
 generated and what it compared, never in its oracle.
 
+\subsection{A controlled campaign}\label{sec:conf-campaign}
+
+\paragraph{Setup.}
+We ran the kit against current releases of every store and engine the layer supports, with fixed
+versions, seeds and counts, in GitHub-hosted runners. There were 29 targets. The 15 stores were
+pgvector 0.8.7 on PostgreSQL 17.11, Redis 8.10.2, Cassandra 5.0.9, Elasticsearch 9.5.5, OpenSearch
+3.9.0, Vespa 8.763.13, Qdrant 1.19.2, Milvus 3.0.2, Weaviate 1.39.12, MongoDB Atlas Local 8.0.30,
+Chroma 1.5.9, LanceDB 0.40.0, FAISS 1.15.1, Pinecone, and the in-memory reference as a control. The 14
+engine targets were OPA 1.21.2, OpenFGA 1.22.0, SpiceDB 1.56.2, Cerbos 0.56.0, Cedar 4.12.2 and Casbin
+1.43.0, each with a metadata-ACL policy and a tenant policy, plus Ory Keto 26.2.0 and the in-process
+metadata-ACL authorizer as a control. Container image digests are recorded with the results. Each
+store target ran 20 seeds of nine data variants and each engine target 20 seeds of seven
+(Appendix~\ref{app:kit}). A \emph{run} is one (target, seed, variant) and takes the worst outcome of
+its examples: \emph{pass}; a \emph{conformance violation}, the kit's first disagreement with the
+reference; a \emph{refusal}, a \texttt{ValueError} by which the layer declines data it cannot
+represent; or an \emph{error}, anything else. Engines run in consistency mode, which compares each
+engine's filter API with its own check API on every hit.
+
+\paragraph{Run 1.}
+The first run (wardowl 2.1.0) completed 4,315 runs: 3,612 passed, 84 were violations, none was
+refused and 619 were errors. Both controls passed every run. No target returned a hit outside the
+reference, and none altered stored metadata. The violations fall into two classes. \emph{Cerbos's
+query plans and checks disagreed} in 39 of the 40 runs whose ACL fields hold a scalar instead of a
+list: for a chunk with \texttt{allowed\_users} equal to the string \texttt{"zo\"e"}, the plan, which the
+layer translates to $\mathrm{In}$, admits the user, as the reference does, while Cerbos's check
+evaluates the policy's CEL \texttt{in}, which is defined on lists and maps only, raises, and denies.
+The policy is the authority, so the filter over-approximates; the re-check drops every such hit. This
+is a policy-authoring pitfall, not a fault of Cerbos or the layer, and the layer's documentation
+records it. \emph{Redis and MongoDB missed matching chunks} in 26 and 19 runs with long and huge
+string values, always passing the sound-only retry. Both stores truncate a long term when they index
+it and look up the whole term when they search: RediSearch keeps at most 4,096 bytes of a tag value,
+which the layer's hex encoding reaches at 2,048 bytes of field and value, and the Atlas Search index
+keeps 8,181 characters. A value equal to the kept prefix of a longer one would also match it, a false
+admit that the re-check catches. The Redis limit is not in its documentation; MongoDB documents it for
+one index field type but not for the vector-search filter type the layer uses.
+
+Of the errors, 479 came from OpenFGA and SpiceDB, which refused whole batches with HTTP~400. OpenFGA
+accepts at most 100 contextual tuples per request, and one generated subject in five is in more than
+300 groups; long identifiers exceeded its size limits. SpiceDB object identifiers admit only a
+restricted alphabet, which excludes \texttt{zo\"e} and \texttt{7.0}. The layer failed closed in every
+case, but only after a round trip, with an error that did not name the limit. The other 140 store
+errors were documented size limits that fail loudly and return nothing: Lucene's 32,766-byte term in
+Elasticsearch and OpenSearch, Milvus's array-element and JSON sizes, Chroma's expression depth of
+1,000, and Qdrant's grammar for field names. Ory Keto and Casbin ran out of the shared time budget
+after 72 and 43 of 140 runs, all passing; Pinecone was skipped for want of a key.
+
+\paragraph{Fixes and run 2.}
+Four of these were faults in the layer's adapters, and we fixed them: OpenFGA and SpiceDB now refuse
+a subject they cannot represent before sending anything, with an error naming the limit, and Redis
+and MongoDB store and search a term above their limits as its SHA-256 digest, leaving shorter terms
+unchanged. The second run tested the fixed adapters with the harness's budgets split across more
+jobs and every finding recorded in full. \tbd{run 2 (Actions run 40905549149): per-target counts;
+OpenFGA and SpiceDB errors expected to become refusals; Redis and MongoDB long and huge strings
+expected to pass; Keto and Casbin expected to complete 140 runs; Cerbos expected to repeat its 39
+disagreements, every one on the filter's side.}
+
 \subsection{Faults and semantic gaps}\label{sec:conf-results}
 
 Table~\ref{tab:conf-faults} lists the faults and semantic gaps in stores and engines that the
 project's release notes, code comments and documentation record, up to the version we evaluate.
 \emph{Found by} follows the release notes: \emph{Review}, attributed collectively to the project's
 own code review or security audit; \emph{Accept.}, to the acceptance scenarios against real servers
-or the scale run of Section~\ref{sec:e2e}; \tbd{}, not stated. \emph{Effect} is the consequence
+or the scale run of Section~\ref{sec:e2e}; \emph{Kit}, the campaign of
+Section~\ref{sec:conf-campaign}; \tbd{}, not stated. \emph{Effect} is the consequence
 without the mitigation: \emph{Leak}, a false admit, which the re-check turns into a violation;
 \emph{Leak*}, wrong stored or returned metadata, which also passes a re-check that reads chunk
 metadata, because (A1) or (A2) fails; \emph{Leak\textdagger}, a check that itself admits, beyond any
@@ -160,6 +218,24 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag \tbd{} & \confrag Leak
  & \confrag Hex-encoded terms (Redis); a separator at both ends of each term (Weaviate)
  & \confrag \tbd{} \tabularnewline
+\confrag Redis 8.10
+ & \confrag Tag values are cut at 4,096 bytes when indexed and looked up whole: long values never
+   match, and a value equal to the kept prefix matches the longer one
+ & \confrag Kit & \confrag Recall; Leak
+ & \confrag Store and search a term over the limit as its SHA-256 digest
+ & \confrag Report drafted; \tbd{filed} \tabularnewline
+\confrag MongoDB Atlas 8.0
+ & \confrag Strings are cut at 8,181 characters when indexed, documented for one index field type
+   only: the same effects as for Redis
+ & \confrag Kit & \confrag Recall; Leak
+ & \confrag As for Redis
+ & \confrag Note drafted; \tbd{filed} \tabularnewline
+\confrag Elasticsearch, OpenSearch, Milvus, Chroma, Qdrant
+ & \confrag Size and syntax limits refuse a write or query: 32,766-byte terms; array-element and JSON
+   sizes; expression depth 1,000; field-name grammar
+ & \confrag Kit & \confrag Avail.
+ & \confrag None needed: each fails closed \tbd{or refuse up front}
+ & \confrag Limits documented \tabularnewline
 \confrag Qdrant
  & \confrag \texttt{.}, \texttt{[}, \texttt{]} and \texttt{"} in a field name are path syntax:
    \texttt{team.name} reaches a nested object
@@ -221,10 +297,10 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
 \confrag Cerbos
  & \confrag CEL \texttt{==} compares a list field whole, and \texttt{in} or
    \texttt{hasIntersection} on a single value is an error (denied); In matches lists by element
- & \confrag \tbd{} & \confrag Leak
+ & \confrag Review; Kit & \confrag Leak
  & \confrag Translate \texttt{and}, \texttt{or}, \texttt{hasIntersection}, \texttt{in} and
-   \texttt{==} only; else post-filter
- & \confrag \tbd{} \tabularnewline
+   \texttt{==} only; else post-filter; documented
+ & \confrag Documentation note drafted \tabularnewline
 \confrag Cedar (adapter)
  & \confrag Values Cedar cannot hold (floats, nulls, integers beyond 64 bits) and keys starting with
    \texttt{\_\_} were dropped, so a \texttt{forbid} on them stopped applying
@@ -236,6 +312,18 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag Review & \confrag Avail.
  & \confrag Deny such a chunk without sending it
  & \confrag \tbd{} \tabularnewline
+\confrag OpenFGA (adapter)
+ & \confrag More than 100 contextual tuples, or a user or group identifier over its size limit, makes
+   it refuse the whole request
+ & \confrag Kit & \confrag Avail.
+ & \confrag Refuse such a subject before sending, naming the limit
+ & \confrag None (adapter) \tabularnewline
+\confrag SpiceDB (adapter)
+ & \confrag A subject or group identifier outside the object-identifier syntax makes it refuse the
+   whole request
+ & \confrag Kit & \confrag Avail.
+ & \confrag Refuse such a subject before sending, naming the limit
+ & \confrag None (adapter) \tabularnewline
 \confrag Ory Keto (adapter)
  & \confrag Batches above \texttt{limit.max\_batch\_check\_size} (10 by default) are refused with
    HTTP 400; the adapter sent 100
@@ -251,18 +339,20 @@ engine before publication.}
 \label{tab:conf-faults}
 \end{table}
 
-The table records development, not a controlled campaign; that campaign, with fixed versions, seeds
-and counts, is \tbd{run the kit against current releases of the 14 stores and 7 engines and report
-what it finds}. Six entries are false admits, which leak without the re-check and become violations
-with it, as Proposition~\ref{prop:reduction} predicts. The five Leak* and Leak\textdagger{} entries
-lie beyond any re-check: the kit's exact comparison of returned with stored metadata targets the first
-kind, and only a test of the policy itself reaches the second. Seven entries cost recall or
+Rows marked \emph{Kit} come from the campaign of Section~\ref{sec:conf-campaign}; the others record
+the project's development before it. Nine entries let a filter admit a chunk the subject may not
+read, which leaks without the re-check and becomes a violation with it, as
+Proposition~\ref{prop:reduction} predicts. The five Leak* and Leak\textdagger{} entries lie beyond
+any re-check: the kit's exact comparison of returned with stored metadata targets the first kind, and
+only a test of the policy itself reaches the second. The remaining effects cost recall, freshness or
 availability; where a fix was needed, the lost recall had been reported as a complete answer, the
-dishonesty that Section~\ref{sec:sys-complete} removes. Where the evidence says how an entry was
-found, it names review or the acceptance scenarios, never the kit, whose role in this record is to
-keep each class fixed once it has entered the generator and the meta-tests. Several entries, the
-three marked as adapter faults among them, are faults in \sys{}'s own code that a store's or
-engine's behavior exposed; any other integration meets the same behavior. Recall lost by approximate
+dishonesty that Section~\ref{sec:sys-complete} removes. Before the campaign, the record credited
+review or the acceptance scenarios, never the kit, whose role had been to keep each class fixed once
+it entered the generator and the meta-tests. The campaign added five entries and confirmed a sixth
+(Cerbos), all in classes the generator targets, long values, many groups, unusual identifiers and
+scalar fields, at sizes that the continuous-integration runs had not reached. Several entries, the
+five marked as adapter faults among them, are faults in \sys{}'s own code that a store's or engine's
+behavior exposed; any other integration meets the same behavior. Recall lost by approximate
 indexes under selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured
 in Section~\ref{sec:quality} instead. Every row will be confirmed with the maintainers of the store or
 engine before publication, and reported upstream where it reflects their behavior rather than an
