@@ -1,0 +1,15 @@
+{
+  "id": "muzakkirhussain1/wardowl-x8-seed13",
+  "title": "wardowl-x8-seed13",
+  "code_file": "x8_seed13.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": true,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": [],
+  "competition_sources": [],
+  "machine_shape": "NvidiaTeslaT4"
+}
