@@ -85,7 +85,7 @@ user may read, and the application could not see the loss.
         recall and scores reveal about unreadable chunks near a query. In a pre-registered
         distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
         chunks had appeared near it from the latency of the widening post-filter (paired AUC 0.80
-        to 0.98) and of pgvector's approximate pre-filter (1.00 at 1,000), and from BM25 and IDF
+        to 0.98) and of pgvector's approximate pre-filter (1.00 with 1,000 of them), and from BM25 and IDF
         scores (0.98 to 1.00). Exact pre-filtering returned identical answers, and padding removed
         every latency channel we tested, at five to seven times the latency.
   \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): four runs of 1,105
