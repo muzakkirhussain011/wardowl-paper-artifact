@@ -129,9 +129,11 @@ candidates than requested, or a cap is reached (1,000 by default; a larger $k$ i
 redactor and a reranker, if configured, receive only permitted hits and cannot add one.
 
 \paragraph{Failing closed.}
-Any exception from the authorizer ends the request with an authorization error and no hits. The
-message is fixed (``authorizer failed''), the original exception kept only as its cause, because
-agent frameworks show tool errors to the model and exception text can name hosts or credentials.
+Any exception from the authorizer ends the request with an authorization error and no hits. An
+exception the adapters did not raise themselves becomes a fixed message (``authorizer failed''), the
+original kept only as its cause, and the adapters' own messages come from a fixed set that names no
+host, because agent frameworks show tool errors to the model and exception text can name hosts or
+credentials; Section~\ref{sec:eng-revoke} checks this under injected faults.
 Malformed answers fail likewise: a filter that is not an In, And or Or, a decision list of the wrong
 length, or any decision that is not a Boolean (\texttt{1}, \texttt{"no"} and \texttt{None} are
 rejected, not coerced).
@@ -175,7 +177,9 @@ filter, it becomes the post-filter's scope.
 A caching wrapper stores, per subject and action, the filter, the scope, and each decision keyed by
 the chunk's identifier and metadata. Its time to live (30\,s by default) is a stated revocation
 bound, and an explicit invalidation ends it at once, also for answers that calls in flight obtained
-before it. Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
+before it, provided the engine answers from current data; an engine that serves a stale snapshot
+after the revocation can refill the cache, which then holds the stale answer for a full time to live
+(Section~\ref{sec:eng-revoke}). Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
 never share an entry, and failures are never cached. Entries shared through Redis carry their
 absolute expiry, so the bound holds across replicas, and, with a signing key, an HMAC-SHA256 over key
 and content, so whoever can write to Redis cannot plant a decision. The bound covers the cache alone:
