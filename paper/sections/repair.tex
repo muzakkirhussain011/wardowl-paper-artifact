@@ -1,0 +1,67 @@
+% Detecting and Repairing Under-Retrieval: body of Section~\ref{sec:repair} (the \section heading and
+% its label stay in main.tex). Labels defined here: sec:rep-design, alg:rep, sec:rep-eval,
+% tab:rep-results. Sources: the library change (PR #168, short_results), PREREG_X2_X5.md on branch
+% paper/x2-x5 (X5). Results marked \tbd{} come from X5.
+
+Section~\ref{sec:quality} found two kinds of loss: \emph{under-retrieval}, where a filtered
+approximate search returns fewer than $k$ hits although more readable chunks exist, and
+\emph{mis-retrieval}, where it returns $k$ hits that are not the right ones. Section~\ref{sec:sys-complete}
+already stops the layer from calling a short approximate answer complete. Here we go further: decide
+cheaply \emph{why} an answer is short, and repair it within a stated cost. Mis-retrieval needs an
+exact baseline to see, and we return to it with a sampled monitor.
+
+\subsection{Design}\label{sec:rep-design}
+
+\paragraph{Detection by a bounded count.}
+When a pre-filtered search on a backend that does not declare exact search returns $h < k$ hits, the
+layer asks the backend for $n = \min(\#\{d : m_d \models \varphi_s\},\ L)$, a filter-only count that
+stops at a limit $L$. If $n \le h$, the store returned every chunk the filter admits, and the answer is
+complete with respect to $\varphi_s$ (\emph{exhausted}). If $n > h$, chunks that pass the filter were
+missed (\emph{missed}). The count is the second certificate of Section~\ref{sec:prob-criteria}; it
+never raises a false alarm, because a count above $h$ proves a miss, and it never certifies falsely,
+because a count no larger than $h$ proves that nothing else passes $\varphi_s$. Both statements hold
+for the store's state at the time of the count; a write between the search and the count can make
+either one stale, as any read without a snapshot can. It costs one query per short answer, and the
+limit keeps that query bounded on stores that count by scanning.
+
+\paragraph{Repair by bounded exact search.}
+After a proven miss the layer can search again, exactly, under the same filter: pgvector disables the
+index scan for that query, so every row that passes the filter is ranked, and Qdrant sets its
+per-request exact flag. The repair runs only when the count is at most a bound $B$
+(\texttt{max\_exact\_rows}, 10,000 by default), so that a subject who can read most of the corpus
+cannot trigger a scan of all of it; above the bound the first hits are kept and the result says
+\emph{over\_limit}. With $L = B + 1$ one count both detects and bounds. The alternative
+\emph{widen} repeats the search on the same store with more effort, for example a larger scan budget
+or ACORN, and merges the two answers; it is cheaper but certifies nothing, since a wider approximate
+search can still miss. OpenSearch already falls back to exact search inside the engine when an
+approximate filtered search returns fewer than $k$ results~\cite{opensearch2026efficient}; the layer
+does the same above the store, for stores that do not.
+
+\paragraph{Security.}
+The repair is one more search step in the layer's single plan, shared by the synchronous and
+asynchronous drivers. It uses the filter already obtained from the authorizer, and every hit it
+returns passes the same re-check as any other. The hits of the first search that the repair
+discards are re-checked in the same call, so a store that ignored the filter still shows up as
+violations. A failed count or search ends the request with an error and no hits, as any other
+failure does (assumption A3). Proposition~\ref{prop:reduction} therefore holds unchanged.
+
+\paragraph{A sampled recall monitor.}
+Neither the count nor the flag can see mis-retrieval. For a configurable share of pre-filtered
+requests, the layer also runs the exact search and reports the overlap of the two top-$k$ lists as a
+metric, without returning the exact hits. This turns the offline audit of Section~\ref{sec:quality}
+into a production signal, at the cost of one exact search per sampled request.
+
+\paragraph{Reporting.}
+Each result carries the outcome of detection (\emph{exhausted}, \emph{missed} or \emph{unknown}),
+of repair (\emph{exact}, \emph{widened}, \emph{over\_limit} or \emph{unsupported}) and, when sampled,
+the measured recall; the same fields reach the audit events and the OpenTelemetry spans and metrics
+(Section~\ref{sec:sys-identity}). The default policy remains \emph{report}, which adds no query.
+
+\subsection{Evaluation}\label{sec:rep-eval}
+
+\tbd{X5 (pre-registered in PREREG\_X2\_X5.md): on pgvector and Qdrant, with the enterprise corpus and
+the MS MARCO layouts; arms report, count, exact with B = 1,000, 10,000 and unbounded, widen, the 1\%
+recall monitor, and the store-native alternatives (pgvector's raised scan limit, Qdrant's ACORN and
+per-tenant graphs). Metrics: detection rate, false-completeness rate, recall@5 and @10, empty-result
+rate, trigger rate, and latency overall and on triggered queries. Hypotheses H5.1 to H5.7 and their
+verdicts; Table tab:rep-results.}
