@@ -1,0 +1,148 @@
+% Retrieval Quality Under Permission-Shaped Filters: body of Section~\ref{sec:quality} (the \section
+% heading and its label stay in main.tex). Labels defined here: sec:qual-audit, tab:qual-x0,
+% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, sec:qual-size.
+% Sources: evidence/kaggle-scale-run-2026-10-24.md (X0), evidence/x1-underretrieval-run1.md (X1 run
+% 1), investigations/filtered-recall-gaps.md (mechanisms, with source links). X1 run 2, X2 and X3
+% are pending and marked \tbd{}.
+
+Security held in every configuration of Section~\ref{sec:e2e}; this section asks what the
+permission filter cost. We first audit the enterprise scenario at common settings, then diagnose the
+two largest losses with pre-registered experiments, and finally map recall against throughput and
+filter size. Recall is permission-recall@$k$ against exact search over the readable set
+(Section~\ref{sec:prob-metrics}).
+
+\subsection{An audit at common settings}\label{sec:qual-audit}
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Store & Recall@5 & Recall@10 & Overlap@5, judy & Overlap@5, others & p50 (ms) \\
+\midrule
+FAISS (flat, exact) & 1.000 & 1.000 & 1.000 & 1.000 & 345.6 \\
+Redis & 0.985 & 0.980 & 0.998 & 0.982 & 28.3 \\
+Elasticsearch & 0.948 & 0.948 & 0.987 & 0.941 & 8.1 \\
+OpenSearch & 0.947 & 0.938 & 0.998 & 0.941 & 6.8 \\
+Weaviate & 0.888 & 0.892 & 1.000 & 0.876 & 7.1 \\
+Chroma & 0.887 & 0.883 & 0.987 & 0.876 & 1441.6 \\
+LanceDB & 0.833 & 0.860 & 0.949 & 0.821 & 22.4 \\
+pgvector & 0.691 & 0.732 & 0.724 & 0.686 & 6.5 \\
+Qdrant & 0.564 & 0.561 & 1.000 & 0.523 & 4.3 \\
+\bottomrule
+\end{tabular}
+\caption{Retrieval quality in the enterprise scenario (Section~\ref{sec:e2e}), one run, 1,105
+questions. Overlap@5 is the share of the exact top five that a store returned, by person type;
+``judy'' are the least-privileged people (624 readable chunks). pgvector with OPA is identical to
+pgvector. Settings: Appendix~\tbd{settings}.}
+\label{tab:qual-x0}
+\end{table}
+
+Table~\ref{tab:qual-x0} shows the spread. At settings a team would plausibly ship, recall@10 ranges
+from 0.56 for Qdrant to 0.98 for Redis, and every store's loss is concentrated where the readable set
+is far from the question. Two failures stand out. pgvector returned \emph{nothing} to ten of the
+least-privileged people, eight on red-team prompts and two on questions about documents they could
+not read, although each could read 624 chunks; the layer, before the change of
+Section~\ref{sec:sys-complete}, called these empty answers complete. Qdrant never returned a short
+answer, yet for ordinary employees it returned the right documents only about half the time
+(overlap@5 0.52), while for the least-privileged people it was perfect. On targeted questions,
+59.6\% of Qdrant's top five were shared FiQA passages where exact search returned none, and the
+model found the target document for only 39.9\% of targeted questions.
+
+The two patterns are opposite in kind. pgvector \emph{under-retrieves}: it returns fewer than $k$
+hits, which a count can detect. Qdrant \emph{mis-retrieves}: it returns $k$ hits, the wrong ones,
+which only an exact baseline reveals. We pre-registered hypotheses for both before running a
+diagnosis grid on Kaggle (X1; the pre-registration and its amendments are released).
+
+\subsection{Qdrant: an islanded permitted subgraph}\label{sec:qual-qdrant}
+
+Qdrant plans filtered search per segment from estimated filter cardinality: a filter estimated below
+a threshold (about 3,333 points for 768-dimensional vectors at the default) runs as a plain, exact
+scan over the payload index, and a broader one runs as filtered HNSW traversal, which scores and
+expands only neighbors that pass the filter~\cite{qdrant2026search}. Extra graph edges that keep a
+filtered subgraph connected are built per payload value, and only for values held by fewer points
+than a cap of a few percent of the segment~\cite{couzon2026filtered}. In the scenario every tenant
+value (56\% of points) and
+the employee and contractor groups (65\% and 61\%) exceed the cap. Near a question about company
+documents, only one of the twenty near-identical tenant copies passes the filter, so the permitted
+company region is a sparse island in the graph, while the shared passages, all permitted, form a
+large connected region that the traversal enters and does not leave. The least-privileged people
+escape the trap because their filter is small enough to be planned as an exact scan.
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Layout & Search setting & Recall@10 & Range over builds & p50 (ms) \\
+\midrule
+As run (one collection) & \texttt{hnsw\_ef} 128 (as run) & 0.619 & 0.062 & 4.5 \\
+ & \texttt{hnsw\_ef} 64 & 0.571 & 0.049 & 3.9 \\
+ & \texttt{hnsw\_ef} 512 & 0.709 & 0.101 & 7.7 \\
+ & ACORN, max selectivity 0.4 or 1.0 & 0.761 & 0.151 & 4.8 \\
+ & exact & 1.000 & n/a & 35.4 \\
+Tenant field marked \texttt{is\_tenant} & as run & 0.656 & 0.031 & 4.3 \\
+ & ACORN & 0.830 & 0.038 & 4.5 \\
+Per-tenant graphs (\texttt{is\_tenant}, $m = 0$) & as run & 0.943 & 0.009 & 3.8 \\
+Shared passages in a separate collection & as run & 0.948 & 0.004 & 8.2 \\
+\bottomrule
+\end{tabular}
+\caption{Qdrant 1.19.2 under the enterprise scenario's permission filters (X1, 1,489 questions,
+three index builds per layout, means over builds). ACORN at the default gate (0.4) and at 1.0 gave
+identical results. \tbd{one-segment layout after the run-2 fix.}}
+\label{tab:qual-qdrant}
+\end{table}
+
+The pre-registered predictions for this hypothesis all held (Table~\ref{tab:qual-qdrant}). Recall@10
+for the least-privileged people was 1.000, against 0.273 (95\% CI 0.242 to 0.305) for company
+documents among everyone else; 98.6\% of the hits that did not count were shared passages; and two
+interventions that reconnect the permitted region restored recall. ACORN, which explores neighbors
+of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 from 0.619 to 0.761 at an 8\%
+latency cost, and per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.943 while also
+being the fastest configuration.
+Putting the shared passages in their own collection, queried separately, reached 0.948. Raising
+\texttt{hnsw\_ef} from 128 to 512 added 0.090 at 1.7 times the latency, within the band we had
+pre-registered as inconclusive, and did not close the gap, as expected for a traversal trapped in
+the wrong region.
+
+One prediction failed. We expected ACORN's default gate, which engages when the estimated
+selectivity is at most 0.4, to engage for some people and not others, because the planner's
+independence estimate for a typical employee sits near 0.4. It engaged for everyone, and the gate
+at 1.0 gave identical recall. The paper therefore claims that ACORN helps but does not suffice under
+this layout, not that its gate misfires. A third hypothesis, that recall varies with the segment
+layout, remains open: recall@10 varied by 0.062 between three builds of the same data, but our
+attempt to force a single segment did not take effect. \tbd{run 2}
+
+For practitioners the result is a layout rule, not a parameter: when permission groups or tenants
+cover large, semantically interleaved parts of a collection, give each tenant its own graph, or keep
+widely shared content apart, before reaching for search-time effort.
+
+\subsection{pgvector: the iterative scan's budget}\label{sec:qual-pgvector}
+
+pgvector 0.8 answers a filtered HNSW query by scanning the graph in order of distance and applying
+the filter to each row the scan emits; with iterative scans enabled, it continues past
+\texttt{hnsw.ef\_search} until enough rows pass the filter or a limit is
+reached~\cite{pgvector2026pgvector}. The limit is \texttt{hnsw.max\_scan\_tuples} (20,000 by default)
+or a memory bound of \texttt{hnsw.scan\_mem\_multiplier} times \texttt{work\_mem}. A person whose
+readable set is small and far from the question can exhaust the budget before any readable row is
+emitted, and the query then returns nothing, which is indistinguishable from having nothing to read.
+
+The pre-registered test of this mechanism held. Every empty answer stopped after more than half of
+the budget had been spent, at a median of 20,083 rows emitted, and every setting that raised the
+tuple limit to 100,000 or more removed the empty answers entirely, while raising only the memory
+bound (eight times the multiplier, or 64\,MB of \texttt{work\_mem}) at the default tuple limit did
+not. \tbd{X1 run 2: absolute counts; the magnitude of the X0
+loss (recall@5 0.691 in the scenario run against 0.998 in the first diagnosis run) and its
+explanation from investigations/x0-x1-pgvector-gap.md; ef\_search and build effects; exact
+baseline.}
+
+\subsection{Recall against throughput}\label{sec:qual-frontiers}
+
+\tbd{X2: per store, recall@10 against queries per second at documented defaults, tuned settings and
+exact search, over selectivity from 0.06\% to 100\% and the measured correlation axes, on the
+enterprise scenario and a second corpus.}
+
+\subsection{Filter size}\label{sec:qual-size}
+
+\tbd{X3: groups per subject from 1 to 40,000; per store, whether the filter is accepted, its latency,
+and recall at fixed selectivity; documented limits that fail loudly.}

@@ -405,6 +405,9 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | opensearch2026documentlevel | Document-level security | verified-now (title only) | page title; body text not read |
 | xiao2024cpack | C-Pack: Packed Resources For General Chinese Embeddings | verified-now (2026-10-29) | arXiv 2309.07597 abstract page: title, 6 authors in order, comment "SIGIR 2024"; pages and DOI not verified, left out |
 | yang2024qwen25 | Qwen2.5 Technical Report | verified-now (2026-10-29) | arXiv 2412.15115 abstract page: title, first six authors in order of 42, Qwen team, v1 19 Dec 2024 |
+| qdrant2026search | Search (Qdrant documentation) | verified-now (2026-10-29) | page title; Query planning section and ACORN default 0.4 read |
+| qdrant2026multitenancy | Multitenancy (Qdrant documentation) | verified-now (2026-10-29) | page title; is_tenant, payload_m, m 0 guidance read |
+| couzon2026filtered | Filtered Vector Search: What ACORN Fixes, and What Fixes ACORN | verified-now (2026-10-29) | page title, two authors, 7 Aug 2026; quoted sentences read |
 
 ## Build note (2026-10-26)
 

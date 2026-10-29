@@ -608,3 +608,32 @@
   urldate      = {2026-10-26},
   annote         = {Dated 2026-05-19 (page metadata). Press report; no arXiv policy page carries the rule}
 }
+
+@misc{qdrant2026search,
+  author       = {{Qdrant}},
+  title        = {Search},
+  howpublished = {Qdrant documentation},
+  url          = {https://qdrant.tech/documentation/search/search/},
+  urldate      = {2026-10-29},
+  annote         = {Query planning: cardinality estimate, plain search over the payload index below a threshold, filterable HNSW above it; ACORN disabled by default, max selectivity default 0.4}
+}
+
+@misc{qdrant2026multitenancy,
+  author       = {{Qdrant}},
+  title        = {Multitenancy},
+  howpublished = {Qdrant documentation (Configure Multitenancy)},
+  url          = {https://qdrant.tech/documentation/manage-data/multitenancy/},
+  urldate      = {2026-10-29},
+  annote         = {is\_tenant; payload\_m 16 and m 0 disable the global index and index each tenant independently; m 0 is not exact search}
+}
+
+@misc{couzon2026filtered,
+  author       = {Couzon, Dylan and Ghafouri, Meina},
+  title        = {Filtered Vector Search: What {ACORN} Fixes, and What Fixes {ACORN}},
+  howpublished = {Qdrant article},
+  year         = {2026},
+  month        = aug,
+  url          = {https://qdrant.tech/articles/filtered-vector-search-acorn/},
+  urldate      = {2026-10-29},
+  annote         = {Extra HNSW edges per payload field, never per combination; values above a per-segment size cap get no extra edges; 39.7 percent recall on a 4 percent two-keyword intersection with ACORN off}
+}
