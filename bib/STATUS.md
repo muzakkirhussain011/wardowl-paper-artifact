@@ -408,6 +408,8 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | qdrant2026search | Search (Qdrant documentation) | verified-now (2026-10-29) | page title; Query planning section and ACORN default 0.4 read |
 | qdrant2026multitenancy | Multitenancy (Qdrant documentation) | verified-now (2026-10-29) | page title; is_tenant, payload_m, m 0 guidance read |
 | couzon2026filtered | Filtered Vector Search: What ACORN Fixes, and What Fixes ACORN | verified-now (2026-10-29) | page title, two authors, 7 Aug 2026; quoted sentences read |
+| reimers2019sentencebert | Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks | verified-now (2026-10-30) | ACL Anthology BibTeX D19-1410: title, two authors, EMNLP-IJCNLP 2019, pages 3982-3992, DOI |
+| wang2020minilm | MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers | verified-now (2026-10-30) | NeurIPS proceedings page: title, six authors in order, NeurIPS 33 (2020); pages not shown, left out |
 
 ## Build note (2026-10-26)
 

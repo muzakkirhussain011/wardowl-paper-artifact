@@ -1,0 +1,105 @@
+% Side Channels in Filtered Retrieval: body of Section~\ref{sec:side} (the \section heading and its
+% label stay in main.tex). Labels defined here: sec:side-game, sec:side-setup, tab:side-hyp,
+% sec:side-results. Source: benchmarks/paper/PREREG_X3_X6.md on branch paper/x3-x6 (X6, with
+% amendments 1 to 3, all made before any full result). Results marked \tbd{} come from the full run.
+
+Proposition~\ref{prop:reduction} bounds what a subject can \emph{read}; it says nothing about what
+the timing or shape of an answer reveals. B\"{u}ttcher and Clarke required of secure full-text
+search that no aspect of the output, its order included, depend on content the user may not
+search~\cite{buttcher2005security}. Each enforcement path of Section~\ref{sec:system} departs from
+that requirement in a predictable way: a widening post-filter works longer when unreadable chunks
+crowd the top of the ranking, an approximate filtered search passes unreadable nodes on its way to
+readable ones, and a keyword score computed over the whole collection counts unreadable documents.
+We ask how much an authenticated subject can learn from these departures about whether unreadable
+chunks exist near a query, and what removing each one costs.
+
+\subsection{A distinguishing game}\label{sec:side-game}
+
+Two worlds of equal size differ only in where $m$ unreadable chunks lie. In $W_1$ they are the $m$
+passages most similar to a probe query; in $W_0$ each is replaced by a passage of another domain, far
+from every probe and cut to the same length, at the same position in the index. The attacker's
+readable set is identical in both worlds. It issues the probe and sees only what a caller of the
+layer sees: the latency, the number of hits, the completeness flag $c$, the mean score of the hits,
+and the hits themselves, from which it can compute recall@10 against the exact top ten of its own
+readable set, since it can read and embed that set. The \emph{differencing attacker}, our primary
+adversary, sees the same probe in both worlds, as someone who repeats a query before and after a
+document is added; its success is the paired AUC, the share of probes whose $W_1$ observation lies
+further in the predicted direction than their $W_0$ observation, and its advantage is $2\,\mathrm{AUC}
+- 1$. The \emph{one-shot attacker} sees one observation and must threshold it; its success is the AUC
+over all $W_1$ against all $W_0$ observations.
+
+\subsection{Setup}\label{sec:side-setup}
+
+\paragraph{Data and probes.}
+The background is all 57,638 FiQA passages~\cite{maia2018www18}, with its 6,648 queries as probe
+candidates; far chunks come from 12,000 SciDocs abstracts, both from BEIR~\cite{thakur2021beir}, and
+all text is embedded with all-MiniLM-L6-v2 (384 dimensions)~\cite{reimers2019sentencebert,wang2020minilm}.
+Each of five seeds places eight groups of nine probes, one with $m = 1{,}000$ secrets, two with 100,
+three with 10 and three with 1. A probe's secrets are its $m$ nearest passages, excluding hubs, the 1\% of
+passages found among the 2,000 nearest neighbors of the largest number of queries; within a group, no probe's secrets fall in the
+zone a group mate can explore, its nearest passages up to 1,000 beyond its own secrets, which is the
+post-filter's cap. One index $W_1$ holds every group's secrets; for each group $g$, an index $W_0^g$
+replaces only group $g$'s secrets by far chunks, so a probe of group $g$ compares two worlds that
+differ in its own secrets alone. Background passages fall into 100 permission buckets, and three
+attackers read 1\%, 10\% and 50\% of them; secrets carry an ACL none of them holds. Every seed
+builds every index afresh.
+
+\paragraph{Configurations.}
+The \emph{pre-filter} runs each store's approximate filtered search at documented defaults:
+pgvector, Qdrant and Elasticsearch, with FAISS over a flat index and \sys{}'s in-memory backend as
+exact controls. The \emph{post-filter} is \sys{}'s widening loop at its defaults: fetch $4k$, widen
+fourfold until $k$ hits are readable, the store runs out, or 1,000 candidates have been examined.
+Four mitigations are measured against them. \emph{Constant-work widening} (M1) fetches the cap of
+1,000 in one round, so every request examines the same number of candidates. \emph{Exact
+pre-filtered search} (M2) ranks every readable chunk: pgvector with index scans disabled, Qdrant's
+exact flag, Elasticsearch's \texttt{script\_score}. \emph{Separation} (M3) gives the attacker an index
+that holds only its own tenant's chunks, as a tenant-per-index layout would; its advantage is zero by
+construction, and measuring it twice provides an A/A null for the harness. \emph{Latency padding}
+(M4) delays each answer to the next multiple of a budget fixed on the first seed and is evaluated on
+the other four; it models an ideal padder and ignores scheduler jitter. For collection statistics,
+keyword search runs under the pre-filter on Elasticsearch (BM25), on Qdrant (sparse vectors with an
+IDF modifier) and on pgvector (\texttt{ts\_rank\_cd}, which uses no collection statistics: a
+negative control), and Elasticsearch adds reciprocal-rank fusion of vector and keyword search.
+
+\paragraph{Measurement and statistics.}
+For every seed, store, probe, attacker and configuration, one warm-up is followed by five timed
+repetitions, each of which runs $W_0^g$, $W_1$ and the two separated indexes in a fresh random order,
+so drift affects every world alike; an observation is the median over repetitions. Every retrieval is
+re-checked, and a hit outside the attacker's readable set would stop the run. Intervals are 95\%
+cluster-bootstrap intervals over (seed, probe) pairs with 10,000 resamples. A channel is
+\emph{present} when the paired AUC reaches the hypothesis's threshold and its interval's lower end
+exceeds 0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$. Two guards precede any
+verdict: the A/A comparison of the two separated indexes must show no latency channel, and exact
+configurations must return identical hit lists in $W_0^g$ and $W_1$ for at least 99\% of probes. The
+experiment runs on GitHub-hosted runners with four virtual CPUs and 16\,GB of memory.
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}p{0.27\linewidth}p{0.47\linewidth}p{0.16\linewidth}@{}}
+\toprule
+Hypothesis & Prediction & Verdict \\
+\midrule
+H1 widening & Post-filter: count AUC $\ge 0.95$ at $m = 1{,}000$; latency AUC $\ge 0.75$ at $m = 100$
+  ($p = 10\%, 50\%$); no channel at $m = 1$ & \tbd{} \\
+H2 constant work (M1) & No latency channel; the count channel remains at $m = 1{,}000$ & \tbd{} \\
+H3 approximate pre-filter & pgvector and Elasticsearch: latency AUC $\ge 0.75$ at $m = 1{,}000$;
+  Qdrant: no channel at $p = 1\%, 10\%$ & \tbd{} \\
+H4 exact pre-filter (M2) & No channel in any observable & \tbd{} \\
+H5 collection statistics & BM25 and IDF-weighted sparse: score AUC $\ge 0.90$ at every $m$;
+  \texttt{ts\_rank\_cd}: none; fusion changes the hit list for at least 25\% of probes at
+  $m = 1{,}000$ & \tbd{} \\
+H6 padding (M4) & No latency channel wherever the unpadded AUC was $\ge 0.75$ & \tbd{} \\
+\bottomrule
+\end{tabular}
+\caption{Pre-registered hypotheses of the side-channel experiment, abbreviated; the full rules,
+including what falsifies each, are in the released pre-registration.}
+\label{tab:side-hyp}
+\end{table}
+
+\subsection{Results}\label{sec:side-results}
+
+\tbd{X6 full run (GitHub Actions run 40940385704): guards G1 and G2; per hypothesis the verdict,
+the paired and one-shot advantages per store, configuration, $m$ and $p$ with intervals; the
+latency cost of M1, M2 and M4 and of separation; any leak (none expected). Figure: paired advantage
+against $m$ per configuration.}
