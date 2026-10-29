@@ -34,7 +34,7 @@ instructions.
 The policy is $\mathrm{AllOf}(\mathrm{Tenant}, \mathrm{MetadataACL})$ (Section~\ref{sec:sys-compose}).
 It runs against ten configurations: FAISS over a flat index (exact, the reference), Chroma, pgvector,
 pgvector with the same policy written in OPA, Qdrant, Elasticsearch, OpenSearch, Weaviate, Redis and
-LanceDB, each at the settings listed in Appendix~\tbd{settings table}. A configuration with OpenFGA
+LanceDB, each at the settings listed in Appendix~\ref{app:settings}. A configuration with OpenFGA
 behind the caching authorizer did not start (the engine's health endpoint did not answer within
 180\,s) and is excluded. Each question retrieves with $k = 5$ for the answer and $k = 10$ for
 recall@10. Qwen2.5-3B-Instruct~\cite{yang2024qwen25} answers from the five chunks.

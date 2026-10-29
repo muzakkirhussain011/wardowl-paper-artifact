@@ -1,0 +1,90 @@
+% Appendices. Labels defined here: app:settings, tab:app-x0-settings, app:x1grid, app:kit, app:compute.
+% Sources: evidence/kaggle-scale-run-2026-10-24.md, investigations/filtered-recall-gaps.md (sections
+% 1.3, 1.4 with file:line references), evidence/conformance-campaign-run1.md,
+% benchmarks/paper/PREREGISTRATION.md on the X1 branch. Versions marked \tbd{} are read from the
+% archived outputs before the preprint.
+
+\section{Store settings in the enterprise scenario}\label{app:settings}
+
+\begin{table}[h]
+\centering
+\scriptsize
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}p{0.17\linewidth}p{0.2\linewidth}p{0.55\linewidth}@{}}
+\toprule
+Store & Version & Index and search settings \\
+\midrule
+FAISS & faiss-cpu \tbd{} & \texttt{IndexFlatIP} (exact); metadata matched in Python \\
+pgvector & pgvector 0.8.7, PostgreSQL 16.15 & HNSW built after loading with default $m = 16$,
+  \texttt{ef\_construction} 64; \texttt{hnsw.ef\_search} 100; iterative scan \texttt{relaxed\_order};
+  \texttt{hnsw.max\_scan\_tuples} 20,000 and \texttt{scan\_mem\_multiplier} 1 (defaults);
+  \texttt{work\_mem} 4\,MB; metadata in \texttt{jsonb} with a GIN \texttt{jsonb\_path\_ops} index;
+  filters as \texttt{@>} containment tests \\
+Qdrant & 1.19.2 & HNSW cosine, $m = 16$, \texttt{ef\_construct} 100, full-scan threshold 10,000\,KB
+  (defaults); keyword payload indexes on users, groups, tenant and identifier, created before
+  loading, none marked \texttt{is\_tenant}; \texttt{hnsw\_ef} 128; no ACORN, not exact \\
+Elasticsearch & \tbd{} & \texttt{int8\_hnsw}, \texttt{num\_candidates} 500 \\
+OpenSearch & \tbd{} & Lucene HNSW, \texttt{num\_candidates} 500 \\
+Weaviate & \tbd{} & HNSW (defaults), indexed while importing \\
+Redis & \tbd{} & HNSW, \texttt{EF\_RUNTIME} 100 \\
+LanceDB & \tbd{} & \texttt{IVF\_PQ}, \texttt{nprobes} 50, \texttt{refine\_factor} 30 \\
+Chroma & 1.5.9 & HNSW cosine (defaults) \\
+\bottomrule
+\end{tabular}
+\caption{Settings in the end-to-end run (Sections~\ref{sec:e2e} and~\ref{sec:quality}). One Kaggle
+session, two T4 GPUs, four CPUs, 31.3\,GiB of memory; embeddings bge-base-en-v1.5, 768 dimensions,
+unit length.}
+\label{tab:app-x0-settings}
+\end{table}
+
+\paragraph{Ground truth.}
+The exact baseline multiplies all question vectors with all chunk vectors, masks chunks the oracle
+says the person may not read, and takes the top ten. FAISS over a flat index reproduces it at recall
+1.000, which validates the pipeline. A hit counts toward recall if it is readable and its similarity,
+recomputed from the run's vectors, is at least the $k$-th exact score minus $10^{-4}$. Recall@5 and
+recall@10 come from separate retrievals with $k = 5$ and $k = 10$. People who may read nothing are
+excluded.
+
+\section{The diagnosis grid}\label{app:x1grid}
+
+\paragraph{pgvector.} One index build per configuration in run 1 (HNSW $m = 16$,
+\texttt{ef\_construction} 64), 1,489 questions, three passes each. Query-time settings: the
+scenario's settings (\emph{as run}); \texttt{hnsw.max\_scan\_tuples} of 20,000, 100,000 or 1,000,000
+crossed with \texttt{hnsw.scan\_mem\_multiplier} of 1, 8 or 16; \texttt{work\_mem} 64\,MB;
+\texttt{hnsw.ef\_search} 40, 200, 400 and 1,000; an inner \texttt{LIMIT} of four or ten times $k$;
+strict ordering; custom and generic plans; and exact search. \tbd{run 2: builds, the skipped
+settings, plan recording.}
+
+\paragraph{Qdrant.} Five layouts (as run; tenant field marked \texttt{is\_tenant}; per-tenant graphs
+with \texttt{payload\_m} 16 and $m = 0$; shared passages in a separate collection; one segment), three
+builds each, with \texttt{hnsw\_ef} 64, 128 and 512, ACORN with maximum selectivity 0.4 and 1.0, and
+exact search. Search paths per segment were read from Qdrant's telemetry.
+
+\paragraph{Statistics.} 95\% intervals from 10,000 cluster-bootstrap resamples over people (seed
+20261026); paired differences between settings on the same questions; verdicts computed by script
+from the pre-registered criteria.
+
+\section{The conformance kit's data variants}\label{app:kit}
+
+Each store target ran 20 seeds of nine variants: the kit's default data (ten corpora per seed) and
+eight stress variants (three corpora per seed): corpora of up to 150 documents; filters nested six
+deep; disjunctions over 100 and 1,000 values; strings up to 40,000 characters (long and huge);
+case and Unicode confusables; numeric strings next to integers; and unusual field names. Each engine
+target ran 20 seeds of seven variants: default; case and Unicode; numeric strings; 1,000 groups;
+300 chunks per check; long identifiers; and scalar instead of list ACL fields. A run is one (seed,
+variant) and takes its worst subject's outcome: pass, a conformance violation, a refusal by the
+library (a \texttt{ValueError} for data it cannot represent), or an error. The in-memory reference
+store and the in-process metadata-ACL engine are controls.
+
+\section{Compute}\label{app:compute}
+
+\begin{tabular}{@{}lll@{}}
+\toprule
+Experiment & Platform & Wall-clock time \\
+\midrule
+End-to-end run & Kaggle, $2\times$T4, 4 CPUs & 2.8\,h \\
+Diagnosis grid, run 1 & Kaggle, $2\times$T4, 4 CPUs & 7.3\,h \\
+Conformance campaign, run 1 & GitHub-hosted runners, six jobs & 2\,h\,56\,min \\
+\tbd{X1 run 2, campaign run 2, X2 to X8} & & \\
+\bottomrule
+\end{tabular}
