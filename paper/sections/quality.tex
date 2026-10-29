@@ -1,9 +1,11 @@
 % Retrieval Quality Under Permission-Shaped Filters: body of Section~\ref{sec:quality} (the \section
 % heading and its label stay in main.tex). Labels defined here: sec:qual-audit, tab:qual-x0,
-% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, sec:qual-size.
+% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, sec:qual-size,
+% tab:qual-size. X3 (sec:qual-size) is from evidence/x3-x6-run1.md (GitHub Actions run 40940385704,
+% commit a191626), every number as x3_stats.py printed it.
 % Sources: evidence/kaggle-scale-run-2026-10-24.md (X0), evidence/x1-underretrieval-run1.md (X1 run
-% 1), investigations/filtered-recall-gaps.md (mechanisms, with source links). X1 run 2, X2 and X3
-% are pending and marked \tbd{}.
+% 1), investigations/filtered-recall-gaps.md (mechanisms, with source links). X1 run 2 and X2 are
+% pending and marked \tbd{}.
 
 Security held in every configuration of Section~\ref{sec:e2e}; this section asks what the
 permission filter cost. We first audit the enterprise scenario at common settings, then diagnose the
@@ -195,7 +197,8 @@ readable document holds one group of each level, and the subject at level $G$ ho
 level's $G$ groups, for $G$ from 1 to 40,000. The readable set, and so the exact answer, is the same
 at every level; only the filter grows. Twelve stores run at default index settings, with FAISS
 over a flat index and the in-memory backend as controls, and each level is timed over 30 questions
-with $k = 10$ in three passes after a warm-up, a retrieval being allowed 120\,s. We record whether
+(10 when the level's first retrieval takes more than 2\,s) with $k = 10$ in three passes after a
+warm-up, a retrieval being allowed 120\,s. We record whether
 each store's translator returns and how fast, whether the store accepts the filter or refuses it,
 and with which error, the latency percentiles, and recall@10 against exact search over the readable
 set; for pgvector also the plan. The limits the stores document that could bind are a 65,536-term
@@ -211,7 +214,84 @@ fiftyfold from one group to 40,000, because above 100 values the layer sends an 
 GIN index cannot serve, while the controls' grows at most twofold; and that recall does not depend
 on the filter's length in any approximate store that accepts it (paired difference within
 $\pm 0.02$).
-\tbd{X3 full run (GitHub Actions run 40940385704): acceptance per store and level with error
-classes; latency against $G$; recall differences with intervals; pgvector's plans; Chroma's
-process ended with a segmentation fault (signal 11) in every seed it reached, rather than refusing
-the filter with an error, to be confirmed from the logs.}
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & \multicolumn{5}{c}{p50 (ms) with $G$ groups} & & \\
+\cmidrule(lr){2-6}
+Store & 1 & 100 & 1,000 & 10,000 & 40,000 & Ratio & Recall@10 \\
+\midrule
+pgvector & 2.86 & 4.51 & 22.2 & 201 & 797 & 272 & 0.967 \\
+Redis & 1.19 & 1.75 & 4.88 & 33.1 & 123 & 99.2 & 0.969 \\
+Vespa & 3.03 & 4.08 & 9.61 & 60.3 & 225 & 76.1 & 0.887 \\
+Weaviate & 4.79 & 5.74 & 14.3 & 82.7 & 306 & 64.1 & 1.000 \\
+Qdrant & 3.49 & 4.35 & 6.30 & 27.3 & 101 & 27.5 & 0.999 \\
+Milvus & 4.85 & 4.30 & 7.53 & 35.2 & 127 & 26.5 & 0.987--0.999 \\
+Elasticsearch & 3.36 & 2.78 & 3.95 & 19.3 & 78.8 & 25.0 & 0.939 \\
+MongoDB & 10.5 & 9.75 & 12.1 & 41.7 & 142 & 13.7 & 1.000 \\
+OpenSearch & 6.06 & 6.27 & 7.63 & 20.2 & 71.6 & 11.5 & 1.000 \\
+LanceDB (exact) & 53.6 & 57.0 & 66.3 & 149 & 424 & 7.94 & 1.000 \\
+Cassandra & 109 & 166 & 90.7 & 124 & 308 & 2.78 & 0.996--1.000 \\
+FAISS (flat) & 385 & 390 & 403 & 424 & 454 & 1.19 & 1.000 \\
+In-memory & 432 & 439 & 451 & 475 & 503 & 1.17 & n/a \\
+Chroma (3 seeds) & 4,416 & 10,689 & refused & refused & crashed & n/a & 1.000 \\
+\bottomrule
+\end{tabular}
+\caption{Filter size (X3): median end-to-end latency of a retrieval through the layer by the number of
+groups $G$ in the subject's filter, the median over three passes of 30 questions in each of five
+seeds (levels of 10 and 4,000 groups are in the released report). Ratio: median latency with 40,000
+groups over that with one, paired by question. Recall@10 against exact search over the readable set
+is the same at every level unless a range (one group to 40,000) is given. Chroma completed three
+seeds, with 10 questions per level because its first retrieval took more than 2\,s; ``refused'':
+every retrieval failed with SQLite's expression-depth error; ``crashed'': the process ended with
+signal 11. Images and clients are those of the conformance campaign
+(Section~\ref{sec:conf-campaign}), at default index settings.}
+\label{tab:qual-size}
+\end{table}
+
+Table~\ref{tab:qual-size} shows the result. Every translator returned at every level, the slowest
+in a median 197\,ms (Cassandra's fallback with 40,000 groups) and 120\,ms (pgvector), and every store
+but Chroma accepted every level in every seed without one failed retrieval, the five stores without a
+prediction included; no documented limit was reached. Acceptance with 40,000 groups was confirmed for
+each of the eight stores we predicted (X3-H2). X3-H1 nevertheless printed inconclusive: its other 77
+parts held, but Chroma completed only three of the five seeds the rule requires. Each Chroma seed
+took 22 minutes, and the harness, which gives each store of a job an equal share of the job's time,
+skipped the last two seeds although the job then finished about three hours early. This is a deviation;
+the two seeds remain to be run (\tbd{Chroma seeds 3 and 4}).
+
+Latency grew as predicted where we predicted it (X3-H3 confirmed in all three parts). pgvector's
+median rose 272-fold (95\% interval 264 to 288) from one group to 40,000: by a factor of 1.6 up to
+100 groups, then roughly in proportion to $G$ once the layer sends array parameters, which the GIN
+index cannot serve.
+Its answers did not change: recall@10 was 0.967 at every level, and the paired difference between
+40,000 groups and one was 0.000 (0.000 to 0.000), so the scan met rows in the same order and only the
+test applied to each row grew more expensive. The plans recorded at each level are not yet extracted
+(\tbd{pgvector plans}). FAISS and the in-memory backend slowed 1.19 and 1.17 times, and Cassandra's
+102 per-group queries with 100 groups took 1.85 times as long (1.82 to 1.87) as its single fallback
+query with 1,000. The other eight servers slowed 11 to 99 times, mostly beyond 1,000 groups, and with
+40,000 groups the translation alone took 31 to 48\,ms of medians between 72 and 306\,ms: much of the
+cost of a long filter lies in building and shipping it. LanceDB, which scans exactly, slowed 7.94
+times.
+
+Recall did not depend on the filter's length (X3-H4 confirmed for each of the eight approximate
+stores that accepted every level). The paired difference between 40,000 groups and one was 0.000,
+with an interval of 0.000 to 0.000, for Qdrant, Elasticsearch, OpenSearch, Weaviate, MongoDB and
+Vespa, 0.000 ($-0.0007$ to 0.0007) for Redis, and 0.012 (0.006 to 0.019) for Milvus, whose recall rose
+from 0.987 to 0.999 with the longer filter, within the pre-registered band; Cassandra's fallback,
+exploratory, gained 0.004 (0.0007 to 0.0093).
+
+Chroma refused, as predicted, but in two ways. With 1,000 groups or more, every retrieval failed with
+SQLite's ``Expression tree is too large (maximum depth 1000)'', which Chroma raises as an
+\texttt{InternalError}: because the layer stores list values as boolean keys
+(Table~\ref{tab:conf-faults}), its disjunction holds one clause per group, 102 with 100 groups and
+1,002 with 1,000, and SQLite limits an expression's depth to 1,000. With 40,000 groups the process
+died with signal 11, a segmentation fault, during its first retrieval, in all three seeds as in both
+smoke runs. The layer's translation had succeeded (2.66 million characters in 101\,ms), no message was
+printed, and no error reached the layer: the application's process ends with the store's. A filter
+that kills the client process is a denial of service, not a refusal (\tbd{disclosure to Chroma; the
+layer to refuse such filters before sending them}). Chroma was also the slowest store at every level
+it accepted, 4.4\,s with one group and 10.7\,s with 100, and each refused retrieval still took about
+4\,s. With three seeds, its X3-H2 verdict is inconclusive.
