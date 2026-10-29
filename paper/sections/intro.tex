@@ -81,9 +81,13 @@ user may read, and the application could not see the loss.
   \item \emph{Detection and bounded repair of under-retrieval} (Section~\ref{sec:repair}): a
         completeness flag that never certifies a short approximate answer, count-based detection,
         and an exact fallback with a cost bound. \tbd{X5 headline}
-  \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}): what widening rounds,
-        latency and the completeness flag reveal about unreadable chunks near a query.
-        \tbd{X6 headline}
+  \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}): what latency, counts,
+        recall and scores reveal about unreadable chunks near a query. In a pre-registered
+        distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
+        chunks had appeared near it from the latency of the widening post-filter (paired AUC 0.80
+        to 0.98) and of pgvector's approximate pre-filter (1.00 at 1,000), and from BM25 and IDF
+        scores (0.98 to 1.00). Exact pre-filtering returned identical answers, and padding removed
+        every latency channel we tested, at five to seven times the latency.
   \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): four runs of 1,105
         questions, 432 of them red-team prompts, over 189 people and ten store configurations, with
         653,638 checked hits and no leak, a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per
