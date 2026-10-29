@@ -149,9 +149,40 @@ baseline.}
 
 \subsection{Recall against throughput}\label{sec:qual-frontiers}
 
-\tbd{X2: per store, recall@10 against queries per second at documented defaults, tuned settings and
-exact search, over selectivity from 0.06\% to 100\% and the measured correlation axes, on the
-enterprise scenario and a second corpus.}
+The enterprise scenario has one permission layout. To separate the filter's selectivity from its
+correlation with the question, X2 adds a corpus whose layouts we control: the first million
+passages of MS MARCO~\cite{bajaj2016ms} from BEIR, embedded with bge-small-en-v1.5 (384 dimensions,
+so that ten stores fit beside the harness on a 16\,GB runner). Every passage belongs to one team of
+a hierarchy of 100 divisions, 10 departments each and 10 teams each, assigned either at random
+(\emph{uncorrelated}) or by hierarchical $k$-means over the embeddings (\emph{clustered}, so groups
+are topical), five seeds of each. A subject receives divisions, departments and teams until it may
+read a target share of the corpus, from 0.06\% to 100\%, and its filter is either one disjunction over
+its groups or a tenant clause conjoined with a disjunction over a grant twice as large, a shape in
+which each clause alone passes far more than both. For clustered layouts the questions are drawn
+either from those whose 100 nearest passages are at least half readable (\emph{positively
+correlated}) or from those with nothing readable among their 1,000 nearest (\emph{negatively
+correlated}). For every question and subject we compute, from exact scores, the global selectivity,
+the local selectivity among the 100 and 1,000 nearest passages, the rank of the first readable
+passage, ACORN's query correlation~\cite{patel2024acorn}, the global-local selectivity of Amanbayev
+et al.~\cite{amanbayev2026filtered} and the over-fetch estimate of HCBGen~\cite{lim2026revisiting}.
+
+Ten approximate stores run against FAISS over a flat index: pgvector, Qdrant, Elasticsearch,
+OpenSearch, Weaviate, Redis, Milvus, MongoDB, LanceDB and Chroma, each at its default, at five levels
+of its search-effort parameter, with its store-specific options (pgvector's raised scan limits and
+strict order, Qdrant's ACORN and per-tenant graphs, Weaviate's filter strategies, Redis's hybrid
+policies, Elasticsearch's quantized index types) and with its own exact search where it has one, in
+three fresh builds per store. Each pgvector search is planned with its own values, so the plan-cache
+effect of Section~\ref{sec:qual-pgvector} cannot arise, and the share of searches whose plan uses the
+HNSW index is recorded. Throughput is measured end to end through the layer with one client thread
+and compared only within a job; recall is compared across jobs. The same harness runs the enterprise
+scenario, whose as-run settings must reproduce the audit's recall within 0.03 for seven of nine
+stores. We pre-registered four hypotheses: that negatively correlated questions lose at least 0.05
+of recall@10 against uncorrelated ones at defaults in at least six stores (H2.1); that local
+selectivity predicts recall better than global selectivity (H2.2); that raising search effort
+narrows but does not close that gap (H2.3); and that intermediate selectivities are harder than very
+small ones, which stores answer by brute force (H2.4).
+\tbd{X2 full run (GitHub Actions run 40921769714): frontiers per store and regime (figure);
+verdicts on H2.1 to H2.4 with intervals; recall by measured axis; validity checks V1 to V5.}
 
 \subsection{Filter size}\label{sec:qual-size}
 
