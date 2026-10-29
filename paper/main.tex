@@ -35,8 +35,8 @@ deployed: an enforcement layer that compiles an organisation's existing authoriz
 filters for production vector stores, re-checks every hit against the authorizer, and fails closed.
 We contribute (i) a formulation of secure and maximal top-$k$ retrieval under an external authorizer,
 with metrics for leaks, permission-recall, under-retrieval and false completeness; (ii) differential
-conformance testing of filter semantics across 14 vector stores, which found \tbd{N} faults and
-semantic gaps; (iii) a measurement of disagreement between authorization engines' filter compilers
+conformance testing of filter semantics across 14 vector stores and seven authorization engines,
+which found six classes of faults and semantic gaps; (iii) a measurement of disagreement between authorization engines' filter compilers
 and their own check APIs; (iv) an audit of retrieval quality under permission-shaped filters, where
 recall@10 at common settings ranged from 0.56 to 1.00 and some stores returned no results at all for
 least-privileged users without any signal; (v) detection and bounded repair of such under-retrieval;

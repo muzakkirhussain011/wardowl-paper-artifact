@@ -152,10 +152,15 @@ Four of these were faults in the layer's adapters, and we fixed them: OpenFGA an
 a subject they cannot represent before sending anything, with an error naming the limit, and Redis
 and MongoDB store and search a term above their limits as its SHA-256 digest, leaving shorter terms
 unchanged. The second run tested the fixed adapters with the harness's budgets split across more
-jobs and every finding recorded in full. \tbd{run 2 (Actions run 40905549149): per-target counts;
-OpenFGA and SpiceDB errors expected to become refusals; Redis and MongoDB long and huge strings
-expected to pass; Keto and Casbin expected to complete 140 runs; Cerbos expected to repeat its 39
-disagreements, every one on the filter's side.}
+jobs and every finding recorded in full; it changed nothing else, and every outcome matched what the
+diagnosis predicted. Of 4,480 runs, 3,822 passed, 39 were violations, 479 were refusals and 140
+were errors. Redis and MongoDB passed every long- and huge-string run. The 479 OpenFGA and SpiceDB
+runs that had failed with HTTP~400 became refusals by the layer, before any request, while the same
+21, 21, 16 and 23 runs passed as before. Keto and Casbin completed all 140 runs each, every one
+passing. The 140 store errors were the documented limits above, unchanged. The 39 Cerbos runs
+disagreed again, and the harness now attributes each disagreeing hit: in all 280, the pushed-down
+filter gave the reference answer and Cerbos's check denied, so the filter over-approximated the
+policy as written and never the reverse. No run in either campaign leaked or altered metadata.
 
 \subsection{Faults and semantic gaps}\label{sec:conf-results}
 

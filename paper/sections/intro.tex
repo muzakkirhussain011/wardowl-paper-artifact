@@ -58,9 +58,11 @@ user may read, and the application could not see the loss.
   \item \emph{Differential conformance testing} (Section~\ref{sec:conformance}). A kit generates
         corpora, permissions and filters, runs them through each store's filter translation and each
         engine's filter and check APIs, and compares every answer with one reference semantics. Over
-        29 targets and 4,315 runs it found \tbd{N, after run 2} faults, among them answers from
-        Cerbos query plans that disagree with Cerbos checks when ACL fields hold scalars, and
-        matching documents that Redis and MongoDB miss when values are long strings.
+        29 targets it found six classes of faults and semantic gaps, among them answers from Cerbos
+        query plans that disagree with Cerbos checks when ACL fields hold scalars, and matching
+        documents that Redis and MongoDB miss because they truncate long values when indexing. We
+        fixed the four that lay in the layer's adapters and confirmed the fixes in a second
+        campaign of 4,480 runs.
   \item \emph{Filter-versus-check agreement of authorization engines} (Section~\ref{sec:engines}),
         measured at a single revision so that permission changes between calls are not counted as
         faults. \tbd{X4 headline}
