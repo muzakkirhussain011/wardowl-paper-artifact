@@ -410,6 +410,9 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | couzon2026filtered | Filtered Vector Search: What ACORN Fixes, and What Fixes ACORN | verified-now (2026-10-29) | page title, two authors, 7 Aug 2026; quoted sentences read |
 | reimers2019sentencebert | Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks | verified-now (2026-10-30) | ACL Anthology BibTeX D19-1410: title, two authors, EMNLP-IJCNLP 2019, pages 3982-3992, DOI |
 | wang2020minilm | MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers | verified-now (2026-10-30) | NeurIPS proceedings page: title, six authors in order, NeurIPS 33 (2020); pages not shown, left out |
+| ioannidis1997parametric | Parametric Query Optimization | verified-now (2026-10-30) | CR 10.1007/s007780050037: title, four authors in order, VLDB Journal 6(2) 132-151, 1997 |
+| postgresql2026prepare | PREPARE (PostgreSQL 16 documentation) | verified-now (2026-10-30) | page title; Notes on custom and generic plans read |
+| psycopg2026prepared | Prepared statements (Psycopg 3 documentation) | verified-now (2026-10-30) | page title; prepare_threshold behaviour read |
 
 ## Build note (2026-10-26)
 

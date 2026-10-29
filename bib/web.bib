@@ -637,3 +637,21 @@
   urldate      = {2026-10-29},
   annote         = {Extra HNSW edges per payload field, never per combination; values above a per-segment size cap get no extra edges; 39.7 percent recall on a 4 percent two-keyword intersection with ACORN off}
 }
+
+@misc{postgresql2026prepare,
+  author       = {{The PostgreSQL Global Development Group}},
+  title        = {{PREPARE}},
+  howpublished = {PostgreSQL Documentation, version 16, SQL Commands},
+  url          = {https://www.postgresql.org/docs/16/sql-prepare.html},
+  urldate      = {2026-10-30},
+  annote       = {Notes: five custom plans, then a generic plan if its cost is not much higher than their average; plan\_cache\_mode}
+}
+
+@misc{psycopg2026prepared,
+  author       = {{The Psycopg Team}},
+  title        = {Prepared statements},
+  howpublished = {Psycopg 3 documentation},
+  url          = {https://www.psycopg.org/psycopg3/docs/advanced/prepare.html},
+  urldate      = {2026-10-30},
+  annote       = {A query is prepared after it runs more than prepare\_threshold times on a connection; None disables}
+}
