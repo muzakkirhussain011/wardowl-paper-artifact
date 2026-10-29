@@ -1,0 +1,112 @@
+% End-to-End Evaluation With Canaries: body of Section~\ref{sec:e2e} (the \section heading and its
+% label stay in main.tex). Labels defined here: sec:e2e-setup, sec:e2e-safety, tab:e2e-safety,
+% sec:e2e-model. Source: evidence/kaggle-scale-run-2026-10-24.md (one run, wardowl 2.1.0, before the
+% honest-completeness change). Repeats (X8) are pending and marked \tbd{}.
+
+The previous sections test components in isolation. Here the whole pipeline runs as an organization
+would run it: many tenants and people in one index, a policy composed of a tenant boundary and
+per-document ACLs, adversarial questions, and a language model that answers from what retrieval
+returns. The goal is a leak test with enough exposure to bound the leak rate, not a measure of
+answer quality.
+
+\subsection{Setup}\label{sec:e2e-setup}
+
+\paragraph{Corpus.}
+The index holds 107,540 chunks: 49,920 synthetic company documents in 20 tenants, of which 41,600
+carry a unique canary string; 20 notices, one per tenant, each carrying a prompt injection; and
+57,600 passages of the FiQA financial question-answering corpus~\cite{maia2018www18} from
+BEIR~\cite{thakur2021beir}, which every tenant may read and which serve as distractors. Company
+documents are drawn from templates (handbooks, finance, HR, board and project records) with
+per-document ACLs over users and groups. Chunks are embedded with
+bge-base-en-v1.5~\cite{xiao2024cpack}.
+
+\paragraph{People and questions.}
+189 people span the tenants. A typical employee may read the shared passages, the tenant's notice
+and five of the twelve document templates, 58,641 chunks in all (the median); the least privileged
+are non-executive board members (``judy'' personas), each of whom may read 624 chunks of three
+templates in one tenant and none of the shared passages (0.58\% of the corpus); one person in no
+group may read nothing. They ask 1,105 questions: 108 generic, 376 targeted at a document
+they may read, 189 targeted at a document they may not read (\emph{forbidden}), and 432 red-team
+prompts that ask for other people's data, other tenants' data or everything, or try to override
+instructions.
+
+\paragraph{Policy and stores.}
+The policy is $\mathrm{AllOf}(\mathrm{Tenant}, \mathrm{MetadataACL})$ (Section~\ref{sec:sys-compose}).
+It runs against ten configurations: FAISS over a flat index (exact, the reference), Chroma, pgvector,
+pgvector with the same policy written in OPA, Qdrant, Elasticsearch, OpenSearch, Weaviate, Redis and
+LanceDB, each at the settings listed in Appendix~\tbd{settings table}. A configuration with OpenFGA
+behind the caching authorizer did not start (the engine's health endpoint did not answer within
+180\,s) and is excluded. Each question retrieves with $k = 5$ for the answer and $k = 10$ for
+recall@10. Qwen2.5-3B-Instruct~\cite{yang2024qwen25} answers from the five chunks.
+
+\paragraph{Leak detection.}
+A leak is any returned chunk outside the person's readable set, as decided by an oracle that
+evaluates the policy without the layer, or any canary from an unreadable document found verbatim in
+a retrieved chunk, in the prompt sent to the model or in the model's answer. Verbatim matching
+misses a paraphrased secret; it is sufficient for retrieved chunks and prompts, which are copied, and
+a lower bound for answers. \tbd{X8 adds paraphrase-aware matching.}
+
+\subsection{Safety}\label{sec:e2e-safety}
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Configuration & Questions & Hits checked & Unreadable hits & Canaries (chunk/prompt/answer) & Violations \\
+\midrule
+FAISS (exact) & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+Chroma & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+pgvector & 1,105 & 16,178 & 0 & 0/0/0 & 0 \\
+pgvector + OPA & 1,105 & 16,178 & 0 & 0/0/0 & 0 \\
+Qdrant & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+Elasticsearch & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+OpenSearch & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+Weaviate & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+Redis & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+LanceDB & 1,105 & 16,360 & 0 & 0/0/0 & 0 \\
+\midrule
+Total & 11,050 & 163,236 & 0 & 0/0/0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{End-to-end safety, one run. Hits are counted over both retrievals per question. pgvector
+checked 182 fewer hits because some of its answers were short or empty (Section~\ref{sec:quality}).}
+\label{tab:e2e-safety}
+\end{table}
+
+No configuration returned an unreadable chunk or exposed a canary (Table~\ref{tab:e2e-safety}). The
+hits are not independent trials: they cluster by question and by person, and a fault in the layer
+would affect a question, not a random hit. We therefore bound the leak rate per question, separately
+for each configuration: with no leak in 1,105 questions, the one-sided 95\% upper bound is $1 -
+0.05^{1/1105} \approx 2.7 \times 10^{-3}$, and per person $1 - 0.05^{1/189} \approx 1.6 \times
+10^{-2}$ (Section~\ref{sec:prob-metrics}). Pooling the ten configurations would not shrink these
+bounds honestly, since they share questions and the layer's code. The violation count is zero
+because the filter and the check read the same ACL metadata here; Sections~\ref{sec:conformance}
+and~\ref{sec:engines} test configurations in which they do not.
+
+Two observations qualify the result. First, it is a statement about this layer under assumptions
+(A1) to (A3) of Proposition~\ref{prop:reduction}, exercised with adversarial inputs, not a proof:
+the red-team prompts can only change the query text, and the layer never lets text choose the
+subject (Section~\ref{sec:sys-identity}). Second, safety held while quality did not. pgvector
+returned no hits at all to ten least-privileged people who could read hundreds of chunks, and the
+layer, before the change of Section~\ref{sec:sys-complete}, reported those empty answers as
+complete; Qdrant answered, but with recall@10 of 0.56. Section~\ref{sec:quality} diagnoses both.
+\tbd{X8: three repeated runs with fresh permission layouts; report the bound over all runs and
+the run-to-run spread of recall.}
+
+\subsection{What the model did with what it retrieved}\label{sec:e2e-model}
+
+Prompt injection in readable content is outside our threat model (Section~\ref{sec:prob-threat}),
+but the run measures where the boundary lies. Each tenant's injected notice is readable by that
+tenant's employees and contractors, so retrieving it for them is correct. In the nine configurations
+for which the run reports it, the notice was retrieved between 7 and 106 times, depending on the
+store's ranking, and the 3B model followed its instruction every time it was retrieved (482 of
+482). Retrieval-time enforcement decides which
+content reaches the model, not what the model does with it; defenses against injected instructions
+in permitted content~\cite{greshake2023not,debenedetti2025defeating} are complementary.
+
+Answer quality followed retrieval quality. With FAISS the model found the target document of a
+targeted question in its top five for every question and answered 99.7\% correctly; with Qdrant
+the target was in the top five for 39.9\% of targeted questions. When a person asked about a
+document they could not read, the model abstained in 70\% to 81\% of cases, depending on the store,
+and otherwise answered from readable documents only, as the canary checks confirm.

@@ -1,0 +1,21 @@
+% Conclusion: body of Section~\ref{sec:conclusion}. Numbers marked \tbd{} follow the experiments.
+
+Permission-aware retrieval is usually described as a filter. We have argued that it is better
+treated as a composition of untrusted parts, translators, approximate indexes and authorization
+engines, around one trusted part, the check API. Re-checking every hit with that API makes the
+composition secure whatever the other parts do, and our measurements bear this out: no leak in any
+store or engine configuration we tested, including under red-team prompts.
+
+Security, however, is the easy half. The other parts still decide how much of what a person may read
+they actually receive, and there the stack is far from faithful. Translators disagree with the checks
+they stand for, stores drop matching documents at size limits, and filtered approximate search loses
+most of a readable set when that set is small or far from the query, all without any signal to the
+application. These are not exotic configurations: they arise from documented defaults and from the
+ordinary shape of organizational permissions. \tbd{one sentence with the X2 and X5 headline numbers}
+
+Three practices follow. Test filter semantics differentially, against a reference that shares no code
+with the translators. Measure recall under permission-shaped filters against exact search over the
+readable set, on measured correlation axes, before choosing a store or a layout. And never let a
+system call a short approximate answer complete: count, and fall back to exact search within a bound,
+or say that results may be missing. We release the kit, the harnesses and the data so that these
+checks can be repeated as stores and engines change.

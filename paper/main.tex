@@ -46,14 +46,7 @@ which 163,236 checked hits produced no leak. Security held everywhere; retrieval
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
-% Story: shared index -> similarity ignores permission -> leak (Bob/Contoso/Northwind).
-% The fix is classic (query modification; Buettcher & Clarke 2005; Bailey et al. 2006).
-% The open question is verification: filters are compiled by unverified translators, executed by
-% approximate indexes with store-specific semantics, and failures are silent.
-% Claim: security can be made to depend only on the authorizer's check API (re-check), so filter
-% errors only cost recall; but recall losses are large, store-specific and invisible today.
-% Contributions list (C1-C7), mirroring the abstract.
-\tbd{introduction text}
+\input{sections/intro}
 
 \section{Background and Problem Statement}\label{sec:problem}
 \input{sections/background}
@@ -86,21 +79,16 @@ which 163,236 checked hits produced no leak. Security held everywhere; retrieval
 \tbd{experiment X6}
 
 \section{End-to-End Evaluation With Canaries}\label{sec:e2e}
-% 107,540 chunks; 20 tenants; 189 people; 1,105 questions (432 red-team); 10 store configurations;
-% 163,236 checked hits; 0 leaks; per-question upper bound; injection obeyed when retrieved
-% (outside the claim). Repeat runs (X8).
-\tbd{results}
+\input{sections/e2e}
 
 \section{Related Work}\label{sec:related}
 \input{sections/related}
 
 \section{Limitations, Ethics and Disclosure}\label{sec:limits}
-% No independent audit; synthetic permission layouts (no public ACL corpus); single-hardware runs;
-% vendor notification of faults before publication; AI-assistance disclosure per venue policy.
-\tbd{limitations}
+\input{sections/limits}
 
 \section{Conclusion}\label{sec:conclusion}
-\tbd{conclusion}
+\input{sections/conclusion}
 
 \bibliographystyle{plainnat}
 \bibliography{../bib/references,../bib/web}

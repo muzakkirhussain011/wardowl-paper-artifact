@@ -1,0 +1,79 @@
+% Limitations, Ethics and Disclosure: body of Section~\ref{sec:limits} (the \section heading and its
+% label stay in main.tex). Labels defined here: sec:limits-limits, sec:limits-ethics, sec:limits-ai,
+% sec:limits-repro. Items marked \tbd{} must be settled before the preprint.
+
+\subsection{Limitations}\label{sec:limits-limits}
+
+\paragraph{Synthetic permissions.}
+No public corpus pairs documents with the access-control lists of a real organization, so every
+permission layout here is generated: tenants, groups and per-document ACLs drawn from templates and
+seeded generators, over public passages (FiQA) and templated company documents. Real
+organizations may have more skewed layouts, with many small groups, deep group hierarchies and
+frequent exceptions. Two choices limit the damage. We place every (question, subject) pair on
+measured correlation axes instead of trusting a layout's label (Section~\ref{sec:prob-metrics}), so
+results transfer to any layout with the same measured difficulty; and we vary layouts across seeds.
+The enterprise scenario is harsh in one respect that we state: each company document has 19
+near-identical copies in other tenants that only the tenant rule separates.
+
+\paragraph{One instrument.}
+Every measurement passes through one enforcement layer, which the authors wrote, so a fault in its
+filter translators could be mistaken for a store fault. The conformance kit compares every answer
+with an in-memory reference that shares no code with the translators, and before attributing a fault
+to a store or engine we reproduce it with the store's or engine's own client, without the layer
+(\tbd{done for every row of the fault table}). The retrieval audit uses each store's own exact
+search as a second baseline.
+
+\paragraph{Versions, settings and hardware.}
+Results hold for the versions and settings we state (for example pgvector 0.8.7 and Qdrant 1.19.2)
+and may not survive the next release; vector stores change quickly, and several behaviors we
+measure are documented defaults that vendors may revise. Experiments ran on shared cloud hardware
+(Kaggle sessions with two T4 GPUs and four CPUs, and GitHub-hosted runners), so latencies are
+comparable within an experiment, not across experiments or with vendor benchmarks.
+
+\paragraph{Statistical power.}
+The end-to-end run is a single run, and the first diagnosis run covered one pgvector index build.
+\tbd{State the final number of runs, seeds and builds per experiment after X1 run 2, X2 and X8.}
+Zero-leak results are reported as upper bounds per question and per subject, not per hit.
+
+\paragraph{Scope of the security claim.}
+Proposition~\ref{prop:reduction} needs correct checks, faithful metadata and failing closed. A store
+that binds content to the wrong identifier or metadata defeats any re-check, and we test that
+assumption only as far as the conformance kit's metadata checks reach. The completeness flag
+detects under-retrieval but not mis-retrieval: a full answer with the wrong chunks still reports
+complete. Side channels are measured (Section~\ref{sec:side}), not eliminated.
+
+\subsection{Ethics and responsible disclosure}\label{sec:limits-ethics}
+
+No human subjects took part. People, documents, ACLs and canaries are synthetic, and the shared
+passages come from a public research corpus~\cite{maia2018www18}. Red-team prompts are generic
+attempts to obtain other people's data and target only our own deployments; every store and engine
+ran in containers or processes we controlled, on our own sessions and runners, and no third-party
+service was probed.
+
+None of our findings is a leak through the layer, because the re-check contains filter faults. They
+can still matter for deployments that trust a pushed-down filter without a re-check: a filter that
+admits more than the check would leak there. We therefore reported each fault in a third-party
+component to its maintainers before this preprint, with a minimal reproducer that does not need our
+library, and give each report's date and status in Table~\ref{tab:conf-faults}. \tbd{dates, links
+and vendor responses}
+
+\subsection{Use of AI assistance}\label{sec:limits-ai}
+
+The library, the conformance kit and the experiment harnesses were written largely by an AI coding
+agent under the authors' direction, and the agent also assisted with literature search and with
+drafting this text. The authors chose the questions, pre-registered the predictions, reviewed the
+designs and are responsible for every claim. Each claim rests on executed tests or logged runs whose
+outputs we release, and each reference was checked against a primary record (title, authors, venue
+and year), with unverifiable fields omitted rather than guessed. \tbd{Final human check of every
+reference before submission.} AI tools are not authors. This statement follows the venue's policy on
+large language models and arXiv's policy on generative AI.
+
+\subsection{Reproducibility}\label{sec:limits-repro}
+
+We release the library at the evaluated version, the conformance kit, every harness script, the
+Kaggle notebooks and GitHub workflows that ran them, the pre-registrations with their dated
+amendments, and the raw outputs with container image digests and seeds \tbd{archive DOI}. For
+review, an anonymized mirror with the package renamed is provided. Compute: the end-to-end run took
+2.8\,h and the first diagnosis run 7.3\,h, each on one Kaggle session with two T4 GPUs; the first
+conformance campaign took 2\,h\,56\,min of wall-clock time over six parallel GitHub-hosted jobs.
+\tbd{Add X1 run 2, the campaign rerun and X2 to X8.}

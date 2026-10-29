@@ -403,6 +403,8 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | lewis2020retrievalaugmented | Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks | verified-now | arXiv 2005.11401 abstract page: title, 12 authors in order, "Accepted at NeurIPS 2020"; pages not verified, left out |
 | elastic2026controlling | Controlling access at the document and field level | verified-now | page title and the sentence "Document level security restricts the documents that users have read access to" |
 | opensearch2026documentlevel | Document-level security | verified-now (title only) | page title; body text not read |
+| xiao2024cpack | C-Pack: Packed Resources For General Chinese Embeddings | verified-now (2026-10-29) | arXiv 2309.07597 abstract page: title, 6 authors in order, comment "SIGIR 2024"; pages and DOI not verified, left out |
+| yang2024qwen25 | Qwen2.5 Technical Report | verified-now (2026-10-29) | arXiv 2412.15115 abstract page: title, first six authors in order of 42, Qwen team, v1 19 Dec 2024 |
 
 ## Build note (2026-10-26)
 

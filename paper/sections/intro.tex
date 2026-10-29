@@ -1,0 +1,89 @@
+% Introduction: body of Section~\ref{sec:intro} (the \section heading and its label stay in
+% main.tex). Numbers marked \tbd{} wait for X1 run 2, the conformance rerun and X4 to X8.
+
+A retrieval-augmented generation (RAG) assistant answers from the chunks of an index that are most
+similar to the question~\cite{lewis2020retrievalaugmented}. In an organization those chunks come
+from documents with different readers: a payroll file, a board deck, one customer's contract and a
+public handbook can share one index. Similarity knows nothing of who may read what, so without
+enforcement the chunk most similar to an employee's question may be one that employee may not open,
+and the model will repeat it. OWASP lists this as LLM08, vector and embedding
+weaknesses~\cite{owasp2025llm082025}; assistants that inherit the permissions of their sources
+depend on those permissions being enforced at retrieval time~\cite{microsoft2026data}, and revoked
+documents have stayed retrievable through a cached index~\cite{roychowdhury2024confusedpilot}.
+
+The remedy is old. Query modification adds the access predicate to the query before it
+runs~\cite{stonebraker1974access}; multi-user full-text search integrated security into query
+processing and showed that statistics computed over unreadable documents leak
+them~\cite{buttcher2005security}; enterprise search checked results late, in growing
+blocks~\cite{bailey2006secure}; Zanzibar checks each result against a central authorization
+service~\cite{pang2019zanzibar}. Managed RAG services combine these steps: Amazon Bedrock knowledge
+bases pre-filter by ACL metadata and verify each document against its source before
+answering~\cite{aws2026access}. Recent work builds permissions into the vector index
+itself~\cite{zhong2026honeybee,han2026dont}, and a 2026 vision paper asks for correctness criteria
+for such systems~\cite{yalamarthi2026policyaware}.
+
+What is not known is whether the stack that implements the remedy is faithful. Three things stand
+between an organization's policy and the chunks a model sees. \emph{First, the policy is compiled by
+translators.} Authorization engines expose filter APIs, such as OpenFGA's ListObjects, SpiceDB's
+LookupResources, OPA's partial evaluation and Cerbos's query
+plans~\cite{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos}, which are
+code paths separate from their check APIs, and every store has its own filter language with its own
+handling of types, missing fields, Unicode and empty lists. We found no published guarantee that the
+paths agree. \emph{Second, the filter runs inside an approximate index.} Permission filters are hard
+cases for filtered nearest-neighbor search: they are often selective, they take a disjunction over
+many groups, and organizational structure, not meaning, decides which chunks they admit, so the
+readable set may lie far from the query~\cite{patel2024acorn,lim2026revisiting}. \emph{Third,
+failures are silent.} Under Truman semantics~\cite{rizvi2004extending} a user who receives three
+chunks, or none, cannot tell whether that is all they may read or all that the index found.
+
+We study permission-aware retrieval as deployed: an enforcement layer that compiles an
+organization's existing policy into filters for production vector stores, re-checks every hit with
+the authorizer and fails closed. We test one such layer, \sys{}, an open-source library with
+adapters for 14 vector stores and seven authorization engines (Section~\ref{sec:system}), and use it
+as an instrument. Our starting point is that the re-check makes security depend on the authorizer's
+check API alone (Proposition~\ref{prop:reduction}): a faulty filter or a lossy index can then cost
+recall but cannot leak. The open questions become how much is lost, where, and whether anyone can
+tell. Our answer is the title. Across every store and engine we tested the layer leaked nothing, but
+retrieval quality under permission-shaped filters ranged from near perfect to missing most of what a
+user may read, and the application could not see the loss.
+
+\paragraph{Contributions.}
+\begin{itemize}
+  \item \emph{A formulation} (Section~\ref{sec:problem}). We adapt the sound, secure and maximal
+        criteria of Wang et al.~\cite{wang2007correctness} to top-$k$ retrieval under an external
+        authorizer, add honesty for the claim that an answer is complete, and define metrics: a leak
+        rate with a per-question bound, permission-recall@$k$ against exact search over the readable
+        set, and under-retrieval and false-completeness rates, reported on measured
+        query-correlation axes.
+  \item \emph{Differential conformance testing} (Section~\ref{sec:conformance}). A kit generates
+        corpora, permissions and filters, runs them through each store's filter translation and each
+        engine's filter and check APIs, and compares every answer with one reference semantics. Over
+        29 targets and 4,315 runs it found \tbd{N, after run 2} faults, among them answers from
+        Cerbos query plans that disagree with Cerbos checks when ACL fields hold scalars, and
+        matching documents that Redis and MongoDB miss when values are long strings.
+  \item \emph{Filter-versus-check agreement of authorization engines} (Section~\ref{sec:engines}),
+        measured at a single revision so that permission changes between calls are not counted as
+        faults. \tbd{X4 headline}
+  \item \emph{An audit of retrieval quality under permission filters} (Section~\ref{sec:quality}).
+        In an enterprise scenario of 107,540 chunks and 20 tenants, recall@10 at common settings
+        ranged from 0.56 to 1.00 over ten store configurations. Pre-registered experiments trace
+        Qdrant's loss to an islanded permitted subgraph (recall@10 of 0.27 on company documents,
+        0.94 with a tenant-aware layout) and pgvector's empty answers to the tuple budget of its
+        iterative scan. \tbd{X1 run 2 and X2 headline}
+  \item \emph{Detection and bounded repair of under-retrieval} (Section~\ref{sec:repair}): a
+        completeness flag that never certifies a short approximate answer, count-based detection,
+        and an exact fallback with a cost bound. \tbd{X5 headline}
+  \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}): what widening rounds,
+        latency and the completeness flag reveal about unreadable chunks near a query.
+        \tbd{X6 headline}
+  \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): 1,105 questions, 432
+        of them red-team prompts, over 189 people and ten store configurations, with 163,236 checked
+        hits and no leak, a one-sided 95\% bound of $2.7 \times 10^{-3}$ leaks per question for
+        each configuration. \tbd{X8 repeats}
+\end{itemize}
+
+We do not propose an index: HoneyBee and Veda are physical designs whose recall our harness can
+measure, and the enforcement mechanism has the precedents listed above. Nor do we defend against
+prompt injection in readable content; in our runs a 3-billion-parameter model obeyed every injected
+notice it retrieved, which marks where a retrieval guarantee ends. The library, the conformance kit,
+the pre-registrations and the raw outputs are released with the paper (Section~\ref{sec:limits}).
