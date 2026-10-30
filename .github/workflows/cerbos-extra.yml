@@ -1,0 +1,56 @@
+name: Cerbos extra
+
+# Tests directly what the paper states about Cerbos beyond the `in` reproducer: hasIntersection on a
+# non-list attribute, and == on an attribute holding a list. curl only, no wardowl. Answers and server
+# logs go to the branch results/cerbos-extra.
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/cerbos-extra.yml, disclosure/reproducers/cerbos-extra-policies/**]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  run:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          persist-credentials: false
+      - name: Run against the tested and the latest version
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          out=$(mktemp -d)
+          for version in 0.56.0 0.57.0; do
+            d="$out/$version"
+            mkdir -p "$d"
+            docker run -d --name cerbos -p 3592:3592 \
+              -v "$PWD/disclosure/reproducers/cerbos-extra-policies:/policies:ro" \
+              "ghcr.io/cerbos/cerbos:$version" > /dev/null
+            for i in $(seq 1 60); do curl -sf http://localhost:3592/_cerbos/health > /dev/null && break; sleep 1; done
+            docker inspect --format '{{index .RepoDigests 0}}' "ghcr.io/cerbos/cerbos:$version" > "$d/digest.txt"
+            curl -s localhost:3592/api/check/resources -d '{"requestId":"r","principal":{"id":"zoe","roles":["user"],"attr":{"groups":["eng"]}},
+              "resources":[{"actions":["read"],"resource":{"kind":"groups","id":"scalar","attr":{"allowed_groups":"eng"}}},
+                           {"actions":["read"],"resource":{"kind":"groups","id":"list","attr":{"allowed_groups":["eng"]}}}]}' > "$d/hasintersection-check.json"
+            curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read",
+              "principal":{"id":"zoe","roles":["user"],"attr":{"groups":["eng"]}},"resource":{"kind":"groups"}}' > "$d/hasintersection-plan.json"
+            curl -s localhost:3592/api/check/resources -d '{"requestId":"r","principal":{"id":"zoe","roles":["user"],"attr":{"tenant":"acme"}},
+              "resources":[{"actions":["read"],"resource":{"kind":"tenant","id":"scalar","attr":{"tenant":"acme"}}},
+                           {"actions":["read"],"resource":{"kind":"tenant","id":"list","attr":{"tenant":["acme"]}}}]}' > "$d/eq-check.json"
+            curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read",
+              "principal":{"id":"zoe","roles":["user"],"attr":{"tenant":"acme"}},"resource":{"kind":"tenant"}}' > "$d/eq-plan.json"
+            sleep 1
+            docker logs cerbos > "$d/server.log" 2>&1
+            grep "Error evaluating CEL" "$d/server.log" | sed -E 's/.*"expression"/"expression"/' > "$d/cel-errors.txt" || true
+            docker rm -f cerbos > /dev/null
+          done
+          cd "$out"
+          git init -q
+          git checkout -q -b results/cerbos-extra
+          git add -A
+          git -c user.name="cerbos extra" -c user.email="extra@localhost" commit -q -m "Cerbos extra of $GITHUB_SHA"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" results/cerbos-extra
