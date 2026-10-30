@@ -880,3 +880,12 @@
   urldate      = {2026-10-30},
   annote       = {FAQ: each JSON field is limited to 65,536 bytes}
 }
+
+@misc{postgresql2026selfuncs,
+  author       = {{The PostgreSQL Global Development Group}},
+  title        = {selfuncs.c: gincostestimate},
+  howpublished = {PostgreSQL source code, branch REL\_16\_STABLE, src/backend/utils/adt/selfuncs.c},
+  url          = {https://github.com/postgres/postgres/blob/REL_16_STABLE/src/backend/utils/adt/selfuncs.c},
+  urldate      = {2026-10-30},
+  annote       = {gincostestimate starts the entry pages fetched at the number of pending pages ("pay attention to pending list") and charges them at random\_page\_cost in the startup cost}
+}

@@ -1,0 +1,23 @@
+[01:05:32] 194,291 result rows of 49 settings from 3 folders; 131 setting records; grid run2; P1 and P2 reference pgvector/hnsw-m16-efc64/pg-hnsw
+[01:05:32] intervals
+[01:13:53] paired comparisons
+[01:17:58] pre-registered verdicts
+[01:18:06] wrote /kaggle/working/x1run2-stats/summary_by_build.csv (131 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/summary_by_setting.csv (49 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/intervals.csv (5,400 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/paired.csv (720 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/explain_summary.csv (134 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/qdrant_paths.csv (242 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/acorn_engagement.csv (176 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/plans.csv (102 rows)
+[01:18:06] wrote /kaggle/working/x1run2-stats/predictions.csv (9 rows)
+[01:18:06] Q1: confirmed
+[01:18:06] Q2: falsified
+[01:18:06] Q3: inconclusive
+[01:18:06] Q4: inconclusive
+[01:18:06] P1: inconclusive
+[01:18:06] P2: inconclusive
+[01:18:06] P3: confirmed
+[01:18:06] P4: falsified
+[01:18:06] P5: confirmed
+[01:18:06] X1 statistics done in 798 s: /kaggle/working/x1run2-stats/report.md

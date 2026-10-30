@@ -73,11 +73,13 @@ user may read, and the application could not see the loss.
         request leaked in 1,090 fault episodes.
   \item \emph{An audit of retrieval quality under permission filters} (Section~\ref{sec:quality}).
         In an enterprise scenario of 107,540 chunks and 20 tenants, mean recall@10 at common
-        settings ranged from 0.55 to 1.00 over ten store configurations and four runs, and pgvector
-        ran either lossy or exact depending on a plan-cache decision. Pre-registered experiments trace
-        Qdrant's loss to an islanded permitted subgraph (recall@10 of 0.27 on company documents,
-        0.94 with a tenant-aware layout) and pgvector's empty answers to the tuple budget of its
-        iterative scan. \tbd{X1 run 2 and X2 headline}
+        settings ranged from 0.55 to 1.00 over ten store configurations and four runs.
+        Pre-registered experiments trace Qdrant's loss to an islanded permitted subgraph (recall@10
+        of 0.37 on company documents, 0.95 with per-tenant graphs) and show that pgvector's answer
+        depends on a decision taken before any search: PostgreSQL's plan cache chooses an exact plan
+        or the HNSW scan according to the state of a GIN index's pending list, and the same
+        configuration was exact in five of eight runs and lost a third of its recall in three. When
+        it scans the graph, both of the scan's limits cut answers short. \tbd{X2 headline}
   \item \emph{Detection and bounded repair of under-retrieval} (Section~\ref{sec:repair}): a
         completeness flag that never certifies a short approximate answer, count-based detection,
         and an exact fallback with a cost bound. \tbd{X5 headline}
