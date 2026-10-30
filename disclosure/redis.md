@@ -1,6 +1,7 @@
 # Draft upstream report: Redis Query Engine (RediSearch)
 
-Status: draft, not filed. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Redis
+Status: filed 2026-10-30 as https://github.com/RediSearch/RediSearch/issues/12106, with the text in
+`disclosure/ready/redis-issue.md`. This file is the working draft and its evidence. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Redis
 8.10.2 and 8.10.3 (the latest release that day), in workflow runs 41007436602, 41007779363 and
 41008151303; see "Reproduced (2026-10-30)".
 Where: https://github.com/RediSearch/RediSearch/issues (bug), with a docs note for

@@ -1,8 +1,9 @@
 # Draft upstream report: Chroma
 
-Status: draft, not filed. Reproduced on 2026-10-30 with the reproducer below (one fix: the
-collection name) on chromadb 1.5.9, still the latest release that day, in workflow runs
-41007779363 and 41008151303; see "Reproduced (2026-10-30)". Run 1 of the campaign saw the error
+Status: filed 2026-10-30 as https://github.com/chroma-core/chroma/issues/7969, with the text in
+`disclosure/ready/chroma-issue-1-depth.md`. This file is the working draft and its evidence. Reproduced on 2026-10-30
+with the reproducer below (one fix: the collection name) on chromadb 1.5.9, still the latest release that day, in
+workflow runs 41007779363 and 41008151303; see "Reproduced (2026-10-30)". Run 1 of the campaign saw the error
 through wardowl, whose filter had the shape of the second query; the reproducer showed that the
 first, flat query fails the same way, so the title and "What happens" no longer say the `$or` is
 nested.
@@ -81,9 +82,8 @@ Build n-ary `$and`/`$or` as one node rather than a chain, or document the limit 
 
 # Second draft report (2026-10-30): a large `where` kills the embedded client process
 
-Status: draft, not filed; Syed decides whether and where to file (a public issue or a private
-security report, since an end user who belongs to many groups could trigger it through an
-application). Reproduced on 2026-10-30 with the reproducer below (one fix: the collection name) on
+Status: filed 2026-10-30 as https://github.com/chroma-core/chroma/issues/7970, a public issue, with the text in
+`disclosure/ready/chroma-issue-2-crash.md`. This file is the working draft and its evidence. Reproduced on 2026-10-30 with the reproducer below (one fix: the collection name) on
 chromadb 1.5.9, still the latest release that day, in workflow runs 41007779363 and 41008151303; see
 "Reproduced (2026-10-30)" at the end. Source: X3 run 40940385704 (`evidence/x3-x6-run1.md`,
 "X3: Chroma, refusal and crash"); the follow-up run under faulthandler will add the stack and the

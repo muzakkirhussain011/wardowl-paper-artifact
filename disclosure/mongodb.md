@@ -1,6 +1,8 @@
 # Draft upstream report: MongoDB Atlas Vector Search
 
-Status: draft, not filed. Reproduced on 2026-10-30 on Atlas Local 8.0.30 and 8.3.13 (the latest
+Status: sent 2026-10-30 as documentation feedback, with the text in `disclosure/ready/mongodb-feedback.md`; there is
+no public link. That text says strings this long are uncommon, which was not measured, and the form cannot be edited.
+This file is the working draft and its evidence. Reproduced on 2026-10-30 on Atlas Local 8.0.30 and 8.3.13 (the latest
 release that day) in workflow runs 41007436602, 41007779363 and 41008151303, with one correction:
 the `filter` type keeps 8,191 characters, not the 8,181 first inferred from the documented `token`
 limit, so the reproducer's prefix is now 8,191 characters. See "Reproduced (2026-10-30)".

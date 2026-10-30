@@ -1,7 +1,8 @@
 # Draft upstream note: Cerbos (documentation suggestion, not a bug)
 
-Status: draft, not filed. Low priority: Cerbos behaves as CEL and its documentation say. File only if
-the paper cites it. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Cerbos 0.56.0
+Status: filed 2026-10-30 as https://github.com/cerbos/cerbos/issues/3456, scoped to `in` on a string, with the text in
+`disclosure/ready/cerbos-issue.md`. This file is the working draft and its evidence; `evidence/cerbos-extra.md` tests
+`hasIntersection` and `==`. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Cerbos 0.56.0
 and 0.57.0 (the latest release that day), in workflow runs 41007436602, 41007779363 and
 41008151303; see "Reproduced (2026-10-30)".
 Where: https://github.com/cerbos/cerbos/issues (documentation), for
