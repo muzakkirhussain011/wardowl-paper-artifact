@@ -1,0 +1,232 @@
+name: Reproducers
+
+# Runs the vendor bug reproducers of the drafts in disclosure/ (the scripts in disclosure/reproducers/,
+# each with the vendor's own client only, never wardowl) against the version the paper tested and the
+# vendor's latest release, and commits every job's result to the branch results/reproducers under
+# runs/<run id>/. A reproducer that does not reproduce is a result, not a failure: a job turns red
+# only when its script could not run to its end.
+#
+# Tested versions: the images of wardowl's paper-conformance workflow (branch
+# paper/conformance-campaign) and chromadb 1.5.9 in Python 3.12, as the X3 runs used it. Latest
+# versions, read on 2026-10-30: Redis 8.10.3 (GitHub release marked Latest; 8.12 is a release
+# candidate), MongoDB Atlas Local 8.3.13 (the image the registry's `latest` tag points to), Cerbos
+# 0.57.0 (GitHub release marked Latest), chromadb 1.5.9 (still the newest on PyPI, so its "latest"
+# jobs repeat the tested version). Each job records the digest of the image it pulled.
+on:
+  push:
+    branches: [main]
+    paths:
+      - disclosure/reproducers/**
+      - .github/workflows/reproducers.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: reproducers-${{ github.ref }}
+  cancel-in-progress: false
+
+defaults:
+  run:
+    shell: bash
+
+jobs:
+  reproduce:
+    name: ${{ matrix.reproducer }} (${{ matrix.version }})
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { reproducer: redis, version: tested, target: "redis:8.10.2-alpine" }
+          - { reproducer: redis, version: latest, target: "redis:8.10.3-alpine" }
+          - { reproducer: mongodb, version: tested, target: "mongodb/mongodb-atlas-local:8.0.30" }
+          - { reproducer: mongodb, version: latest, target: "mongodb/mongodb-atlas-local:8.3.13" }
+          - { reproducer: cerbos, version: tested, target: "ghcr.io/cerbos/cerbos:0.56.0" }
+          - { reproducer: cerbos, version: latest, target: "ghcr.io/cerbos/cerbos:0.57.0" }
+          - { reproducer: chroma-depth, version: tested, target: "chromadb==1.5.9" }
+          - { reproducer: chroma-depth, version: latest, target: "chromadb==1.5.9" }
+          - { reproducer: chroma-crash, version: tested, target: "chromadb==1.5.9" }
+          - { reproducer: chroma-crash, version: latest, target: "chromadb==1.5.9" }
+    env:
+      REPRODUCER: ${{ matrix.reproducer }}
+      VERSION_LABEL: ${{ matrix.version }}
+      TARGET: ${{ matrix.target }}
+      MONGOSH_VERSION: 2.14.1
+      ANONYMIZED_TELEMETRY: "False"
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - name: Start the server
+        if: contains(fromJSON('["redis", "mongodb", "cerbos"]'), matrix.reproducer)
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          case "$REPRODUCER" in
+            redis)   docker run -d --name redis -p 6379:6379 "$TARGET" ;;
+            mongodb) docker run -d --name mongodb -p 27017:27017 "$TARGET" ;;
+            cerbos)  docker run -d --name cerbos -p 3592:3592 \
+                       -v "$PWD/disclosure/reproducers/cerbos-policies:/policies:ro" "$TARGET" ;;
+          esac 2>&1 | tee -a "$RUNNER_TEMP/out/setup.log"
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        if: startsWith(matrix.reproducer, 'chroma')
+        with: { python-version: "3.12" }
+      - name: Install the client
+        run: |
+          mkdir -p "$RUNNER_TEMP/out"
+          case "$REPRODUCER" in
+            mongodb) npm install -g --no-fund --no-audit "mongosh@$MONGOSH_VERSION" ;;
+            chroma-*) python -m pip install --disable-pip-version-check --quiet "$TARGET" ;;
+            *) echo "the server image's own client is used" ;;
+          esac 2>&1 | tee -a "$RUNNER_TEMP/out/setup.log"
+      - name: Wait for the server
+        if: contains(fromJSON('["redis", "mongodb", "cerbos"]'), matrix.reproducer)
+        run: |
+          wait_for() {
+            local tries=$1; shift
+            for i in $(seq 1 "$tries"); do
+              if "$@" > /dev/null 2>&1; then echo "$REPRODUCER answered after about $((2 * i)) s"; return 0; fi
+              sleep 2
+            done
+            echo "::error::$REPRODUCER did not answer"; docker logs --tail 80 "$REPRODUCER"; return 1
+          }
+          mongodb_healthy() { [ "$(docker inspect -f '{{.State.Health.Status}}' mongodb)" = healthy ]; }
+          case "$REPRODUCER" in
+            redis)   wait_for 60 docker exec redis redis-cli ping ;;
+            mongodb) wait_for 180 mongodb_healthy ;;
+            cerbos)  wait_for 60 curl -sf http://localhost:3592/_cerbos/health ;;
+          esac 2>&1 | tee -a "$RUNNER_TEMP/out/setup.log"
+      - name: Record the versions
+        run: |
+          {
+            set +e
+            echo "reproducer: $REPRODUCER"
+            echo "version label: $VERSION_LABEL"
+            echo "target: $TARGET"
+            echo "commit: $GITHUB_SHA"
+            echo "run: $GITHUB_RUN_ID attempt $GITHUB_RUN_ATTEMPT"
+            echo "runner: ${ImageOS:-?} ${ImageVersion:-?}, $(uname -srm)"
+            echo "started: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            case "$REPRODUCER" in
+              redis|mongodb|cerbos)
+                echo "image digest: $(docker image inspect --format '{{join .RepoDigests " "}}' "$TARGET")"
+                echo "image id: $(docker image inspect --format '{{.Id}}' "$TARGET")"
+                echo "image labels: $(docker image inspect --format '{{json .Config.Labels}}' "$TARGET")" ;;
+            esac
+            case "$REPRODUCER" in
+              redis)
+                echo "redis-cli: $(docker exec redis redis-cli --version)"
+                docker exec redis redis-cli INFO server | grep -E '^redis_(version|git_sha1|build_id)' | tr -d '\r'
+                echo "modules:"; docker exec redis redis-cli MODULE LIST | tr '\n' ' '; echo ;;
+              mongodb)
+                echo "mongosh: $(mongosh --version)"
+                echo "server: $(mongosh --quiet 'mongodb://127.0.0.1:27017/?directConnection=true' --eval 'db.version()')"
+                echo "image env: $(docker image inspect --format '{{json .Config.Env}}' "$TARGET")" ;;
+              cerbos)
+                echo "server_info: $(curl -s http://localhost:3592/api/server_info)"
+                echo "curl: $(curl --version | head -n 1)" ;;
+              chroma-*)
+                echo "python: $(python --version 2>&1)"
+                echo "chromadb: $(python -m pip show chromadb | grep -E '^Version')"
+                echo "stack limit (ulimit -s): $(ulimit -s)" ;;
+            esac
+          } 2>&1 | tee "$RUNNER_TEMP/out/versions.txt"
+      - name: Run the reproducer
+        run: |
+          case "$REPRODUCER" in
+            redis)        export REDIS_CLI="docker exec redis redis-cli"; cmd="sh disclosure/reproducers/redis.sh" ;;
+            mongodb)      cmd="sh disclosure/reproducers/mongodb.sh" ;;
+            cerbos)       cmd="sh disclosure/reproducers/cerbos.sh" ;;
+            chroma-depth) cmd="python disclosure/reproducers/chroma_depth.py" ;;
+            chroma-crash) cmd="python disclosure/reproducers/chroma_crash.py" ;;
+          esac
+          start=$(date +%s)
+          status=0
+          $cmd > "$RUNNER_TEMP/out/output.txt" 2>&1 || status=$?
+          seconds=$(( $(date +%s) - start ))
+          cat "$RUNNER_TEMP/out/output.txt"
+          jq -n --arg reproducer "$REPRODUCER" --arg version "$VERSION_LABEL" --arg target "$TARGET" \
+            --arg command "$cmd" --argjson exit_status "$status" --argjson seconds "$seconds" \
+            --arg run_id "$GITHUB_RUN_ID" --arg commit "$GITHUB_SHA" \
+            --rawfile versions "$RUNNER_TEMP/out/versions.txt" \
+            --arg results "$(grep '^RESULT' "$RUNNER_TEMP/out/output.txt" | cut -c 8- || true)" \
+            '{reproducer: $reproducer, version: $version, target: $target, command: $command,
+              exit_status: $exit_status, seconds: $seconds, run_id: $run_id, commit: $commit,
+              versions: ($versions | split("\n") | map(select(length > 0))),
+              results: ($results | split("\n") | map(select(length > 0)))}' > "$RUNNER_TEMP/out/result.json"
+          cat "$RUNNER_TEMP/out/result.json"
+          echo "status=$status" >> "$GITHUB_ENV"
+      - name: Keep the server's log
+        if: always() && contains(fromJSON('["redis", "mongodb", "cerbos"]'), matrix.reproducer)
+        run: docker logs --tail 200 "$REPRODUCER" > "$RUNNER_TEMP/out/server.log" 2>&1 || true
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: ${{ matrix.reproducer }}-${{ matrix.version }}
+          path: ${{ runner.temp }}/out/
+          if-no-files-found: warn
+          retention-days: 90
+      - name: The script ran to its end
+        run: |
+          if [ "${status:-}" != 0 ]; then echo "::error::the script stopped with exit status ${status:-unknown}"; exit 1; fi
+
+  collect:
+    name: commit the results
+    needs: reproduce
+    if: always()
+    runs-on: ubuntu-24.04
+    timeout-minutes: 10
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          path: ${{ runner.temp }}/results
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { fetch-depth: 1 }
+      - name: The jobs' conclusions
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          mkdir -p "$RUNNER_TEMP/results"
+          curl -sf -H "Authorization: Bearer $GH_TOKEN" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/$GITHUB_REPOSITORY/actions/runs/$GITHUB_RUN_ID/jobs?per_page=50" \
+            | jq '[.jobs[] | {name, conclusion, failed_steps: [(.steps // [])[] | select(.conclusion == "failure") | .name]}]' \
+            > "$RUNNER_TEMP/results/jobs.json" || echo '[]' > "$RUNNER_TEMP/results/jobs.json"
+          cat "$RUNNER_TEMP/results/jobs.json"
+      - name: Write the summary
+        run: |
+          cd "$RUNNER_TEMP/results"
+          shopt -s nullglob
+          {
+            echo "# Reproducers, run $GITHUB_RUN_ID (commit $GITHUB_SHA)"
+            echo
+            for f in */result.json; do
+              jq -r '"## \(.reproducer) (\(.version)): \(.target)\n\nexit status \(.exit_status), \(.seconds) s\n\n"
+                     + (.versions | map("    " + .) | join("\n")) + "\n\n"
+                     + (.results | map("- " + .) | join("\n")) + "\n"' "$f"
+            done
+            echo "## Jobs"
+            echo
+            jq -r '.[] | "- \(.name): \(.conclusion // "running")" + (if (.failed_steps | length) > 0 then " (failed: \(.failed_steps | join(", ")))" else "" end)' jobs.json
+          } > summary.md
+          cat summary.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Commit to results/reproducers
+        run: |
+          branch=results/reproducers
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            git fetch --depth=1 origin "$branch"
+            git switch --force-create "$branch" FETCH_HEAD
+          else
+            git switch --orphan "$branch"
+          fi
+          dest="runs/$GITHUB_RUN_ID"
+          rm -rf "$dest"
+          mkdir -p "$dest"
+          cp -R "$RUNNER_TEMP/results/." "$dest/"
+          git add runs
+          git -c user.name="github-actions[bot]" -c user.email="41898282+github-actions[bot]@users.noreply.github.com" \
+            commit -q -m "reproducers: run $GITHUB_RUN_ID (attempt $GITHUB_RUN_ATTEMPT) of $GITHUB_SHA"
+          git push origin "HEAD:refs/heads/$branch"
