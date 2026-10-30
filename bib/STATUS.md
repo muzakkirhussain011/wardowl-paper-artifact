@@ -87,7 +87,7 @@ HoneyBee (4 records → `zhong2026honeybee`), Filtered-DiskANN (4 → `gollapudi
 | Curator (SIGMOD 2026), arXiv:2601.01291, "Curator: Efficient Vector Search with Low-Selectivity Filters" | This is a different paper from `jin2024curator`; do not conflate them. It is not in either file because the notes gave no BibTeX (snippet-level). arXiv confirms 7 authors and "Accepted at SIGMOD 2026", so add it if the paper needs it. |
 | Grey literature in `filtered_vector_search.md`: Tampere 2024 thesis, Research Square preprint 10.21203/rs.3.rs-7338381/v1, SNU 2026 dissertation, IJETCSIT 2026 "Silo, Pool, and Bridge" article | Not peer reviewed and not read; the notes say "cite with care or omit". No entries. |
 | Concentric AI and ShareGate oversharing figures as primary data | Known only from secondary coverage (`pogorelec2025genai`; ShareGate through IT Brief). Not checked against the primary reports. |
-| Items marked [U] in `evaluation_and_testing_methodology.md` without BibTeX: McKeeman 1998, Chen/Cheung/Yiu 1998 tech report, Slutz 1998 (RAGS), Ene et al. SACMAT 2008, the Secret Sharer exposure formula, Argus (arXiv 2510.06663), JoinEquiv (arXiv 2606.23294), VectorDBBench, OSS-Fuzz | Not verified in the notes and not in the report. No entries. |
+| Items marked [U] in `evaluation_and_testing_methodology.md` without BibTeX: Chen/Cheung/Yiu 1998 tech report, Slutz 1998 (RAGS), Ene et al. SACMAT 2008, the Secret Sharer exposure formula, Argus (arXiv 2510.06663), JoinEquiv (arXiv 2606.23294), VectorDBBench, OSS-Fuzz | Not verified in the notes and not in the report. No entries. |
 | Hawking 2004 (ADC, "Challenges in Enterprise Search") | The notes did not verify its DOI or content. No entry. |
 | Authors' own evidence files the report links (Kaggle run 2026-10-24, recall-gap investigation, paper plan v0) | Unpublished internal material, not bibliography entries. |
 | Vendor pages in `industry_systems.md` and `venues_and_policies.md` that the report does not cite (Glean, Amazon Q Business, Vertex AI Search, Elastic and OpenSearch DLS, Supabase, Weaviate RBAC, Pinecone multitenancy, Zilliz, MongoDB Atlas, Permit.io, Pangea, Aserto, Descope, PAIG, Onyx, Slack AI, GeminiJack, ForcedLeak, CW1226324 and others) | Not added. Add them from the notes' URLs if the paper cites them, and re-read each title first. |
@@ -441,6 +441,41 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | openfga2026openfgaproto | openfga.proto (openfga/api, main) | verified-now (2026-10-30) | GH raw file: TupleKey user 512 bytes, object pattern 2 to 256 non-whitespace characters, 100 contextual tuples |
 | authzed2026reference | Reference: spicedb (AuthZed documentation) | verified-now (2026-10-30) | page heading (the HTML title is generic); quantization interval default 5s, max staleness percent default 0.1 |
 | pgvector2026pgvector, authzed2026consistency, opa2026evaluating, opa2026writing, postgresql2026prepare, psycopg2026prepared | (existing entries, re-read for the fault table) | re-read (2026-10-30) | pgvector README: max_scan_tuples 20,000, scan_mem_multiplier 1; consistency page: minimize_latency, configurable staleness window, no default stated; OPA pages: nothing on simplifying not over an empty collection; PREPARE notes and psycopg prepare_threshold re-read (the psycopg page does not state the default 5) |
+
+## Added 2026-10-30 (critical review, concern 8)
+
+All checked on 2026-10-30. `CR` = Crossref record of the DOI. DBLP sat behind a bot check, so it was not read directly except through one search result, and the ACM and IEEE pages refused automated requests. End pages are omitted where only a start page could be verified.
+
+| Key | Short title | Status | Checked |
+|---|---|---|---|
+| goguen1982security | Security Policies and Security Models (IEEE S&P 1982) | partial (2026-10-30) | CR and OpenAlex: title, two authors, venue, year, DOI; both give only start page 11, so pages are left out |
+| askarov2010predictive | Predictive Black-Box Mitigation of Timing Channels (CCS '10) | verified-now (2026-10-30) | CR: title, three authors in order, venue, pages 297-307, DOI |
+| zhang2012languagebased | Language-Based Control and Mitigation of Timing Channels (PLDI '12) | verified-now (2026-10-30) | CR: title, three authors in order, venue, pages 99-110, DOI |
+| gelernter2015crosssite | Cross-Site Search Attacks (CCS '15) | verified-now (2026-10-30) | CR: title, two authors, venue, pages 1394-1405, DOI |
+| felten2000timing | Timing Attacks on Web Privacy (CCS '00) | verified-now (2026-10-30) | CR: title, two authors, venue, pages 25-32, DOI |
+| mckeeman1998differential | Differential Testing for Software (Digital Technical Journal 10(1)) | verified-now (2026-10-30), no DOI exists | OpenAlex W109452506: title, William Marshall McKeeman, Digital Technical Journal, volume 10, pages 100-107, 1998; DBLP's author page as a search result: "Digit. Tech. J. 10(1): 100-107 (1998)". The HP archive PDF could not be fetched, so the text itself was not read |
+| fisler2005verification | Margrave: Verification and Change-Impact Analysis of Access-Control Policies (ICSE '05) | partial (2026-10-30) | CR: title, four authors in order, venue, year, DOI; CR and OpenAlex give only start page 196, so pages are left out |
+| backes2018semanticbased | Zelkova: Semantic-based Automated Reasoning for AWS Access Policies using SMT (FMCAD 2018) | verified-now (2026-10-30) | CR: title, nine authors in order, venue, pages 1-9, DOI. The name Zelkova is from memory of the paper, not from the record |
+| martin2007fault | A Fault Model and Mutation Testing of Access Control Policies (WWW '07) | verified-now (2026-10-30) | CR: title, two authors, venue, pages 667-676, DOI |
+| hanley1983if | If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators (JAMA 249(13)) | verified-now (2026-10-30) | PubMed 6827763: title, J A Hanley and A Lippman-Hand, JAMA 249(13):1743-5, 1983. CR confirms the DOI, Hanley's given name and start page, and omits the second author |
+| song2000practical | Practical Techniques for Searches on Encrypted Data (IEEE S&P 2000) | verified-now (2026-10-30) | CR: title, three authors in order (given names as recorded), venue, pages 44-55, DOI; year from the venue name |
+| curtmola2006searchable | Searchable Symmetric Encryption: Improved Definitions and Efficient Constructions (CCS '06) | verified-now (2026-10-30) | CR: title, four authors in order, venue, pages 79-88, DOI |
+| wong2009secure | Secure kNN Computation on Encrypted Databases (SIGMOD '09) | verified-now (2026-10-30) | CR: title, four authors in order, venue, pages 139-152, DOI |
+| disselkoen2024how | (existing entry, re-read) | re-read (2026-10-30) | arXiv 2407.01688 abstract: executable model, mechanically proved properties, differential random testing against the model |
+
+Existing entries now cited for the first time, not re-checked today (see their rows above): zerr2008zerber, zerr2009zerberr, fagin2003searching, griffiths1976authorization, motro1989access, lefevre2004limiting, pappachan2020sieve, wang2023efficient, wu2022hqann, gupta2023caps, cai2024navigating, li2025sieve, zuo2024serf, xu2024irangegraph, engels2024approximate, wei2020analyticdbv, zhang2023vbase, zou2025poisonedrag, costa2025securing, wu2024systemlevel, klees2018evaluating, schloegel2024sok, smucker2007comparison, urbano2019statistical. The claims about them in `related.tex` and `background.tex` stay at the level of their titles or of what the notes verified (Sieve, Motro and Fagin et al. were not read in full; the statement on LeFevre et al. comes from Wang et al.).
+
+## Licenses read on 2026-10-30 (`limits.tex`, Reproducibility)
+
+| Item | License as stated | Page read |
+|---|---|---|
+| MS MARCO | Terms: the datasets are intended for non-commercial research purposes only | microsoft.github.io/msmarco |
+| FiQA 2018 | Task 2 training and test data "available only for non-commercial use"; no named license and no terms stated for Task 1 | sites.google.com/view/fiqa |
+| FiQA and SciDocs in BEIR | Dataset cards tagged `cc-by-sa-4.0`; neither has a licensing section. The BEIR README has no license column and leaves it to users to determine permission | huggingface.co/datasets/BeIR/fiqa, /BeIR/scidocs, github.com/beir-cellar/beir |
+| SciDocs | LICENSE file: Creative Commons Attribution 4.0 International | raw.githubusercontent.com/allenai/scidocs/master/LICENSE |
+| bge-base-en-v1.5, bge-small-en-v1.5 | Tag `mit`; "FlagEmbedding is licensed under the MIT License"; released models usable commercially free of charge | huggingface.co/BAAI/ |
+| all-MiniLM-L6-v2 | Tag `apache-2.0` | huggingface.co/sentence-transformers/all-MiniLM-L6-v2 |
+| Qwen2.5-3B-Instruct | Tag `qwen-research`; LICENSE: Qwen Research License Agreement, release date 19 September 2024; non-commercial means research or evaluation; commercial use requires a license requested from Alibaba Cloud | huggingface.co/Qwen/Qwen2.5-3B-Instruct, blob/main/LICENSE |
 
 ## Build note (2026-10-26)
 

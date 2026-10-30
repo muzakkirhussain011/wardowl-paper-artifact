@@ -13,7 +13,7 @@ documents have stayed retrievable through a cached index~\cite{roychowdhury2024c
 
 The remedy is old. Query modification adds the access predicate to the query before it
 runs~\cite{stonebraker1974access}; multi-user full-text search integrated security into query
-processing and showed that statistics computed over unreadable documents leak
+processing and showed that statistics computed over unreadable documents reveal
 them~\cite{buttcher2005security}; enterprise search checked results late, in growing
 blocks~\cite{bailey2006secure}; Zanzibar checks each result against a central authorization
 service~\cite{pang2019zanzibar}. Managed RAG services combine these steps: Amazon Bedrock knowledge
@@ -33,76 +33,100 @@ paths agree. \emph{Second, the filter runs inside an approximate index.} Permiss
 cases for filtered nearest-neighbor search: they are often selective, they take a disjunction over
 many groups, and organizational structure, not meaning, decides which chunks they admit, so the
 readable set may lie far from the query~\cite{patel2024acorn,lim2026revisiting}. \emph{Third,
-failures are silent.} Under Truman semantics~\cite{rizvi2004extending} a user who receives three
+failures are silent.} Under Truman semantics~\cite{rizvi2004extending} a person who receives three
 chunks, or none, cannot tell whether that is all they may read or all that the index found.
 
 We study permission-aware retrieval as deployed: an enforcement layer that compiles an
 organization's existing policy into filters for production vector stores, re-checks every hit with
 the authorizer and fails closed. We test one such layer, \sys{}, an open-source library with
 adapters for 14 vector stores and seven authorization engines (Section~\ref{sec:system}), and use it
-as an instrument. Our starting point is that the re-check makes security depend on the authorizer's
-check API alone (Proposition~\ref{prop:reduction}): a faulty filter or a lossy index can then cost
-recall but cannot leak. The open questions become how much is lost, where, and whether anyone can
-tell. Our answer is the title. Across every store and engine we tested the layer leaked nothing, but
-retrieval quality under permission-shaped filters ranged from near perfect to missing most of what a
-user may read, and the application could not see the loss.
+as an instrument. Our starting point is that the re-check rests security on a small trusted computing
+base around the authorizer's check API (Observation~\ref{prop:reduction}): a faulty filter or a lossy
+index can then cost recall but cannot put a chunk outside the readable set into an answer. The open
+questions become how much is lost, where, how fresh the check is, what the answers still reveal, and
+whether anyone can tell. Our answer is the title, with its scope stated. By \emph{leak-free} we mean
+one thing: in every store and engine we tested, no returned chunk lay outside the subject's readable
+set at the revision the re-check read. That revision can be stale: a revoked permission kept admitting
+for up to a cache's time to live or an engine's staleness, which we report per path, and the release
+we evaluated exceeded its stated bound after an invalidation. Other observables of an answer still revealed
+information about unreadable chunks. And retrieval quality under permission-shaped filters ranged from
+near perfect to missing most of what a person may read, and the application could not see the loss.
 
 \paragraph{Contributions.}
 \begin{itemize}
   \item \emph{A formulation} (Section~\ref{sec:problem}). We adapt the sound, secure and maximal
         criteria of Wang et al.~\cite{wang2007correctness} to top-$k$ retrieval under an external
-        authorizer, add honesty for the claim that an answer is complete, and define metrics: a leak
-        rate with a per-question bound, permission-recall@$k$ against exact search over the readable
-        set, and under-retrieval and false-completeness rates, reported on measured
-        query-correlation axes.
+        authorizer, define the readable set from the policy, and add freshness, with a measured
+        staleness $\delta$ per path, and count-honesty for the claim that an answer is complete. We
+        state the trusted computing base and define metrics: a leak rate with bounds per question and
+        per subject, permission-recall@$k$ against exact search over the readable set, and
+        under-retrieval and false-completeness rates, reported on measured query-correlation axes.
   \item \emph{Differential conformance testing} (Section~\ref{sec:conformance}). A kit generates
         corpora, permissions and filters, runs them through each store's filter translation and each
-        engine's filter and check APIs, and compares every answer with one reference semantics. Over
-        29 targets it found six classes of faults and semantic gaps, among them answers from Cerbos
-        query plans that disagree with Cerbos checks when ACL fields hold scalars, and matching
-        documents that Redis and MongoDB miss because they truncate long values when indexing. We
-        fixed the four that lay in the layer's adapters and confirmed the fixes in a second
-        campaign of 4,480 runs.
+        engine's filter and check APIs, and compares every answer with one reference semantics. We ran
+        it against 13 of the 14 stores the layer supports (Pinecone, a hosted service, was skipped for
+        want of an API key) and seven engines. It found two undocumented store behaviors with a
+        correctness effect, Redis and MongoDB truncating long values when indexing and so missing
+        matching chunks; two faults in the layer's OpenFGA and SpiceDB adapters, which cost
+        availability; and documented size limits in five stores, which fail closed. It also confirmed,
+        at scale, a type gap the project's review had already recorded in the layer's Cerbos translator,
+        which maps CEL's \texttt{in} and \texttt{==} to a filter that also accepts scalars, so the filter
+        over-approximates the policy and the re-check drops the excess. We fixed or mitigated the
+        adapter faults and the Redis and MongoDB misses, and a second campaign of 4,480 runs confirmed
+        the fixes; in it about 85\% of the OpenFGA and SpiceDB runs were refused by the layer before
+        reaching the engine, because the generated subject could not be represented there.
   \item \emph{Filter-versus-check agreement of authorization engines} (Section~\ref{sec:engines}),
         measured at a single revision so that permission changes between calls are not counted as
-        faults. Over 6.3 million user-document pairs from OpenFGA, SpiceDB, OPA and Cerbos we found
-        no translation fault; the disagreements seen in practice were revision skew between the two
-        calls. The revocation measurements falsified three of our predictions: SpiceDB's default
-        consistency served revoked chunks for up to 8.7\,s, invalidating a cache in front of a stale
-        engine merely refilled it, and a single ban rule removed OPA's pre-filter for everyone. No
-        request leaked in 1,090 fault episodes.
+        faults. Over 6.3 million user-document pairs from OpenFGA, SpiceDB, OPA and Cerbos, in the
+        profiles that hold the model as intended, filters and checks never disagreed; the only
+        disagreement at one revision was the Cerbos type gap, on one-value ACL fields, and those seen
+        in practice were revision skew between the two calls. Four pre-registered verdicts were
+        falsified, by three findings: SpiceDB's default consistency served revoked chunks for up to
+        8.7\,s, in one of 40 trials (a rerun stayed within 5.2\,s); invalidating a cache in front of a
+        stale engine merely refilled it for its full time to live, which we fixed and confirmed in the
+        rerun; and a single ban rule removed OPA's pre-filter for everyone. No chunk outside the
+        readable set was returned in 1,050 fault episodes, a one-sided 95\% bound of
+        $2.8 \times 10^{-3}$ per episode over the faults we injected.
   \item \emph{An audit of retrieval quality under permission filters} (Section~\ref{sec:quality}).
-        In an enterprise scenario of 107,540 chunks and 20 tenants, mean recall@10 at common
-        settings ranged from 0.55 to 1.00 over ten store configurations and four runs.
-        Pre-registered experiments trace Qdrant's loss to an islanded permitted subgraph (recall@10
-        of 0.37 on company documents, 0.95 with per-tenant graphs) and show that pgvector's answer
-        depends on a decision taken before any search: PostgreSQL's plan cache chooses an exact plan
-        or the HNSW scan according to the state of a GIN index's pending list, and the same
-        configuration was exact in five of eight runs and lost a third of its recall in three. When
-        it scans the graph, both of the scan's limits cut answers short. On a million MS MARCO
-        passages under controlled permission layouts, recall@10 at the stores' defaults ranged from
-        0.44 to 1.00, filters admitting 0.5\% to 10\% of the corpus were harder than smaller ones in
-        five of nine stores, and questions far from the readable set cost four stores 0.05 to 0.42 of
-        recall and others latency instead.
+        In an enterprise scenario of 107,540 chunks and 20 tenants, mean recall@10 at common settings
+        over four runs ranged from 0.55 to 0.98 over eight stores searched approximately, under this
+        layer's schema. Pre-registered experiments trace Qdrant's loss to an islanded permitted
+        subgraph (recall@10 of 0.656 in the shared layout and 0.952 with per-tenant graphs) and show
+        that pgvector's answer depends on a decision taken before any search: PostgreSQL's plan cache
+        chooses an exact plan or the HNSW scan according to the state of a GIN index's pending list.
+        Over eight runs the same configuration ran exact in five and, by its median, fast in three, one
+        of them a mixture, and in the fast runs it lost about a quarter of its recall, a split consistent
+        with autovacuum running on its own schedule. When it scans the graph, both of the scan's limits
+        cut answers short. On a million MS MARCO passages under controlled permission layouts, recall@10
+        at the stores' defaults ranged from 0.44 to above 0.99. On clustered layouts with negatively
+        correlated questions, filters admitting 0.5\% to 10\% of the corpus were harder than the smallest
+        (0.06\%) in five of nine stores, and such questions cost four stores 0.05 to 0.42 of recall and
+        others latency instead.
   \item \emph{Detection and bounded repair of under-retrieval} (Section~\ref{sec:repair}): a
         completeness flag that never certifies a short approximate answer, count-based detection,
         and an exact fallback with a cost bound. The count flagged all 2,657 truly short answers
-        without a false alarm, and exact repair left none empty or short, at a median of 30 to
-        109\,ms on the answers it repaired; but no repair touches mis-retrieval, and 57\% to 58\% of
-        Qdrant's enterprise answers marked complete were not maximal under every policy, against
-        24\% with per-tenant graphs.
+        without a false alarm, and exact repair without a bound left none empty or short, at a median of
+        30 to 109\,ms on the answers it repaired. A bound limits this: on MS MARCO, a bound of 1,000 chunks
+        repaired only 0.5\% of pgvector's answers out of the 1.7\% that triggered it, and bounds of 1,000
+        and 10,000 repaired none of Qdrant's, whose short answers all had more readable chunks. No repair
+        touches mis-retrieval, and 57\% to 58\% of Qdrant's enterprise answers marked complete were not
+        maximal under every policy, against 24\% with per-tenant graphs.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}): what latency, counts,
         recall and scores reveal about unreadable chunks near a query. In a pre-registered
         distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
         chunks had appeared near it from the latency of the widening post-filter (paired AUC 0.80
-        to 0.98) and of pgvector's approximate pre-filter (1.00 with 1,000 of them), and from BM25 and IDF
-        scores (0.98 to 1.00). Exact pre-filtering returned identical answers, and padding removed
-        every latency channel we tested, at five to seven times the latency.
+        to 0.98, except pgvector's 0.66 for an attacker reading 10\% of the background) and of
+        pgvector's approximate pre-filter (1.00 with 1,000 of them), and from BM25 and IDF scores (0.98
+        to 1.00). Two FAISS builds of identical content themselves gave paired AUCs of 0.36 to 0.60, so
+        weaker channels lie near build noise. Exact pre-filtering returned identical answers, and padding, tested
+        where the unpadded AUC reached 0.75, removed the latency channel in all seven such cells, at five
+        to seven times the latency.
   \item \emph{An end-to-end evaluation with canaries} (Section~\ref{sec:e2e}): four runs of 1,105
         questions per configuration, 432 of them red-team prompts, over 189 people and eleven
         configurations of nine stores and three ways to state the policy (in process, OPA and
-        OpenFGA), with 783,888 checked hits and no leak, a one-sided 95\% bound of
-        $6.8 \times 10^{-4}$ leaks per question for each configuration.
+        OpenFGA), with no leak: a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per question for
+        each configuration and $1.6 \times 10^{-2}$ per person. Both bounds hold over the generator's
+        question distribution and say nothing about an adaptive adversary.
 \end{itemize}
 
 We do not propose an index: HoneyBee and Veda are physical designs whose recall our harness can

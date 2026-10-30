@@ -18,25 +18,39 @@ per-check latency divided by the visibility density $\mathit{VD}$ (a 6.4\,ms off
 a one-second budget to 93 checked results), and fetched blocks of
 $2\,\mathit{NR}/\mathit{VD}$ candidates until a page of $\mathit{NR}$ results
 filled~\cite{bailey2006secure}. Google's Search Appliance team named early and late binding and
-warned that ACLs copied into an index drift out of sync and leak~\cite{mangtani2006documentlevel}.
-The pre-filter we test is query integration applied to approximate nearest-neighbor (ANN) search, and
+warned that ACLs copied into an index drift out of sync and expose
+content~\cite{mangtani2006documentlevel}. Fagin et al.\ studied search over a corporate
+intranet~\cite{fagin2003searching}, the setting in which these documents and their readers live. The
+pre-filter we test is query integration applied to approximate nearest-neighbor (ANN) search, and
 its widening post-filter is Bailey et al.'s loop; we claim neither. We use B\"{u}ttcher and Clarke's
 consistency definition to frame side channels of filtered vector search, which we found no prior work
-to measure.
+to measure. A separate line protects the index from its server. Zerber bounds what an index reveals
+about terms under statistical attacks, with limited trust in the central indexer~\cite{zerr2008zerber},
+and Zerber+R adds top-$k$ ranking over such an index~\cite{zerr2009zerberr}; searchable encryption
+protects keyword search~\cite{song2000practical,curtmola2006searchable}, and secure kNN protects
+similarity search over encrypted vectors~\cite{wong2009secure}. Those works assume an untrusted
+server; ours trusts the store's host (Section~\ref{sec:prob-threat}) and asks whether the deployed
+query path is faithful.
 
 \paragraph{Database access control.}
-Stonebraker and Wong enforced access rules by query modification, conjoining the applicable rules'
-qualifications with the user's query~\cite{stonebraker1974access}, which is what a pushed-down
-permission filter does. Rizvi et al.\ separated Truman semantics, which silently answer over the
-user's restricted view as Oracle's Virtual Private Database does, from non-Truman semantics, which
-reject queries that authorized data cannot answer~\cite{rizvi2004extending,oracle2026using}. Wang et
-al.\ defined sound, secure and maximal answers and found no algorithm of the time that was both sound
-and secure~\cite{wang2007correctness}; Kabra et al.\ showed that functions evaluated before the
-authorization predicate leak through their values and error messages~\cite{kabra2006redundancy}; and
-optimal security-aware query processing is impossible for the full relational
-calculus~\cite{guarnieri2014optimal}. PostgreSQL row-level security brings these lessons to
-production with default deny, leakproof functions and documented covert channels through key
-checks~\cite{postgresql2026row}. The layer we test is query modification with Truman semantics, and
+System R gave relational databases discretionary GRANT and REVOKE~\cite{griffiths1976authorization},
+and Motro derived authorizations by algebraic manipulation of view
+definitions~\cite{motro1989access}. Stonebraker and Wong enforced access rules by query modification,
+conjoining the applicable rules' qualifications with the user's query~\cite{stonebraker1974access},
+which is what a pushed-down permission filter does. Rizvi et al.\ separated Truman semantics, which
+silently answer over the user's restricted view as Oracle's Virtual Private Database does, from
+non-Truman semantics, which reject queries that authorized data cannot
+answer~\cite{rizvi2004extending,oracle2026using}. Wang et al.\ defined sound, secure and maximal
+answers, found no algorithm of the time that was both sound and secure, and showed that the cell-level
+disclosure control of Hippocratic databases~\cite{lefevre2004limiting} violates soundness and
+maximality~\cite{wang2007correctness}; Kabra et al.\ showed that functions evaluated before the authorization predicate reveal data through their values
+and error messages~\cite{kabra2006redundancy}; and optimal security-aware query processing is
+impossible for the full relational calculus~\cite{guarnieri2014optimal}. Sieve enforces large numbers
+of fine-grained policies from a middleware above the database~\cite{pappachan2020sieve}. PostgreSQL
+row-level security brings these lessons to production with default deny, leakproof functions and
+documented covert channels through key checks~\cite{postgresql2026row}. We did not measure such native
+enforcement (Section~\ref{sec:limits-limits}). The layer we test is query modification with Truman
+semantics, and
 its re-check deliberately keeps the redundancy that Kabra et al.\ remove, because its filter and its
 check come from different code paths. This lineage proves rewriting correct under exact evaluation; we
 adapt its criteria to top-$k$ retrieval (Section~\ref{sec:problem}) and test components that carry no
@@ -56,9 +70,15 @@ Policy engines compile filters through engineering artifacts: OPA's partial eval
 2018, emits SQL conditions for a documented fragment of its
 language~\cite{sandall2018write,opa2026evaluating,opa2026writing}, and Cerbos's query plans return
 always-allowed, always-denied or a conditional syntax tree~\cite{cerbos2026cerbos}. The peer-reviewed
-Cedar paper does not discuss filtering~\cite{cutler2024cedar}, XACML 3.0 returns one decision per
-request~\cite{oasis2013extensible}, and we found no peer-reviewed semantics or correctness proof for
-any policy-to-filter translator. We propose no authorizer or filter API. We measure, at one revision
+Cedar paper does not discuss filtering~\cite{cutler2024cedar}, and XACML 3.0 returns one decision per
+request~\cite{oasis2013extensible}. Policies and engines themselves have been verified and tested:
+Margrave checks properties of access-control policies and the impact of changing
+them~\cite{fisler2005verification}, Zelkova reasons about AWS access policies with an SMT
+solver~\cite{backes2018semanticbased}, mutation testing targets access-control
+policies~\cite{martin2007fault}, and Cedar's production code is differentially tested against a model
+with machine-checked proofs~\cite{disselkoen2024how}. These address the policy and its check path; we
+found no peer-reviewed semantics or correctness proof for any policy-to-filter translator. We propose
+no authorizer or filter API. We measure, at one revision
 token, how often each engine's filters disagree with its own check API and when its list APIs
 truncate (Section~\ref{sec:engines}), and rely on the re-check so that such faults cost recall, not
 security.
@@ -72,6 +92,12 @@ filters~\cite{patel2024acorn}, Faiss-HNSW and ACORN could not reach 0.9 recall@1
 selectivity~\cite{li2025attribute}, and without a fallback ACORN-1's recall falls to 0.03--0.10 at
 0.3\% pass fraction~\cite{kim2026racorn1}. pgvector filters after the index scan, so a filter matching
 10\% of rows yields about four matches at the default search depth~\cite{pgvector2026pgvector}.
+Index designs for attribute-filtered search include proximity graphs that fuse vectors and
+attributes~\cite{wang2023efficient,wu2022hqann}, space partitions~\cite{gupta2023caps}, graphs that
+navigate label sets~\cite{cai2024navigating}, workload-aware collections of
+indexes~\cite{li2025sieve} and structures for range filters~\cite{zuo2024serf,xu2024irangegraph,engels2024approximate},
+and systems combine vector and relational predicates in one engine~\cite{wei2020analyticdbv,zhang2023vbase};
+all take the predicate as part of the query rather than compile it from an external policy.
 Engines now fall back to exact scoring for restrictive
 filters~\cite{aquino2024filtering,rodriguez2024how,trent2025filtered}; since version 3.5, OpenSearch
 does so whenever approximate search returns fewer than $k$ results while at least $k$ documents
@@ -121,19 +147,35 @@ forbids passing a client's token upstream~\cite{mcp2026model}, and MITRE ATLAS m
 says an agent should never hold permissions its user would not~\cite{mitre2026atlas}; yet 40.55\% of
 7,973 live remote MCP servers exposed tools without authentication~\cite{zhou2026first}. This
 literature shows why enforcement must be deterministic and precede generation, but does not test
-whether an enforcement layer is faithful or what it costs in recall. We adopt token-bound identity
+whether an enforcement layer is faithful or what it costs in recall. Corpus
+poisoning~\cite{zou2025poisonedrag} acts through content a reader may read, and information-flow
+control for agents~\cite{costa2025securing,wu2024systemlevel} constrains where retrieved content may
+flow after it is read; both are complementary to a retrieval guarantee. We adopt token-bound identity
 rather than claim it, exclude extraction within the readable set and injection in permitted content
 (Section~\ref{sec:prob-threat}), and take the timing channel that SpliceLeak made practical in RAG
 infrastructure~\cite{sun2026agentassisted} as motivation to measure side channels of filtered
 retrieval.
+
+\paragraph{Side channels and information flow.}
+Noninterference requires that what a high-privilege user does has no effect on what a low-privilege
+user observes~\cite{goguen1982security}. The distinguishing game of Section~\ref{sec:side-game} tests a
+restricted form of it, over chosen observables and chosen changes to unreadable content. Timing has
+long revealed hidden content on the web: load times revealed a browser's cache and so its
+history~\cite{felten2000timing}, and the response times of search endpoints let a cross-site attacker
+extract private data~\cite{gelernter2015crosssite}. Black-box mitigation delays outputs to a predicted
+schedule~\cite{askarov2010predictive}, and language-based work combines such mitigation with
+information-flow control~\cite{zhang2012languagebased}; the padding we measure is the simplest such
+schedule, a fixed budget. We propose no mitigation beyond these. What we add is a measurement of how
+much each enforcement path of filtered vector search reveals, and of what removing it costs.
 
 \paragraph{Testing methodology.}
 Database engines have mature oracles for logic bugs: Pivoted Query Synthesis found 121 bugs in
 SQLite, MySQL and PostgreSQL~\cite{rigger2020testing}; NoREC and Ternary Logic Partitioning compare a
 query with a non-optimizing or partitioned rewrite of itself~\cite{rigger2020detecting,rigger2020finding};
 and later oracles reach query plans and graph databases~\cite{ba2023testing,ba2024keep,kamm2023testing}.
-All are forms of differential or metamorphic testing~\cite{chen2018metamorphic,segura2016survey},
-often with property-based input generation~\cite{claessen2000quickcheck,maciver2019hypothesis}. Vector databases have no such oracles:
+All descend from differential~\cite{mckeeman1998differential} and
+metamorphic~\cite{chen2018metamorphic,segura2016survey} testing, often with property-based input
+generation~\cite{claessen2000quickcheck,maciver2019hypothesis}. Vector databases have no such oracles:
 a study of 1,671 bug-fix pull requests in 15 vector databases found 57.3\% of bugs to be functional
 failures, with filter abnormality as a fault class, but does not mention differential or metamorphic
 testing~\cite{xie2025toward}, and a testing roadmap lists oracle definition as an open
@@ -141,11 +183,16 @@ challenge~\cite{wang2025towards}. The Secret Sharer inserted canaries to estimat
 memorization~\cite{carlini2019secret}. In reporting, ANN work plots recall-throughput
 frontiers~\cite{aumuller2020annbenchmarks}, yet the Big-ANN results paper and HoneyBee give no error
 bars~\cite{simhadri2025results,zhong2026honeybee}, short of the practice recommended for ML
-benchmarks~\cite{bouthillier2021accounting,agarwal2021deep}. We found no differential or metamorphic
-testing of metadata-filter semantics across vector stores. Ours uses a reference semantics as a
-NoREC-style oracle and evaluates its relations under exact search, so that approximation cannot
-confound them (Section~\ref{sec:conformance}); we also turn canaries into a deterministic enforcement
-check over hits, prompts and answers, and report confidence intervals over repeated runs.
+benchmarks~\cite{bouthillier2021accounting,agarwal2021deep}; fuzzing research has similar reporting
+norms for repeated campaigns and stated seeds~\cite{klees2018evaluating,schloegel2024sok}, and IR
+evaluation has compared the significance tests available for paired
+comparisons~\cite{smucker2007comparison,urbano2019statistical}. We found no differential or metamorphic testing of metadata-filter semantics across vector stores. Ours is
+differential in McKeeman's sense: every store's translation is compared with one reference
+implementation, not with a rewriting of the same query as in NoREC's metamorphic relation, and it
+evaluates its relations under exact search, so that approximation cannot confound them
+(Section~\ref{sec:conformance}). We also turn canaries into a deterministic enforcement check over
+hits, prompts and answers, report zero-event bounds by the rule of three~\cite{hanley1983if}, and
+report confidence intervals over repeated runs.
 
 \paragraph{Industry systems.}
 Among native store features, Azure AI Search (in preview) goes furthest: it builds filters from the

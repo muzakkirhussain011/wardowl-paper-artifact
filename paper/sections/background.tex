@@ -1,43 +1,49 @@
 % Background and Problem Statement: body of Section~\ref{sec:problem} (the \section heading and its
 % label stay in main.tex). Labels defined here: sec:prob-setup, sec:prob-criteria, def:criteria,
-% prop:reduction, sec:prob-threat, sec:prob-metrics.
+% prop:reduction (an observation since the 2026-10-30 revision; the label is kept because other
+% sections cite it), sec:prob-threat, sec:prob-metrics.
 
 \subsection{Permission-aware top-$k$ retrieval}\label{sec:prob-setup}
 
 \paragraph{Retrieval in RAG.}
 A retrieval-augmented generation (RAG) pipeline embeds a question, retrieves the $k$ stored chunks
-most similar to it, and places them in a language model's prompt~\cite{lewis2020retrievalaugmented}. Let $D$ be a corpus of chunks, each with an embedding $\mathbf{x}_d$ and metadata $m_d$, and let
+most similar to it, and places them in a language model's prompt~\cite{lewis2020retrievalaugmented}.
+Let $D$ be a corpus of chunks, each with an embedding $\mathbf{x}_d$ and metadata $m_d$, and let
 $\sigma(q,d)$ be the similarity (cosine or inner product) between a query embedding $q$ and
 $\mathbf{x}_d$. For $X \subseteq D$, $\mathrm{top}_k(q,X)$ denotes the $\min(k,|X|)$ chunks of $X$ most
 similar to $q$, ties broken by a fixed order on chunk identifiers. Vector stores answer this query
 approximately, with indexes such as HNSW~\cite{malkov2020efficient}, DiskANN~\cite{subramanya2019diskann}
 or IVF~\cite{douze2024faiss}; a filtered query $\mathrm{search}(q,\varphi,k)$ restricts the answer to
-chunks whose metadata satisfy a predicate $\varphi$, filtering before, after or during index
-traversal~\cite{patel2024acorn,chronis2025filtered}. Similarity ignores authorization: when readers
-with different permissions share one index, the chunk most similar to a question may be one the asker
-may not read~\cite{arceo2026securing,owasp2025llm082025}.
+the chunks $E(\varphi) = \{d \in D : m_d \models \varphi\}$ whose metadata satisfy a predicate
+$\varphi$, filtering before, after or during index traversal~\cite{patel2024acorn,chronis2025filtered}.
+Similarity ignores authorization: when readers with different permissions share one index, the chunk
+most similar to a question may be one the asker may not read~\cite{arceo2026securing,owasp2025llm082025}.
 
-\paragraph{Subjects, readable sets and the authorizer.}
-A \emph{subject} $s$ is the user on whose behalf a query runs; an agent acting for a user is
+\paragraph{Subjects, the policy and the authorizer.}
+A \emph{subject} $s$ is the principal on whose behalf a query runs; an agent acting for a user is
 authorized as that user, never with permissions the user lacks~\cite{jones2020oauth,mitre2026atlas}.
-Permissions live in an external \emph{authorizer}: a relationship-based engine in the style of
+Permissions are stated by a \emph{policy}. Given the authorization data at revision $\tau$ (a
+snapshot of relationships, ACLs and policy text, committed at time $t(\tau)$), the policy decides
+$P_\tau(s,d) \in \{0,1\}$, whether $s$ may read chunk $d$. The \emph{readable set} of $s$ is
+$R_\tau(s) = \{d \in D : P_\tau(s,d) = 1\}$, and the \emph{exact answer} to $q$ is
+$T^\star = \mathrm{top}_k(q, R_\tau(s))$. Our experiments compute $P$ with an independent oracle
+written without the layer's code (Section~\ref{sec:prob-metrics}). The policy is enforced by an
+external \emph{authorizer}: a relationship-based engine in the style of
 Zanzibar~\cite{pang2019zanzibar}, a policy engine, or ACL metadata copied from a source system. Its
-\emph{check API} answers one question at a time, $\mathrm{check}_\tau(s,d) \in \{0,1\}$, where $\tau$
-is the revision (snapshot) of the authorization data it reads~\cite{pang2019zanzibar,authzed2026consistency}.
-The \emph{readable set} of $s$ is $R_\tau(s) = \{d \in D : \mathrm{check}_\tau(s,d) = 1\}$, and the
-\emph{exact answer} to $q$ is $T^\star = \mathrm{top}_k(q, R_\tau(s))$. Many authorizers also expose a
-\emph{filter API}, such as OpenFGA's ListObjects, SpiceDB's LookupResources, OPA's partial evaluation
-or Cerbos's query plans~\cite{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos},
-whose output can be translated into a store predicate $\varphi_s$. The filter API and the check API
-are separate code paths, and we found no published guarantee that they agree
-(Section~\ref{sec:related}).
+\emph{check API} answers one question at a time, $\mathrm{check}_\tau(s,d) \in \{0,1\}$, reading
+revision $\tau$~\cite{pang2019zanzibar,authzed2026consistency}; it is the implementation of $P$ that
+an enforcement layer trusts. Many authorizers also expose a \emph{filter API}, such as OpenFGA's
+ListObjects, SpiceDB's LookupResources, OPA's partial evaluation or Cerbos's query
+plans~\cite{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos}, whose output
+can be translated into a store predicate $\varphi_s$. The filter API and the check API are separate
+code paths, and we found no published guarantee that they agree (Section~\ref{sec:related}).
 
 \paragraph{The enforcement layer.}
 An enforcement layer sits between the RAG application and the store. For each request it
 (i)~takes $s$ from a verified token; (ii)~obtains $\varphi_s$ when a filter can be compiled;
-(iii)~searches the store with $\varphi_s$ for $k' \ge k$ candidates, or without a filter when none can
-be compiled; (iv)~re-checks every candidate with $\mathrm{check}_\tau$, dropping those that fail and
-counting them as \emph{violations}; (v)~widens the search until $k$ candidates survive or a cap is
+(iii)~searches the store with $\varphi_s$ for at least $k$ candidates, or without a filter when none
+can be compiled; (iv)~re-checks every candidate with $\mathrm{check}_\tau$, dropping those that fail
+and counting them as \emph{violations}; (v)~widens the search until $k$ candidates survive or a cap is
 reached; and (vi)~fails closed, returning nothing, when the authorizer cannot answer. It returns a
 ranked list $H$ of at most $k$ chunks and a flag $c \in \{0,1\}$ claiming that $H$ is complete.
 Section~\ref{sec:system} describes the layer we test, \sys{}, and credits the precedents of each step;
@@ -51,96 +57,169 @@ if it reveals nothing the policy forbids, and \emph{maximal} if it returns as mu
 allow~\cite{wang2007correctness}. A recent vision paper asks for these criteria to be reinterpreted
 for vector search~\cite{yalamarthi2026policyaware}. We adapt them to top-$k$ retrieval under Truman
 semantics, in which a query is answered over the subject's restricted view rather than
-rejected~\cite{rizvi2004extending}.
+rejected~\cite{rizvi2004extending}. Under Truman semantics the reference answer is the exact answer
+over the readable set, so soundness becomes a property of the returned chunks relative to $T^\star$,
+and maximality splits into two failures that need different detectors.
 
-\begin{definition}[Secure, sound, maximal and honest retrieval]\label{def:criteria}
-Fix a subject $s$, a query $q$, a depth $k$ and the revision $\tau$ at which the request's hits are
-checked. A result $(H,c)$ is
-\emph{secure} if $H \subseteq R_\tau(s)$;
-\emph{sound} if every $d \in H$ carries its true similarity $\sigma(q,d)$ and $H$ is ordered by it;
-\emph{maximal} if $H = \mathrm{top}_k(q, R_\tau(s))$, chunks that tie the $k$-th exact score being
-interchangeable; and
-\emph{honest} if $c = 1$ implies that $H$ is maximal.
+\begin{definition}[Criteria for permission-aware top-$k$ retrieval]\label{def:criteria}
+Fix a subject $s$, a query $q$ and a depth $k$, for a request issued at time $t$. Each hit $d$ is
+checked at some revision $\tau_d$ (different hits may be checked at different revisions, for example
+when some decisions come from a cache), and $\tau$ is the latest of these revisions. $\varphi_s$ is
+the predicate the store searched under (the constant true for an unfiltered search), $\sigma_{(k)}$
+the $k$-th highest similarity in $R_\tau(s)$ (the lowest if $|R_\tau(s)| < k$), and
+$T^\star_\epsilon = \{d \in R_\tau(s) : \sigma(q,d) \ge \sigma_{(k)} - \epsilon\}$ the chunks that
+belong to the exact answer up to ties within $\epsilon$. A result $(H,c)$ is
+\begin{itemize}
+  \item \emph{secure} if $d \in R_{\tau_d}(s)$ for every $d \in H$: no returned chunk lies outside
+        the readable set at the revision its check read;
+  \item \emph{$\delta$-fresh} if it is secure and every $\tau_d$ includes every write committed before
+        $t - \delta$, so that a permission revoked more than $\delta$ before the request, and not
+        granted again, admits nothing in it;
+  \item \emph{sound} if $H \subseteq T^\star_\epsilon$ (mis-retrieval, returning chunks that are not
+        among the exact answers, violates it);
+  \item \emph{complete} if $|H| = \min(k, |R_\tau(s)|)$ (under-retrieval violates it);
+  \item \emph{maximal} if it is sound and complete, that is, $H$ is $\mathrm{top}_k(q, R_\tau(s))$
+        up to ties within $\epsilon$; and
+  \item \emph{count-honest} if $c = 1$ implies $|H| = \min\bigl(k, |R_\tau(s) \cap E(\varphi_s)|\bigr)$.
+\end{itemize}
 \end{definition}
 
-Security and honesty are required of every result; maximality is what approximate search trades away,
-and permission-recall@$k$ (Section~\ref{sec:prob-metrics}) measures the shortfall. Soundness is weak
-here: it rules out fabricated, mis-scored or mis-ordered hits, such as the slightly out-of-order
-output of pgvector's relaxed iterative scans~\cite{pgvector2026pgvector}, and leaves the choice of
-hits to maximality. Security concerns the returned set only; B\"{u}ttcher and Clarke's stricter
-requirement, that no aspect of the output depend on unsearchable content~\cite{buttcher2005security},
-also covers timing and completeness signals, which we treat as side channels
-(Section~\ref{sec:prob-threat}). Under Truman semantics a short answer looks like an answer to a
-subject who can read little; the flag $c$ is a partial step toward non-Truman behavior, letting the
-layer say that an answer may be incomplete.
+Security, and freshness for the $\delta$ that the serving path states, are required of every result,
+and count-honesty is required of the flag. Soundness and completeness are what approximate search
+trades away; permission-recall@$k$, the under-retrieval rate and the false-completeness rate
+(Section~\ref{sec:prob-metrics}) measure the shortfall. Count-honesty is relative to $\varphi_s$: it
+implies completeness only when $\varphi_s$ has no false denials, $R_\tau(s) \subseteq E(\varphi_s)$,
+and it never implies soundness, since a full answer of the wrong chunks satisfies it. A flag with
+$c = 1$ only for maximal results would need exact search to set; Section~\ref{sec:sys-complete} shows
+that the layer we test is count-honest relative to $\varphi_s$ and no more. Wang et al.'s soundness
+compares an answer with the unrestricted one; ours compares it with the exact answer over the
+readable set, which is what a Truman subject is owed. Score fidelity is a separate conformance
+property (finite scores in non-increasing order, Section~\ref{sec:conformance}); mis-ordering inside
+a store, such as the slightly out-of-order output of pgvector's relaxed iterative
+scans~\cite{pgvector2026pgvector}, shows in recall, not in security. Security concerns the returned
+set only. B\"{u}ttcher and Clarke's stricter requirement,
+that no aspect of the output depend on unsearchable content~\cite{buttcher2005security}, is a
+noninterference condition~\cite{goguen1982security} on everything a caller observes, including timing
+and the flag; we treat those observables as side channels (Section~\ref{sec:prob-threat}). Under
+Truman semantics a short answer looks like an answer to a subject who can read little; the flag $c$
+is a partial step toward non-Truman behavior, letting the layer say that an answer may be
+incomplete.
 
-\paragraph{Security reduces to the check API.}
+\paragraph{Security does not depend on the filter or the store.}
 We make three assumptions.
 \begin{itemize}
-  \item[(A1)] \emph{Correct checks}: $\mathrm{check}_\tau(s,d) = 1$ exactly when the policy at
-        revision $\tau$ lets $s$ read $d$.
+  \item[(A1)] \emph{Correct checks}: $\mathrm{check}_\tau(s,d) = P_\tau(s,d)$ for every subject, chunk
+        and revision $\tau$ the check reads.
   \item[(A2)] \emph{Faithful metadata}: for every candidate the store returns, the identifier and
         attributes that the check evaluates belong to the chunk whose content is returned.
   \item[(A3)] \emph{Fail closed}: an error, timeout or malformed answer from the authorizer ends the
         request with no hits.
 \end{itemize}
 
-\begin{proposition}[Security reduces to the check API]\label{prop:reduction}
+\begin{observation}[Security does not depend on the filter or the store]\label{prop:reduction}
 Under \textup{(A1)} to \textup{(A3)}, if the layer returns only candidates that passed
-$\mathrm{check}_\tau$, every result it returns is secure at $\tau$, whatever predicate $\varphi_s$ was
-compiled and however the store evaluated or approximated it.
-\end{proposition}
+$\mathrm{check}$, every result it returns is secure, whatever predicate $\varphi_s$ was compiled and
+however the store evaluated or approximated it. If, moreover, every check reads a revision that
+includes every write committed before $t - \delta$, every result is $\delta$-fresh.
+\end{observation}
 
-\begin{proof}[Proof sketch]
-Each $d \in H$ passed $\mathrm{check}_\tau(s,d) = 1$ on the identifier and attributes the store
-returned with it. By (A2) these describe the returned content, and by (A1) the policy lets $s$ read
-it, so $H \subseteq R_\tau(s)$. If a check cannot be completed, (A3) gives $H = \emptyset$. Neither
-step refers to $\varphi_s$ or to the store's search procedure.
+\begin{proof}[Argument]
+Each $d \in H$ passed $\mathrm{check}_{\tau_d}(s,d) = 1$ on the identifier and attributes the store
+returned with it. By (A2) these describe the returned content, and by (A1) $P_{\tau_d}(s,d) = 1$, so
+$d \in R_{\tau_d}(s)$. If a check cannot be completed, (A3) gives $H = \emptyset$. The freshness part
+restates the condition on $\tau_d$. No step refers to $\varphi_s$ or to the store's search procedure.
 \end{proof}
 
-The proposition is narrow on purpose, with three consequences. \emph{First, the re-check sees filter
-faults in one direction only.} A \emph{false admit}, where $\varphi_s$ accepts a chunk outside
-$R_\tau(s)$, reaches the re-check, which drops it and counts a violation; the violation count thus
-measures online how insecure the pushed-down filter is. A \emph{false denial}, where $\varphi_s$
-rejects a readable chunk, never becomes a candidate and silently costs maximality. Truncated
-allow-lists (OpenFGA's non-streaming ListObjects stops at 1,000 results or 3 seconds by
-default~\cite{openfga2026openfga}), divergent store filter semantics and approximate-index misses all
-fail this way, and only an offline oracle finds them: differential conformance testing against a
-reference semantics (Section~\ref{sec:conformance}) or an audit against exact search over $R_\tau(s)$
+With the readable set defined by the policy and (A1) equating the check with the policy, the
+statement is close to definitional, and we call it an observation for that reason. Its content is
+what it leaves out: no assumption about $\varphi_s$, the filter APIs, the translators, the store's
+filter semantics or its index. It moves the burden of security onto a small trusted computing base,
+stated below, and turns everything else into a question of completeness, soundness and freshness. It
+also holds for every query, chosen adaptively or not, which no sampled measurement can show.
+
+Three consequences follow. \emph{First, the re-check sees filter faults in one direction only.} A
+\emph{false admit}, where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, reaches the re-check, which
+drops it and counts a violation; the violation count thus measures online how far the pushed-down
+filter over-approximates. A \emph{false denial}, where $\varphi_s$ rejects a readable chunk, never
+becomes a candidate and silently costs completeness. Truncated allow-lists (OpenFGA's non-streaming
+ListObjects stops at 1,000 results or 3 seconds by default~\cite{openfga2026openfga}), divergent store
+filter semantics and approximate-index misses all fail this way, and only an offline oracle finds
+them: differential conformance testing against a reference semantics
+(Section~\ref{sec:conformance}) or an audit against exact search over $R_\tau(s)$
 (Section~\ref{sec:quality}). \emph{Second, the assumptions mark where security can still fail.} (A1)
 excludes wrong upstream permissions and, when the check reads ACLs copied into chunk metadata, holds
 only as far as the copy is fresh; (A2) fails under any store or ingestion fault that binds content to
-the wrong identifier or metadata, which no re-check can detect; and security holds only at the
-revision the re-check reads, so a stale snapshot, as SpiceDB's default latency-minimizing reads allow,
-leaves a window in which a revoked permission still admits~\cite{authzed2026consistency}.
-\emph{Third, a violation is a translation fault only at a single revision.} If $\varphi_s$ is compiled
-at revision $\tau_f$ and hits are checked at $\tau_c \neq \tau_f$, a disagreement may be a legitimate
-ACL change between the calls. Zanzibar's snapshot tokens and SpiceDB's revision tokens prevent such
-mixing~\cite{pang2019zanzibar,authzed2026protecting}, and we pin filter and check to one revision when
-measuring disagreement (Section~\ref{sec:engines}).
+the wrong identifier or metadata, which no re-check can detect; and security holds at the revision
+the check reads, so how stale that revision may be is a separate guarantee, freshness, which we
+state per path below. \emph{Third, a violation is a translation fault only at a single revision.} If
+$\varphi_s$ is compiled at revision $\tau_f$ and hits are checked at $\tau_c \neq \tau_f$, a
+disagreement may be a legitimate ACL change between the calls. Zanzibar's snapshot tokens and
+SpiceDB's revision tokens prevent such mixing~\cite{pang2019zanzibar,authzed2026protecting}, and we pin
+filter and check to one revision when measuring disagreement (Section~\ref{sec:engines}).
 
-\paragraph{Honest completeness.}
-Security needs no knowledge of $R_\tau(s)$; maximality does. A layer can set $c = 1$ honestly only if
-(a)~the store searched exactly under $\varphi_s$, deep enough that $k$ candidates survived the
+\paragraph{Trusted computing base.}
+The observation trusts (i)~the authorizer's check API and the authorization data it reads (A1),
+including the freshness of ACLs copied into chunk metadata; (ii)~the layer's mapping of a request to
+checks: the subject taken from a verified token (Section~\ref{sec:sys-identity}) and the adapter code
+that turns the subject, its groups and each chunk's identifier and attributes into the engine's check
+request; (iii)~the binding of content to identifier and metadata in the store and in ingestion (A2);
+(iv)~the decision cache, its keys, time to live and invalidation, and the engine's own staleness,
+which together set $\delta$; and (v)~the fail-closed path (A3). It does not trust the filter APIs, the
+translators, the store's filter semantics or index, the widening loop, or a reranker or redactor,
+which receive only permitted hits. The trusted part has failed before. Two faults in the layer's own
+adapters let the check itself admit, beyond any re-check: a SpiceDB adapter that checked groups as
+separate subjects and so bypassed an exclusion, and a Cedar adapter that dropped values a
+\texttt{forbid} rule needed (Table~\ref{tab:conf-faults}); the project's acceptance scenarios and
+review found them, and both were fixed before the version we evaluate. With the re-check turned off,
+the filter and its translator join the trusted computing base (Section~\ref{sec:sys-retrieval}).
+
+\paragraph{Caches and staleness.}
+Let the engine answer from a snapshot that may lack the writes of the last $\delta_e$ seconds, and let
+the layer cache each decision for at most a time to live $\ell$. A decision used at time $t$ was then
+read at a revision that includes every write committed before $t - (\ell + \delta_e)$, so under (A1)
+to (A3) the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache. An explicit
+invalidation is meant to restore $\delta_e$-freshness for the subjects it names; it can do so only if
+the cache does not then store answers the engine computes from a snapshot older than the
+invalidation. Section~\ref{sec:eng-revoke} measures $\delta$ per path (Table~\ref{tab:eng-revoke}).
+When permissions are copied into chunk metadata, and for engines read at full consistency, revocation
+took effect in a median of 0.01\,s or less; for engines behind a cache it took the time to live
+(medians within 34\,ms of 5\,s and 30\,s), and invalidation ended that delay at once, or within 1\,s
+on a replica sharing the cache. Two sources of truth were stale themselves. Under SpiceDB's default
+\texttt{minimizeLatency}, revoked chunks were served for a median 3.3\,s and, in one of 40 trials of
+the first run, 8.7\,s, beyond the 6.5\,s we had registered as the limit (the documented 5.5\,s plus
+1\,s for polling); a rerun stayed within 5.2\,s. Cerbos took a median 2.5\,s to reload a rewritten policy file, and
+states no bound. In front of these two engines, the release we evaluated violated its stated bound:
+after an invalidation the next call refilled the cache from the stale snapshot and held it for the
+full time to live, so 79 of 80 SpiceDB revocations with invalidation exceeded the bound, with medians
+of 30 and 31\,s. The fix caches nothing for the engine's declared staleness after an invalidation, and
+a rerun confirmed it: all 160 SpiceDB and Cerbos revocations with invalidation took effect within the
+declared staleness plus 1\,s, and 1\,s more on the replica.
+
+\paragraph{Count certificates.}
+Security needs no knowledge of $R_\tau(s)$; completeness does. A layer can set $c = 1$ count-honestly
+only if (a)~the store searched exactly under $\varphi_s$, deep enough that $k$ candidates survived the
 re-check or none remained, or (b)~a filter-only count shows that every chunk passing $\varphi_s$ was
 among the candidates. Conversely, a count of at least $k$ alongside fewer than $k$ candidates proves
 under-retrieval; OpenSearch uses this test to switch to exact search~\cite{opensearch2026efficient}.
-Both certificates are relative to $\varphi_s$, so maximality with respect to $R_\tau(s)$ also needs a
-filter free of false denials, which we test offline rather than certify at run time. A layer that
-marks a short or empty approximate result complete is dishonest; \sys{} did so in the run of
-Section~\ref{sec:e2e}, where pgvector returned no hits to ten least-privileged subjects who could read
-documents while $c$ stayed 1.
+Both certificates are relative to $\varphi_s$, so completeness with respect to $R_\tau(s)$ also needs
+a filter free of false denials, which we test offline rather than certify at run time. A layer that
+marks a short or empty approximate result complete is not count-honest; the release of \sys{} we ran
+end to end was not, and in the runs of Section~\ref{sec:e2e} it reported empty answers as complete for
+up to ten least-privileged people per run, each of whom could read 624 chunks.
 
 \subsection{Threat model}\label{sec:prob-threat}
 
 \paragraph{Adversary.}
 The adversary is an authenticated subject, or an agent or application acting for one, who may issue
-any number of arbitrary queries through the layer, including adversarial and red-team prompts, to
-obtain the content of any chunk outside the subject's readable set, across users or tenants. The
-adversary does not control the authorizer, the store or the layer's host.
+any number of arbitrary queries through the layer, chosen adaptively and including adversarial and
+red-team prompts, to obtain the content of any chunk outside the subject's readable set, across
+users or tenants, or to learn whether such chunks exist near a query. The adversary does not control
+the authorizer, the store or the layer's host. Observation~\ref{prop:reduction} covers adaptive
+queries; our measurements sample questions from a generator and bound failure rates over that
+distribution only (Section~\ref{sec:prob-metrics}).
 
 \paragraph{In scope.}
-(i)~Cross-user and cross-tenant leakage through retrieval results. (ii)~Faults in the composed
+(i)~Cross-user and cross-tenant disclosure through retrieval results. (ii)~Faults in the composed
 components: errors in an authorizer's filter compilation; filter-semantics bugs and gaps in stores,
 such as type coercion, Unicode and case handling, and nested field names; and approximate-index
 behavior under selective or misaligned filters. (iii)~Authorizer outages, slow answers and malformed
@@ -148,70 +227,75 @@ answers, which must fail closed. (iv)~Identity confusion: a retrieval tool that 
 identifier as an argument lets a prompt-injectable model choose whose permissions apply, a confused
 deputy~\cite{hardy1988confused}; the layer takes the subject only from a verified token, following
 RFC 8693 and the MCP authorization specification~\cite{jones2020oauth,mcp2026model}.
-(v)~Revocation: a permission removed after indexing must stop admitting chunks once the re-check sees
-the change. Context added after the vector stage, such as parent documents, neighboring chunks or
-graph hops, is covered only if it passes through the same re-check~\cite{thornton2026retrieval}.
+(v)~Revocation: a permission removed after indexing must stop admitting chunks within the $\delta$ the
+serving path states. Context added after the vector stage, such as parent documents, neighboring
+chunks or graph hops, is covered only if it passes through the same re-check~\cite{thornton2026retrieval}.
 
 \paragraph{Out of scope.}
-(i)~Prompt injection carried in readable content, and anything the model does with retrieved content,
-including exfiltration after correct retrieval as in EchoLeak~\cite{nvd2025cve202532711}; we report
-that the model obeyed every injected notice it retrieved (Section~\ref{sec:e2e}) to mark where our
-claim ends. (ii)~Wrong upstream permissions: over-broad ACLs are enforced faithfully, as by assistants
-that inherit source permissions~\cite{microsoft2026data}. (iii)~Extraction or membership inference
-over readable content~\cite{zeng2024good,naseh2025riddle}. (iv)~Infrastructure: compromise of the
-store, its credentials, backups or hosts. Because embeddings can be
-inverted~\cite{morris2023text,zhang2025universal}, our guarantee covers the query path only; the index
-needs storage-level protection, and the layer never returns or logs raw vectors, query embeddings
-included. (v)~Several participants per interaction, where content must be authorized for
-each~\cite{bhatt2025enterprise}; we model one subject per request.
+(i)~Prompt injection carried in readable content, poisoning of readable content~\cite{zou2025poisonedrag},
+and anything the model does with retrieved content, including exfiltration after correct retrieval
+as in EchoLeak~\cite{nvd2025cve202532711}; we report that the model obeyed every injected notice it
+retrieved (Section~\ref{sec:e2e}) to mark where our claim ends. (ii)~Wrong upstream permissions:
+over-broad ACLs are enforced faithfully, as by assistants that inherit source
+permissions~\cite{microsoft2026data}. (iii)~Extraction or membership inference over readable
+content~\cite{zeng2024good,naseh2025riddle}. (iv)~Infrastructure: compromise of the store, its
+credentials, backups or hosts. Because embeddings can be inverted~\cite{morris2023text,zhang2025universal},
+our guarantee covers the query path only; the index needs storage-level protection, and the layer
+never returns or logs raw vectors, query embeddings included. (v)~Several participants per
+interaction, where content must be authorized for each~\cite{bhatt2025enterprise}; we model one
+subject per request.
 
 \paragraph{Side channels.}
-Proposition~\ref{prop:reduction} says nothing about what the timing or shape of an answer reveals.
+Observation~\ref{prop:reduction} says nothing about what the timing or shape of an answer reveals.
 Widening rounds, latency and the flag $c$ depend on how many unreadable chunks lie near the query, and
 a filtered graph traversal may depend on the unreadable nodes it passes. Hybrid scoring that mixes
 BM25 or IDF-weighted sparse scores, or normalizes or fuses scores over candidates that include
 unreadable chunks, reopens B\"{u}ttcher and Clarke's collection-statistics
 channel~\cite{buttcher2005security}; the dense similarity of one query and one chunk does not, because
 it ignores collection statistics. We do not assume these channels away: Section~\ref{sec:side}
-measures them.
+measures them, and we say that such a channel \emph{reveals} information about unreadable chunks,
+reserving \emph{leak} for returned content.
 
 \subsection{Metrics}\label{sec:prob-metrics}
 
-Metrics use an independent oracle that evaluates the policy without calling the layer, and exact
-search over $R_\tau(s)$ by exhaustive scoring. \emph{Selectivity} is the fraction of the corpus that
-passes a filter ($|R_\tau(s)|/|D|$ for the permission filter), following ACORN~\cite{patel2024acorn};
-some systems use the complement~\cite{wang2021milvus}.
+Metrics use the policy oracle, which evaluates $P$ without calling the layer, and exact search over
+$R_\tau(s)$ by exhaustive scoring. \emph{Selectivity} is the fraction of the corpus that passes a
+filter ($|R_\tau(s)|/|D|$ for the permission filter), following ACORN~\cite{patel2024acorn}; some
+systems use the complement~\cite{wang2021milvus}.
 
-\paragraph{Leak rate with an honest bound.}
-A \emph{leak} is a returned chunk outside $R_\tau(s)$, or a canary string from an unreadable document
-found in a hit, a prompt or an answer; canaries follow the Secret Sharer's inserted
-secrets~\cite{carlini2019secret}, used as a deterministic enforcement check rather than a memorization
-estimate. When no leak occurs, counting hits overstates confidence, because hits cluster by question
-and subject. We bound the leak rate per question and per subject with the one-sided 95\% bound
-$1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ trials: for the four runs of
-Section~\ref{sec:e2e}, about $6.8 \times 10^{-4}$ per question for each configuration (4,420
-questions) and $1.6 \times 10^{-2}$ per subject (189 subjects, who recur across runs), not the
-$4.6 \times 10^{-6}$ that 653,638 checked hits would suggest. The \emph{violation rate},
-the share of store candidates the re-check rejects, measures the insecurity of the pushed-down
-filter, not of the layer.
+\paragraph{Leaks, and bounds per question and per subject.}
+A \emph{leak} is a returned chunk outside $R_\tau(s)$ as the oracle decides it, or a canary string from
+an unreadable document found in a hit, a prompt or an answer; canaries follow the Secret Sharer's
+inserted secrets~\cite{carlini2019secret}, used as a deterministic enforcement check rather than a
+memorization estimate. When no leak occurs, the unit of the bound matters. Hits are not independent
+trials: they cluster by question and by subject, and a fault in the layer would affect a question or
+a permission shape, not a random hit. We therefore bound the leak rate per question and per subject,
+with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ trials, the rule of
+three~\cite{hanley1983if}. For the end-to-end runs of Section~\ref{sec:e2e} this gives about
+$6.8 \times 10^{-4}$ per question for each configuration (4,420 questions) and $1.6 \times 10^{-2}$
+per subject (the scenario's 189 people, who recur across runs), not the $3.8 \times 10^{-6}$ that
+783,888 checked hits would suggest; for the injected faults of Section~\ref{sec:eng-revoke}, about
+$2.8 \times 10^{-3}$ per fault episode (1,050 episodes). These bounds hold over the distribution of the
+question generator and of the injected faults; they say nothing about an adaptive adversary, for
+which only Observation~\ref{prop:reduction} and its trusted computing base speak. The
+\emph{violation rate}, the share of store candidates the re-check rejects, measures how far the
+pushed-down filter over-approximates, not the security of the layer.
 
 \paragraph{Permission-recall@$k$.}
-For a question whose subject can read something, let $\sigma_{(k)}$ be the $k$-th highest similarity
-in $R_\tau(s)$ (the lowest if $|R_\tau(s)| < k$) and $T^\star_\epsilon = \{d \in R_\tau(s) :
-\sigma(q,d) \ge \sigma_{(k)} - \epsilon\}$, so that ties do not penalize a store ($\epsilon = 10^{-4}$).
-Permission-recall@$k$ is $|H \cap T^\star_\epsilon| / \min(k, |R_\tau(s)|)$. Measured against exact
-search over the readable set rather than the store's filtered set, it charges filter false denials and
-index misses alike; recall against the store's own exact search under the same filter separates the
-two.
+For a question whose subject can read something, permission-recall@$k$ is
+$|H \cap T^\star_\epsilon| / \min(k, |R_\tau(s)|)$, with $T^\star_\epsilon$ as in
+Definition~\ref{def:criteria} and $\epsilon = 10^{-4}$, so that ties do not penalize a store. Measured against exact search
+over the readable set rather than the store's filtered set, it charges filter false denials and index
+misses alike; recall against the store's own exact search under the same filter separates the two.
 
 \paragraph{Under-retrieval and false completeness.}
-The \emph{under-retrieval rate} is the share of retrievals that return fewer than
+The \emph{under-retrieval rate} is the share of retrievals that are not complete, returning fewer than
 $\min(k, |R_\tau(s)|)$ hits, and the \emph{empty-result rate} the share returning none to subjects who
 can read something. A count can detect under-retrieval, but mis-retrieval, where $k$ hits come back
-but not the right ones, shows only in recall; in the run of Section~\ref{sec:e2e} it, not empty
-results, caused most of the recall loss. We report the confusion matrix of $c$ against the oracle;
-the \emph{false-completeness rate}, the share of results with $c = 1$ that are not maximal, measures
-dishonesty directly.
+but not the right ones, shows only in recall; in the enterprise scenario it, not empty results, caused
+most of the recall loss (Sections~\ref{sec:quality} and~\ref{sec:repair}). We report the confusion
+matrix of $c$ against the oracle; the \emph{false-completeness rate}, the share of results with
+$c = 1$ that are not maximal, measures how far a count-honest flag stays from certifying maximality.
 
 \paragraph{Latency.}
 End-to-end latency per retrieval (filter compilation, search, re-check and widening) is reported at

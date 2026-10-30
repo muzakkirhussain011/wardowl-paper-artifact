@@ -10,8 +10,8 @@
 Section~\ref{sec:prob-setup} between a RAG application, an authorizer and a vector store.
 Table~\ref{tab:sys-precedents} separates what has precedent from what we add. The enforcement
 mechanism is not ours. We add a single reference semantics for permission filters, which makes the
-mechanism testable across stores, and a completeness flag that does not overstate what an
-approximate index returned.
+mechanism testable across stores, and a count-honest completeness flag, which does not overstate how
+many chunks an approximate index returned.
 
 \begin{table}[tbp]
 \centering
@@ -34,7 +34,7 @@ Component & Precedent & Role in this paper \\
 \sysrag Re-check of every candidate
  & \sysrag Late-bound checks per result~\cite{pang2019zanzibar}; real-time verification of
    pre-filtered documents~\cite{aws2026access}
- & \sysrag Violations as an online count of filter false admits (Proposition~\ref{prop:reduction}) \tabularnewline
+ & \sysrag Violations as an online count of filter false admits (Observation~\ref{prop:reduction}) \tabularnewline
 \sysrag Failing closed
  & \sysrag Withholding documents on transient errors~\cite{aws2026access}; an error instead of a
    partially filtered result~\cite{microsoft2026querytime}
@@ -44,9 +44,9 @@ Component & Precedent & Role in this paper \\
  & \sysrag The flag $c$ as a partial step toward non-Truman answers \tabularnewline
 \sysrag Three-operator filter algebra with one reference semantics
  & \sysrag Per-store filter languages
- & \sysrag \textbf{Contribution}: the oracle for differential testing across 14 stores
-   (Section~\ref{sec:conformance}) \tabularnewline
-\sysrag Honest completeness
+ & \sysrag \textbf{Contribution}: the oracle for differential testing across the 14 stores the layer
+   supports, 13 of them run (Section~\ref{sec:conformance}) \tabularnewline
+\sysrag Count-honest completeness
  & \sysrag Exact search when fewer than $k$ approximate results return~\cite{opensearch2026efficient}
  & \sysrag \textbf{Contribution}: an exactness declaration and a flag that never reports a short
    approximate answer as complete (Sections~\ref{sec:sys-complete} and~\ref{sec:repair}) \tabularnewline
@@ -119,8 +119,10 @@ One search with $\varphi_s$ returns the store's answer $H_0$, truncated to $k$ s
 ignores $k$ cannot widen the checks. Every hit is checked again; hits that fail are dropped, not
 replaced, and counted as \emph{violations}. Because filter and check are separate code paths, a
 violation is, at a single revision, a false admit by the filter or its translation, observed online
-(Proposition~\ref{prop:reduction}). With the re-check off, hits are still matched against
-$\varphi_s$ locally, so a store that ignores the filter still cannot leak.
+(Observation~\ref{prop:reduction}). With the re-check off, security rests on the filter. Hits are
+still matched against $\varphi_s$ locally, so a store that ignores the filter cannot return a chunk
+outside it, but a filter that over-approximates the policy, such as the Cerbos translation of
+Section~\ref{sec:conf-campaign}, is then returned unchecked.
 
 \paragraph{Widening post-filter.}
 Without a filter, \sys{} fetches $k \cdot o$ candidates ($o = 4$ by default), checks those not seen
@@ -138,23 +140,24 @@ Malformed answers fail likewise: a filter that is not an In, And or Or, a decisi
 length, or any decision that is not a Boolean (\texttt{1}, \texttt{"no"} and \texttt{None} are
 rejected, not coerced).
 
-\subsection{Honest completeness}\label{sec:sys-complete}
+\subsection{Count-honest completeness}\label{sec:sys-complete}
 
-Every result carries the flag $c$ of Section~\ref{sec:prob-setup}. Earlier releases set $c = 1$ for
-any pre-filtered result without violations, an empty one included, and for any post-filter whose
-last search came back short. In the run of Section~\ref{sec:e2e}, \sys{} thus reported empty answers
-as complete for least-privileged subjects who could read hundreds of chunks; the project's notes
-attribute them to pgvector's iterative scan stopping at its tuple or memory limit, a diagnosis that
-Section~\ref{sec:quality} tests. The version we evaluate lets a backend declare
-\texttt{exact\_search} when it ranks every chunk that satisfies the filter, so that a short answer
-proves nothing else matches; only the in-memory reference and FAISS over a flat index (its default)
-do. With $e$ the declaration and $v$ the number of violations, a pre-filtered result has
+Every result carries the flag $c$ of Section~\ref{sec:prob-setup}. The release we ran end to end
+(2.1.0) set $c = 1$ for any pre-filtered result without violations, an empty one included, and for any
+post-filter whose last search came back short, so it was not count-honest: in the runs of
+Section~\ref{sec:e2e} it reported empty answers as complete for least-privileged people who could read
+624 chunks each. Section~\ref{sec:qual-pgvector} traces those answers to pgvector's plan cache and the
+scan's two limits. The current code (PR~\#166, not yet in a release) lets a backend declare \texttt{exact\_search} when it ranks every chunk that satisfies the filter, so that a
+short answer proves nothing else matches; only the in-memory reference and FAISS over a flat index
+(its default) do. With $e$ the declaration and $v$ the number of violations, a pre-filtered result has
 $c = \bigl(|H_0| = k \vee e\bigr) \wedge (v = 0)$; a post-filtered one has $c = 1$ only if $k$ hits
 were permitted, or the last search came back short before the cap and either no scope applied or $e$
-holds. The flag is thus honest about under-retrieval, not mis-retrieval: a full answer is taken at
-the store's word, so $c = 1$ does not certify maximality (Definition~\ref{def:criteria}), and we
-measure mis-retrieval offline (Section~\ref{sec:quality}). An unfiltered post-filter also still reads
-a short list as the end of the store, which fails for pgvector with iterative scans off (at most
+holds. The flag is thus count-honest relative to $\varphi_s$ (Definition~\ref{def:criteria}), and only
+to it. It does not imply completeness against $R_\tau(s)$, since a false denial in $\varphi_s$ shrinks
+$E(\varphi_s)$ unseen, and it does not imply soundness: a full answer is taken at the store's word, so
+$c = 1$ does not certify maximality, and we measure mis-retrieval offline
+(Section~\ref{sec:quality}). One assumption remains: an unfiltered post-filter reads a short list as
+the end of the store, which fails for pgvector with iterative scans off (at most
 \texttt{hnsw.ef\_search} rows, 40 by default). Count-based certification and a bounded exact
 fallback, as in OpenSearch~\cite{opensearch2026efficient}, are evaluated in Section~\ref{sec:repair}.
 
@@ -164,11 +167,11 @@ fallback, as in OpenSearch~\cite{opensearch2026efficient}, are evaluated in Sect
 $\mathrm{AllOf}$ admits a chunk when every part does, asking each part only about chunks that the
 earlier parts admitted; $\mathrm{AnyOf}$ asks each part only about chunks still denied. Their
 filters, the conjunction or disjunction of the parts' filters, exist only when every part has one.
-Their scopes are asymmetric. A scope is valid when $R(s) \subseteq \{d : m_d \models \psi_s\}$.
-Since $\bigcap_i R_i \subseteq R_j$ for every $j$, AllOf may conjoin whichever filters or scopes its
-parts offer; since leaving a part out of a scope for $\bigcup_i R_i$ can hide readable chunks, AnyOf
-offers a scope only when every part offers a filter or a scope. Every candidate is still checked, so
-a wrong scope costs speed or recall, never security. The tenant authorizer admits chunks whose tenant
+Their scopes are asymmetric. A scope is valid when $R_\tau(s) \subseteq E(\psi_s)$. Since
+$\bigcap_i R_i \subseteq R_j$ for every $j$, where $R_i$ is the readable set under part $i$, AllOf may
+conjoin whichever filters or scopes its parts offer; since leaving a part out of a scope for
+$\bigcup_i R_i$ can hide readable chunks, AnyOf offers a scope only when every part offers a filter or
+a scope. Every candidate is still checked, so a wrong scope costs speed or recall, never security. The tenant authorizer admits chunks whose tenant
 field equals the subject's tenant and raises when the subject has no usable tenant, so a request
 that lost its tenant returns nothing rather than everything; combined with an engine that offers no
 filter, it becomes the post-filter's scope.
@@ -179,16 +182,16 @@ the chunk's identifier and metadata. Its time to live (30\,s by default) is a st
 bound, and an explicit invalidation ends it at once, also for answers that calls in flight obtained
 before it, provided the engine answers from current data. In the release we evaluate, an engine
 that serves a stale snapshot after the revocation can refill the cache, which then holds the stale
-answer for a full time to live; Section~\ref{sec:eng-revoke} found this, and the fix it evaluates
-caches nothing for the engine's declared staleness after an invalidation, so the bound becomes that
-staleness. Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
+answer for a full time to live, a violation of the stated bound; Section~\ref{sec:eng-revoke} found
+this, and the fix it evaluates caches nothing for the engine's declared staleness after an
+invalidation, so the bound becomes that staleness. Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
 never share an entry, and failures are never cached. Entries shared through Redis carry their
 absolute expiry, so the bound holds across replicas, and, with a signing key, an HMAC-SHA256 over key
 and content, so whoever can write to Redis cannot plant a decision. The bound covers the cache alone:
 engine staleness~\cite{authzed2026consistency} and the freshness of ACLs copied into chunks add to
-it. The cache weakens (A1) of Proposition~\ref{prop:reduction} to a decision at most one time to live
-old, and its invalidation needed three successive fixes for races that stored a pre-invalidation
-answer after the invalidation.
+it. With the cache, the layer is $(\ell + \delta_e)$-fresh rather than $\delta_e$-fresh
+(Section~\ref{sec:prob-criteria}), and the cache joins the trusted computing base; its invalidation
+needed three successive fixes for races that stored a pre-invalidation answer after the invalidation.
 
 \subsection{Identity and audit}\label{sec:sys-identity}
 

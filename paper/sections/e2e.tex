@@ -3,23 +3,26 @@
 % sec:e2e-model. Sources: evidence/kaggle-scale-run-2026-10-24.md (X0, seed 7, wardowl 2.1.0, before
 % the honest-completeness change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in
 % plan/x8-prereg.md), and the OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same
-% pre-registration, in evidence/x8-run.md).
+% pre-registration, in evidence/x8-run.md). Amendment 2 (exposure and the mutation control,
+% plan/x8-prereg.md, kaggle/x8/x8b_run.py) is running; its results replace the \tbd{} below.
 
 The previous sections test components in isolation. Here the whole pipeline runs as an organization
 would run it: many tenants and people in one index, a policy composed of a tenant boundary and
 per-document ACLs, adversarial questions, and a language model that answers from what retrieval
-returns. The goal is a leak test with enough exposure to bound the leak rate, not a measure of
-answer quality.
+returns. The goal is a leak test that bounds the leak rate per question and per person, not a
+measure of answer quality. The test uses one permission layout, in the form the layer's schema gives
+it, and its bounds hold over the question generator's distribution; they say nothing about an
+adaptive adversary, for which Observation~\ref{prop:reduction} speaks.
 
 \subsection{Setup}\label{sec:e2e-setup}
 
 \paragraph{Corpus.}
-The index holds 107,540 chunks: 49,920 synthetic company documents in 20 tenants, of which 41,600
-carry a unique canary string; 20 notices, one per tenant, each carrying a prompt injection; and
-57,600 passages of the FiQA financial question-answering corpus~\cite{maia2018www18} from
-BEIR~\cite{thakur2021beir}, which every tenant may read and which serve as distractors. Company
-documents are drawn from templates (handbooks, finance, HR, board and project records) with
-per-document ACLs over users and groups. Chunks are embedded with
+The index holds 107,540 chunks, one per document or passage: 49,920 synthetic company documents in 20
+tenants, of which 41,600 carry a unique canary string; 20 notices, one per tenant, each carrying a
+prompt injection; and 57,600 passages of the FiQA financial question-answering
+corpus~\cite{maia2018www18} from BEIR~\cite{thakur2021beir}, which every tenant may read and which
+serve as distractors. Company documents are drawn from templates (handbooks, finance, HR, board and
+project records) with per-document ACLs over users and groups. Chunks are embedded with
 bge-base-en-v1.5~\cite{xiao2024cpack}.
 
 \paragraph{People and questions.}
@@ -52,12 +55,15 @@ The scenario ran four times with seeds 7, 11, 13 and 17 on the same software and
 Kaggle session with two T4 GPUs each; Appendix~\ref{app:compute}). The seed changes the document
 text, the sample of questions and the order in which people ask; the permission templates and
 personas are fixed, so the runs repeat the layout with fresh documents and questions. The repeats
-and their predictions were pre-registered after the first run.
+and their predictions were pre-registered after the first run and before any repeat. The runs used
+the released version 2.1.0, before the change of Section~\ref{sec:sys-complete}; permissions did not
+change during a run, so these runs test containment, not freshness, which
+Section~\ref{sec:eng-revoke} measures.
 
 \paragraph{Leak detection.}
-A leak is any returned chunk outside the person's readable set, as decided by an oracle that
-evaluates the policy without the layer, or any canary of an unreadable document found in a retrieved
-chunk, in the prompt sent to the model or in the model's answer. A canary is a 40-bit code derived
+A leak is any returned chunk outside the person's readable set, as decided by the policy oracle,
+which evaluates the policy without the layer, or any canary of an unreadable document found in a
+retrieved chunk, in the prompt sent to the model or in the model's answer. A canary is a 40-bit code derived
 from the document's identifier; the matcher finds it in any case and with any hyphen, dash, space or
 nothing between its parts, and a positive control checks, for every person, that it finds exactly
 the canaries of the documents that person may not read in a text that holds all of them. A model
@@ -91,42 +97,66 @@ pgvector + OpenFGA\textsuperscript{$\ast$} & 4,420 & 64,845 & 0 & 0/0/0 & 0 \\
 pgvector\textsuperscript{$\ast$} & 4,420 & 65,405 & 0 & 0/0/0 & 0 \\
 \bottomrule
 \end{tabular}
-\caption{End-to-end safety over four runs (seeds 7, 11, 13 and 17). Hits are counted over both
-retrievals per question. pgvector and its variants checked fewer hits because some of their
-answers were short or empty (Section~\ref{sec:quality}). \textsuperscript{$\ast$}Four further runs
-with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration reported
-an error.}
+\caption{End-to-end safety over four runs (seeds 7, 11, 13 and 17). The unit of the bounds in the
+text is the question and the person; hits are secondary and are counted over both retrievals per
+question, so about a third of them, the $k = 5$ hits, largely repeat chunks already counted among the
+$k = 10$ hits of the same question. pgvector and its variants checked fewer hits because some of
+their answers were short or empty (Section~\ref{sec:quality}). \textsuperscript{$\ast$}Four further
+runs with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration
+reported an error.}
 \label{tab:e2e-safety}
 \end{table}
 
 No configuration in any run returned an unreadable chunk or exposed a canary
-(Table~\ref{tab:e2e-safety}): 783,888 checked hits, eleven configurations, no leak. The first of the
-five pre-registered predictions for the repeats, that safety would hold everywhere, held, and so did
-the amendment's for OpenFGA, which started in every run and pre-filtered every question. The hits are not independent trials: they cluster by
-question and by person, and a fault in the layer would affect a question, not a random hit. We
-therefore bound the leak rate per question, separately for each configuration, treating the
-questions of different runs, which are sampled afresh over fresh documents, as independent: with no
-leak in 4,420 questions, the one-sided 95\% upper bound is $1 - 0.05^{1/4420} \approx 6.8 \times
-10^{-4}$ per question (Section~\ref{sec:prob-metrics}). Per person the bound stays at a single run's
-$1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$: the same personas recur in every run with the same
-permissions, so a fault tied to a permission shape would recur too, and counting person-runs would
-overstate the evidence. Pooling the configurations would not shrink these bounds honestly, since
-they share questions and the layer's code. The violation count is zero because the filter and the
-check read the same ACL metadata here; Sections~\ref{sec:conformance} and~\ref{sec:engines} test
-configurations in which they do not.
+(Table~\ref{tab:e2e-safety}). We bound the leak rate per question, separately for each of the eleven
+configurations, treating the questions of different runs, which are sampled afresh over fresh
+documents, as independent: with no leak in 4,420 questions, the one-sided 95\% upper bound is
+$1 - 0.05^{1/4420} \approx 6.8 \times 10^{-4}$ per question (Section~\ref{sec:prob-metrics}). Per
+person the bound stays at a single run's $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$: the same
+personas recur in every run with the same permissions, so a fault tied to a permission shape would
+recur too, and counting person-runs would overstate the evidence. Pooling the configurations would not
+shrink these bounds honestly, since they share questions and the layer's code. The first of the five
+pre-registered predictions for the repeats, that no unreadable hit, canary or violation would occur,
+held, and so did the amendment's for OpenFGA, which started in every run and pre-filtered every
+question. As a secondary count, the runs checked 783,888 hits, not independent trials, since hits
+cluster by question and by person, and a fault in the layer would affect a question, not a random hit.
+
+The bounds are over the distribution of the question generator: the 1,105 questions of a run are
+sampled by the scenario's generator, and a binomial bound over sampled questions says nothing about
+an adversary who adapts its queries to what it sees. For such an adversary we rely on
+Observation~\ref{prop:reduction}, which does not depend on the query, and on its trusted computing
+base.
+
+These numbers have power only if the questions came near content the asking person may not read, and
+if the pipeline's checks fire when enforcement is broken. The canary matcher's positive control above
+tests the matcher alone. A second amendment to the pre-registration, exploratory in that it was
+specified in writing after the main results and before running, measures both on FAISS: exposure, the
+share of questions whose unfiltered exact top $k$ holds a chunk the person may not read, and a mutation
+positive control, which breaks the pushed-down filter in three ways (it admits everything, also
+admits the neighboring tenant, or drops the ACL clause) with the re-check off and on.
+\tbd{exposure and positive control (X8 amendment 2)}
+
+No violation occurred. In the in-process configurations the filter and the re-check evaluate the same
+ACL metadata under the same reference semantics, so a violation would need a store to translate or
+evaluate the filter wrongly; with OPA and OpenFGA, filter and check come from the engine's separate
+APIs, and they agreed on every hit. Sections~\ref{sec:conformance} and~\ref{sec:engines} test
+configurations and data shapes on which they do not.
 
 Two observations qualify the result. First, it is a statement about this layer under assumptions
-(A1) to (A3) of Proposition~\ref{prop:reduction}, exercised with adversarial inputs, not a proof:
+(A1) to (A3) of Observation~\ref{prop:reduction}, exercised with adversarial inputs, not a proof:
 the red-team prompts can only change the query text, and the layer never lets text choose the
-subject (Section~\ref{sec:sys-identity}). Second, safety held while quality did not, and quality did
-not repeat. pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four
+subject (Section~\ref{sec:sys-identity}). Second, containment held while quality did not, and quality
+did not repeat. pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four
 runs, people who could each read 624 chunks, and the layer, before the change of
 Section~\ref{sec:sys-complete}, reported those empty answers as complete. The same configuration ran
 in one of two modes, fast and lossy or exact and about fifty times slower, for a reason
-Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache; we had predicted 3 to 25 empty
-answers in every repeat, and two repeats fell outside. Over its eight runs it ran fast in three and
-exact in five, and the seed did not decide which: seeds 7, 11 and 17 each ran fast in one run and
-exact in another. With OpenFGA, whose pre-filter lists the readable documents,
+Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache. Our third prediction, that 3 to 25
+people would receive no results in every repeat, was falsified: two repeats fell outside it, because
+it assumed that the first run's mode was a property of the configuration. Over its eight runs the
+configuration ran exact in five and, by its median, fast in three, one of them a mixture whose p95 of
+433\,ms shows that part of its searches ran exact. The seed did not decide which: seeds 7, 11 and 17
+each ran fast in one run and exact in another. In two of the five exact runs one person still received
+no results, which we have not explained. With OpenFGA, whose pre-filter lists the readable documents,
 pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 3 to 10
 least-privileged people without results, whatever mode the in-process configuration had just run
 in. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
@@ -148,5 +178,5 @@ targeted question in its top five for every question in every run and answered 9
 correctly; with Qdrant the target was in the top five for 33.8\% to 39.9\% of targeted questions.
 With OpenFGA, despite its lower recall, the target was in the top five for 94.2\% to 97.9\%. When a
 person asked about a document they could not read, the model abstained in 68\% to 83\% of cases,
-depending on the store and run, and otherwise answered from readable documents only, as the
+depending on the store and run, and otherwise answered from readable chunks only, as the
 canary checks confirm.

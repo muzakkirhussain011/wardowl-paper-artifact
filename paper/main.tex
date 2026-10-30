@@ -1,6 +1,7 @@
 % Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG
-% Draft skeleton, 2026-10-26. Venue style is applied later (NeurIPS 2027 E&D style once released);
-% this preprint layout uses the standard article class. Numbers marked \tbd{} are not yet measured.
+% Venue style is applied later (NeurIPS 2027 E&D style once released); this preprint layout uses the
+% standard article class. \tbd{} marks what is still open: the X8 amendment 2 results in e2e.tex, and
+% in limits.tex the filing of vendor reports, the human check of references and the archive DOI.
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
@@ -16,7 +17,7 @@
 \newcommand{\tbd}[1]{\textcolor{red}{[TBD: #1]}}
 \newcommand{\sys}{\textsc{wardowl}}
 \newtheorem{definition}{Definition}
-\newtheorem{proposition}{Proposition}
+\newtheorem{observation}{Observation}
 
 \title{Leak-Free but Not Loss-Free:\\Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
 \author{Anonymous Authors}
@@ -31,19 +32,27 @@ model's prompt. Similarity ignores authorization, so any index shared by readers
 permissions can hand a user's question a chunk that user may not read; OWASP lists this as LLM08.
 The remedy is old: push the access predicate into the query and check what comes back. What is not
 known is whether today's stack implements it faithfully. We study permission-aware retrieval as
-deployed: an enforcement layer that compiles an organisation's existing authorization policy into
+deployed: an enforcement layer that compiles an organization's existing authorization policy into
 filters for production vector stores, re-checks every hit against the authorizer, and fails closed.
-We contribute (i) a formulation of secure and maximal top-$k$ retrieval under an external authorizer,
-with metrics for leaks, permission-recall, under-retrieval and false completeness; (ii) differential
-conformance testing of filter semantics across 14 vector stores and seven authorization engines,
-which found six classes of faults and semantic gaps; (iii) a measurement of disagreement between authorization engines' filter compilers
-and their own check APIs; (iv) an audit of retrieval quality under permission-shaped filters, where
-recall@10 at common settings ranged from 0.55 to 1.00, and one store, in most of our runs, returned
-no results at all to some least-privileged users without any signal; (v) detection and bounded
-repair of such under-retrieval; (vi) a measurement of side channels in filtered retrieval; and
+We contribute (i) a formulation of secure, fresh, sound, complete and count-honest top-$k$ retrieval
+under an external authorizer, with a stated trusted computing base; (ii) differential conformance
+testing of filter semantics across 13 of the 14 vector stores the layer supports and seven
+authorization engines, which found two undocumented store behaviors that cost recall, two adapter
+faults and documented limits that fail closed, and confirmed a type gap in the layer's Cerbos
+translator; (iii) a measurement of disagreement between authorization engines' filter compilers and
+their own check APIs, which at one revision was confined to that type gap, and of revocation delay per
+path, up to the cache's time to live or the engine's staleness; (iv) an audit of retrieval quality
+under permission-shaped filters, where mean recall@10 at common settings ranged from 0.55 to 0.98 over
+eight stores searched approximately, and one store returned no results at all to some least-privileged
+people in five of eight runs, which the evaluated release reported as complete; (v) detection and
+bounded repair of such under-retrieval; (vi) a measurement of side channels in filtered retrieval; and
 (vii) an end-to-end evaluation with canary documents over 107,540 chunks, 20 tenants and 1,105
-questions per run, including red-team prompts, in which 783,888 checked hits across eleven
-configurations produced no leak. Security held everywhere; retrieval quality did not.
+questions per run, including red-team prompts: four runs of each of eleven configurations, with no
+leak and a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per question for each configuration and
+$1.6 \times 10^{-2}$ per person, over the generator's question distribution. No returned chunk was
+unreadable at the revision the re-check read, in any tested configuration; information about
+unreadable chunks still was revealed through latency, counts, recall and scores, and retrieval
+quality varied widely.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
