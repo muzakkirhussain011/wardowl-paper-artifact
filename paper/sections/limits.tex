@@ -18,10 +18,11 @@ near-identical copies in other tenants that only the tenant rule separates.
 \paragraph{One instrument.}
 Every measurement passes through one enforcement layer, which the authors wrote, so a fault in its
 filter translators could be mistaken for a store fault. The conformance kit compares every answer
-with an in-memory reference that shares no code with the translators, and before attributing a fault
-to a store or engine we reproduce it with the store's or engine's own client, without the layer
-(\tbd{done for every row of the fault table}). The retrieval audit uses each store's own exact
-search as a second baseline.
+with an in-memory reference that shares no code with the translators, and the retrieval audit uses
+each store's own exact search as a second baseline. Of the faults we attribute to a store or engine,
+those found by our experiments come with a reproducer that uses only the vendor's own client
+\tbd{results of running them}; the others rest on the vendors' documentation, which
+Table~\ref{tab:conf-faults} cites.
 
 \paragraph{Versions, settings and hardware.}
 Results hold for the versions and settings we state (for example pgvector 0.8.7 and Qdrant 1.19.2)
@@ -31,9 +32,15 @@ measure are documented defaults that vendors may revise. Experiments ran on shar
 comparable within an experiment, not across experiments or with vendor benchmarks.
 
 \paragraph{Statistical power.}
-The end-to-end run is a single run, and the first diagnosis run covered one pgvector index build.
-\tbd{State the final number of runs, seeds and builds per experiment after X1 run 2, X2 and X8.}
-Zero-leak results are reported as upper bounds per question and per subject, not per hit.
+The end-to-end scenario ran four times with fresh documents and questions, and four more times for
+the OpenFGA configuration, but always with one permission layout; its people recur in every run, so
+its bound per person is a single run's. The diagnosis grid ran three index builds per layout, the
+frontier and repair experiments three builds per store and corpus over ten permission layouts,
+and the engine, filter-size and side-channel experiments five seeds each; intervals come from
+bootstrap resampling over people, subjects or probes, not over builds, so a store whose recall varies
+between builds (Qdrant's by up to 0.086) is described by the mean of three. Zero-leak results are
+reported as upper bounds per question and per subject, not per hit. Several pre-registered verdicts
+are inconclusive rather than confirmed or falsified, and we report them as such.
 
 \paragraph{Scope of the security claim.}
 Proposition~\ref{prop:reduction} needs correct checks, faithful metadata and failing closed. A store
@@ -52,10 +59,11 @@ service was probed.
 
 None of our findings is a leak through the layer, because the re-check contains filter faults. They
 can still matter for deployments that trust a pushed-down filter without a re-check: a filter that
-admits more than the check would leak there. We therefore reported each fault in a third-party
-component to its maintainers before this preprint, with a minimal reproducer that does not need our
-library, and give each report's date and status in Table~\ref{tab:conf-faults}. \tbd{dates, links
-and vendor responses}
+admits more than the check would leak there, and one, Chroma's crash on a large filter, lets any
+user in enough groups stop an application that passes their groups to Chroma. For each fault in a
+third-party component that our experiments found, we prepared a report with a minimal reproducer
+that does not need our library, and Table~\ref{tab:conf-faults} gives each report's status at the
+time of writing. \tbd{filing dates, links and vendor responses, once the reports are filed}
 
 \subsection{Use of AI assistance}\label{sec:limits-ai}
 
@@ -73,7 +81,7 @@ large language models and arXiv's policy on generative AI.
 We release the library at the evaluated version, the conformance kit, every harness script, the
 Kaggle notebooks and GitHub workflows that ran them, the pre-registrations with their dated
 amendments, and the raw outputs with container image digests and seeds \tbd{archive DOI}. For
-review, an anonymized mirror with the package renamed is provided. Compute: the end-to-end run took
-2.8\,h and the first diagnosis run 7.3\,h, each on one Kaggle session with two T4 GPUs; the first
-conformance campaign took 2\,h\,56\,min of wall-clock time over six parallel GitHub-hosted jobs.
-\tbd{Add X1 run 2, the campaign rerun and X2 to X8.}
+review, an anonymized mirror with the package renamed is provided. Compute: about 35 hours of
+Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
+listed per experiment in Appendix~\ref{app:compute}; no experiment reported here ran on a local
+machine.
