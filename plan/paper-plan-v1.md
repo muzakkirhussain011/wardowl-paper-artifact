@@ -180,3 +180,9 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
   muzakkirhussain1/wardowl-x8fga-seedNN; two GPU sessions at a time). Library fix: PR #185. Paper: e2e,
   audit table, abstract, intro (X4 and X8 headlines), appendix versions updated (03e0c7a). X3/X6
   (40940385704) and X2/X5 (40921769714) still running; X3's Chroma job crashed with SIGSEGV on every seed.
+- 2026-10-30 (evening): all experiments in. X8 amendment 2 (`evidence/x8-controls.md`): six predictions hold; the
+  seventh holds for targeted questions and is falsified for red-team prompts (87.7%, one attack at 1.8%). Final read of
+  the main text done: fixes to the conformance count (13 engine targets beside the control), wording left from
+  anonymous review, the author's role in the layer stated. arXiv source package built by CI on `results/pdf`. CI
+  artifacts copied to the wardowl branch `results/archive` (348 artifacts, 212 MB, corpora and embeddings left out). What
+  remains is the author's: see `plan/POSTING.md`.
