@@ -27,9 +27,9 @@ Each count ran once in a fresh child process, with a main-thread stack limit of 
 | 16,500 | SIGSEGV, no Python exception | -11 |
 | 40,000 | SIGSEGV, no Python exception | -11 |
 
-Under gdb, in an earlier run, the main thread received SIGSEGV in `chromadb_rust_bindings.abi3.so` with the stack about 16,500 frames deep, the innermost frames all returning to one address in that library, while the tokio and sqlx-sqlite worker threads were idle. So the main thread appears to run out of stack in one recursive function of the Rust bindings, before SQLite sees the query. The per-clause correspondence is inferred from the frame count, since the library has no symbols. A stack overflow depends on the stack size, so another limit would probably move the threshold; I did not test that.
+Under gdb, in an earlier run, the main thread received SIGSEGV in `chromadb_rust_bindings.abi3.so` with the stack about 16,500 frames deep, the innermost frames all returning to one address in that library, while the tokio and sqlx-sqlite worker threads were idle. The library has no symbols, so I could not name the function. I did not test other stack limits.
 
-This needs an unusually large filter, so I don't expect it to affect most users. It matters mainly for an application that builds `where` from a user's group memberships, where a user in enough groups could end the process. A single-node server may share the code path; I did not test that.
+I met this with a filter built from a user's group memberships, one clause per group. I have not measured how many groups users have in practice, and I did not test server mode.
 
 If it helps, one option would be to render n-ary `$and` and `$or` as a balanced tree, or with sea-query's `Cond::any()` and `Cond::all()`, and to validate the size of a `where` with a clear error. A documented size limit for local mode would also help. You know this code far better than I do, so please take that only as a suggestion.
 

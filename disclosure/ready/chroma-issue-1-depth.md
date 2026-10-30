@@ -30,7 +30,7 @@ for where in (flat, nested):
 
 Expected: `[['a']]` for both, or a documented limit on the number of operands.
 
-Where I met it: a permission filter for a user in many groups, with one clause per group, is refused as a whole. It fails safely, with a clear error, so this is an availability limit and not a wrong answer.
+Where I met it: a permission filter for a user in many groups, with one clause per group. The query raises the error below and returns no results.
 
 If it helps, one option would be to build n-ary `$and` and `$or` as one node rather than a chain, or to document the limit in operands. You know this code far better than I do, so please take that only as a suggestion.
 

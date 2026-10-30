@@ -42,7 +42,7 @@ The first search returns `doc:long` and the second returns `doc:prefix` only, or
 
 **Additional context**
 
-Values this long are uncommon, so I don't expect this to affect most users. Where it does apply, in applications that filter on TAG values they do not control (identifiers, group names, hashes of paths), a document can be missed silently, and a value equal to the first 4,096 bytes of another matches it. An access-control filter built this way could admit a document granted to a different, longer name, which is why I thought it worth mentioning.
+So a filter on such a field can miss a document, and can match one that holds a different, longer value; both show in the reproducer above. I thought that worth mentioning because I met it while testing access-control filters. I have not measured how often values this long occur in practice.
 
 If it helps, one option would be to apply the same limit to query values, so that both sides agree, or to refuse a longer value at indexing with an error, and to document the limit on the tag fields page and in `FT.CREATE`. You know this code far better than I do, so please take that only as a suggestion.
 
