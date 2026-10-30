@@ -1,0 +1,44 @@
+name: Reference check
+
+# Checks every reference the paper cites against a primary record, in the cloud: DOIs against Crossref,
+# arXiv identifiers against arXiv's API, and other links by fetching them. Compares titles and first
+# authors. The report goes to the branch results/refcheck. It is a machine check, for finding faults; it
+# does not replace reading the references.
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/refcheck.yml, bib/refcheck.py]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.12"
+      - name: Check the references
+        run: |
+          git fetch -q origin results/pdf
+          git show FETCH_HEAD:main.aux > "$RUNNER_TEMP/main.aux"
+          out=$(mktemp -d)
+          python bib/refcheck.py "$RUNNER_TEMP/main.aux" bib/references.bib bib/web.bib "$out/report.md" "$out/report.tsv"
+          echo "out=$out" >> "$GITHUB_ENV"
+      - name: Publish the report
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          cd "$out"
+          git init -q
+          git checkout -q -b results/refcheck
+          git add -A
+          git -c user.name="reference check" -c user.email="refcheck@localhost" commit -q -m "Reference check of $GITHUB_SHA"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" results/refcheck
