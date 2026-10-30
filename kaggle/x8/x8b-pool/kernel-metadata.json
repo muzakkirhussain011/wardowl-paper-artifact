@@ -1,0 +1,15 @@
+{
+  "id": "muzakkirhussain1/wardowl-x8b-pool",
+  "title": "wardowl-x8b-pool",
+  "code_file": "x8b_pool.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": ["muzakkirhussain1/wardowl-x8b-seed7", "muzakkirhussain1/wardowl-x8b-seed11", "muzakkirhussain1/wardowl-x8b-seed13", "muzakkirhussain1/wardowl-x8b-seed17"],
+  "competition_sources": [],
+  "machine_shape": "None"
+}
