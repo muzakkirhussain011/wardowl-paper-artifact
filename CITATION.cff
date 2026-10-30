@@ -7,7 +7,7 @@ authors:
     given-names: Syed Muzakkir
     email: muzakkirhussain011@gmail.com
 repository-code: "https://github.com/muzakkirhussain011/wardowl"
-repository-artifact: "https://github.com/muzakkirhussain011/wardowl-paper"
+repository-artifact: "https://github.com/muzakkirhussain011/wardowl-paper-artifact"
 keywords:
   - retrieval-augmented generation
   - access control

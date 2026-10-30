@@ -88,6 +88,8 @@ jobs:
               echo "pages: $(pdfinfo "$pkg/paper_arXiv/main.pdf" | awk '/^Pages/{print $2}')" >> "$out/arxiv/checks.txt"
               echo "text lines differing from the main build: $(diff "$pkg/a.txt" "$pkg/b.txt" | grep -c '^[<>]')" >> "$out/arxiv/checks.txt"
               diff "$pkg/a.txt" "$pkg/b.txt" > "$out/arxiv/text-diff.txt" || true
+              cp "$pkg/paper_arXiv/main.pdf" "$out/arxiv/main-tl2025.pdf"
+              pdftoppm -r 90 -f 5 -l 5 -png "$pkg/paper_arXiv/main.pdf" "$out/arxiv/tl2025-page"
               # The same comparison ignoring layout: one word per line, spaces and line breaks dropped.
               tr -s '[:space:]' '\n' < "$pkg/a.txt" > "$pkg/a.words"
               tr -s '[:space:]' '\n' < "$pkg/b.txt" > "$pkg/b.words"
