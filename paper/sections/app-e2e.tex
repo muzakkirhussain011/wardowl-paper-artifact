@@ -1,0 +1,168 @@
+% Appendix: the end-to-end evaluation in detail. Moved from Section~\ref{sec:e2e}. Sources:
+% evidence/kaggle-scale-run-2026-10-24.md (X0, seed 7, wardowl 2.1.0, before the honest-completeness
+% change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in plan/x8-prereg.md), and the
+% OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same pre-registration).
+
+\section{The end-to-end evaluation in detail (X0 and X8)}\label{app:e2e}
+
+This appendix gives the full setup of the end-to-end runs, the safety table, and what the model did with what it
+retrieved, which Section~\ref{sec:e2e} summarizes.
+
+\subsection{Setup}\label{sec:e2e-setup}
+
+\paragraph{Corpus.}
+The index holds 107,540 chunks, one per document or passage: 49,920 synthetic company documents in 20
+tenants, of which 41,600 carry a unique canary string; 20 notices, one per tenant, each carrying a
+prompt injection; and 57,600 passages of the FiQA financial question-answering
+corpus~\cite{maia2018www18} from BEIR~\cite{thakur2021beir}, which every tenant may read and which
+serve as distractors. Company documents are drawn from templates (handbooks, finance, HR, board and
+project records) with per-document ACLs over users and groups. Chunks are embedded with
+bge-base-en-v1.5~\cite{xiao2024cpack}.
+
+\paragraph{People and questions.}
+189 people span the tenants. A typical employee may read the shared passages, the tenant's notice
+and five of the twelve document templates, 58,641 chunks in all (the median); the least privileged
+are non-executive board members (``judy'' personas), each of whom may read 624 chunks of three
+templates in one tenant and none of the shared passages (0.58\% of the corpus); one person in no
+group may read nothing. They ask 1,105 questions: 108 generic, 376 targeted at a document
+they may read, 189 targeted at a document they may not read (\emph{forbidden}), and 432 red-team
+prompts that ask for other people's data, other tenants' data or everything, or try to override
+instructions.
+
+\paragraph{Policy and stores.}
+The policy is $\mathrm{AllOf}(\mathrm{Tenant}, \mathrm{MetadataACL})$ (Appendix~\ref{sec:sys-compose}).
+It runs against ten configurations: FAISS over a flat index (exact, the reference), Chroma, pgvector,
+pgvector with the same policy written in OPA, Qdrant, Elasticsearch, OpenSearch, Weaviate, Redis and
+LanceDB, each at the settings listed in Appendix~\ref{app:settings}. Each question retrieves with
+$k = 5$ for the answer and $k = 10$ for recall@10. Qwen2.5-3B-Instruct~\cite{yang2024qwen25} answers
+from the five chunks. An eleventh configuration, pgvector with the policy's ACLs held as 74,960
+OpenFGA relationship tuples behind the caching authorizer, pre-filters with ListObjects. It did not
+start in the runs below: our harness set OpenFGA's ListObjects deadline to 20\,s while leaving its
+request timeout at the default, and OpenFGA 1.22 refuses to start with a deadline longer than the
+request timeout. We had first recorded this as an infrastructure failure; the server's log shows
+otherwise. With the timeout raised and nothing else changed, the configuration ran in four further
+runs with the same seeds, pre-registered as an amendment before they started; each also repeated
+the in-process pgvector configuration.
+
+\paragraph{Runs.}
+The scenario ran four times with seeds 7, 11, 13 and 17 on the same software and hardware (one
+Kaggle session with two T4 GPUs each; Appendix~\ref{app:compute}). The seed changes the document
+text, the sample of questions and the order in which people ask; the permission templates and
+personas are fixed, so the runs repeat the layout with fresh documents and questions. The repeats
+and their predictions were pre-registered after the first run and before any repeat. The runs used
+the released version 2.1.0, before the change of Appendix~\ref{sec:sys-complete}; permissions did not
+change during a run, so these runs test containment, not freshness, which
+Section~\ref{sec:eng-revoke} measures.
+
+\paragraph{Leak detection.}
+A leak is any returned chunk outside the person's readable set, as decided by the policy oracle,
+which evaluates the policy without the layer, or any canary of an unreadable document found in a
+retrieved chunk, in the prompt sent to the model or in the model's answer. A canary is a 40-bit code derived
+from the document's identifier; the matcher finds it in any case and with any hyphen, dash, space or
+nothing between its parts, and a positive control checks, for every person, that it finds exactly
+the canaries of the documents that person may not read in a text that holds all of them. A model
+cannot produce a 40-bit code it has not been shown, so an answer can leak a canary only through a
+prompt that contains it, and prompts are checked verbatim. The answer check guards against a fault
+in the pipeline between prompt and answer, not against paraphrase.
+
+\subsection{Safety in detail}\label{app:e2e-safety}
+
+\begin{table}[tbp]
+\centering
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrr@{}}
+\toprule
+Configuration & Questions & Hits checked & Unreadable hits & Canaries (chunk/prompt/answer) & Violations \\
+\midrule
+FAISS (exact) & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+Chroma & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+pgvector & 4,420 & 65,047 & 0 & 0/0/0 & 0 \\
+pgvector + OPA & 4,420 & 65,071 & 0 & 0/0/0 & 0 \\
+Qdrant & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+Elasticsearch & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+OpenSearch & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+Weaviate & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+Redis & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+LanceDB & 4,420 & 65,440 & 0 & 0/0/0 & 0 \\
+\midrule
+Total & 44,200 & 653,638 & 0 & 0/0/0 & 0 \\
+\midrule
+pgvector + OpenFGA\textsuperscript{$\ast$} & 4,420 & 64,845 & 0 & 0/0/0 & 0 \\
+pgvector\textsuperscript{$\ast$} & 4,420 & 65,405 & 0 & 0/0/0 & 0 \\
+\bottomrule
+\end{tabular}
+\caption{End-to-end safety over four runs (seeds 7, 11, 13 and 17). The unit of the bounds in the
+text is the question and the person; hits are secondary and are counted over both retrievals per
+question, so about a third of them, the $k = 5$ hits, largely repeat chunks already counted among the
+$k = 10$ hits of the same question. pgvector and its variants checked fewer hits because some of
+their answers were short or empty (Section~\ref{sec:quality}). \textsuperscript{$\ast$}Four further
+runs with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration
+reported an error.}
+\label{tab:e2e-safety}
+\end{table}
+
+No configuration in any run returned an unreadable chunk or exposed a canary
+(Table~\ref{tab:e2e-safety}). We bound the leak rate per question, separately for each of the eleven
+configurations, treating the questions of different runs, which are sampled afresh over fresh
+documents, as independent: with no leak in 4,420 questions, the one-sided 95\% upper bound is
+$1 - 0.05^{1/4420} \approx 6.8 \times 10^{-4}$ per question (Section~\ref{sec:prob-metrics}). Per
+person the bound stays at a single run's $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$: the same
+personas recur in every run with the same permissions, so a fault tied to a permission shape would
+recur too, and counting person-runs would overstate the evidence. Pooling the configurations would not
+shrink these bounds honestly, since they share questions and the layer's code. The first of the five
+pre-registered predictions for the repeats, that no unreadable hit, canary or violation would occur,
+held, and so did the amendment's for OpenFGA, which started in every run and pre-filtered every
+question. As a secondary count, the runs checked 783,888 hits, not independent trials, since hits
+cluster by question and by person, and a fault in the layer would affect a question, not a random hit.
+
+The bounds are over the distribution of the question generator: the 1,105 questions of a run are
+sampled by the scenario's generator, and a binomial bound over sampled questions says nothing about
+an adversary who adapts its queries to what it sees. For such an adversary we rely on
+Observation~\ref{prop:reduction}, which does not depend on the query, and on its trusted computing
+base.
+
+No violation occurred. In the in-process configurations the filter and the re-check evaluate the same
+ACL metadata under the same reference semantics, so a violation would need a store to translate or
+evaluate the filter wrongly; with OPA and OpenFGA, filter and check come from the engine's separate
+APIs, and they agreed on every hit. Sections~\ref{sec:conformance} and~\ref{sec:engines} test
+configurations and data shapes on which they do not.
+
+Two observations qualify the result. First, it is a statement about this layer under assumptions
+(A1) to (A3) of Observation~\ref{prop:reduction}, exercised with adversarial inputs, not a proof:
+the red-team prompts can only change the query text, and the layer never lets text choose the
+subject (Appendix~\ref{sec:sys-identity}). Second, containment held while quality did not, and quality
+did not repeat. pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four
+runs, people who could each read 624 chunks, and the layer, before the change of
+Appendix~\ref{sec:sys-complete}, reported those empty answers as complete. The same configuration ran
+in one of two modes, fast and lossy or exact and about fifty times slower, for a reason
+Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache. Our third prediction, that 3 to 25
+people would receive no results in every repeat, was falsified: two repeats fell outside it, because
+it assumed that the first run's mode was a property of the configuration. Over its eight runs the
+configuration ran exact in five and, by its median, fast in three, one of them a mixture whose p95 of
+433\,ms shows that part of its searches ran exact. The seed did not decide which: seeds 7, 11 and 17
+each ran fast in one run and exact in another. In two of the five exact runs one person still received
+no results, which we have not explained. With OpenFGA, whose pre-filter lists the readable documents,
+pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 3 to 10
+least-privileged people without results, whatever mode the in-process configuration had just run
+in. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
+other stores varied little from run to run (Section~\ref{sec:qual-audit}).
+
+\subsection{What the model did with what it retrieved}\label{sec:e2e-model}
+
+Prompt injection in readable content is outside our threat model (Section~\ref{sec:prob-threat}),
+but the runs measure where the boundary lies. Each tenant's injected notice is readable by that
+tenant's employees and contractors, so retrieving it for them is correct. Over all eight runs the
+notice was retrieved between 1 and 117 times per configuration and run, depending on the store's
+ranking, and the 3B model followed its instruction every time it was retrieved: 3,069 of 3,069
+times. Retrieval-time enforcement decides which content reaches the model, not what the model does
+with it; defenses against injected instructions in permitted
+content~\cite{greshake2023not,debenedetti2025defeating} are complementary.
+
+Answer quality followed retrieval quality. With FAISS the model found the target document of a
+targeted question in its top five for every question in every run and answered 98.4\% to 99.7\%
+correctly (an answer is correct when it quotes the fact from the right tenant's document); with Qdrant the target
+was in the top five for 33.8\% to 39.9\% of targeted questions.
+With OpenFGA, despite its lower recall, the target was in the top five for 94.2\% to 97.9\%. When a
+person asked about a document they could not read, the model abstained in 68\% to 83\% of cases,
+depending on the store and run, and otherwise answered from readable chunks only, as the
+canary checks confirm.

@@ -1,7 +1,10 @@
 % Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG
 % Venue style is applied later (NeurIPS 2027 E&D style once released); this preprint layout uses the
 % standard article class. \tbd{} marks what is still open: the X8 amendment 2 results in e2e.tex, and
-% in limits.tex the filing of vendor reports, the human check of references and the archive DOI.
+% in limits.tex the filing of vendor reports, the human check of references, the extent of the
+% authors' review and the archive DOI.
+% Structure (decision of 2026-10-30): a main text of at most 20 pages, then the bibliography, then
+% appendices. Everything cut from the main text is in an appendix; nothing measured was dropped.
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
@@ -9,8 +12,13 @@
 \usepackage{microtype}
 \usepackage{amsmath,amssymb,amsthm}
 \usepackage{booktabs}
+\usepackage{longtable}
 \usepackage{graphicx}
 \usepackage{xcolor}
+\usepackage{pgfplots}
+\usepgfplotslibrary{groupplots}
+\pgfplotsset{compat=1.18}
+\usepackage[font=small,skip=5pt]{caption}
 \usepackage[hidelinks]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
@@ -28,37 +36,29 @@
 
 \begin{abstract}
 Retrieval-augmented generation (RAG) places the chunks most similar to a question into a language
-model's prompt. Similarity ignores authorization, so any index shared by readers with different
-permissions can hand a user's question a chunk that user may not read; OWASP lists this as LLM08.
-The remedy is old: push the access predicate into the query and check what comes back. What is not
-known is whether today's stack implements it faithfully. We study permission-aware retrieval as
-deployed: an enforcement layer that compiles an organization's existing authorization policy into
-filters for production vector stores, re-checks every hit against the authorizer, and fails closed.
-We contribute (i) a formulation of secure, fresh, sound, complete and count-honest top-$k$ retrieval
-under an external authorizer, with a stated trusted computing base; (ii) differential conformance
-testing of filter semantics across 13 of the 14 vector stores the layer supports and seven
-authorization engines, which found two undocumented store behaviors that cost recall, two adapter
-faults and documented limits that fail closed, and confirmed a type gap in the layer's Cerbos
-translator; (iii) a measurement of disagreement between authorization engines' filter compilers and
-their own check APIs, which at one revision was confined to that type gap, and of revocation delay per
-path, up to the cache's time to live or the engine's staleness; (iv) an audit of retrieval quality
-under permission-shaped filters, where mean recall@10 at common settings ranged from 0.55 to 0.98 over
-eight stores searched approximately, and one store returned no results at all to some least-privileged
-people in five of eight runs, which the evaluated release reported as complete; (v) detection and
-bounded repair of such under-retrieval; (vi) a measurement of side channels in filtered retrieval; and
-(vii) an end-to-end evaluation with canary documents over 107,540 chunks, 20 tenants and 1,105
-questions per run, including red-team prompts: four runs of each of eleven configurations, with no
-leak and a one-sided 95\% bound of $6.8 \times 10^{-4}$ leaks per question for each configuration and
-$1.6 \times 10^{-2}$ per person, over the generator's question distribution. No returned chunk was
-unreadable at the revision the re-check read, in any tested configuration; information about
-unreadable chunks still was revealed through latency, counts, recall and scores, and retrieval
-quality varied widely.
+model's prompt. Similarity ignores authorization, so an index shared by readers with different
+permissions can hand a subject a chunk it may not read; OWASP lists this as LLM08. The remedy is old:
+push the access predicate into the query and check what comes back. We ask whether today's stack
+implements it faithfully, by testing one enforcement layer that compiles an existing authorization
+policy into filters for production vector stores, re-checks every hit and fails closed. We formalize
+secure, fresh, sound, complete and count-honest top-$k$ retrieval with a stated trusted computing
+base. Differential testing of 13 stores and seven authorization engines found two undocumented store
+behaviors that cost recall, adapter faults and documented limits that fail closed; filters and checks
+disagreed at one revision only on a type gap in one translator. Mean recall@10 at common settings
+ranged from 0.55 to 0.98 over eight stores searched approximately, and one store returned no results
+to some least-privileged people in five of eight runs, which the evaluated release reported as
+complete; we trace these losses to graph layout and a plan cache and measure what detection and bounded
+repair recover. Eleven end-to-end configurations, four runs each over 107,540 chunks, had no leak: a
+one-sided 95\% bound of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per person, over the
+generator's question distribution. No returned chunk was unreadable at the revision the re-check read,
+in any tested configuration; information about unreadable chunks still was revealed through latency,
+counts, recall and scores, and revocation took up to a cache's time to live or an engine's staleness.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}
 \input{sections/intro}
 
-\section{Background and Problem Statement}\label{sec:problem}
+\section{Problem Statement and Threat Model}\label{sec:problem}
 \input{sections/background}
 
 \section{The Enforcement Layer Under Test}\label{sec:system}
@@ -85,7 +85,7 @@ quality varied widely.
 \section{Related Work}\label{sec:related}
 \input{sections/related}
 
-\section{Limitations, Ethics and Disclosure}\label{sec:limits}
+\section{Limitations, Ethics, AI Use and Reproducibility}\label{sec:limits}
 \input{sections/limits}
 
 \section{Conclusion}\label{sec:conclusion}
@@ -95,6 +95,21 @@ quality varied widely.
 \bibliography{../bib/references,../bib/web}
 
 \appendix
+\input{sections/app-map}
+\input{sections/app-ledger}
+\input{sections/app-problem}
+\input{sections/app-system}
+\input{sections/app-conformance}
+\input{sections/app-faults}
+\input{sections/app-engines}
+\input{sections/app-quality}
+\input{sections/app-frontier}
+\input{sections/app-size}
+\input{sections/app-repair}
+\input{sections/app-side}
+\input{sections/app-e2e}
+\input{sections/app-related}
+\input{sections/app-limits}
 \input{sections/appendix}
 
 \end{document}

@@ -1,0 +1,323 @@
+% Appendix: side channels in detail. Moved from Section~\ref{sec:side}. Sources:
+% benchmarks/paper/PREREG_X3_X6.md on branch paper/x3-x6 (X6, with amendments 1 to 3, all made before
+% any full result); results from evidence/x3-x6-run1.md (GitHub Actions run 40940385704, commit
+% a191626). Every number is as x6_stats.py printed it; the two places where the script departs from
+% the written rules are stated in the text. The follow-up analyses (amendment 4, exploratory,
+% specified in writing after the main results and before running; run 40982986417, commit 9e22b89)
+% are from evidence/x3-x6-followup.md, as x3x6_followup.py printed them; they change no verdict.
+% "Reveal" is used throughout; "leak" is reserved for returned content.
+
+\section{Side channels in detail (X6)}\label{app:side}
+
+This appendix gives the setup, the hypotheses and the full results of the side-channel experiment, including the
+forensics of the build offsets, which Section~\ref{sec:side} summarizes.
+
+\subsection{Setup}\label{sec:side-setup}
+
+\paragraph{Data and probes.}
+The background is all 57,638 FiQA passages~\cite{maia2018www18}, with its 6,648 queries as probe
+candidates; far chunks come from 12,000 SciDocs abstracts, both from BEIR~\cite{thakur2021beir}, and
+all text is embedded with all-MiniLM-L6-v2 (384 dimensions)~\cite{reimers2019sentencebert,wang2020minilm}.
+Each of five seeds places eight groups of nine probes, one with $m = 1{,}000$ secrets, two with 100,
+three with 10 and three with 1. A probe's secrets are its $m$ nearest passages, excluding hubs, the 1\% of
+passages found among the 2,000 nearest neighbors of the largest number of queries; within a group, no probe's secrets fall in the
+zone a group mate can explore, its nearest passages up to 1,000 beyond its own secrets, which is the
+post-filter's cap. One index $W_1$ holds every group's secrets; for each group $g$, an index $W_0^g$
+replaces only group $g$'s 1,233 secrets by far chunks. A probe of group $g$ thus compares two worlds
+that differ in its own secrets and in those of its eight group mates, which the zone rule places
+beyond the depth the layer explores for it; collection statistics, however, count them all.
+Background passages fall into 100 permission buckets, and three
+attackers read 1\%, 10\% and 50\% of them; secrets carry an ACL none of them holds. Every seed
+builds every index afresh.
+
+\paragraph{Configurations.}
+The \emph{pre-filter} runs each store's approximate filtered search at documented defaults:
+pgvector, Qdrant and Elasticsearch, with FAISS over a flat index and \sys{}'s in-memory backend as
+exact controls. The \emph{post-filter} is \sys{}'s widening loop at its defaults: fetch $4k$, widen
+fourfold until $k$ hits are readable, the store runs out, or 1,000 candidates have been examined.
+Four mitigations are measured against them. \emph{Constant-work widening} (M1) fetches the cap of
+1,000 in one round, so every request examines the same number of candidates. \emph{Exact
+pre-filtered search} (M2) ranks every readable chunk: pgvector with index scans disabled, Qdrant's
+exact flag, Elasticsearch's \texttt{script\_score}. \emph{Separation} (M3) gives the attacker an index
+that holds only its own tenant's chunks, as a tenant-per-index layout would; its advantage is zero by
+construction, and measuring it twice provides an A/A null for the harness. \emph{Latency padding}
+(M4) delays each answer to the next multiple of a budget fixed on the first seed and is evaluated on
+the other four; it models an ideal padder and ignores scheduler jitter. For collection statistics,
+keyword search runs under the pre-filter on Elasticsearch (BM25), on Qdrant (sparse vectors with an
+IDF modifier) and on pgvector (\texttt{ts\_rank\_cd}, which uses no collection statistics: a
+negative control), and Elasticsearch adds reciprocal-rank fusion of vector and keyword search.
+
+\paragraph{Measurement and statistics.}
+For every seed, store, probe, attacker and configuration, one warm-up is followed by five timed
+repetitions, each of which runs $W_0^g$, $W_1$ and the two separated indexes in a fresh random order,
+so drift affects every world alike; an observation is the median over repetitions. The in-memory
+control, which rescores the whole corpus on every search, runs a reduced design fixed in advance:
+three probes per level and seed, $p = 10\%$ only, three repetitions. Every retrieval is
+re-checked, and a hit outside the attacker's readable set would stop the run. Intervals are 95\%
+cluster-bootstrap intervals over (seed, probe) pairs with 10,000 resamples. A channel is
+\emph{present} when the paired AUC reaches the hypothesis's threshold and its interval's lower end
+exceeds 0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$. Two guards precede any
+verdict: the A/A comparison of the two separated indexes must show no latency channel, and exact
+configurations must return identical hit lists in $W_0^g$ and $W_1$ for at least 99\% of probes. The
+experiment runs on GitHub-hosted runners with four virtual CPUs and 16\,GB of memory.
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}p{0.20\linewidth}p{0.42\linewidth}p{0.32\linewidth}@{}}
+\toprule
+Hypothesis & Prediction & Verdict \\
+\midrule
+H1 widening & Post-filter: count AUC $\ge 0.95$ at $m = 1{,}000$; latency AUC $\ge 0.75$ at $m = 100$
+  ($p = 10\%, 50\%$); no channel at $m = 1$ & Falsified: count 0.613 to 0.688 at $p = 50\%$;
+  FAISS latency 0.667 at $m = 1$ \\
+H2 constant work (M1) & No latency channel; the count channel remains at $m = 1{,}000$ & Falsified:
+  count as in H1; a reverse latency channel on pgvector \\
+H3 approximate pre-filter & pgvector and Elasticsearch: latency AUC $\ge 0.75$ at $m = 1{,}000$;
+  Qdrant: no channel at $p = 1\%, 10\%$ & pgvector confirmed; Elasticsearch inconclusive; Qdrant
+  confirmed \\
+H4 exact pre-filter (M2) & No channel in any observable & Inconclusive: identical answers; latency
+  offsets between builds \\
+H5 collection statistics & BM25 and IDF-weighted sparse: score AUC $\ge 0.90$ at every $m$;
+  \texttt{ts\_rank\_cd}: none; fusion changes the hit list for at least 25\% of probes at
+  $m = 1{,}000$ & BM25, sparse: inconclusive (0.794 to 0.886 at $m \le 10$);
+  \texttt{ts\_rank\_cd}, fusion: confirmed \\
+H6 padding (M4) & No latency channel wherever the unpadded AUC was $\ge 0.75$ (forward channels
+  only) & Inconclusive as printed (script defect); confirmed under the written rule \\
+\bottomrule
+\end{tabular}
+\caption{Pre-registered hypotheses of the side-channel experiment, abbreviated, with the verdicts of
+the full run (Section~\ref{sec:side-results}); the full rules, including what falsifies each, are in
+the released pre-registration.}
+\label{tab:side-hyp}
+\end{table}
+
+\subsection{Full results}\label{app:side-results}
+
+\begin{table}[tbp]
+\centering
+\small
+\begin{tabular}{@{}llrrrr@{}}
+\toprule
+Configuration & Observable & $m = 1$ & 10 & 100 & 1,000 \\
+\midrule
+Post-filter, FAISS & latency & 0.67 & 0.67 & 0.80 & 0.76 \\
+Post-filter, pgvector & latency & 0.37 & 0.38 & 0.57 & 0.68 \\
+Post-filter, Qdrant & latency & 0.47 & 0.46 & 0.75 & 0.78 \\
+Post-filter, Elasticsearch & latency & 0.48 & 0.58 & 0.76 & 0.86 \\
+Post-filter, all four & count & 0.50--0.51 & 0.50--0.51 & 0.58--0.59 & 0.84--0.87 \\
+\midrule
+Constant work, FAISS & latency & 0.63 & 0.57 & 0.46 & 0.13 \\
+Constant work, pgvector & latency & 0.29 & 0.22 & 0.07 & 0.02 \\
+Constant work, Qdrant & latency & 0.47 & 0.47 & 0.45 & 0.35 \\
+Constant work, Elasticsearch & latency & 0.57 & 0.57 & 0.55 & 0.62 \\
+\midrule
+Pre-filter, pgvector & latency & 0.33 & 0.44 & 0.79 & 0.88 \\
+Pre-filter, pgvector & recall & 0.49 & 0.47 & 0.31 & 0.22 \\
+Pre-filter, Qdrant & latency & 0.47 & 0.43 & 0.47 & 0.57 \\
+Pre-filter, Elasticsearch & latency & 0.49 & 0.50 & 0.48 & 0.60 \\
+\midrule
+Exact, FAISS (pre-filter) & latency & 0.25 & 0.30 & 0.25 & 0.35 \\
+Exact, pgvector & latency & 0.17 & 0.14 & 0.13 & 0.12 \\
+Exact, Qdrant & latency & 0.45 & 0.46 & 0.50 & 0.42 \\
+Exact, Elasticsearch & latency & 0.50 & 0.48 & 0.47 & 0.47 \\
+Exact, all four & count, recall, score & 0.50 & 0.50 & 0.50 & 0.50 \\
+\midrule
+BM25, Elasticsearch & score & 0.79 & 0.88 & 0.98 & 0.99 \\
+Sparse IDF, Qdrant & score & 0.81 & 0.89 & 0.98 & 1.00 \\
+\texttt{ts\_rank\_cd}, pgvector & score & 0.50 & 0.50 & 0.50 & 0.50 \\
+\texttt{ts\_rank\_cd}, pgvector & latency & 0.45 & 0.47 & 0.50 & 0.70 \\
+\bottomrule
+\end{tabular}
+\caption{Paired AUC of the differencing attacker, $W_1$ against $W_0^g$, pooled over the three
+attackers: 120, 120, 80 and 40 probes for $m = 1$, 10, 100 and 1,000 over five seeds. Above 0.5 the
+observable moves in the direction predicted for $W_1$ (latency up; count, recall and score down);
+below 0.5 it moves the other way, which serves an attacker who knows the sign just as well, so the
+size of a channel is $|\mathrm{AUC} - 0.5|$. Latency values must be read against the differences between
+builds of identical content, which reached $|\mathrm{AUC} - 0.5|$ of 0.16 for FAISS's post-filter, 0.24
+for its pre-filter and 0.31 for pgvector's exact search, and under 0.01 for Qdrant's exact search
+(Section~\ref{sec:side-results}); the other configurations were not measured that way. No correction
+for multiple comparisons is applied: the verdicts rest on the cells the hypotheses name, and the rest
+of the table is descriptive. Intervals
+for the cells the hypotheses name are in the text; all are in the released report.}
+\label{tab:side-auc}
+\end{table}
+
+\paragraph{The run.}
+Every pre-registered cell ran: five seeds for each store, all 72 probes placed in every seed, and
+520,320 retrievals without an error. None returned a chunk outside the attacker's readable set. In
+three seeds the SciDocs passages far enough from every probe (2,331 to 4,864) were fewer than the
+secrets (8,417 to 8,985), and the harness reused far chunks rather than drawing them without
+replacement as the pre-registration states; every far chunk still lay outside every probe's zone.
+Table~\ref{tab:side-auc} summarizes the channels by $m$. Verdicts are as the analysis script printed
+them; where the script departs from the written rules, we say so.
+
+\paragraph{Guards.}
+Exact search returned identical hit lists in $W_1$ and $W_0^g$ for every probe and attacker (G2:
+change rate 0.000 for pgvector, Qdrant and Elasticsearch with exact search and for FAISS). The A/A
+guard G1 held for all 20 configurations of the four vector stores, with paired AUCs from 0.463 (95\%
+interval 0.436 to 0.492) to 0.536 (0.507 to 0.563) over 360 clusters. It failed for the in-memory
+control (0.533, interval 0.400 to 0.650; and 0.500, 0.367 to 0.633): with 60 clusters and three
+repetitions, an interval inside $[0.40, 0.60]$ was out of reach, so its latency parts are
+inconclusive, as they would have been in any case (pooled latency 0.383, 0.267 to 0.500, and 15
+clusters per level). G1 compares one index
+with itself; it cannot see a difference between two builds, and such differences appear below.
+
+\paragraph{Widening (H1, falsified).}
+Where the prediction rested on the loop alone, the post-filter revealed nearby secrets as predicted. At $m = 100$ one
+more widening round made $W_1$ slower, with paired AUCs of 0.850 (0.762 to 0.925) on FAISS, 0.800
+(0.713 to 0.887) on Qdrant and 0.825 (0.738 to 0.900) on Elasticsearch at $p = 10\%$, and 0.925 to
+0.975 on all four stores at $p = 50\%$, where FAISS took 14.8 against 7.2\,ms on average. The
+one-shot attacker did almost as well (pooled AUC 0.962 for FAISS at $p = 50\%$). pgvector's 0.662
+(0.550 to 0.762) at $p = 10\%$ was inconclusive, although $W_1$ took 18.7 against 10.7\,ms on average:
+on probes that needed no extra round, its post-filter was slightly faster on $W_1$, as it was at
+$m = 1$ (0.369) and $m = 10$ (0.383). At
+$m = 1{,}000$ an attacker reading 1\% of the background received a short answer in $W_1$ for every
+probe on every store (count AUC 1.000).
+
+Two parts failed. At $m = 1{,}000$ and $p = 50\%$ the count AUC was 0.613 to 0.688, below the
+falsification bound of 0.80 on every store, and at $p = 10\%$ it was 0.912 to 0.925. The prediction
+assumed that the 1,000 nearest candidates are all secrets. Hubs may not be secrets, so they remain in
+the background, interleaved with the secrets: a probe's 1,000th secret ranked as deep as 1,040 to
+1,271 (the deepest per seed), and readable hubs among the post-filter's 1,000 candidates filled the
+answer. On FAISS, $W_1$ returned 0.375, 3.35 and 7.60 hits on average at $p = 1\%$, 10\% and 50\%, and
+its answer was complete for 62.5\% of probes at $p = 50\%$, which accounts for the AUC of 0.688, since
+every $W_0^g$ answer was complete. A follow-up check, exploratory, specified in writing after the
+main results and before running, confirmed the mechanism probe by probe: the 1,000 nearest passages of each
+$m = 1{,}000$ probe held between 1 and 231 hubs (45.7 on average) and no passage that was neither a
+hub nor a secret, and FAISS returned exactly the smaller of 10 and the number of readable hubs among
+them, for all 40 probes and every attacker; the same count over the background predicted every
+$W_0^g$ answer. The count channel is only as strong as readable content among the secrets is scarce.
+
+The second failure is a latency difference on FAISS at $m = 1$: paired AUC 0.667 (0.617 to 0.717).
+Its answers were identical in both worlds for all 360 pairs, the mean difference was 0.05 to 0.14\,ms
+on 7 to 46\,ms, and the AUC was the same at $m = 10$ (0.672), with ten times as many secrets among the
+candidates. Configurations whose answers are identical in both worlds show such offsets, of either
+sign, at every $m$: FAISS's exact pre-filter was faster on $W_1$ (paired AUC 0.25 to 0.35), and
+pgvector's exact search was 1.5 to 3.5 times slower on $W_0^g$ (0.12 to 0.17).
+
+Two follow-up analyses, likewise exploratory and specified in writing before they ran, examined this
+offset. In the
+main run's records the whole difference lay in FAISS's own search call: 0.115\,ms (95\% interval
+0.076 to 0.154; paired AUC 0.681) against 0.106\,ms of latency, with the same number of widening
+rounds in all 360 pairs and no difference in $W_1$'s direction in the authorizer ($-0.001$\,ms) or
+the rest of the layer ($-0.010$\,ms). A second run then built, for each group, $W_1$ again and
+$W_0^g$ twice, just before the group, and measured them with the original $W_1$ in random order. It
+reproduced the direction of the offset, more weakly ($W_1$ against the first $W_0^g$: 0.597, 0.539
+to 0.656, at $m = 1$), and two builds of identical content differed by as much: $W_1$ against its
+own rebuild 0.600 (0.547 to 0.653), the second build of $W_0^g$ against the first 0.361 (0.308 to
+0.414), at every $m$ alike. With builds matched in time, the difference in content gave 0.447 (0.392
+to 0.506) at $m = 1$, but 0.742 (0.700 to 0.783) at $m = 1{,}000$, where the widening channel is real.
+The reading we fixed in advance called the offset a build difference only if that $m = 1$ interval
+lay within $[0.40, 0.60]$; it reaches 0.392, so the formal reading is inconclusive. What the numbers
+show is that two FAISS indexes of the same content differ in search time by as much as $W_1$ and
+$W_0^g$ did, while the secret adds no detectable offset of its own at $m = 1$.
+
+These same-content comparisons set the noise level against which every latency channel of
+Table~\ref{tab:side-auc} must be read. Two builds of identical content gave paired latency AUCs of
+0.342 to 0.608 for FAISS's post-filter, depending on $m$ and on which builds were compared
+($|\mathrm{AUC} - 0.5|$ up to 0.16), 0.257 and 0.426 for its
+pre-filter (up to 0.24), 0.186 and 0.789 for pgvector's exact search (up to 0.31, from the tables'
+vacuum state, below), and 0.494 and 0.505 for Qdrant's exact search (under 0.01); we have no such
+measurement for the other configurations, and Elasticsearch's was lost. A latency AUC between about
+0.6 and 0.8 is therefore not by itself evidence about the secrets. What separates a channel from an
+offset is that a channel grows with $m$, as in the widening loop and pgvector's iterative scan, while
+an offset stays the same at every $m$, as in the configurations whose answers are identical.
+
+\paragraph{Constant work (H2, falsified).}
+Fetching the cap in one round removed the widening channel from latency pooled over $m$ and $p$ on
+FAISS (0.517, 0.484 to 0.549) and Qdrant (0.456, 0.422 to 0.491), and left the count channel, which
+falsifies H2 at $p = 50\%$ as it does H1. Timing did not become uninformative. Where the candidates
+are secrets, $W_1$ answered \emph{faster}: on pgvector the paired AUC fell from 0.29 at $m = 1$ to 0.017
+(0.000 to 0.050) at $m = 1{,}000$, where $W_1$ took 23.5 against 26.4\,ms; FAISS fell to 0.133 (0.075
+to 0.200) and Qdrant to 0.350 (0.225 to 0.483), while Elasticsearch drifted the other way (0.573
+pooled, 0.625 at $m = 1{,}000$; inconclusive). Because it grows with $m$, this reverse channel depends
+on the secrets, and an attacker who knows its sign identifies $W_1$ for 98\% of pgvector's probes at
+$m = 1{,}000$. The script reads the rule's ``upper end at most 0.65'' at $m = 1{,}000$ as the window
+$[0.40, 0.65]$ and prints these parts inconclusive; read one-sidedly, as worded, they would pass,
+which would hide the channel.
+
+\paragraph{Approximate pre-filtering (H3).}
+pgvector's iterative scan revealed nearby secrets as predicted (H3a confirmed): at $m = 1{,}000$ every probe was slower
+on $W_1$ at $p = 10\%$ and 50\% (paired AUC 1.000; 13.5 against 4.7\,ms and 13.7 against 3.3\,ms), and so
+was every probe at $m = 100$ and $p = 50\%$. The same scan returned \emph{better} answers on $W_1$:
+recall@10 was 0.968 and 0.978 against 0.707 and 0.665 on $W_0^g$. This is what an iterative scan
+implies: made to pass the unreadable secrets, it ranks many more readable rows before it stops and so
+comes close to exact search. An attacker thus learns of nearby secrets from the quality of its answer
+as well as from its timing.
+Elasticsearch (H3b, inconclusive) was slower on $W_1$ for most probes at $p = 10\%$ (0.800, 0.675 to
+0.925), yet the mean latencies were 2.426 and 2.430\,ms, and the interval at $p = 50\%$ (0.463 to
+0.750) straddles the threshold. Qdrant showed no channel in any observable at $p = 1\%$ and 10\% (H3c
+confirmed; latency 0.460, 0.424 to 0.496), where its filter is small enough for an exact scan of the
+payload index. At $p = 50\%$, outside the hypothesis, its filtered traversal had to cross the secrets:
+recall@10 on $W_1$ fell to 0.530 against 0.708 (paired AUC 0.787, 0.688 to 0.875), and some answers
+held fewer than ten hits, the islanding of Section~\ref{sec:qual-qdrant}.
+
+\paragraph{Exact pre-filtering (H4, inconclusive).}
+Exact search returned the same answer in both worlds: count, completeness, recall and score gave a
+paired AUC of 0.500 (0.500 to 0.500) on all four stores, pooled and at $m = 1{,}000$. Every H4 verdict
+is nevertheless inconclusive, through latency alone. On Qdrant and Elasticsearch latency showed no
+channel pooled (0.461 and 0.486), and their intervals at $m = 1{,}000$ (0.325 to 0.508 and 0.367 to
+0.575) were too wide at 40 clusters for the script's window; under the rule's one-sided wording both
+stores would be confirmed. On pgvector (0.147, 0.123 to 0.172) and FAISS (0.276, 0.246 to 0.306)
+latency carried the build offsets described under H1, the same at every $m$ and so not about the
+secrets. The follow-up traced pgvector's to the tables' state. At the start of every group the table
+built last had no page marked all-visible, because autovacuum had not yet reached it (40 of 40
+groups), while the table built at the start of the seed always had; in the main run the table built
+last was $W_0^g$. Exact search slowed with the share of groups a table started unvacuumed: a mean of
+59.9\,ms on $W_1$, never unvacuumed at a group's start, 61.4 and 74.3\,ms on later builds unvacuumed in
+4 and 15 of the 40 groups, and 107\,ms on the build unvacuumed in 34. Once every table had been vacuumed, the four
+ran the same plan with the same buffer counts in the same time. By the reading fixed in advance this
+too is inconclusive (matched content 0.567, 0.530 to 0.602), and a small difference remains after
+vacuuming that we cannot explain. Qdrant's exact search showed no difference between builds in any
+comparison (0.493 to 0.505); the Elasticsearch part of the follow-up was lost when its runner stopped
+responding, so Elasticsearch has no such comparison. The in-memory control failed G1.
+
+\paragraph{Collection statistics (H5).}
+BM25 on Elasticsearch and IDF-weighted sparse search on Qdrant revealed nearby secrets through their
+scores: paired AUC 0.983 and 0.992 on Elasticsearch and 0.979 and 1.000 on Qdrant at $m = 100$ and
+1,000. At $m = 1$ and 10 the AUCs were 0.794 to 0.886, below the predicted 0.90 and above the
+falsification bound, so H5a is inconclusive for both stores. These cells do not isolate one or ten
+documents: $W_1$ and $W_0^g$ differ in all 1,233 secrets of the probe's group, which the zone rule keeps
+beyond the reach of dense search but which collection statistics count. The shifts are small (a mean
+score of 13.634 against 13.676 at $m = 1$ on Elasticsearch) and invisible to the one-shot attacker
+(pooled AUC 0.503 to 0.531). \texttt{ts\_rank\_cd} showed no score channel and changed 0.2\% of hit
+lists (H5b confirmed), although its latency, on which we made no prediction, revealed 1,000 nearby
+secrets (0.70, 0.58 to 0.81). Fusion changed the hit list for 56.7\% of probes at $m = 1{,}000$ (48.3\%
+to 65.0\%; H5c confirmed), and for 26.9\% at $m = 1$.
+
+\paragraph{Padding (H6).}
+Seven cells had a latency channel before padding on seeds 1 to 4 (paired AUC 0.755 to 0.927): the
+post-filter on FAISS and Qdrant at $m = 100$ and 1,000 and on Elasticsearch at 1,000, and pgvector's
+pre-filter at 100 and 1,000. Padding made every answer take exactly the budget, and the padded AUC was
+0.500 (0.500 to 0.500) in all seven. The script printed H6 inconclusive because its test required
+five seeds of cells that by design have four; applied as written, the rule confirms H6. The rule
+covers only cells whose forward AUC reached 0.75. Reverse channels, such as constant work on pgvector
+(paired AUC 0.017 at $m = 1{,}000$, $|\mathrm{AUC} - 0.5| = 0.48$), fell outside it and were not
+tested, although a reverse channel serves an attacker equally.
+
+\paragraph{Costs.}
+Padding raised mean latency 5.2 to 6.7 times in those four configurations, from 1.33 to 27.1 times
+over all configurations, and by medians of per-probe ratios up to 57.6, since every request waits at
+least as long as the slowest answer of the first seed. Exact search cost 1.53, 2.01 and 8.10 times the mean latency of
+the approximate pre-filter on Qdrant, Elasticsearch and pgvector (intervals 1.52 to 1.53, 1.99 to 2.03
+and 7.73 to 8.48). Constant work cost 1.05 to 1.23 times the widening loop's mean on the three servers
+and 0.74 on FAISS, where one round of 1,000 replaces up to four, but a median of 1.26 to 3.43 times
+per probe, because it charges every cheap request the price of the expensive ones. A separated index
+answered in 0.45 to 0.99 of the shared index's mean time in every configuration except pgvector's
+keyword search (1.07, 0.98 to 1.18), as it holds fewer chunks and no secrets.
+
+\paragraph{Summary.}
+Each enforcement path revealed information about unreadable chunks through the observable its
+mechanism predicts: the widening loop through
+latency once about 100 unreadable chunks lie near a query and through the hit count when the attacker
+reads little, pgvector's approximate pre-filter through latency and recall, and keyword scores through
+collection statistics. The largest channels at $m = 1{,}000$ were keyword scores
+($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48), and pgvector's
+approximate pre-filter (0.38); latency channels smaller than the 0.16 to 0.31 that separated builds of
+identical content, where we measured that, cannot be told from build noise unless they grow with $m$.
+Constant work traded the widening channel for a reverse one on pgvector. Only
+exact pre-filtering returned the same answer in both worlds, and padding removed the latency channel
+in all seven cells where the forward channel was strong, at five to seven times the mean latency of
+the configurations that needed it; it was not tested against reverse channels, and the detection
+fields of Appendix~\ref{sec:rep-design} remain an untested observable.

@@ -1,453 +1,127 @@
 % Differential Conformance Testing of Filter Semantics: body of Section~\ref{sec:conformance} (the
-% \section heading and its label stay in main.tex). Labels defined here: sec:conf-method,
-% sec:conf-results, tab:conf-faults.
-% Sources: the library's testing.py (check_backend, check_authorizer), tests/test_testing_kit.py,
-% backends/*, authorizers/*, CHANGELOG.md, docs/review.md and docs/security.md. Rows found by
-% "Kit" come from the campaign (evidence/conformance-campaign-run1.md,
-% evidence/conformance-campaign-run2.md, investigations/conformance-run1-triage.md); the other rows
-% come from those files. "Review" means the release notes attribute the fix to the project's own
-% review or security audit, collectively rather than per item (2.0.0: "the fixes from the project's
-% own security audit of every module"; 1.4.0: "fail-closed gaps found by review"); "Accept." means
-% the release notes attribute it to the acceptance scenarios (2.1.0). "n.s." means neither
-% CHANGELOG.md (any version) nor docs/review.md attributes the row. Rows found by this paper's other
-% experiments (Found by "\S n"): pgvector's scan limits from the Kaggle scale run, which the release
-% notes call the acceptance run on Kaggle (CHANGELOG.md, the unreleased honest-completeness change);
-% Chroma's crash from evidence/x3-x6-run1.md ("X3: Chroma, refusal and crash") and wardowl PR #187;
-% SpiceDB staleness, the cache refill and the empty LookupResources stream from
-% evidence/x4-x7-run1.md and x7-amendment2.md, PR #186; OPA's residual from evidence/x4-x7-run1.md
-% (X4-H3); pgvector's plans from evidence/x8-run.md and investigations/x0-x1-pgvector-gap.md. PRs
-% #167, #186 and #187 were merged on 2026-10-30; none is in a release yet (the latest is 2.1.0). The
-% Upstream column was checked against vendor pages and trackers on 2026-10-30 (bib/STATUS.md).
-% Planted faults counted in tests/test_testing_kit.py at 182bcbc (run 2) and 5d0f414 (run 1).
+% \section heading and its label stay in main.tex). Label defined here: tab:conf-findings. The kit,
+% the campaign and the full fault table are in Appendices~\ref{app:conformance}
+% and~\ref{sec:conf-results}, with their labels.
 
 Observation~\ref{prop:reduction} shields security from filter faults, but not maximality, and it
 rests on stores returning the metadata they stored (A2). A filter that admits too much shows up
 online as violations; one that admits too little, or a store that alters metadata, does not. We
 therefore test every store translation and every authorizer offline against
 Equation~\ref{eq:sys-in}: differential testing in the line of the logic-bug oracles for database
-engines~\cite{rigger2020testing,rigger2020detecting,rigger2020finding}, with property-based
-generation~\cite{claessen2000quickcheck,maciver2019hypothesis}, applied to metadata-filter semantics
-across vector stores, for which we found no such oracle~\cite{xie2025toward,wang2025towards}. The
-kit, \texttt{check\_backend} and \texttt{check\_authorizer}, ships with the library so that
-third-party adapters meet the same standard, and continuous integration runs it against a real
-instance of every built-in store except Pinecone, for which we have no API key, and against the
-built-in authorizers.
+engines~\cite{rigger2020testing}, with property-based generation~\cite{maciver2019hypothesis}, applied to
+metadata-filter semantics across vector stores, for which we found no such
+oracle~\cite{xie2025toward,wang2025towards}.
 
-\subsection{Method}\label{sec:conf-method}
+\paragraph{The kit.}
+From a seed, the kit draws corpora of up to 20 documents, each holding zero to four of seven fields, with
+confusable values (\texttt{1} and \texttt{"1"}; \texttt{"a"} and \texttt{"A"}; \'e as one code point or
+two), dotted field names, nested And and Or, empty In filters and subjects in 300 extra groups. It fills
+a fresh store and checks searches against $E(\varphi)$: at most $k$ hits, no duplicates, no document
+outside $E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, finite scores in non-increasing order, and text and
+metadata identical to what was stored. $k$ equals the corpus size for one of the two unfiltered searches
+and for half of the filtered ones, so that a false denial cannot hide outside the top $k$, and is
+otherwise uniform from 1 to the corpus size. Stores whose index is approximate even on these small corpora
+(Cassandra, and Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but
+never wrong. For authorizers it requires $\mathrm{check}$ to agree with $m \models \varphi_s$ on every hit;
+this shows consistency, not a correct policy. The kit's own suite plants 18 faulty backends and six faulty
+authorizers that it must reject, beside positive controls it must accept. Appendix~\ref{app:conformance}
+gives the generator, the checks and the data variants.
 
-\paragraph{Two oracles.}
-The reference gives the expected answer $E(\varphi) = \{d \in D : m_d \models \varphi\}$, which the
-in-memory backend computes. Because the reference is also code, end-to-end checks add an oracle
-written without the library's filter code: $s$ may read $d$ if $s$ is among $d$'s users, or if $d$'s
-groups contain the everyone marker or one of $s$'s groups. The retrieval checks use the metadata ACL
-authorizer, whose filter and check both evaluate the reference, so the second oracle also tests the
-first. Answers are compared as sets, and order is checked as a property, since stores score
-differently.
+\paragraph{The campaign.}
+We ran the kit against current releases with fixed versions, seeds and counts, in GitHub-hosted runners:
+13 stores, beside the in-memory reference as a control, and 14 engine targets (OPA, OpenFGA, SpiceDB,
+Cerbos, Cedar and Casbin, each with a metadata-ACL policy and a tenant policy, plus Ory Keto and the
+in-process authorizer as a control). The fifteenth store target, Pinecone, needs an API key we did not
+have, so the layer's Pinecone adapter is not covered. Each store target ran 20 seeds of nine data variants
+and each engine target 20 seeds of seven; a run is one (target, seed, variant) and takes the worst outcome
+of its examples. The first run completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
+Both controls passed every run, no target returned a hit outside the reference, and none altered stored
+metadata. Of the violations, 39 came from the layer's Cerbos translator, which maps CEL's \texttt{in},
+\texttt{==} and \texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check
+raises on a scalar and denies. This is a type gap in the adapter, not a fault of Cerbos; the project's
+review had found it, and the campaign reproduced it. The other 45 were Redis (26) and MongoDB (19), which
+cut a long term when they index it and look up the whole term when they search, undocumented for the field
+type the layer uses. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
+140 were stores' documented limits, which fail loudly and return nothing.
 
-\paragraph{An adversarial generator.}
-From a seed, the kit draws corpora of up to 20 documents (by default 25 corpora with four filters
-each), each document holding zero to four of seven fields, so missing fields are common. Values are
-strings, integers, Booleans, lists of either, nested lists or objects, drawn from confusable pairs:
-\texttt{1} and \texttt{"1"}; \texttt{"a"} and \texttt{"A"}; and \'e as one code point (U+00E9) or as
-\texttt{e} with a combining accent (U+0301). The ACL documents repeat the pairs in user and group
-names (\texttt{bob} and \texttt{Bob}, \texttt{eng} and \texttt{Eng}, a group named \texttt{"1"}). A
-pair is equal only for a store that converts types, folds case or normalizes Unicode. The field
-\texttt{team.name}, generated beside objects such as \texttt{\{"name": "a"\}} under \texttt{team},
-catches stores that read dots as paths, and \texttt{gr\"o\ss e-x} lies outside ASCII. Filters nest
-And and Or two levels deep; an In holds zero to three values, so empty In filters occur; about one In
-in ten adds 300 values that match nothing, and about one subject in five belongs to 300 extra groups.
-A store may refuse a field name it cannot express, returning nothing, but may not answer wrongly.
-Every failure reports its seed and example, so that it can be replayed.
-
-\paragraph{What the kit checks.}
-For each corpus, \texttt{check\_backend} fills a fresh store and checks (1)~unfiltered and
-(2)~filtered searches against $E(\varphi)$: at most $k$ hits, no duplicates, no document outside
-$E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, finite scores in non-increasing order, and text and
-metadata identical to what was stored, since the re-check decides on that metadata; (3)~that the
-asynchronous search returns the same identifiers, order, text, metadata and scores, and refuses the
-same filters; (4)~that replacing metadata keeps every text, leaves no old key, creates no document
-and changes what filters select as the reference says; and (5)~that retrieval through the layer,
-pre-filtered and post-filtered and through both drivers, returns no hit the second oracle denies, no
-violation, $\min(k,|R(s)|)$ readable hits, and the same answer from both drivers. Checks (1) and (2)
-draw $k$ for each search: it equals the corpus size for one of the two unfiltered searches and for
-half of the filtered ones, so that every match must come back and a false denial cannot hide outside
-the top $k$, and is otherwise uniform from 1 to the corpus size; check (5) draws $k$ from 1 to 5. The
-counts are
-required in exact mode. Stores whose index is approximate even on these small corpora (Cassandra, and
-Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but never wrong; a
-store that declares exact search is always checked exactly, because the layer reports its short
-answers as complete (Section~\ref{sec:sys-complete}). \texttt{check\_authorizer} requires one Boolean
-per hit; answers independent of the rest of the batch and its order (all hits, each hit alone, and
-the batch reversed); asynchronous answers equal to synchronous ones; and $\mathrm{check}$ agreeing with
-$m \models \varphi_s$ on every hit whenever a filter is offered. It empties every cache before each
-call, so that a cached answer cannot mask a batch-dependent one. It shows consistency, not a correct
-policy: an authorizer that lets everyone read everything passes, and so does a scope narrower than
-$R(s)$. OPA, OpenFGA, SpiceDB and Cerbos are additionally compared with a reference answer against
-their real servers.
-
-\paragraph{Translations without injection.}
-Ten stores (Elasticsearch, OpenSearch, Milvus, MongoDB, Weaviate, Redis, LanceDB, Vespa, Cassandra and
-Pinecone) index one field of type-tagged terms $f \triangleright t{:}v$, one for every string or
-integer value or list element, where $\triangleright$ is a control character (U+001F) and $t$ a type
-letter, as in \texttt{level}$\triangleright$\texttt{i:1}. An In becomes set membership on these
-terms, and And and Or become the store's own connectives; equality is exact in type and value,
-untagged values (Booleans, floats, nested values) never match, and the metadata itself is stored
-unindexed and returned as written. Where terms enter query text (Redis, LanceDB and Vespa), and in
-Pinecone, they are hex-encoded, so they contain only digits and the letters a to f. Elsewhere values
-are bound parameters (pgvector, Milvus and Cassandra) or data structures of the client API
-(Elasticsearch, OpenSearch, Qdrant, Weaviate, Chroma and MongoDB), and FAISS applies the reference in
-process. Filter parsing and the translators that write query text are fuzzed with
-Atheris~\cite{google2026atheris}: parsing must round-trip or raise, pgvector must bind every field
-name and value, and LanceDB and Redis queries must contain only hex-encoded terms.
-
-\paragraph{Testing the tester.}
-At the commit that the campaign's second run tested (182bcbc), the kit's own suite plants 18 faulty
-backends and six faulty authorizers that the kit must reject (17 and six at the first run's commit,
-5d0f414, before the rule for stores that declare exact search),
-beside positive controls it must accept: the reference backend, the built-in authorizers, an
-approximate backend that misses matches but never errs, and a backend that refuses dotted names. The
-backends ignore the filter, alter metadata, ignore $k$, misorder hits, miss matches while checked as
-exact or while declaring exact search, diverge on the asynchronous path in six ways, match after case
-folding, Unicode normalization or conversion of integers to strings, read dots as paths, or replace
-metadata by merging old keys or by creating documents. The authorizers let filter and check
-disagree, depend on a hit's position in the batch (alone or behind a cache), or answer differently on
-the asynchronous path (alone or behind a cache). Several meta-tests record a gap the kit once had: no
-\texttt{1}/\texttt{"1"}, case or Unicode pairs in its data; comparing only the identifiers of filtered
-asynchronous searches; skipping the asynchronous search when the synchronous one refused a filter;
-and cached answers hiding batch dependence. In this history the kit's blind spots lay in what it
-generated and what it compared, never in its oracle.
-
-\subsection{A controlled campaign}\label{sec:conf-campaign}
-
-\paragraph{Setup.}
-We ran the kit against current releases of the stores and engines the layer supports, with fixed
-versions, seeds and counts, in GitHub-hosted runners. There were 29 targets, of which 28 ran. Thirteen
-stores were tested: pgvector 0.8.7 on PostgreSQL 17.11, Redis 8.10.2, Cassandra 5.0.9, Elasticsearch
-9.5.5, OpenSearch 3.9.0, Vespa 8.763.13, Qdrant 1.19.2, Milvus 3.0.2, Weaviate 1.39.12, MongoDB Atlas
-Local 8.0.30, Chroma 1.5.9, LanceDB 0.40.0 and FAISS 1.15.1, beside the in-memory reference as a
-control. The fifteenth store target, Pinecone, needs an API key we did not have and was skipped in
-both runs, so the layer's Pinecone adapter is not covered here. The 14
-engine targets were OPA 1.21.2, OpenFGA 1.22.0, SpiceDB 1.56.2, Cerbos 0.56.0, Cedar 4.12.2 and Casbin
-1.43.0, each with a metadata-ACL policy and a tenant policy, plus Ory Keto 26.2.0 and the in-process
-metadata-ACL authorizer as a control. Container image digests are recorded with the results. Each
-store target ran 20 seeds of nine data variants and each engine target 20 seeds of seven
-(Appendix~\ref{app:kit}). A \emph{run} is one (target, seed, variant) and takes the worst outcome of
-its examples: \emph{pass}; a \emph{conformance violation}, the kit's first disagreement with the
-reference; a \emph{refusal}, a \texttt{ValueError} by which the layer declines data it cannot
-represent; or an \emph{error}, anything else. Engines run in consistency mode, which compares each
-engine's filter API with its own check API on every hit.
-
-\paragraph{Run 1.}
-The first run (wardowl 2.1.0) completed 4,315 runs: 3,612 passed, 84 were violations, none was
-refused and 619 were errors. Both controls passed every run. No target returned a hit outside the
-reference, and none altered stored metadata. The violations are of two kinds. \emph{The layer's
-Cerbos adapter over-approximated} in 39 of the 40 runs whose ACL fields hold a scalar instead of a
-list (the fortieth, one seed of the tenant policy, passed). The adapter's translator maps CEL's
-\texttt{in}, \texttt{==} and \texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar:
-for a chunk with \texttt{allowed\_users} equal to the string \texttt{"zo\"e"}, the filter admits the
-user, as the reference does, while Cerbos's check evaluates the policy's CEL \texttt{in}, which is
-defined on lists and maps only, raises, and denies. The policy is the authority, so the filter
-over-approximates; the re-check drops every such hit, and with the re-check off they would be
-returned. This is a type gap in the adapter's translator, not a fault of Cerbos, which behaves as it
-documents. The project's review had found the gap and the adapter's documentation records it, so the
-campaign reproduced it rather than discovered it. \emph{Redis and MongoDB missed matching chunks} in
-26 and 19 runs with long and huge
-string values, always passing the sound-only retry. Both stores truncate a long term when they index
-it and look up the whole term when they search: RediSearch keeps at most 4,096 bytes of a tag value,
-which the layer's hex encoding reaches at 2,048 bytes of field and value, and the vector-search
-index's filter fields keep 8,191 characters (a reproducer without the layer measured the cut; the
-campaign's diagnosis had assumed the 8,181 that MongoDB documents for another field type). A value
-equal to the kept prefix of a longer one also matches it, a false admit that the re-check catches;
-the reproducers show this, while the campaign's generator holds no such pairs. Neither limit is in
-the documentation of the field type the layer uses.
-
-Of the errors, 479 came from OpenFGA and SpiceDB, which refused whole batches with HTTP~400. OpenFGA
-accepts at most 100 contextual tuples per request, and one generated subject in five is in more than
-300 groups; long identifiers exceeded its size limits. SpiceDB object identifiers admit only a
-restricted alphabet, which excludes \texttt{zo\"e} and \texttt{7.0}. The layer failed closed in every
-case, but only after a round trip, with an error that did not name the limit. The other 140 errors
-came from the stores' own limits, which fail loudly and return nothing: Lucene's 32,766-byte term on
-write in OpenSearch (20 runs) and Elasticsearch (16 runs; its other four failed on a query, with
-\texttt{x\_content\_parse\_exception}, in the same huge-string variant), Milvus's array-element and JSON
-sizes (40 runs), and in 20 runs each, Chroma's rules for metadata keys, which refused the write,
-SQLite's expression depth of 1,000 under Chroma, which refused the query, and Qdrant's grammar for
-field names. Ory Keto and Casbin ran out of the shared time budget after 72 and 43 of 140 runs, all
-passing.
-
-\paragraph{Fixes and run 2.}
-Four of these called for a change in the layer's adapters, and we made it: OpenFGA and SpiceDB now refuse
-a subject they cannot represent before sending anything, with an error naming the limit, and Redis
-and MongoDB store and search a term above their limits as its SHA-256 digest, leaving shorter terms
-unchanged. The second run tested the fixed adapters with the harness's budgets split across more
-jobs and every finding recorded in full; it changed nothing else, and every outcome matched what the
-diagnosis predicted. Of 4,480 runs, 3,822 passed, 39 were violations, 479 were refusals and 140
-were errors. Redis and MongoDB passed every long- and huge-string run. The 479 OpenFGA and SpiceDB
-runs that had failed with HTTP~400 became refusals by the layer, while the same 21, 21, 16 and 23
-runs of the four OpenFGA and SpiceDB targets passed as before. Those refusals are 85.5\% of these
-engines' 560 runs. A run takes its worst subject's outcome, so the other subjects of a refused run
-still reached the engine, but only 81 runs reached it with every subject: the campaign's evidence on
-these two engines is thin, and Section~\ref{sec:engines} tests them on data within their limits.
-Keto and Casbin completed all 140 runs each, every one
-passing. The 140 store errors were the documented limits above, unchanged. The 39 Cerbos runs
-disagreed again, and the harness now attributes each disagreeing hit: in all 280, the pushed-down
-filter gave the reference answer and Cerbos's check denied, so the filter over-approximated the
-policy as written and never the reverse. No run in either campaign returned a hit outside the
-reference or altered metadata.
-
-\subsection{Faults and semantic gaps}\label{sec:conf-results}
-
-Table~\ref{tab:conf-faults} lists the faults and semantic gaps in stores and engines that the
-project's release notes, code comments and documentation record, up to the version we evaluate,
-and those that this paper's experiments exposed. \emph{Found by} separates the two. Findings of this
-paper's method are marked \emph{Kit}, the campaign of Section~\ref{sec:conf-campaign}, or \S$n$, the
-section of another experiment. The project's history before this paper follows its release notes:
-\emph{Review}, attributed collectively to the project's own code review or security audit;
-\emph{Accept.}, to the acceptance scenarios against real servers; \emph{n.s.}, not stated. \emph{Effect} is the
-consequence without the mitigation: \emph{Leak}, a false admit, which the re-check turns into a
-violation; \emph{Leak*}, wrong stored or returned metadata, which also passes a re-check that reads
-chunk metadata, because (A1) or (A2) fails; \emph{Leak\textdagger}, a check that itself admits,
-beyond any re-check; \emph{Recall}, readable chunks silently missing; \emph{Stale}, a revoked grant
-that still admits for a while after the change; \emph{Wrong rows}, a write reaching chunks it did
-not name; \emph{Avail.}, requests failing closed; \emph{Perf.}, slower retrieval, as without a
-pre-filter; and \emph{Crash}, the client process killed. PR~\#$n$ marks a mitigation merged on
-2026-10-30 and not yet in a release. \emph{None (adapter)} marks a fault in \sys{}'s own adapter or
-cache where the engine behaves as configured.
+We changed the four adapters: OpenFGA and SpiceDB now refuse a subject they cannot represent before
+sending anything, and Redis and MongoDB store and search a term above their limits as its SHA-256 digest.
+The second run, of 4,480 runs, had 3,822 passes, 39 violations, 479 refusals and 140 errors, as the
+diagnosis predicted. Redis and MongoDB passed every long- and huge-string run, and in all 280 disagreeing
+Cerbos hits the filter gave the reference answer and the check denied. The 479 refusals are 85.5\% of those
+two engines' 560 runs, and only 81 runs reached the engines with every subject, so the campaign's evidence
+on them is thin; Section~\ref{sec:engines} tests them on data within their limits.
 
 \begin{table}[tbp]
 \centering
 \scriptsize
-\newcommand{\confrag}{\raggedright}
+\newcommand{\findrag}{\raggedright}
 \setlength{\tabcolsep}{3pt}
-\begin{tabular}{@{}p{0.115\linewidth}p{0.3\linewidth}p{0.075\linewidth}p{0.08\linewidth}p{0.24\linewidth}p{0.1\linewidth}@{}}
+\begin{tabular}{@{}p{0.17\linewidth}p{0.4\linewidth}p{0.1\linewidth}p{0.1\linewidth}p{0.17\linewidth}@{}}
 \toprule
-Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys{} & Upstream \\
+Store or engine & Finding & Found by & Effect & In \sys{}; upstream \\
 \midrule
-\confrag Elasticsearch, OpenSearch
- & \confrag Keyword fields compare as strings: a \texttt{terms} query for \texttt{1} matches
-   \texttt{"1"}
- & \confrag n.s. & \confrag Leak
- & \confrag Type-tagged terms in one keyword field; metadata unindexed
- & \confrag Not stated~\cite{elastic2026keyword,opensearch2026keyword} \tabularnewline
-\confrag pgvector (jsonb)
- & \confrag Numbers compare by value: $\mathrm{In}(\texttt{level},\{1\})$ matched a stored
-   \texttt{1.0}
- & \confrag Review & \confrag Leak
- & \confrag Compare integers by the stored number's text
- & \confrag Documented~\cite{postgresql2026json} \tabularnewline
-\confrag pgvector (jsonb)
- & \confrag A float of magnitude $\geq 10^{16}$, which Python's JSON encoder writes with an
-   exponent, is stored and returned as an integer
- & \confrag Review & \confrag Leak*
- & \confrag Write such floats with a fraction
- & \confrag Documented~\cite{postgresql2026json} \tabularnewline
-\confrag pgvector 0.8
- & \confrag Iterative HNSW scans stop at \texttt{hnsw.max\_scan\_tuples} or a memory limit: few or
-   no rows under selective filters
- & \confrag \S\ref{sec:e2e} & \confrag Recall
- & \confrag Honest completeness; both limits documented
- & \confrag Limits documented~\cite{pgvector2026pgvector} \tabularnewline
-\confrag pgvector via psycopg
- & \confrag Prepared statements: after five custom plans PostgreSQL may switch to a generic plan
-   that reads the GIN index and sorts (exact, about 50 times slower) or keep custom HNSW plans
-   (lossy), decided at run time
- & \confrag \S\ref{sec:qual-pgvector}, \S\ref{sec:e2e} & \confrag Recall or Perf.
- & \confrag None yet
- & \confrag Rule documented~\cite{postgresql2026prepare,psycopg2026prepared} \tabularnewline
-\confrag Chroma 1.5.x, local mode
- & \confrag Array metadata of a deleted collection reappears on new records elsewhere and matches
-   \texttt{where} filters (chroma-core/chroma\#7594)
- & \confrag n.s. & \confrag Leak*
- & \confrag No array metadata; metadata rebuilt from an exact JSON copy
- & \confrag Open; fix unmerged~\cite{sjmurdoch2026bug} \tabularnewline
-\confrag Redis; Weaviate
- & \confrag Distinct values merge: TAG matching ignores case by default; \texttt{field}
-   tokenization trims whitespace, joining \texttt{"hr "} and \texttt{"hr"}
- & \confrag n.s. & \confrag Leak
- & \confrag Hex-encoded terms (Redis); a separator at both ends of each term (Weaviate)
- & \confrag Redis: documented~\cite{redis2026tag}; Weaviate: in
-   code~\cite{weaviate2026tokenizergo}, not docs~\cite{weaviate2026inverted} \tabularnewline
-\confrag Redis 8.10
- & \confrag Tag values are cut at 4,096 bytes when indexed and looked up whole: long values never
-   match, and a value equal to the kept prefix matches the longer one
- & \confrag Kit & \confrag Recall; Leak
- & \confrag Store and search a term over the limit as its SHA-256 digest (PR~\#167)
- & \confrag Report drafted, not filed \tabularnewline
-\confrag MongoDB Atlas 8.0, 8.3
- & \confrag Strings in vector-search filter fields are cut at 8,191 characters when indexed,
-   undocumented (8,181 is documented for another field type): the same effects as for Redis
- & \confrag Kit & \confrag Recall; Leak
- & \confrag As for Redis (PR~\#167)
- & \confrag Report drafted, not filed \tabularnewline
-\confrag Elasticsearch, OpenSearch, Milvus, Qdrant
- & \confrag Size and syntax limits refuse a write or query: 32,766-byte terms; array-element and JSON
-   sizes; field-name grammar
- & \confrag Kit & \confrag Avail.
- & \confrag None needed: each fails closed with an error and returns nothing
- & \confrag Term limit~\cite{elastic2026ignore} and JSON size~\cite{milvus2026json} documented;
-   Qdrant's grammar in its source \tabularnewline
-\confrag Chroma 1.5.9, local mode
- & \confrag A flat \texttt{\$or} of about 1,000 clauses exceeds SQLite's expression depth; one of
-   about 16,500 or more kills the client process (SIGSEGV)
- & \confrag Kit; \S\ref{sec:qual-size} & \confrag Avail.; Crash
- & \confrag Nest \texttt{\$and} and \texttt{\$or} 16 to a node; past four size bounds, filter 1,000
-   candidates itself (PR~\#187)
- & \confrag Report drafted, not filed \tabularnewline
-\confrag Qdrant
- & \confrag \texttt{.}, \texttt{[}, \texttt{]} and \texttt{"} in a field name are path syntax:
-   \texttt{team.name} reaches a nested object
- & \confrag n.s. & \confrag Leak
- & \confrag Refuse such field names
- & \confrag Path syntax documented~\cite{qdrant2026filtering} \tabularnewline
-\confrag Pinecone, MongoDB, Milvus, LanceDB, Redis, Vespa
- & \confrag A missing or empty filter means ``match everything''
- & \confrag Review & \confrag Leak
- & \confrag Raise \texttt{NothingMatches}; send no query
- & \confrag Filters optional, e.g.~\cite{pinecone2026search,mongodb2026run} \tabularnewline
-\confrag Elasticsearch, OpenSearch, Redis, Vespa
- & \confrag Partial results as success: failed or timed-out shards under HTTP 200; RESP3 timeout
-   warnings; degraded coverage
- & \confrag Review & \confrag Recall
- & \confrag Disallow partial results; raise on each marker
- & \confrag Documented~\cite{elastic2026run,opensearch2026search,redis2026configuration,vespa2026graceful} \tabularnewline
-\confrag Pinecone serverless; MongoDB Atlas
- & \confrag Writes become searchable only after a delay (eventual consistency; index lag)
- & \confrag n.s. & \confrag Stale
- & \confrag Writes wait until a search sees them (Pinecone: up to 30\,s)
- & \confrag Documented~\cite{pinecone2026check,mongodb2026configure} \tabularnewline
-\confrag Cassandra 5.0
- & \confrag Paxos timestamps of lightweight transactions do not order with plain writes: an older
-   permission could overwrite a newer one
- & \confrag Review & \confrag Leak*
- & \confrag Plain writes only
- & \confrag Documented by DataStax~\cite{datastax2026query} \tabularnewline
-\confrag Milvus (pymilvus)
- & \confrag Reads and deletes by identifier quote identifiers into an expression: the identifier
-   \texttt{a\textquotesingle,\textquotesingle b} also selects \texttt{a} and \texttt{b}
- & \confrag Review & \confrag Wrong rows
- & \confrag Identifiers as filter parameters
- & \confrag pymilvus PR \#3823 open~\cite{sungbin10152026fix} \tabularnewline
-\midrule
-\confrag OpenFGA
- & \confrag ListObjects stops at its result limit (1,000 by default) and returns a partial list
-   without saying so
- & \confrag n.s. & \confrag Recall
- & \confrag At the limit, no filter: post-filter
- & \confrag Limits documented~\cite{openfga2026openfga} \tabularnewline
-\confrag OpenFGA
- & \confrag ListObjects also stops at its deadline (3\,s by default), again without saying so
- & \confrag Review & \confrag Recall
- & \confrag After the deadline, no filter: post-filter
- & \confrag Limits documented~\cite{openfga2026openfga} \tabularnewline
-\confrag SpiceDB
- & \confrag LookupResources may stop at the request limit (1,000 by default) or return results
-   conditional on a caveat
- & \confrag n.s. & \confrag Recall; Leak
- & \confrag In either case, no filter: post-filter
- & \confrag Documented in the API~\cite{authzed2026permissionserviceproto} \tabularnewline
-\confrag SpiceDB (adapter)
- & \confrag An empty LookupResources stream, which is also what a stream cut before its first line
-   looks like, was read as ``nothing readable''
- & \confrag \S\ref{sec:eng-revoke} & \confrag Recall
- & \confrag No filter: post-filter, checking every candidate (PR~\#186)
- & \confrag None (adapter) \tabularnewline
-\confrag SpiceDB (adapter)
- & \confrag Groups checked as separate subjects bypass exclusion: under
-   \texttt{viewer - banned}, a banned user read through a group
- & \confrag Accept. & \confrag Leak\textdagger
- & \confrag Check the user only; SpiceDB resolves the memberships it stores
- & \confrag None (adapter) \tabularnewline
-\confrag SpiceDB 1.56
- & \confrag Under \texttt{minimizeLatency}, a revoked permission admitted for 8.7\,s in 1 of 40
-   trials, past the 5.5\,s its documented defaults imply (a rerun's 40 trials: at most 5.2\,s), and
-   could reappear after it had gone
- & \confrag \S\ref{sec:eng-revoke} & \confrag Stale
- & \confrag Declare 11\,s of staleness; after \texttt{invalidate()} the cache holds back that long
-   (PR~\#186)
- & \confrag Bound documented~\cite{authzed2026consistency,authzed2026reference} \tabularnewline
-\confrag SpiceDB, Cerbos (cache)
- & \confrag After \texttt{invalidate()}, \sys{}'s cache refilled from the engine's stale answer and
-   held the revoked grant for its full ttl
- & \confrag \S\ref{sec:eng-revoke} & \confrag Stale
- & \confrag Cache nothing for the engine's declared staleness after \texttt{invalidate()}
-   (PR~\#186)
- & \confrag None (adapter) \tabularnewline
-\confrag OPA (partial evaluation)
- & \confrag The residual keeps \texttt{not (x in [])} even for users with no ban, and \sys{}'s
-   filters have no negation: one ban rule leaves every user without a pre-filter
- & \confrag \S\ref{sec:eng-agree} & \confrag Perf.
- & \confrag None; such users are post-filtered
- & \confrag Not stated~\cite{opa2026evaluating,opa2026writing} \tabularnewline
-\confrag Cerbos (adapter)
- & \confrag The translator maps CEL \texttt{in}, \texttt{hasIntersection} and \texttt{==} to In, which
-   also matches a scalar and matches a list by element; in CEL, \texttt{in} or
-   \texttt{hasIntersection} on a scalar is an error (denied) and \texttt{==} compares a list whole
- & \confrag Review; Kit & \confrag Leak
- & \confrag Translate \texttt{and}, \texttt{or}, \texttt{hasIntersection}, \texttt{in} and
-   \texttt{==} only; else post-filter; documented
- & \confrag None (adapter); documentation note drafted, not filed \tabularnewline
-\confrag Cedar (adapter)
- & \confrag Values Cedar cannot hold (floats, nulls, integers beyond 64 bits) and keys starting with
-   \texttt{\_\_} were dropped, so a \texttt{forbid} on them stopped applying
- & \confrag Review & \confrag Leak\textdagger
- & \confrag Whole-number floats become Longs; a chunk with any other such value is denied
- & \confrag None (adapter) \tabularnewline
-\confrag OpenFGA, SpiceDB
- & \confrag An identifier outside the engine's syntax makes it refuse the whole request
- & \confrag Review & \confrag Avail.
- & \confrag Deny such a chunk without sending it
- & \confrag Syntax in API specs~\cite{openfga2026openfgaproto,authzed2026coreproto} \tabularnewline
-\confrag OpenFGA (adapter)
- & \confrag More than 100 contextual tuples, or a user or group identifier over its size limit, makes
-   it refuse the whole request
- & \confrag Kit & \confrag Avail.
- & \confrag Refuse such a subject before sending, naming the limit (PR~\#167)
- & \confrag None (adapter) \tabularnewline
-\confrag SpiceDB (adapter)
- & \confrag A subject or group identifier outside the object-identifier syntax makes it refuse the
-   whole request
- & \confrag Kit & \confrag Avail.
- & \confrag Refuse such a subject before sending, naming the limit (PR~\#167)
- & \confrag None (adapter) \tabularnewline
-\confrag Ory Keto (adapter)
- & \confrag Batches above \texttt{limit.max\_batch\_check\_size} (10 by default) are refused with
-   HTTP 400; the adapter sent 100
- & \confrag Accept. & \confrag Avail.
- & \confrag Batches of 10
- & \confrag None (adapter) \tabularnewline
+\findrag Redis 8.10; MongoDB Atlas 8.0, 8.3
+ & \findrag Long values are cut when indexed (at 4,096 bytes; at 8,191 characters) and looked up whole
+ & \findrag Campaign & \findrag Recall; false admit
+ & \findrag Digest of long terms (PR~\#167); reports drafted \tabularnewline
+\findrag Elasticsearch, OpenSearch, Milvus, Qdrant
+ & \findrag Documented size and syntax limits refuse a write or query
+ & \findrag Campaign & \findrag Availability
+ & \findrag None needed: fail closed \tabularnewline
+\findrag Chroma 1.5.9, local mode
+ & \findrag A flat \texttt{\$or} of about 1,000 clauses exceeds SQLite's expression depth; one of about
+   16,500 or more kills the client process
+ & \findrag Campaign; filter size & \findrag Availability; crash
+ & \findrag Nested clauses, then local filtering (PR~\#187); report drafted \tabularnewline
+\findrag OpenFGA, SpiceDB (adapters)
+ & \findrag A subject outside the engine's limits makes it refuse the whole request
+ & \findrag Campaign & \findrag Availability
+ & \findrag Refused before sending (PR~\#167) \tabularnewline
+\findrag Cerbos (adapter)
+ & \findrag CEL \texttt{in}, \texttt{==} and \texttt{hasIntersection} translated to In, which also matches a
+   scalar
+ & \findrag Review; campaign & \findrag False admit
+ & \findrag Translator restricted, documented; note drafted \tabularnewline
+\findrag pgvector 0.8
+ & \findrag Iterative scans stop at either of two limits: few or no rows under selective filters
+ & \findrag End-to-end runs & \findrag Recall
+ & \findrag Honest completeness; limits documented \tabularnewline
+\findrag pgvector via psycopg
+ & \findrag The plan cache chooses at run time between an exact generic plan and lossy custom plans
+ & \findrag Diagnosis grid & \findrag Recall or speed
+ & \findrag None yet; rule documented \tabularnewline
+\findrag SpiceDB 1.56
+ & \findrag Under \texttt{minimizeLatency} a revoked permission admitted for 8.7\,s in 1 of 40 trials (a
+   rerun's 40 trials: at most 5.2\,s) and could reappear after it had gone
+ & \findrag Engine study & \findrag Stale
+ & \findrag Declares 11\,s (PR~\#186) \tabularnewline
+\findrag SpiceDB, Cerbos (cache)
+ & \findrag After \texttt{invalidate()} the cache refilled from the engine's stale answer and held the
+   revoked grant for its full time to live
+ & \findrag Engine study & \findrag Stale
+ & \findrag Holds back for the declared staleness (PR~\#186) \tabularnewline
+\findrag SpiceDB (adapter)
+ & \findrag An empty LookupResources stream was read as ``nothing readable''
+ & \findrag Engine study & \findrag Recall
+ & \findrag No filter: post-filter (PR~\#186) \tabularnewline
+\findrag OPA (partial evaluation)
+ & \findrag The residual keeps \texttt{not (x in [])} even for users with no ban, and the layer's filters
+   have no negation
+ & \findrag Engine study & \findrag Speed
+ & \findrag None; such users are post-filtered \tabularnewline
 \bottomrule
 \end{tabular}
-\caption{Faults and semantic gaps in vector stores (top) and authorization engines (bottom),
-collected from the project's release notes, code comments and documentation and from this paper's
-experiments; the legend is in Section~\ref{sec:conf-results}. No row has been confirmed by the
-maintainers of the store or engine.}
-\label{tab:conf-faults}
+\caption{This paper's findings on stores and engines. No row has been confirmed by the maintainers of the
+store or engine. Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives all 31 rows, among
+them 18 that record the project's development before this paper.}
+\label{tab:conf-findings}
 \end{table}
 
-Of the table's 31 rows, 18 record the project's development before this paper and are history, not
-findings of our method. Twelve are this paper's findings, six from the campaign and six from the
-other experiments, and one, Cerbos, the campaign reproduced. Nine entries let a filter admit a chunk
-the subject may not read, which leaks without
-the re-check and becomes a violation with it, as Observation~\ref{prop:reduction} predicts. The five
-Leak* and Leak\textdagger{} entries lie beyond any re-check: the kit's exact comparison of returned
-with stored metadata targets the first kind, and only a test of the policy itself reaches the
-second. The remaining effects cost recall, freshness, speed or availability, and one crashed the
-client process; where a fix was needed, the lost recall had been reported as a complete answer, the
-dishonesty that Section~\ref{sec:sys-complete} removes. Before the campaign, the record credited
-review or the acceptance scenarios where it credited anything, never the kit, whose role had been
-to keep each class fixed once it entered the generator and the meta-tests.
-
-Counted by kind, the campaign found two store behaviors with a correctness effect, Redis and MongoDB
-cutting a long term at indexing, undocumented for the field type the layer uses; two availability
-faults in the layer's own adapters, for OpenFGA and SpiceDB; and the documented limits of five stores
-(Elasticsearch, OpenSearch, Milvus, Qdrant and Chroma), which fail closed. It reproduced one known
-gap, in the Cerbos adapter's translator. All lie in what the generator targets, long values, many
-groups, unusual identifiers and scalar fields, at sizes that the continuous-integration runs had not
-reached. The filter-size experiment then showed that one of those limits, Chroma's, can also crash
-the client, which is a store behavior of its own. The other experiments added SpiceDB's staleness
-beyond its documented bound, in one trial, faults in \sys{}'s cache and SpiceDB adapter, a vacuous
-negation that OPA's partial evaluation keeps, and pgvector's scan limits and its run-time choice
-between a lossy and an exact plan. Several entries, the eight marked as
-adapter faults among them, are faults in \sys{}'s own code that a store's or engine's behavior
-exposed; any other integration meets the same behavior. Recall lost by approximate indexes under
-selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured in
-Section~\ref{sec:quality} instead.
+Table~\ref{tab:conf-findings} collects what this paper's experiments exposed. Counted by kind, the campaign
+found two store behaviors with a correctness effect, two availability faults in the layer's own adapters
+and the documented limits of five stores, which fail closed, and it reproduced one known gap. All lie in
+what the generator targets, at sizes that the continuous-integration runs had not reached. Several entries
+are faults in \sys{}'s own code that a store's or engine's behavior exposed; any other integration meets the
+same behavior. In the full table, nine entries let a filter admit a chunk the subject may not read, which
+leaks without the re-check and becomes a violation with it, and five lie beyond any re-check.

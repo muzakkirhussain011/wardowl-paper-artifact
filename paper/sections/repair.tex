@@ -1,214 +1,74 @@
 % Detecting and Repairing Under-Retrieval: body of Section~\ref{sec:repair} (the \section heading and
-% its label stay in main.tex). Labels defined here: sec:rep-design, alg:rep, sec:rep-eval,
-% tab:rep-results. Sources: the library change (PR #168, short_results), PREREG_X2_X5.md on branch
-% paper/x2-x5 (X5, committed at 828ea27), results from evidence/x2-x5-run1.md (GitHub Actions run
-% 40921769714, commit 884ce18), every number as x2x5_stats.py printed it.
+% its label stay in main.tex). Label defined here: tab:rep-summary. The design, the evaluation and the
+% full table of arms (tab:rep-results) are in Appendix~\ref{app:repair}, with their labels. Sources:
+% PREREG_X2_X5.md on branch paper/x2-x5 (X5, committed at 828ea27), results from
+% evidence/x2-x5-run1.md (GitHub Actions run 40921769714, commit 884ce18).
 
-Section~\ref{sec:quality} found two kinds of loss: \emph{under-retrieval}, where a filtered
-approximate search returns fewer than $k$ hits although more readable chunks exist, and
-\emph{mis-retrieval}, where it returns $k$ hits that are not the right ones. Section~\ref{sec:sys-complete}
-already stops the layer from calling a short approximate answer complete. Here we go further: decide
-cheaply \emph{why} an answer is short, and repair it within a stated cost. Mis-retrieval needs an
-exact baseline to see, and we return to it with a sampled monitor.
+Section~\ref{sec:quality} found \emph{under-retrieval}, where a filtered approximate search returns fewer than
+$k$ hits although more readable chunks exist, and \emph{mis-retrieval}, where it returns $k$ hits that are not the
+right ones. The flag of Section~\ref{sec:system} already stops the layer from calling a short approximate answer
+complete. Here we decide cheaply why an answer is short, and repair it within a stated cost.
 
-\subsection{Design}\label{sec:rep-design}
+\paragraph{Design.}
+When a pre-filtered search on a backend that does not declare exact search returns $h < k$ hits, the layer asks for
+$n = \min(\#\{d : m_d \models \varphi_s\},\ L)$, a filter-only count that stops at a limit $L$. If $n \le h$, the store
+returned every chunk the filter admits (\emph{exhausted}); if $n > h$, chunks that pass the filter were missed
+(\emph{missed}). After a proven miss the layer can search again exactly under the same filter, when the count is at
+most a bound $B$ (10,000 by default), so that a subject who can read most of the corpus cannot trigger a scan of all of
+it; above the bound the first hits are kept and the result says \emph{over\_limit}. The alternative \emph{widen} repeats
+the search with more effort and merges the answers; it is cheaper but certifies nothing. Every hit passes the same
+re-check and a failed count or search fails closed, so Observation~\ref{prop:reduction} holds unchanged. Neither count
+nor flag can see mis-retrieval, so a sampled \emph{monitor} also runs the exact search for a configurable share of
+requests and reports the overlap of the two top-$k$ lists as a metric.
 
-\paragraph{Detection by a bounded count.}
-When a pre-filtered search on a backend that does not declare exact search returns $h < k$ hits, the
-layer asks the backend for $n = \min(\#\{d : m_d \models \varphi_s\},\ L)$, a filter-only count that
-stops at a limit $L$. If $n \le h$, the store returned every chunk the filter admits, and the answer is
-complete with respect to $\varphi_s$ (\emph{exhausted}). If $n > h$, chunks that pass the filter were
-missed (\emph{missed}). The count is the second certificate of Section~\ref{sec:prob-criteria}; it
-never raises a false alarm, because a count above $h$ proves a miss, and it never certifies falsely,
-because a count no larger than $h$ proves that nothing else passes $\varphi_s$. Both statements hold
-for the store's state at the time of the count; a write between the search and the count can make
-either one stale, as any read without a snapshot can. It costs one query per short answer, and the
-limit keeps that query bounded on stores that count by scanning.
+\paragraph{Evaluation.}
+We evaluate the policies on pgvector and Qdrant, on the enterprise scenario (1,468 questions with something to read) and
+the 6,200 pairs of the MS MARCO layouts, three fresh builds per store and corpus, from the audit's settings with each
+pgvector search planned with its own values. Seven hypotheses were pre-registered. Table~\ref{tab:rep-summary} gives the
+main arms and Table~\ref{tab:rep-results} in Appendix~\ref{sec:rep-eval} all of them.
 
-\paragraph{Repair by bounded exact search.}
-After a proven miss the layer can search again, exactly, under the same filter: pgvector disables the
-index scan for that query, so every row that passes the filter is ranked, and Qdrant sets its
-per-request exact flag. The repair runs only when the count is at most a bound $B$
-(\texttt{max\_exact\_rows}, 10,000 by default), so that a subject who can read most of the corpus
-cannot trigger a scan of all of it; above the bound the first hits are kept and the result says
-\emph{over\_limit}. With $L = B + 1$ one count both detects and bounds. The alternative
-\emph{widen} repeats the search on the same store with more effort, for example a larger scan budget
-or ACORN, and merges the two answers; it is cheaper but certifies nothing, since a wider approximate
-search can still miss. OpenSearch already falls back to exact search inside the engine when an
-approximate filtered search returns fewer than $k$ results~\cite{opensearch2026efficient}; the layer
-does the same above the store, for stores that do not.
-
-\paragraph{Security.}
-The repair is one more search step in the layer's single plan, shared by the synchronous and
-asynchronous drivers. It uses the filter already obtained from the authorizer, and every hit it
-returns passes the same re-check as any other. The hits of the first search that the repair
-discards are re-checked in the same call, so a store that ignored the filter still shows up as
-violations. A failed count or search ends the request with an error and no hits, as any other
-failure does (assumption A3). Observation~\ref{prop:reduction} therefore holds unchanged.
-
-\paragraph{A sampled recall monitor.}
-Neither the count nor the flag can see mis-retrieval. For a configurable share of pre-filtered
-requests, the layer also runs the exact search and reports the overlap of the two top-$k$ lists as a
-metric, without returning the exact hits. This turns the offline audit of Section~\ref{sec:quality}
-into a production signal, at the cost of one exact search per sampled request.
-
-\paragraph{Reporting.}
-Each result carries the outcome of detection (\emph{exhausted}, \emph{missed} or \emph{unknown}),
-of repair (\emph{exact}, \emph{widened}, \emph{over\_limit} or \emph{unsupported}) and, when sampled,
-the measured recall; the same fields reach the audit events and the OpenTelemetry spans and metrics
-(Section~\ref{sec:sys-identity}). The default policy remains \emph{report}, which adds no query.
-
-\subsection{Evaluation}\label{sec:rep-eval}
-
-We evaluate the policies on pgvector and Qdrant, the two stores whose losses
-Section~\ref{sec:quality} diagnosed, on the enterprise scenario (1,468 questions with something to
-read) and on the 6,200 question--subject pairs of the MS MARCO layouts of
-Section~\ref{sec:qual-frontiers}, on X2's prepared data and in jobs of their own, three fresh builds
-per store and corpus. The base configuration is the audit's: pgvector with relaxed-order iterative
-scans, \texttt{ef\_search} 100 and the default scan limits, each search planned with its own values;
-Qdrant with \texttt{hnsw\_ef} 128 and no ACORN. Over the same backend and build we run
-\emph{report}; \emph{count}; \emph{exact} with $B$ of 1,000, 10,000 and unbounded; \emph{widen},
-whose wider search is pgvector with a million-tuple scan limit, a sixteenfold scan memory and
-\texttt{ef\_search} 400, or Qdrant with \texttt{hnsw\_ef} 512 and ACORN at gate 1.0; the 1\% recall
-monitor; and, for comparison, the store-native alternatives alone: pgvector's tuple limit raised to a
-million, Qdrant's ACORN at gate 1.0, and, on the enterprise corpus, Qdrant's per-tenant graphs. Each
-question retrieves with $k = 5$ and $k = 10$ in a first pass and twice more with $k = 10$; every hit is
-re-checked by the layer and by an independent oracle, and latency is the median of the three passes
-with $k = 10$.
-
-Seven hypotheses were pre-registered. The count detects every short first search without a false
-alarm (H5.1); exact repair without a bound leaves no result empty or short and reaches recall@10 of
-at least 0.999 on the queries it repairs (H5.2); no repair changes the median latency of the queries that do not
-trigger it by more than 5\% either way (H5.3); no repair changes Qdrant's false-completeness rate, because its loss is mis-retrieval
-(H5.4); the monitor samples 1\% of searches and its recall agrees with the harness's (H5.5);
-widening recovers less than exact repair on the searches that trigger it (H5.6); and on the
-enterprise corpus Qdrant's per-tenant layout reaches recall@10 of 0.90 while every library arm on
-the shared layout stays at or below 0.75 (H5.7).
-
-\begin{table*}[tbp]
+\begin{table}[tbp]
 \centering
 \footnotesize
-\begin{tabular}{@{}llrrrrrrrrrrr@{}}
+\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrrrr@{}}
 \toprule
- & & & & & & & & & \multicolumn{2}{c}{All (ms)} & \multicolumn{2}{c}{Triggered (ms)} \\
-\cmidrule(lr){10-11}\cmidrule(lr){12-13}
-Corpus, store & Arm & R@5 & R@10 & Empty & Short & Trigger & Detect & FC & p50 & p99 & p50 & p95 \\
+ & \multicolumn{2}{c}{Recall@10} & \multicolumn{3}{c}{Short} & \multicolumn{2}{c}{False complete} & \multicolumn{2}{c}{Triggered (ms)} \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}\cmidrule(lr){7-8}\cmidrule(lr){9-10}
+Corpus, store & report & exact & report & $B$ 10,000 & exact & report & exact & p50 & p95 \\
 \midrule
-Enterprise, & report & 0.639 & 0.667 & 0.089 & 0.116 & 0.129 & -- & 0.551 & 17.3 & 92.5 & -- & -- \\
-pgvector & count & 0.639 & 0.667 & 0.089 & 0.116 & 0.129 & 1.000 & 0.542 & 17.7 & 114.1 & 14.7 & 25.6 \\
- & exact, $B$ 1,000 & 0.747 & 0.782 & 0.000 & 0.000 & 0.129 & 1.000 & 0.480 & 17.6 & 122.7 & 25.3 & 30.6 \\
- & exact, $B$ 10,000 & 0.747 & 0.782 & 0.000 & 0.000 & 0.129 & 1.000 & 0.480 & 17.3 & 120.9 & 25.2 & 30.3 \\
- & exact, unbounded & 0.747 & 0.782 & 0.000 & 0.000 & 0.129 & 1.000 & 0.480 & 17.2 & 127.2 & 30.1 & 40.2 \\
- & widen & 0.739 & 0.775 & 0.000 & 0.000 & 0.129 & 1.000 & 0.498 & 17.9 & 410.7 & 34.5 & 360.9 \\
- & monitor 1\% & 0.639 & 0.667 & 0.089 & 0.116 & 0.129 & -- & 0.551 & 17.6 & 96.1 & -- & -- \\
- & tuple limit $10^6$ alone & 0.664 & 0.694 & 0.072 & 0.090 & 0.103 & -- & 0.543 & 17.6 & 128.9 & -- & -- \\
-\midrule
-Enterprise, & report & 0.658 & 0.654 & 0.000 & 0.000 & 0.014 & -- & 0.581 & 4.72 & 6.15 & -- & -- \\
-Qdrant & count, exact, widen & 0.658 & 0.654 & 0.000 & 0.000 & 0.014 & n/a & 0.573 & 4.59--4.60 & 5.86--5.91 & 1.57--1.58 & 1.69--1.84 \\
- & monitor 1\% & 0.658 & 0.654 & 0.000 & 0.000 & 0.014 & -- & 0.581 & 4.71 & 6.00 & -- & -- \\
- & ACORN 1.0 alone & 0.857 & 0.855 & 0.000 & 0.000 & 0.014 & -- & 0.388 & 4.84 & 6.35 & -- & -- \\
- & per-tenant graphs & 0.938 & 0.939 & 0.000 & 0.000 & 0.014 & -- & 0.235 & 4.69 & 8.27 & -- & -- \\
-\midrule
-MS MARCO, & report & 0.896 & 0.900 & 0.003 & 0.017 & 0.017 & -- & 0.301 & 9.87 & 425.4 & -- & -- \\
-pgvector & count & 0.896 & 0.900 & 0.003 & 0.017 & 0.017 & 1.000 & 0.301 & 9.83 & 427.7 & 21.7 & 87.7 \\
- & exact, $B$ 1,000 & 0.900 & 0.904 & 0.001 & 0.012 & 0.017 & 1.000 & 0.299 & 9.82 & 426.1 & 60.0 & 129.2 \\
- & exact, $B$ 10,000 & 0.909 & 0.915 & 0.000 & 0.001 & 0.017 & 1.000 & 0.296 & 10.0 & 486.9 & 115.8 & 365.8 \\
- & exact, unbounded & 0.909 & 0.915 & 0.000 & 0.000 & 0.017 & 1.000 & 0.296 & 10.0 & 446.5 & 108.6 & 220.7 \\
- & widen & 0.907 & 0.913 & 0.000 & 0.000 & 0.017 & 1.000 & 0.306 & 9.89 & 772.1 & 594.4 & 1,572.7 \\
- & monitor 1\% & 0.896 & 0.900 & 0.003 & 0.017 & 0.017 & -- & 0.301 & 10.2 & 433.2 & -- & -- \\
- & tuple limit $10^6$ alone & 0.899 & 0.903 & 0.003 & 0.016 & 0.016 & -- & 0.299 & 10.0 & 429.4 & -- & -- \\
-\midrule
-MS MARCO, & report & 0.809 & 0.807 & 0.000 & 0.035 & 0.035 & -- & 0.356 & 6.07 & 10.7 & -- & -- \\
-Qdrant & count & 0.809 & 0.807 & 0.000 & 0.035 & 0.035 & 1.000 & 0.356 & 6.02 & 26.5 & 21.7 & 28.2 \\
- & exact, $B$ 1,000 & 0.809 & 0.807 & 0.000 & 0.035 & 0.035 & 1.000 & 0.356 & 5.80 & 25.8 & 21.1 & 28.3 \\
- & exact, $B$ 10,000 & 0.809 & 0.807 & 0.000 & 0.035 & 0.035 & 1.000 & 0.356 & 5.95 & 26.4 & 21.6 & 27.9 \\
- & exact, unbounded & 0.833 & 0.842 & 0.000 & 0.000 & 0.035 & 1.000 & 0.343 & 6.10 & 44.4 & 37.9 & 50.4 \\
- & widen & 0.833 & 0.841 & 0.000 & 0.000 & 0.035 & 1.000 & 0.349 & 5.56 & 117.8 & 97.4 & 148.5 \\
- & monitor 1\% & 0.809 & 0.807 & 0.000 & 0.035 & 0.035 & -- & 0.356 & 5.15 & 10.6 & -- & -- \\
- & ACORN 1.0 alone & 0.987 & 0.986 & 0.000 & 0.000 & 0.000 & n/a & 0.085 & 15.9 & 125.7 & -- & -- \\
+Enterprise, pgvector & 0.667 & 0.782 & 0.116 & 0.000 & 0.000 & 0.551 & 0.480 & 30.1 & 40.2 \\
+Enterprise, Qdrant & 0.654 & 0.654 & 0.000 & 0.000 & 0.000 & 0.581 & 0.573 & 1.57--1.58 & 1.69--1.84 \\
+MS MARCO, pgvector & 0.900 & 0.915 & 0.017 & 0.001 & 0.000 & 0.301 & 0.296 & 108.6 & 220.7 \\
+MS MARCO, Qdrant & 0.807 & 0.842 & 0.035 & 0.035 & 0.000 & 0.356 & 0.343 & 37.9 & 50.4 \\
 \bottomrule
 \end{tabular}
-\caption{X5: detecting and repairing under-retrieval (GitHub Actions run 40921769714; three builds per
-store and corpus; every arm on every question). Recall@$k$ (R@5, R@10) and the rates are means over
-retrievals with $k = 10$ unless marked. Empty and Short: the answer has no hit, or fewer than
-$\min(k, R)$, where $R$ is what the subject may read. Trigger: the first search came back with fewer
-than $k$ hits, which sets off the count. Detect: the share of truly short first searches flagged
-\emph{missed}; n/a: there were none; ``--'': the arm does not count. FC: false-completeness rate, the
-share of results marked complete that are not maximal. Latency: per-question median of three passes,
-end to end; ``Triggered'' is the time spent on the short result (count and repair) on triggered
-retrievals. Latency compares arms within one store and corpus only.}
-\label{tab:rep-results}
-\end{table*}
+\caption{Repair: \emph{report} adds no query; \emph{exact} repairs without a bound; $B$ 10,000 is the default bound.
+Means over retrievals with $k = 10$, three builds. Short: fewer than $\min(k, R)$ hits, where $R$ is what the subject may
+read. False complete: the share of results marked complete that are not maximal. Triggered: time spent on the short
+result (count and repair) on triggered retrievals with exact repair without a bound; Qdrant on the enterprise corpus
+triggered only for people who could read fewer than $k$ chunks, and was repaired nowhere.}
+\label{tab:rep-summary}
+\end{table}
 
-\paragraph{Detection (H5.1, confirmed).}
-The count raised no false alarm and flagged every truly short first search as \emph{missed}: 992 of
-992 for pgvector on the enterprise corpus, 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS
-MARCO ($k = 5$ and $k = 10$ together), and every answer it marked \emph{exhausted} held all $\min(k,
-R)$ readable chunks. Qdrant on the enterprise corpus had no truly short answer: its first searches came
-back short only for people who could read fewer than $k$ chunks, which the count marked exhausted.
-Qdrant did under-retrieve on MS MARCO, which X0 and X1 never saw on the enterprise corpus: 3.5\% of its
-answers with $k = 10$ were short.
+\paragraph{Results.}
+The count raised no false alarm and flagged every truly short first search as \emph{missed}: 992 of 992 for pgvector on
+the enterprise corpus, and 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS MARCO (H5.1 confirmed). Repaired
+exactly without a bound, no answer was empty or short, and the repaired answers reached recall@10 of 1.0000 (H5.2 confirmed
+for the unbounded arm). The bound decides where repair applies. On the enterprise corpus every short answer had at most
+1,000 readable chunks, so all three bounds repaired all of them; on MS MARCO a bound of 1,000 repaired 0.5\% of pgvector's
+answers out of 1.7\% triggered, and every short answer of Qdrant had more than 10,000 readable chunks, so the bounded arms
+repaired none and reported each as \emph{over\_limit} and not complete. The cost on queries that did not trigger is
+inconclusive (H5.3): of 60 latency ratios, 45 lay in the band of 0.95 to 1.05 and none above the falsification bound of 1.10,
+and over all questions every repair arm's median lay within 0.6\,ms of \emph{report}'s. No repair touched Qdrant's loss on
+the enterprise corpus (H5.4 confirmed): 58.1\% of its answers marked complete were not maximal under \emph{report} and 57.3\%
+under every repair arm. The 1\% monitor sampled within the 99.9\% binomial interval in all twelve builds and estimated Qdrant's
+recall within 0.030 and 0.004 (H5.5 confirmed), so a 1\% sample is enough to see the loss that the flag cannot. Exact repair
+beat widening by 0.085 of recall@10 (95\% interval 0.064 to 0.110) on the 421 questions that triggered in both arms (H5.6
+confirmed). On the enterprise corpus Qdrant's per-tenant graphs reached recall@10 of 0.939 while the best library arm on the
+shared layout reached 0.654 (H5.7 confirmed), and the false-completeness rate fell from 0.581 to 0.235.
 
-\paragraph{Exact repair (H5.2, confirmed for the unbounded arm).}
-Repaired exactly without a bound, no answer was empty or short, and the repaired answers reached
-recall@10 of 1.0000: on 576 triggered retrievals for pgvector on the enterprise corpus, on 323 for
-pgvector and 644 for Qdrant on MS MARCO, which had returned 992, 574 and 1,091 short answers under
-\emph{report} ($k = 5$ and $k = 10$ over three builds). Recall@10 rose from 0.667 to 0.782, from 0.900 to 0.915 and from 0.807 to 0.842. The
-bound decided where repair applied. On the enterprise corpus every short answer had at most 1,000
-readable chunks, so all three bounds repaired all of them; on MS MARCO a bound of 1,000 repaired 0.5\%
-of pgvector's answers out of 1.7\% triggered, and every short answer of Qdrant had more than 10,000
-readable chunks, so the bounded arms repaired none and reported each as \emph{over\_limit} and not
-complete. At the default bound of 10,000, then, 0.1\% of pgvector's answers and all of Qdrant's 3.5\%
-stayed short on MS MARCO. Where the repair ran without a bound, the count and the exact search
-together took 30.1\,ms at the median
-and 40.2\,ms at p95 of a triggered pgvector retrieval on the enterprise corpus, 108.6 and 220.7\,ms on
-MS MARCO, and 37.9 and 50.4\,ms for Qdrant.
-
-\paragraph{Cost on other queries (H5.3, inconclusive).}
-Of the 60 median latency ratios between a repair arm and \emph{report} on the questions that
-triggered neither, 45 lay within the pre-registered band of 0.95 to 1.05, one above it (1.054, Qdrant
-on MS MARCO, build 2, $B$ 10,000) and 14 below it, down to 0.866: the repair arm faster than
-\emph{report}. None exceeded the falsification bound of 1.10. Twelve of the 14 low ratios are
-Qdrant's, and the arms ran in a fixed order after \emph{report} within each build, so they are
-consistent with the store's latency drifting during a build rather than with any effect of the arms;
-the run cannot separate the two. Over all questions, every repair arm's median latency lay within
-0.6\,ms of \emph{report}'s.
-
-\paragraph{Mis-retrieval (H5.4, confirmed).}
-No repair touched Qdrant's loss on the enterprise corpus: 58.1\% of its answers marked complete under
-\emph{report} were not maximal, and 57.3\% under every repair arm, a difference of $-0.008$ (95\%
-interval $-0.027$ to 0.000). The small change is the count marking the short answers of people with
-fewer than $k$ readable chunks exhausted, and so complete and correct; no answer was repaired. Across
-the table, exact repair lowered the false-completeness rate only as far as short answers had caused it
-(0.551 to 0.480 for pgvector on the enterprise corpus); the rest is mis-retrieval, which a full answer
-hides from any count.
-
-\paragraph{The monitor (H5.5, confirmed).}
-The monitor sampled within the 99.9\% binomial interval around 1\% in all twelve builds (48 to 65 of
-5,956 retrievals per build on the enterprise corpus, 210 to 267 of 24,800 on MS MARCO). Its recall,
-computed against the store's own exact search, agreed within 0.1 with the harness's on all 1,767
-sampled retrievals, and its mean estimated Qdrant's recall over all retrievals within 0.030 (0.684
-on 166 samples against 0.654) on the enterprise corpus and within 0.004 (0.812 on 725 against 0.807)
-on MS MARCO. A 1\% sample is thus enough to see the loss that \texttt{complete} cannot.
-
-\paragraph{Widening (H5.6, confirmed).}
-On the 421 questions that triggered in both arms, exact repair beat widening by 0.085 of recall@10
-(95\% interval 0.064 to 0.110; Wilcoxon $p = 5.6 \times 10^{-30}$), and widening cost more: 360.9 and
-1,572.7\,ms at p95 of a triggered pgvector retrieval, on the enterprise corpus and on MS MARCO, against
-40.2 and 220.7\,ms for exact repair. A wider approximate search filled the short answers, since it
-left none empty or short, but did not rank them exactly.
-
-\paragraph{Store-native fixes (H5.7, confirmed).}
-On the enterprise corpus Qdrant's per-tenant graphs reached recall@10 of 0.9386 while the best library
-arm on the shared layout reached 0.6535, and the false-completeness rate fell from 0.581 to 0.235. ACORN
-alone reached 0.855 there and 0.986 on MS MARCO, where it also removed every short answer, at a median
-of 15.9 against 6.1\,ms. pgvector's tuple limit raised alone lowered the enterprise corpus's
-empty-result rate only from 0.089 to 0.072, because the scan's memory bound then stops it, as X1 found
-(Section~\ref{sec:qual-pgvector}).
-
-The two tools divide the work. A count tells a short answer from a small readable set without error.
-Exact repair without a bound fixes every short answer for tens to hundreds of milliseconds spent on
-that answer; within a bound it fixes only the answers whose readable set fits, none of Qdrant's on MS
-MARCO. Neither sees a full answer of the wrong chunks, which was most of the loss on both stores
-(pgvector's recall@10 on the enterprise corpus was 0.782 after exact repair, 0.667 without it); only
-a sampled exact search sees it, and only a better index or layout removes it.
+The two tools divide the work. A count tells a short answer from a small readable set without error. Exact repair without a
+bound fixes every short answer for tens to hundreds of milliseconds spent on that answer; within a bound it fixes only the
+answers whose readable set fits. Neither sees a full answer of the wrong chunks, which was most of the loss on both stores;
+only a sampled exact search sees it, and only a better index or layout removes it.

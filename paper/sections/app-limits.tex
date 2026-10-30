@@ -1,0 +1,105 @@
+% Appendix: limitations in detail and licenses. Moved from Section~\ref{sec:limits}. Licenses were
+% read on their official pages on 2026-10-30 (bib/STATUS.md).
+
+\section{Limitations in detail}\label{sec:limits-limits}
+
+\paragraph{Scope of the security claim.}
+The title's \emph{leak-free} means that no returned chunk lay outside the readable set at the revision
+the check read, under the trusted computing base of Section~\ref{sec:prob-criteria}. It does not mean
+fresh: a revocation takes up to the $\delta$ of its path, which Section~\ref{sec:eng-revoke} measures,
+and the release we evaluated exceeded its stated $\delta$ after an invalidation. It does not mean that
+unreadable chunks leave no trace: latency, counts, recall and scores reveal them
+(Section~\ref{sec:side}), and the detection fields of Section~\ref{sec:repair} (\emph{missed},
+\emph{exhausted}, \emph{over\_limit}) are further caller-visible observables that we did not measure. A
+store that binds content to the wrong identifier or metadata defeats any re-check, and we test that
+assumption only as far as the conformance kit's metadata checks reach. The trusted computing base has
+failed before: earlier versions of the layer's SpiceDB and Cedar adapters let the check itself admit
+(Table~\ref{tab:conf-faults}), so the claim covers the code we evaluated, not its history. The
+completeness flag is count-honest relative to the pushed-down filter: it detects under-retrieval but
+not mis-retrieval, and a full answer with the wrong chunks still reports complete.
+
+\paragraph{Synthetic permissions.}
+No public corpus pairs documents with the access-control lists of a real organization, so every
+permission layout here is generated: tenants, groups and per-document ACLs drawn from templates and
+seeded generators, over public passages (FiQA, MS MARCO) and templated company documents. Real
+organizations may have more skewed layouts, with many small groups, deep group hierarchies and
+frequent exceptions. We place every (question, subject) pair on measured correlation axes instead of
+trusting a layout's label (Section~\ref{sec:prob-metrics}), which makes results comparable across
+layouts of similar measured difficulty, although no single axis described every store
+(Section~\ref{sec:qual-frontiers}). The MS MARCO experiments vary layouts across seeds; the
+end-to-end runs keep one layout and vary only documents and questions, so their people recur with the
+same permissions. That one layout is harsh in a way we state and did not vary: each company document
+has 19 near-identical copies in other tenants that only the tenant rule separates, a hard case for
+graph indexes, so its recall numbers, Qdrant's especially, should not be read as an estimate for an
+organization without such copies.
+
+\paragraph{One instrument.}
+Every measurement passes through one enforcement layer, built for this project, so a fault in its
+filter translators could be mistaken for a store fault. The conformance kit compares every answer
+with an in-memory reference that shares no code with the translators, and the retrieval audit uses
+each store's own exact search as a second baseline. Some numbers are properties of the layer's schema
+as much as of a store: pgvector's filters are \texttt{jsonb} containment tests over a GIN index, with an
+array test above 100 values that the index cannot serve, and Chroma's list values are boolean keys, so
+its disjunctions hold one clause per group. Results describe each store under this layer's schema, not
+at its best possible schema. Of the third-party behaviors our experiments found, four come with a
+reproducer that uses only the vendor's own client: the truncation in Redis and in MongoDB, Chroma's
+crash, and the CEL semantics that the layer's Cerbos translator meets. Each showed the reported
+behavior when run on GitHub-hosted runners on 30 October 2026 against the version we evaluated and the
+vendor's latest release (Redis 8.10.2 and 8.10.3, MongoDB Atlas Local 8.0.30 and 8.3.13, Cerbos 0.56.0
+and 0.57.0, and Chroma 1.5.9, still its latest). Running them corrected one figure: MongoDB's
+vector-search filter fields keep 8,191 characters, not the 8,181 we had taken from its documentation
+of another field type. SpiceDB's staleness, OPA's residual negation and pgvector's plan choice were
+measured through the layer and have no reproducer independent of it; the other rows of
+Table~\ref{tab:conf-faults} rest on the vendors' documentation, which the table cites.
+
+\paragraph{Versions, settings and hardware.}
+No single version of the library was evaluated throughout. The end-to-end runs used release 2.1.0 from
+PyPI; other experiments ran from their own branches, several carrying fixes that are not yet in a
+release, such as the engine rerun and the repair experiment (Appendix~\ref{app:map}), and we did not rerun the whole evaluation
+on one release. The library commit of each experiment is recorded with its outputs. Results hold for the
+versions and settings we state (for example pgvector 0.8.7 and Qdrant 1.19.2) and may not survive the
+next release; vector stores change quickly, and several behaviors we measure are documented defaults
+that vendors may revise. PostgreSQL was 16.15 in the end-to-end runs and version 16 in the diagnosis
+grid, and 17.11 in the campaign, the engine study and the frontier, repair and filter-size experiments.
+Embeddings were 768-dimensional (bge-base-en-v1.5) on the enterprise corpus and 384-dimensional on MS
+MARCO (bge-small-en-v1.5) and in the filter-size and side-channel experiments (all-MiniLM-L6-v2);
+dimension matters, for example, to the point count at which Qdrant plans an exact scan. We did not
+record Lucene's segment counts for Elasticsearch and OpenSearch. Experiments ran on shared cloud
+hardware (Kaggle sessions with two T4 GPUs and four CPUs, and GitHub-hosted runners), so latencies are
+comparable within an experiment, not across experiments or with vendor benchmarks.
+
+\paragraph{Baselines and sweeps we did not run.}
+We compare the enforcement paths of one layer, not the layer with a store's native enforcement: we
+did not measure PostgreSQL row-level security or the document-level security of Elasticsearch and
+OpenSearch, whose recall and latency may differ. We did not sweep the share of near-duplicate
+chunks, so we cannot say how fast Qdrant's loss falls as copies across tenants become fewer. Outside the
+100\% selectivity cells on MS MARCO we have no unfiltered baseline per store, so part of a store's loss
+under a filter may be its ordinary approximation error, as with LanceDB's quantized index.
+
+\paragraph{Statistical power.}
+The end-to-end scenario ran four times with fresh documents and questions, and four more times for
+the OpenFGA configuration, but always with one permission layout; its people recur in every run, so
+its bound per person is a single run's. Its bounds are over the question generator's distribution and
+say nothing about an adaptive adversary. The diagnosis grid ran three index builds per layout, the
+frontier and repair experiments three builds per store and corpus over ten MS MARCO layouts and the
+enterprise layout, and the engine, filter-size and side-channel experiments five seeds each; intervals
+come from bootstrap resampling over people, subjects or probes, not over builds, so a store whose
+recall varies between builds (Qdrant's by up to 0.13) is described by the mean of three. Zero-leak
+results are reported as upper bounds per question, per subject and per fault episode, not per hit. We
+apply no correction for multiple comparisons across cells, and in the side-channel experiment two
+builds of identical content can differ by as much as a weak channel (Section~\ref{sec:side-results}).
+Several pre-registered verdicts are inconclusive rather than confirmed or falsified, and we report
+them as such.
+
+\subsection{Licenses of data and models}\label{app:licenses}
+
+We read each license on its official page on 30 October 2026. MS MARCO's terms state that the datasets
+are intended for non-commercial research purposes only. The FiQA site makes its Task 2 data, which
+BEIR redistributes, available only for non-commercial use; BEIR's dataset cards for FiQA and SciDocs
+carry a CC BY-SA 4.0 tag, and BEIR's documentation leaves it to users to determine whether they may use
+a dataset. The SciDocs repository's license file is CC BY 4.0. The embedding models bge-base-en-v1.5 and
+bge-small-en-v1.5 are under the MIT license and all-MiniLM-L6-v2 under Apache 2.0. Qwen2.5-3B-Instruct
+is under the Qwen Research License Agreement, which permits research and evaluation and requires a
+separate license for commercial use. All our use was research. The harnesses download corpora and
+models from their sources; released outputs that quote passages or model answers should be treated
+under the same terms.
