@@ -62,7 +62,7 @@ with \texttt{hnsw.scan\_mem\_multiplier} of 1, 8 or 16; \texttt{work\_mem} 64\,M
 strict ordering; and exact search with index scans disabled. Two replays of the audit's pass ran
 first on the first build, right after loading and after \texttt{VACUUM (ANALYZE)}; every other
 setting ran after a vacuum. PostgreSQL's \texttt{auto\_explain} recorded the plan of every search of
-the first pass. Run 1 had one build per layout, skipped 12 settings for time, and recorded no
+the first pass. Run 1 built one pgvector index, skipped 12 settings for time, and recorded no
 executed plans; it is reported in the released evidence.
 
 \paragraph{Qdrant.} Five layouts (as run; tenant field marked \texttt{is\_tenant}; per-tenant graphs
