@@ -11,10 +11,9 @@ cost. We ask whether the filters \sys{} compiles from four engines admit exactly
 checks allow, separating a translation fault, which persists at one revision, from revision skew, a write
 between the two calls, and from truncated list APIs. We then measure how long a revocation keeps admitting
 and whether the layer fails closed. We tested OpenFGA 1.22.0, SpiceDB 1.56.2, OPA 1.21.2 and Cerbos 0.56.0
-on five seeds of a generated world of 3 tenants, 120 users, 60 groups, 80 folders and 1,500 documents,
-against an independent oracle, with controls that validate the counting. \emph{One revision} means
-SpiceDB's \texttt{atExactSnapshot} at the token of the last write; OpenFGA offers no snapshot token, so its
-store was read quiescent; OPA and Cerbos are stateless per request (Appendix~\ref{app:engines}).
+on five seeds of a generated world of 120 users and 1,500 documents against an independent oracle. \emph{One
+revision} means SpiceDB's \texttt{atExactSnapshot}; OpenFGA has no snapshot token, so its store was read quiescent;
+OPA and Cerbos are stateless per request (Appendix~\ref{app:engines}).
 
 \paragraph{Agreement at one revision.}
 In the seven profiles that hold the model as intended, 6.3 million (user, document) pairs produced no
@@ -88,15 +87,13 @@ prediction (A2-H1 to A2-H8): all 160 SpiceDB and Cerbos revocations with invalid
 declared staleness plus 1\,s, and 1\,s more on the replica, at medians of 4.8\,s (at most 5.2\,s) and 3.9\,s
 against 30 and 31\,s before. SpiceDB itself still flapped; the cache no longer prolongs that.
 
-We injected 14 faults into each engine, by a proxy or by killing the server, and five or eight into pgvector
-and Qdrant, in 1,090 episodes of a 3\,s baseline, a 12\,s fault and recovery. Outside the control below, no
-retrieval returned a chunk outside the user's readable set, in 623,279 requests over 1,050 episodes: at most
-$2.8 \times 10^{-3}$ per episode (one-sided 95\%), over the faults we injected (X7-H6 confirmed). The control,
-40 episodes that turned the engine's denials into allows, leaked in every engine. Every engine-caused failure
-was the layer's authorization error with a message naming no host; transport faults failed every request
-inside the fault, and recovery took a median 0.02 to 0.18\,s after removal. Two behaviors needed work: an
-empty LookupResources stream read as ``no readable documents'' (4,746 retrievals returned nothing without an
-error, losing recall only), and store failures surfaced as the clients' own exceptions. The rerun confirmed
-both fixes, and in its 10,303 requests over 140 episodes no chunk leaked ($2.1 \times 10^{-2}$ per episode).
-For a connection that is accepted but never answered, only a deadline on the whole retrieval, which the layer
-does not yet offer, would bound the wait.
+We injected 14 faults into each engine, and five or eight into pgvector and Qdrant, in 1,090 episodes. Outside
+the control below, no retrieval returned a chunk outside the user's readable set, in 623,279 requests over 1,050
+episodes: at most $2.8 \times 10^{-3}$ per episode (one-sided 95\%), over the faults we injected (X7-H6 confirmed).
+The control, 40 episodes that turned the engine's denials into allows, leaked in every engine. Every engine-caused
+failure was the layer's authorization error with a message naming no host, and recovery took a median 0.02 to
+0.18\,s after a transport fault's removal. Two behaviors needed work: an empty LookupResources stream read as ``no
+readable documents'' (4,746 retrievals returned nothing without an error, losing recall only), and store failures
+surfaced as the clients' own exceptions. The rerun confirmed both fixes, and in its 10,303 requests over 140 episodes
+no chunk leaked ($2.1 \times 10^{-2}$ per episode). For a connection that is accepted but never answered, only a
+deadline on the whole retrieval, which the layer does not yet offer, would bound the wait.

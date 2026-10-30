@@ -11,13 +11,11 @@ weaknesses~\cite{owasp2025llm082025}, and revoked documents have stayed retrieva
 index~\cite{roychowdhury2024confusedpilot}.
 
 The remedy is old. Query modification adds the access predicate to the query before it
-runs~\cite{stonebraker1974access}; multi-user full-text search integrated security into query
-processing and showed that statistics computed over unreadable documents reveal
-them~\cite{buttcher2005security}; enterprise search checked results late, in growing
-blocks~\cite{bailey2006secure}; Zanzibar checks each result against a central authorization
-service~\cite{pang2019zanzibar}. Managed RAG services combine these steps~\cite{aws2026access}. Recent
-work builds permissions into the vector index itself~\cite{zhong2026honeybee,han2026dont} and asks for
-correctness criteria for such systems~\cite{yalamarthi2026policyaware}.
+runs~\cite{stonebraker1974access}; multi-user full-text search showed that statistics computed over
+unreadable documents reveal them~\cite{buttcher2005security}; enterprise search checked results late, in
+growing blocks~\cite{bailey2006secure}; Zanzibar checks each result against a central authorization
+service~\cite{pang2019zanzibar}. Managed RAG services combine these steps~\cite{aws2026access}, and recent
+work builds permissions into the vector index itself~\cite{zhong2026honeybee,han2026dont}.
 
 What is not known is whether the stack that implements the remedy is faithful. Three things stand
 between an organization's policy and the chunks a model sees. \emph{First, the policy is compiled by
@@ -49,42 +47,34 @@ near perfect to missing most of what a subject may read, and the application cou
 \begin{itemize}
   \item \emph{A formulation} (Section~\ref{sec:problem}). We adapt the sound, secure and maximal
         criteria of Wang et al.~\cite{wang2007correctness} to top-$k$ retrieval under an external
-        authorizer, define the readable set from the policy, add freshness, with a measured staleness
-        $\delta$ per path, and count-honesty for the claim that an answer is complete, and state the
-        trusted computing base.
+        authorizer, add freshness, with a measured staleness $\delta$ per path, and count-honesty for the
+        claim that an answer is complete, and state the trusted computing base.
   \item \emph{Verification of the enforcement path} (Sections~\ref{sec:conformance},
-        \ref{sec:engines} and~\ref{sec:e2e}). Differential conformance testing against one reference
-        semantics, across 13 of the 14 stores (Pinecone was skipped for want of an API key) and seven
-        engines, found two undocumented store behaviors with a correctness effect, two availability
-        faults in the layer's adapters and documented limits in five stores that fail closed, and
-        reproduced a known type gap in the layer's Cerbos translator. At one revision, over 6.3 million
-        user-document pairs from four engines, filters and checks never disagreed in the profiles that
-        hold the model as intended. No chunk outside the readable set was returned in 1,050 fault
-        episodes (one-sided 95\% bound $2.8 \times 10^{-3}$ per episode, over the faults we injected) or
-        in four runs of each of eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and
-        $1.6 \times 10^{-2}$ per person, over the generator's question distribution; neither bound
-        speaks to an adaptive adversary).
+        \ref{sec:engines} and~\ref{sec:e2e}). Differential conformance testing across 13 of the 14 stores
+        and seven engines found two undocumented store behaviors with a correctness effect, two
+        availability faults in the layer's adapters and documented limits that fail closed, and reproduced a
+        known type gap in the layer's Cerbos translator. At one revision, over 6.3 million user-document
+        pairs, filters and checks never disagreed in the profiles that hold the model as intended. No
+        chunk outside the readable set was returned in 1,050 fault episodes or in four runs of each of
+        eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per
+        person, one-sided 95\%, over the generator's question distribution).
   \item \emph{An audit, diagnosis and repair of retrieval quality} (Sections~\ref{sec:quality}
         and~\ref{sec:repair}). Mean recall@10 at common settings ranged from 0.55 to 0.98 over eight
         stores searched approximately, under this layer's schema. Pre-registered experiments trace
         Qdrant's loss to an islanded permitted subgraph (0.656 in the shared layout, 0.952 with
-        per-tenant graphs) and show that pgvector's answer depends on PostgreSQL's plan cache: over eight
-        runs the same configuration ran exact in five and, by its median, fast in three, losing about a
-        quarter of its recall in the fast runs. A count flagged all 2,657 truly short answers without a
-        false alarm, and exact repair without a bound left none empty or short, but no count sees a full
-        answer of the wrong chunks.
+        per-tenant graphs) and pgvector's to PostgreSQL's plan cache and two scan limits. A count flagged all
+        2,657 truly short answers without a false alarm, and exact repair without a bound left none empty
+        or short, but no count sees a full answer of the wrong chunks.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered
         distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
         chunks had appeared near it from the latency of the widening post-filter (paired AUC 0.80 to
         0.98, except pgvector's 0.66 for an attacker reading 10\% of the background) and from BM25 and
-        IDF scores (0.98 to 1.00). Exact pre-filtering returned identical answers, and padding removed the
-        latency channel in all seven cells where the unpadded AUC reached 0.75, at five to seven times
-        the latency.
+        IDF scores (0.98 to 1.00). Exact pre-filtering returned identical answers; padding removed the latency
+        channel where it was tested, at five to seven times the latency.
 \end{itemize}
 
-We do not propose an index, and we do not defend against prompt injection in readable content; in our
-runs a 3-billion-parameter model obeyed every injected notice it retrieved, which marks where a
-retrieval guarantee ends. The library, the conformance kit, the pre-registrations and the raw outputs
-are released with the paper (Section~\ref{sec:limits}). Appendix~\ref{app:map} maps every experiment to
-its versions and runs, and Appendix~\ref{app:ledger} lists every hypothesis with its registration and
-verdict; labels such as P5 below refer to that ledger.
+We do not propose an index, and we do not defend against prompt injection in readable content. The library,
+the conformance kit, the pre-registrations and the raw outputs are released with the paper
+(Section~\ref{sec:limits}). Appendix~\ref{app:map} maps every experiment to its versions and runs, and
+Appendix~\ref{app:ledger} lists every hypothesis with its registration and verdict; labels such as P5 below
+refer to that ledger.

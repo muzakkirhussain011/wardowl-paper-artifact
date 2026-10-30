@@ -8,12 +8,11 @@
 
 Observation~\ref{prop:reduction} bounds what a subject can \emph{read}; it says nothing about what the timing
 or shape of an answer reveals. B\"{u}ttcher and Clarke required of secure full-text search that no aspect of the
-output, its order included, depend on content the user may not search~\cite{buttcher2005security}. Each enforcement
-path departs from that requirement in a predictable way: a widening post-filter works longer when unreadable chunks
-crowd the top of the ranking, an approximate filtered search passes unreadable nodes on its way to readable ones,
-and a keyword score computed over the whole collection counts unreadable documents. We ask how much an authenticated
-subject can learn from these departures about whether unreadable chunks exist near a query, and what removing each
-one costs.
+output depend on content the user may not search~\cite{buttcher2005security}. Each enforcement path departs from that
+in a predictable way: a widening post-filter works longer when unreadable chunks crowd the top of the ranking, an
+approximate filtered search passes unreadable nodes on its way to readable ones, and a keyword score computed over the
+collection counts unreadable documents. We ask how much a subject can learn from these departures about whether
+unreadable chunks exist near a query, and what removing each one costs.
 
 \subsection{A distinguishing game}\label{sec:side-game}
 
@@ -29,15 +28,14 @@ added; its success is the paired AUC, the share of probes whose $W_1$ observatio
 direction than their $W_0$ observation. An attacker who knows the sign of a difference gains as much below 0.5 as
 above it, so the size of a channel is $|\mathrm{AUC} - 0.5|$.
 
-The background is all 57,638 FiQA passages~\cite{maia2018www18}, embedded with all-MiniLM-L6-v2. Each of five seeds
-places eight groups of nine probes, with $m$ of 1,000, 100, 10 and 1, and three attackers read 1\%, 10\% and 50\% ($p$)
-of the background. We measure each store's approximate pre-filter at documented defaults (pgvector, Qdrant,
-Elasticsearch), with FAISS over a flat index as an exact control; the post-filter at the layer's defaults; keyword
-search; and four mitigations: constant-work widening, which fetches the cap in one round; exact pre-filtered search;
-a separated per-tenant index, whose measured A/A serves as a null; and latency padding. A channel is \emph{present}
-when the paired AUC reaches the hypothesis's threshold and its 95\% cluster-bootstrap interval's lower end exceeds
-0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$. Appendix~\ref{sec:side-setup} gives the design,
-and Table~\ref{tab:side-hyp} the hypotheses.
+The background is all 57,638 FiQA passages~\cite{maia2018www18}. Each of five seeds places eight groups of nine probes,
+with $m$ of 1,000, 100, 10 and 1, and three attackers read 1\%, 10\% and 50\% ($p$) of the background. We measure each
+store's approximate pre-filter at documented defaults (pgvector, Qdrant, Elasticsearch), with FAISS over a flat index as an
+exact control; the post-filter at the layer's defaults; keyword search; and mitigations: constant-work widening, which
+fetches the cap in one round; exact pre-filtered search; a separated index, whose A/A serves as a null; and latency padding.
+A channel is \emph{present} when the paired AUC reaches the hypothesis's threshold and its 95\% interval's lower end exceeds
+0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$. Appendix~\ref{sec:side-setup} gives the design, and
+Table~\ref{tab:side-hyp} the hypotheses.
 
 \subsection{Results}\label{sec:side-results}
 
@@ -130,53 +128,46 @@ score unless named. Table~\ref{tab:side-auc} in Appendix~\ref{app:side-results} 
 \label{fig:side-auc}
 \end{figure}
 
-Every pre-registered cell ran: 520,320 retrievals without an error, none returning a chunk outside the attacker's
-readable set. Figure~\ref{fig:side-auc} shows the channels by $m$. One caution comes first. Two builds of identical content
-gave paired latency AUCs of 0.342 to 0.608 for FAISS's post-filter, and $|\mathrm{AUC} - 0.5|$ up to 0.24 for its pre-filter,
-0.31 for pgvector's exact search and under 0.01 for Qdrant's exact search; the other configurations were not measured that way.
-A latency AUC between about 0.6 and 0.8 is therefore not by itself evidence about the secrets. What separates a channel from
-an offset is that a channel grows with $m$. We apply no correction for multiple comparisons: the verdicts rest on the cells the
-hypotheses name.
+Every pre-registered cell ran: 520,320 retrievals without an error, none returning a chunk outside the attacker's readable set.
+Figure~\ref{fig:side-auc} shows the channels by $m$. One caution comes first. Two builds of identical content gave paired latency AUCs
+of 0.342 to 0.608 for FAISS's post-filter, and $|\mathrm{AUC} - 0.5|$ up to 0.24 for its pre-filter, 0.31 for pgvector's exact search and
+under 0.01 for Qdrant's exact search; the other configurations were not measured that way. A latency AUC between about 0.6 and 0.8 is
+therefore not by itself evidence about the secrets: a channel grows with $m$, and an offset does not. We apply no correction for multiple
+comparisons; the verdicts rest on the cells the hypotheses name.
 
 \paragraph{Widening (H1 falsified).}
-Where the prediction rested on the loop alone, the post-filter revealed nearby secrets as predicted. At $m = 100$ one more
-widening round made $W_1$ slower, with paired AUCs of 0.850 (0.762 to 0.925) on FAISS, 0.800 (0.713 to 0.887) on Qdrant and
-0.825 (0.738 to 0.900) on Elasticsearch at $p = 10\%$, and 0.925 to 0.975 on all four stores at $p = 50\%$; pgvector's 0.662
-(0.550 to 0.762) at $p = 10\%$ was inconclusive. At $m = 1{,}000$ an attacker reading 1\% received a short answer in $W_1$ for
-every probe (count AUC 1.000). Two parts failed. At $m = 1{,}000$ and $p = 50\%$ the count AUC was 0.613 to 0.688, below the
-falsification bound of 0.80: readable hub passages among the candidates filled the answer, which an exploratory follow-up
-confirmed probe by probe. And FAISS's latency at $m = 1$ gave 0.667 (0.617 to 0.717) on identical answers, a difference that lies
-in the search call and is matched by two builds of the same content.
+Where the prediction rested on the loop alone, the post-filter revealed nearby secrets as predicted. At $m = 100$ one more widening round
+made $W_1$ slower, with paired AUCs of 0.850 (0.762 to 0.925) on FAISS, 0.800 (0.713 to 0.887) on Qdrant and 0.825 (0.738 to 0.900) on
+Elasticsearch at $p = 10\%$, and 0.925 to 0.975 on all four stores at $p = 50\%$; pgvector's 0.662 (0.550 to 0.762) at $p = 10\%$ was
+inconclusive. Two parts failed. At $m = 1{,}000$ and $p = 50\%$ the count AUC was 0.613 to 0.688, below the falsification bound of 0.80, because
+readable hub passages among the candidates filled the answer. And FAISS's latency at $m = 1$ gave 0.667 (0.617 to 0.717) on identical answers:
+two builds of the same content differed by as much, though the reading we fixed in advance for that follow-up is formally inconclusive.
 
 \paragraph{Constant work (H2 falsified).}
-Fetching the cap in one round removed the widening channel from pooled latency on FAISS (0.517, 0.484 to 0.549) and Qdrant (0.456,
-0.422 to 0.491) and left the count channel. Timing did not become uninformative: on pgvector the paired AUC fell to 0.017 (0.000 to
-0.050) at $m = 1{,}000$, a reverse channel that grows with $m$, so an attacker who knows its sign identifies $W_1$ for 98\% of probes.
+Fetching the cap in one round removed the widening channel from pooled latency on FAISS (0.517, 0.484 to 0.549) and Qdrant (0.456, 0.422 to
+0.491) and left the count channel. On pgvector the paired AUC fell to 0.017 (0.000 to 0.050) at $m = 1{,}000$, a reverse channel that grows with
+$m$, so an attacker who knows its sign identifies $W_1$ for 98\% of probes.
 
 \paragraph{Pre-filtering.}
-pgvector's iterative scan revealed nearby secrets (H3a confirmed): at $m = 1{,}000$ every probe was slower on $W_1$ at $p = 10\%$ and
-50\% (paired AUC 1.000), and the same scan returned better answers there, with recall@10 of 0.968 and 0.978 against 0.707 and 0.665,
-so an attacker learns from the quality of its answer as well. Elasticsearch was inconclusive (H3b). Qdrant showed no channel in any
-observable at $p = 1\%$ and 10\% (H3c confirmed; latency 0.460, 0.424 to 0.496), where its filter is small enough for an exact scan.
-Exact search returned the same answer in both worlds, with count, completeness, recall and score at 0.500 (0.500 to 0.500) on all four
-stores, yet every H4 verdict is inconclusive through latency alone, because of the build offsets above.
+pgvector's iterative scan revealed nearby secrets (H3a confirmed): at $m = 1{,}000$ every probe was slower on $W_1$ at $p = 10\%$ and 50\% (paired
+AUC 1.000), and it returned better answers there, with recall@10 of 0.968 and 0.978 against 0.707 and 0.665. Elasticsearch was inconclusive (H3b).
+Qdrant showed no channel in any observable at $p = 1\%$ and 10\% (H3c confirmed), where its filter is small enough for an exact scan. Exact search
+returned the same answer in both worlds, with count, completeness, recall and score at 0.500 (0.500 to 0.500) on all four stores, yet every H4 verdict
+is inconclusive through latency alone, because of build offsets.
 
 \paragraph{Collection statistics (H5).}
-BM25 on Elasticsearch and IDF-weighted sparse search on Qdrant revealed nearby secrets through their scores: paired AUC 0.983 and 0.992
-on Elasticsearch and 0.979 and 1.000 on Qdrant at $m = 100$ and 1,000. At $m = 1$ and 10 the AUCs were 0.794 to 0.886, below the
-predicted 0.90 (H5a inconclusive), and these cells do not isolate one or ten documents, because the two worlds differ in all 1,233
-secrets of the probe's group, which collection statistics count. \texttt{ts\_rank\_cd}, which uses no collection statistics, showed no
-score channel (H5b confirmed), and reciprocal-rank fusion changed the hit list for 56.7\% of probes at $m = 1{,}000$ (H5c confirmed).
+BM25 on Elasticsearch and IDF-weighted sparse search on Qdrant revealed nearby secrets through their scores: paired AUC 0.983 and 0.992 on Elasticsearch
+and 0.979 and 1.000 on Qdrant at $m = 100$ and 1,000. At $m = 1$ and 10 the AUCs were 0.794 to 0.886, below the predicted 0.90 (H5a inconclusive), and
+those cells do not isolate one or ten documents, because the two worlds differ in all 1,233 secrets of the probe's group. \texttt{ts\_rank\_cd}, which uses
+no collection statistics, showed no score channel (H5b confirmed), and reciprocal-rank fusion changed the hit list for 56.7\% of probes at $m = 1{,}000$
+(H5c confirmed).
 
 \paragraph{Padding (H6) and costs.}
-Seven cells had a forward latency channel before padding (paired AUC 0.755 to 0.927). Padding made every answer take exactly the budget,
-and the padded AUC was 0.500 (0.500 to 0.500) in all seven. The script printed H6 inconclusive because its test required five seeds of
-cells that by design have four; applied as written, the rule confirms it. Reverse channels fell outside the rule and were not tested.
-Padding raised mean latency 5.2 to 6.7 times in those configurations, and exact search cost 1.53, 2.01 and 8.10 times the mean latency of
-the approximate pre-filter on Qdrant, Elasticsearch and pgvector.
+Seven cells had a forward latency channel before padding (paired AUC 0.755 to 0.927), and the padded AUC was 0.500 (0.500 to 0.500) in all seven. The script
+printed H6 inconclusive because its test required five seeds of cells that by design have four; applied as written, the rule confirms it. Reverse channels fell
+outside the rule and were not tested. Padding raised mean latency 5.2 to 6.7 times in those configurations, and exact search cost 1.53, 2.01 and 8.10 times the
+mean latency of the approximate pre-filter on Qdrant, Elasticsearch and pgvector.
 
-\paragraph{Summary.}
-Each enforcement path revealed information about unreadable chunks through the observable its mechanism predicts. The largest channels at
-$m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48), and pgvector's
-approximate pre-filter (0.38). Only exact pre-filtering returned the same answer in both worlds, and padding removed the latency channel
-where the forward channel was strong; Appendix~\ref{app:side-results} gives the full results, costs and the build-offset forensics.
+In sum, the largest channels at $m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48), and
+pgvector's approximate pre-filter (0.38). Only exact pre-filtering returned the same answer in both worlds. Appendix~\ref{app:side-results} gives the full
+results, costs and the build-offset forensics.

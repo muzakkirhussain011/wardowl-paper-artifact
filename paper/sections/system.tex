@@ -10,14 +10,12 @@ each step. We add a single reference semantics for permission filters, which mak
 across stores, and a count-honest completeness flag, which does not overstate how many chunks an
 approximate index returned.
 
-\paragraph{Contracts.}
-An authorizer offers $\mathrm{check}(s,H)$, which returns one Boolean per hit;
-$\mathrm{filter\_for}(s)$, which returns a filter $\varphi_s$ selecting \emph{exactly} what $s$ may read,
-or nothing; and, optionally, $\mathrm{scope\_for}(s)$, a necessary condition such as the subject's
-tenant. Besides ACLs copied into chunk metadata, \sys{} supports seven engines: OPA, OpenFGA, SpiceDB and
-Cerbos offer filters, and Ory Keto, Cedar and Casbin offer checks only. Adapters cover 14 stores (pgvector,
-Qdrant, Milvus, MongoDB Atlas, Weaviate, Redis, LanceDB, FAISS, Vespa, Cassandra, Pinecone, Elasticsearch,
-OpenSearch and Chroma), and an in-memory backend that evaluates the reference semantics is their oracle.
+An authorizer offers a batch check, a filter that selects \emph{exactly} what $s$ may read, or nothing, and
+optionally a necessary condition such as the subject's tenant. Besides ACLs copied into chunk metadata, \sys{}
+supports seven engines: OPA, OpenFGA, SpiceDB and Cerbos offer filters, and Ory Keto, Cedar and Casbin offer checks
+only. Adapters cover 14 stores (pgvector, Qdrant, Milvus, MongoDB Atlas, Weaviate, Redis, LanceDB, FAISS, Vespa,
+Cassandra, Pinecone, Elasticsearch, OpenSearch and Chroma), and an in-memory backend that evaluates the reference
+semantics is their oracle.
 
 \paragraph{Filter semantics.}
 Filters are built from $\mathrm{In}(f,V)$, $\mathrm{And}$ and $\mathrm{Or}$. Let $\mathcal{V}$ be the
@@ -42,8 +40,7 @@ violations. Otherwise it post-filters: it fetches $k \cdot o$ candidates ($o = 4
 those not seen before, and multiplies the fetch by $o$ until $k$ hits are permitted, the store returns
 fewer candidates than requested, or a cap is reached (1,000 by default). Any exception or malformed
 answer from the authorizer ends the request with an authorization error and no hits. With the re-check
-off, security rests on the filter: hits are still matched against $\varphi_s$ locally, but a filter that
-over-approximates the policy is returned unchecked.
+off, security rests on the filter: a filter that over-approximates the policy is returned unchecked.
 
 \paragraph{Completeness.}
 The release we ran end to end (2.1.0) set $c = 1$ for any pre-filtered result without violations, an
@@ -51,10 +48,7 @@ empty one included, so it was not count-honest. The current code (PR~\#166, not 
 backend declare exact search; with $e$ the declaration, $v$ the violations and $H_0$ the store's answer,
 a pre-filtered result has $c = \bigl(|H_0| = k \vee e\bigr) \wedge (v = 0)$. The flag is thus count-honest
 relative to $\varphi_s$, and only to it: a false denial shrinks $E(\varphi_s)$ unseen, and a full answer is
-taken at the store's word, so $c = 1$ does not certify maximality.
-
-\paragraph{Caching and identity.}
-A caching wrapper stores decisions for a time to live (30\,s by default) that is a stated revocation
-bound, with explicit invalidation. No interface lets a client or a model choose the subject, which comes
-from a verified token. Appendix~\ref{app:system} details composition, tenant scopes, the cache and the
-identity paths, and Appendix~\ref{sec:sys-complete} the flag.
+taken at the store's word, so $c = 1$ does not certify maximality. A caching wrapper stores decisions for a
+time to live (30\,s by default), a stated revocation bound with explicit invalidation, and no interface lets a
+client or a model choose the subject. Appendix~\ref{app:system} details the flag, composition, tenant scopes, the
+cache and identity.

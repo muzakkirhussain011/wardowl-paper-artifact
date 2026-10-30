@@ -7,23 +7,20 @@
 Appendix~\ref{sec:limits-limits} states these in full. \emph{Leak-free} means that no returned chunk lay outside the
 readable set at the revision the check read, under the stated trusted computing base. It does not mean fresh, nor that
 unreadable chunks leave no trace, and the detection fields of Section~\ref{sec:repair} are observables we did not measure.
-Every permission layout is generated, because no public corpus pairs documents with a real organization's ACLs; the
-enterprise layout, with 19 near-identical copies of each company document, is a hard case for graph indexes, so its recall
-numbers, Qdrant's especially, should not be read as an estimate for an organization without such copies. Every measurement
-passes through one layer, and some numbers are properties of its schema as much as of a store. No single version of the library
-was evaluated throughout, and PostgreSQL and the embedding dimension differ across experiments (Appendix~\ref{app:map}). We did not
-measure native enforcement (PostgreSQL row-level security, document-level security in Elasticsearch and OpenSearch), sweep the share
-of near-duplicate chunks or rerun the evaluation on one release, and outside the 100\% selectivity cells we have no unfiltered baseline
-per store. Zero-leak results are upper bounds over the generator's distribution; we apply no correction for multiple comparisons across
-cells, and several verdicts are inconclusive rather than confirmed or falsified.
+Every permission layout is generated, and the enterprise layout, with 19 near-identical copies of each company document, is a hard case for
+graph indexes, so its recall numbers, Qdrant's especially, should not be read as an estimate for an organization without such copies. Every
+measurement passes through one layer, and some numbers are properties of its schema as much as of a store. No single version of the library was
+evaluated throughout, and PostgreSQL and the embedding dimension differ across experiments (Appendix~\ref{app:map}). We did not measure native
+enforcement (PostgreSQL row-level security, document-level security in Elasticsearch and OpenSearch), sweep the share of near-duplicate chunks or
+rerun the evaluation on one release, and outside the 100\% selectivity cells we have no unfiltered baseline per store. Zero-leak results are upper
+bounds over the generator's distribution; we apply no correction for multiple comparisons across cells.
 
 \paragraph{Ethics and disclosure.}\label{sec:limits-ethics}
-No human subjects took part: people, documents, ACLs and canaries are synthetic, the shared passages come from public research
-corpora~\cite{maia2018www18,bajaj2016ms}, every store and engine ran in containers or processes we controlled, and no third-party service
-was probed. None of our findings is a chunk returned through the layer outside the readable set at the checked revision. They can still
-matter for deployments that trust a pushed-down filter without a re-check, and Chroma's crash lets any user in enough groups stop an
-application that passes their groups to Chroma. For the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the
-Cerbos translator meets we prepared reports with minimal reproducers that do not need our library;
+No human subjects took part: people, documents, ACLs and canaries are synthetic, and every store and engine ran in containers or processes we
+controlled. None of our findings is a chunk returned through the layer outside the readable set at the checked revision. They can still matter for
+deployments that trust a pushed-down filter without a re-check, and Chroma's crash lets any user in enough groups stop an application that passes
+their groups to Chroma (Appendix~\ref{app:ethics}). For the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
+translator meets we prepared reports with minimal reproducers that do not need our library;
 Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report's status. SpiceDB's staleness beyond its documented bound, OPA's residual negation and pgvector's plan
 choice have no report. \tbd{filing dates, links and vendor responses, once the reports are filed}
 

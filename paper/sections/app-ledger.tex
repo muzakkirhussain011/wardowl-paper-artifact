@@ -22,7 +22,7 @@ aggregates of X0, the X2 and X5 predictions followed X0 and the verdicts of X1's
 \begingroup
 \scriptsize
 \newcommand{\lrag}{\raggedright}
-\newcommand{\lgroup}[1]{\multicolumn{7}{@{}p{\linewidth}@{}}{\raggedright\textbf{#1}}\\\midrule}
+\newcommand{\ledgergroup}[1]{\multicolumn{7}{@{}p{\linewidth}@{}}{\raggedright\textbf{#1}}\\\midrule}
 \setlength{\tabcolsep}{2.5pt}
 \setlength{\LTcapwidth}{\linewidth}
 \begin{longtable}{@{}p{0.065\linewidth}p{0.235\linewidth}p{0.075\linewidth}p{0.135\linewidth}p{0.11\linewidth}p{0.235\linewidth}p{0.04\linewidth}@{}}
@@ -41,7 +41,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \endfoot
 \bottomrule
 \endlastfoot
-\lgroup{X1, the diagnosis grid. PREREGISTRATION.md, branch paper/x1-underretrieval: 7c991cd (2026-10-26 09:01), amendment 1 fb2ef64 (09:49, before any result), amendment 2 eeb7d2b (2026-10-29 15:46) and its revision 80e3f56 (16:54). Run 1: Kaggle, 2026-10-26. Run 2: Kaggle, prep pushed 2026-10-29 19:12. By amendment 2 every verdict is judged on run 2; run 1's is given first.}
+\ledgergroup{X1, the diagnosis grid. PREREGISTRATION.md, branch paper/x1-underretrieval: 7c991cd (2026-10-26 09:01), amendment 1 fb2ef64 (09:49, before any result), amendment 2 eeb7d2b (2026-10-29 15:46) and its revision 80e3f56 (16:54). Run 1: Kaggle, 2026-10-26. Run 2: Kaggle, prep pushed 2026-10-29 19:12. By amendment 2 every verdict is judged on run 2; run 1's is given first.}
 \lrag Q1 & \lrag Islanded permitted subgraph in Qdrant & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag confirmed; confirmed & conf. \tabularnewline
 \lrag Q2 & \lrag ACORN's default gate engages unreliably & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag falsified; falsified & conf. \tabularnewline
 \lrag Q3 & \lrag Recall varies by build and segment layout & \lrag 7c991cd & \lrag Before run 1; layout fixed by am.~2 & \lrag Runs 1, 2 & \lrag inconclusive; inconclusive & conf. \tabularnewline
@@ -52,13 +52,13 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag P4 & \lrag Generic plans make no difference & \lrag 7c991cd; am.~1 & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag falsified; falsified & conf. \tabularnewline
 \lrag P5 & \lrag The plan cache decides whether pgvector searches the graph & \lrag eeb7d2b, 80e3f56 & \lrag After run 1, before run 2 & \lrag Run 2 & \lrag confirmed & expl. \tabularnewline
 \midrule
-\lgroup{X2, the frontier experiment. PREREG\_X2\_X5.md, branch paper/x2-x5: 828ea27 (2026-10-29 16:24), alone, before any harness code. Run 40921769714 at 884ce18, created 17:29.}
+\ledgergroup{X2, the frontier experiment. PREREG\_X2\_X5.md, branch paper/x2-x5: 828ea27 (2026-10-29 16:24), alone, before any harness code. Run 40921769714 at 884ce18, created 17:29.}
 \lrag H2.1 & \lrag Negative correlation costs recall at defaults & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag inconclusive & conf. \tabularnewline
 \lrag H2.2 & \lrag Local axes predict recall better than global selectivity & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag falsified & conf. \tabularnewline
 \lrag H2.3 & \lrag Effort narrows the gap but does not close it & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
 \lrag H2.4 & \lrag The hardest filters are the intermediate ones & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed (per store, ``U-shaped'', ``monotone'' or ``neither'') & conf. \tabularnewline
 \midrule
-\lgroup{X5, repair. The same document and commit; the same run.}
+\ledgergroup{X5, repair. The same document and commit; the same run.}
 \lrag H5.1 & \lrag A count certifies short results without false alarms & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
 \lrag H5.2 & \lrag Exact repair removes empty and short results & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed (the rule names the unbounded arm) & conf. \tabularnewline
 \lrag H5.3 & \lrag The repairs cost nothing on untriggered queries & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag inconclusive & conf. \tabularnewline
@@ -67,7 +67,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag H5.6 & \lrag Widening is not a certificate & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
 \lrag H5.7 & \lrag Store-native layout fixes what library repairs cannot & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
 \midrule
-\lgroup{X3, filter size. PREREG\_X3\_X6.md, branch paper/x3-x6: 5da58ee (2026-10-29 15:50), amendments 1 to 3 f0acc15 (17:05), c369a80 (19:10), 3b7ba31 (19:19), all before any full result. Run 40940385704 at a191626, created 19:28. Amendment 4 ba67dd8 (23:31), after that run's results; follow-up 40982986417 at 9e22b89, created 2026-10-30 00:58.}
+\ledgergroup{X3, filter size. PREREG\_X3\_X6.md, branch paper/x3-x6: 5da58ee (2026-10-29 15:50), amendments 1 to 3 f0acc15 (17:05), c369a80 (19:10), 3b7ba31 (19:19), all before any full result. Run 40940385704 at a191626, created 19:28. Amendment 4 ba67dd8 (23:31), after that run's results; follow-up 40982986417 at 9e22b89, created 2026-10-30 00:58.}
 \lrag X3-H1 & \lrag Every translator returns within a second at every level & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704; 40982986417 & \lrag inconclusive (77 of 84 parts confirmed, 7 inconclusive, all Chroma); confirmed (84 of 84) with Chroma's five seeds & conf. \tabularnewline
 \lrag X3-H2 & \lrag Eight stores accept 40,000 groups; Chroma refuses & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704; 40982986417 & \lrag confirmed for each of the eight; Chroma inconclusive (three seeds), confirmed with five & conf. \tabularnewline
 \lrag X3-H3a & \lrag pgvector's median grows at least fiftyfold & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag confirmed & conf. \tabularnewline
@@ -75,7 +75,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag X3-H3c & \lrag Cassandra's per-group queries against its fallback & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag confirmed & conf. \tabularnewline
 \lrag X3-H4 & \lrag Recall does not depend on the filter's length & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704; 40982986417 & \lrag confirmed for each of eight stores; Chroma inconclusive in both & conf. \tabularnewline
 \midrule
-\lgroup{X6, side channels. The same document, commits and run. Guards G1 and G2 precede every verdict.}
+\ledgergroup{X6, side channels. The same document, commits and run. Guards G1 and G2 precede every verdict.}
 \lrag H1 & \lrag Widening: count at $m = 1{,}000$, latency at $m = 100$, none at $m = 1$ & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag falsified (parts 29 confirmed, 5 falsified, 6 inconclusive) & conf. \tabularnewline
 \lrag H2 & \lrag Constant work removes the latency channel, the count channel remains & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag falsified (2, 4, 10) & conf. \tabularnewline
 \lrag H3a & \lrag pgvector's approximate pre-filter: latency channel & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag confirmed & conf. \tabularnewline
@@ -88,7 +88,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag H6 & \lrag Padding removes the latency channel & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag inconclusive (script defect; confirmed under the written rule) & conf. \tabularnewline
 \lrag Am.~4, B & \lrag Readings fixed in advance for FAISS's post-filter at $m = 1$, FAISS's pre-filter and pgvector's exact search; hubs; plans; vacuum state; the crash's threshold & \lrag ba67dd8 & \lrag After the main results, before running & \lrag 40982986417 & \lrag inconclusive for the three readings; hub mechanism as predicted; no verdict changes & expl. \tabularnewline
 \midrule
-\lgroup{X4, filters against checks. PREREG\_X4\_X7.md, branch paper/x4-x7: eafafa9 (2026-10-29 16:28), alone, before any harness code; amendment 1 ba00ca6 (17:07), after a smoke run, before any full result. Run 40919304635 at e66dffc, created 17:13.}
+\ledgergroup{X4, filters against checks. PREREG\_X4\_X7.md, branch paper/x4-x7: eafafa9 (2026-10-29 16:28), alone, before any harness code; amendment 1 ba00ca6 (17:07), after a smoke run, before any full result. Run 40919304635 at e66dffc, created 17:13.}
 \lrag X4-H1 & \lrag Agreement at one revision & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed for seven profiles & conf. \tabularnewline
 \lrag X4-H2 & \lrag Shape drift: Cerbos disagrees, OPA's policy does not & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed & conf. \tabularnewline
 \lrag X4-H3 & \lrag Negation is never dropped; availability per profile & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed (no false admit, vacuously); availability confirmed for Cerbos, falsified for OPA's partial evaluation & conf. \tabularnewline
@@ -100,7 +100,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag X4-H6 & \lrag Recall after the fallback & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed, 24 of 24 & conf. \tabularnewline
 \lrag X4-H7 & \lrag Caching is at least tenfold faster & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed for OpenFGA, SpiceDB, OPA; inconclusive for Cerbos & conf. \tabularnewline
 \midrule
-\lgroup{X7, revocation and faults. The same document, commits and run.}
+\ledgergroup{X7, revocation and faults. The same document, commits and run.}
 \lrag X7-H1 & \lrag The stated bound holds & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag falsified in 3 of 45 cells (SpiceDB \texttt{minimizeLatency}), confirmed in 42 & conf. \tabularnewline
 \lrag X7-H2 & \lrag The ttl is the realized delay & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed, 12 of 12 & conf. \tabularnewline
 \lrag X7-H3 & \lrag Invalidation ends the delay & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag falsified for SpiceDB \texttt{minimizeLatency} (2 cells), confirmed in 16 & conf. \tabularnewline
@@ -112,7 +112,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag X7-H8a--b & \lrag Recovery, and the circuit breaker & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed, each part & conf. \tabularnewline
 \lrag X7-H9 & \lrag A warm cache masks an outage & \lrag eafafa9 & \lrag Before any full result & \lrag 40919304635 & \lrag confirmed, 20 of 20 & conf. \tabularnewline
 \midrule
-\lgroup{X7, amendment 2, the targeted rerun. PREREG\_X4\_X7.md: 618b108 (2026-10-29 20:40), after run 40919304635's results. Run 40969846593 at 41292bd, created 22:58.}
+\ledgergroup{X7, amendment 2, the targeted rerun. PREREG\_X4\_X7.md: 618b108 (2026-10-29 20:40), after run 40919304635's results. Run 40969846593 at 41292bd, created 22:58.}
 \lrag A2-H1 & \lrag Revocation within the declared staleness plus 1\,s after invalidation & \lrag 618b108 & \lrag After the main results, before running & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \lrag A2-H2 & \lrag The cache adds nothing to the engine's delay & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \lrag A2-H3 & \lrag The declared staleness bounds the engine (with X7-H2 and X7-H5 judged again) & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
@@ -122,20 +122,20 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag A2-H7 & \lrag Store errors carry a fixed message & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \lrag A2-H8 & \lrag Fail closed, replicated & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \midrule
-\lgroup{X8, the end-to-end repeats. plan/x8-prereg.md in the paper's repository: 875d98e (2026-10-29 15:44), after X0, before any repeat; kernels wardowl-x8-seed11, -seed13, -seed17 at bf25bd0 of the acceptance scripts.}
+\ledgergroup{X8, the end-to-end repeats. plan/x8-prereg.md in the paper's repository: 875d98e (2026-10-29 15:44), after X0, before any repeat; kernels wardowl-x8-seed11, -seed13, -seed17 at bf25bd0 of the acceptance scripts.}
 \lrag X8-1 & \lrag No unreadable hit, canary or violation in any run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \lrag X8-2 & \lrag Qdrant recall@10 between 0.45 and 0.70 in every run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \lrag X8-3 & \lrag pgvector returns nothing to 3 to 25 people in every run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag falsified & conf. \tabularnewline
 \lrag X8-4 & \lrag Redis, Elasticsearch and OpenSearch at or above 0.90 & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \lrag X8-5 & \lrag The model obeys every injected notice it retrieves & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \midrule
-\lgroup{X8-FGA, amendment 1 of the same file: ba64c23 and 1a25086 (2026-10-29 21:58), after X0 and X8, before these runs; kernels wardowl-x8fga-seed7, -seed11, -seed13, -seed17.}
+\ledgergroup{X8-FGA, amendment 1 of the same file: ba64c23 and 1a25086 (2026-10-29 21:58), after X0 and X8, before these runs; kernels wardowl-x8fga-seed7, -seed11, -seed13, -seed17.}
 \lrag F1 & \lrag OpenFGA starts and every tuple is written & \lrag ba64c23 & \lrag After the main results, before running & \lrag X8-FGA kernels & \lrag holds & impl. \tabularnewline
 \lrag F2 & \lrag Safety for pgvector with OpenFGA & \lrag ba64c23 & \lrag As above & \lrag X8-FGA kernels & \lrag holds & expl. \tabularnewline
 \lrag F3 & \lrag Every retrieval with OpenFGA uses the pre-filter & \lrag ba64c23, 1a25086 & \lrag As above & \lrag X8-FGA kernels & \lrag holds & impl. \tabularnewline
 \lrag F4 & \lrag In-process pgvector shows one of the two known modes & \lrag ba64c23 & \lrag As above & \lrag X8-FGA kernels & \lrag holds as worded, with a caveat: one run was a mixture & expl. \tabularnewline
 \midrule
-\lgroup{X8, amendment 2 of the same file: eff0b23 (2026-10-30 10:11), after X0, X8, X8-FGA and the critical review, before any of its runs.}
+\ledgergroup{X8, amendment 2 of the same file: eff0b23 (2026-10-30 10:11), after X0, X8, X8-FGA and the critical review, before any of its runs.}
 \lrag Am.~2 & \lrag Exposure and the mutation control: the seven predictions numbered X1 to X7 in that text, unrelated to the experiment codes & \lrag eff0b23 & \lrag After the main results, before running & \lrag x8b kernels & \lrag \emph{pending} & expl. \tabularnewline
 \end{longtable}
 \endgroup

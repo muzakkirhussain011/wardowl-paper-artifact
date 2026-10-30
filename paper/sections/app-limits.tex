@@ -103,3 +103,21 @@ is under the Qwen Research License Agreement, which permits research and evaluat
 separate license for commercial use. All our use was research. The harnesses download corpora and
 models from their sources; released outputs that quote passages or model answers should be treated
 under the same terms.
+
+\subsection{Ethics and disclosure in detail}\label{app:ethics}
+
+No human subjects took part. People, documents, ACLs and canaries are synthetic, and the shared
+passages come from public research corpora~\cite{maia2018www18,bajaj2016ms}. Red-team prompts are
+generic attempts to obtain other people's data and target only our own deployments; every store and
+engine ran in containers or processes we controlled, on our own sessions and runners, and no
+third-party service was probed.
+
+None of our findings is a chunk returned through the layer outside the readable set at the checked
+revision, because the re-check contains filter faults. They can still matter for deployments that
+trust a pushed-down filter without a re-check: a filter that admits more than the check would leak
+there, and one, Chroma's crash on a large filter, lets any user in enough groups stop an application
+that passes their groups to Chroma. For four behaviors in third-party components that our experiments
+found (the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
+translator meets), we prepared a report with a minimal reproducer that does not need our library, and
+Table~\ref{tab:conf-faults} gives each report's status at the time of writing. SpiceDB's staleness
+beyond its documented bound, OPA's residual negation and pgvector's plan choice have no report.

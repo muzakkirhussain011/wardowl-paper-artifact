@@ -13,44 +13,38 @@ metadata-filter semantics across vector stores, for which we found no such
 oracle~\cite{xie2025toward,wang2025towards}.
 
 \paragraph{The kit.}
-From a seed, the kit draws corpora of up to 20 documents, each holding zero to four of seven fields, with
-confusable values (\texttt{1} and \texttt{"1"}; \texttt{"a"} and \texttt{"A"}; \'e as one code point or
-two), dotted field names, nested And and Or, empty In filters and subjects in 300 extra groups. It fills
-a fresh store and checks searches against $E(\varphi)$: at most $k$ hits, no duplicates, no document
+From a seed, the kit draws small corpora with confusable values (\texttt{1} and \texttt{"1"}; \texttt{"a"}
+and \texttt{"A"}; \'e as one code point or two), missing and dotted fields, nested And and Or, empty In
+filters and subjects in 300 extra groups. It checks searches against $E(\varphi)$: at most $k$ hits, no document
 outside $E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, finite scores in non-increasing order, and text and
-metadata identical to what was stored. $k$ equals the corpus size for one of the two unfiltered searches
-and for half of the filtered ones, so that a false denial cannot hide outside the top $k$, and is
-otherwise uniform from 1 to the corpus size. Stores whose index is approximate even on these small corpora
-(Cassandra, and Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but
-never wrong. For authorizers it requires $\mathrm{check}$ to agree with $m \models \varphi_s$ on every hit;
-this shows consistency, not a correct policy. The kit's own suite plants 18 faulty backends and six faulty
-authorizers that it must reject, beside positive controls it must accept. Appendix~\ref{app:conformance}
-gives the generator, the checks and the data variants.
+metadata identical to what was stored. $k$ equals the corpus size for half of the filtered searches, so that a
+false denial cannot hide outside the top $k$. Stores whose index is approximate even on these corpora (Cassandra,
+and Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but never wrong. For
+authorizers it requires $\mathrm{check}$ to agree with $m \models \varphi_s$ on every hit, which shows
+consistency, not a correct policy. Its own suite plants 18 faulty backends and six faulty authorizers that it
+must reject. Appendix~\ref{app:conformance} gives the generator, the checks and the data variants.
 
 \paragraph{The campaign.}
-We ran the kit against current releases with fixed versions, seeds and counts, in GitHub-hosted runners:
-13 stores, beside the in-memory reference as a control, and 14 engine targets (OPA, OpenFGA, SpiceDB,
-Cerbos, Cedar and Casbin, each with a metadata-ACL policy and a tenant policy, plus Ory Keto and the
-in-process authorizer as a control). The fifteenth store target, Pinecone, needs an API key we did not
-have, so the layer's Pinecone adapter is not covered. Each store target ran 20 seeds of nine data variants
-and each engine target 20 seeds of seven; a run is one (target, seed, variant) and takes the worst outcome
-of its examples. The first run completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
-Both controls passed every run, no target returned a hit outside the reference, and none altered stored
-metadata. Of the violations, 39 came from the layer's Cerbos translator, which maps CEL's \texttt{in},
-\texttt{==} and \texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check
-raises on a scalar and denies. This is a type gap in the adapter, not a fault of Cerbos; the project's
-review had found it, and the campaign reproduced it. The other 45 were Redis (26) and MongoDB (19), which
-cut a long term when they index it and look up the whole term when they search, undocumented for the field
-type the layer uses. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
+We ran the kit with fixed versions, seeds and counts against 13 stores, beside the in-memory reference as a
+control, and 14 engine targets (OPA, OpenFGA, SpiceDB, Cerbos, Cedar and Casbin, each with a metadata-ACL policy
+and a tenant policy, plus Ory Keto and the in-process authorizer as a control). The fifteenth store target,
+Pinecone, needs an API key we did not have, so its adapter is not covered. Each store target ran 20 seeds of nine
+data variants and each engine target 20 seeds of seven; a run is one (target, seed, variant) and takes the worst
+outcome of its examples. The first run completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
+Both controls passed every run, no target returned a hit outside the reference, and none altered stored metadata.
+Of the violations, 39 came from the layer's Cerbos translator, which maps CEL's \texttt{in}, \texttt{==} and
+\texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check raises on a scalar and
+denies: a type gap in the adapter, not a fault of Cerbos, which the project's review had found and the campaign
+reproduced. The other 45 were Redis (26) and MongoDB (19), which cut a long term when they index it and look up the
+whole term when they search. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
 140 were stores' documented limits, which fail loudly and return nothing.
 
-We changed the four adapters: OpenFGA and SpiceDB now refuse a subject they cannot represent before
-sending anything, and Redis and MongoDB store and search a term above their limits as its SHA-256 digest.
-The second run, of 4,480 runs, had 3,822 passes, 39 violations, 479 refusals and 140 errors, as the
-diagnosis predicted. Redis and MongoDB passed every long- and huge-string run, and in all 280 disagreeing
-Cerbos hits the filter gave the reference answer and the check denied. The 479 refusals are 85.5\% of those
-two engines' 560 runs, and only 81 runs reached the engines with every subject, so the campaign's evidence
-on them is thin; Section~\ref{sec:engines} tests them on data within their limits.
+We changed the four adapters: OpenFGA and SpiceDB now refuse a subject they cannot represent before sending
+anything, and Redis and MongoDB store and search a term above their limits as its SHA-256 digest. The second run, of
+4,480 runs, had 3,822 passes, 39 violations, 479 refusals and 140 errors, as the diagnosis predicted. Redis and MongoDB
+passed every long- and huge-string run, and in all 280 disagreeing Cerbos hits the filter gave the reference answer and
+the check denied. The 479 refusals are 85.5\% of those two engines' 560 runs, and only 81 runs reached them with every
+subject, so the campaign's evidence on them is thin; Section~\ref{sec:engines} tests them on data within their limits.
 
 \begin{table}[tbp]
 \centering
@@ -120,8 +114,6 @@ them 18 that record the project's development before this paper.}
 
 Table~\ref{tab:conf-findings} collects what this paper's experiments exposed. Counted by kind, the campaign
 found two store behaviors with a correctness effect, two availability faults in the layer's own adapters
-and the documented limits of five stores, which fail closed, and it reproduced one known gap. All lie in
-what the generator targets, at sizes that the continuous-integration runs had not reached. Several entries
+and the documented limits of five stores, which fail closed, and it reproduced one known gap. Several entries
 are faults in \sys{}'s own code that a store's or engine's behavior exposed; any other integration meets the
-same behavior. In the full table, nine entries let a filter admit a chunk the subject may not read, which
-leaks without the re-check and becomes a violation with it, and five lie beyond any re-check.
+same behavior.

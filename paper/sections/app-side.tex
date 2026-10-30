@@ -10,7 +10,10 @@
 \section{Side channels in detail (X6)}\label{app:side}
 
 This appendix gives the setup, the hypotheses and the full results of the side-channel experiment, including the
-forensics of the build offsets, which Section~\ref{sec:side} summarizes.
+forensics of the build offsets, which Section~\ref{sec:side} summarizes. Beside the game's differencing attacker
+(Section~\ref{sec:side-game}), whose advantage is $2\,\mathrm{AUC} - 1$ and for whom $|\mathrm{AUC} - 0.5|$ is half the
+size of that advantage, we report a \emph{one-shot attacker}, who sees one observation and must threshold it; its
+success is the AUC over all $W_1$ against all $W_0$ observations.
 
 \subsection{Setup}\label{sec:side-setup}
 

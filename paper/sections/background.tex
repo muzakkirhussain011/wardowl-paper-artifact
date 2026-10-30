@@ -7,27 +7,25 @@
 \subsection{\texorpdfstring{Permission-aware top-$k$ retrieval}{Permission-aware top-k retrieval}}\label{sec:prob-setup}
 
 Let $D$ be a corpus of chunks, each with an embedding $\mathbf{x}_d$ and metadata $m_d$, and let
-$\sigma(q,d)$ be the similarity (cosine or inner product) between a query embedding $q$ and
-$\mathbf{x}_d$. For $X \subseteq D$, $\mathrm{top}_k(q,X)$ denotes the $\min(k,|X|)$ chunks of $X$ most
-similar to $q$, ties broken by a fixed order on chunk identifiers. Vector stores answer this query
-approximately, with indexes such as HNSW~\cite{malkov2020efficient}, DiskANN~\cite{subramanya2019diskann}
-or IVF~\cite{douze2024faiss}; a filtered query $\mathrm{search}(q,\varphi,k)$ restricts the answer to
-the chunks $E(\varphi) = \{d \in D : m_d \models \varphi\}$ whose metadata satisfy a predicate
-$\varphi$, filtering before, after or during index traversal~\cite{patel2024acorn,chronis2025filtered}.
+$\sigma(q,d)$ be the similarity between a query embedding $q$ and $\mathbf{x}_d$. For $X \subseteq D$,
+$\mathrm{top}_k(q,X)$ denotes the $\min(k,|X|)$ chunks of $X$ most similar to $q$, ties broken by a fixed
+order on chunk identifiers. Vector stores answer this query approximately, with indexes such as
+HNSW~\cite{malkov2020efficient}, DiskANN~\cite{subramanya2019diskann} or IVF~\cite{douze2024faiss}; a filtered
+query $\mathrm{search}(q,\varphi,k)$ restricts the answer to $E(\varphi) = \{d \in D : m_d \models \varphi\}$,
+filtering before, after or during index traversal~\cite{patel2024acorn,chronis2025filtered}.
 
 A \emph{subject} $s$ is the principal on whose behalf a query runs; an agent acting for a user is
-authorized as that user~\cite{jones2020oauth}. Given the authorization data at revision $\tau$ (a
-snapshot of relationships, ACLs and policy text, committed at time $t(\tau)$), the \emph{policy} decides
-$P_\tau(s,d) \in \{0,1\}$, whether $s$ may read chunk $d$. The \emph{readable set} of $s$ is
-$R_\tau(s) = \{d \in D : P_\tau(s,d) = 1\}$, written $R(s)$ when the revision is clear, and the
-\emph{exact answer} to $q$ is $T^\star = \mathrm{top}_k(q, R_\tau(s))$. Our experiments compute $P$ with
-an independent oracle written without the layer's code. The policy is enforced by an external
-\emph{authorizer}: a relationship-based engine in the style of Zanzibar~\cite{pang2019zanzibar}, a
-policy engine, or ACL metadata copied from a source system. Its \emph{check API} answers
-$\mathrm{check}_\tau(s,d) \in \{0,1\}$, reading revision $\tau$. Many authorizers also expose a
-\emph{filter API}, such as OpenFGA's ListObjects, SpiceDB's LookupResources, OPA's partial evaluation or
-Cerbos's query plans~\cite{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos},
-whose output can be translated into a store predicate $\varphi_s$.
+authorized as that user~\cite{jones2020oauth}. Given the authorization data at revision $\tau$, committed at
+time $t(\tau)$, the \emph{policy} decides $P_\tau(s,d) \in \{0,1\}$, whether $s$ may read chunk $d$. The
+\emph{readable set} is $R_\tau(s) = \{d \in D : P_\tau(s,d) = 1\}$, written $R(s)$ when the revision is clear,
+and the \emph{exact answer} is $T^\star = \mathrm{top}_k(q, R_\tau(s))$. Our experiments compute $P$ with an
+independent oracle written without the layer's code. An external \emph{authorizer} enforces the policy: a
+relationship-based engine in the style of Zanzibar~\cite{pang2019zanzibar}, a policy engine, or ACL metadata
+copied from a source system. Its \emph{check API} answers $\mathrm{check}_\tau(s,d) \in \{0,1\}$, reading
+revision $\tau$. Many authorizers also expose a \emph{filter API}, such as OpenFGA's ListObjects, SpiceDB's
+LookupResources, OPA's partial evaluation or Cerbos's query
+plans~\cite{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos}, whose output can be
+translated into a store predicate $\varphi_s$.
 
 An \emph{enforcement layer} sits between the RAG application and the store. For each request it
 (i)~takes $s$ from a verified token; (ii)~obtains $\varphi_s$ when a filter can be compiled;
@@ -44,8 +42,7 @@ is \emph{sound} if it is consistent with the answer computed without access cont
 if it reveals nothing the policy forbids, and \emph{maximal} if it returns as much as the first two
 allow~\cite{wang2007correctness}. We adapt them to top-$k$ retrieval under Truman semantics, in which a
 query is answered over the subject's restricted view rather than rejected~\cite{rizvi2004extending}, so
-the reference answer is the exact answer over the readable set, and maximality splits into two failures
-that need different detectors.
+the reference answer is the exact answer over the readable set.
 
 \begin{definition}[Criteria for permission-aware top-$k$ retrieval]\label{def:criteria}
 Fix a subject $s$, a query $q$ and a depth $k$, for a request issued at time $t$. Each hit $d$ is
@@ -71,13 +68,12 @@ belong to the exact answer up to ties within $\epsilon$. A result $(H,c)$ is
 \end{definition}
 
 Security, and freshness for the $\delta$ that the serving path states, are required of every result,
-and count-honesty is required of the flag. Soundness and completeness are what approximate search
-trades away. Count-honesty is relative to $\varphi_s$: it implies completeness only when $\varphi_s$ has
-no false denials, and it never implies soundness, since a full answer of the wrong chunks satisfies it.
-Security concerns the returned set only; everything else a caller observes we treat as a side channel
-(Section~\ref{sec:side}). Appendix~\ref{app:criteria} discusses the criteria against their sources.
+and count-honesty is required of the flag; soundness and completeness are what approximate search trades away.
+Count-honesty is relative to $\varphi_s$: it implies completeness only when $\varphi_s$ has no false denials, and
+it never implies soundness. Security concerns the returned set only; everything else a caller observes we treat
+as a side channel (Section~\ref{sec:side}). Appendix~\ref{app:criteria} discusses the criteria against their
+sources.
 
-\paragraph{Security does not depend on the filter or the store.}
 We make three assumptions. (A1) \emph{Correct checks}: $\mathrm{check}_\tau(s,d) = P_\tau(s,d)$ for every
 subject, chunk and revision $\tau$ the check reads. (A2) \emph{Faithful metadata}: for every candidate
 the store returns, the identifier and attributes that the check evaluates belong to the chunk whose
@@ -98,70 +94,57 @@ $d \in R_{\tau_d}(s)$. If a check cannot be completed, (A3) gives $H = \emptyset
 restates the condition on $\tau_d$. No step refers to $\varphi_s$ or to the store's search procedure.
 \end{proof}
 
-The statement is close to definitional, and we call it an observation for that reason. Its content is
-what it leaves out: no assumption about $\varphi_s$, the filter APIs, the translators, the store's
-filter semantics or its index, and it holds for every query, chosen adaptively or not, which no sampled
-measurement can show. The re-check sees filter faults in one direction only: a \emph{false admit}, where
-$\varphi_s$ accepts a chunk outside $R_\tau(s)$, reaches the re-check and becomes a violation; a
-\emph{false denial}, where $\varphi_s$ rejects a readable chunk, never becomes a candidate and silently
-costs completeness, so only an offline oracle finds it.
+The statement is close to definitional, hence an observation. Its content is what it leaves out: no assumption
+about $\varphi_s$, the filter APIs, the translators, the store's filter semantics or its index, and it holds for
+every query, chosen adaptively or not, which no sampled measurement can show. The re-check sees filter faults in
+one direction only: a \emph{false admit}, where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, becomes a
+violation; a \emph{false denial}, where $\varphi_s$ rejects a readable chunk, silently costs completeness, so only
+an offline oracle finds it.
 
 \paragraph{Trusted computing base.}
 The observation trusts (i)~the authorizer's check API and the authorization data it reads (A1),
 including the freshness of ACLs copied into chunk metadata; (ii)~the layer's mapping of a request to
-checks: the subject taken from a verified token and the adapter code that turns the subject, its groups
-and each chunk's identifier and attributes into the engine's check request; (iii)~the binding of content
-to identifier and metadata in the store and in ingestion (A2); (iv)~the decision cache, its keys, time
-to live and invalidation, and the engine's own staleness, which together set $\delta$; and (v)~the
-fail-closed path (A3). It does not trust the filter APIs, the translators, the store's filter semantics
-or index, the widening loop, or a reranker or redactor, which receive only permitted hits. The trusted
-part has failed before: two faults in the layer's own adapters let the check itself admit, beyond any
-re-check (Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results}), and both were fixed before the
-version we evaluate. With the re-check turned off, the filter and its translator join the trusted
-computing base.
+checks: the subject taken from a verified token and the adapter code that builds the engine's check request;
+(iii)~the binding of content to identifier and metadata in the store and in ingestion (A2); (iv)~the decision
+cache, its keys, time to live and invalidation, and the engine's own staleness, which together set $\delta$; and
+(v)~the fail-closed path (A3). It does not trust the filter APIs, the translators, the store's filter semantics or
+index, the widening loop, or a reranker or redactor, which receive only permitted hits. The trusted part has failed
+before: two faults in the layer's own adapters let the check itself admit, beyond any re-check
+(Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results}), and both were fixed before the version we evaluate.
+With the re-check turned off, the filter and its translator join the trusted computing base.
 
 \paragraph{Staleness and count certificates.}
 If the engine answers from a snapshot that may lack the writes of the last $\delta_e$ seconds and the
 layer caches each decision for at most a time to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or
 $\delta_e$-fresh without a cache; Section~\ref{sec:eng-revoke} measures $\delta$ per path. A layer can set
-$c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, deep enough that $k$
-candidates survived the re-check or none remained, or if a filter-only count shows that every chunk
-passing $\varphi_s$ was among the candidates; conversely, a count of at least $k$ alongside fewer than
-$k$ candidates proves under-retrieval~\cite{opensearch2026efficient}
-(Appendix~\ref{app:certificates}).
+$c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or if a filter-only count shows that
+every chunk passing $\varphi_s$ was among the candidates; conversely, a count of at least $k$ alongside fewer than
+$k$ candidates proves under-retrieval (Appendix~\ref{app:certificates}).
 
 \subsection{Threat model}\label{sec:prob-threat}
 
-The adversary is an authenticated subject, or an agent or application acting for one, who may issue any
-number of arbitrary queries through the layer, chosen adaptively and including red-team prompts, to
-obtain the content of any chunk outside its readable set or to learn whether such chunks exist near a
-query. It does not control the authorizer, the store or the layer's host. \emph{In scope} are cross-user
-and cross-tenant disclosure through retrieval results; faults in filter compilation, store filter
-semantics and approximate-index behavior; authorizer outages and malformed answers, which must fail
-closed; identity confusion, the confused deputy~\cite{hardy1988confused}; and revocation within the
-$\delta$ the path states. \emph{Out of scope} are prompt injection and poisoning in readable
-content~\cite{zou2025poisonedrag} and what the model does with retrieved content; wrong upstream
-permissions; extraction within the readable set~\cite{zeng2024good}; compromise of the store or its
-hosts; and several participants per interaction. We say that a side channel \emph{reveals} information
-about unreadable chunks, reserving \emph{leak} for returned content. Appendix~\ref{app:threat} gives the
-full model.
+The adversary is an authenticated subject, or an agent or application acting for one, who may issue any number of
+arbitrary queries through the layer, chosen adaptively and including red-team prompts, to obtain the content of any
+chunk outside its readable set or to learn whether such chunks exist near a query. It does not control the
+authorizer, the store or the layer's host. \emph{In scope} are disclosure across users and tenants through retrieval
+results; faults in filter compilation, store filter semantics and approximate indexes; authorizer outages and malformed
+answers; identity confusion~\cite{hardy1988confused}; and revocation within the $\delta$ the path states. \emph{Out of
+scope} are prompt injection and poisoning in readable content~\cite{zou2025poisonedrag}; wrong upstream permissions;
+extraction within the readable set~\cite{zeng2024good}; and compromise of the store or its hosts. We say that a side
+channel \emph{reveals} information about unreadable chunks, reserving \emph{leak} for returned content.
+Appendix~\ref{app:threat} gives the full model.
 
 \subsection{Metrics}\label{sec:prob-metrics}
 
-Metrics use the policy oracle and exact search over $R_\tau(s)$ by exhaustive scoring. A \emph{leak} is a
-returned chunk outside $R_\tau(s)$ as the oracle decides it, or a canary string from an unreadable
-document found in a hit, a prompt or an answer~\cite{carlini2019secret}. Hits are not independent
-trials: they cluster by question and by subject. When no leak occurs we therefore bound the rate per
-question and per subject, with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$ for zero events in
-$n$ trials~\cite{hanley1983if}. These bounds hold over the distribution of the question generator and of
-the injected faults; for an adaptive adversary only Observation~\ref{prop:reduction} and its trusted
-computing base speak. \emph{Permission-recall@$k$} (recall, for short) is
-$|H \cap T^\star_\epsilon| / \min(k, |R_\tau(s)|)$ with $\epsilon = 10^{-4}$; measured against exact
-search over the readable set, it charges filter false denials and index misses alike. The
-\emph{under-retrieval rate} is the share of retrievals that are not complete, the \emph{empty-result
-rate} the share returning none to subjects who can read something, and the \emph{false-completeness rate}
-the share of results with $c = 1$ that are not maximal. \emph{Selectivity} is the fraction of the corpus
-that passes a filter. Because selectivity and query correlation alone are unstable proxies for
-difficulty~\cite{lim2026revisiting}, we place each (question, subject) pair on several measured axes
-(Appendix~\ref{app:metrics}). Rates carry 95\% intervals from a cluster bootstrap over subjects, and
-comparisons between configurations are paired on the same questions.
+A \emph{leak} is a returned chunk outside $R_\tau(s)$ as the oracle decides it, or a canary string from an unreadable
+document found in a hit, a prompt or an answer~\cite{carlini2019secret}. Hits cluster by question and by subject, so when
+no leak occurs we bound the rate per question and per subject, with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$
+for zero events in $n$ trials~\cite{hanley1983if}. These bounds hold over the distribution of the question generator and
+of the injected faults; for an adaptive adversary only Observation~\ref{prop:reduction} and its trusted computing base
+speak. \emph{Permission-recall@$k$} (recall, for short) is $|H \cap T^\star_\epsilon| / \min(k, |R_\tau(s)|)$ with
+$\epsilon = 10^{-4}$, against exact search over the readable set, so it charges filter false denials and index misses alike.
+The \emph{under-retrieval rate} is the share of retrievals that are not complete, the \emph{empty-result rate} the share
+returning none to subjects who can read something, and the \emph{false-completeness rate} the share of results with $c = 1$
+that are not maximal. \emph{Selectivity} is the fraction of the corpus that passes a filter. Rates carry 95\% intervals from
+a cluster bootstrap over subjects, and comparisons are paired on the same questions; the measured correlation axes are in
+Appendix~\ref{app:metrics}.
