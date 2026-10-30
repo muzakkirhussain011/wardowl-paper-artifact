@@ -87,6 +87,12 @@ jobs:
               pdftotext -layout "$pkg/paper_arXiv/main.pdf" "$pkg/b.txt"
               echo "pages: $(pdfinfo "$pkg/paper_arXiv/main.pdf" | awk '/^Pages/{print $2}')" >> "$out/arxiv/checks.txt"
               echo "text lines differing from the main build: $(diff "$pkg/a.txt" "$pkg/b.txt" | grep -c '^[<>]')" >> "$out/arxiv/checks.txt"
+              diff "$pkg/a.txt" "$pkg/b.txt" > "$out/arxiv/text-diff.txt" || true
+              # The same comparison ignoring layout: one word per line, spaces and line breaks dropped.
+              tr -s '[:space:]' '\n' < "$pkg/a.txt" > "$pkg/a.words"
+              tr -s '[:space:]' '\n' < "$pkg/b.txt" > "$pkg/b.words"
+              diff "$pkg/a.words" "$pkg/b.words" > "$out/arxiv/word-diff.txt" || true
+              echo "words: $(wc -l < "$pkg/a.words") and $(wc -l < "$pkg/b.words"); differing word lines: $(grep -c '^[<>]' "$out/arxiv/word-diff.txt")" >> "$out/arxiv/checks.txt"
             else
               echo "the stripped package did not compile" >> "$out/arxiv/checks.txt"
             fi

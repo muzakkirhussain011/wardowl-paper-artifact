@@ -1,7 +1,8 @@
 name: Evidence tag
 
 # Builds the tag evidence-v1 in the cloud: this repository plus the CI artifacts and results branches of
-# the paper's runs, read from the public wardowl repository. The DOI archives this tag.
+# the paper's runs, read from the public wardowl repository. The DOI archives this tag. Rebuilt whenever
+# this file changes or the workflow is run by hand, so it is rebuilt after the last change to the text.
 on:
   push:
     branches: [main]
