@@ -485,4 +485,13 @@ All `note` fields were renamed to `annote` so that plainnat does not print inter
 
 Counts on 2026-10-30: `references.bib` 206 entries, 118 of them cited by the paper; `web.bib` 97 entries, 65 cited; 183 cited in all. The Summary above gives the counts of the first build on 2026-10-26, before later checks added entries. `REFERENCE_CHECK.md` lists the 183 with links, for the author's check by hand.
 
+Machine check of all 183 cited references (`bib/refcheck.py`, workflow `refcheck.yml`, report on branch `results/refcheck`), 2026-10-30. It compares titles, first authors and years with Crossref and arXiv, and for other links looks for at least 70% of the title's words on the page. It does not check volumes, issues or pages. First run: 158 ok, 25 flagged. Each flagged one was then read:
+
+- 14 titles: Crossref stores the part after the colon as a subtitle; title plus subtitle match the entry (bailey2006secure, chen2018metamorphic, claessen2000quickcheck, curtmola2006searchable, fong2011relationshipbaseda, hanley1983if, hardy1988confused, maia2018www18, pappachan2020sieve, urbano2019statistical, wang2021milvus, wei2020analyticdbv, zerr2008zerber, zerr2009zerberr). chen2018metamorphic also shows 2019: Crossref gives issued 2018-01-04 and print 2019-01-31; the entry's 2018 is the issued year.
+- 3 first authors are the same person written differently: aumuller2020annbenchmarks (LaTeX accent), song2000practical (Crossref puts the whole name in the family field), yang2024qwen25 (arXiv lists "Qwen :" before An Yang).
+- 2 years are the venue's, the record's is the preprint's: xiao2024cpack (Crossref: SIGIR 2024, DOI added to the entry); zou2025poisonedrag (usenix.org page: USENIX Security 25).
+- 4 links: nvd2025cve202532711 (NVD's API returns the CVE), authzed2026coreproto (the file exists, HTTP 200, 7,471 bytes), milvus2026implement and milvus2026json (page titles "Implement Multi-tenancy" and "JSON Field"; plain requests get HTTP 403).
+- wang2007correctness: the link returns a PDF (HTTP 200) that could not be read here. A web search's summary gives the same title and seven authors, VLDB 2007, pp. 555-566, citing a Scopus record in a university repository; that record was not opened.
+- mckeeman1998differential: no link in the entry. A web search's summary gives Digital Technical Journal 10(1): 100-107 (1998), citing DBLP; dblp.org blocks automated requests, so DBLP itself was not read.
+
 The 77 undated `web.bib` entries now have `year` and `note = {Accessed <urldate>}`, both taken from their `urldate`. Without a year, plainnat printed a stray ", ." after `howpublished` when an author had several entries. The year is the year of access, not of publication, and the note says so in the bibliography.
