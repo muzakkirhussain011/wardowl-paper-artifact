@@ -37,7 +37,7 @@ jobs:
         run: |
           sudo apt-get install -y -q poppler-utils > /dev/null
           out=$(mktemp -d)
-          for f in main.pdf main.log main.toc main.blg; do
+          for f in main.pdf main.log main.aux main.blg; do
             [ -f "paper/$f" ] && cp "paper/$f" "$out/" || true
           done
           {
