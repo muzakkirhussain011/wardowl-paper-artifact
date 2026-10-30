@@ -62,4 +62,4 @@ Found by wardowl's conformance kit, as a disagreement between filter and check o
 
 A research paper on permission-aware retrieval mentions this behavior, as a gap in my adapter and not as a fault of Cerbos. If anything here is wrong, or if you would like the paper to describe it differently, please tell me and I will update it.
 
-AI disclosure: this report and its reproducer were drafted with an AI coding agent (Claude Code), and the reproducer's output above comes from running it in CI on both versions.
+AI disclosure: drafted with an AI coding agent; the output above comes from running the reproducer in CI on both versions.

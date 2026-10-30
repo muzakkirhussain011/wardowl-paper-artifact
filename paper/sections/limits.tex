@@ -1,4 +1,4 @@
-% Limitations, Ethics, AI Use and Reproducibility: body of Section~\ref{sec:limits} (the \section heading
+% Limitations, Ethics and Reproducibility: body of Section~\ref{sec:limits} (the \section heading
 % and its label stay in main.tex). Labels defined here: sec:limits-ethics, sec:limits-ai, sec:limits-repro.
 % The full limitations (sec:limits-limits) and the licenses are in Appendix~\ref{sec:limits-limits}. Items
 % marked \tbd{} must be settled before the preprint.
@@ -13,7 +13,10 @@ measurement passes through one layer, and some numbers are properties of its sch
 evaluated throughout, and PostgreSQL and the embedding dimension differ across experiments (Appendix~\ref{app:map}). We did not measure native
 enforcement (PostgreSQL row-level security, document-level security in Elasticsearch and OpenSearch), sweep the share of near-duplicate chunks or
 rerun the evaluation on one release, and outside the 100\% selectivity cells we have no unfiltered baseline per store. Zero-leak results are upper
-bounds over the generator's distribution; we apply no correction for multiple comparisons across cells.
+bounds over the generator's distribution; we apply no correction for multiple comparisons across cells. The system under test, its oracles, the
+meta-tests that judge the oracles and the scripts that compute the verdicts share one source, so a misconception common to them would pass every check, a
+common-mode risk that repeated runs cannot remove. Three things limit it, without removing it: the oracles were written without the library's filter code,
+the vendor reproducers use only the vendors' clients, and we release the outputs so that others can recompute the verdicts.
 
 \paragraph{Ethics and disclosure.}\label{sec:limits-ethics}
 The author develops \sys{}, the layer under test, at \url{https://github.com/muzakkirhussain011/wardowl}, the repository that the pull-request numbers in
@@ -28,16 +31,10 @@ Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report
 choice have no report. \tbd{Cerbos issue link; any vendor responses before posting}
 
 \paragraph{Use of AI assistance.}\label{sec:limits-ai}
-An AI coding agent produced most of the artifacts of this work under the author's direction: the library's code, the conformance kit and its
-meta-tests, the independent oracles, the experiment harnesses and analysis scripts, the drafts of the pre-registrations, the evidence summaries of each
-run, the checks of every reference against a primary record, and drafts of this text. Unverifiable reference fields were omitted rather than guessed. The
-numbers audit and the critical review that this version answers were run by separate agent instances. The author chose the research questions, took the
-decisions recorded with the pre-registrations and reviews, and is responsible for every claim. \tbd{extent of the author's own review of the code,
-pre-registrations, evidence summaries and text} \tbd{Final human check of every reference before submission.} Because the system under test, the oracles
-that judge it, the meta-tests that judge the oracles and the scripts that compute the verdicts come from one agent, a misconception shared among them would
-pass every check, a common-mode risk to validity that repeated runs cannot remove. Three things limit it, without removing it: the oracles were written
-without the library's filter code, the vendor reproducers use only the vendors' clients, and we release the outputs so that others can recompute the verdicts.
-AI tools are not authors. This statement follows arXiv's policy on generative AI.
+Under the author's direction, an AI coding agent produced most of the library's code, the conformance kit, the oracles, the harnesses and the analysis
+scripts, drafted the pre-registrations, the evidence summaries and this text, and checked the references against primary records; the numbers audit and the
+critical review cited here were run by separate instances of it. The author chose the research questions, took the decisions recorded with the
+pre-registrations and reviews, and takes full responsibility for the content.
 
 \paragraph{Reproducibility.}\label{sec:limits-repro}
 We release the library at the evaluated commits, the conformance kit, every harness script, the Kaggle notebooks and GitHub workflows that ran them, the
