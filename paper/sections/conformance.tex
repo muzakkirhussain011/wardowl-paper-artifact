@@ -30,8 +30,8 @@ have, so its adapter is not covered. A run is one (target, seed, variant), of 20
 and takes the worst outcome of its examples. The first campaign completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
 Both controls passed every run, no target returned a hit outside the reference, and none altered stored metadata.
 Of the violations, 39 came from the layer's Cerbos translator, which maps CEL's \texttt{in}, \texttt{==} and
-\texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check raises on a scalar and
-denies: a type gap in the adapter, not a fault of Cerbos, which the project's review had found and the campaign
+\texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check raises on \texttt{in} or
+\texttt{hasIntersection} over a scalar, compares a list whole under \texttt{==}, and denies: a type gap in the adapter, not a fault of Cerbos, which the project's review had found and the campaign
 reproduced. The other 45 were Redis (26) and MongoDB (19), which cut a long term when they index it and look up the
 whole term when they search. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
 140 were stores' documented limits, which fail loudly and return nothing.
