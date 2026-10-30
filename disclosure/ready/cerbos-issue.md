@@ -8,12 +8,12 @@
 
 ## Current Behavior
 
-Thanks for Cerbos. This is a documentation suggestion, not a bug: Cerbos behaves as CEL and its documentation say. The fault I met was in my own translator, which I have since fixed.
+Thanks for Cerbos. This is a documentation suggestion, not a bug: Cerbos behaves as CEL and its documentation say. The disagreement I met came from my own adapter's translator, and wardowl documents it.
 
 With a rule condition `request.principal.id in request.resource.attr.allowed_users`:
 
 - CheckResources for a resource whose `allowed_users` is the string `"zoe"` and a principal `zoe` answers `EFFECT_DENY`: `in` on a string is a CEL runtime error, and the conditions page says a runtime error makes the condition "not satisfied".
-- PlanResources for the same principal answers `KIND_CONDITIONAL` with the condition `"zoe" in request.resource.attr.allowed_users`. Nothing in the plan says that the attribute must be a list or map for it to hold. An adapter that maps it to a database operator matching a scalar as well as an array element (MongoDB's `{allowed_users: "zoe"}`, or Elasticsearch's `term` on a keyword field) admits rows that CheckResources denies. The same holds for `hasIntersection`, and for `==` on an attribute that holds a list in some rows.
+- PlanResources for the same principal answers `KIND_CONDITIONAL` with the condition `"zoe" in request.resource.attr.allowed_users`. Nothing in the plan says that the attribute must be a list or map for it to hold. My adapter mapped it to an operator that matches a scalar as well as an array element, and in my tests that filter admitted documents that CheckResources denied.
 
 The operators table describes `in` as "Membership in lists or maps" and `hasIntersection` as list intersection, and does not say what happens on other types.
 
@@ -58,7 +58,7 @@ curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read",
 
 ## Anything else?
 
-Found by wardowl's conformance kit, as a disagreement between filter and check on chunks whose ACL fields hold a string instead of a list. wardowl now restricts its translator and documents the same limit; this note is about Cerbos's documentation only, and you know your docs far better than I do, so please take it only as a suggestion.
+Found by wardowl's conformance kit, as a disagreement between filter and check on chunks whose ACL fields hold a string instead of a list. wardowl documents this limit, and its re-check drops such a chunk and reports it as a violation. This note is about Cerbos's documentation only, and you know your docs far better than I do, so please take it only as a suggestion.
 
 A research paper on permission-aware retrieval mentions this behavior, as a gap in my adapter and not as a fault of Cerbos. If anything here is wrong, or if you would like the paper to describe it differently, please tell me and I will update it.
 

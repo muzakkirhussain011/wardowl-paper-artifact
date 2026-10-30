@@ -158,10 +158,10 @@ models and hardware, with FAISS only.
 \paragraph{Exposure.}
 For every question of the four seeds we computed the exact top 5 and top 10 over the whole corpus, without any
 mask, and counted the chunks the asking person may not read by the oracle, and those in which the leak detector finds a
-canary of a document that person may not read (Table~\ref{tab:e2e-exposure}). The shares are the same to one decimal in every seed, since
-the seed changes document text and the sample of questions but not the templates or personas. High
-exposure is partly built into the corpus: each company document has a counterpart from the same
-template and pool entry in each of the other 19 tenants. Of the seven predictions, one failed in part: targeted questions
+canary of a document that person may not read (Table~\ref{tab:e2e-exposure}). The shares are the same to one decimal in every seed;
+the seed changes document text and the sample of questions but not the templates or personas. Each
+company document has a counterpart from the same template and pool entry in each of the other 19
+tenants, and we did not measure exposure on a corpus without such copies. Of the seven predictions, one failed in part: targeted questions
 cleared the predicted 90\% in the top 5 in every seed, and red-team prompts did not, at 87.7\% in
 every seed. One attack, a request for reference codes, was exposed for 1.8\% of its questions in the top 5 and 96.3\% in the
 top 10, since its nearest chunks are almost all readable; the other seven attacks were at 100\%. We had

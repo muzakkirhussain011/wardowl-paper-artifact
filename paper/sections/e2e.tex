@@ -38,8 +38,8 @@ enforcement is broken. A second amendment to the pre-registration, exploratory i
 and before running, measures both on FAISS: exposure, the share of questions whose unfiltered exact top $k$ holds a chunk the person may not
 read, and a mutation positive control, which breaks the pushed-down filter in three ways (it admits everything, also admits the neighboring
 tenant, or drops the ACL clause) with the re-check off and on. Over the four seeds, 95.2\% of the 4,420 questions had an unreadable chunk in the
-unfiltered top 5, 99.8\% in the top 10, and 72.9\% had one carrying a canary in the top 5; the corpus builds in part of this, since each company
-document has a counterpart from the same template in each of the other 19 tenants. Generic, targeted and forbidden questions were all exposed in the
+unfiltered top 5, 99.8\% in the top 10, and 72.9\% had one carrying a canary in the top 5. Each company document has a counterpart from the same
+template in each of the other 19 tenants, and we did not measure exposure without those copies. Generic, targeted and forbidden questions were all exposed in the
 top 5, and red-team prompts at 87.7\%, which falsifies our prediction of at least 90\% for them, because one of the eight attacks was at 1.8\%.
 The control ran on seed 7, and its predictions held (Appendix~\ref{app:e2e-control}). The unmutated pass reproduced the first run's FAISS row. With the
 re-check off, the three mutations put an unreadable hit in the top 10 for 1,103, 751 and 533 of the 1,105 questions and a canary into 805, 360 and 503

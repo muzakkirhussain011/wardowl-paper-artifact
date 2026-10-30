@@ -40,9 +40,9 @@ consider a query whose neighbours are the shared passages.
 | red team | 1,728 | 87.7% | 4.26 | 75.0% | 99.5% | 8.62 | 75.0% |
 | all | 4,420 | 95.2% | 4.61 | 72.9% | 99.8% | 9.26 | 72.9% |
 
-The shares are the same to one decimal in every seed, because the seed changes the document text and
-the sample but not the templates or personas. This is high partly by construction: each company
-document has a counterpart from the same template and pool entry in each of the other 19 tenants.
+The shares are the same to one decimal in every seed; the seed changes the document text and the
+sample but not the templates or personas. Each company document has a counterpart from the same
+template and pool entry in each of the other 19 tenants, and exposure was not measured without them.
 The per-person-type and per-attack tables are in `evidence/raw/x8b-pool/x8b-exposure-pooled.md`.
 
 ## Mutation control, seed 7

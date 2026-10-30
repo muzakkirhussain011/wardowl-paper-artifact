@@ -13,7 +13,7 @@ permission-recall@$k$ (Section~\ref{sec:prob-metrics}). Every result measures a 
 schema and settings, not the store alone: for example, metadata in one \texttt{jsonb} column tested with
 \texttt{@>} on pgvector, and list values as boolean keys on Chroma.
 
-\subsection{An audit at common settings}\label{sec:qual-audit}
+\subsection{An audit at default or tuned settings}\label{sec:qual-audit}
 
 \begin{figure}[tbp]
 \centering
@@ -77,7 +77,7 @@ schema and settings, not the store alone: for example, metadata in one \texttt{j
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,1) {4.3--4.7};
 \end{axis}
 \end{tikzpicture}
-\caption{Recall@10 in the enterprise scenario at common settings, four runs (seeds 7, 11, 13, 17). Each
+\caption{Recall@10 in the enterprise scenario at default or tuned settings, four runs (seeds 7, 11, 13, 17). Each
 circle is one run and each bar the range over runs. pgvector ran in one of two modes per run
 (Section~\ref{sec:qual-pgvector}); its right-hand values are per mode, fast then exact. p50 is the range of
 per-run median retrieval latency. Table~\ref{tab:qual-x0} in Appendix~\ref{app:audit} adds recall@5 and overlap by
@@ -86,11 +86,11 @@ person type; Appendix~\ref{app:settings} gives the settings.}
 \end{figure}
 
 The enterprise scenario (Section~\ref{sec:e2e}) holds 107,540 chunks in 20 tenants. Figure~\ref{fig:qual-audit} shows
-the spread at settings a team would plausibly ship, some tuned and some defaults. Mean recall@10 over the four runs
+the spread at the settings of Appendix~\ref{app:settings}, some tuned and some defaults. Mean recall@10 over the four runs
 ranged from 0.55 for Qdrant (0.535 in its worst run) to 0.98 for Redis across the eight approximate stores, with
 pgvector in its fast mode; the exact control, FAISS, scored 1.000 and pgvector in its exact mode 0.993. The figure
-compares configurations, not stores, and the corpus, in which only one of twenty near-identical tenant copies of a
-document passes a person's filter, is a hard case for graph indexes. No store other than pgvector moved its recall@10 by
+compares configurations, not stores. In this corpus only one of twenty near-identical tenant copies of a document
+passes a person's filter, and Section~\ref{sec:qual-qdrant} shows that Qdrant's loss depends on that layout. No store other than pgvector moved its recall@10 by
 more than 0.04 across the runs.
 
 Two failures stand out. pgvector returned \emph{nothing} to some of the least-privileged people of the scenario, although

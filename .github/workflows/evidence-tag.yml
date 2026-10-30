@@ -1,0 +1,47 @@
+name: Evidence tag
+
+# Builds the tag evidence-v1 in the cloud: this repository plus the CI artifacts and results branches of
+# the paper's runs, read from the public wardowl repository. The DOI archives this tag.
+on:
+  push:
+    branches: [main]
+    paths: [.github/workflows/evidence-tag.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  tag:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v5
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - name: Build and push the tag
+        env:
+          TOKEN: ${{ github.token }}
+        run: |
+          wardowl=https://github.com/muzakkirhussain011/wardowl.git
+          for branch in archive x2-x5 x3-x6 x4-x7; do
+            git fetch -q --depth 1 "$wardowl" "refs/heads/results/$branch:refs/evidence/$branch"
+          done
+          git fetch -q "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
+            refs/heads/results/reproducers:refs/evidence/reproducers
+          export GIT_INDEX_FILE="$RUNNER_TEMP/index"
+          git read-tree HEAD
+          git read-tree --prefix=evidence/raw/ci-artifacts/ refs/evidence/archive
+          git read-tree --prefix=evidence/raw/results-x2-x5/ refs/evidence/x2-x5
+          git read-tree --prefix=evidence/raw/results-x3-x6/ refs/evidence/x3-x6
+          git read-tree --prefix=evidence/raw/results-x4-x7/ refs/evidence/x4-x7
+          git read-tree --prefix=evidence/raw/results-reproducers/ refs/evidence/reproducers
+          tree=$(git write-tree)
+          unset GIT_INDEX_FILE
+          commit=$(git -c user.name="Syed Muzakkir Hussain" -c user.email="muzakkirhussain011@gmail.com" \
+            commit-tree "$tree" -p HEAD \
+            -m "Evidence archive v1: the repository plus the CI artifacts and results branches of the paper's runs")
+          git tag -f evidence-v1 "$commit"
+          git ls-tree -r -l evidence-v1 | awk '{s+=$4} END{printf "%d files, %.0f MB\n", NR, s/1048576}'
+          git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" refs/tags/evidence-v1

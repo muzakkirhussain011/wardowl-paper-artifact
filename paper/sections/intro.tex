@@ -22,7 +22,7 @@ between an organization's policy and the chunks a model sees. \emph{First, the p
 translators.} Filter APIs are code paths separate from check APIs, every store has its own filter
 language, and we found no published guarantee that the paths agree. \emph{Second, the filter runs inside
 an approximate index.} Permission filters are hard cases for filtered nearest-neighbor search: they are
-often selective, they take a disjunction over many groups, and organizational structure, not meaning,
+can be selective, they take a disjunction over many groups, and organizational structure, not meaning,
 decides which chunks they admit~\cite{patel2024acorn,lim2026revisiting}. \emph{Third, failures are
 silent.} Under Truman semantics~\cite{rizvi2004extending} a subject who receives three chunks, or none,
 cannot tell whether that is all it may read or all that the index found.
@@ -58,7 +58,7 @@ the loss.
         mutation control shows that the leak checks fail when the filter is broken on purpose and that
         the re-check contains the fault.
   \item \emph{An audit, diagnosis and repair of retrieval quality} (Sections~\ref{sec:quality}
-        and~\ref{sec:repair}). Mean recall@10 at common settings ranged from 0.55 to 0.98 over eight
+        and~\ref{sec:repair}). Mean recall@10 at default or tuned settings ranged from 0.55 to 0.98 over eight
         stores searched approximately, under this layer's schema. Pre-registered experiments trace
         Qdrant's loss to an islanded permitted subgraph (0.656 in the shared layout, 0.952 with
         per-tenant graphs) and pgvector's to PostgreSQL's plan cache and two scan limits. A count flagged all
