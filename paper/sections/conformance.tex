@@ -25,12 +25,10 @@ consistency, not a correct policy. Its own suite plants 18 faulty backends and s
 must reject. Appendix~\ref{app:conformance} gives the generator, the checks and the data variants.
 
 \paragraph{The campaign.}
-We ran the kit with fixed versions, seeds and counts against 13 stores, beside the in-memory reference as a
-control, and 14 engine targets (OPA, OpenFGA, SpiceDB, Cerbos, Cedar and Casbin, each with a metadata-ACL policy
-and a tenant policy, plus Ory Keto and the in-process authorizer as a control). The fifteenth store target,
-Pinecone, needs an API key we did not have, so its adapter is not covered. Each store target ran 20 seeds of nine
-data variants and each engine target 20 seeds of seven; a run is one (target, seed, variant) and takes the worst
-outcome of its examples. The first run completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
+We ran the kit with fixed versions, seeds and counts against 13 stores and 14 engine targets (OPA, OpenFGA, SpiceDB,
+Cerbos, Cedar and Casbin, each with two policies, and Ory Keto), beside controls. Pinecone needs an API key we did not
+have, so its adapter is not covered. A run is one (target, seed, variant), of 20 seeds and nine or seven data variants,
+and takes the worst outcome of its examples. The first campaign completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
 Both controls passed every run, no target returned a hit outside the reference, and none altered stored metadata.
 Of the violations, 39 came from the layer's Cerbos translator, which maps CEL's \texttt{in}, \texttt{==} and
 \texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's check raises on a scalar and
@@ -40,7 +38,7 @@ whole term when they search. Of the errors, 479 were OpenFGA and SpiceDB refusin
 140 were stores' documented limits, which fail loudly and return nothing.
 
 We changed the four adapters: OpenFGA and SpiceDB now refuse a subject they cannot represent before sending
-anything, and Redis and MongoDB store and search a term above their limits as its SHA-256 digest. The second run, of
+anything, and Redis and MongoDB store and search a term above their limits as its SHA-256 digest. The second campaign, of
 4,480 runs, had 3,822 passes, 39 violations, 479 refusals and 140 errors, as the diagnosis predicted. Redis and MongoDB
 passed every long- and huge-string run, and in all 280 disagreeing Cerbos hits the filter gave the reference answer and
 the check denied. The 479 refusals are 85.5\% of those two engines' 560 runs, and only 81 runs reached them with every

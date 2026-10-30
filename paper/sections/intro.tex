@@ -19,29 +19,27 @@ work builds permissions into the vector index itself~\cite{zhong2026honeybee,han
 
 What is not known is whether the stack that implements the remedy is faithful. Three things stand
 between an organization's policy and the chunks a model sees. \emph{First, the policy is compiled by
-translators.} Authorization engines expose filter APIs that are code paths separate from their check
-APIs, and every store has its own filter language with its own handling of types, missing fields,
-Unicode and empty lists. We found no published guarantee that the paths agree. \emph{Second, the filter
-runs inside an approximate index.} Permission filters are hard cases for filtered nearest-neighbor
-search: they are often selective, they take a disjunction over many groups, and organizational
-structure, not meaning, decides which chunks they admit~\cite{patel2024acorn,lim2026revisiting}.
-\emph{Third, failures are silent.} Under Truman semantics~\cite{rizvi2004extending} a subject who
-receives three chunks, or none, cannot tell whether that is all it may read or all that the index found.
+translators.} Filter APIs are code paths separate from check APIs, every store has its own filter
+language, and we found no published guarantee that the paths agree. \emph{Second, the filter runs inside
+an approximate index.} Permission filters are hard cases for filtered nearest-neighbor search: they are
+often selective, they take a disjunction over many groups, and organizational structure, not meaning,
+decides which chunks they admit~\cite{patel2024acorn,lim2026revisiting}. \emph{Third, failures are
+silent.} Under Truman semantics~\cite{rizvi2004extending} a subject who receives three chunks, or none,
+cannot tell whether that is all it may read or all that the index found.
 
-We study permission-aware retrieval as deployed: an enforcement layer that compiles an organization's
-existing policy into filters for production vector stores, re-checks every hit with the authorizer
-and fails closed. We test one such layer, \sys{}, an open-source library with adapters for 14 vector
-stores and seven authorization engines (Section~\ref{sec:system}), and use it as an instrument. The
-re-check rests security on a small trusted computing base around the authorizer's check API
+We test one enforcement layer as deployed, \sys{}, an open-source library that compiles an organization's
+existing policy into filters for 14 vector stores, from seven authorization engines, re-checks every hit
+with the authorizer and fails closed (Section~\ref{sec:system}), and we use it as an instrument. The
+re-check rests security on a small trusted computing base around the check API
 (Observation~\ref{prop:reduction}): a faulty filter or a lossy index can then cost recall but cannot
 put a chunk outside the readable set into an answer. The open questions become how much is lost, where,
 how fresh the check is, what the answers still reveal, and whether anyone can tell. Our answer is the
 title, with its scope stated. By \emph{leak-free} we mean one thing: in every store and engine we
 tested, no returned chunk lay outside the subject's readable set at the revision the re-check read.
-That revision can be stale, by up to a cache's time to live or an engine's staleness, and the release we
-evaluated exceeded its stated bound after an invalidation. Other observables of an answer still revealed
-information about unreadable chunks. And retrieval quality under permission-shaped filters ranged from
-near perfect to missing most of what a subject may read, and the application could not see the loss.
+That revision can be stale, and the release we evaluated exceeded its stated bound after an invalidation.
+Other observables of an answer still revealed information about unreadable chunks. And retrieval quality
+ranged from near perfect to missing most of what a subject may read, and the application could not see
+the loss.
 
 \paragraph{Contributions.}
 \begin{itemize}

@@ -10,12 +10,10 @@ each step. We add a single reference semantics for permission filters, which mak
 across stores, and a count-honest completeness flag, which does not overstate how many chunks an
 approximate index returned.
 
-An authorizer offers a batch check, a filter that selects \emph{exactly} what $s$ may read, or nothing, and
-optionally a necessary condition such as the subject's tenant. Besides ACLs copied into chunk metadata, \sys{}
-supports seven engines: OPA, OpenFGA, SpiceDB and Cerbos offer filters, and Ory Keto, Cedar and Casbin offer checks
-only. Adapters cover 14 stores (pgvector, Qdrant, Milvus, MongoDB Atlas, Weaviate, Redis, LanceDB, FAISS, Vespa,
-Cassandra, Pinecone, Elasticsearch, OpenSearch and Chroma), and an in-memory backend that evaluates the reference
-semantics is their oracle.
+An authorizer offers a batch check and either a filter that selects \emph{exactly} what $s$ may read or nothing.
+Besides ACLs copied into chunk metadata, \sys{} supports seven engines: OPA, OpenFGA, SpiceDB and Cerbos offer filters,
+and Ory Keto, Cedar and Casbin offer checks only. Adapters cover 14 stores, and an in-memory backend that evaluates the
+reference semantics is their oracle.
 
 \paragraph{Filter semantics.}
 Filters are built from $\mathrm{In}(f,V)$, $\mathrm{And}$ and $\mathrm{Or}$. Let $\mathcal{V}$ be the
@@ -34,13 +32,12 @@ and Or are rejected, a missing field never matches, and a filter that can match 
 without a query, because several stores read a missing or empty filter as ``match everything''.
 
 \paragraph{Retrieval.}
-By default the layer pre-filters when the backend supports filters and the authorizer returns
-$\varphi_s$: one search with $\varphi_s$, every hit checked again, those that fail dropped and counted as
-violations. Otherwise it post-filters: it fetches $k \cdot o$ candidates ($o = 4$ by default), checks
-those not seen before, and multiplies the fetch by $o$ until $k$ hits are permitted, the store returns
-fewer candidates than requested, or a cap is reached (1,000 by default). Any exception or malformed
-answer from the authorizer ends the request with an authorization error and no hits. With the re-check
-off, security rests on the filter: a filter that over-approximates the policy is returned unchecked.
+The layer pre-filters when the backend supports filters and the authorizer returns $\varphi_s$: one search with
+$\varphi_s$, every hit checked again, those that fail dropped and counted as violations. Otherwise it post-filters: it
+fetches $4k$ candidates, checks those not seen before, and multiplies the fetch by four until $k$ hits are permitted, the
+store returns fewer than requested, or a cap is reached (1,000 by default). Any exception or malformed answer from the
+authorizer ends the request with no hits. With the re-check off, a filter that over-approximates the policy is returned
+unchecked.
 
 \paragraph{Completeness.}
 The release we ran end to end (2.1.0) set $c = 1$ for any pre-filtered result without violations, an

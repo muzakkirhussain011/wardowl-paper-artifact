@@ -31,14 +31,12 @@ post-filtered.
 Unpinned under a writer committing 20 toggles a second, filter and check disagreed in every OpenFGA trial,
 in 81.5\% of SpiceDB trials with \texttt{fullyConsistent} (95\% interval 76.0\% to 86.5\%) and in 13.0\% of
 OPA trials (8.5\% to 18.0\%). A write between the calls explained every disagreeing pair, and none
-reproduced; pinned to one SpiceDB snapshot under the same writer, 200 trials produced no disagreement
-(X4-H4 confirmed). An online violation is therefore evidence of a translation fault only when filter and
-check read one revision. Non-streaming ListObjects and LookupResources with the layer's limit of 1,000
-returned exactly $\min(N, 1000)$ objects without signalling truncation. The layer gave an exact filter for
-every $N \le 999$ and none for $N \ge 1000$ in all 540 calls (X4-H5 confirmed), never a short one. The cost
-lies at the limit: with 1,000 or 1,001 readable documents among 100,000, the post-filter's 1,000 candidates
-hold about ten readable ones, and recall@10 fell to 0.855 to 0.891 per level, against 1.000 with the filter
-below the limit and from 3,000 readable documents up (X4-H6 confirmed).
+reproduced; pinned to one SpiceDB snapshot, 200 trials produced no disagreement (X4-H4 confirmed). An online
+violation is thus evidence of a translation fault only when filter and check read one revision. ListObjects and
+LookupResources with the layer's limit of 1,000 returned exactly $\min(N, 1000)$ objects without signalling
+truncation; the layer gave an exact filter for every $N \le 999$ and none for $N \ge 1000$ in all 540 calls (X4-H5
+confirmed). The cost lies at the limit: with 1,000 or 1,001 readable documents among 100,000, recall@10 fell to 0.855
+to 0.891 per level, against 1.000 below the limit and from 3,000 readable documents up (X4-H6 confirmed).
 
 \subsection{Revocation and faults}\label{sec:eng-revoke}
 
@@ -75,17 +73,16 @@ shared replica's 1\,s local copy. Permissions copied into chunk metadata were re
 (X7-H4 confirmed). Two sources of truth were stale themselves. Cerbos reloaded a rewritten policy file in a
 median 2.5\,s (at most 4.0\,s). SpiceDB under \texttt{minimizeLatency}, the layer's default, took a median
 3.3\,s; in 28 polls a revoked chunk reappeared after it had disappeared, and one of 40 trials took 8.7\,s,
-beyond the 6.5\,s we had registered (the documented 5.5\,s plus 1\,s for polling; X7-H5 falsified). A rerun's
-40 trials took at most 5.2\,s. Invalidation did not survive such an engine: the next call refilled the cache
-from the stale snapshot, so 79 of 80 SpiceDB revocations with invalidation exceeded their bound (medians
-30.0 and 31.0\,s; X7-H1 and X7-H3 falsified in these cells), and Cerbos's took as long.
+beyond the 6.5\,s we had registered (X7-H5 falsified); a rerun's 40 trials took at most 5.2\,s. Invalidation did
+not survive such an engine: the next call refilled the cache from the stale snapshot, so 79 of 80 SpiceDB revocations
+with invalidation exceeded their bound (medians 30.0 and 31.0\,s; X7-H1 and X7-H3 falsified in these cells), and
+Cerbos's took as long.
 
-We fixed this and four other defects the run exposed. After an invalidation the cache now caches nothing for
-the engine's declared staleness (11\,s for SpiceDB without full consistency). A targeted rerun, an
-implementation check specified in writing after the main results and before running, confirmed every
-prediction (A2-H1 to A2-H8): all 160 SpiceDB and Cerbos revocations with invalidation took effect within the
-declared staleness plus 1\,s, and 1\,s more on the replica, at medians of 4.8\,s (at most 5.2\,s) and 3.9\,s
-against 30 and 31\,s before. SpiceDB itself still flapped; the cache no longer prolongs that.
+We fixed this and four other defects the run exposed: after an invalidation the cache now caches nothing for the
+engine's declared staleness (11\,s for SpiceDB without full consistency). A targeted rerun, an implementation check
+specified in writing after the main results and before running, confirmed every prediction (A2-H1 to A2-H8): all 160
+SpiceDB and Cerbos revocations with invalidation took effect within the declared staleness plus 1\,s, and 1\,s more on
+the replica, at medians of 4.8\,s (at most 5.2\,s) and 3.9\,s against 30 and 31\,s before.
 
 We injected 14 faults into each engine, and five or eight into pgvector and Qdrant, in 1,090 episodes. Outside
 the control below, no retrieval returned a chunk outside the user's readable set, in 623,279 requests over 1,050

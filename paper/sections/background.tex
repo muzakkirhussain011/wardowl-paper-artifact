@@ -96,30 +96,26 @@ restates the condition on $\tau_d$. No step refers to $\varphi_s$ or to the stor
 
 The statement is close to definitional, hence an observation. Its content is what it leaves out: no assumption
 about $\varphi_s$, the filter APIs, the translators, the store's filter semantics or its index, and it holds for
-every query, chosen adaptively or not, which no sampled measurement can show. The re-check sees filter faults in
-one direction only: a \emph{false admit}, where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, becomes a
-violation; a \emph{false denial}, where $\varphi_s$ rejects a readable chunk, silently costs completeness, so only
-an offline oracle finds it.
+every query, chosen adaptively or not. The re-check sees filter faults in one direction only: a \emph{false admit},
+where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, becomes a violation; a \emph{false denial}, where $\varphi_s$
+rejects a readable chunk, silently costs completeness, so only an offline oracle finds it.
 
 \paragraph{Trusted computing base.}
-The observation trusts (i)~the authorizer's check API and the authorization data it reads (A1),
-including the freshness of ACLs copied into chunk metadata; (ii)~the layer's mapping of a request to
-checks: the subject taken from a verified token and the adapter code that builds the engine's check request;
-(iii)~the binding of content to identifier and metadata in the store and in ingestion (A2); (iv)~the decision
-cache, its keys, time to live and invalidation, and the engine's own staleness, which together set $\delta$; and
-(v)~the fail-closed path (A3). It does not trust the filter APIs, the translators, the store's filter semantics or
-index, the widening loop, or a reranker or redactor, which receive only permitted hits. The trusted part has failed
-before: two faults in the layer's own adapters let the check itself admit, beyond any re-check
-(Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results}), and both were fixed before the version we evaluate.
-With the re-check turned off, the filter and its translator join the trusted computing base.
+The observation trusts (i)~the check API and the authorization data it reads (A1), including the freshness of ACLs
+copied into chunk metadata; (ii)~the layer's mapping of a request to checks, from the verified token to the adapter
+code; (iii)~the binding of content to identifier and metadata in the store and in ingestion (A2); (iv)~the decision
+cache and the engine's own staleness, which together set $\delta$; and (v)~the fail-closed path (A3). It does not
+trust the filter APIs, the translators, the store's filter semantics or index, or the widening loop. The trusted part
+has failed before: two faults in the layer's own adapters let the check itself admit (Table~\ref{tab:conf-faults} in
+Appendix~\ref{sec:conf-results}), and both were fixed before the version we evaluate. With the re-check turned off, the
+filter and its translator join the trusted computing base.
 
 \paragraph{Staleness and count certificates.}
-If the engine answers from a snapshot that may lack the writes of the last $\delta_e$ seconds and the
-layer caches each decision for at most a time to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or
-$\delta_e$-fresh without a cache; Section~\ref{sec:eng-revoke} measures $\delta$ per path. A layer can set
-$c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or if a filter-only count shows that
-every chunk passing $\varphi_s$ was among the candidates; conversely, a count of at least $k$ alongside fewer than
-$k$ candidates proves under-retrieval (Appendix~\ref{app:certificates}).
+If the engine may lack the writes of the last $\delta_e$ seconds and the layer caches each decision for at most a time
+to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache; Section~\ref{sec:eng-revoke}
+measures $\delta$ per path. A layer can set $c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or
+if a filter-only count shows that every chunk passing $\varphi_s$ was among the candidates; a count of at least $k$ alongside
+fewer than $k$ candidates proves under-retrieval (Appendix~\ref{app:certificates}).
 
 \subsection{Threat model}\label{sec:prob-threat}
 

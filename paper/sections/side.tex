@@ -41,11 +41,13 @@ Table~\ref{tab:side-hyp} the hypotheses.
 
 \begin{figure}[tbp]
 \centering
+\newcommand{\sidekey}[2]{\tikz[baseline=-0.6ex]{\draw[black,line width=0.7pt,#1] (0,0) -- (0.8,0);\path plot[mark=#2,mark size=1.1pt,mark options={solid,black}] coordinates {(0.4,0)};}}
+{\scriptsize \sidekey{}{*}~FAISS\quad \sidekey{dashed}{square*}~pgvector\quad \sidekey{dotted}{triangle*}~Qdrant\quad \sidekey{dashdotted}{diamond*}~Elasticsearch\par}\vspace{1mm}
 \begin{tikzpicture}
 \begin{groupplot}[
-  group style={group size=3 by 2, horizontal sep=14mm, vertical sep=5mm,
+  group style={group size=3 by 2, horizontal sep=5mm, vertical sep=5mm,
     xticklabels at=edge bottom, yticklabels at=edge left, xlabels at=edge bottom, ylabels at=edge left},
-  scale only axis, width=3.45cm, height=2.35cm,
+  scale only axis, width=4.45cm, height=2.1cm,
   xmode=log, xmin=0.8, xmax=1250, ymin=0, ymax=1.03,
   xtick={1,10,100,1000}, xticklabels={1,10,100,1\,000}, xminorticks=false,
   ytick={0,0.25,0.5,0.75,1}, yticklabels={0,,0.5,,1},
@@ -54,8 +56,7 @@ Table~\ref{tab:side-hyp} the hypotheses.
   ylabel={Paired AUC},
   label style={font=\scriptsize},
   title style={font=\footnotesize, yshift=-1.2ex},
-  clip=false,
-  every axis plot/.append style={black, line width=0.7pt, mark size=1pt},
+  every axis plot/.append style={black, line width=0.7pt, mark size=1.1pt, mark options={solid}},
 ]
 \nextgroupplot[title={Post-filter, latency}]
   \fill[gray!18] (axis cs:1,0.342) rectangle (axis cs:1000,0.608);
@@ -64,38 +65,25 @@ Table~\ref{tab:side-hyp} the hypotheses.
   \addplot[dashed, mark=square*] coordinates {(1,0.37)(10,0.38)(100,0.57)(1000,0.68)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.47)(10,0.46)(100,0.75)(1000,0.78)};
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.48)(10,0.58)(100,0.76)(1000,0.86)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.88) {ES};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.80) {Qdrant};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.73) {FAISS};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.65) {pgvector};
-  \node[font=\tiny, anchor=south west, inner sep=1pt] at (axis cs:1,0.345) {FAISS, same content};
 \nextgroupplot[title={Post-filter, count}]
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
   \addplot[mark=*] coordinates {(1,0.50)(10,0.51)(100,0.59)(1000,0.87)};
   \addplot[dashed, mark=square*] coordinates {(1,0.50)(10,0.50)(100,0.58)(1000,0.85)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.51)(10,0.51)(100,0.58)(1000,0.87)};
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.50)(10,0.51)(100,0.58)(1000,0.84)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.855) {all four};
 \nextgroupplot[title={Constant work, latency}]
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
   \addplot[mark=*] coordinates {(1,0.63)(10,0.57)(100,0.46)(1000,0.13)};
   \addplot[dashed, mark=square*] coordinates {(1,0.29)(10,0.22)(100,0.07)(1000,0.02)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.47)(10,0.47)(100,0.45)(1000,0.35)};
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.57)(10,0.57)(100,0.55)(1000,0.62)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.62) {ES};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.35) {Qdrant};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.14) {FAISS};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.03) {pgvector};
 \nextgroupplot[title={Approximate pre-filter}]
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
   \addplot[dashed, mark=square*] coordinates {(1,0.33)(10,0.44)(100,0.79)(1000,0.88)};
-  \addplot[densely dotted, mark=square] coordinates {(1,0.49)(10,0.47)(100,0.31)(1000,0.22)};
+  \addplot[dashed, mark=square] coordinates {(1,0.49)(10,0.47)(100,0.31)(1000,0.22)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.47)(10,0.43)(100,0.47)(1000,0.57)};
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.49)(10,0.50)(100,0.48)(1000,0.60)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.88) {pgvector};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.62) {ES};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.54) {Qdrant};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.22) {pgvector recall};
+  \node[font=\scriptsize, anchor=north east] at (axis cs:95,0.30) {pgvector, recall};
 \nextgroupplot[title={Exact pre-filter, latency}, xlabel={Unreadable chunks near the query, $m$}]
   \fill[gray!18] (axis cs:1,0.186) rectangle (axis cs:1000,0.789);
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
@@ -103,28 +91,22 @@ Table~\ref{tab:side-hyp} the hypotheses.
   \addplot[dashed, mark=square*] coordinates {(1,0.17)(10,0.14)(100,0.13)(1000,0.12)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.45)(10,0.46)(100,0.50)(1000,0.42)};
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.50)(10,0.48)(100,0.47)(1000,0.47)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.49) {ES};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.41) {Qdrant};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.33) {FAISS};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.12) {pgvector};
-  \node[font=\tiny, anchor=north west, inner sep=1pt] at (axis cs:1,0.785) {pgvector, same content};
 \nextgroupplot[title={Keyword search}]
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.79)(10,0.88)(100,0.98)(1000,0.99)};
   \addplot[dotted, mark=triangle*] coordinates {(1,0.81)(10,0.89)(100,0.98)(1000,1.00)};
-  \addplot[mark=o] coordinates {(1,0.50)(10,0.50)(100,0.50)(1000,0.50)};
+  \addplot[dashed, mark=square] coordinates {(1,0.50)(10,0.50)(100,0.50)(1000,0.50)};
   \addplot[dashed, mark=square*] coordinates {(1,0.45)(10,0.47)(100,0.50)(1000,0.70)};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,1.03) {Qdrant IDF};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.94) {ES BM25};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.70) {\texttt{ts\_rank\_cd}, latency};
-  \node[font=\tiny, anchor=west] at (axis cs:1300,0.47) {\texttt{ts\_rank\_cd}, score};
+  \node[font=\scriptsize, anchor=south east] at (axis cs:95,0.92) {BM25, IDF scores};
+  \node[font=\scriptsize, anchor=north east] at (axis cs:1000,0.42) {\texttt{ts\_rank\_cd}: score, latency};
 \end{groupplot}
 \end{tikzpicture}
-\caption{Paired AUC of the differencing attacker against $m$, pooled over the three attackers (120, 120, 80 and 40 probes
-at $m = 1$, 10, 100 and 1,000): latency unless named. Above the dashed line the observable moves as predicted for $W_1$
-(latency up; count, recall and score down), below it the other way. A channel grows with $m$; an offset does not. Gray
-bands: the range of paired AUCs between builds of identical content, where measured. ES: Elasticsearch. Keyword panel:
-score unless named. Table~\ref{tab:side-auc} in Appendix~\ref{app:side-results} has the values.}
+\caption{Paired AUC of the differencing attacker against $m$, pooled over the three attackers (120, 120, 80 and 40 probes at
+$m = 1$, 10, 100 and 1,000). Above the dashed line the observable moves as predicted for $W_1$ (latency up; count, recall and
+score down), below it the other way. A channel grows with $m$; an offset does not. Gray bands: the range of paired AUCs between
+builds of identical content, for FAISS's post-filter (first panel) and pgvector's exact search (fifth). Keyword panel: open squares
+are \texttt{ts\_rank\_cd}'s score, filled squares its latency. Table~\ref{tab:side-auc} in Appendix~\ref{app:side-results} has the
+values.}
 \label{fig:side-auc}
 \end{figure}
 

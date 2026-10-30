@@ -1,18 +1,17 @@
 % Retrieval Quality Under Permission-Shaped Filters: body of Section~\ref{sec:quality} (the \section
 % heading and its label stay in main.tex). Labels defined here: sec:qual-audit, fig:qual-audit,
-% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, fig:qual-frontiers.
-% The full text is in Appendices~\ref{app:quality} (audit, diagnosis), \ref{app:frontier} (frontier,
-% tab:qual-frontiers, tab:qual-x2tests) and \ref{sec:qual-size} (filter size, tab:qual-size).
+% sec:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, fig:qual-frontiers. The full text is in
+% Appendices~\ref{app:quality} (audit, diagnosis, tab:qual-x0, tab:qual-qdrant), \ref{app:frontier}
+% (frontier, tab:qual-frontiers, tab:qual-x2tests) and \ref{sec:qual-size} (filter size, tab:qual-size).
 % Sources: evidence/kaggle-scale-run-2026-10-24.md, evidence/x8-run.md (per-run recall@10 of
 % fig:qual-audit), evidence/x1-underretrieval-run2.md, evidence/x2-x5-run1.md (section "Frontier data":
 % fig:qual-frontiers; recall is the three-build mean, QPS the build-0 job's), evidence/x3-x6-run1.md.
 
 No configuration of Section~\ref{sec:e2e} returned a chunk outside the subject's readable set at the
-revision the re-check read; this section asks what the permission filter cost. We audit the enterprise
-scenario at common settings, diagnose the two largest losses, and map recall against throughput on a corpus
-whose layouts we control. Recall is permission-recall@$k$ (Section~\ref{sec:prob-metrics}). Every result
-measures a store under this layer's schema and settings, not the store alone: for example, metadata in one
-\texttt{jsonb} column tested with \texttt{@>} on pgvector, and list values as boolean keys on Chroma.
+revision the re-check read; this section asks what the permission filter cost. Recall is
+permission-recall@$k$ (Section~\ref{sec:prob-metrics}). Every result measures a store under this layer's
+schema and settings, not the store alone: for example, metadata in one \texttt{jsonb} column tested with
+\texttt{@>} on pgvector, and list values as boolean keys on Chroma.
 
 \subsection{An audit at common settings}\label{sec:qual-audit}
 
@@ -20,7 +19,7 @@ measures a store under this layer's schema and settings, not the store alone: fo
 \centering
 \begin{tikzpicture}
 \begin{axis}[
-  scale only axis, width=8.6cm, height=4.7cm,
+  scale only axis, width=8.6cm, height=4.2cm,
   xmin=0.5, xmax=1.0, ymin=0.4, ymax=9.6,
   ytick={1,...,9},
   yticklabels={Qdrant,pgvector,LanceDB,Chroma,Weaviate,OpenSearch,Elasticsearch,Redis,FAISS (exact)},
@@ -53,170 +52,124 @@ measures a store under this layer's schema and settings, not the store alone: fo
   (0.732,2)(0.992,2)(0.994,2)(0.732,2)
   (0.561,1)(0.535,1)(0.561,1)(0.549,1)
 };
-\node[font=\scriptsize, anchor=south] at (axis cs:0.732,2.15) {fast mode (2 runs)};
-\node[font=\scriptsize, anchor=south east] at (axis cs:0.995,2.15) {exact mode (2 runs)};
+\node[font=\scriptsize, anchor=north] at (axis cs:0.732,1.8) {fast mode (2 runs)};
+\node[font=\scriptsize, anchor=north east] at (axis cs:0.998,1.8) {exact mode (2 runs)};
 % the columns to the right: mean over runs and range of per-run p50
 \node[font=\scriptsize\bfseries, anchor=west] at (axis cs:1.015,9.95) {Mean};
-\node[font=\scriptsize\bfseries, anchor=west] at (axis cs:1.105,9.95) {p50 (ms)};
+\node[font=\scriptsize\bfseries, anchor=west] at (axis cs:1.125,9.95) {p50 (ms)};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,9) {1.000};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,9) {346--368};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,9) {346--368};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,8) {0.981};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,8) {28--30};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,8) {28--30};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,7) {0.949};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,7) {8--9};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,7) {8--9};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,6) {0.935};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,6) {7};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,6) {7};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,5) {0.902};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,5) {7--8};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,5) {7--8};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,4) {0.879};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,4) {1432--1481};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,4) {1432--1481};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,3) {0.874};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,3) {22--25};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,3) {22--25};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,2) {0.732; 0.993};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,2) {6.5--8.1; 386--399};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,1) {0.551};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,1) {4.3--4.7};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,2.17) {0.732};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,1.72) {0.993};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,2.17) {6.5--8.1};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.105,1.72) {386--399};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,1) {4.3--4.7};
 \end{axis}
 \end{tikzpicture}
 \caption{Recall@10 in the enterprise scenario at common settings, four runs (seeds 7, 11, 13, 17). Each
-circle is one run and each bar the range over runs, under this layer's schema. pgvector ran in one of two
-modes per run (Section~\ref{sec:qual-pgvector}); its right-hand values are per mode, fast above exact. p50 is
-the range of per-run median retrieval latency. Table~\ref{tab:qual-x0} in Appendix~\ref{app:audit} adds
-recall@5 and overlap by person type; Appendix~\ref{app:settings} gives the settings.}
+circle is one run and each bar the range over runs. pgvector ran in one of two modes per run
+(Section~\ref{sec:qual-pgvector}); its right-hand values are per mode, fast then exact. p50 is the range of
+per-run median retrieval latency. Table~\ref{tab:qual-x0} in Appendix~\ref{app:audit} adds recall@5 and overlap by
+person type; Appendix~\ref{app:settings} gives the settings.}
 \label{fig:qual-audit}
 \end{figure}
 
-The enterprise scenario (Section~\ref{sec:e2e}) holds 107,540 chunks in 20 tenants.
-Figure~\ref{fig:qual-audit} shows the spread at settings a team would plausibly ship, some tuned and some
-defaults. Mean recall@10 over the four runs ranged from 0.55 for Qdrant (0.535 in its worst run) to 0.98 for
-Redis across the eight approximate stores, with pgvector in its fast mode; the exact control, FAISS, scored
-1.000 and pgvector in its exact mode 0.993. The figure compares configurations, not stores, and the corpus,
-in which only one of twenty near-identical tenant copies of a document passes a person's filter, is a hard
-case for graph indexes. No store other than pgvector moved its recall@10 by more than 0.04 across the runs.
+The enterprise scenario (Section~\ref{sec:e2e}) holds 107,540 chunks in 20 tenants. Figure~\ref{fig:qual-audit} shows
+the spread at settings a team would plausibly ship, some tuned and some defaults. Mean recall@10 over the four runs
+ranged from 0.55 for Qdrant (0.535 in its worst run) to 0.98 for Redis across the eight approximate stores, with
+pgvector in its fast mode; the exact control, FAISS, scored 1.000 and pgvector in its exact mode 0.993. The figure
+compares configurations, not stores, and the corpus, in which only one of twenty near-identical tenant copies of a
+document passes a person's filter, is a hard case for graph indexes. No store other than pgvector moved its recall@10 by
+more than 0.04 across the runs.
 
-Two failures stand out. pgvector returned \emph{nothing} to some of the least-privileged people of the
-scenario, although each could read 624 chunks: ten in the first run and seven in another, and the evaluated
-release called these empty answers complete. In the other two runs the same configuration searched exactly,
-at fifty times the latency. Qdrant never returned a short answer, yet for ordinary employees it returned the
-right documents only about half the time (the share of the exact top five it returned was 0.52 in the first
-run), while for the least-privileged people it was perfect. The patterns differ in kind: pgvector
-\emph{under-retrieves}, returning fewer than $k$ hits, which a count can detect, and also returns wrong ones;
-Qdrant only \emph{mis-retrieves}, returning $k$ hits, the wrong ones, which only an exact baseline reveals. We
-pre-registered hypotheses for both before running a diagnosis grid of 1,489 questions and three index builds
-per layout (Appendix~\ref{app:x1grid}).
+Two failures stand out. pgvector returned \emph{nothing} to some of the least-privileged people of the scenario, although
+each could read 624 chunks: ten in the first run and seven in another, and the evaluated release called these empty
+answers complete. In the other two runs the same configuration searched exactly, at fifty times the latency. Qdrant never
+returned a short answer, yet for ordinary employees it returned only about half of the exact top five (0.52 in the first
+run), while for the least-privileged people it was perfect. pgvector thus \emph{under-retrieves}, which a count can detect,
+and also returns wrong chunks; Qdrant only \emph{mis-retrieves}, which only an exact baseline reveals. We pre-registered
+hypotheses for both before running a diagnosis grid of 1,489 questions and three index builds per layout
+(Appendix~\ref{app:x1grid}).
 
 \subsection{Qdrant: an islanded permitted subgraph}\label{sec:qual-qdrant}
 
-Qdrant plans filtered search per segment from estimated filter cardinality: a filter estimated below a
-threshold (about 3,333 points for 768-dimensional vectors at the default) runs as an exact scan over the
-payload index, and a broader one as filtered HNSW traversal, which scores and expands only neighbors that
-pass the filter~\cite{qdrant2026search}. In the scenario every tenant value and the employee and contractor
-groups exceed the cap below which extra edges keep a filtered subgraph connected~\cite{couzon2026filtered}.
-Near a question about company documents, only one of the twenty near-identical tenant copies passes the
-filter, so the permitted company region is a sparse island in the graph, while the shared passages, all
-permitted, form a large connected region that the traversal enters and does not leave. The least-privileged
-people escape the trap because their filter is small enough to be planned as an exact scan.
+Qdrant runs a filter estimated below a threshold (about 3,333 points for 768-dimensional vectors at the default) as an exact
+scan over the payload index, and a broader one as filtered HNSW traversal, which scores and expands only neighbors that pass
+the filter~\cite{qdrant2026search}. In the scenario every tenant value and the employee and contractor groups exceed the cap
+below which extra edges keep a filtered subgraph connected~\cite{couzon2026filtered}. Near a question about company documents,
+only one of the twenty tenant copies passes the filter, so the permitted company region is a sparse island in the graph, while
+the shared passages, all permitted, form a large connected region that the traversal enters and does not leave. The
+least-privileged people escape because their filter is small enough to be planned as an exact scan.
 
-\begin{table}[tbp]
-\centering
-\footnotesize
-\begin{tabular}{@{}llrrr@{}}
-\toprule
-Layout & Search setting & Recall@10 & Range & p50 (ms) \\
-\midrule
-As run (one collection) & \texttt{hnsw\_ef} 128 (as run) & 0.656 & 0.086 & 7.1 \\
- & \texttt{hnsw\_ef} 64 & 0.600 & 0.074 & 6.0 \\
- & \texttt{hnsw\_ef} 512 & 0.758 & 0.120 & 11.3 \\
- & ACORN, max selectivity 0.4 or 1.0 & 0.808 & 0.127 & 7.3 \\
- & exact & 1.000 & n/a & 43.1 \\
-Tenant field marked \texttt{is\_tenant} & as run & 0.651 & 0.025 & 6.9 \\
- & ACORN & 0.802 & 0.076 & 7.1 \\
-Built as one segment & as run & 0.625 & 0.029 & 7.0 \\
- & ACORN & 0.777 & 0.027 & 7.2 \\
-Per-tenant graphs (\texttt{is\_tenant}, $m = 0$) & as run & 0.952 & 0.001 & 6.6 \\
-Shared passages in a separate collection & as run & 0.949 & 0.003 & 12.9 \\
-\bottomrule
-\end{tabular}
-\caption{Qdrant 1.19.2 under the enterprise scenario's permission filters (second run of the diagnosis grid,
-1,489 questions, three index builds per layout, means over builds; Range is the range over builds; latency
-from one CPU session). ACORN at the default gate (0.4) and at 1.0 gave identical results. The first run agreed
-within 0.05 (as run 0.619, ACORN 0.761, per-tenant graphs 0.943).}
-\label{tab:qual-qdrant}
-\end{table}
-
-The predictions for this hypothesis held in both runs of the grid (Q1 confirmed; Table~\ref{tab:qual-qdrant}).
-Recall@10 for the least-privileged people was 1.000, against 0.369 (95\% interval 0.334 to 0.402) for company
-documents among everyone else, and 97.5\% of the hits that did not count were shared passages. ACORN, which
-explores neighbors of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 from 0.656 to 0.808 at a
-3\% latency cost, and per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.952 while being faster
-than the as-run layout. Raising \texttt{hnsw\_ef} from 128 to 512 added 0.103 (0.090 to 0.116) at 1.6 times the
-latency (Q4, inconclusive by its band) and did not close the gap. We expected ACORN's default gate to engage
-for some people and not others; it engaged for everyone (Q2 falsified), so ACORN helps but does not suffice
-under this layout. Q3, on segment layout, stayed inconclusive: recall@10 varied by up to 0.086 between builds of
-the same data, but both layouts ended with one segment holding points. For practitioners the result is a layout
-rule, not a parameter: when permission groups or tenants cover large, semantically interleaved parts of a
-collection, give each tenant its own graph, or keep widely shared content apart, before reaching for search-time
-effort.
+The predictions for this hypothesis held in both runs of the grid (Q1 confirmed; Table~\ref{tab:qual-qdrant} in
+Appendix~\ref{app:qdrant}). Recall@10 for the least-privileged people was 1.000, against 0.369 (95\% interval 0.334 to 0.402) for
+company documents among everyone else, and 97.5\% of the hits that did not count were shared passages. ACORN, which explores
+neighbors of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 over all questions from 0.656 to 0.808 at a 3\% latency
+cost; per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.952, faster than the as-run layout, and a separate collection for the
+shared passages reached 0.949. Raising \texttt{hnsw\_ef} from 128 to 512 added 0.103 (0.090 to 0.116) at 1.6 times the latency (Q4
+inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified), so
+ACORN helps but does not suffice under this layout. Q3, on segment layout, stayed inconclusive: recall@10 varied by up to 0.086 between
+builds of the same data, but both layouts ended with one segment holding points. The result is a layout rule, not a parameter: when
+permission groups or tenants cover large, semantically interleaved parts of a collection, give each tenant its own graph, or keep
+widely shared content apart, before reaching for search-time effort.
 
 \subsection{pgvector: a plan cache, then a scan budget}\label{sec:qual-pgvector}
 
-pgvector 0.8 answers a filtered HNSW query by scanning the graph in order of distance and applying the filter
-to each row; with iterative scans it continues until enough rows pass or a limit is
-reached~\cite{pgvector2026pgvector}, either \texttt{hnsw.max\_scan\_tuples} (20,000 by default) or a memory bound.
-We hypothesized that the limit caused the empty answers. Testing showed that a decision taken before the scan
-matters more: whether PostgreSQL runs the HNSW scan at all.
+pgvector 0.8 scans the HNSW graph in order of distance and applies the filter to each row; with iterative scans it continues until
+enough rows pass or a limit is reached~\cite{pgvector2026pgvector}, either \texttt{hnsw.max\_scan\_tuples} (20,000 by default) or a
+memory bound. We hypothesized that the limit caused the empty answers. A decision taken before the scan matters more: whether PostgreSQL
+runs the HNSW scan at all.
 
 \paragraph{The plan cache.}
-The layer binds the filter's values and $k$ as parameters. psycopg prepares a statement on its sixth execution
-on a connection~\cite{psycopg2026prepared}; PostgreSQL then uses a generic plan whenever its estimated cost is
-not much higher than the custom plans' average~\cite{postgresql2026prepare}. A generic plan cannot see the
-\texttt{jsonb} values or the \texttt{LIMIT}, assumes a selective filter, and reads the rows the GIN index returns
-and sorts them: an exact search. Under the default configuration only 0.9\% of the searches on the scenario's
-questions used the HNSW index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values,
-98.1\% used it, with recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5 confirmed, an
-exploratory hypothesis specified in writing after the grid's first run and before its second; P4, which had
-predicted that generic plans make no difference, falsified, with recall@10 lower by 0.343 under custom plans).
+The layer binds the filter's values and $k$ as parameters. psycopg prepares a statement on its sixth execution on a
+connection~\cite{psycopg2026prepared}; PostgreSQL then uses a generic plan whenever its estimated cost is not much higher than the custom
+plans' average~\cite{postgresql2026prepare}. A generic plan cannot see the \texttt{jsonb} values or the \texttt{LIMIT}, assumes a selective
+filter, and reads the rows the GIN index returns and sorts them: an exact search. Under the default configuration only 0.9\% of the searches on
+the scenario's questions used the HNSW index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values, 98.1\% used it, with
+recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5 confirmed, an exploratory hypothesis specified in writing after the grid's
+first run and before its second; P4, which had predicted that generic plans make no difference, falsified, with recall@10 lower by 0.343 under custom
+plans).
 
-What tips the choice is the state of the GIN index. Replaying the audit's pass right after loading, when the
-index's pending list held 388 pages, PostgreSQL never switched: 98.1\% of searches used HNSW, and recall@5 was
-0.697 at 7.0\,ms, the audit reproduced. The same replay after \texttt{VACUUM}, with the pending list empty, ran
-2,148 generic executions, and recall@5 was 0.998 at 335\,ms. PostgreSQL's cost estimate charges every pending page
-at the start of the scan~\cite{postgresql2026selfuncs}, so after a bulk load the generic plan looks expensive until
-a vacuum merges the list. Autovacuum runs on its own schedule, and the variation across the end-to-end runs is
-consistent with it, though we did not record its timing there: the same configuration ran fast by its median in
-three of eight runs, one of them a mixture, and exact in five. A measurement of pgvector through prepared
-statements therefore reports one of two systems, fifty times apart in latency and 0.3 apart in recall, depending
-on maintenance that no benchmark setting names. Planning every search with its own values, with
-\texttt{plan\_cache\_mode = force\_custom\_plan} or by not preparing the statement, removes the choice.
+What tips the choice is the state of the GIN index. Replaying the audit's pass right after loading, when the index's pending list held 388 pages,
+PostgreSQL never switched: recall@5 was 0.697 at 7.0\,ms, the audit reproduced. The same replay after \texttt{VACUUM}, with the list empty, ran 2,148
+generic executions, with recall@5 of 0.998 at 335\,ms. PostgreSQL's cost estimate charges every pending page at the start of the
+scan~\cite{postgresql2026selfuncs}, so after a bulk load the generic plan looks expensive until a vacuum merges the list. Autovacuum runs on its own
+schedule, and the variation across the end-to-end runs is consistent with it, though we did not record its timing there: the same configuration ran
+fast by its median in three of eight runs, one of them a mixture, and exact in five. A measurement of pgvector through prepared statements therefore
+reports one of two systems, fifty times apart in latency and 0.3 apart in recall, depending on maintenance that no benchmark setting names. Planning
+every search with its own values removes the choice.
 
 \paragraph{The scan's budget.}
-With the HNSW scan forced, recall@10 was 0.656 on the grid's question set and 8.9\% of retrievals with $k = 5$
-were empty. Both limits bind: raising the tuple limit alone lowered the empty rate only to 7.3\%, raising the
-memory alone changed nothing, and raising both removed every empty answer (P1 inconclusive: 79.9\% of the empty
-answers came from questions whose first readable row lay beyond half the scan's reach, short of the 95\% we had
-predicted). Removing the empty answers did not remove the loss: with both limits raised recall@10 was 0.780, and
-0.866 on a graph built with $m = 32$ and \texttt{ef\_construction} 200. The rest is mis-retrieval, since a
-relaxed-order scan stops at the first $k$ permitted rows it meets. A deeper search ($+0.069$), more candidates
-before the final sort ($+0.095$) and a better graph ($+0.066$) each helped, and strict ordering hurt (0.497), but
-the loss was not concentrated as predicted (P2 inconclusive). For the least-privileged the planner's row estimate
-was a median 11.1 times their readable set (P3 confirmed), which steers it to the HNSW scan where an exact plan
-over a few hundred chunks would return the right answer.
+With the HNSW scan forced, recall@10 was 0.656 on the grid's question set and 8.9\% of retrievals with $k = 5$ were empty. Both limits bind: raising the
+tuple limit alone lowered the empty rate only to 7.3\%, raising the memory alone changed nothing, and raising both removed every empty answer (P1
+inconclusive: 79.9\% of the empty answers came from questions whose first readable row lay beyond half the scan's reach, short of the predicted 95\%).
+The loss remained: with both limits raised recall@10 was 0.780, and 0.866 on a graph built with $m = 32$ and \texttt{ef\_construction} 200. The rest is
+mis-retrieval, since a relaxed-order scan stops at the first $k$ permitted rows it meets. A deeper search ($+0.069$), more candidates before the final
+sort ($+0.095$) and a better graph ($+0.066$) each helped, and strict ordering hurt (0.497), but the loss was not concentrated as predicted (P2
+inconclusive). For the least-privileged the planner's row estimate was a median 11.1 times their readable set (P3 confirmed), which steers it to the HNSW
+scan where an exact plan would return the right answer.
 
 \subsection{Recall against throughput}\label{sec:qual-frontiers}
 
-The enterprise scenario has one permission layout. To separate a filter's selectivity from its correlation with
-the question, the frontier experiment adds a corpus whose layouts we control: the first million passages of MS
-MARCO~\cite{bajaj2016ms}, in a hierarchy of teams assigned at random (\emph{uncorrelated}) or by hierarchical
-$k$-means over the embeddings (\emph{clustered}), five seeds of each, with 1,050 subjects, 6,200 question--subject
-pairs and selectivities from 0.06\% to 100\%. \emph{Negatively correlated} questions have nothing readable among
-their 1,000 nearest passages, the best by that criterion when fewer than four qualify. Ten approximate stores run
-against FAISS over a flat index, each at its default, at five levels of search effort and with its own options, in
-three fresh builds. Chroma was not measured: a filtered retrieval took 137 to 221\,s, so none reached a timed pass.
-Every exact setting returned the exact answer, no hit was unreadable, and eight of the audit's nine stores
-reproduced the recall@10 of its first run within 0.03 (pgvector at 0.730 against 0.732). Appendix~\ref{app:frontier}
-gives the design and Table~\ref{tab:qual-frontiers} the values behind Figure~\ref{fig:qual-frontiers}.
+To separate a filter's selectivity from its correlation with the question, the frontier experiment adds a corpus whose layouts we control: the first million
+passages of MS MARCO~\cite{bajaj2016ms}, in a hierarchy of teams assigned at random (\emph{uncorrelated}) or by hierarchical $k$-means over the embeddings
+(\emph{clustered}), five seeds of each, with 1,050 subjects, 6,200 question--subject pairs and selectivities from 0.06\% to 100\%. \emph{Negatively
+correlated} questions have nothing readable among their 1,000 nearest passages, the best by that criterion when fewer than four qualify. Ten approximate
+stores run against FAISS over a flat index, each at its default, at five levels of search effort and with its own options, in three fresh builds. Chroma
+was not measured: a filtered retrieval took 137 to 221\,s, so none reached a timed pass. Every exact setting returned the exact answer, no hit was unreadable,
+and eight of the audit's nine stores reproduced the recall@10 of its first run within 0.03 (pgvector at 0.730 against 0.732). Appendix~\ref{app:frontier} gives
+the design.
 
 \begin{figure}[tbp]
 \centering
@@ -224,8 +177,8 @@ gives the design and Table~\ref{tab:qual-frontiers} the values behind Figure~\re
 \begin{groupplot}[
   group style={group size=3 by 2, horizontal sep=5mm, vertical sep=5mm,
     xticklabels at=edge bottom, yticklabels at=edge left, xlabels at=edge bottom, ylabels at=edge left},
-  scale only axis, width=4.45cm, height=2.45cm,
-  xmode=log, xmin=0.15, xmax=450, ymin=0.38, ymax=1.04,
+  scale only axis, width=4.45cm, height=2.2cm,
+  xmode=log, xmin=0.15, xmax=450, ymin=0.38, ymax=1.06,
   xtick={1,10,100}, xticklabels={1,10,100}, ytick={0.4,0.6,0.8,1.0},
   yticklabels={0.4,0.6,0.8,1.0},
   xminorticks=false,
@@ -241,8 +194,8 @@ gives the design and Table~\ref{tab:qual-frontiers} the values behind Figure~\re
   \addplot[only marks, mark=square*, mark size=1.7pt, black] coordinates {(75.3,0.575)};
   \addplot[only marks, mark=o, mark size=1.7pt, black] coordinates {(12.9,0.949)(16.2,0.878)};
   \addplot[only marks, mark=x, mark size=2.4pt, thick, black] coordinates {(0.26,1.000)};
-  \node[font=\scriptsize, anchor=south west] at (axis cs:75.3,0.575) {default};
-  \node[font=\scriptsize, anchor=east] at (axis cs:11.5,0.949) {both limits};
+  \node[font=\scriptsize, anchor=south] at (axis cs:75.3,0.60) {default};
+  \node[font=\scriptsize, anchor=north east] at (axis cs:10.5,0.955) {both limits};
   \node[font=\scriptsize, anchor=west] at (axis cs:19,0.905) {sweep};
   \node[font=\scriptsize, anchor=west] at (axis cs:0.33,1.0) {exact};
 \nextgroupplot[title={Qdrant}]
@@ -250,14 +203,14 @@ gives the design and Table~\ref{tab:qual-frontiers} the values behind Figure~\re
   \addplot[only marks, mark=square*, mark size=1.7pt, black] coordinates {(205.3,0.799)};
   \addplot[only marks, mark=o, mark size=1.7pt, black] coordinates {(69.1,0.983)(28.5,0.997)};
   \addplot[only marks, mark=x, mark size=2.4pt, thick, black] coordinates {(22.6,1.000)};
-  \node[font=\scriptsize, anchor=east] at (axis cs:190,0.76) {default};
-  \node[font=\scriptsize, anchor=north] at (axis cs:60,0.965) {ACORN};
+  \node[font=\scriptsize, anchor=east] at (axis cs:170,0.74) {default};
+  \node[font=\scriptsize, anchor=north] at (axis cs:45,0.965) {ACORN};
   \node[font=\scriptsize, anchor=east] at (axis cs:19,1.0) {exact};
 \nextgroupplot[title={Elasticsearch}]
   \addplot[black, mark=*, mark size=0.9pt] coordinates {(150.3,0.826)(161.7,0.833)(148.4,0.862)(131.9,0.873)(107.2,0.878)};
   \addplot[only marks, mark=square*, mark size=1.7pt, black] coordinates {(185.1,0.806)};
   \addplot[only marks, mark=x, mark size=2.4pt, thick, black] coordinates {(52.1,1.000)};
-  \node[font=\scriptsize, anchor=east] at (axis cs:165,0.785) {default};
+  \node[font=\scriptsize, anchor=east] at (axis cs:165,0.775) {default};
   \node[font=\scriptsize, anchor=east] at (axis cs:44,1.0) {exact};
 \nextgroupplot[title={Weaviate}]
   \addplot[black, mark=*, mark size=0.9pt] coordinates {(145.0,0.955)(141.2,0.973)(117.4,0.985)(101.7,0.991)(77.1,0.994)};
@@ -280,50 +233,42 @@ gives the design and Table~\ref{tab:qual-frontiers} the values behind Figure~\re
   \addplot[only marks, mark=square*, mark size=1.7pt, black] coordinates {(67.9,0.437)};
   \addplot[only marks, mark=o, mark size=1.7pt, black] coordinates {(37.9,0.908)};
   \addplot[only marks, mark=x, mark size=2.4pt, thick, black] coordinates {(4.6,1.000)};
-  \node[font=\scriptsize, anchor=south west] at (axis cs:75,0.44) {default};
+  \node[font=\scriptsize, anchor=south] at (axis cs:67.9,0.47) {default};
   \node[font=\scriptsize, anchor=north] at (axis cs:37.9,0.885) {refine $30k$};
   \node[font=\scriptsize, anchor=east] at (axis cs:3.9,1.0) {exact};
 \end{groupplot}
 \end{tikzpicture}
-\caption{Recall@10 against throughput on MS MARCO, one panel per store: square, the default; line, the five-level
-effort sweep; circles, store options; cross, the store's exact search. Recall is the mean over three builds and
-throughput that of the store's first build, in its own job on its own runner, so compare within a panel, not across
-panels. LanceDB's post-filter (0.175) lies below its panel. Table~\ref{tab:qual-frontiers} in
-Appendix~\ref{app:frontier} has these values and the stores not drawn.}
+\caption{Recall@10 against throughput on MS MARCO, one panel per store: square, the default; line, the five-level effort sweep; circles,
+store options; cross, the store's exact search. Recall is the mean over three builds and throughput that of the store's first build, in its
+own job on its own runner, so compare within a panel, not across panels. LanceDB's post-filter (0.175) lies below its panel.
+Table~\ref{tab:qual-frontiers} in Appendix~\ref{app:frontier} has these values and the stores not drawn.}
 \label{fig:qual-frontiers}
 \end{figure}
 
 \paragraph{Defaults and effort.}
-At the settings a user gets without tuning, recall@10 ranged from 0.437 and 0.575 to 0.998. The two lowest are
-documented defaults: pgvector without iterative scans came back empty on 32.4\% of retrievals (recall@10 0.897 with
-them at \texttt{ef\_search} 100), and LanceDB's IVF-PQ index ranks by quantized distances, so raising
-\texttt{nprobes} from 10 to 500 moved recall@10 only from 0.424 to 0.450, while re-ranking 30 times $k$ candidates
-reached 0.908. Elsewhere effort bought recall at a price in throughput, and the stores' own options bought more:
-Qdrant reached 0.898 at the top of its sweep but 0.997 with ACORN. Where the filter passes everything, at 100\%
-selectivity, recall@10 at the defaults ran from 0.517 for LanceDB and 0.793 for Redis to 0.978 for Qdrant, and four
-stores lost recall against that baseline over the whole mix of filters: pgvector (0.575 against 0.916), Qdrant (0.799
-against 0.978), Elasticsearch (0.806 against 0.870) and LanceDB (0.437 against 0.517). Among settings that served at
-least 50 queries per second in their first build's job, the best recall@10 was 1.000 for Elasticsearch (its exact
-search, at 52), 0.999 for OpenSearch and Milvus, 0.997 for Redis, 0.995 for Weaviate, 0.979 for Qdrant, 0.578 for
-pgvector and 0.438 for LanceDB; MongoDB reached 50 at no setting. These throughputs are not calibrated across runners.
+At the defaults, recall@10 ranged from 0.437 and 0.575 to 0.998. The two lowest are documented defaults: pgvector without iterative scans came back
+empty on 32.4\% of retrievals (recall@10 0.897 with them at \texttt{ef\_search} 100), and LanceDB's IVF-PQ index ranks by quantized distances, so raising
+\texttt{nprobes} from 10 to 500 moved recall@10 only from 0.424 to 0.450, while re-ranking 30 times $k$ candidates reached 0.908. Elsewhere effort bought
+recall at a price in throughput, and the stores' own options bought more: Qdrant reached 0.898 at the top of its sweep but 0.997 with ACORN. At 100\%
+selectivity, where the filter passes everything, recall@10 at the defaults ran from 0.517 for LanceDB and 0.793 for Redis to 0.978 for Qdrant, and four stores
+lost recall against that baseline over the whole mix of filters: pgvector (0.575 against 0.916), Qdrant (0.799 against 0.978), Elasticsearch (0.806 against
+0.870) and LanceDB (0.437 against 0.517). Among settings that served at least 50 queries per second, uncalibrated across runners, the best recall@10 was 1.000
+for Elasticsearch (its exact search), 0.999 for OpenSearch and Milvus, 0.997 for Redis, 0.995 for Weaviate, 0.979 for Qdrant, 0.578 for pgvector and 0.438 for
+LanceDB; MongoDB reached 50 at no setting.
 
 \paragraph{Correlation and selectivity.}
-Negatively correlated questions lost at least 0.05 of recall@10 in four stores, not the six we had predicted (H2.1
-inconclusive): pgvector 0.424 (95\% interval 0.415 to 0.433), LanceDB 0.254, Elasticsearch 0.137 and Weaviate 0.055.
-Others paid in latency: Redis's recall was higher for those questions, by 0.079, but at 10\% and 30\% selectivity they
-took a median of 56.8 and 147.1\,ms, against 2.2 and 2.7\,ms for uncorrelated ones. Local selectivity predicted recall
-better than global selectivity in three stores and worse in five (H2.2 falsified), and the split follows the mechanism:
-local won where recall depends on what lies near the question, and global where the store chooses its search path from
-the filter's estimated size, searching small filters exactly. No single axis describes every store. At the top of each
-sweep the gap narrowed and remained in two of the four stores that had one (H2.3 confirmed): pgvector's fell from 0.424
-to 0.172, LanceDB's moved by 0.001, Weaviate's closed and Elasticsearch's widened. On clustered layouts with negatively
-correlated questions, filters admitting 0.5\% to 10\% of the corpus were harder than the smallest (0.06\%) in five of
-nine stores (H2.4 confirmed): Qdrant's recall@10 at 0.06\%, 0.5\%, 2\% and 10\% was 1.000, 1.000, 0.460 and 0.489. In
-this regime very selective permission filters are the easy case for most stores.
+Negatively correlated questions lost at least 0.05 of recall@10 in four stores, not the six we had predicted (H2.1 inconclusive): pgvector 0.424 (95\% interval
+0.415 to 0.433), LanceDB 0.254, Elasticsearch 0.137 and Weaviate 0.055. Redis paid in latency instead: its recall was higher for those questions, by 0.079, but
+at 10\% and 30\% selectivity they took a median of 56.8 and 147.1\,ms, against 2.2 and 2.7\,ms for uncorrelated ones. Local selectivity predicted recall better
+than global selectivity in three stores and worse in five (H2.2 falsified): local won where recall depends on what lies near the question, and global where the
+store chooses its search path from the filter's estimated size. At the top of each sweep the gap narrowed and remained in two of the four stores that had one (H2.3
+confirmed): pgvector's fell from 0.424 to 0.172, LanceDB's moved by 0.001, Weaviate's closed and Elasticsearch's widened. On clustered layouts with negatively
+correlated questions, filters admitting 0.5\% to 10\% of the corpus were harder than the smallest (0.06\%) in five of nine stores (H2.4 confirmed): Qdrant's
+recall@10 at those four levels, from the smallest up, was 1.000, 1.000, 0.460 and 0.489. In this regime very selective permission filters are the easy case for most
+stores.
 
 \paragraph{Filter size.}
-Varying only a disjunction's length from 1 to 40,000 groups, with the same 10\% of a 100,000-chunk corpus readable at
-every level, recall did not depend on length in any of the eight approximate stores that accepted every level (X3-H4
-confirmed), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other servers. Chroma alone
-refused, from 1,000 groups with SQLite's expression-depth error, and at about 16,500 groups its client process crashed,
-which the layer now avoids (Appendix~\ref{sec:qual-size}).
+Varying only a disjunction's length from 1 to 40,000 groups, with the same 10\% of a 100,000-chunk corpus readable at every level, recall did not depend on length in
+any of the eight approximate stores that accepted every level (X3-H4 confirmed), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other
+servers. Chroma alone refused, from 1,000 groups with SQLite's expression-depth error, and at about 16,500 groups its client process crashed, which the layer now avoids
+(Appendix~\ref{sec:qual-size}).

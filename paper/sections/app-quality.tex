@@ -85,6 +85,33 @@ company region is a sparse island in the graph, while the shared passages, all p
 large connected region that the traversal enters and does not leave. The least-privileged people
 escape the trap because their filter is small enough to be planned as an exact scan.
 
+\begin{table}[tbp]
+\centering
+\footnotesize
+\begin{tabular}{@{}llrrr@{}}
+\toprule
+Layout & Search setting & Recall@10 & Range & p50 (ms) \\
+\midrule
+As run (one collection) & \texttt{hnsw\_ef} 128 (as run) & 0.656 & 0.086 & 7.1 \\
+ & \texttt{hnsw\_ef} 64 & 0.600 & 0.074 & 6.0 \\
+ & \texttt{hnsw\_ef} 512 & 0.758 & 0.120 & 11.3 \\
+ & ACORN, max selectivity 0.4 or 1.0 & 0.808 & 0.127 & 7.3 \\
+ & exact & 1.000 & n/a & 43.1 \\
+Tenant field marked \texttt{is\_tenant} & as run & 0.651 & 0.025 & 6.9 \\
+ & ACORN & 0.802 & 0.076 & 7.1 \\
+Built as one segment & as run & 0.625 & 0.029 & 7.0 \\
+ & ACORN & 0.777 & 0.027 & 7.2 \\
+Per-tenant graphs (\texttt{is\_tenant}, $m = 0$) & as run & 0.952 & 0.001 & 6.6 \\
+Shared passages in a separate collection & as run & 0.949 & 0.003 & 12.9 \\
+\bottomrule
+\end{tabular}
+\caption{Qdrant 1.19.2 under the enterprise scenario's permission filters (X1 run 2, 1,489
+questions, three index builds per layout, means over builds; Range is the range over builds; latency from
+one CPU session). ACORN at the default gate (0.4) and at 1.0 gave identical results. Run 1 agreed within 0.05
+(as run 0.619, ACORN 0.761, per-tenant graphs 0.943).}
+\label{tab:qual-qdrant}
+\end{table}
+
 The pre-registered predictions for this hypothesis all held, in both runs of the grid
 (Table~\ref{tab:qual-qdrant} shows the second). Recall@10 for the least-privileged people was 1.000,
 against 0.369 (95\% CI 0.334 to 0.402; 0.273 in the first run) for company documents among everyone

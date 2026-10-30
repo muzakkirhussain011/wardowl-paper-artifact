@@ -1,22 +1,20 @@
 % Conclusion: body of Section~\ref{sec:conclusion}. Every number is from the sections it summarizes.
 
-Permission-aware retrieval is usually described as a filter. We have argued that it is better treated as a composition of
-untrusted parts, translators, approximate indexes and filter APIs, around a small trusted computing base centered on the check
-API. Re-checking every hit with that API makes containment independent of the untrusted parts, and our measurements agree: no leak
-in any of eleven end-to-end configurations (one-sided 95\% bounds of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per
-person, over the question generator's distribution), and none in 1,050 fault episodes ($2.8 \times 10^{-3}$ per episode, over the faults
-we injected).
+Permission-aware retrieval is usually described as a filter. We have argued that it is better treated as a composition of untrusted
+parts, translators, approximate indexes and filter APIs, around a small trusted computing base centered on the check API. Re-checking
+every hit makes containment independent of the untrusted parts, and our measurements agree: no leak in any of eleven end-to-end
+configurations (one-sided 95\% bounds of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per person, over the question
+generator's distribution), and none in 1,050 fault episodes ($2.8 \times 10^{-3}$ per episode, over the faults we injected).
 
-Containment, however, is the easy part, and it is not all that security asks. The checked revision can be stale, and an invalidation in
-front of a stale engine broke the bound the release stated until we fixed it. Answers still reveal: latency, counts, recall and scores told an
-attacker when unreadable chunks lay near a query. And the untrusted parts still decide how much of what a subject may read it actually receives:
-stores dropped matching chunks at size limits, filtered approximate search lost much of a readable set far from the question, and the same pgvector
-configuration was exact in some runs and lost about a quarter of its recall in others. In the release we ran end to end, none of this reached the
-application as a signal. It can be made to: a filter-only count flagged every truly short answer without a false alarm, and an exact search without a
-bound repaired them all, while a bound leaves unrepaired those above it; but no count sees a full answer of the wrong chunks.
+Containment, however, is the easy part, and it is not all that security asks. The checked revision can be stale. Latency, counts, recall
+and scores told an attacker when unreadable chunks lay near a query. And the untrusted parts still decide how much of what a subject may
+read it receives: stores dropped matching chunks at size limits, filtered approximate search lost much of a readable set far from the
+question, and the same pgvector configuration was exact in some runs and lost about a quarter of its recall in others. A filter-only count
+flagged every truly short answer without a false alarm and an exact search without a bound repaired them all, but no count sees a full answer
+of the wrong chunks.
 
 Three practices follow. Test filter semantics differentially, and measure recall under permission-shaped filters against exact search over the
-readable set, on measured correlation axes, before choosing a store, a layout or a plan. Never let a system call a short approximate answer complete:
-count, fall back to exact search within a bound, and sample exact searches to see what a count cannot. Treat the shape and timing of an answer as outputs
-too, and the staleness of a check as part of the claim: state $\delta$ for each path, and where unreadable chunks near a query must not be inferable, search
-exactly and pad latency. We release the kit, the harnesses and the data so that these checks can be repeated as stores and engines change.
+readable set before choosing a store, a layout or a plan. Never let a system call a short approximate answer complete: count, fall back to exact
+search within a bound, and sample exact searches to see what a count cannot. Treat the shape and timing of an answer as outputs too, and the
+staleness of a check as part of the claim. We release the kit, the harnesses and the data so that these checks can be repeated as stores and
+engines change.
