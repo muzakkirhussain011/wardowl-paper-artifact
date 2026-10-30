@@ -1,0 +1,37 @@
+{
+  "store": "qdrant",
+  "layout": "as-run",
+  "build": "as-run-b0",
+  "rep": 0,
+  "setting": "qb-ef64",
+  "experiments": [
+    "Q-b"
+  ],
+  "params": {
+    "hnsw_ef": 64
+  },
+  "harness_level": [],
+  "first_build_only": false,
+  "started": "2026-10-26T10:07:09+0000",
+  "status": "done",
+  "seconds": 1.8,
+  "summary": {
+    "recall5": 1.0,
+    "recall10": 1.0,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 3.1941149999852314
+  },
+  "files": {
+    "runs": "/kaggle/working/x1-smoke/runs/qdrant__as-run__as-run-b0__qb-ef64.parquet",
+    "telemetry": "/kaggle/working/x1-smoke/telemetry/qdrant__as-run__as-run-b0__qb-ef64.parquet"
+  },
+  "questions": 169,
+  "retrievals": 507,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 0,
+  "passes": 2,
+  "sweep_seconds": 1.7,
+  "telemetry": true
+}

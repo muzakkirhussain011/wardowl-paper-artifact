@@ -1,0 +1,77 @@
+{
+  "store": "pgvector",
+  "layout": "hnsw-m16-efc64",
+  "build": "hnsw-m16-efc64-b0",
+  "rep": 0,
+  "setting": "pc-ef40",
+  "experiments": [
+    "P-c",
+    "P2"
+  ],
+  "params": {
+    "ef_search": 40,
+    "iterative_scan": "relaxed_order"
+  },
+  "harness_level": [],
+  "first_build_only": false,
+  "started": "2026-10-26T14:03:24+0000",
+  "status": "done",
+  "seconds": 1811.0,
+  "summary": {
+    "recall5": 0.997683923705722,
+    "recall10": 0.9985694822888284,
+    "err5": 0.0006811989100817438,
+    "short5": 0.0006811989100817438,
+    "latency_p50_ms": 392.7950099987356
+  },
+  "files": {
+    "runs": "/kaggle/working/x1/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pc-ef40.parquet",
+    "explain": "/kaggle/working/x1/explain/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pc-ef40.parquet",
+    "explain_raw": "/kaggle/working/x1/explain_raw/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pc-ef40.jsonl.gz"
+  },
+  "questions": 1489,
+  "retrievals": 5956,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 6,
+  "passes": 3,
+  "sweep_seconds": 1809.5,
+  "prepared_statements": {
+    "statements": 7,
+    "search_statements": 4,
+    "search_generic_plans": 5852,
+    "search_custom_plans": 94,
+    "per_search_statement": [
+      {
+        "name": "_pg3_4",
+        "generic_plans": 2343,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_5",
+        "generic_plans": 2158,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_3",
+        "generic_plans": 1351,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_6",
+        "generic_plans": 0,
+        "custom_plans": 79
+      }
+    ]
+  },
+  "effective_settings": {
+    "hnsw.ef_search": "40",
+    "hnsw.iterative_scan": "relaxed_order",
+    "hnsw.max_scan_tuples": "20000",
+    "hnsw.scan_mem_multiplier": "1",
+    "work_mem": "4MB",
+    "enable_indexscan": "on",
+    "plan_cache_mode": "auto",
+    "prepare_threshold": "5"
+  }
+}

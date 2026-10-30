@@ -1,0 +1,21 @@
+store,persona_type,kb_share5_mean,kb_share5_count,reference_kb_share5_mean,reference_kb_share5_count
+faiss,kb-reader,0.0,340,0.0,340
+faiss,judy,0.0,36,0.0,36
+chroma,kb-reader,0.0,340,0.0,340
+chroma,judy,0.0,36,0.0,36
+pgvector,kb-reader,0.0023529411764705885,340,0.0,340
+pgvector,judy,0.0,36,0.0,36
+pgvector + OPA,kb-reader,0.0023529411764705885,340,0.0,340
+pgvector + OPA,judy,0.0,36,0.0,36
+qdrant,kb-reader,0.6588235294117647,340,0.0,340
+qdrant,judy,0.0,36,0.0,36
+elasticsearch,kb-reader,0.0,340,0.0,340
+elasticsearch,judy,0.0,36,0.0,36
+opensearch,kb-reader,0.0,340,0.0,340
+opensearch,judy,0.0,36,0.0,36
+weaviate,kb-reader,0.0,340,0.0,340
+weaviate,judy,0.0,36,0.0,36
+redis,kb-reader,0.0,340,0.0,340
+redis,judy,0.0,36,0.0,36
+lancedb,kb-reader,0.0,340,0.0,340
+lancedb,judy,0.0,36,0.0,36

@@ -1,0 +1,164 @@
+[{"stream_name":"stdout","time":0.935285113,"data":"+ rm -rf /tmp/wardowl-src \u0026\u0026 git clone -q https://github.com/muzakkirhussain011/wardowl.git /tmp/wardowl-src\n"}
+,{"stream_name":"stdout","time":3.097623805,"data":"+ git -C /tmp/wardowl-src checkout -q bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 \u0026\u0026 git -C /tmp/wardowl-src log -1 --format='%H %cs %s'\n"}
+,{"stream_name":"stdout","time":3.280482973,"data":"bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 2026-10-24 Merge pull request #161 from muzakkirhussain011/release/2.1.0\n"}
+,{"stream_name":"stdout","time":3.281067965,"data":"+ pip install -q \"wardowl[pgvector,chroma,elasticsearch,opensearch,qdrant,weaviate,redis,lancedb,faiss]==2.1.0\" \"sentence-transformers\u003e=3\" \"datasets\u003e=2.19\" psutil\n"}
+,{"stream_name":"stderr","time":44.806542594,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":44.806574471,"data":"google-adk 2.7.1 requires opentelemetry-api\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":44.806581033,"data":"google-adk 2.7.1 requires opentelemetry-sdk\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":45.120769596,"data":"+ PG_TUNE=1 bash /tmp/wardowl-src/benchmarks/kaggle_setup.sh\n"}
+,{"stream_name":"stderr","time":49.179433181,"data":"W: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.\n"}
+,{"stream_name":"stderr","time":49.17947464,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stderr","time":118.054084125,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\n"}
+,{"stream_name":"stderr","time":118.054111626,"data":"\n"}
+,{"stream_name":"stderr","time":118.054118094,"data":"You are in 'detached HEAD' state. You can look around, make experimental\n"}
+,{"stream_name":"stderr","time":118.054124249,"data":"changes and commit them, and you can discard any commits you make in this\n"}
+,{"stream_name":"stderr","time":118.05413009,"data":"state without impacting any branches by switching back to a branch.\n"}
+,{"stream_name":"stderr","time":118.054136033,"data":"\n"}
+,{"stream_name":"stderr","time":118.054141176,"data":"If you want to create a new branch to retain commits you create, you may\n"}
+,{"stream_name":"stderr","time":118.054146819,"data":"do so (now or later) by using -c with the switch command. Example:\n"}
+,{"stream_name":"stderr","time":118.054152105,"data":"\n"}
+,{"stream_name":"stderr","time":118.054157136,"data":"  git switch -c \u003cnew-branch-name\u003e\n"}
+,{"stream_name":"stderr","time":118.054162994,"data":"\n"}
+,{"stream_name":"stderr","time":118.054167269,"data":"Or undo this operation with:\n"}
+,{"stream_name":"stderr","time":118.05417168,"data":"\n"}
+,{"stream_name":"stderr","time":118.054175908,"data":"  git switch -\n"}
+,{"stream_name":"stderr","time":118.054180891,"data":"\n"}
+,{"stream_name":"stderr","time":118.054185354,"data":"Turn off this advice by setting config variable advice.detachedHead to false\n"}
+,{"stream_name":"stderr","time":118.054190114,"data":"\n"}
+,{"stream_name":"stdout","time":137.136812989,"data":" * Starting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":139.338546193,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":139.571905434,"data":" * Restarting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":141.981655029,"data":"   ...done.\n"}
+,{"stream_name":"stderr","time":142.034960688,"data":"NOTICE:  database \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stderr","time":142.09140102,"data":"NOTICE:  role \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stdout","time":142.262927639,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\n"}
+,{"stream_name":"stdout","time":142.646502659,"data":"X8-FGA seed 13\n"}
+,{"stream_name":"stdout","time":152.909125507,"data":"\n"}
+,{"stream_name":"stdout","time":152.909164626,"data":"== environment\n"}
+,{"stream_name":"stdout","time":153.225720347,"data":"[22:38:44] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":153.225752149,"data":"[22:38:44] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":153.225757821,"data":"[22:38:44] cpus: 4\n"}
+,{"stream_name":"stdout","time":153.225763548,"data":"[22:38:44] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":153.225772398,"data":"[22:38:44] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":153.225775585,"data":"[22:38:44] acceptance_commit: bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839\n"}
+,{"stream_name":"stdout","time":153.225778752,"data":"[22:38:44] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":153.225801397,"data":"[22:38:44] gpus: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":153.225807497,"data":"[22:38:44] torch: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":153.225811955,"data":"[22:38:44] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":153.225834483,"data":"[22:38:44] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":153.225839102,"data":"[22:38:44] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":153.225843935,"data":"[22:38:44] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":153.225848756,"data":"[22:38:44] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":153.225853134,"data":"[22:38:44] chromadb: 1.5.9\n"}
+,{"stream_name":"stdout","time":153.225858049,"data":"[22:38:44] elasticsearch: 9.5.1\n"}
+,{"stream_name":"stdout","time":153.225862194,"data":"[22:38:44] opensearch-py: 3.2.0\n"}
+,{"stream_name":"stdout","time":153.22586634,"data":"[22:38:44] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":153.225870992,"data":"[22:38:44] weaviate-client: 4.24.1\n"}
+,{"stream_name":"stdout","time":153.225875168,"data":"[22:38:44] redis: 8.1.0\n"}
+,{"stream_name":"stdout","time":153.225879311,"data":"[22:38:44] lancedb: 0.41.0\n"}
+,{"stream_name":"stdout","time":153.225884918,"data":"[22:38:44] faiss-cpu: 1.15.1\n"}
+,{"stream_name":"stdout","time":153.225892564,"data":"[22:38:44] LLM on cuda:0, embeddings and exact search on cuda:1\n"}
+,{"stream_name":"stdout","time":153.225914482,"data":"  [PASS] wardowl is the release installed from PyPI, not the cloned source\n"}
+,{"stream_name":"stdout","time":153.226054946,"data":"  [PASS] wardowl 2.1.0 is the version under test (2.1.0)\n"}
+,{"stream_name":"stdout","time":153.226064332,"data":"\n"}
+,{"stream_name":"stdout","time":153.226069186,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":153.228340049,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":153.23436029,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":154.553916605,"data":"[22:38:46] 49,920 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":159.586928612,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":162.031341204,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 169685.40 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 166473.48 examples/s]\n"}
+,{"stream_name":"stdout","time":164.586078417,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":164.606374433,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":164.606671393,"data":"  note: corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":164.607976566,"data":"\n"}
+,{"stream_name":"stdout","time":164.607990144,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":201.18724426,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2606.50it/s]\n"}
+,{"stream_name":"stdout","time":230.051867578,"data":"[22:40:01]   embedded 20,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":257.074420587,"data":"[22:40:28]   embedded 40,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":316.597823128,"data":"[22:41:28]   embedded 60,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":408.963177821,"data":"[22:43:00]   embedded 80,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":499.438920547,"data":"[22:44:30]   embedded 100,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":532.967636854,"data":"[22:45:04]   embedded 107,540 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":533.171687402,"data":"[22:45:04] embedded 107,540 chunks in 330 s on cuda:1\n"}
+,{"stream_name":"stdout","time":534.233925978,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":534.237685019,"data":"\n"}
+,{"stream_name":"stdout","time":534.237703522,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":535.477666163,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":535.48976028,"data":"  note: readable chunks per person: min 0, median 58,641, max 59,265 of 107,540\n"}
+,{"stream_name":"stdout","time":535.489786358,"data":"\n"}
+,{"stream_name":"stdout","time":535.48979109,"data":"== language model\n"}
+,{"stream_name":"stderr","time":597.033546527,"data":"\rFetching 2 files:   0%|          | 0/2 [00:00\u003c?, ?it/s]\rFetching 2 files:  50%|█████     | 1/2 [00:09\u003c00:09,  9.35s/it]\rFetching 2 files: 100%|██████████| 2/2 [00:59\u003c00:00, 33.37s/it]\rFetching 2 files: 100%|██████████| 2/2 [00:59\u003c00:00, 29.77s/it]\n"}
+,{"stream_name":"stderr","time":611.665315199,"data":"\rLoading weights:   0%|          | 0/434 [00:00\u003c?, ?it/s]\rLoading weights:   0%|          | 1/434 [00:00\u003c07:05,  1.02it/s]\rLoading weights:  31%|███       | 135/434 [00:01\u003c00:01, 168.21it/s]\rLoading weights:  47%|████▋     | 205/434 [00:01\u003c00:01, 174.08it/s]\rLoading weights:  58%|█████▊    | 252/434 [00:01\u003c00:01, 168.77it/s]\rLoading weights:  66%|██████▌   | 287/434 [00:02\u003c00:00, 162.35it/s]\rLoading weights:  73%|███████▎  | 315/434 [00:02\u003c00:00, 160.40it/s]\rLoading weights:  78%|███████▊  | 339/434 [00:02\u003c00:00, 151.67it/s]\rLoading weights:  83%|████████▎ | 359/434 [00:02\u003c00:00, 150.85it/s]\rLoading weights:  87%|████████▋ | 378/434 [00:02\u003c00:00, 142.19it/s]\rLoading weights:  92%|█████████▏| 399/434 [00:02\u003c00:00, 151.53it/s]\rLoading weights:  96%|█████████▌| 416/434 [00:02\u003c00:00, 152.86it/s]\rLoading weights: 100%|██████████| 434/434 [00:02\u003c00:00, 145.42it/s]\n"}
+,{"stream_name":"stdout","time":613.884986849,"data":"[22:46:25] Qwen/Qwen2.5-3B-Instruct on cuda:0 in 78 s\n"}
+,{"stream_name":"stdout","time":614.996369371,"data":"[22:46:26] probe answer: 'The staff cafeteria opens at 8 am.'\n"}
+,{"stream_name":"stdout","time":614.996423846,"data":"  [PASS] the assistant answers a simple question from its document\n"}
+,{"stream_name":"stdout","time":614.996494113,"data":"\n"}
+,{"stream_name":"stdout","time":614.996525656,"data":"== store pgvector\n"}
+,{"stream_name":"stdout","time":627.363151376,"data":"[22:46:38]   loaded 20,000 of 107,540 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":639.233279216,"data":"[22:46:50]   loaded 40,000 of 107,540 chunks (24 s)\n"}
+,{"stream_name":"stdout","time":652.187898338,"data":"[22:47:03]   loaded 60,000 of 107,540 chunks (37 s)\n"}
+,{"stream_name":"stdout","time":665.001944159,"data":"[22:47:16]   loaded 80,000 of 107,540 chunks (50 s)\n"}
+,{"stream_name":"stdout","time":677.490462129,"data":"[22:47:28]   loaded 100,000 of 107,540 chunks (62 s)\n"}
+,{"stream_name":"stdout","time":682.765938368,"data":"[22:47:34]   loaded 107,540 of 107,540 chunks (67 s)\n"}
+,{"stream_name":"stdout","time":713.386900126,"data":"[22:48:04] pgvector loaded: {'load_s': 67.3, 'index_s': 29.8, 'detail': 'PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 963 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order', 'process_rss_delta_gib': 0.05, 'server_rss_gib': 2.01, 'data_gib': None, 'rows': 107540}\n"}
+,{"stream_name":"stdout","time":713.386945865,"data":"  [PASS] pgvector: holds all 107,540 chunks\n"}
+,{"stream_name":"stdout","time":713.386950297,"data":"\n"}
+,{"stream_name":"stdout","time":713.386987334,"data":"== pgvector: questions\n"}
+,{"stream_name":"stdout","time":853.308204449,"data":"[22:50:24]   pgvector: 250 of 1105 questions retrieved (140 s)\n"}
+,{"stream_name":"stdout","time":1043.893646698,"data":"[22:53:35]   pgvector: 500 of 1105 questions retrieved (330 s)\n"}
+,{"stream_name":"stdout","time":1236.933331244,"data":"[22:56:48]   pgvector: 750 of 1105 questions retrieved (523 s)\n"}
+,{"stream_name":"stdout","time":1420.691868236,"data":"[22:59:52]   pgvector: 1000 of 1105 questions retrieved (707 s)\n"}
+,{"stream_name":"stdout","time":1503.116667353,"data":"[23:01:14]   pgvector: 1105 of 1105 questions retrieved (790 s)\n"}
+,{"stream_name":"stdout","time":1503.347273882,"data":"[23:01:14]   pgvector: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":1646.482038492,"data":"[23:03:37]   generated 160 of 1105 answers (143 s)\n"}
+,{"stream_name":"stdout","time":1785.332136568,"data":"[23:05:56]   generated 320 of 1105 answers (282 s)\n"}
+,{"stream_name":"stdout","time":1903.694712177,"data":"[23:07:55]   generated 480 of 1105 answers (400 s)\n"}
+,{"stream_name":"stdout","time":2011.139637866,"data":"[23:09:42]   generated 640 of 1105 answers (508 s)\n"}
+,{"stream_name":"stdout","time":2145.073778785,"data":"[23:11:56]   generated 800 of 1105 answers (642 s)\n"}
+,{"stream_name":"stdout","time":2297.33652214,"data":"[23:14:28]   generated 960 of 1105 answers (794 s)\n"}
+,{"stream_name":"stdout","time":2488.473000461,"data":"[23:17:39]   generated 1105 of 1105 answers (985 s)\n"}
+,{"stream_name":"stdout","time":2535.080422413,"data":"  [PASS] pgvector: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":2535.080541842,"data":"  [PASS] pgvector: all 16,359 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":2535.080586237,"data":"  [PASS] pgvector: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":2535.080991612,"data":"  [PASS] pgvector: everyone who may read something got results\n"}
+,{"stream_name":"stdout","time":2535.081047928,"data":"  [PASS] pgvector: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":2535.081187795,"data":"  [PASS] pgvector: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":2535.081267519,"data":"  [PASS] pgvector: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":2535.165205841,"data":"  note: pgvector: recall@5 0.9841, recall@10 0.9866; retrieval p50/p95/p99 413.4/453.8/469.0 ms; whole answer p50 2055.4 ms; answer accuracy 0.9867; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":2535.199777215,"data":"\n"}
+,{"stream_name":"stdout","time":2535.199825615,"data":"== pgvector + OpenFGA: questions\n"}
+,{"stream_name":"stdout","time":2535.203028392,"data":"[23:18:26] $ bash -c curl -sSfL https://github.com/openfga/openfga/releases/download/v1.22.0/openfga_1.22.0_linux_amd64.tar.gz | tar xz -C /tmp/wardowl-stores/openfga\n"}
+,{"stream_name":"stdout","time":2652.171481463,"data":"[23:20:23] OpenFGA 1.22.0: wrote 74,960 tuples in 115 s\n"}
+,{"stream_name":"stdout","time":2681.692468343,"data":"[23:20:53]   pgvector + OpenFGA: 250 of 1105 questions retrieved (29 s)\n"}
+,{"stream_name":"stdout","time":2712.468121681,"data":"[23:21:23]   pgvector + OpenFGA: 500 of 1105 questions retrieved (60 s)\n"}
+,{"stream_name":"stdout","time":2741.470600829,"data":"[23:21:52]   pgvector + OpenFGA: 750 of 1105 questions retrieved (89 s)\n"}
+,{"stream_name":"stdout","time":2770.508515997,"data":"[23:22:21]   pgvector + OpenFGA: 1000 of 1105 questions retrieved (118 s)\n"}
+,{"stream_name":"stdout","time":2780.144687452,"data":"[23:22:31]   pgvector + OpenFGA: 1105 of 1105 questions retrieved (127 s)\n"}
+,{"stream_name":"stdout","time":2780.375091018,"data":"[23:22:31]   pgvector + OpenFGA: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":2882.990123765,"data":"[23:24:14]   generated 160 of 544 answers (103 s)\n"}
+,{"stream_name":"stdout","time":3002.659105229,"data":"[23:26:14]   generated 320 of 544 answers (222 s)\n"}
+,{"stream_name":"stdout","time":3154.637393692,"data":"[23:28:46]   generated 480 of 544 answers (374 s)\n"}
+,{"stream_name":"stdout","time":3215.125310336,"data":"[23:29:46]   generated 544 of 544 answers (435 s)\n"}
+,{"stream_name":"stdout","time":3258.309990704,"data":"  [PASS] pgvector + OpenFGA: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":3258.310041142,"data":"  [PASS] pgvector + OpenFGA: all 16,268 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":3258.310115722,"data":"  [PASS] pgvector + OpenFGA: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":3258.310652929,"data":"  [FAIL] pgvector + OpenFGA: everyone who may read something got results: 3: ['coho-judy', 'contoso-judy', 'woodgrove-judy']\n"}
+,{"stream_name":"stdout","time":3258.310670395,"data":"  [PASS] pgvector + OpenFGA: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":3258.310689198,"data":"  [PASS] pgvector + OpenFGA: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":3258.310817923,"data":"  [PASS] pgvector + OpenFGA: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":3258.380272834,"data":"  note: pgvector + OpenFGA: recall@5 0.6847, recall@10 0.7137; retrieval p50/p95/p99 44.7/97.4/193.0 ms; whole answer p50 1524.7 ms; answer accuracy 0.9362; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":3258.596861601,"data":"[23:30:30] $ service postgresql stop\n"}
+,{"stream_name":"stdout","time":3258.661511087,"data":" * Stopping PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":3259.216581779,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":3259.219878138,"data":"\n"}
+,{"stream_name":"stdout","time":3259.21989731,"data":"wardowl enterprise RAG on Kaggle: 23 of 24 checks passed in 3117 s\n"}
+,{"stream_name":"stdout","time":3259.219912332,"data":"  FAILED pgvector + OpenFGA: everyone who may read something got results: 3: ['coho-judy', 'contoso-judy', 'woodgrove-judy']\n"}
+,{"stream_name":"stdout","time":3259.220053545,"data":"results: /kaggle/working/results.md and /kaggle/working/results.json\n"}
+,{"stream_name":"stdout","time":3259.220162834,"data":"X8-FGA seed 13: 1 failed checks, 3258 s\n"}
+,{"stream_name":"stderr","time":3267.031565894,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":3267.031609354,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":3267.304908245,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":3267.30493477,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":3268.160458676,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":3269.195204174,"data":"[NbConvertApp] Writing 282049 bytes to __results__.html\n"}
+]

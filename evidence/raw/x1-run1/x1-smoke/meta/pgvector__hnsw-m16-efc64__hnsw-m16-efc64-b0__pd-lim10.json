@@ -1,0 +1,75 @@
+{
+  "store": "pgvector",
+  "layout": "hnsw-m16-efc64",
+  "build": "hnsw-m16-efc64-b0",
+  "rep": 0,
+  "setting": "pd-lim10",
+  "experiments": [
+    "P-d",
+    "P2"
+  ],
+  "params": {
+    "ef_search": 100,
+    "iterative_scan": "relaxed_order",
+    "limit_factor": 10
+  },
+  "harness_level": [
+    "limit_factor"
+  ],
+  "first_build_only": false,
+  "started": "2026-10-26T10:05:59+0000",
+  "status": "done",
+  "seconds": 5.2,
+  "summary": {
+    "recall5": 1.0,
+    "recall10": 1.0,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 13.53502550000485
+  },
+  "files": {
+    "runs": "/kaggle/working/x1-smoke/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pd-lim10.parquet",
+    "explain": "/kaggle/working/x1-smoke/explain/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pd-lim10.parquet",
+    "explain_raw": "/kaggle/working/x1-smoke/explain_raw/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pd-lim10.jsonl.gz"
+  },
+  "questions": 169,
+  "retrievals": 507,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 0,
+  "passes": 2,
+  "sweep_seconds": 4.9,
+  "prepared_statements": {
+    "statements": 6,
+    "search_statements": 3,
+    "search_generic_plans": 434,
+    "search_custom_plans": 68,
+    "per_search_statement": [
+      {
+        "name": "_pg3_4",
+        "generic_plans": 128,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_5",
+        "generic_plans": 0,
+        "custom_plans": 58
+      },
+      {
+        "name": "_pg3_3",
+        "generic_plans": 306,
+        "custom_plans": 5
+      }
+    ]
+  },
+  "effective_settings": {
+    "hnsw.ef_search": "100",
+    "hnsw.iterative_scan": "relaxed_order",
+    "hnsw.max_scan_tuples": "20000",
+    "hnsw.scan_mem_multiplier": "1",
+    "work_mem": "4MB",
+    "enable_indexscan": "on",
+    "plan_cache_mode": "auto",
+    "prepare_threshold": "5"
+  }
+}

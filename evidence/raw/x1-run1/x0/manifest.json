@@ -1,0 +1,50 @@
+{
+  "experiment": "X0: re-analysis of the 2026-10-24 Kaggle run (section 6.0)",
+  "input": "/kaggle/input/notebooks/muzakkirhussainsyed/notebookd8377caca8",
+  "inputs": {
+    "answers.jsonl": {
+      "bytes": 6205489,
+      "sha256": "8d39a801f4ef4b55b6d6007422c9ecf16c29aa0f1f16bd5c52eae8e0bd4ff48e"
+    },
+    "results.json": {
+      "bytes": 32664,
+      "sha256": "990072a5071fdc987550b2cc827ee8656e5a91995b7c89d6a9eef3772ba5ab79"
+    }
+  },
+  "lines": 11050,
+  "stores": [
+    "faiss",
+    "chroma",
+    "pgvector",
+    "pgvector + OPA",
+    "qdrant",
+    "elasticsearch",
+    "opensearch",
+    "weaviate",
+    "redis",
+    "lancedb"
+  ],
+  "categories": [
+    "forbidden",
+    "generic",
+    "redteam",
+    "targeted"
+  ],
+  "outputs": [
+    "per_question.csv",
+    "empties.csv",
+    "pgvector_empties.csv",
+    "recall5_by_category.csv",
+    "recall5_by_person_type.csv",
+    "recall5_by_category_and_person_type.csv",
+    "kb_share_targeted.csv",
+    "summary.md",
+    "x0.log"
+  ],
+  "versions": {
+    "wardowl": "2.1.0",
+    "pandas": "2.3.3",
+    "numpy": "2.1.3"
+  },
+  "seconds": 0.8
+}

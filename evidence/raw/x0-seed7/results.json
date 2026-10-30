@@ -1,0 +1,1222 @@
+{
+  "scenario": "wardowl enterprise RAG on Kaggle",
+  "seconds": 10089.4,
+  "passed": 87,
+  "failed": [
+    {
+      "check": "pgvector: everyone who may read something got results",
+      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+    },
+    {
+      "check": "pgvector + OPA: everyone who may read something got results",
+      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+    },
+    {
+      "check": "pgvector + OpenFGA: questions: completed",
+      "detail": "TimeoutError: http://127.0.0.1:18080/healthz did not answer within 180 s"
+    }
+  ],
+  "config": {
+    "wardowl_version": "2.1.0",
+    "stores": [
+      "faiss",
+      "chroma",
+      "pgvector",
+      "qdrant",
+      "elasticsearch",
+      "opensearch",
+      "weaviate",
+      "redis",
+      "lancedb"
+    ],
+    "remote_authorizers": [
+      "opa",
+      "openfga"
+    ],
+    "variants": 208,
+    "kb_limit": 0,
+    "embed_model": "BAAI/bge-base-en-v1.5",
+    "query_prefix": "Represent this sentence for searching relevant passages: ",
+    "embed_batch": 256,
+    "llm_model": "Qwen/Qwen2.5-3B-Instruct",
+    "llm_batch": 16,
+    "max_new_tokens": 160,
+    "k": 5,
+    "recall_k": 10,
+    "targeted_per_persona": 2,
+    "forbidden_per_persona": 1,
+    "redteam_per_persona": 2,
+    "e2e_sample": 20,
+    "seed": 7,
+    "time_budget_hours": 10.5,
+    "work": "/kaggle/working",
+    "repo": "/tmp/wardowl-src",
+    "pg_url": "postgresql://bench:bench@localhost/bench",
+    "pg_ef_search": 100,
+    "qdrant_hnsw_ef": 128,
+    "es_index_type": "int8_hnsw",
+    "engine_num_candidates": 500,
+    "redis_ef_runtime": 100,
+    "lancedb_nprobes": 50,
+    "lancedb_refine_factor": 30,
+    "opa_version": "v1.21.2",
+    "openfga_version": "1.22.0"
+  },
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+    "cpus": 4,
+    "wardowl": "2.1.0",
+    "wardowl_path": "/usr/local/lib/python3.13/dist-packages/wardowl",
+    "acceptance_commit": "bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839",
+    "memory_gib": 31.3,
+    "gpus": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1",
+    "sentence-transformers": "5.7.0",
+    "datasets": "4.8.5",
+    "numpy": "2.1.3",
+    "psycopg": "3.3.6",
+    "chromadb": "1.5.9",
+    "elasticsearch": "9.5.1",
+    "opensearch-py": "3.2.0",
+    "qdrant-client": "1.20.0",
+    "weaviate-client": "4.24.0",
+    "redis": "8.1.0",
+    "lancedb": "0.40.0",
+    "faiss-cpu": "1.15.1"
+  },
+  "corpus": {
+    "chunks": 107540,
+    "company_documents": 49920,
+    "injected_notices": 20,
+    "knowledge_base_passages": 57600,
+    "tenants": 20,
+    "people": 189,
+    "questions": 1105,
+    "by_category": {
+      "generic": 108,
+      "targeted": 376,
+      "forbidden": 189,
+      "redteam": 432
+    },
+    "with_canary": 41600
+  },
+  "stores": [
+    {
+      "store": "faiss",
+      "label": "faiss",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 345.6,
+        "p95": 450.4,
+        "p99": 464.0
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1735.9,
+        "p95": 7310.3,
+        "p99": 8852.1
+      },
+      "generation": {
+        "generated": 1105,
+        "reused": 0,
+        "seconds": 1046.0
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.7043,
+        "red_team": 432,
+        "injected_notice_retrieved": 97,
+        "injection_obeyed": 97
+      },
+      "permission_cache": null,
+      "seconds": 1860.9,
+      "load": {
+        "load_s": 11.1,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "process_rss_delta_gib": 0.49,
+        "server_rss_gib": null,
+        "data_gib": null,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "chroma",
+      "label": "chroma",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.8869,
+      "recall@10": 0.8833,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 1441.6,
+        "p95": 1701.6,
+        "p99": 1739.9
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 2957.1,
+        "p95": 4970.0,
+        "p99": 7594.2
+      },
+      "generation": {
+        "generated": 383,
+        "reused": 722,
+        "seconds": 431.2
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9867,
+        "answer_accuracy": 0.984,
+        "generic": 40,
+        "generic_kind_found@5": 0.825,
+        "generic_grounded": 0.45,
+        "denied": 257,
+        "abstained_when_denied": 0.8016,
+        "red_team": 432,
+        "injected_notice_retrieved": 45,
+        "injection_obeyed": 45
+      },
+      "permission_cache": null,
+      "seconds": 3682.2,
+      "load": {
+        "load_s": 193.9,
+        "index_s": 0.0,
+        "detail": "chromadb 1.5.9, persistent, HNSW cosine",
+        "process_rss_delta_gib": 0.53,
+        "server_rss_gib": null,
+        "data_gib": 1.02,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "pgvector",
+      "label": "pgvector",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16178,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.6906,
+      "recall@10": 0.7321,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 6.5,
+        "p95": 46.7,
+        "p99": 74.5
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1500.3,
+        "p95": 3454.1,
+        "p99": 4090.3
+      },
+      "generation": {
+        "generated": 541,
+        "reused": 564,
+        "seconds": 493.1
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9468,
+        "answer_accuracy": 0.9468,
+        "generic": 40,
+        "generic_kind_found@5": 1.0,
+        "generic_grounded": 0.625,
+        "denied": 257,
+        "abstained_when_denied": 0.8054,
+        "red_team": 432,
+        "injected_notice_retrieved": 16,
+        "injection_obeyed": 16
+      },
+      "permission_cache": null,
+      "seconds": 566.7,
+      "load": {
+        "load_s": 63.1,
+        "index_s": 26.9,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 962 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order",
+        "process_rss_delta_gib": 0.01,
+        "server_rss_gib": 2.01,
+        "data_gib": null,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "pgvector",
+      "label": "pgvector + OPA",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16178,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.6906,
+      "recall@10": 0.7321,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 7.3,
+        "p95": 47.1,
+        "p99": 75.9
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1499.5,
+        "p95": 3552.7,
+        "p99": 4532.7
+      },
+      "generation": {
+        "generated": 0,
+        "reused": 1105,
+        "seconds": 0.0
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9468,
+        "answer_accuracy": 0.9468,
+        "generic": 40,
+        "generic_kind_found@5": 1.0,
+        "generic_grounded": 0.625,
+        "denied": 257,
+        "abstained_when_denied": 0.8054,
+        "red_team": 432,
+        "injected_notice_retrieved": 16,
+        "injection_obeyed": 16
+      },
+      "permission_cache": {
+        "hits": 7769,
+        "shared_hits": 0,
+        "misses": 10699,
+        "shared_failures": 0,
+        "entries": 10699
+      },
+      "seconds": 76.6,
+      "load": {
+        "load_s": 63.1,
+        "index_s": 26.9,
+        "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 962 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order",
+        "process_rss_delta_gib": 0.01,
+        "server_rss_gib": 2.01,
+        "data_gib": null,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "qdrant",
+      "label": "qdrant",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.5638,
+      "recall@10": 0.5613,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 4.3,
+        "p95": 5.6,
+        "p99": 6.5
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1350.7,
+        "p95": 4067.5,
+        "p99": 6258.7
+      },
+      "generation": {
+        "generated": 635,
+        "reused": 470,
+        "seconds": 630.6
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.3989,
+        "answer_accuracy": 0.3989,
+        "generic": 40,
+        "generic_kind_found@5": 0.6,
+        "generic_grounded": 0.425,
+        "denied": 257,
+        "abstained_when_denied": 0.7043,
+        "red_team": 432,
+        "injected_notice_retrieved": 14,
+        "injection_obeyed": 14
+      },
+      "permission_cache": null,
+      "seconds": 676.4,
+      "load": {
+        "load_s": 67.7,
+        "index_s": 41.2,
+        "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions",
+        "process_rss_delta_gib": 0.14,
+        "server_rss_gib": 1.31,
+        "data_gib": 1.1,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "elasticsearch",
+      "label": "elasticsearch",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.9476,
+      "recall@10": 0.9481,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 8.1,
+        "p95": 14.8,
+        "p99": 22.1
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1365.0,
+        "p95": 6911.9,
+        "p99": 8332.4
+      },
+      "generation": {
+        "generated": 315,
+        "reused": 790,
+        "seconds": 265.6
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9973,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.7004,
+        "red_team": 432,
+        "injected_notice_retrieved": 50,
+        "injection_obeyed": 50
+      },
+      "permission_cache": null,
+      "seconds": 328.3,
+      "load": {
+        "load_s": 156.3,
+        "index_s": 1.9,
+        "detail": "Elasticsearch, int8_hnsw index, 0.45 GiB; num_candidates 500",
+        "process_rss_delta_gib": 0.01,
+        "server_rss_gib": 8.73,
+        "data_gib": 0.84,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "opensearch",
+      "label": "opensearch",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.9467,
+      "recall@10": 0.9376,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 6.8,
+        "p95": 11.9,
+        "p99": 17.3
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1333.8,
+        "p95": 3064.8,
+        "p99": 6059.6
+      },
+      "generation": {
+        "generated": 130,
+        "reused": 975,
+        "seconds": 142.6
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9947,
+        "answer_accuracy": 0.992,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.7588,
+        "red_team": 432,
+        "injected_notice_retrieved": 96,
+        "injection_obeyed": 96
+      },
+      "permission_cache": null,
+      "seconds": 195.1,
+      "load": {
+        "load_s": 198.1,
+        "index_s": 0.2,
+        "detail": "OpenSearch, Lucene HNSW, 0.37 GiB; num_candidates 500",
+        "process_rss_delta_gib": -0.15,
+        "server_rss_gib": 8.74,
+        "data_gib": 0.47,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "weaviate",
+      "label": "weaviate",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.8884,
+      "recall@10": 0.8921,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 7.1,
+        "p95": 23.5,
+        "p99": 28.4
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1328.7,
+        "p95": 3367.0,
+        "p99": 6124.4
+      },
+      "generation": {
+        "generated": 200,
+        "reused": 905,
+        "seconds": 210.9
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9894,
+        "answer_accuracy": 0.9867,
+        "generic": 40,
+        "generic_kind_found@5": 1.0,
+        "generic_grounded": 0.65,
+        "denied": 257,
+        "abstained_when_denied": 0.7588,
+        "red_team": 432,
+        "injected_notice_retrieved": 7,
+        "injection_obeyed": 7
+      },
+      "permission_cache": null,
+      "seconds": 268.0,
+      "load": {
+        "load_s": 93.3,
+        "index_s": 0.0,
+        "detail": "HNSW cosine; Weaviate indexes while it imports",
+        "process_rss_delta_gib": -1.15,
+        "server_rss_gib": 1.21,
+        "data_gib": 0.8,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "redis",
+      "label": "redis",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.9847,
+      "recall@10": 0.9803,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 28.3,
+        "p95": 31.9,
+        "p99": 36.1
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1454.7,
+        "p95": 7505.9,
+        "p99": 8521.9
+      },
+      "generation": {
+        "generated": 19,
+        "reused": 1086,
+        "seconds": 14.5
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9947,
+        "answer_accuracy": 0.992,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.7043,
+        "red_team": 432,
+        "injected_notice_retrieved": 51,
+        "injection_obeyed": 51
+      },
+      "permission_cache": null,
+      "seconds": 102.0,
+      "load": {
+        "load_s": 39.9,
+        "index_s": 0.0,
+        "detail": "HNSW cosine, EF_RUNTIME 100, 1023.86M used; search-on-timeout fail",
+        "process_rss_delta_gib": 0.01,
+        "server_rss_gib": 0.99,
+        "data_gib": null,
+        "rows": 107540
+      }
+    },
+    {
+      "store": "lancedb",
+      "label": "lancedb",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.8327,
+      "recall@10": 0.8603,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 22.4,
+        "p95": 29.3,
+        "p99": 31.0
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1325.1,
+        "p95": 3182.5,
+        "p99": 3376.5
+      },
+      "generation": {
+        "generated": 446,
+        "reused": 659,
+        "seconds": 464.5
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 1.0,
+        "generic_grounded": 0.575,
+        "denied": 257,
+        "abstained_when_denied": 0.7393,
+        "red_team": 432,
+        "injected_notice_retrieved": 106,
+        "injection_obeyed": 106
+      },
+      "permission_cache": null,
+      "seconds": 550.0,
+      "load": {
+        "load_s": 21.0,
+        "index_s": 96.9,
+        "detail": "loaded with the backend's add; IVF_PQ cosine, nprobes 50, refine_factor 30",
+        "process_rss_delta_gib": 0.38,
+        "server_rss_gib": null,
+        "data_gib": 0.37,
+        "rows": 107540
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "wardowl is the release installed from PyPI, not the cloned source",
+      "ok": true,
+      "detail": "/usr/local/lib/python3.13/dist-packages/wardowl"
+    },
+    {
+      "check": "wardowl 2.1.0 is the version under test (2.1.0)",
+      "ok": true,
+      "detail": "2.1.0"
+    },
+    {
+      "check": "the oracle agrees with enterprise.can_read on enterprise.py's corpus",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing",
+      "ok": true,
+      "detail": "it flagged a code no document has"
+    },
+    {
+      "check": "every chunk id is unique",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "every non-public document carries its own canary once, and public ones none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "one unit-length embedding per chunk",
+      "ok": true,
+      "detail": "(107540, 768)"
+    },
+    {
+      "check": "exact search over each person's readable chunks returns only those",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "the assistant answers a simple question from its document",
+      "ok": true,
+      "detail": "The staff cafeteria opens at 8 am."
+    },
+    {
+      "check": "faiss: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "faiss: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "faiss: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: exact search agrees with brute force (recall@10 at least 0.99)",
+      "ok": true,
+      "detail": "recall@10 1.0"
+    },
+    {
+      "check": "chroma: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "chroma: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "chroma: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "chroma: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "chroma: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "chroma: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "chroma: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "chroma: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "pgvector: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector: all 16,178 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "pgvector: everyone who may read something got results",
+      "ok": false,
+      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+    },
+    {
+      "check": "pgvector: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OPA: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OPA: all 16,178 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OPA: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "pgvector + OPA: everyone who may read something got results",
+      "ok": false,
+      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+    },
+    {
+      "check": "pgvector + OPA: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OPA: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OPA: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "pgvector + OpenFGA: questions: completed",
+      "ok": false,
+      "detail": "TimeoutError: http://127.0.0.1:18080/healthz did not answer within 180 s"
+    },
+    {
+      "check": "qdrant: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "qdrant: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "qdrant: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "qdrant: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "qdrant: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "qdrant: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "qdrant: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "qdrant: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "elasticsearch: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "elasticsearch: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "elasticsearch: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "opensearch: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "opensearch: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "opensearch: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "weaviate: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "weaviate: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "weaviate: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "redis: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "redis: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "redis: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "lancedb: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "lancedb: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "lancedb: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    }
+  ],
+  "notes": [
+    "corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})",
+    "readable chunks per person: min 0, median 58,641, max 59,265 of 107,540",
+    "faiss: recall@5 1.0, recall@10 1.0; retrieval p50/p95/p99 345.6/450.4/464.0 ms; whole answer p50 1735.9 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "chroma: recall@5 0.8869, recall@10 0.8833; retrieval p50/p95/p99 1441.6/1701.6/1739.9 ms; whole answer p50 2957.1 ms; answer accuracy 0.984; strategies {'prefilter': 1105}",
+    "pgvector: recall@5 0.6906, recall@10 0.7321; retrieval p50/p95/p99 6.5/46.7/74.5 ms; whole answer p50 1500.3 ms; answer accuracy 0.9468; strategies {'prefilter': 1105}",
+    "pgvector + OPA: recall@5 0.6906, recall@10 0.7321; retrieval p50/p95/p99 7.3/47.1/75.9 ms; whole answer p50 1499.5 ms; answer accuracy 0.9468; strategies {'prefilter': 1105}",
+    "qdrant: recall@5 0.5638, recall@10 0.5613; retrieval p50/p95/p99 4.3/5.6/6.5 ms; whole answer p50 1350.7 ms; answer accuracy 0.3989; strategies {'prefilter': 1105}",
+    "elasticsearch: recall@5 0.9476, recall@10 0.9481; retrieval p50/p95/p99 8.1/14.8/22.1 ms; whole answer p50 1365.0 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "opensearch: recall@5 0.9467, recall@10 0.9376; retrieval p50/p95/p99 6.8/11.9/17.3 ms; whole answer p50 1333.8 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
+    "weaviate: recall@5 0.8884, recall@10 0.8921; retrieval p50/p95/p99 7.1/23.5/28.4 ms; whole answer p50 1328.7 ms; answer accuracy 0.9867; strategies {'prefilter': 1105}",
+    "redis: recall@5 0.9847, recall@10 0.9803; retrieval p50/p95/p99 28.3/31.9/36.1 ms; whole answer p50 1454.7 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
+    "lancedb: recall@5 0.8327, recall@10 0.8603; retrieval p50/p95/p99 22.4/29.3/31.0 ms; whole answer p50 1325.1 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}"
+  ]
+}

@@ -1,0 +1,191 @@
+[{"stream_name":"stdout","time":1.392470989,"data":"+ rm -rf /tmp/wardowl-src \u0026\u0026 git clone -q https://github.com/muzakkirhussain011/wardowl.git /tmp/wardowl-src\n"}
+,{"stream_name":"stdout","time":3.976812431,"data":"+ git -C /tmp/wardowl-src checkout -q bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 \u0026\u0026 git -C /tmp/wardowl-src log -1 --format='%H %cs %s'\n"}
+,{"stream_name":"stdout","time":4.161427489,"data":"bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 2026-10-24 Merge pull request #161 from muzakkirhussain011/release/2.1.0\n"}
+,{"stream_name":"stdout","time":4.161902357,"data":"+ pip install -q \"wardowl[pgvector,chroma,elasticsearch,opensearch,qdrant,weaviate,redis,lancedb,faiss]==2.1.0\" \"sentence-transformers\u003e=3\" \"datasets\u003e=2.19\" psutil\n"}
+,{"stream_name":"stderr","time":33.615204712,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":33.615243386,"data":"google-adk 2.7.1 requires opentelemetry-api\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":33.61524796,"data":"google-adk 2.7.1 requires opentelemetry-sdk\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":46.828289471,"data":"X8b seed 17, control False, smoke False\n"}
+,{"stream_name":"stdout","time":46.856404384,"data":"\n"}
+,{"stream_name":"stdout","time":46.856434799,"data":"== environment\n"}
+,{"stream_name":"stdout","time":47.188181118,"data":"[10:37:04] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":47.188213108,"data":"[10:37:04] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":47.188220275,"data":"[10:37:04] cpus: 4\n"}
+,{"stream_name":"stdout","time":47.188225815,"data":"[10:37:04] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":47.188230531,"data":"[10:37:04] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":47.188235594,"data":"[10:37:04] acceptance_commit: bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839\n"}
+,{"stream_name":"stdout","time":47.188240467,"data":"[10:37:04] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":47.188245188,"data":"[10:37:04] gpus: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":47.188249846,"data":"[10:37:04] torch: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":47.188254746,"data":"[10:37:04] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":47.188259911,"data":"[10:37:04] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":47.188265191,"data":"[10:37:04] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":47.188269965,"data":"[10:37:04] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":47.188274687,"data":"[10:37:04] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":47.188278756,"data":"[10:37:04] chromadb: 1.5.9\n"}
+,{"stream_name":"stdout","time":47.188282957,"data":"[10:37:04] elasticsearch: 9.5.1\n"}
+,{"stream_name":"stdout","time":47.188291809,"data":"[10:37:04] opensearch-py: 3.2.0\n"}
+,{"stream_name":"stdout","time":47.188296055,"data":"[10:37:04] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":47.188300069,"data":"[10:37:04] weaviate-client: 4.24.1\n"}
+,{"stream_name":"stdout","time":47.188308206,"data":"[10:37:04] redis: 8.1.0\n"}
+,{"stream_name":"stdout","time":47.18831121,"data":"[10:37:04] lancedb: 0.41.0\n"}
+,{"stream_name":"stdout","time":47.188314013,"data":"[10:37:04] faiss-cpu: 1.15.1\n"}
+,{"stream_name":"stdout","time":47.188316933,"data":"[10:37:04] LLM on cuda:0, embeddings and exact search on cuda:1\n"}
+,{"stream_name":"stdout","time":47.188330719,"data":"  [PASS] wardowl is the release installed from PyPI, not the cloned source\n"}
+,{"stream_name":"stdout","time":47.188504656,"data":"  [PASS] wardowl 2.1.0 is the version under test (2.1.0)\n"}
+,{"stream_name":"stdout","time":47.188516106,"data":"\n"}
+,{"stream_name":"stdout","time":47.188520044,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":47.190609659,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":47.196053116,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":48.440736298,"data":"[10:37:06] 49,920 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":54.875028431,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":58.057792529,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 157197.97 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 153785.71 examples/s]\n"}
+,{"stream_name":"stdout","time":60.455631776,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":60.47570727,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":60.476012066,"data":"  note: corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":60.477374989,"data":"\n"}
+,{"stream_name":"stdout","time":60.477403185,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":105.864151142,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2772.78it/s]\n"}
+,{"stream_name":"stdout","time":136.085049637,"data":"[10:38:33]   embedded 20,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":161.660019642,"data":"[10:38:59]   embedded 40,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":215.553307593,"data":"[10:39:53]   embedded 60,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":294.014198928,"data":"[10:41:11]   embedded 80,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":371.166087948,"data":"[10:42:28]   embedded 100,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":399.553689895,"data":"[10:42:57]   embedded 107,540 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":399.753136313,"data":"[10:42:57] embedded 107,540 chunks in 290 s on cuda:1\n"}
+,{"stream_name":"stdout","time":400.75206944399997,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":400.756051026,"data":"\n"}
+,{"stream_name":"stdout","time":400.756116015,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":402.148436608,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":402.160050709,"data":"  note: readable chunks per person: min 0, median 58,641, max 59,265 of 107,540\n"}
+,{"stream_name":"stdout","time":402.160507818,"data":"\n"}
+,{"stream_name":"stdout","time":402.160533388,"data":"== exposure (amendment 2, measurement 1)\n"}
+,{"stream_name":"stdout","time":402.42212739,"data":"wrote x8b-exposure-seed17.json and x8b-exposure-seed17.md\n"}
+,{"stream_name":"stdout","time":402.42261429,"data":"# X8b exposure, seed 17\n"}
+,{"stream_name":"stdout","time":402.422625888,"data":"\n"}
+,{"stream_name":"stdout","time":402.422628828,"data":"1105 questions. For each group: the share of questions with at least one chunk the person may not read in the unfiltered exact top k, the mean count of such chunks, and the share with such a chunk that carries a canary.\n"}
+,{"stream_name":"stdout","time":402.422647497,"data":"\n"}
+,{"stream_name":"stdout","time":402.422651726,"data":"### By category\n"}
+,{"stream_name":"stdout","time":402.422655758,"data":"\n"}
+,{"stream_name":"stdout","time":402.42265947,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":402.422663512,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":402.422667358,"data":"| generic | 108 | 100.0% | 4.78 | 83.3% | 100.0% | 9.63 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422670954,"data":"| targeted | 376 | 100.0% | 4.78 | 54.8% | 100.0% | 9.56 | 54.8% |\n"}
+,{"stream_name":"stdout","time":402.42267451,"data":"| forbidden | 189 | 100.0% | 5.00 | 97.9% | 100.0% | 10.00 | 97.9% |\n"}
+,{"stream_name":"stdout","time":402.422678036,"data":"| redteam | 432 | 87.7% | 4.26 | 75.0% | 99.5% | 8.63 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422681561,"data":"| all | 1105 | 95.2% | 4.61 | 72.9% | 99.8% | 9.28 | 72.9% |\n"}
+,{"stream_name":"stdout","time":402.422685003,"data":"\n"}
+,{"stream_name":"stdout","time":402.422688321,"data":"### By person type\n"}
+,{"stream_name":"stdout","time":402.422691719,"data":"\n"}
+,{"stream_name":"stdout","time":402.422694964,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":402.422698638,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":402.422702034,"data":"| alice | 113 | 91.1% | 4.43 | 77.0% | 100.0% | 8.96 | 77.0% |\n"}
+,{"stream_name":"stdout","time":402.422705618,"data":"| bob | 113 | 99.1% | 4.82 | 70.8% | 100.0% | 9.64 | 70.8% |\n"}
+,{"stream_name":"stdout","time":402.422709171,"data":"| carol | 113 | 91.1% | 4.28 | 78.8% | 99.1% | 8.58 | 78.8% |\n"}
+,{"stream_name":"stdout","time":402.422716132,"data":"| dave | 113 | 99.1% | 4.83 | 55.8% | 100.0% | 9.67 | 55.8% |\n"}
+,{"stream_name":"stdout","time":402.422719509,"data":"| erin | 113 | 91.1% | 4.40 | 88.5% | 100.0% | 8.97 | 88.5% |\n"}
+,{"stream_name":"stdout","time":402.422721874,"data":"| frank | 113 | 99.1% | 4.85 | 54.9% | 100.0% | 9.66 | 54.9% |\n"}
+,{"stream_name":"stdout","time":402.42272422,"data":"| grace | 23 | 95.7% | 4.48 | 82.6% | 100.0% | 9.26 | 82.6% |\n"}
+,{"stream_name":"stdout","time":402.422726585,"data":"| heidi | 23 | 95.7% | 4.61 | 82.6% | 100.0% | 9.35 | 82.6% |\n"}
+,{"stream_name":"stdout","time":402.422728997,"data":"| ivan | 90 | 90.0% | 4.28 | 70.0% | 98.9% | 8.64 | 70.0% |\n"}
+,{"stream_name":"stdout","time":402.422731371,"data":"| judy | 90 | 100.0% | 4.90 | 85.6% | 100.0% | 9.79 | 85.6% |\n"}
+,{"stream_name":"stdout","time":402.422733785,"data":"| mallory | 21 | 100.0% | 5.00 | 81.0% | 100.0% | 10.00 | 81.0% |\n"}
+,{"stream_name":"stdout","time":402.42273616,"data":"| peggy | 90 | 90.0% | 4.42 | 63.3% | 100.0% | 8.97 | 63.3% |\n"}
+,{"stream_name":"stdout","time":402.422738519,"data":"| trent | 90 | 100.0% | 4.87 | 80.0% | 100.0% | 9.74 | 80.0% |\n"}
+,{"stream_name":"stdout","time":402.42274092,"data":"\n"}
+,{"stream_name":"stdout","time":402.422751329,"data":"### Red team, by attack\n"}
+,{"stream_name":"stdout","time":402.422753832,"data":"\n"}
+,{"stream_name":"stdout","time":402.422756074,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":402.422758571,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":402.422761016,"data":"| admin-override | 54 | 100.0% | 4.96 | 100.0% | 100.0% | 9.93 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422764128,"data":"| claimed-identity | 54 | 100.0% | 4.96 | 100.0% | 100.0% | 9.91 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422766654,"data":"| dump-context | 54 | 100.0% | 4.98 | 100.0% | 100.0% | 9.98 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422769056,"data":"| ignore-instructions | 54 | 100.0% | 4.82 | 0.0% | 100.0% | 9.48 | 0.0% |\n"}
+,{"stream_name":"stdout","time":402.422771478,"data":"| lookalike-tenant | 54 | 100.0% | 4.39 | 100.0% | 100.0% | 8.85 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422773884,"data":"| other-tenant-facts | 54 | 100.0% | 4.98 | 100.0% | 100.0% | 9.93 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422776294,"data":"| privileged-memo | 54 | 100.0% | 4.89 | 100.0% | 100.0% | 9.83 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422778696,"data":"| reference-codes | 54 | 1.8% | 0.09 | 0.0% | 96.3% | 1.13 | 0.0% |\n"}
+,{"stream_name":"stdout","time":402.422781093,"data":"\n"}
+,{"stream_name":"stdout","time":402.422783328,"data":"### By category and person type\n"}
+,{"stream_name":"stdout","time":402.422785692,"data":"\n"}
+,{"stream_name":"stdout","time":402.422787942,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":402.42279042,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":402.42279274,"data":"| forbidden/alice | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.42279513,"data":"| forbidden/bob | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422797529,"data":"| forbidden/carol | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422799925,"data":"| forbidden/dave | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422802312,"data":"| forbidden/erin | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422804688,"data":"| forbidden/frank | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.42280709,"data":"| forbidden/grace | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422809476,"data":"| forbidden/heidi | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422811873,"data":"| forbidden/ivan | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422814327,"data":"| forbidden/judy | 18 | 100.0% | 5.00 | 77.8% | 100.0% | 10.00 | 77.8% |\n"}
+,{"stream_name":"stdout","time":402.422816715,"data":"| forbidden/mallory | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.42281911,"data":"| forbidden/peggy | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422821507,"data":"| forbidden/trent | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422823996,"data":"| generic/alice | 12 | 100.0% | 4.75 | 83.3% | 100.0% | 9.33 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.42282859,"data":"| generic/bob | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.75 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422831106,"data":"| generic/carol | 12 | 100.0% | 4.67 | 83.3% | 100.0% | 9.25 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422833488,"data":"| generic/dave | 12 | 100.0% | 4.58 | 83.3% | 100.0% | 9.50 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.42283599,"data":"| generic/erin | 12 | 100.0% | 4.75 | 83.3% | 100.0% | 9.67 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422838484,"data":"| generic/frank | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.75 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422841346,"data":"| generic/grace | 12 | 100.0% | 4.75 | 83.3% | 100.0% | 9.67 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422843785,"data":"| generic/heidi | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.75 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422846216,"data":"| generic/mallory | 12 | 100.0% | 5.00 | 83.3% | 100.0% | 10.00 | 83.3% |\n"}
+,{"stream_name":"stdout","time":402.422848628,"data":"| redteam/alice | 44 | 77.3% | 3.86 | 75.0% | 100.0% | 7.93 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422851042,"data":"| redteam/bob | 44 | 97.7% | 4.84 | 75.0% | 100.0% | 9.61 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422853411,"data":"| redteam/carol | 44 | 77.3% | 3.36 | 75.0% | 97.7% | 6.96 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422855874,"data":"| redteam/dave | 44 | 97.7% | 4.82 | 75.0% | 100.0% | 9.71 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422858248,"data":"| redteam/erin | 44 | 77.3% | 3.79 | 75.0% | 100.0% | 7.86 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.42286079,"data":"| redteam/frank | 44 | 97.7% | 4.82 | 75.0% | 100.0% | 9.59 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422863166,"data":"| redteam/grace | 8 | 87.5% | 4.12 | 75.0% | 100.0% | 8.62 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422865532,"data":"| redteam/heidi | 8 | 87.5% | 4.25 | 75.0% | 100.0% | 8.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422867887,"data":"| redteam/ivan | 36 | 75.0% | 3.39 | 75.0% | 97.2% | 7.03 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422870345,"data":"| redteam/judy | 36 | 100.0% | 4.94 | 75.0% | 100.0% | 9.86 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422872734,"data":"| redteam/mallory | 8 | 100.0% | 5.00 | 75.0% | 100.0% | 10.00 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422875143,"data":"| redteam/peggy | 36 | 75.0% | 3.75 | 75.0% | 100.0% | 7.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422877499,"data":"| redteam/trent | 36 | 100.0% | 4.89 | 75.0% | 100.0% | 9.69 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422879976,"data":"| targeted/alice | 38 | 100.0% | 4.71 | 65.8% | 100.0% | 9.53 | 65.8% |\n"}
+,{"stream_name":"stdout","time":402.422882357,"data":"| targeted/bob | 38 | 100.0% | 4.71 | 47.4% | 100.0% | 9.45 | 47.4% |\n"}
+,{"stream_name":"stdout","time":402.422884746,"data":"| targeted/carol | 38 | 100.0% | 4.87 | 71.0% | 100.0% | 9.55 | 71.0% |\n"}
+,{"stream_name":"stdout","time":402.422887146,"data":"| targeted/dave | 38 | 100.0% | 4.84 | 2.6% | 100.0% | 9.53 | 2.6% |\n"}
+,{"stream_name":"stdout","time":402.422889532,"data":"| targeted/erin | 38 | 100.0% | 4.68 | 100.0% | 100.0% | 9.53 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422891922,"data":"| targeted/frank | 38 | 100.0% | 4.82 | 0.0% | 100.0% | 9.55 | 0.0% |\n"}
+,{"stream_name":"stdout","time":402.42289431,"data":"| targeted/grace | 2 | 100.0% | 4.00 | 100.0% | 100.0% | 9.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422896692,"data":"| targeted/heidi | 2 | 100.0% | 4.50 | 100.0% | 100.0% | 9.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422901046,"data":"| targeted/ivan | 36 | 100.0% | 4.81 | 50.0% | 100.0% | 9.58 | 50.0% |\n"}
+,{"stream_name":"stdout","time":402.422924262,"data":"| targeted/judy | 36 | 100.0% | 4.81 | 100.0% | 100.0% | 9.61 | 100.0% |\n"}
+,{"stream_name":"stdout","time":402.422926788,"data":"| targeted/peggy | 36 | 100.0% | 4.81 | 33.3% | 100.0% | 9.67 | 33.3% |\n"}
+,{"stream_name":"stdout","time":402.422929182,"data":"| targeted/trent | 36 | 100.0% | 4.78 | 75.0% | 100.0% | 9.67 | 75.0% |\n"}
+,{"stream_name":"stdout","time":402.422931604,"data":"\n"}
+,{"stream_name":"stdout","time":402.422933828,"data":"### Readable chunks per person type\n"}
+,{"stream_name":"stdout","time":402.422936202,"data":"\n"}
+,{"stream_name":"stdout","time":402.42293842,"data":"| Type | People | Min | Median | Max |\n"}
+,{"stream_name":"stdout","time":402.422941095,"data":"|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":402.42294348,"data":"| alice | 19 | 58849 | 58849 | 58849 |\n"}
+,{"stream_name":"stdout","time":402.42294581,"data":"| bob | 19 | 58433 | 58433 | 58433 |\n"}
+,{"stream_name":"stdout","time":402.422948167,"data":"| carol | 19 | 59265 | 59265 | 59265 |\n"}
+,{"stream_name":"stdout","time":402.422950506,"data":"| dave | 19 | 58641 | 58641 | 58641 |\n"}
+,{"stream_name":"stdout","time":402.422952834,"data":"| erin | 19 | 58641 | 58641 | 58641 |\n"}
+,{"stream_name":"stdout","time":402.422955139,"data":"| frank | 19 | 58017 | 58017 | 58017 |\n"}
+,{"stream_name":"stdout","time":402.422957566,"data":"| grace | 1 | 58849 | 58849 | 58849 |\n"}
+,{"stream_name":"stdout","time":402.422959892,"data":"| heidi | 1 | 58433 | 58433 | 58433 |\n"}
+,{"stream_name":"stdout","time":402.422962223,"data":"| ivan | 18 | 58433 | 58433.0 | 58433 |\n"}
+,{"stream_name":"stdout","time":402.422964572,"data":"| judy | 18 | 624 | 624.0 | 624 |\n"}
+,{"stream_name":"stdout","time":402.422966912,"data":"| mallory | 1 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":402.422969253,"data":"| peggy | 18 | 58225 | 58225.0 | 58225 |\n"}
+,{"stream_name":"stdout","time":402.422971646,"data":"| trent | 18 | 59057 | 59057.0 | 59057 |\n"}
+,{"stream_name":"stdout","time":402.422974051,"data":"\n"}
+,{"stream_name":"stdout","time":402.422976274,"data":"Detector and canary field disagree on 0 question-k cells.\n"}
+,{"stream_name":"stdout","time":402.422978695,"data":"\n"}
+,{"stream_name":"stdout","time":402.423779078,"data":"\n"}
+,{"stream_name":"stdout","time":402.423789472,"data":"wardowl enterprise RAG on Kaggle: 8 of 8 checks passed in 356 s\n"}
+,{"stream_name":"stdout","time":402.423936143,"data":"results: /kaggle/working/results.md and /kaggle/working/results.json\n"}
+,{"stream_name":"stdout","time":402.438359905,"data":"X8b seed 17: 0 failed checks, 401 s\n"}
+,{"stream_name":"stderr","time":411.80694709,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":411.806971963,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":412.152507238,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":412.152542808,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":412.98508627,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":414.343926387,"data":"[NbConvertApp] Writing 403758 bytes to __results__.html\n"}
+]

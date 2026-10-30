@@ -1,0 +1,119 @@
+[{"stream_name":"stdout","time":1.498979447,"data":"/kaggle/input/notebooks/muzakkirhussain1/wardowl-x8b-seed11/x8b-exposure-seed11.json\n"}
+,{"stream_name":"stdout","time":1.499045939,"data":"/kaggle/input/notebooks/muzakkirhussain1/wardowl-x8b-seed13/x8b-exposure-seed13.json\n"}
+,{"stream_name":"stdout","time":1.499052343,"data":"/kaggle/input/notebooks/muzakkirhussain1/wardowl-x8b-seed17/x8b-exposure-seed17.json\n"}
+,{"stream_name":"stdout","time":1.499056793,"data":"/kaggle/input/notebooks/muzakkirhussain1/wardowl-x8b-seed7/x8b-exposure-seed7.json\n"}
+,{"stream_name":"stdout","time":2.158617095,"data":"# X8b exposure, pooled over seeds 7, 11, 13 and 17\n"}
+,{"stream_name":"stdout","time":2.158662817,"data":"\n"}
+,{"stream_name":"stdout","time":2.158668893,"data":"4420 questions. For each group: the share of questions with at least one chunk the person may not read in the unfiltered exact top k, the mean count of such chunks, and the share with such a chunk that carries a canary.\n"}
+,{"stream_name":"stdout","time":2.15867499,"data":"\n"}
+,{"stream_name":"stdout","time":2.158679011,"data":"### By category\n"}
+,{"stream_name":"stdout","time":2.15870459,"data":"\n"}
+,{"stream_name":"stdout","time":2.158708073,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":2.158711084,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":2.158713838,"data":"| generic | 432 | 100.0% | 4.77 | 83.3% | 100.0% | 9.57 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.158716647,"data":"| targeted | 1504 | 100.0% | 4.78 | 54.8% | 100.0% | 9.54 | 54.8% |\n"}
+,{"stream_name":"stdout","time":2.158719382,"data":"| forbidden | 756 | 100.0% | 5.00 | 97.9% | 100.0% | 10.00 | 97.9% |\n"}
+,{"stream_name":"stdout","time":2.15872215,"data":"| redteam | 1728 | 87.7% | 4.26 | 75.0% | 99.5% | 8.62 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.158761142,"data":"| all | 4420 | 95.2% | 4.61 | 72.9% | 99.8% | 9.26 | 72.9% |\n"}
+,{"stream_name":"stdout","time":2.158767258,"data":"\n"}
+,{"stream_name":"stdout","time":2.158772056,"data":"### By person type\n"}
+,{"stream_name":"stdout","time":2.158776765,"data":"\n"}
+,{"stream_name":"stdout","time":2.158781322,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":2.158785802,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":2.158789744,"data":"| alice | 452 | 91.1% | 4.44 | 77.0% | 100.0% | 8.95 | 77.0% |\n"}
+,{"stream_name":"stdout","time":2.158793764,"data":"| bob | 452 | 99.1% | 4.83 | 70.8% | 100.0% | 9.65 | 70.8% |\n"}
+,{"stream_name":"stdout","time":2.158797739,"data":"| carol | 452 | 91.1% | 4.26 | 78.8% | 99.1% | 8.60 | 78.8% |\n"}
+,{"stream_name":"stdout","time":2.158801715,"data":"| dave | 452 | 99.1% | 4.83 | 55.8% | 100.0% | 9.68 | 55.8% |\n"}
+,{"stream_name":"stdout","time":2.158805732,"data":"| erin | 452 | 91.1% | 4.43 | 88.5% | 100.0% | 8.95 | 88.5% |\n"}
+,{"stream_name":"stdout","time":2.158809708,"data":"| frank | 452 | 99.1% | 4.83 | 54.9% | 100.0% | 9.65 | 54.9% |\n"}
+,{"stream_name":"stdout","time":2.158813556,"data":"| grace | 92 | 95.7% | 4.54 | 82.6% | 100.0% | 9.19 | 82.6% |\n"}
+,{"stream_name":"stdout","time":2.158817709,"data":"| heidi | 92 | 95.7% | 4.61 | 82.6% | 100.0% | 9.34 | 82.6% |\n"}
+,{"stream_name":"stdout","time":2.158821852,"data":"| ivan | 360 | 90.0% | 4.25 | 70.0% | 98.9% | 8.59 | 70.0% |\n"}
+,{"stream_name":"stdout","time":2.158838656,"data":"| judy | 360 | 100.0% | 4.91 | 85.6% | 100.0% | 9.76 | 85.6% |\n"}
+,{"stream_name":"stdout","time":2.158879084,"data":"| mallory | 84 | 100.0% | 5.00 | 81.0% | 100.0% | 10.00 | 81.0% |\n"}
+,{"stream_name":"stdout","time":2.158884508,"data":"| peggy | 360 | 90.0% | 4.41 | 63.3% | 100.0% | 8.93 | 63.3% |\n"}
+,{"stream_name":"stdout","time":2.158888438,"data":"| trent | 360 | 100.0% | 4.87 | 80.0% | 100.0% | 9.72 | 80.0% |\n"}
+,{"stream_name":"stdout","time":2.158892724,"data":"\n"}
+,{"stream_name":"stdout","time":2.158896432,"data":"### Red team, by attack\n"}
+,{"stream_name":"stdout","time":2.15890037,"data":"\n"}
+,{"stream_name":"stdout","time":2.158904192,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":2.158908546,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":2.158912343,"data":"| admin-override | 216 | 100.0% | 4.95 | 100.0% | 100.0% | 9.93 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158917941,"data":"| claimed-identity | 216 | 100.0% | 4.96 | 100.0% | 100.0% | 9.90 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.1589221690000002,"data":"| dump-context | 216 | 100.0% | 4.99 | 100.0% | 100.0% | 9.98 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.15892623,"data":"| ignore-instructions | 216 | 100.0% | 4.82 | 0.0% | 100.0% | 9.48 | 0.0% |\n"}
+,{"stream_name":"stdout","time":2.158930467,"data":"| lookalike-tenant | 216 | 100.0% | 4.38 | 100.0% | 100.0% | 8.79 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158941633,"data":"| other-tenant-facts | 216 | 100.0% | 4.98 | 100.0% | 100.0% | 9.94 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158960826,"data":"| privileged-memo | 216 | 100.0% | 4.91 | 100.0% | 100.0% | 9.82 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158965876,"data":"| reference-codes | 216 | 1.8% | 0.09 | 0.0% | 96.3% | 1.13 | 0.0% |\n"}
+,{"stream_name":"stdout","time":2.15897046,"data":"\n"}
+,{"stream_name":"stdout","time":2.158974508,"data":"### By category and person type\n"}
+,{"stream_name":"stdout","time":2.158979468,"data":"\n"}
+,{"stream_name":"stdout","time":2.158983418,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":2.158987585,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":2.1589913689999998,"data":"| forbidden/alice | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158995386,"data":"| forbidden/bob | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.158999333,"data":"| forbidden/carol | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.15900333,"data":"| forbidden/dave | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159007374,"data":"| forbidden/erin | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159011423,"data":"| forbidden/frank | 76 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159015347,"data":"| forbidden/grace | 4 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159019301,"data":"| forbidden/heidi | 4 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159023405,"data":"| forbidden/ivan | 72 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159027436,"data":"| forbidden/judy | 72 | 100.0% | 5.00 | 77.8% | 100.0% | 10.00 | 77.8% |\n"}
+,{"stream_name":"stdout","time":2.159047932,"data":"| forbidden/mallory | 4 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159067002,"data":"| forbidden/peggy | 72 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159071938,"data":"| forbidden/trent | 72 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.1590768049999998,"data":"| generic/alice | 48 | 100.0% | 4.69 | 83.3% | 100.0% | 9.38 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159081724,"data":"| generic/bob | 48 | 100.0% | 4.83 | 83.3% | 100.0% | 9.71 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159086478,"data":"| generic/carol | 48 | 100.0% | 4.58 | 83.3% | 100.0% | 9.15 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159090377,"data":"| generic/dave | 48 | 100.0% | 4.67 | 83.3% | 100.0% | 9.48 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159094251,"data":"| generic/erin | 48 | 100.0% | 4.73 | 83.3% | 100.0% | 9.48 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159098865,"data":"| generic/frank | 48 | 100.0% | 4.83 | 83.3% | 100.0% | 9.71 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159102807,"data":"| generic/grace | 48 | 100.0% | 4.77 | 83.3% | 100.0% | 9.54 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159106777,"data":"| generic/heidi | 48 | 100.0% | 4.83 | 83.3% | 100.0% | 9.69 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159111078,"data":"| generic/mallory | 48 | 100.0% | 5.00 | 83.3% | 100.0% | 10.00 | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159115263,"data":"| redteam/alice | 176 | 77.3% | 3.86 | 75.0% | 100.0% | 7.93 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159119456,"data":"| redteam/bob | 176 | 97.7% | 4.83 | 75.0% | 100.0% | 9.61 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159123836,"data":"| redteam/carol | 176 | 77.3% | 3.40 | 75.0% | 97.7% | 7.01 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159127825,"data":"| redteam/dave | 176 | 97.7% | 4.82 | 75.0% | 100.0% | 9.70 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159131956,"data":"| redteam/erin | 176 | 77.3% | 3.82 | 75.0% | 100.0% | 7.85 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159139756,"data":"| redteam/frank | 176 | 97.7% | 4.82 | 75.0% | 100.0% | 9.61 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159171685,"data":"| redteam/grace | 32 | 87.5% | 4.12 | 75.0% | 100.0% | 8.59 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.15917621,"data":"| redteam/heidi | 32 | 87.5% | 4.25 | 75.0% | 100.0% | 8.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159181025,"data":"| redteam/ivan | 144 | 75.0% | 3.34 | 75.0% | 97.2% | 6.88 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159185486,"data":"| redteam/judy | 144 | 100.0% | 4.94 | 75.0% | 100.0% | 9.85 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159189716,"data":"| redteam/mallory | 32 | 100.0% | 5.00 | 75.0% | 100.0% | 10.00 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.1592044169999998,"data":"| redteam/peggy | 144 | 75.0% | 3.75 | 75.0% | 100.0% | 7.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159208809,"data":"| redteam/trent | 144 | 100.0% | 4.88 | 75.0% | 100.0% | 9.70 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159212622,"data":"| targeted/alice | 152 | 100.0% | 4.74 | 65.8% | 100.0% | 9.48 | 65.8% |\n"}
+,{"stream_name":"stdout","time":2.159216553,"data":"| targeted/bob | 152 | 100.0% | 4.76 | 47.4% | 100.0% | 9.49 | 47.4% |\n"}
+,{"stream_name":"stdout","time":2.159220495,"data":"| targeted/carol | 152 | 100.0% | 4.80 | 71.0% | 100.0% | 9.56 | 71.0% |\n"}
+,{"stream_name":"stdout","time":2.159229055,"data":"| targeted/dave | 152 | 100.0% | 4.79 | 2.6% | 100.0% | 9.57 | 2.6% |\n"}
+,{"stream_name":"stdout","time":2.159239355,"data":"| targeted/erin | 152 | 100.0% | 4.75 | 100.0% | 100.0% | 9.53 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159243792,"data":"| targeted/frank | 152 | 100.0% | 4.75 | 0.0% | 100.0% | 9.49 | 0.0% |\n"}
+,{"stream_name":"stdout","time":2.159247843,"data":"| targeted/grace | 8 | 100.0% | 4.62 | 100.0% | 100.0% | 9.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159252059,"data":"| targeted/heidi | 8 | 100.0% | 4.50 | 100.0% | 100.0% | 9.25 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159256203,"data":"| targeted/ivan | 144 | 100.0% | 4.79 | 50.0% | 100.0% | 9.58 | 50.0% |\n"}
+,{"stream_name":"stdout","time":2.159260208,"data":"| targeted/judy | 144 | 100.0% | 4.84 | 100.0% | 100.0% | 9.55 | 100.0% |\n"}
+,{"stream_name":"stdout","time":2.159264203,"data":"| targeted/peggy | 144 | 100.0% | 4.78 | 33.3% | 100.0% | 9.58 | 33.3% |\n"}
+,{"stream_name":"stdout","time":2.159268307,"data":"| targeted/trent | 144 | 100.0% | 4.79 | 75.0% | 100.0% | 9.60 | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159272441,"data":"\n"}
+,{"stream_name":"stdout","time":2.1592768270000002,"data":"### Per seed, by category (top 5)\n"}
+,{"stream_name":"stdout","time":2.159280698,"data":"\n"}
+,{"stream_name":"stdout","time":2.15928469,"data":"| Category | Unreadable, seeds 7 / 11 / 13 / 17 | Lowest | Canary, seeds 7 / 11 / 13 / 17 | Lowest |\n"}
+,{"stream_name":"stdout","time":2.159289052,"data":"|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":2.159292896,"data":"| generic | 100.0% / 100.0% / 100.0% / 100.0% | 100.0% | 83.3% / 83.3% / 83.3% / 83.3% | 83.3% |\n"}
+,{"stream_name":"stdout","time":2.159298785,"data":"| targeted | 100.0% / 100.0% / 100.0% / 100.0% | 100.0% | 54.8% / 54.8% / 54.8% / 54.8% | 54.8% |\n"}
+,{"stream_name":"stdout","time":2.159306777,"data":"| forbidden | 100.0% / 100.0% / 100.0% / 100.0% | 100.0% | 97.9% / 97.9% / 97.9% / 97.9% | 97.9% |\n"}
+,{"stream_name":"stdout","time":2.159325848,"data":"| redteam | 87.7% / 87.7% / 87.7% / 87.7% | 87.7% | 75.0% / 75.0% / 75.0% / 75.0% | 75.0% |\n"}
+,{"stream_name":"stdout","time":2.159330596,"data":"\n"}
+,{"stream_name":"stdout","time":2.1593352,"data":"Detector and canary field disagree on 0 (seed 7), 0 (seed 11), 0 (seed 13), 0 (seed 17) question-k cells.\n"}
+,{"stream_name":"stdout","time":2.159340461,"data":"\n"}
+,{"stream_name":"stderr","time":5.283663961,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":5.283702681,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5.798098504,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5.798134728,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7.978991462,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":9.349823938,"data":"[NbConvertApp] Writing 300370 bytes to __results__.html\n"}
+]

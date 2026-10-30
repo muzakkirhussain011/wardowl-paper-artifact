@@ -1,0 +1,284 @@
+[10:04:15] python: 3.13.15
+[10:04:15] platform: Linux-6.18.55+-x86_64-with-glibc2.39
+[10:04:15] cpus: 4
+[10:04:15] wardowl: 2.1.0
+[10:04:15] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl
+[10:04:15] acceptance_commit: 947fb8f11efa917ec86402d381c1983d143df7df
+[10:04:15] memory_gib: 31.3
+[10:04:15] gpus: ['Tesla T4', 'Tesla T4']
+[10:04:15] torch: 2.11.0+cu128
+[10:04:15] transformers: 5.16.1
+[10:04:15] sentence-transformers: 5.7.0
+[10:04:15] datasets: 4.8.5
+[10:04:15] numpy: 2.1.3
+[10:04:15] psycopg: 3.3.6
+[10:04:15] chromadb: None
+[10:04:15] elasticsearch: None
+[10:04:15] opensearch-py: None
+[10:04:15] qdrant-client: 1.20.0
+[10:04:15] weaviate-client: None
+[10:04:15] redis: None
+[10:04:15] lancedb: None
+[10:04:15] faiss-cpu: None
+[10:04:15] pandas: 2.3.3
+[10:04:15] pyarrow: 23.0.1
+[10:04:15] scipy: 1.16.3
+[10:04:15] psycopg-pool: 3.3.3
+[10:04:15] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1047.9, 'gpus': ['Tesla T4', 'Tesla T4'], 'cuda': '12.8'}
+[10:04:15] wardowl_installed: True
+[10:04:15] == stage corpus
+[10:04:21] 6,648 FiQA queries for the probe set
+[10:04:21] probe set: 24 people, 384 questions
+[10:04:21] == stage corpus: done in 6 s
+[10:04:21] == stage embeddings
+[10:04:24] cached embeddings copied from /kaggle/input: ['/kaggle/input/notebooks/muzakkirhussainsyed/notebookd8377caca8/cache/chunks-BAAI_bge-base-en-v1.5-3165378041584035.npy']
+[10:05:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:05:06] WARNING: no cached embedding file matched this corpus: the chunks were embedded again
+[10:05:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:05:06] == stage embeddings: done in 45 s
+[10:05:06] == stage exact baseline
+[10:05:07] == stage exact baseline: done in 1 s
+[10:05:07] == stage alignment variables
+[10:05:07] == stage alignment variables: done in 0 s
+[10:05:07] 169 questions of 11 people; 10 fixed EXPLAIN questions
+[10:05:07] == stage pgvector: start and load
+[10:05:11] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}
+[10:05:11] == stage pgvector: start and load: done in 3 s
+[10:05:11] == stage pgvector: filter estimates
+[10:05:11] == stage pgvector: filter estimates: done in 0 s
+[10:05:11] == stage pgvector hnsw-m16-efc64-b0
+[10:05:11] pgvector index hnsw-m16-efc64 build 0: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 0, 'm': 16, 'ef_construction': 64, 'builder': "enterprise_rag.PgVectorStore.load: wardowl's create_schema(hnsw=True) after the bulk load, as the original run (pgvector's defaults m 16, ef_construction 64)", 'seconds': 1.2, 'index_bytes': 12214272, 'reloptions': None}
+[10:05:11] -- pgvector hnsw-m16-efc64-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[10:05:13]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 1 of 2 (1 s)
+[10:05:13]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 2 of 2 (2 s)
+[10:05:13]    pgvector hnsw-m16-efc64-b0 p-asrun: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.4 ms, 2 s
+[10:05:13] -- pgvector hnsw-m16-efc64-b0 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}
+[10:05:15]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 1 of 2 (2 s)
+[10:05:16]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 2 of 2 (2 s)
+[10:05:16]    pgvector hnsw-m16-efc64-b0 pa-t20k-m8: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 4.0 ms, 3 s
+[10:05:16] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}
+[10:05:18]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 1 of 2 (2 s)
+[10:05:18]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 2 of 2 (2 s)
+[10:05:19]    pgvector hnsw-m16-efc64-b0 pa-t100k-m1: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.9 ms, 3 s
+[10:05:19] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}
+[10:05:20]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 1 of 2 (2 s)
+[10:05:21]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 2 of 2 (3 s)
+[10:05:21]    pgvector hnsw-m16-efc64-b0 pa-t100k-m8: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 4.3 ms, 3 s
+[10:05:21] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}
+[10:05:23]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 1 of 2 (2 s)
+[10:05:24]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 2 of 2 (2 s)
+[10:05:24]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.8 ms, 3 s
+[10:05:24] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[10:05:26]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 1 of 2 (2 s)
+[10:05:27]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 2 of 2 (2 s)
+[10:05:27]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 4.1 ms, 3 s
+[10:05:27] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}
+[10:05:28]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 1 of 2 (1 s)
+[10:05:29]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 2 of 2 (2 s)
+[10:05:29]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.5 ms, 2 s
+[10:05:29] -- pgvector hnsw-m16-efc64-b0 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'work_mem': '64MB'}
+[10:05:32]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 1 of 2 (3 s)
+[10:05:33]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 2 of 2 (5 s)
+[10:05:34]    pgvector hnsw-m16-efc64-b0 pb-wm64: recall@5 0.9986486486486488, recall@10 0.9986486486486488, ERR 0.0, p50 13.0 ms, 5 s
+[10:05:34] -- pgvector hnsw-m16-efc64-b0 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order'}
+[10:05:37]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 1 of 2 (3 s)
+[10:05:38]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 2 of 2 (5 s)
+[10:05:39]    pgvector hnsw-m16-efc64-b0 pc-ef40: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.2 ms, 5 s
+[10:05:39] -- pgvector hnsw-m16-efc64-b0 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order'}
+[10:05:42]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 1 of 2 (3 s)
+[10:05:44]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 2 of 2 (5 s)
+[10:05:44]    pgvector hnsw-m16-efc64-b0 pc-ef200: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.1 ms, 5 s
+[10:05:44] -- pgvector hnsw-m16-efc64-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order'}
+[10:05:47]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 1 of 2 (3 s)
+[10:05:48]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 2 of 2 (5 s)
+[10:05:49]    pgvector hnsw-m16-efc64-b0 pc-ef400: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.0 ms, 5 s
+[10:05:49] -- pgvector hnsw-m16-efc64-b0 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order'}
+[10:05:52]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 1 of 2 (3 s)
+[10:05:53]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 2 of 2 (5 s)
+[10:05:54]    pgvector hnsw-m16-efc64-b0 pc-ef1000: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.1 ms, 5 s
+[10:05:54] -- pgvector hnsw-m16-efc64-b0 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'limit_factor': 4}
+[10:05:57]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 1 of 2 (3 s)
+[10:05:58]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 2 of 2 (5 s)
+[10:05:59]    pgvector hnsw-m16-efc64-b0 pd-lim4: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.5 ms, 5 s
+[10:05:59] -- pgvector hnsw-m16-efc64-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'limit_factor': 10}
+[10:06:02]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 1 of 2 (3 s)
+[10:06:04]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 2 of 2 (5 s)
+[10:06:04]    pgvector hnsw-m16-efc64-b0 pd-lim10: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.5 ms, 5 s
+[10:06:04] -- pgvector hnsw-m16-efc64-b0 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order'}
+[10:06:07]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 1 of 2 (3 s)
+[10:06:08]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 2 of 2 (4 s)
+[10:06:08]    pgvector hnsw-m16-efc64-b0 pe-strict: recall@5 0.9972972972972972, recall@10 0.9945945945945945, ERR 0.0, p50 12.9 ms, 5 s
+[10:06:08] -- pgvector hnsw-m16-efc64-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[10:06:10]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 1 of 2 (1 s)
+[10:06:10]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 2 of 2 (2 s)
+[10:06:10]    pgvector hnsw-m16-efc64-b0 pg-custom: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.2 ms, 2 s
+[10:06:10] -- pgvector hnsw-m16-efc64-b0 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}
+[10:06:11]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 1 of 2 (1 s)
+[10:06:12]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 2 of 2 (2 s)
+[10:06:12]    pgvector hnsw-m16-efc64-b0 pg-noprepare: recall@5 0.9554054054054053, recall@10 0.9628378378378378, ERR 0.0, p50 3.0 ms, 2 s
+[10:06:12] -- pgvector hnsw-m16-efc64-b0 ph-exact: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'enable_indexscan': 'off'}
+[10:06:15]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 1 of 2 (3 s)
+[10:06:17]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 2 of 2 (5 s)
+[10:06:17]    pgvector hnsw-m16-efc64-b0 ph-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.1 ms, 5 s
+[10:06:17] == stage pgvector hnsw-m16-efc64-b0: done in 66 s
+[10:06:17] == stage pgvector hnsw-m32-efc200-b0
+[10:06:21] pgvector index hnsw-m32-efc200 build 0: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 0, 'm': 32, 'ef_construction': 200, 'seconds': 3.7, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 12214272, 'reloptions': ['m=32', 'ef_construction=200']}
+[10:06:21] -- pgvector hnsw-m32-efc200-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[10:06:24]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 1 of 2 (3 s)
+[10:06:26]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 2 of 2 (5 s)
+[10:06:26]    pgvector hnsw-m32-efc200-b0 p-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.2 ms, 5 s
+[10:06:26] -- pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[10:06:29]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 1 of 2 (3 s)
+[10:06:31]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 2 of 2 (5 s)
+[10:06:31]    pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.7 ms, 5 s
+[10:06:31] -- pgvector hnsw-m32-efc200-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order'}
+[10:06:35]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 1 of 2 (3 s)
+[10:06:36]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 2 of 2 (5 s)
+[10:06:36]    pgvector hnsw-m32-efc200-b0 pc-ef400: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.2 ms, 5 s
+[10:06:36] -- pgvector hnsw-m32-efc200-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'limit_factor': 10}
+[10:06:40]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 1 of 2 (3 s)
+[10:06:41]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 2 of 2 (5 s)
+[10:06:41]    pgvector hnsw-m32-efc200-b0 pd-lim10: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 13.4 ms, 5 s
+[10:06:41] == stage pgvector hnsw-m32-efc200-b0: done in 24 s
+[10:06:43] == stage qdrant: start
+[10:06:47] Qdrant server: {'title': 'qdrant - vector search engine', 'version': '1.19.2', 'commit': '016542aa5deb6c66380bb137badf73d54f742bde'}
+[10:06:47] == stage qdrant: start: done in 3 s
+[10:06:47] == stage qdrant as-run-b0
+[10:07:04]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}
+[10:07:04] qdrant as-run build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}
+[10:07:04] -- qdrant as-run-b0 q-asrun: {'hnsw_ef': 128}
+[10:07:05]   qdrant as-run-b0 q-asrun: pass 1 of 2 (1 s)
+[10:07:06]   qdrant as-run-b0 q-asrun: pass 2 of 2 (2 s)
+[10:07:06]    qdrant as-run-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:06] -- qdrant as-run-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[10:07:07]   qdrant as-run-b0 qa-acorn040: pass 1 of 2 (1 s)
+[10:07:08]   qdrant as-run-b0 qa-acorn040: pass 2 of 2 (2 s)
+[10:07:08] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:08] WARNING: qdrant as-run-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:07:08] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:08]    qdrant as-run-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:08] -- qdrant as-run-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[10:07:09]   qdrant as-run-b0 qa-acorn100: pass 1 of 2 (1 s)
+[10:07:09]   qdrant as-run-b0 qa-acorn100: pass 2 of 2 (2 s)
+[10:07:09] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:09] WARNING: qdrant as-run-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:07:09] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:09]    qdrant as-run-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:09] -- qdrant as-run-b0 qb-ef64: {'hnsw_ef': 64}
+[10:07:11]   qdrant as-run-b0 qb-ef64: pass 1 of 2 (1 s)
+[10:07:11]   qdrant as-run-b0 qb-ef64: pass 2 of 2 (2 s)
+[10:07:11]    qdrant as-run-b0 qb-ef64: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.2 ms, 2 s
+[10:07:11] -- qdrant as-run-b0 qb-ef512: {'hnsw_ef': 512}
+[10:07:12]   qdrant as-run-b0 qb-ef512: pass 1 of 2 (1 s)
+[10:07:13]   qdrant as-run-b0 qb-ef512: pass 2 of 2 (2 s)
+[10:07:13]    qdrant as-run-b0 qb-ef512: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.0 ms, 2 s
+[10:07:13] -- qdrant as-run-b0 qc-exact: {'exact': True}
+[10:07:14]   qdrant as-run-b0 qc-exact: pass 1 of 2 (1 s)
+[10:07:14]   qdrant as-run-b0 qc-exact: pass 2 of 2 (2 s)
+[10:07:15]    qdrant as-run-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:15] == stage qdrant as-run-b0: done in 28 s
+[10:07:15] == stage qdrant is-tenant-b0
+[10:07:32]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}
+[10:07:32] qdrant is-tenant build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}
+[10:07:32] -- qdrant is-tenant-b0 q-asrun: {'hnsw_ef': 128}
+[10:07:33]   qdrant is-tenant-b0 q-asrun: pass 1 of 2 (1 s)
+[10:07:33]   qdrant is-tenant-b0 q-asrun: pass 2 of 2 (2 s)
+[10:07:33]    qdrant is-tenant-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:33] -- qdrant is-tenant-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[10:07:34]   qdrant is-tenant-b0 qa-acorn040: pass 1 of 2 (1 s)
+[10:07:35]   qdrant is-tenant-b0 qa-acorn040: pass 2 of 2 (2 s)
+[10:07:35] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:35] WARNING: qdrant is-tenant-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:07:35] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:35]    qdrant is-tenant-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:35] -- qdrant is-tenant-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[10:07:36]   qdrant is-tenant-b0 qa-acorn100: pass 1 of 2 (1 s)
+[10:07:37]   qdrant is-tenant-b0 qa-acorn100: pass 2 of 2 (2 s)
+[10:07:37] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:37] WARNING: qdrant is-tenant-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:07:37] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:37]    qdrant is-tenant-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:37] -- qdrant is-tenant-b0 qc-exact: {'exact': True}
+[10:07:38]   qdrant is-tenant-b0 qc-exact: pass 1 of 2 (1 s)
+[10:07:38]   qdrant is-tenant-b0 qc-exact: pass 2 of 2 (2 s)
+[10:07:38]    qdrant is-tenant-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.2 ms, 2 s
+[10:07:38] == stage qdrant is-tenant-b0: done in 24 s
+[10:07:38] == stage qdrant tenant-m0-b0
+[10:07:56]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}
+[10:07:56] qdrant tenant-m0 build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}
+[10:07:56] -- qdrant tenant-m0-b0 q-asrun: {'hnsw_ef': 128}
+[10:07:57]   qdrant tenant-m0-b0 q-asrun: pass 1 of 2 (1 s)
+[10:07:57]   qdrant tenant-m0-b0 q-asrun: pass 2 of 2 (2 s)
+[10:07:57]    qdrant tenant-m0-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.1 ms, 2 s
+[10:07:57] -- qdrant tenant-m0-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[10:07:58]   qdrant tenant-m0-b0 qa-acorn040: pass 1 of 2 (1 s)
+[10:07:59]   qdrant tenant-m0-b0 qa-acorn040: pass 2 of 2 (2 s)
+[10:07:59] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:59] WARNING: qdrant tenant-m0-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:07:59] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:07:59]    qdrant tenant-m0-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.0 ms, 2 s
+[10:07:59] -- qdrant tenant-m0-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[10:08:00]   qdrant tenant-m0-b0 qa-acorn100: pass 1 of 2 (1 s)
+[10:08:01]   qdrant tenant-m0-b0 qa-acorn100: pass 2 of 2 (2 s)
+[10:08:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:01] WARNING: qdrant tenant-m0-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:08:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:01]    qdrant tenant-m0-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.0 ms, 2 s
+[10:08:01] -- qdrant tenant-m0-b0 qc-exact: {'exact': True}
+[10:08:02]   qdrant tenant-m0-b0 qc-exact: pass 1 of 2 (1 s)
+[10:08:02]   qdrant tenant-m0-b0 qc-exact: pass 2 of 2 (2 s)
+[10:08:02]    qdrant tenant-m0-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.0 ms, 2 s
+[10:08:02] == stage qdrant tenant-m0-b0: done in 24 s
+[10:08:02] == stage qdrant separate-kb-b0
+[10:08:20]   Qdrant indexed: {'wardowl_enterprise_company': (980, 0, 2), 'wardowl_enterprise_kb': (2000, 0, 2)}
+[10:08:20] qdrant separate-kb build 0: {'wardowl_enterprise_company': 980, 'wardowl_enterprise_kb': 2000} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}
+[10:08:20] -- qdrant separate-kb-b0 q-asrun: {'hnsw_ef': 128}
+[10:08:23]   qdrant separate-kb-b0 q-asrun: pass 1 of 2 (2 s)
+[10:08:23]   qdrant separate-kb-b0 q-asrun: pass 2 of 2 (3 s)
+[10:08:24]    qdrant separate-kb-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.6 ms, 3 s
+[10:08:24] -- qdrant separate-kb-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[10:08:26]   qdrant separate-kb-b0 qa-acorn040: pass 1 of 2 (2 s)
+[10:08:26]   qdrant separate-kb-b0 qa-acorn040: pass 2 of 2 (3 s)
+[10:08:26] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:26] WARNING: qdrant separate-kb-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:08:26] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:26]    qdrant separate-kb-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.4 ms, 3 s
+[10:08:26] -- qdrant separate-kb-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[10:08:28]   qdrant separate-kb-b0 qa-acorn100: pass 1 of 2 (2 s)
+[10:08:29]   qdrant separate-kb-b0 qa-acorn100: pass 2 of 2 (3 s)
+[10:08:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:29] WARNING: qdrant separate-kb-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:08:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:29]    qdrant separate-kb-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.5 ms, 3 s
+[10:08:29] -- qdrant separate-kb-b0 qc-exact: {'exact': True}
+[10:08:32]   qdrant separate-kb-b0 qc-exact: pass 1 of 2 (2 s)
+[10:08:32]   qdrant separate-kb-b0 qc-exact: pass 2 of 2 (3 s)
+[10:08:32]    qdrant separate-kb-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.6 ms, 3 s
+[10:08:32] == stage qdrant separate-kb-b0: done in 30 s
+[10:08:33] == stage qdrant one-segment-b0
+[10:08:49]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 1)}
+[10:08:49] qdrant one-segment build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 1}
+[10:08:49] -- qdrant one-segment-b0 q-asrun: {'hnsw_ef': 128}
+[10:08:51]   qdrant one-segment-b0 q-asrun: pass 1 of 2 (1 s)
+[10:08:51]   qdrant one-segment-b0 q-asrun: pass 2 of 2 (2 s)
+[10:08:51]    qdrant one-segment-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.4 ms, 2 s
+[10:08:51] -- qdrant one-segment-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[10:08:52]   qdrant one-segment-b0 qa-acorn040: pass 1 of 2 (1 s)
+[10:08:53]   qdrant one-segment-b0 qa-acorn040: pass 2 of 2 (2 s)
+[10:08:53] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:53] WARNING: qdrant one-segment-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:08:53] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:53]    qdrant one-segment-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.3 ms, 2 s
+[10:08:53] -- qdrant one-segment-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[10:08:54]   qdrant one-segment-b0 qa-acorn100: pass 1 of 2 (1 s)
+[10:08:55]   qdrant one-segment-b0 qa-acorn100: pass 2 of 2 (2 s)
+[10:08:55] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:55] WARNING: qdrant one-segment-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[10:08:55] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[10:08:55]    qdrant one-segment-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.3 ms, 2 s
+[10:08:55] -- qdrant one-segment-b0 qc-exact: {'exact': True}
+[10:08:56]   qdrant one-segment-b0 qc-exact: pass 1 of 2 (1 s)
+[10:08:56]   qdrant one-segment-b0 qc-exact: pass 2 of 2 (2 s)
+[10:08:57]    qdrant one-segment-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 3.2 ms, 2 s
+[10:08:57] == stage qdrant one-segment-b0: done in 24 s
+[10:08:58] X1 finished in 0.08 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/x1-smoke/manifest.json)

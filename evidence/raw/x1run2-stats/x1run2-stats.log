@@ -1,0 +1,43 @@
+[{"stream_name":"stdout","time":3.651162105,"data":"[01:04:26] role stats; no setting starts after 8.5 h of this session\n"}
+,{"stream_name":"stdout","time":3.6572185839999998,"data":"[01:04:26] wardowl and the paper's scripts at a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":3.657254425,"data":"[01:04:26] $ /usr/bin/python3 -m pip install -q wardowl[pgvector,qdrant] @ git+https://github.com/muzakkirhussain011/wardowl.git@a95642429d508340946ee3679b65db2eedd36dc1 qdrant-client\u003e=1.16 sentence-transformers\u003e=3 datasets\u003e=2.19 psutil pyarrow scipy\n"}
+,{"stream_name":"stdout","time":21.524044174,"data":"[01:04:44] exit code 0\n"}
+,{"stream_name":"stdout","time":23.591459356,"data":"[01:04:46] shard folders: [PosixPath('/kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-a/x1run2'), PosixPath('/kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-b/x1run2'), PosixPath('/kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-c/x1run2')]\n"}
+,{"stream_name":"stdout","time":23.591498239,"data":"[01:04:46] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_stats.py --in /kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-a/x1run2 /kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-b/x1run2 /kaggle/input/notebooks/muzakkirhussain1/x1run2-shard-c/x1run2 --out /kaggle/working/x1run2-stats\n"}
+,{"stream_name":"stderr","time":47.441611814,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":47.441659149,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stderr","time":50.23836747,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":50.238413044,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stderr","time":51.691904899,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":51.691943614,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stdout","time":69.127195492,"data":"[01:05:32] 194,291 result rows of 49 settings from 3 folders; 131 setting records; grid run2; P1 and P2 reference pgvector/hnsw-m16-efc64/pg-hnsw\n"}
+,{"stream_name":"stdout","time":69.775088559,"data":"[01:05:32] intervals\n"}
+,{"stream_name":"stdout","time":570.175606733,"data":"[01:13:53] paired comparisons\n"}
+,{"stream_name":"stdout","time":814.801378122,"data":"[01:17:58] pre-registered verdicts\n"}
+,{"stream_name":"stdout","time":823.104378089,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/summary_by_build.csv (131 rows)\n"}
+,{"stream_name":"stdout","time":823.107888811,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/summary_by_setting.csv (49 rows)\n"}
+,{"stream_name":"stdout","time":823.161690036,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/intervals.csv (5,400 rows)\n"}
+,{"stream_name":"stdout","time":823.17879589,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/paired.csv (720 rows)\n"}
+,{"stream_name":"stdout","time":823.181138757,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/explain_summary.csv (134 rows)\n"}
+,{"stream_name":"stdout","time":823.183823373,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/qdrant_paths.csv (242 rows)\n"}
+,{"stream_name":"stdout","time":823.18531946,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/acorn_engagement.csv (176 rows)\n"}
+,{"stream_name":"stdout","time":823.18697289,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/plans.csv (102 rows)\n"}
+,{"stream_name":"stdout","time":823.188017858,"data":"[01:18:06] wrote /kaggle/working/x1run2-stats/predictions.csv (9 rows)\n"}
+,{"stream_name":"stdout","time":823.233915397,"data":"[01:18:06] Q1: confirmed\n"}
+,{"stream_name":"stdout","time":823.233950343,"data":"[01:18:06] Q2: falsified\n"}
+,{"stream_name":"stdout","time":823.233955933,"data":"[01:18:06] Q3: inconclusive\n"}
+,{"stream_name":"stdout","time":823.233960884,"data":"[01:18:06] Q4: inconclusive\n"}
+,{"stream_name":"stdout","time":823.234069851,"data":"[01:18:06] P1: inconclusive\n"}
+,{"stream_name":"stdout","time":823.234174768,"data":"[01:18:06] P2: inconclusive\n"}
+,{"stream_name":"stdout","time":823.23419528,"data":"[01:18:06] P3: confirmed\n"}
+,{"stream_name":"stdout","time":823.234308317,"data":"[01:18:06] P4: falsified\n"}
+,{"stream_name":"stdout","time":823.234332977,"data":"[01:18:06] P5: confirmed\n"}
+,{"stream_name":"stdout","time":823.23450312,"data":"[01:18:06] X1 statistics done in 798 s: /kaggle/working/x1run2-stats/report.md\n"}
+,{"stream_name":"stdout","time":823.592855234,"data":"[01:18:06] exit code 0\n"}
+,{"stream_name":"stderr","time":826.750478048,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":826.75051748,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":827.219720541,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":827.219752304,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":828.458940055,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":829.909924534,"data":"[NbConvertApp] Writing 275128 bytes to __results__.html\n"}
+]

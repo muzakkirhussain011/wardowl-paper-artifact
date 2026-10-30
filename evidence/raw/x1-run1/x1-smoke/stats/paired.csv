@@ -1,0 +1,465 @@
+a,b,why,metric,mean,low,high,n,clusters,mean_a,mean_b,wilcoxon_p,wilcoxon_note,mcnemar_only_a,mcnemar_only_b,mcnemar_p
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,0.46695361834247723,0.3267369232882992,0.6228474712970503,169,11,4.5749277662726255,4.107974147930149,6.977942393094714e-27,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m16,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,-0.5263004792916772,-1.4333183689064297,0.11974106731797178,169,11,3.5816736686384707,4.107974147930149,0.0008106890766182217,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,0.5176677692286066,0.34760708229123416,0.6776319278114196,169,11,4.625641917158755,4.107974147930149,2.357239456495023e-26,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m1,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,0.4501519230767458,0.3038822134690283,0.5827420312882897,169,11,4.558126071006894,4.107974147930149,3.843656947682841e-27,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t100k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,0.7655066982241195,0.6007422756889428,0.929940256550673,169,11,4.873480846154267,4.107974147930149,1.181041903682203e-28,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pa-t20k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,0.6250531360942982,0.5364076570684676,0.7316695984884865,169,11,4.7330272840244465,4.107974147930149,2.0858388169610766e-29,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04324324324324324,0.018172215843857635,0.06219369369369369,148,10,0.9986486486486488,0.9554054054054054,3.454810139105629e-05,21 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.035810810810810806,0.017402184959349594,0.051400562412123096,148,10,0.9986486486486488,0.9628378378378378,1.3771365153039307e-07,34 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.02810921717171717,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005194713739124512,-0.0008712059868490551,-0.00018616275248693572,148,10,1.9429004876998443e-05,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pb-wm64,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.8901715739605045,0.31163773422551444,8.896489192072229,169,11,8.998145721890653,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.02013962934755014,0.06419432585043382,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.018171756507481037,0.051516647531572896,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.028667728586442457,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008430519258050973,-0.00024858821006048317,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pc-ef1000,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.9961981005913545,-0.23131468334816668,8.663715642955989,169,11,9.104172248521502,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.017533866995073893,0.06539968746243538,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.017760640841702532,0.0527027027027027,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.029322383105362556,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008518635035574665,-0.00022629629801693515,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pc-ef200,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.986473517749278,0.3649534119540842,8.82757895814457,169,11,9.094447665679427,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.01865457184325109,0.0668528368794326,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.017266968325791856,0.051748554913294775,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.028901734104046242,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008572469743429357,-0.00019630016873662277,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pc-ef40,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.985988112425306,-0.7451065361302347,8.672501361166077,169,11,9.093962260355454,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.023640069889341874,0.06415094339622641,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.017647058823529408,0.05200168918918918,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008322375628256046,-0.00024020196389174696,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.708268482246615,-0.20076483423009606,8.432222757529507,169,11,8.816242630176763,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.020968451944240647,0.06380119650253104,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.0188235294117647,0.052668918918918915,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008225186360316826,-0.00020824917431535277,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.283102852069449,0.20459651287193478,9.401321003449791,169,11,9.391076999999598,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.019406223717409587,0.06644827586206896,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.020999999999999998,0.05179290795909291,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.000862063994470462,-0.00023410452322827416,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pd-lim4,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.163922011834828,0.48280321110396857,9.121537949213357,169,11,9.271896159764976,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04189189189189189,0.021709152161706904,0.06389909832546155,148,10,0.9972972972972972,0.9554054054054054,6.483002800368435e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.03175675675675675,0.012027027027027026,0.049831560283687924,148,10,0.9945945945945945,0.9628378378378378,3.6402088375309644e-06,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0003620916725815957,-0.0008421640394774522,0.00014760262713158675,148,10,0.00017680870620785397,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pe-strict,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.573414905325922,-0.21633261185519279,8.386909909803327,169,11,8.681389053256071,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pg-custom,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,-0.8569012189357262,-2.0436485303962253,0.05299796394877653,169,11,3.251072928994422,4.107974147930149,0.0009652780678313246,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,0.9554054054054054,0.9554054054054054,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,0.9628378378378378,0.9628378378378378,1.0,every difference is zero,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.013513513513513514,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,0.0005389003787894497,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/pg-noprepare,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,-1.072421476333847,-2.404114211362277,-0.17290187115437608,169,11,3.0355526715963013,4.107974147930149,0.0002569557967701309,169 non-zero differences,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.021348784194528875,0.06560755544312336,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.01944444444444444,0.051195431800534874,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008555616224781369,-0.00020713902970237655,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m16-efc64/ph-exact,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,4.8258252751459745,-0.06227291250918125,8.638579247273503,169,11,8.933799423076122,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.0233479395236821,0.066258064516129,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.020304760281754142,0.05364332221265603,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.02728386809269162,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008250223777871206,-0.00020585172408358883,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m32-efc200/p-asrun,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.012179251477933,0.06538792101876606,8.675290209990049,169,11,9.120153399408082,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.020872661122661125,0.06504842259721202,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.0188235294117647,0.052343749999999974,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.02857142857142857,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008319863405369722,-0.00020442751049709262,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.637417541419053,-0.29046476989154413,9.084811314981593,169,11,9.745391689349201,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",recall5,0.04459459459459459,0.02140498652291105,0.06758665430954587,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",recall10,0.037162162162162164,0.017760640841702532,0.05294912634832523,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",gross_miss10,-0.013513513513513514,-0.026134759845208286,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",sim_gap10,-0.0005388996891073286,-0.0008366522691133008,-0.00019221940660864358,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m32-efc200/pa-t1000k-m8,pgvector/hnsw-m16-efc64/pa-t1000k-m8,"index family against m16/efc64, same setting",latency_ms,5.119749772190446,0.23760476908333936,9.17020124615392,169,11,9.745391689349201,4.625641917158755,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.02016806722689075,0.06608327427356483,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.01641791044776119,0.05165723981900451,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.02717391304347826,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0007892297541607144,-0.0001969617515988257,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.042207964497209,-0.046149137481682104,9.05786864762114,169,11,9.150182112427357,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+pgvector/hnsw-m32-efc200/pc-ef400,pgvector/hnsw-m16-efc64/pc-ef400,"index family against m16/efc64, same setting",latency_ms,0.3339394822505939,0.22842133341228704,0.47133077210355384,169,11,9.150182112427357,8.816242630176763,8.108701832802914e-21,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall5,0.04459459459459459,0.019767782699322563,0.0654520015546055,148,10,1.0,0.9554054054054054,2.17370635852332e-05,22 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,recall10,0.037162162162162164,0.01850217864923747,0.05250068889501239,148,10,1.0,0.9628378378378378,5.4583747874610755e-08,36 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,gross_miss10,-0.013513513513513514,-0.027777777777777776,0.0,148,10,0.0,0.013513513513513514,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,sim_gap10,-0.0005388996891073286,-0.0008246144689619564,-0.00021632974960755314,148,10,6.896821210980078e-10,0.0005389003787894497,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/p-asrun,against the original run's setting,latency_ms,5.100074630177301,0.03645707331904774,8.98587631615504,169,11,9.208048778107448,4.107974147930149,3.14454933857931e-14,169 non-zero differences,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+pgvector/hnsw-m32-efc200/pd-lim10,pgvector/hnsw-m16-efc64/pd-lim10,"index family against m16/efc64, same setting",latency_ms,-0.18302822189214826,-0.47196959123926413,0.08705008559870361,169,11,9.208048778107448,9.391076999999598,7.46615233093888e-10,169 non-zero differences,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9648771449714784,-2.96837446250224,0.06612208813662004,169,11,3.003276964496836,3.968154109468314,0.1923359610898029,169 non-zero differences,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.857053713019359,-2.6045414390630857,0.12431396388548559,169,11,3.111100396448955,3.968154109468314,0.00010391085603980936,169 non-zero differences,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qb-ef512,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-1.0983472810647654,-3.0968344722786365,-0.057830856984375414,169,11,2.8698068284035485,3.968154109468314,2.0279704801220795e-08,169 non-zero differences,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qb-ef64,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.8563510562139823,-2.8689613873613564,0.15332742526433907,169,11,3.1118030532543317,3.968154109468314,1.7663286386662647e-11,169 non-zero differences,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9550919142008668,-2.85317998913578,0.05790983021380213,169,11,3.0130621952674472,3.968154109468314,0.16884964392735768,169 non-zero differences,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9195255502967371,-2.9361132660604725,0.0897577775053944,169,11,3.048628559171577,3.968154109468314,0.0005453461708192753,169 non-zero differences,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.976033378697845,-2.9757876857053205,0.06024150811852789,169,11,2.992120730770469,3.968154109468314,0.9868493368087496,169 non-zero differences,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",latency_ms,-0.011156233726366666,-0.09045430646027268,0.07752439344426204,169,11,2.992120730770469,3.003276964496836,0.2613629928520278,169 non-zero differences,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.95219728106431,-2.8271281954197844,0.049656026441355194,169,11,3.015956828404004,3.968154109468314,0.20776099310944796,169 non-zero differences,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",latency_ms,-0.09514356804495101,-0.202015399576358,0.011055784402780596,169,11,3.015956828404004,3.111100396448955,0.0031736702207592403,169 non-zero differences,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9128059467482769,-3.049028589142453,0.11232831918202807,169,11,3.055348162720037,3.968154109468314,4.772299270730454e-05,169 non-zero differences,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/is-tenant/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",latency_ms,0.042285967452589994,-0.016389445752822404,0.08918780452088891,169,11,3.055348162720037,3.0130621952674472,0.0038625460312172685,169 non-zero differences,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.7658706390493777,-2.6564773968808737,0.23904304117368028,169,11,3.2022834704189362,3.968154109468314,4.269596286815732e-16,169 non-zero differences,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.8675025621344573,-2.6365922345010477,0.1690368464130975,169,11,3.1006515473338565,3.968154109468314,2.05650884418753e-06,169 non-zero differences,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",latency_ms,0.09737458283702109,0.016259364736957112,0.1732906666893185,169,11,3.1006515473338565,3.003276964496836,5.326173442441318e-08,169 non-zero differences,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.8187532159751872,-2.8472620501925086,0.2358875134214699,169,11,3.1494008934931266,3.968154109468314,1.3601659182419685e-09,169 non-zero differences,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",latency_ms,0.03830049704417175,-0.11383130203598739,0.16942813635181764,169,11,3.1494008934931266,3.111100396448955,0.026494904821238226,169 non-zero differences,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.8496455680454927,-2.7226291602701234,0.22692431004171493,169,11,3.118508541422821,3.968154109468314,2.4610459978175325e-07,169 non-zero differences,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/one-segment/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",latency_ms,0.10544634615537408,0.0065511603742389,0.21574767792227884,169,11,3.118508541422821,3.0130621952674472,1.7563609647023712e-07,169 non-zero differences,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,2.4602131508844485,2.3306602927416704,2.5899831020764497,169,11,6.428367260352762,3.968154109468314,3.4340762257155457e-28,169 non-zero differences,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,1.3904418875718207,-0.6370795930147614,2.4105327115114896,169,11,5.358595997040135,3.968154109468314,3.4340762257155457e-28,169 non-zero differences,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",latency_ms,2.3553190325432993,2.238362833619438,2.47621262977881,169,11,5.358595997040135,3.003276964496836,1.745307981174729e-29,169 non-zero differences,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,1.47789956508321,-0.32242167095060636,2.5551115021288777,169,11,5.446053674551524,3.968154109468314,3.4340762257155457e-28,169 non-zero differences,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",latency_ms,2.334953278102569,2.1833200135670126,2.51049026442083,169,11,5.446053674551524,3.111100396448955,1.745307981174729e-29,169 non-zero differences,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,1.5302342041412127,-0.2854769490800701,2.577440658595357,169,11,5.498388313609526,3.968154109468314,3.4340762257155457e-28,169 non-zero differences,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/separate-kb/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",latency_ms,2.4853261183420794,2.30492754740124,2.635998404897544,169,11,5.498388313609526,3.0130621952674472,1.745307981174729e-29,169 non-zero differences,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/q-asrun,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9042356538473275,-3.1128211921471065,0.11037194204828518,169,11,3.0639184556209864,3.968154109468314,0.00010801022691569464,169 non-zero differences,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-1.0370437278106828,-3.0854602724109297,-0.021686118474197835,169,11,2.931110381657631,3.968154109468314,0.0030315174806020426,169 non-zero differences,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qa-acorn040,qdrant/as-run/qa-acorn040,"layout against as-run, same setting",latency_ms,-0.07216658283920432,-0.18146660161994785,0.014803950232040555,169,11,2.931110381657631,3.003276964496836,0.00014307866013495564,169 non-zero differences,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-0.9823391893500156,-2.868419889708965,0.09259762225764795,169,11,2.9858149201182984,3.968154109468314,0.18967246020424677,169 non-zero differences,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qa-acorn100,qdrant/as-run/qa-acorn100,"layout against as-run, same setting",latency_ms,-0.12528547633065668,-0.26015232289268525,0.027261263466290424,169,11,2.9858149201182984,3.111100396448955,2.0625811867354784e-07,169 non-zero differences,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/q-asrun,against the original run's setting,latency_ms,-1.020305718937705,-3.0833426140913454,0.03134661318202686,169,11,2.9478483905306088,3.968154109468314,0.10916502608379319,169 non-zero differences,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/tenant-m0/qc-exact,qdrant/as-run/qc-exact,"layout against as-run, same setting",latency_ms,-0.06521380473683817,-0.12932114524901095,0.0005808129249502996,169,11,2.9478483905306088,3.0130621952674472,0.0009926303557202503,169 non-zero differences,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,recall5,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,recall10,0.0,0.0,0.0,148,10,1.0,1.0,1.0,every difference is zero,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,empty5,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,empty10,0.0,0.0,0.0,148,10,0.0,0.0,,,0.0,0.0,1.0
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,short5,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,gross_miss10,0.0,0.0,0.0,148,10,0.0,0.0,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,sim_gap10,0.0,0.0,0.0,148,10,6.896821210980078e-10,6.896821210980078e-10,,,,,
+qdrant/as-run/qa-acorn100,qdrant/as-run/qa-acorn040,ACORN 1.0 against 0.4,latency_ms,0.10782343195211935,-0.018083569155350025,0.23564284291747725,169,11,3.111100396448955,3.003276964496836,0.0007112017097563409,169 non-zero differences,,,

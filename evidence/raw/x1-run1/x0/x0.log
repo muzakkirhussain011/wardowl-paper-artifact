@@ -1,0 +1,12 @@
+[10:04:06] original run's output: /kaggle/input/notebooks/muzakkirhussainsyed/notebookd8377caca8
+[10:04:06] 11,050 lines from /kaggle/input/notebooks/muzakkirhussainsyed/notebookd8377caca8/answers.jsonl: {'faiss': 1105, 'chroma': 1105, 'pgvector': 1105, 'pgvector + OPA': 1105, 'qdrant': 1105, 'elasticsearch': 1105, 'opensearch': 1105, 'weaviate': 1105, 'redis': 1105, 'lancedb': 1105}
+[10:04:06] every store's lines line up with FAISS's by position, person and question
+[10:04:06] wrote /kaggle/working/x0/per_question.csv (11,050 rows)
+[10:04:06] wrote /kaggle/working/x0/empties.csv (20 rows)
+[10:04:06] wrote /kaggle/working/x0/pgvector_empties.csv (10 rows)
+[10:04:06] wrote /kaggle/working/x0/recall5_by_category.csv (40 rows)
+[10:04:06] wrote /kaggle/working/x0/recall5_by_person_type.csv (30 rows)
+[10:04:06] wrote /kaggle/working/x0/recall5_by_category_and_person_type.csv (100 rows)
+[10:04:06] wrote /kaggle/working/x0/kb_share_targeted.csv (20 rows)
+[10:04:06] pgvector: 10 empty k=5 results in answers.jsonl; the hit shortfall implies 12.1
+[10:04:06] X0 done in 1 s; summary: /kaggle/working/x0/summary.md

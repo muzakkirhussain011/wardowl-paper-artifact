@@ -1,0 +1,101 @@
+store,category,persona_type,overlap5,n
+faiss,generic,kb-reader,1.0,96
+faiss,generic,no-groups,,0
+faiss,targeted,kb-reader,1.0,340
+faiss,forbidden,kb-reader,1.0,170
+faiss,redteam,kb-reader,1.0,388
+faiss,forbidden,no-groups,,0
+faiss,redteam,no-groups,,0
+faiss,targeted,judy,1.0,36
+faiss,forbidden,judy,1.0,18
+faiss,redteam,judy,1.0,36
+chroma,generic,kb-reader,0.8208333333333333,96
+chroma,generic,no-groups,,0
+chroma,targeted,kb-reader,0.9900000000000001,340
+chroma,forbidden,kb-reader,0.8270588235294117,170
+chroma,redteam,kb-reader,0.811340206185567,388
+chroma,forbidden,no-groups,,0
+chroma,redteam,no-groups,,0
+chroma,targeted,judy,0.9777777777777779,36
+chroma,forbidden,judy,0.9888888888888889,18
+chroma,redteam,judy,0.9944444444444444,36
+pgvector,generic,kb-reader,0.5958333333333333,96
+pgvector,generic,no-groups,,0
+pgvector,targeted,kb-reader,0.941764705882353,340
+pgvector,forbidden,kb-reader,0.5047058823529411,170
+pgvector,redteam,kb-reader,0.5644329896907216,388
+pgvector,forbidden,no-groups,,0
+pgvector,redteam,no-groups,,0
+pgvector,targeted,judy,0.9277777777777777,36
+pgvector,forbidden,judy,0.4444444444444444,18
+pgvector,redteam,judy,0.6611111111111111,36
+pgvector + OPA,generic,kb-reader,0.5958333333333333,96
+pgvector + OPA,generic,no-groups,,0
+pgvector + OPA,targeted,kb-reader,0.941764705882353,340
+pgvector + OPA,forbidden,kb-reader,0.5047058823529411,170
+pgvector + OPA,redteam,kb-reader,0.5644329896907216,388
+pgvector + OPA,forbidden,no-groups,,0
+pgvector + OPA,redteam,no-groups,,0
+pgvector + OPA,targeted,judy,0.9277777777777777,36
+pgvector + OPA,forbidden,judy,0.4444444444444444,18
+pgvector + OPA,redteam,judy,0.6611111111111111,36
+qdrant,generic,kb-reader,0.7374999999999999,96
+qdrant,generic,no-groups,,0
+qdrant,targeted,kb-reader,0.3352941176470588,340
+qdrant,forbidden,kb-reader,0.5047058823529411,170
+qdrant,redteam,kb-reader,0.6427835051546392,388
+qdrant,forbidden,no-groups,,0
+qdrant,redteam,no-groups,,0
+qdrant,targeted,judy,1.0,36
+qdrant,forbidden,judy,1.0,18
+qdrant,redteam,judy,1.0,36
+elasticsearch,generic,kb-reader,0.9625,96
+elasticsearch,generic,no-groups,,0
+elasticsearch,targeted,kb-reader,0.9847058823529412,340
+elasticsearch,forbidden,kb-reader,0.9588235294117647,170
+elasticsearch,redteam,kb-reader,0.8907216494845361,388
+elasticsearch,forbidden,no-groups,,0
+elasticsearch,redteam,no-groups,,0
+elasticsearch,targeted,judy,0.9888888888888889,36
+elasticsearch,forbidden,judy,0.9777777777777779,18
+elasticsearch,redteam,judy,0.9888888888888889,36
+opensearch,generic,kb-reader,0.8937499999999999,96
+opensearch,generic,no-groups,,0
+opensearch,targeted,kb-reader,0.9911764705882353,340
+opensearch,forbidden,kb-reader,0.8952941176470588,170
+opensearch,redteam,kb-reader,0.9288659793814432,388
+opensearch,forbidden,no-groups,,0
+opensearch,redteam,no-groups,,0
+opensearch,targeted,judy,1.0,36
+opensearch,forbidden,judy,0.9888888888888889,18
+opensearch,redteam,judy,1.0,36
+weaviate,generic,kb-reader,0.8145833333333333,96
+weaviate,generic,no-groups,,0
+weaviate,targeted,kb-reader,0.9835294117647058,340
+weaviate,forbidden,kb-reader,0.851764705882353,170
+weaviate,redteam,kb-reader,0.8082474226804124,388
+weaviate,forbidden,no-groups,,0
+weaviate,redteam,no-groups,,0
+weaviate,targeted,judy,1.0,36
+weaviate,forbidden,judy,1.0,18
+weaviate,redteam,judy,1.0,36
+redis,generic,kb-reader,0.975,96
+redis,generic,no-groups,,0
+redis,targeted,kb-reader,0.9958823529411766,340
+redis,forbidden,kb-reader,1.0,170
+redis,redteam,kb-reader,0.9639175257731959,388
+redis,forbidden,no-groups,,0
+redis,redteam,no-groups,,0
+redis,targeted,judy,0.9944444444444444,36
+redis,forbidden,judy,1.0,18
+redis,redteam,judy,1.0,36
+lancedb,generic,kb-reader,0.7687499999999999,96
+lancedb,generic,no-groups,,0
+lancedb,targeted,kb-reader,1.0,340
+lancedb,forbidden,kb-reader,0.7752941176470589,170
+lancedb,redteam,kb-reader,0.697938144329897,388
+lancedb,forbidden,no-groups,,0
+lancedb,redteam,no-groups,,0
+lancedb,targeted,judy,1.0,36
+lancedb,forbidden,judy,0.8666666666666667,18
+lancedb,redteam,judy,0.9388888888888888,36

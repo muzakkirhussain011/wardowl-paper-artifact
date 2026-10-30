@@ -9,3 +9,6 @@
 *.synctex.gz
 *.toc
 paper/main.pdf
+
+# Raw outputs of the runs are kept, logs included
+!evidence/raw/**

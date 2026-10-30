@@ -1,0 +1,41 @@
+store,category,overlap5,n
+faiss,generic,1.0,96
+faiss,targeted,1.0,376
+faiss,forbidden,1.0,188
+faiss,redteam,1.0,424
+chroma,generic,0.8208333333333333,96
+chroma,targeted,0.9888297872340426,376
+chroma,forbidden,0.8425531914893617,188
+chroma,redteam,0.8268867924528303,424
+pgvector,generic,0.5958333333333333,96
+pgvector,targeted,0.9404255319148936,376
+pgvector,forbidden,0.49893617021276593,188
+pgvector,redteam,0.5726415094339623,424
+pgvector + OPA,generic,0.5958333333333333,96
+pgvector + OPA,targeted,0.9404255319148936,376
+pgvector + OPA,forbidden,0.49893617021276593,188
+pgvector + OPA,redteam,0.5726415094339623,424
+qdrant,generic,0.7374999999999999,96
+qdrant,targeted,0.39893617021276595,376
+qdrant,forbidden,0.5521276595744681,188
+qdrant,redteam,0.6731132075471699,424
+elasticsearch,generic,0.9625,96
+elasticsearch,targeted,0.9851063829787233,376
+elasticsearch,forbidden,0.9606382978723403,188
+elasticsearch,redteam,0.8990566037735849,424
+opensearch,generic,0.8937499999999999,96
+opensearch,targeted,0.9920212765957447,376
+opensearch,forbidden,0.9042553191489362,188
+opensearch,redteam,0.9349056603773584,424
+weaviate,generic,0.8145833333333333,96
+weaviate,targeted,0.9851063829787233,376
+weaviate,forbidden,0.8659574468085107,188
+weaviate,redteam,0.8245283018867925,424
+redis,generic,0.975,96
+redis,targeted,0.9957446808510638,376
+redis,forbidden,1.0,188
+redis,redteam,0.9669811320754716,424
+lancedb,generic,0.7687499999999999,96
+lancedb,targeted,1.0,376
+lancedb,forbidden,0.7840425531914894,188
+lancedb,redteam,0.7183962264150944,424

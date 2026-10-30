@@ -1,0 +1,42 @@
+{
+  "store": "qdrant",
+  "layout": "separate-kb",
+  "build": "separate-kb-b2",
+  "rep": 2,
+  "setting": "qa-acorn040",
+  "experiments": [
+    "Q-a",
+    "Q2"
+  ],
+  "params": {
+    "hnsw_ef": 128,
+    "acorn": true,
+    "max_selectivity": 0.4
+  },
+  "harness_level": [],
+  "first_build_only": false,
+  "started": "2026-10-26T16:59:16+0000",
+  "status": "done",
+  "seconds": 47.9,
+  "summary": {
+    "recall5": 0.9577656675749319,
+    "recall10": 0.9504768392370574,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 8.133415998599958
+  },
+  "files": {
+    "runs": "/kaggle/working/x1/runs/qdrant__separate-kb__separate-kb-b2__qa-acorn040.parquet",
+    "telemetry": "/kaggle/working/x1/telemetry/qdrant__separate-kb__separate-kb-b2__qa-acorn040.parquet"
+  },
+  "questions": 1489,
+  "retrievals": 5956,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 0,
+  "passes": 3,
+  "sweep_seconds": 47.8,
+  "acorn_searches_counted": 0,
+  "acorn_counter_seen": true,
+  "telemetry": true
+}

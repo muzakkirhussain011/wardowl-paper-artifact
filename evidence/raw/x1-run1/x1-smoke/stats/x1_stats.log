@@ -1,0 +1,21 @@
+[10:09:03] 7,436 result rows of 44 settings; 44 setting records
+[10:09:03] intervals
+[10:09:05] paired comparisons
+[10:09:11] pre-registered verdicts
+[10:09:11] wrote /kaggle/working/x1-smoke/stats/summary_by_build.csv (44 rows)
+[10:09:11] wrote /kaggle/working/x1-smoke/stats/summary_by_setting.csv (44 rows)
+[10:09:11] wrote /kaggle/working/x1-smoke/stats/intervals.csv (4,224 rows)
+[10:09:12] wrote /kaggle/working/x1-smoke/stats/paired.csv (464 rows)
+[10:09:12] wrote /kaggle/working/x1-smoke/stats/explain_summary.csv (22 rows)
+[10:09:12] wrote /kaggle/working/x1-smoke/stats/qdrant_paths.csv (154 rows)
+[10:09:12] wrote /kaggle/working/x1-smoke/stats/acorn_engagement.csv (11 rows)
+[10:09:12] wrote /kaggle/working/x1-smoke/stats/predictions.csv (8 rows)
+[10:09:12] Q1: falsified
+[10:09:12] Q2: falsified
+[10:09:12] Q3: inconclusive
+[10:09:12] Q4: confirmed
+[10:09:12] P1: inconclusive
+[10:09:12] P2: confirmed
+[10:09:12] P3: confirmed
+[10:09:12] P4: falsified
+[10:09:12] X1 statistics done in 9 s: /kaggle/working/x1-smoke/stats/report.md

@@ -1,0 +1,37 @@
+{
+  "store": "qdrant",
+  "layout": "tenant-m0",
+  "build": "tenant-m0-b0",
+  "rep": 0,
+  "setting": "qc-exact",
+  "experiments": [
+    "Q-c"
+  ],
+  "params": {
+    "exact": true
+  },
+  "harness_level": [],
+  "first_build_only": true,
+  "started": "2026-10-26T10:08:01+0000",
+  "status": "done",
+  "seconds": 1.7,
+  "summary": {
+    "recall5": 1.0,
+    "recall10": 1.0,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 2.967668499991305
+  },
+  "files": {
+    "runs": "/kaggle/working/x1-smoke/runs/qdrant__tenant-m0__tenant-m0-b0__qc-exact.parquet",
+    "telemetry": "/kaggle/working/x1-smoke/telemetry/qdrant__tenant-m0__tenant-m0-b0__qc-exact.parquet"
+  },
+  "questions": 169,
+  "retrievals": 507,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 0,
+  "passes": 2,
+  "sweep_seconds": 1.6,
+  "telemetry": true
+}

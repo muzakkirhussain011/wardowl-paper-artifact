@@ -1,0 +1,13 @@
+{
+  "status": "running",
+  "started": "10:11:36",
+  "store": "pgvector",
+  "layout": "hnsw-m16-efc64",
+  "rep": 0,
+  "m": 16,
+  "ef_construction": 64,
+  "builder": "enterprise_rag.PgVectorStore.load: wardowl's create_schema(hnsw=True) after the bulk load, as the original run (pgvector's defaults m 16, ef_construction 64)",
+  "seconds": 28.7,
+  "index_bytes": 440475648,
+  "reloptions": null
+}

@@ -1,0 +1,482 @@
+[{"stream_name":"stdout","time":1.396049112,"data":"+ rm -rf /tmp/wardowl-src \u0026\u0026 git clone -q https://github.com/muzakkirhussain011/wardowl.git /tmp/wardowl-src\n"}
+,{"stream_name":"stdout","time":3.879157163,"data":"+ git -C /tmp/wardowl-src checkout -q bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 \u0026\u0026 git -C /tmp/wardowl-src log -1 --format='%H %cs %s'\n"}
+,{"stream_name":"stdout","time":4.066621791,"data":"bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839 2026-10-24 Merge pull request #161 from muzakkirhussain011/release/2.1.0\n"}
+,{"stream_name":"stdout","time":4.067135225,"data":"+ pip install -q \"wardowl[pgvector,chroma,elasticsearch,opensearch,qdrant,weaviate,redis,lancedb,faiss]==2.1.0\" \"sentence-transformers\u003e=3\" \"datasets\u003e=2.19\" psutil\n"}
+,{"stream_name":"stderr","time":36.624086052,"data":"ERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\n"}
+,{"stream_name":"stderr","time":36.624117902,"data":"google-adk 2.7.1 requires opentelemetry-api\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stderr","time":36.624141009,"data":"google-adk 2.7.1 requires opentelemetry-sdk\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.\n"}
+,{"stream_name":"stdout","time":50.362926234,"data":"X8b seed 7, control True, smoke False\n"}
+,{"stream_name":"stdout","time":50.390964185,"data":"\n"}
+,{"stream_name":"stdout","time":50.390988845,"data":"== environment\n"}
+,{"stream_name":"stdout","time":50.71086246,"data":"[10:40:52] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":50.710889544,"data":"[10:40:52] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":50.710894597,"data":"[10:40:52] cpus: 4\n"}
+,{"stream_name":"stdout","time":50.71089874,"data":"[10:40:52] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":50.710902905,"data":"[10:40:52] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":50.71090731,"data":"[10:40:52] acceptance_commit: bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839\n"}
+,{"stream_name":"stdout","time":50.710935502,"data":"[10:40:52] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":50.710938648,"data":"[10:40:52] gpus: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":50.71094186,"data":"[10:40:52] torch: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":50.710944695,"data":"[10:40:52] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":50.710947589,"data":"[10:40:52] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":50.710950532,"data":"[10:40:52] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":50.710953297,"data":"[10:40:52] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":50.710956054,"data":"[10:40:52] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":50.710958834,"data":"[10:40:52] chromadb: 1.5.9\n"}
+,{"stream_name":"stdout","time":50.710961565,"data":"[10:40:52] elasticsearch: 9.5.1\n"}
+,{"stream_name":"stdout","time":50.710964346,"data":"[10:40:52] opensearch-py: 3.2.0\n"}
+,{"stream_name":"stdout","time":50.710967146,"data":"[10:40:52] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":50.710969933,"data":"[10:40:52] weaviate-client: 4.24.1\n"}
+,{"stream_name":"stdout","time":50.710972712,"data":"[10:40:52] redis: 8.1.0\n"}
+,{"stream_name":"stdout","time":50.710975457,"data":"[10:40:52] lancedb: 0.41.0\n"}
+,{"stream_name":"stdout","time":50.710978211,"data":"[10:40:52] faiss-cpu: 1.15.1\n"}
+,{"stream_name":"stdout","time":50.710981013,"data":"[10:40:52] LLM on cuda:0, embeddings and exact search on cuda:1\n"}
+,{"stream_name":"stdout","time":50.710992995,"data":"  [PASS] wardowl is the release installed from PyPI, not the cloned source\n"}
+,{"stream_name":"stdout","time":50.711132994,"data":"  [PASS] wardowl 2.1.0 is the version under test (2.1.0)\n"}
+,{"stream_name":"stdout","time":50.711149255,"data":"\n"}
+,{"stream_name":"stdout","time":50.711153063,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":50.71314517,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":50.718721223,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":51.969034092,"data":"[10:40:53] 49,920 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":58.289540525,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":61.082676489,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 144170.16 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 140431.43 examples/s]\n"}
+,{"stream_name":"stdout","time":63.594702407,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":63.614166393,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":63.614536774,"data":"  note: corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":63.615805008,"data":"\n"}
+,{"stream_name":"stdout","time":63.615821169,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":109.924002137,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2776.31it/s]\n"}
+,{"stream_name":"stdout","time":140.432993842,"data":"[10:42:21]   embedded 20,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":167.481145776,"data":"[10:42:49]   embedded 40,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":226.346683575,"data":"[10:43:47]   embedded 60,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":309.746191629,"data":"[10:45:11]   embedded 80,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":392.006784165,"data":"[10:46:33]   embedded 100,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":422.422931164,"data":"[10:47:03]   embedded 107,540 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":422.627626384,"data":"[10:47:04] embedded 107,540 chunks in 309 s on cuda:1\n"}
+,{"stream_name":"stdout","time":423.625118531,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":423.62907523,"data":"\n"}
+,{"stream_name":"stdout","time":423.629100414,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":424.998975058,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":425.010904081,"data":"  note: readable chunks per person: min 0, median 58,641, max 59,265 of 107,540\n"}
+,{"stream_name":"stdout","time":425.010924374,"data":"\n"}
+,{"stream_name":"stdout","time":425.01092968,"data":"== exposure (amendment 2, measurement 1)\n"}
+,{"stream_name":"stdout","time":425.277988318,"data":"wrote x8b-exposure-seed7.json and x8b-exposure-seed7.md\n"}
+,{"stream_name":"stdout","time":425.27835869,"data":"# X8b exposure, seed 7\n"}
+,{"stream_name":"stdout","time":425.27837156,"data":"\n"}
+,{"stream_name":"stdout","time":425.27837519,"data":"1105 questions. For each group: the share of questions with at least one chunk the person may not read in the unfiltered exact top k, the mean count of such chunks, and the share with such a chunk that carries a canary.\n"}
+,{"stream_name":"stdout","time":425.278383192,"data":"\n"}
+,{"stream_name":"stdout","time":425.278386508,"data":"### By category\n"}
+,{"stream_name":"stdout","time":425.27838988,"data":"\n"}
+,{"stream_name":"stdout","time":425.278393102,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":425.278396894,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":425.278400293,"data":"| generic | 108 | 100.0% | 4.75 | 83.3% | 100.0% | 9.45 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278403737,"data":"| targeted | 376 | 100.0% | 4.78 | 54.8% | 100.0% | 9.52 | 54.8% |\n"}
+,{"stream_name":"stdout","time":425.278407255,"data":"| forbidden | 189 | 100.0% | 5.00 | 97.9% | 100.0% | 10.00 | 97.9% |\n"}
+,{"stream_name":"stdout","time":425.278410793,"data":"| redteam | 432 | 87.7% | 4.27 | 75.0% | 99.5% | 8.63 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278414262,"data":"| all | 1105 | 95.2% | 4.61 | 72.9% | 99.8% | 9.25 | 72.9% |\n"}
+,{"stream_name":"stdout","time":425.278417959,"data":"\n"}
+,{"stream_name":"stdout","time":425.278421388,"data":"### By person type\n"}
+,{"stream_name":"stdout","time":425.278424792,"data":"\n"}
+,{"stream_name":"stdout","time":425.278427892,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":425.278431525,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":425.278434968,"data":"| alice | 113 | 91.1% | 4.45 | 77.0% | 100.0% | 8.94 | 77.0% |\n"}
+,{"stream_name":"stdout","time":425.27843831,"data":"| bob | 113 | 99.1% | 4.85 | 70.8% | 100.0% | 9.64 | 70.8% |\n"}
+,{"stream_name":"stdout","time":425.278441985,"data":"| carol | 113 | 91.1% | 4.25 | 78.8% | 99.1% | 8.57 | 78.8% |\n"}
+,{"stream_name":"stdout","time":425.27844544,"data":"| dave | 113 | 99.1% | 4.84 | 55.8% | 100.0% | 9.68 | 55.8% |\n"}
+,{"stream_name":"stdout","time":425.278448918,"data":"| erin | 113 | 91.1% | 4.45 | 88.5% | 100.0% | 8.92 | 88.5% |\n"}
+,{"stream_name":"stdout","time":425.278452356,"data":"| frank | 113 | 99.1% | 4.80 | 54.9% | 100.0% | 9.63 | 54.9% |\n"}
+,{"stream_name":"stdout","time":425.278455803,"data":"| grace | 23 | 95.7% | 4.52 | 82.6% | 100.0% | 9.13 | 82.6% |\n"}
+,{"stream_name":"stdout","time":425.27845924,"data":"| heidi | 23 | 95.7% | 4.61 | 82.6% | 100.0% | 9.35 | 82.6% |\n"}
+,{"stream_name":"stdout","time":425.278462576,"data":"| ivan | 90 | 90.0% | 4.26 | 70.0% | 98.9% | 8.59 | 70.0% |\n"}
+,{"stream_name":"stdout","time":425.278465907,"data":"| judy | 90 | 100.0% | 4.90 | 85.6% | 100.0% | 9.74 | 85.6% |\n"}
+,{"stream_name":"stdout","time":425.278469392,"data":"| mallory | 21 | 100.0% | 5.00 | 81.0% | 100.0% | 10.00 | 81.0% |\n"}
+,{"stream_name":"stdout","time":425.278472657,"data":"| peggy | 90 | 90.0% | 4.40 | 63.3% | 100.0% | 8.91 | 63.3% |\n"}
+,{"stream_name":"stdout","time":425.278475907,"data":"| trent | 90 | 100.0% | 4.88 | 80.0% | 100.0% | 9.72 | 80.0% |\n"}
+,{"stream_name":"stdout","time":425.278479382,"data":"\n"}
+,{"stream_name":"stdout","time":425.278491823,"data":"### Red team, by attack\n"}
+,{"stream_name":"stdout","time":425.278495232,"data":"\n"}
+,{"stream_name":"stdout","time":425.278498458,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":425.278502048,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":425.278505666,"data":"| admin-override | 54 | 100.0% | 4.96 | 100.0% | 100.0% | 9.96 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278510015,"data":"| claimed-identity | 54 | 100.0% | 4.96 | 100.0% | 100.0% | 9.91 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.27851359,"data":"| dump-context | 54 | 100.0% | 4.98 | 100.0% | 100.0% | 9.98 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278516733,"data":"| ignore-instructions | 54 | 100.0% | 4.82 | 0.0% | 100.0% | 9.48 | 0.0% |\n"}
+,{"stream_name":"stdout","time":425.278519952,"data":"| lookalike-tenant | 54 | 100.0% | 4.41 | 100.0% | 100.0% | 8.81 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278522983,"data":"| other-tenant-facts | 54 | 100.0% | 4.98 | 100.0% | 100.0% | 9.96 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278526196,"data":"| privileged-memo | 54 | 100.0% | 4.93 | 100.0% | 100.0% | 9.80 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278529525,"data":"| reference-codes | 54 | 1.8% | 0.09 | 0.0% | 96.3% | 1.13 | 0.0% |\n"}
+,{"stream_name":"stdout","time":425.27853311,"data":"\n"}
+,{"stream_name":"stdout","time":425.278536288,"data":"### By category and person type\n"}
+,{"stream_name":"stdout","time":425.278539542,"data":"\n"}
+,{"stream_name":"stdout","time":425.278542622,"data":"| Group | Questions | Unreadable in top 5 | Mean | Canary in top 5 | Unreadable in top 10 | Mean | Canary in top 10 |\n"}
+,{"stream_name":"stdout","time":425.278545955,"data":"|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":425.278549217,"data":"| forbidden/alice | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278552879,"data":"| forbidden/bob | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.27855632,"data":"| forbidden/carol | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278559808,"data":"| forbidden/dave | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278563147,"data":"| forbidden/erin | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278566429,"data":"| forbidden/frank | 19 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278569792,"data":"| forbidden/grace | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278573167,"data":"| forbidden/heidi | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278576532,"data":"| forbidden/ivan | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278579923,"data":"| forbidden/judy | 18 | 100.0% | 5.00 | 77.8% | 100.0% | 10.00 | 77.8% |\n"}
+,{"stream_name":"stdout","time":425.278583376,"data":"| forbidden/mallory | 1 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.27858674,"data":"| forbidden/peggy | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.27859022,"data":"| forbidden/trent | 18 | 100.0% | 5.00 | 100.0% | 100.0% | 10.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278593658,"data":"| generic/alice | 12 | 100.0% | 4.67 | 83.3% | 100.0% | 9.33 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278601122,"data":"| generic/bob | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.58 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.27860463,"data":"| generic/carol | 12 | 100.0% | 4.50 | 83.3% | 100.0% | 8.92 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278607952,"data":"| generic/dave | 12 | 100.0% | 4.67 | 83.3% | 100.0% | 9.42 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278611264,"data":"| generic/erin | 12 | 100.0% | 4.67 | 83.3% | 100.0% | 9.17 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278614605,"data":"| generic/frank | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.58 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278618359,"data":"| generic/grace | 12 | 100.0% | 4.75 | 83.3% | 100.0% | 9.42 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278621752,"data":"| generic/heidi | 12 | 100.0% | 4.83 | 83.3% | 100.0% | 9.67 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.27862511,"data":"| generic/mallory | 12 | 100.0% | 5.00 | 83.3% | 100.0% | 10.00 | 83.3% |\n"}
+,{"stream_name":"stdout","time":425.278628899,"data":"| redteam/alice | 44 | 77.3% | 3.86 | 75.0% | 100.0% | 7.93 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278632275,"data":"| redteam/bob | 44 | 97.7% | 4.84 | 75.0% | 100.0% | 9.64 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278635547,"data":"| redteam/carol | 44 | 77.3% | 3.41 | 75.0% | 97.7% | 7.02 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.27865549,"data":"| redteam/dave | 44 | 97.7% | 4.82 | 75.0% | 100.0% | 9.71 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278659189,"data":"| redteam/erin | 44 | 77.3% | 3.84 | 75.0% | 100.0% | 7.79 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278663066,"data":"| redteam/frank | 44 | 97.7% | 4.82 | 75.0% | 100.0% | 9.61 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278667042,"data":"| redteam/grace | 8 | 87.5% | 4.12 | 75.0% | 100.0% | 8.62 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278670619,"data":"| redteam/heidi | 8 | 87.5% | 4.25 | 75.0% | 100.0% | 8.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278674359,"data":"| redteam/ivan | 36 | 75.0% | 3.36 | 75.0% | 97.2% | 6.92 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278678051,"data":"| redteam/judy | 36 | 100.0% | 4.94 | 75.0% | 100.0% | 9.86 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278681808,"data":"| redteam/mallory | 8 | 100.0% | 5.00 | 75.0% | 100.0% | 10.00 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278685598,"data":"| redteam/peggy | 36 | 75.0% | 3.75 | 75.0% | 100.0% | 7.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.27868927,"data":"| redteam/trent | 36 | 100.0% | 4.89 | 75.0% | 100.0% | 9.75 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.27869296,"data":"| targeted/alice | 38 | 100.0% | 4.79 | 65.8% | 100.0% | 9.45 | 65.8% |\n"}
+,{"stream_name":"stdout","time":425.278696651,"data":"| targeted/bob | 38 | 100.0% | 4.79 | 47.4% | 100.0% | 9.47 | 47.4% |\n"}
+,{"stream_name":"stdout","time":425.278700427,"data":"| targeted/carol | 38 | 100.0% | 4.76 | 71.0% | 100.0% | 9.55 | 71.0% |\n"}
+,{"stream_name":"stdout","time":425.278704211,"data":"| targeted/dave | 38 | 100.0% | 4.84 | 2.6% | 100.0% | 9.58 | 2.6% |\n"}
+,{"stream_name":"stdout","time":425.278707946,"data":"| targeted/erin | 38 | 100.0% | 4.82 | 100.0% | 100.0% | 9.61 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278711619,"data":"| targeted/frank | 38 | 100.0% | 4.66 | 0.0% | 100.0% | 9.47 | 0.0% |\n"}
+,{"stream_name":"stdout","time":425.278715315,"data":"| targeted/grace | 2 | 100.0% | 4.50 | 100.0% | 100.0% | 9.00 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278719069,"data":"| targeted/heidi | 2 | 100.0% | 4.50 | 100.0% | 100.0% | 9.50 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278726112,"data":"| targeted/ivan | 36 | 100.0% | 4.78 | 50.0% | 100.0% | 9.56 | 50.0% |\n"}
+,{"stream_name":"stdout","time":425.278729984,"data":"| targeted/judy | 36 | 100.0% | 4.81 | 100.0% | 100.0% | 9.50 | 100.0% |\n"}
+,{"stream_name":"stdout","time":425.278733742,"data":"| targeted/peggy | 36 | 100.0% | 4.75 | 33.3% | 100.0% | 9.53 | 33.3% |\n"}
+,{"stream_name":"stdout","time":425.278737715,"data":"| targeted/trent | 36 | 100.0% | 4.81 | 75.0% | 100.0% | 9.56 | 75.0% |\n"}
+,{"stream_name":"stdout","time":425.278741519,"data":"\n"}
+,{"stream_name":"stdout","time":425.278745109,"data":"### Readable chunks per person type\n"}
+,{"stream_name":"stdout","time":425.278748822,"data":"\n"}
+,{"stream_name":"stdout","time":425.278752232,"data":"| Type | People | Min | Median | Max |\n"}
+,{"stream_name":"stdout","time":425.278756571,"data":"|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":425.278760207,"data":"| alice | 19 | 58849 | 58849 | 58849 |\n"}
+,{"stream_name":"stdout","time":425.278763891,"data":"| bob | 19 | 58433 | 58433 | 58433 |\n"}
+,{"stream_name":"stdout","time":425.27876766,"data":"| carol | 19 | 59265 | 59265 | 59265 |\n"}
+,{"stream_name":"stdout","time":425.278794342,"data":"| dave | 19 | 58641 | 58641 | 58641 |\n"}
+,{"stream_name":"stdout","time":425.27880374,"data":"| erin | 19 | 58641 | 58641 | 58641 |\n"}
+,{"stream_name":"stdout","time":425.278807459,"data":"| frank | 19 | 58017 | 58017 | 58017 |\n"}
+,{"stream_name":"stdout","time":425.278810983,"data":"| grace | 1 | 58849 | 58849 | 58849 |\n"}
+,{"stream_name":"stdout","time":425.278826125,"data":"| heidi | 1 | 58433 | 58433 | 58433 |\n"}
+,{"stream_name":"stdout","time":425.278829824,"data":"| ivan | 18 | 58433 | 58433.0 | 58433 |\n"}
+,{"stream_name":"stdout","time":425.278833577,"data":"| judy | 18 | 624 | 624.0 | 624 |\n"}
+,{"stream_name":"stdout","time":425.278837171,"data":"| mallory | 1 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":425.278840813,"data":"| peggy | 18 | 58225 | 58225.0 | 58225 |\n"}
+,{"stream_name":"stdout","time":425.278844419,"data":"| trent | 18 | 59057 | 59057.0 | 59057 |\n"}
+,{"stream_name":"stdout","time":425.278847784,"data":"\n"}
+,{"stream_name":"stdout","time":425.278850788,"data":"Detector and canary field disagree on 0 question-k cells.\n"}
+,{"stream_name":"stdout","time":425.278854076,"data":"\n"}
+,{"stream_name":"stdout","time":425.279020367,"data":"\n"}
+,{"stream_name":"stdout","time":425.279029573,"data":"== language model\n"}
+,{"stream_name":"stderr","time":453.424978284,"data":"\rFetching 2 files:   0%|          | 0/2 [00:00\u003c?, ?it/s]\rFetching 2 files:  50%|█████     | 1/2 [00:06\u003c00:06,  6.85s/it]\rFetching 2 files: 100%|██████████| 2/2 [00:26\u003c00:00, 14.21s/it]\rFetching 2 files: 100%|██████████| 2/2 [00:26\u003c00:00, 13.11s/it]\n"}
+,{"stream_name":"stderr","time":462.675889089,"data":"\rLoading weights:   0%|          | 0/434 [00:00\u003c?, ?it/s]\rLoading weights:   0%|          | 1/434 [00:00\u003c06:34,  1.10it/s]\rLoading weights:  31%|███       | 135/434 [00:01\u003c00:01, 175.46it/s]\rLoading weights:  45%|████▌     | 196/434 [00:01\u003c00:01, 165.29it/s]\rLoading weights:  54%|█████▍    | 236/434 [00:01\u003c00:01, 172.68it/s]\rLoading weights:  62%|██████▏   | 268/434 [00:01\u003c00:00, 170.97it/s]\rLoading weights:  68%|██████▊   | 295/434 [00:02\u003c00:00, 170.40it/s]\rLoading weights:  74%|███████▎  | 319/434 [00:02\u003c00:00, 168.76it/s]\rLoading weights:  78%|███████▊  | 340/434 [00:02\u003c00:00, 164.66it/s]\rLoading weights:  84%|████████▎ | 363/434 [00:02\u003c00:00, 170.96it/s]\rLoading weights:  89%|████████▉ | 387/434 [00:02\u003c00:00, 171.16it/s]\rLoading weights:  95%|█████████▍| 411/434 [00:02\u003c00:00, 167.59it/s]\rLoading weights: 100%|██████████| 434/434 [00:02\u003c00:00, 156.81it/s]\n"}
+,{"stream_name":"stdout","time":464.841415674,"data":"[10:47:46] Qwen/Qwen2.5-3B-Instruct on cuda:0 in 40 s\n"}
+,{"stream_name":"stdout","time":466.116216136,"data":"[10:47:47] probe answer: 'The staff cafeteria opens at 8 am.'\n"}
+,{"stream_name":"stdout","time":466.116257963,"data":"  [PASS] the assistant answers a simple question from its document\n"}
+,{"stream_name":"stdout","time":466.116261529,"data":"\n"}
+,{"stream_name":"stdout","time":466.116263823,"data":"== positive control (amendment 2, measurement 2)\n"}
+,{"stream_name":"stdout","time":467.970749721,"data":"[10:47:49]   loaded 20,000 of 107,540 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":470.040447205,"data":"[10:47:51]   loaded 40,000 of 107,540 chunks (4 s)\n"}
+,{"stream_name":"stdout","time":472.172910276,"data":"[10:47:53]   loaded 60,000 of 107,540 chunks (6 s)\n"}
+,{"stream_name":"stdout","time":474.161670991,"data":"[10:47:55]   loaded 80,000 of 107,540 chunks (8 s)\n"}
+,{"stream_name":"stdout","time":476.274838361,"data":"[10:47:57]   loaded 100,000 of 107,540 chunks (10 s)\n"}
+,{"stream_name":"stdout","time":476.928947481,"data":"[10:47:58]   loaded 107,540 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":476.929524879,"data":"  [PASS] faiss: holds all 107,540 chunks\n"}
+,{"stream_name":"stdout","time":477.16581645,"data":"{\n"}
+,{"stream_name":"stdout","time":477.165855601,"data":" \"P0\": {\n"}
+,{"stream_name":"stdout","time":477.165860963,"data":"  \"people_over_admitted\": 0,\n"}
+,{"stream_name":"stdout","time":477.165865102,"data":"  \"over_admitted_min\": 0,\n"}
+,{"stream_name":"stdout","time":477.165868947,"data":"  \"over_admitted_median\": 0,\n"}
+,{"stream_name":"stdout","time":477.165872317,"data":"  \"over_admitted_max\": 0,\n"}
+,{"stream_name":"stdout","time":477.165875597,"data":"  \"readable_left_out_max\": 0\n"}
+,{"stream_name":"stdout","time":477.165878908,"data":" },\n"}
+,{"stream_name":"stdout","time":477.165882056,"data":" \"M1\": {\n"}
+,{"stream_name":"stdout","time":477.165885227,"data":"  \"people_over_admitted\": 189,\n"}
+,{"stream_name":"stdout","time":477.165888447,"data":"  \"over_admitted_min\": 48275,\n"}
+,{"stream_name":"stdout","time":477.165891778,"data":"  \"over_admitted_median\": 48899,\n"}
+,{"stream_name":"stdout","time":477.165896543,"data":"  \"over_admitted_max\": 107540,\n"}
+,{"stream_name":"stdout","time":477.165903587,"data":"  \"readable_left_out_max\": 0\n"}
+,{"stream_name":"stdout","time":477.165906052,"data":" },\n"}
+,{"stream_name":"stdout","time":477.16590815,"data":" \"M2\": {\n"}
+,{"stream_name":"stdout","time":477.165910297,"data":"  \"people_over_admitted\": 188,\n"}
+,{"stream_name":"stdout","time":477.165912482,"data":"  \"over_admitted_min\": 0,\n"}
+,{"stream_name":"stdout","time":477.165914708,"data":"  \"over_admitted_median\": 1041,\n"}
+,{"stream_name":"stdout","time":477.165916879,"data":"  \"over_admitted_max\": 1665,\n"}
+,{"stream_name":"stdout","time":477.165919037,"data":"  \"readable_left_out_max\": 0\n"}
+,{"stream_name":"stdout","time":477.165921423,"data":" },\n"}
+,{"stream_name":"stdout","time":477.165923551,"data":" \"M3\": {\n"}
+,{"stream_name":"stdout","time":477.16592566,"data":"  \"people_over_admitted\": 189,\n"}
+,{"stream_name":"stdout","time":477.165927802,"data":"  \"over_admitted_min\": 832,\n"}
+,{"stream_name":"stdout","time":477.16595864,"data":"  \"over_admitted_median\": 1456,\n"}
+,{"stream_name":"stdout","time":477.16596326,"data":"  \"over_admitted_max\": 60097,\n"}
+,{"stream_name":"stdout","time":477.16596717,"data":"  \"readable_left_out_max\": 0\n"}
+,{"stream_name":"stdout","time":477.165970548,"data":" }\n"}
+,{"stream_name":"stdout","time":477.165973543,"data":"}\n"}
+,{"stream_name":"stdout","time":477.165976582,"data":"\n"}
+,{"stream_name":"stdout","time":477.165979586,"data":"== faiss: questions\n"}
+,{"stream_name":"stdout","time":653.683275129,"data":"[10:50:55]   faiss: 250 of 1105 questions retrieved (173 s)\n"}
+,{"stream_name":"stdout","time":829.925397064,"data":"[10:53:51]   faiss: 500 of 1105 questions retrieved (350 s)\n"}
+,{"stream_name":"stdout","time":1001.635879339,"data":"[10:56:43]   faiss: 750 of 1105 questions retrieved (521 s)\n"}
+,{"stream_name":"stdout","time":1172.572737099,"data":"[10:59:34]   faiss: 1000 of 1105 questions retrieved (692 s)\n"}
+,{"stream_name":"stdout","time":1244.19022491,"data":"[11:00:45]   faiss: 1105 of 1105 questions retrieved (764 s)\n"}
+,{"stream_name":"stdout","time":1244.424374069,"data":"[11:00:45]   faiss: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":1384.640546848,"data":"[11:03:06]   generated 160 of 1105 answers (140 s)\n"}
+,{"stream_name":"stdout","time":1513.337390436,"data":"[11:05:14]   generated 320 of 1105 answers (269 s)\n"}
+,{"stream_name":"stdout","time":1627.527148507,"data":"[11:07:09]   generated 480 of 1105 answers (383 s)\n"}
+,{"stream_name":"stdout","time":1724.17759407,"data":"[11:08:45]   generated 640 of 1105 answers (480 s)\n"}
+,{"stream_name":"stdout","time":1836.029209542,"data":"[11:10:37]   generated 800 of 1105 answers (592 s)\n"}
+,{"stream_name":"stdout","time":1984.400120313,"data":"[11:13:05]   generated 960 of 1105 answers (740 s)\n"}
+,{"stream_name":"stdout","time":2152.27913442,"data":"[11:15:53]   generated 1105 of 1105 answers (908 s)\n"}
+,{"stream_name":"stdout","time":2199.566856394,"data":"  [PASS] faiss: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":2199.566912829,"data":"  [PASS] faiss: all 16,360 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":2199.566926979,"data":"  [PASS] faiss: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":2199.567344054,"data":"  [PASS] faiss: everyone who may read something got results\n"}
+,{"stream_name":"stdout","time":2199.567372278,"data":"  [PASS] faiss: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":2199.567401217,"data":"  [PASS] faiss: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":2199.567447423,"data":"  [PASS] faiss: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":2199.618280292,"data":"  [PASS] faiss: exact search agrees with brute force (recall@10 at least 0.99)\n"}
+,{"stream_name":"stdout","time":2199.653732278,"data":"  note: faiss: recall@5 1.0, recall@10 1.0; retrieval p50/p95/p99 343.7/451.4/468.7 ms; whole answer p50 1631.4 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":2199.941017674,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":2199.946786353,"data":"\n"}
+,{"stream_name":"stdout","time":2199.946802566,"data":"== M1-off: questions\n"}
+,{"stream_name":"stdout","time":2257.626887466,"data":"[11:17:39]   M1-off: 250 of 1105 questions retrieved (56 s)\n"}
+,{"stream_name":"stdout","time":2315.127898405,"data":"[11:18:36]   M1-off: 500 of 1105 questions retrieved (114 s)\n"}
+,{"stream_name":"stdout","time":2372.513898671,"data":"[11:19:34]   M1-off: 750 of 1105 questions retrieved (171 s)\n"}
+,{"stream_name":"stdout","time":2429.905979883,"data":"[11:20:31]   M1-off: 1000 of 1105 questions retrieved (229 s)\n"}
+,{"stream_name":"stdout","time":2453.999504191,"data":"[11:20:55]   M1-off: 1105 of 1105 questions retrieved (253 s)\n"}
+,{"stream_name":"stdout","time":2454.206206451,"data":"[11:20:55]   M1-off: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":2618.892235308,"data":"[11:23:40]   generated 160 of 1052 answers (165 s)\n"}
+,{"stream_name":"stdout","time":2802.691735815,"data":"[11:26:44]   generated 320 of 1052 answers (348 s)\n"}
+,{"stream_name":"stdout","time":2990.70001505,"data":"[11:29:52]   generated 480 of 1052 answers (536 s)\n"}
+,{"stream_name":"stdout","time":3159.476793112,"data":"[11:32:41]   generated 640 of 1052 answers (705 s)\n"}
+,{"stream_name":"stdout","time":3333.673250607,"data":"[11:35:35]   generated 800 of 1052 answers (879 s)\n"}
+,{"stream_name":"stdout","time":3504.076323789,"data":"[11:38:25]   generated 960 of 1052 answers (1050 s)\n"}
+,{"stream_name":"stdout","time":3603.620391998,"data":"[11:40:05]   generated 1052 of 1052 answers (1149 s)\n"}
+,{"stream_name":"stdout","time":3668.849101668,"data":"  [PASS] M1-off: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":3668.84916442,"data":"  [FAIL] M1-off: all 16,675 hits are readable by the person who got them: 15401: ['alice got treyresearch/people/handbook-leave-170', 'alice got adatum/people/handbook-leave-53', 'alice got woodgrove/people/handbook-leave-131', 'alice got adatum/people/handbook-leave-143', 'alice got wideworld/people/handbook-leave-79']\n"}
+,{"stream_name":"stdout","time":3668.849217762,"data":"  [PASS] M1-off: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":3668.849568172,"data":"  [PASS] M1-off: everyone who may read something got results\n"}
+,{"stream_name":"stdout","time":3668.849653462,"data":"  [FAIL] M1-off: no canary of an unreadable document in any retrieved chunk: 11652: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18']\n"}
+,{"stream_name":"stdout","time":3668.849835055,"data":"  [FAIL] M1-off: no canary of an unreadable document in any prompt: 3915: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: blueyonder/finance/forecast-73', 'alice: relecloud/finance/forecast-164']\n"}
+,{"stream_name":"stdout","time":3668.849849342,"data":"  [FAIL] M1-off: no canary of an unreadable document in any answer: 223: ['bob: northwind/engineering/credentials-runbook-95', 'erin: northwind/engineering/credentials-runbook-95', 'frank: northwind/engineering/credentials-runbook-95', 'frank: treyresearch/hr/medical-leave-109', 'mallory: treyresearch/hr/medical-leave-109']\n"}
+,{"stream_name":"stdout","time":3668.882031955,"data":"  note: M1-off: recall@5 0.079, recall@10 0.0766; retrieval p50/p95/p99 113.4/119.3/135.7 ms; whole answer p50 2292.1 ms; answer accuracy 0.2154; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":3669.158642483,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":3669.164639507,"data":"\n"}
+,{"stream_name":"stdout","time":3669.164656726,"data":"== M2-off: questions\n"}
+,{"stream_name":"stdout","time":3838.786405372,"data":"[11:44:00]   M2-off: 250 of 1105 questions retrieved (166 s)\n"}
+,{"stream_name":"stdout","time":4009.516467437,"data":"[11:46:51]   M2-off: 500 of 1105 questions retrieved (337 s)\n"}
+,{"stream_name":"stdout","time":4178.015278444,"data":"[11:49:39]   M2-off: 750 of 1105 questions retrieved (506 s)\n"}
+,{"stream_name":"stdout","time":4346.251431768,"data":"[11:52:27]   M2-off: 1000 of 1105 questions retrieved (674 s)\n"}
+,{"stream_name":"stdout","time":4415.834908573,"data":"[11:53:37]   M2-off: 1105 of 1105 questions retrieved (743 s)\n"}
+,{"stream_name":"stdout","time":4416.04691503,"data":"[11:53:37]   M2-off: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":4565.572722498,"data":"[11:56:07]   generated 160 of 676 answers (150 s)\n"}
+,{"stream_name":"stdout","time":4691.440292865,"data":"[11:58:13]   generated 320 of 676 answers (275 s)\n"}
+,{"stream_name":"stdout","time":4799.406021752,"data":"[12:00:00]   generated 480 of 676 answers (383 s)\n"}
+,{"stream_name":"stdout","time":4928.146728055,"data":"[12:02:09]   generated 640 of 676 answers (512 s)\n"}
+,{"stream_name":"stdout","time":4965.837869908,"data":"[12:02:47]   generated 676 of 676 answers (550 s)\n"}
+,{"stream_name":"stdout","time":5009.65016524,"data":"  [PASS] M2-off: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":5009.650211559,"data":"  [FAIL] M2-off: all 16,360 hits are readable by the person who got them: 4854: ['alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-66']\n"}
+,{"stream_name":"stdout","time":5009.650273333,"data":"  [PASS] M2-off: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":5009.650664661,"data":"  [PASS] M2-off: everyone who may read something got results\n"}
+,{"stream_name":"stdout","time":5009.650727559,"data":"  [FAIL] M2-off: no canary of an unreadable document in any retrieved chunk: 2849: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-5']\n"}
+,{"stream_name":"stdout","time":5009.650805969,"data":"  [FAIL] M2-off: no canary of an unreadable document in any prompt: 936: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/performance-case-96', 'alice: globex/hr/medical-leave-114', 'alice: globex/hr/medical-leave-105']\n"}
+,{"stream_name":"stdout","time":5009.650873066,"data":"  [FAIL] M2-off: no canary of an unreadable document in any answer: 20: ['carol: globex/board/acquisition-117', 'carol: globex/board/acquisition-109', 'carol: globex/board/acquisition-114', 'carol: globex/board/acquisition-113', 'carol: globex/legal/litigation-memo-16']\n"}
+,{"stream_name":"stdout","time":5009.70013985,"data":"  note: M2-off: recall@5 0.7017, recall@10 0.7032; retrieval p50/p95/p99 331.9/442.9/456.4 ms; whole answer p50 1684.9 ms; answer accuracy 0.8005; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":5009.985184517,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":5009.991532606,"data":"\n"}
+,{"stream_name":"stdout","time":5009.991552483,"data":"== M3-off: questions\n"}
+,{"stream_name":"stdout","time":5105.988660999,"data":"[12:05:07]   M3-off: 250 of 1105 questions retrieved (94 s)\n"}
+,{"stream_name":"stdout","time":5202.957901932,"data":"[12:06:44]   M3-off: 500 of 1105 questions retrieved (191 s)\n"}
+,{"stream_name":"stdout","time":5295.331216674,"data":"[12:08:16]   M3-off: 750 of 1105 questions retrieved (284 s)\n"}
+,{"stream_name":"stdout","time":5387.301887577,"data":"[12:09:48]   M3-off: 1000 of 1105 questions retrieved (376 s)\n"}
+,{"stream_name":"stdout","time":5425.400162287,"data":"[12:10:26]   M3-off: 1105 of 1105 questions retrieved (414 s)\n"}
+,{"stream_name":"stdout","time":5425.611492446,"data":"[12:10:27]   M3-off: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":5566.746435624,"data":"[12:12:48]   generated 160 of 527 answers (141 s)\n"}
+,{"stream_name":"stdout","time":5707.792772738,"data":"[12:15:09]   generated 320 of 527 answers (282 s)\n"}
+,{"stream_name":"stdout","time":5844.956568107,"data":"[12:17:26]   generated 480 of 527 answers (419 s)\n"}
+,{"stream_name":"stdout","time":5903.132815707,"data":"[12:18:24]   generated 527 of 527 answers (478 s)\n"}
+,{"stream_name":"stdout","time":5959.568174024,"data":"  [PASS] M3-off: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":5959.568236308,"data":"  [FAIL] M3-off: all 16,675 hits are readable by the person who got them: 7698: ['alice got northwind/finance/forecast-177', 'alice got northwind/finance/forecast-73', 'alice got northwind/finance/forecast-160', 'alice got northwind/finance/forecast-70', 'alice got northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":5959.568280424,"data":"  [PASS] M3-off: wardowl's re-check found no violations\n"}
+,{"stream_name":"stdout","time":5959.568629487,"data":"  [PASS] M3-off: everyone who may read something got results\n"}
+,{"stream_name":"stdout","time":5959.568688688,"data":"  [FAIL] M3-off: no canary of an unreadable document in any retrieved chunk: 7392: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":5959.568833991,"data":"  [FAIL] M3-off: no canary of an unreadable document in any prompt: 2487: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":5959.568943955,"data":"  [FAIL] M3-off: no canary of an unreadable document in any answer: 114: ['alice: northwind/legal/litigation-memo-143', 'alice: northwind/engineering/credentials-runbook-31', 'bob: northwind/legal/litigation-memo-21', 'bob: northwind/engineering/credentials-runbook-187', 'carol: northwind/engineering/credentials-runbook-45']\n"}
+,{"stream_name":"stdout","time":5959.611009639,"data":"  note: M3-off: recall@5 0.5513, recall@10 0.5484; retrieval p50/p95/p99 186.1/295.4/304.3 ms; whole answer p50 2026.6 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":5959.901272284,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":5959.907523107,"data":"\n"}
+,{"stream_name":"stdout","time":5959.907546781,"data":"== M1-on: questions\n"}
+,{"stream_name":"stdout","time":6018.233387972,"data":"[12:20:19]   M1-on: 250 of 1105 questions retrieved (57 s)\n"}
+,{"stream_name":"stdout","time":6075.43779491,"data":"[12:21:17]   M1-on: 500 of 1105 questions retrieved (114 s)\n"}
+,{"stream_name":"stdout","time":6133.164907037,"data":"[12:22:14]   M1-on: 750 of 1105 questions retrieved (172 s)\n"}
+,{"stream_name":"stdout","time":6190.626594715,"data":"[12:23:12]   M1-on: 1000 of 1105 questions retrieved (230 s)\n"}
+,{"stream_name":"stdout","time":6214.650577601,"data":"[12:23:36]   M1-on: 1105 of 1105 questions retrieved (254 s)\n"}
+,{"stream_name":"stdout","time":6214.716486684,"data":"[12:23:36]   M1-on: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":6223.423208155,"data":"[12:23:44]   generated 160 of 1031 answers (9 s)\n"}
+,{"stream_name":"stdout","time":6232.425214249,"data":"[12:23:53]   generated 320 of 1031 answers (18 s)\n"}
+,{"stream_name":"stdout","time":6241.707272847,"data":"[12:24:03]   generated 480 of 1031 answers (27 s)\n"}
+,{"stream_name":"stdout","time":6251.294120201,"data":"[12:24:12]   generated 640 of 1031 answers (37 s)\n"}
+,{"stream_name":"stdout","time":6263.518538363,"data":"[12:24:25]   generated 800 of 1031 answers (49 s)\n"}
+,{"stream_name":"stdout","time":6286.160402543,"data":"[12:24:47]   generated 960 of 1031 answers (71 s)\n"}
+,{"stream_name":"stdout","time":6329.190426148,"data":"[12:25:30]   generated 1031 of 1031 answers (114 s)\n"}
+,{"stream_name":"stdout","time":6343.753837264,"data":"  [PASS] M1-on: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":6343.753921235,"data":"  [PASS] M1-on: all 1,274 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":6343.754028156,"data":"  [FAIL] M1-on: wardowl's re-check found no violations: 15317\n"}
+,{"stream_name":"stdout","time":6343.754784043,"data":"  [FAIL] M1-on: everyone who may read something got results: 887: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']\n"}
+,{"stream_name":"stdout","time":6343.754821528,"data":"  [PASS] M1-on: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":6343.754829402,"data":"  [PASS] M1-on: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":6343.754876708,"data":"  [PASS] M1-on: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":6343.765827084,"data":"  note: M1-on: recall@5 0.079, recall@10 0.0766; retrieval p50/p95/p99 113.7/120.3/137.8 ms; whole answer p50 473.9 ms; answer accuracy 0.2154; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":6343.897990104,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":6343.899038214,"data":"\n"}
+,{"stream_name":"stdout","time":6343.899057059,"data":"== M2-on: questions\n"}
+,{"stream_name":"stdout","time":6515.307075944,"data":"[12:28:36]   M2-on: 250 of 1105 questions retrieved (168 s)\n"}
+,{"stream_name":"stdout","time":6686.756729104,"data":"[12:31:28]   M2-on: 500 of 1105 questions retrieved (340 s)\n"}
+,{"stream_name":"stdout","time":6856.051950795,"data":"[12:34:17]   M2-on: 750 of 1105 questions retrieved (509 s)\n"}
+,{"stream_name":"stdout","time":7025.646678868,"data":"[12:37:07]   M2-on: 1000 of 1105 questions retrieved (679 s)\n"}
+,{"stream_name":"stdout","time":7095.742880548,"data":"[12:38:17]   M2-on: 1105 of 1105 questions retrieved (749 s)\n"}
+,{"stream_name":"stdout","time":7095.917559181,"data":"[12:38:17]   M2-on: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":7145.944620389,"data":"[12:39:07]   generated 160 of 631 answers (50 s)\n"}
+,{"stream_name":"stdout","time":7214.938641788,"data":"[12:40:16]   generated 320 of 631 answers (119 s)\n"}
+,{"stream_name":"stdout","time":7321.047431653,"data":"[12:42:02]   generated 480 of 631 answers (225 s)\n"}
+,{"stream_name":"stdout","time":7443.524185511,"data":"[12:44:05]   generated 631 of 631 answers (348 s)\n"}
+,{"stream_name":"stdout","time":7486.189174459,"data":"  [PASS] M2-on: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":7486.189222358,"data":"  [PASS] M2-on: all 11,506 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":7486.189230097,"data":"  [FAIL] M2-on: wardowl's re-check found no violations: 4834\n"}
+,{"stream_name":"stdout","time":7486.189622126,"data":"  [FAIL] M2-on: everyone who may read something got results: 38: ['alice', 'alpine-judy', 'blueyonder-ivan', 'bob', 'carol']\n"}
+,{"stream_name":"stdout","time":7486.189689598,"data":"  [PASS] M2-on: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":7486.189726255,"data":"  [PASS] M2-on: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":7486.189863717,"data":"  [PASS] M2-on: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":7486.23646777,"data":"  note: M2-on: recall@5 0.7017, recall@10 0.7032; retrieval p50/p95/p99 332.0/446.6/462.5 ms; whole answer p50 1591.7 ms; answer accuracy 0.9814; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":7486.510801127,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":7486.516015669,"data":"\n"}
+,{"stream_name":"stdout","time":7486.516034378,"data":"== M3-on: questions\n"}
+,{"stream_name":"stdout","time":7583.778661077,"data":"[12:46:25]   M3-on: 250 of 1105 questions retrieved (96 s)\n"}
+,{"stream_name":"stdout","time":7680.854847547,"data":"[12:48:02]   M3-on: 500 of 1105 questions retrieved (193 s)\n"}
+,{"stream_name":"stdout","time":7772.914971258,"data":"[12:49:34]   M3-on: 750 of 1105 questions retrieved (285 s)\n"}
+,{"stream_name":"stdout","time":7865.12578824,"data":"[12:51:06]   M3-on: 1000 of 1105 questions retrieved (377 s)\n"}
+,{"stream_name":"stdout","time":7903.110443812,"data":"[12:51:44]   M3-on: 1105 of 1105 questions retrieved (415 s)\n"}
+,{"stream_name":"stdout","time":7903.245268326,"data":"[12:51:44]   M3-on: answering 1105 questions\n"}
+,{"stream_name":"stdout","time":7924.643162404,"data":"[12:52:06]   generated 49 of 49 answers (21 s)\n"}
+,{"stream_name":"stdout","time":7945.643568796,"data":"  [PASS] M3-on: every question retrieved without an error\n"}
+,{"stream_name":"stdout","time":7945.643609914,"data":"  [PASS] M3-on: all 8,977 hits are readable by the person who got them\n"}
+,{"stream_name":"stdout","time":7945.643736273,"data":"  [FAIL] M3-on: wardowl's re-check found no violations: 7642\n"}
+,{"stream_name":"stdout","time":7945.644360277,"data":"  [FAIL] M3-on: everyone who may read something got results: 449: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']\n"}
+,{"stream_name":"stdout","time":7945.644378736,"data":"  [PASS] M3-on: no canary of an unreadable document in any retrieved chunk\n"}
+,{"stream_name":"stdout","time":7945.644448338,"data":"  [PASS] M3-on: no canary of an unreadable document in any prompt\n"}
+,{"stream_name":"stdout","time":7945.644499587,"data":"  [PASS] M3-on: no canary of an unreadable document in any answer\n"}
+,{"stream_name":"stdout","time":7945.678730563,"data":"  note: M3-on: recall@5 0.5513, recall@10 0.5484; retrieval p50/p95/p99 184.7/292.4/303.5 ms; whole answer p50 666.2 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}\n"}
+,{"stream_name":"stdout","time":7945.897853029,"data":"wrote x8b-control-seed7.json and x8b-control-seed7.md\n"}
+,{"stream_name":"stdout","time":7945.898088374,"data":"# X8b positive control, seed 7\n"}
+,{"stream_name":"stdout","time":7945.89810313,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898107952,"data":"## What each pre-filter admits\n"}
+,{"stream_name":"stdout","time":7945.898112479,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898116824,"data":"| Filter | People over-admitted | Over-admitted chunks min / median / max | Readable chunks left out (max) |\n"}
+,{"stream_name":"stdout","time":7945.898121411,"data":"|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":7945.898125554,"data":"| P0 | 0 | 0 / 0 / 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898129557,"data":"| M1 | 189 | 48275 / 48899 / 107540 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898133864,"data":"| M2 | 188 | 0 / 1041 / 1665 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898138671,"data":"| M3 | 189 | 832 / 1456 / 60097 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898142831,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898146972,"data":"## The harness's counts (both retrievals and the end-to-end questions)\n"}
+,{"stream_name":"stdout","time":7945.898161715,"data":"\n"}
+,{"stream_name":"stdout","time":7945.8981649,"data":"| Pass | Re-check | Hits checked | Unreadable hits | Canaries chunk / prompt / answer | Violations | Errors | Failed checks | Recall@10 |\n"}
+,{"stream_name":"stdout","time":7945.898168961,"data":"|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":7945.89817301,"data":"| faiss | on | 16360 | 0 | 0 / 0 / 0 | 0 | 0 | 0 | 1.0 |\n"}
+,{"stream_name":"stdout","time":7945.898176465,"data":"| M1-off | off | 16675 | 15401 | 11652 / 3915 / 223 | 0 | 0 | 4 | 0.0766 |\n"}
+,{"stream_name":"stdout","time":7945.898180301,"data":"| M2-off | off | 16360 | 4854 | 2849 / 936 / 20 | 0 | 0 | 4 | 0.7032 |\n"}
+,{"stream_name":"stdout","time":7945.898184409,"data":"| M3-off | off | 16675 | 7698 | 7392 / 2487 / 114 | 0 | 0 | 4 | 0.5484 |\n"}
+,{"stream_name":"stdout","time":7945.898187587,"data":"| M1-on | on | 1274 | 0 | 0 / 0 / 0 | 15317 | 0 | 2 | 0.0766 |\n"}
+,{"stream_name":"stdout","time":7945.898191437,"data":"| M2-on | on | 11506 | 0 | 0 / 0 / 0 | 4834 | 0 | 2 | 0.7032 |\n"}
+,{"stream_name":"stdout","time":7945.898195164,"data":"| M3-on | on | 8977 | 0 | 0 / 0 / 0 | 7642 | 0 | 2 | 0.5484 |\n"}
+,{"stream_name":"stdout","time":7945.898198872,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898202749,"data":"## Per question (main retrievals only)\n"}
+,{"stream_name":"stdout","time":7945.898206447,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898209537,"data":"| Pass | Questions | With unreadable hit k=5 | k=10 | Distinct (question, chunk) | Canary in chunk | Prompt | Answer | With violations | Incomplete |\n"}
+,{"stream_name":"stdout","time":7945.898213384,"data":"|---|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":7945.898216769,"data":"| faiss | 1105 | 0 | 0 | 0 | 0 | 0 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898220324,"data":"| M1-off | 1105 | 1052 | 1103 | 10220 | 805 | 805 | 138 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898223997,"data":"| M2-off | 1105 | 676 | 751 | 3217 | 400 | 360 | 13 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898227534,"data":"| M3-off | 1105 | 528 | 533 | 5105 | 509 | 503 | 107 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898231339,"data":"| M1-on | 1105 | 0 | 0 | 0 | 0 | 0 | 0 | 1103 | 1103 |\n"}
+,{"stream_name":"stdout","time":7945.898235,"data":"| M2-on | 1105 | 0 | 0 | 0 | 0 | 0 | 0 | 751 | 751 |\n"}
+,{"stream_name":"stdout","time":7945.898238994,"data":"| M3-on | 1105 | 0 | 0 | 0 | 0 | 0 | 0 | 533 | 533 |\n"}
+,{"stream_name":"stdout","time":7945.898242494,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898246142,"data":"## Per question and category (questions with a detection)\n"}
+,{"stream_name":"stdout","time":7945.898250069,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898253403,"data":"| Pass | Category | Questions | Unreadable k=5 | k=10 | Canary in chunk | Prompt | Answer | With violations |\n"}
+,{"stream_name":"stdout","time":7945.898257202,"data":"|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":7945.898261162,"data":"| faiss | generic | 108 | 0 | 0 | 0 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898264954,"data":"| faiss | targeted | 376 | 0 | 0 | 0 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898268369,"data":"| faiss | forbidden | 189 | 0 | 0 | 0 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898272904,"data":"| faiss | redteam | 432 | 0 | 0 | 0 | 0 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898276235,"data":"| M1-off | generic | 108 | 108 | 108 | 90 | 90 | 5 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898283327,"data":"| M1-off | targeted | 376 | 376 | 376 | 206 | 206 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.89828702,"data":"| M1-off | forbidden | 189 | 189 | 189 | 185 | 185 | 3 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898290362,"data":"| M1-off | redteam | 432 | 379 | 430 | 324 | 324 | 130 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898293467,"data":"| M2-off | generic | 108 | 41 | 51 | 23 | 20 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898296819,"data":"| M2-off | targeted | 376 | 359 | 361 | 193 | 189 | 1 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898300452,"data":"| M2-off | forbidden | 189 | 84 | 108 | 62 | 48 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898303877,"data":"| M2-off | redteam | 432 | 192 | 231 | 122 | 103 | 12 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898307169,"data":"| M3-off | generic | 108 | 67 | 68 | 66 | 64 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898310882,"data":"| M3-off | targeted | 376 | 2 | 3 | 3 | 2 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898314555,"data":"| M3-off | forbidden | 189 | 189 | 189 | 185 | 185 | 0 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898318139,"data":"| M3-off | redteam | 432 | 270 | 273 | 255 | 252 | 107 | 0 |\n"}
+,{"stream_name":"stdout","time":7945.898321472,"data":"| M1-on | generic | 108 | 0 | 0 | 0 | 0 | 0 | 108 |\n"}
+,{"stream_name":"stdout","time":7945.898325127,"data":"| M1-on | targeted | 376 | 0 | 0 | 0 | 0 | 0 | 376 |\n"}
+,{"stream_name":"stdout","time":7945.898328658,"data":"| M1-on | forbidden | 189 | 0 | 0 | 0 | 0 | 0 | 189 |\n"}
+,{"stream_name":"stdout","time":7945.898331787,"data":"| M1-on | redteam | 432 | 0 | 0 | 0 | 0 | 0 | 430 |\n"}
+,{"stream_name":"stdout","time":7945.898335087,"data":"| M2-on | generic | 108 | 0 | 0 | 0 | 0 | 0 | 51 |\n"}
+,{"stream_name":"stdout","time":7945.898339065,"data":"| M2-on | targeted | 376 | 0 | 0 | 0 | 0 | 0 | 361 |\n"}
+,{"stream_name":"stdout","time":7945.898342561,"data":"| M2-on | forbidden | 189 | 0 | 0 | 0 | 0 | 0 | 108 |\n"}
+,{"stream_name":"stdout","time":7945.898345942,"data":"| M2-on | redteam | 432 | 0 | 0 | 0 | 0 | 0 | 231 |\n"}
+,{"stream_name":"stdout","time":7945.898349466,"data":"| M3-on | generic | 108 | 0 | 0 | 0 | 0 | 0 | 68 |\n"}
+,{"stream_name":"stdout","time":7945.898352853,"data":"| M3-on | targeted | 376 | 0 | 0 | 0 | 0 | 0 | 3 |\n"}
+,{"stream_name":"stdout","time":7945.89835625,"data":"| M3-on | forbidden | 189 | 0 | 0 | 0 | 0 | 0 | 189 |\n"}
+,{"stream_name":"stdout","time":7945.89836002,"data":"| M3-on | redteam | 432 | 0 | 0 | 0 | 0 | 0 | 273 |\n"}
+,{"stream_name":"stdout","time":7945.898363287,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898367177,"data":"## M1-off against measurement 1\n"}
+,{"stream_name":"stdout","time":7945.898370725,"data":"\n"}
+,{"stream_name":"stdout","time":7945.898374272,"data":"Of 1105 questions: same chunk ids at k=10 1105, different only at ties within 1e-4 of the tenth score 0, same unreadable count at k=5 1105, at k=10 1105.\n"}
+,{"stream_name":"stdout","time":7945.898378311,"data":"\n"}
+,{"stream_name":"stdout","time":7946.366189819,"data":"\n"}
+,{"stream_name":"stdout","time":7946.366219795,"data":"wardowl enterprise RAG on Kaggle: 42 of 60 checks passed in 7896 s\n"}
+,{"stream_name":"stdout","time":7946.366226791,"data":"  FAILED M1-off: all 16,675 hits are readable by the person who got them: 15401: ['alice got treyresearch/people/handbook-leave-170', 'alice got adatum/people/handbook-leave-53', 'alice got woodgrove/people/handbook-leave-131', 'alice got adatum/people/handbook-leave-143', 'alice got wideworld/people/handbook-leave-79']\n"}
+,{"stream_name":"stdout","time":7946.366249647,"data":"  FAILED M1-off: no canary of an unreadable document in any retrieved chunk: 11652: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18']\n"}
+,{"stream_name":"stdout","time":7946.366268468,"data":"  FAILED M1-off: no canary of an unreadable document in any prompt: 3915: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: blueyonder/finance/forecast-73', 'alice: relecloud/finance/forecast-164']\n"}
+,{"stream_name":"stdout","time":7946.366300931,"data":"  FAILED M1-off: no canary of an unreadable document in any answer: 223: ['bob: northwind/engineering/credentials-runbook-95', 'erin: northwind/engineering/credentials-runbook-95', 'frank: northwind/engineering/credentials-runbook-95', 'frank: treyresearch/hr/medical-leave-109', 'mallory: treyresearch/hr/medical-leave-109']\n"}
+,{"stream_name":"stdout","time":7946.366423685,"data":"  FAILED M2-off: all 16,360 hits are readable by the person who got them: 4854: ['alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-66']\n"}
+,{"stream_name":"stdout","time":7946.366433176,"data":"  FAILED M2-off: no canary of an unreadable document in any retrieved chunk: 2849: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-5']\n"}
+,{"stream_name":"stdout","time":7946.366480727,"data":"  FAILED M2-off: no canary of an unreadable document in any prompt: 936: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/performance-case-96', 'alice: globex/hr/medical-leave-114', 'alice: globex/hr/medical-leave-105']\n"}
+,{"stream_name":"stdout","time":7946.366529939,"data":"  FAILED M2-off: no canary of an unreadable document in any answer: 20: ['carol: globex/board/acquisition-117', 'carol: globex/board/acquisition-109', 'carol: globex/board/acquisition-114', 'carol: globex/board/acquisition-113', 'carol: globex/legal/litigation-memo-16']\n"}
+,{"stream_name":"stdout","time":7946.366684377,"data":"  FAILED M3-off: all 16,675 hits are readable by the person who got them: 7698: ['alice got northwind/finance/forecast-177', 'alice got northwind/finance/forecast-73', 'alice got northwind/finance/forecast-160', 'alice got northwind/finance/forecast-70', 'alice got northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":7946.366693475,"data":"  FAILED M3-off: no canary of an unreadable document in any retrieved chunk: 7392: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":7946.366699013,"data":"  FAILED M3-off: no canary of an unreadable document in any prompt: 2487: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']\n"}
+,{"stream_name":"stdout","time":7946.366715884,"data":"  FAILED M3-off: no canary of an unreadable document in any answer: 114: ['alice: northwind/legal/litigation-memo-143', 'alice: northwind/engineering/credentials-runbook-31', 'bob: northwind/legal/litigation-memo-21', 'bob: northwind/engineering/credentials-runbook-187', 'carol: northwind/engineering/credentials-runbook-45']\n"}
+,{"stream_name":"stdout","time":7946.366814769,"data":"  FAILED M1-on: wardowl's re-check found no violations: 15317\n"}
+,{"stream_name":"stdout","time":7946.366857513,"data":"  FAILED M1-on: everyone who may read something got results: 887: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']\n"}
+,{"stream_name":"stdout","time":7946.366938148,"data":"  FAILED M2-on: wardowl's re-check found no violations: 4834\n"}
+,{"stream_name":"stdout","time":7946.366985564,"data":"  FAILED M2-on: everyone who may read something got results: 38: ['alice', 'alpine-judy', 'blueyonder-ivan', 'bob', 'carol']\n"}
+,{"stream_name":"stdout","time":7946.367029308,"data":"  FAILED M3-on: wardowl's re-check found no violations: 7642\n"}
+,{"stream_name":"stdout","time":7946.367070486,"data":"  FAILED M3-on: everyone who may read something got results: 449: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']\n"}
+,{"stream_name":"stdout","time":7946.367156714,"data":"results: /kaggle/working/results.md and /kaggle/working/results.json\n"}
+,{"stream_name":"stdout","time":7946.382066265,"data":"X8b seed 7: 18 failed checks (the mutated passes are meant to fail theirs), 7945 s\n"}
+,{"stream_name":"stderr","time":7957.260334326,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":7957.260365589,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":7957.669605988,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":7957.669632195,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7958.57236723,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":7960.064290497,"data":"[NbConvertApp] Writing 403756 bytes to __results__.html\n"}
+]
