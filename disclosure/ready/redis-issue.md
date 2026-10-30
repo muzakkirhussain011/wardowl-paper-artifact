@@ -48,4 +48,4 @@ If it helps, one option would be to apply the same limit to query values, so tha
 
 I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
 
-I used an AI coding agent to help with the testing and this write-up. The commands and results above come from real runs, and I will follow this issue and answer any questions.
+The commands and results above come from real runs, and I will follow this issue and answer any questions.

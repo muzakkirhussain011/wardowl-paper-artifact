@@ -12,7 +12,7 @@ what was registered, what came out and the text.
 | Path | What it holds |
 |---|---|
 | `paper/` | The LaTeX source. GitHub Actions builds the PDF on every push, to the branch `results/pdf` |
-| `plan/` | The paper plan, the pre-registration of the end-to-end repeats with its dated amendments, and the posting checklist |
+| `plan/` | The paper plan, and the pre-registration of the end-to-end repeats with its dated amendments |
 | `evidence/` | One summary per run, with what each number was read from. `compute.md` gives the compute per experiment |
 | `evidence/raw/` | Raw outputs of the Kaggle runs. In the tag `evidence-v1`, also the CI artifacts and results branches (see below) |
 | `disclosure/` | The vendor reports with their minimal reproducers, which do not need wardowl. `reproducers.yml` runs them |

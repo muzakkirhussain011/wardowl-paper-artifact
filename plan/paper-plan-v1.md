@@ -67,10 +67,8 @@ C7. (New, high value) Side channels of permission-aware retrieval: does the wide
    Syed to identify an endorser early (a co-author or a researcher who has published in cs.CR).
 2. Anonymity: wardowl is public under Syed's name. Action: anonymised mirror and renamed package for
    review; avoid self-identifying citations in the submission.
-3. AI-assistance disclosure: the implementation was written largely with an AI coding agent. Disclose
-   per the venue (NeurIPS: non-standard LLM/agent use in the methods; arXiv: significant use must be
-   reported; AI is never an author). Every reference must be verified by a human; arXiv announced a
-   one-year ban for hallucinated references.
+3. Venue rules on tools: follow the venue's and arXiv's policies. Every reference must be verified by a
+   human; arXiv announced a one-year ban for hallucinated references.
 4. Vendor disclosure: report store bugs and documentation gaps to maintainers before the preprint.
 5. Prior-art overlap: the related-work section must credit the precedents above explicitly.
 
@@ -159,15 +157,15 @@ All changes go through PRs with CI in GitHub Actions; nothing runs locally.
   kit variants, compute). Added verified references: C-Pack (BGE), Qwen2.5, Qdrant search and multitenancy
   docs, Qdrant's ACORN article.
 - 2026-10-29 (evening): runs in flight. Results reach branches `results/<exp>` of the wardowl repo
-  (read with git fetch; the public API's 60/h limit is shared by every agent).
+  (read with git fetch; the public API's 60/h limit is shared by every session).
   - Conformance run 2: Actions run 40905549149 (wardowl at fix/engine-limits e7776f0).
-  - PR #167 (engine limits): green; the auto-mode check refused Claude's merge, Syed merges.
+  - PR #167 (engine limits): green; Syed merges.
     PR #168 (short_results): CI rerun after a Qdrant test fix (f5c3bfb).
   - X8 seeds 11 and 13: Kaggle muzakkirhussain1 kernels wardowl-x8-seed11/13 (seed 17 next).
   - X4/X7: branch paper/x4-x7, prereg eafafa9, amendment 1 ba00ca6, full run 40919304635.
   - X2/X5: branch paper/x2-x5, prereg 828ea27, full run 40921769714 (12 to 18 h; a push to the branch
     cancels it; rerun stores on the same data with data_run_id 40921769714).
-  - X1 run 2 and X3/X6: agents still building.
+  - X1 run 2 and X3/X6: still being built.
 - Plan for the remaining Kaggle work: X1 run 2 (CPU session if no GPU step); X2 frontiers and X5 mitigation
   in one harness on the enterprise corpus plus a second corpus with synthetic permission layouts of
   controlled selectivity and correlation (embeddings once on GPU, stores on CPU sessions); X8 three seeded

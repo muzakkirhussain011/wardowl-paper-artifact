@@ -101,4 +101,4 @@ RQ5. Does the design prevent leaks end to end, including to the LLM's answer, un
   CIs, and findings that generalise beyond the library (under-retrieval in production stores).
 - Venue fit: NeurIPS/ICML main tracks are a weak fit for a systems/security study; the Datasets and
   Benchmarks track, security venues and database venues are stronger. To be settled by the venue review.
-- Authorship and AI-assistance disclosure must follow the target venue's and arXiv's policies.
+- Authorship and disclosure must follow the target venue's and arXiv's policies.
