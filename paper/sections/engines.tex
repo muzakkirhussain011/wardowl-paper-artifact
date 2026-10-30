@@ -175,7 +175,7 @@ chunk reappeared after it had disappeared. Invalidation does not survive such an
 refills the cache from the stale snapshot, which the cache holds for its full ttl, so 79 of 80 SpiceDB
 revocations with invalidation exceeded their bound (medians 30.0 and 31.0\,s), and Cerbos's took as
 long. After invalidation the bound is ttl plus staleness, not staleness; a cache that declines to
-refill during the engine's staleness window would restore it (\tbd{evaluate the fix}).
+refill during the engine's staleness window would restore it, which we evaluate below.
 
 \paragraph{Faults.}
 We injected 14 faults into each engine, by a proxy or by killing the server, and five or eight into
@@ -190,6 +190,29 @@ instead of 2\,s, at the price of a median 3.1 to 3.6\,s to the first success aft
 30\,s cache answered every request through the 12\,s outages. Answers altered in content failed
 closed, except that an empty LookupResources stream reads as ``no readable documents'': 4,746
 retrievals returned nothing without an error, losing recall only. Store faults surfaced as the
-clients' own exceptions, unwrapped, and pgvector's pool held blocked requests for its 5\,s timeout or
-longer, so its unanswered-connection case put no request inside the window and remains untested
-(\tbd{rerun with requests in flight}).
+clients' own exceptions, unwrapped, some with the store's raw response, and pgvector's pool held
+blocked requests for its 5\,s timeout or longer, so its unanswered-connection case put no request
+inside the window.
+
+\paragraph{The fixes, tested.}
+The run exposed five defects in the layer, and we fixed all five. After an invalidation the cache
+now caches nothing for the engine's declared staleness, and the SpiceDB adapter, whose documentation
+had promised 5\,s, declares 11\,s without full consistency: twice the documented 5.5\,s, since we
+measured 8.7\,s. An empty LookupResources stream now yields no filter, so the retriever post-filters
+and checks every candidate. Every store failure is raised as one search error with a fixed message
+and the client's exception as its cause. And pgvector can set a statement timeout. A targeted rerun, pre-registered
+as an amendment before it ran, with requests started every 0.2\,s so that some are in flight when a
+fault begins, confirmed all of its predictions. With invalidation, all 160 SpiceDB and Cerbos
+revocations took effect within the predicted bound (the declared staleness plus 1\,s, and 1\,s more
+on the replica): medians of
+4.8\,s (at most 5.2\,s) for SpiceDB and 3.9\,s for Cerbos, against 30 and 31\,s before. SpiceDB itself
+still flapped, serving a revoked chunk again after it had gone in 16 to 28 polls per condition; the
+cache no longer prolongs that. Under the emptied stream, 3,520 retrievals failed closed instead of
+returning nothing, and with only the lookups emptied 3,180 returned exactly the right answer through
+post-filtering. All 6,066 store failures carried the fixed message and named no host. pgvector's
+statement timeout turned a table lock into failures after a median 1.003\,s with no request hanging,
+against 80 hanging requests and a median of 5\,s without it; for a connection that is accepted but never answered it cannot
+help, since the server never sees the statement, and every request hung or failed after 5\,s with or
+without it, as predicted. Only a deadline on the whole retrieval, which the layer does not yet offer,
+would bound that case. In 10,303 requests under these faults no chunk leaked (one-sided 95\% bound
+$2.9 \times 10^{-4}$ per request).

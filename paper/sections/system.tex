@@ -177,9 +177,11 @@ filter, it becomes the post-filter's scope.
 A caching wrapper stores, per subject and action, the filter, the scope, and each decision keyed by
 the chunk's identifier and metadata. Its time to live (30\,s by default) is a stated revocation
 bound, and an explicit invalidation ends it at once, also for answers that calls in flight obtained
-before it, provided the engine answers from current data; an engine that serves a stale snapshot
-after the revocation can refill the cache, which then holds the stale answer for a full time to live
-(Section~\ref{sec:eng-revoke}). Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
+before it, provided the engine answers from current data. In the release we evaluate, an engine
+that serves a stale snapshot after the revocation can refill the cache, which then holds the stale
+answer for a full time to live; Section~\ref{sec:eng-revoke} found this, and the fix it evaluates
+caches nothing for the engine's declared staleness after an invalidation, so the bound becomes that
+staleness. Keys encode type and length, so \texttt{1}, \texttt{"1"}, \texttt{True} and \texttt{1.0}
 never share an entry, and failures are never cached. Entries shared through Redis carry their
 absolute expiry, so the bound holds across replicas, and, with a signing key, an HMAC-SHA256 over key
 and content, so whoever can write to Redis cannot plant a decision. The bound covers the cache alone:
