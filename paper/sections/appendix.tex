@@ -49,13 +49,21 @@ excluded.
 
 \section{The diagnosis grid}\label{app:x1grid}
 
-\paragraph{pgvector.} One index build per configuration in run 1 (HNSW $m = 16$,
-\texttt{ef\_construction} 64), 1,489 questions, three passes each. Query-time settings: the
-scenario's settings (\emph{as run}); \texttt{hnsw.max\_scan\_tuples} of 20,000, 100,000 or 1,000,000
-crossed with \texttt{hnsw.scan\_mem\_multiplier} of 1, 8 or 16; \texttt{work\_mem} 64\,MB;
+\paragraph{pgvector.} The numbers in the paper are from run 2: three index builds with HNSW $m = 16$
+and \texttt{ef\_construction} 64 and three with $m = 32$ and \texttt{ef\_construction} 200 (a core
+grid), 1,489 questions (the scenario's 1,105 and 384 asked by 24 people in a single group each),
+three timed passes each. Query-time settings: the scenario's settings with the planner's choice and
+prepared statements (\emph{as run}); custom plans forced (\texttt{plan\_cache\_mode =
+force\_custom\_plan}); no prepared statements; the HNSW scan forced (custom plans with sequential
+and bitmap scans disabled), the reference for the scan-budget hypotheses, and every budget and depth
+setting forced the same way: \texttt{hnsw.max\_scan\_tuples} of 20,000, 100,000 or 1,000,000 crossed
+with \texttt{hnsw.scan\_mem\_multiplier} of 1, 8 or 16; \texttt{work\_mem} 64\,MB;
 \texttt{hnsw.ef\_search} 40, 200, 400 and 1,000; an inner \texttt{LIMIT} of four or ten times $k$;
-strict ordering; custom and generic plans; and exact search. \tbd{run 2: builds, the skipped
-settings, plan recording.}
+strict ordering; and exact search with index scans disabled. Two replays of the audit's pass ran
+first on the first build, right after loading and after \texttt{VACUUM (ANALYZE)}; every other
+setting ran after a vacuum. PostgreSQL's \texttt{auto\_explain} recorded the plan of every search of
+the first pass. Run 1 had one build per layout, skipped 12 settings for time, and recorded no
+executed plans; it is reported in the released evidence.
 
 \paragraph{Qdrant.} Five layouts (as run; tenant field marked \texttt{is\_tenant}; per-tenant graphs
 with \texttt{payload\_m} 16 and $m = 0$; shared passages in a separate collection; one segment), three
