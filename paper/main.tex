@@ -22,6 +22,11 @@
 \usepackage[hidelinks]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
+% Run-in paragraph headings with less space above than the article class's 3.25ex.
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{4}{\z@}{1.6ex \@plus .4ex \@minus .2ex}{-1em}{\normalfont\normalsize\bfseries}}
+\makeatother
+
 \newcommand{\tbd}[1]{\textcolor{red}{[TBD: #1]}}
 \newcommand{\sys}{\textsc{wardowl}}
 \newtheorem{definition}{Definition}

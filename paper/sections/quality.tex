@@ -119,8 +119,8 @@ neighbors of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 over
 cost; per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.952, faster than the as-run layout, and a separate collection for the
 shared passages reached 0.949. Raising \texttt{hnsw\_ef} from 128 to 512 added 0.103 (0.090 to 0.116) at 1.6 times the latency (Q4
 inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified), so
-ACORN helps but does not suffice under this layout. Q3, on segment layout, stayed inconclusive: recall@10 varied by up to 0.086 between
-builds of the same data, but both layouts ended with one segment holding points. The result is a layout rule, not a parameter: when
+ACORN helps but does not suffice under this layout. Q3, on segment layout, stayed inconclusive, since both layouts ended with one segment
+holding points. The result is a layout rule, not a parameter: when
 permission groups or tenants cover large, semantically interleaved parts of a collection, give each tenant its own graph, or keep
 widely shared content apart, before reaching for search-time effort.
 
@@ -175,7 +175,7 @@ the design.
 \centering
 \begin{tikzpicture}
 \begin{groupplot}[
-  group style={group size=3 by 2, horizontal sep=5mm, vertical sep=5mm,
+  group style={group size=3 by 2, horizontal sep=5mm, vertical sep=7mm,
     xticklabels at=edge bottom, yticklabels at=edge left, xlabels at=edge bottom, ylabels at=edge left},
   scale only axis, width=4.45cm, height=2.2cm,
   xmode=log, xmin=0.15, xmax=450, ymin=0.38, ymax=1.06,
@@ -252,9 +252,9 @@ empty on 32.4\% of retrievals (recall@10 0.897 with them at \texttt{ef\_search} 
 recall at a price in throughput, and the stores' own options bought more: Qdrant reached 0.898 at the top of its sweep but 0.997 with ACORN. At 100\%
 selectivity, where the filter passes everything, recall@10 at the defaults ran from 0.517 for LanceDB and 0.793 for Redis to 0.978 for Qdrant, and four stores
 lost recall against that baseline over the whole mix of filters: pgvector (0.575 against 0.916), Qdrant (0.799 against 0.978), Elasticsearch (0.806 against
-0.870) and LanceDB (0.437 against 0.517). Among settings that served at least 50 queries per second, uncalibrated across runners, the best recall@10 was 1.000
-for Elasticsearch (its exact search), 0.999 for OpenSearch and Milvus, 0.997 for Redis, 0.995 for Weaviate, 0.979 for Qdrant, 0.578 for pgvector and 0.438 for
-LanceDB; MongoDB reached 50 at no setting.
+0.870) and LanceDB (0.437 against 0.517). Among settings that served at least 50 queries per second, uncalibrated across runners, the best recall@10 ran from
+0.438 for LanceDB and 0.578 for pgvector to 0.979 for Qdrant and 0.995 to 1.000 for Weaviate, Redis, Milvus, OpenSearch and Elasticsearch (its exact search); MongoDB reached 50 at
+no setting.
 
 \paragraph{Correlation and selectivity.}
 Negatively correlated questions lost at least 0.05 of recall@10 in four stores, not the six we had predicted (H2.1 inconclusive): pgvector 0.424 (95\% interval

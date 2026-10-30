@@ -17,13 +17,11 @@ The index holds 107,540 chunks: 49,920 synthetic company documents in 20 tenants
 notices, each carrying a prompt injection; and 57,600 FiQA passages~\cite{maia2018www18} that every tenant may read. 189 people, the
 scenario's subjects, span the tenants: a typical employee may read 58,641 chunks, the least privileged 624, and one person nothing.
 They ask 1,105 questions: 108 generic, 376 targeted at a document they may read, 189 at a document they may not, and 432 red-team
-prompts. The policy, a tenant boundary and per-document ACLs, runs in ten configurations (FAISS over a flat index, Chroma, pgvector,
-pgvector with the policy written in OPA, Qdrant, Elasticsearch, OpenSearch, Weaviate, Redis and LanceDB) and in an eleventh, with the
-ACLs as 74,960 OpenFGA tuples, which ran in four further runs after a harness fault of ours stopped it from starting. The scenario ran
-four times, with seeds 7, 11, 13 and 17, on release 2.1.0; the repeats and their predictions were pre-registered after the first run
-and before any repeat. Permissions did not change during a run, so these runs test containment, not freshness. A leak is any returned
-chunk outside the person's readable set, as the policy oracle decides it, or any canary of an unreadable document in a retrieved chunk,
-the prompt or the answer (Appendix~\ref{sec:e2e-setup}).
+prompts. The policy, a tenant boundary and per-document ACLs, runs in ten configurations (FAISS over a flat index, the eight approximate
+stores of Figure~\ref{fig:qual-audit}, and pgvector with the policy written in OPA) and in an eleventh, with the ACLs as 74,960 OpenFGA
+tuples, which ran in four further runs after a harness fault of ours stopped it from starting. The scenario ran four times, with seeds
+7, 11, 13 and 17, on release 2.1.0; the repeats and their predictions were pre-registered after the first run and before any repeat.
+Permissions did not change during a run, so these runs test containment, not freshness (Appendix~\ref{sec:e2e-setup}).
 
 \paragraph{Safety.}\label{sec:e2e-safety}
 No configuration in any run returned an unreadable chunk or exposed a canary (Table~\ref{tab:e2e-safety} in

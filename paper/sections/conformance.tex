@@ -15,14 +15,13 @@ oracle~\cite{xie2025toward,wang2025towards}.
 \paragraph{The kit.}
 From a seed, the kit draws small corpora with confusable values (\texttt{1} and \texttt{"1"}; \texttt{"a"}
 and \texttt{"A"}; \'e as one code point or two), missing and dotted fields, nested And and Or, empty In
-filters and subjects in 300 extra groups. It checks searches against $E(\varphi)$: at most $k$ hits, no document
-outside $E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, finite scores in non-increasing order, and text and
-metadata identical to what was stored. $k$ equals the corpus size for half of the filtered searches, so that a
-false denial cannot hide outside the top $k$. Stores whose index is approximate even on these corpora (Cassandra,
-and Vespa and Redis with HNSW) run in a sound-only mode, in which answers may be short but never wrong. For
-authorizers it requires $\mathrm{check}$ to agree with $m \models \varphi_s$ on every hit, which shows
-consistency, not a correct policy. Its own suite plants 18 faulty backends and six faulty authorizers that it
-must reject. Appendix~\ref{app:conformance} gives the generator, the checks and the data variants.
+filters and subjects in 300 extra groups. It checks searches against $E(\varphi)$: no document outside
+$E(\varphi)$, $\min(k,|E(\varphi)|)$ of them, and text and metadata identical to what was stored. $k$ equals the
+corpus size for half of the filtered searches, so that a false denial cannot hide outside the top $k$. Stores whose
+index is approximate even on these corpora (Cassandra, and Vespa and Redis with HNSW) run in a sound-only mode. For
+authorizers it requires $\mathrm{check}$ to agree with $m \models \varphi_s$ on every hit, which shows consistency, not
+a correct policy. Its own suite plants 18 faulty backends and six faulty authorizers that it must reject
+(Appendix~\ref{app:conformance}).
 
 \paragraph{The campaign.}
 We ran the kit with fixed versions, seeds and counts against 13 stores and 14 engine targets (OPA, OpenFGA, SpiceDB,

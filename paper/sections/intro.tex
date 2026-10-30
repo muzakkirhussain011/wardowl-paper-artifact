@@ -48,14 +48,13 @@ the loss.
         authorizer, add freshness, with a measured staleness $\delta$ per path, and count-honesty for the
         claim that an answer is complete, and state the trusted computing base.
   \item \emph{Verification of the enforcement path} (Sections~\ref{sec:conformance},
-        \ref{sec:engines} and~\ref{sec:e2e}). Differential conformance testing across 13 of the 14 stores
-        and seven engines found two undocumented store behaviors with a correctness effect, two
-        availability faults in the layer's adapters and documented limits that fail closed, and reproduced a
-        known type gap in the layer's Cerbos translator. At one revision, over 6.3 million user-document
-        pairs, filters and checks never disagreed in the profiles that hold the model as intended. No
-        chunk outside the readable set was returned in 1,050 fault episodes or in four runs of each of
-        eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per
-        person, one-sided 95\%, over the generator's question distribution).
+        \ref{sec:engines} and~\ref{sec:e2e}). Differential testing across 13 of the 14 stores and seven
+        engines found two undocumented store behaviors with a correctness effect, two availability faults
+        in the layer's adapters and documented limits that fail closed. At one revision, over 6.3 million
+        user-document pairs, filters and checks never disagreed in the profiles that hold the model as
+        intended. No chunk outside the readable set was returned in 1,050 fault episodes or in four runs of
+        each of eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and
+        $1.6 \times 10^{-2}$ per person, one-sided 95\%, over the generator's question distribution).
   \item \emph{An audit, diagnosis and repair of retrieval quality} (Sections~\ref{sec:quality}
         and~\ref{sec:repair}). Mean recall@10 at common settings ranged from 0.55 to 0.98 over eight
         stores searched approximately, under this layer's schema. Pre-registered experiments trace
@@ -65,10 +64,9 @@ the loss.
         or short, but no count sees a full answer of the wrong chunks.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered
         distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
-        chunks had appeared near it from the latency of the widening post-filter (paired AUC 0.80 to
-        0.98, except pgvector's 0.66 for an attacker reading 10\% of the background) and from BM25 and
-        IDF scores (0.98 to 1.00). Exact pre-filtering returned identical answers; padding removed the latency
-        channel where it was tested, at five to seven times the latency.
+        chunks had appeared near it from the widening post-filter's latency (paired AUC 0.80 to 0.98, except
+        pgvector's 0.66 for an attacker reading 10\% of the background) and from BM25 and IDF scores (0.98
+        to 1.00). Exact pre-filtering returned identical answers.
 \end{itemize}
 
 We do not propose an index, and we do not defend against prompt injection in readable content. The library,

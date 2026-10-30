@@ -28,14 +28,12 @@ added; its success is the paired AUC, the share of probes whose $W_1$ observatio
 direction than their $W_0$ observation. An attacker who knows the sign of a difference gains as much below 0.5 as
 above it, so the size of a channel is $|\mathrm{AUC} - 0.5|$.
 
-The background is all 57,638 FiQA passages~\cite{maia2018www18}. Each of five seeds places eight groups of nine probes,
-with $m$ of 1,000, 100, 10 and 1, and three attackers read 1\%, 10\% and 50\% ($p$) of the background. We measure each
-store's approximate pre-filter at documented defaults (pgvector, Qdrant, Elasticsearch), with FAISS over a flat index as an
-exact control; the post-filter at the layer's defaults; keyword search; and mitigations: constant-work widening, which
-fetches the cap in one round; exact pre-filtered search; a separated index, whose A/A serves as a null; and latency padding.
-A channel is \emph{present} when the paired AUC reaches the hypothesis's threshold and its 95\% interval's lower end exceeds
-0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$. Appendix~\ref{sec:side-setup} gives the design, and
-Table~\ref{tab:side-hyp} the hypotheses.
+The background is all 57,638 FiQA passages~\cite{maia2018www18}, and three attackers read 1\%, 10\% and 50\% ($p$) of it. Over five
+seeds we measure each store's approximate pre-filter at documented defaults (pgvector, Qdrant, Elasticsearch), with FAISS as an exact
+control; the post-filter at the layer's defaults; keyword search; and mitigations: constant-work widening, which fetches the cap in
+one round; exact pre-filtered search; and latency padding. A channel is \emph{present} when the paired AUC reaches the hypothesis's
+threshold and its 95\% interval's lower end exceeds 0.55, and \emph{absent} when the interval lies within $[0.40, 0.60]$.
+Appendix~\ref{sec:side-setup} gives the design, and Table~\ref{tab:side-hyp} the hypotheses.
 
 \subsection{Results}\label{sec:side-results}
 
@@ -45,7 +43,7 @@ Table~\ref{tab:side-hyp} the hypotheses.
 {\scriptsize \sidekey{}{*}~FAISS\quad \sidekey{dashed}{square*}~pgvector\quad \sidekey{dotted}{triangle*}~Qdrant\quad \sidekey{dashdotted}{diamond*}~Elasticsearch\par}\vspace{1mm}
 \begin{tikzpicture}
 \begin{groupplot}[
-  group style={group size=3 by 2, horizontal sep=5mm, vertical sep=5mm,
+  group style={group size=3 by 2, horizontal sep=5mm, vertical sep=7mm,
     xticklabels at=edge bottom, yticklabels at=edge left, xlabels at=edge bottom, ylabels at=edge left},
   scale only axis, width=4.45cm, height=2.1cm,
   xmode=log, xmin=0.8, xmax=1250, ymin=0, ymax=1.03,
