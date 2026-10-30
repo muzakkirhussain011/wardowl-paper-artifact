@@ -84,6 +84,8 @@ def normalize(text: str) -> str:
     text = unicodedata.normalize("NFKD", text)
     text = "".join(c for c in text if not unicodedata.combining(c))
     text = re.sub(r"\\[a-zA-Z]+", " ", text)
+    text = re.sub(r"\\[^a-zA-Z0-9\s]", "", text)  # LaTeX accents, so Aum{\"u}ller reads as Aumuller
+    text = re.sub(r"[{}]", "", text)
     text = re.sub(r"[^a-zA-Z0-9]+", " ", text).lower()
     return " ".join(text.split())
 
@@ -117,7 +119,7 @@ def check_doi(entry: dict[str, str]) -> dict[str, str]:
     if status != 200:
         return {"source": "crossref", "result": f"DOI not found ({status})"}
     work = json.loads(body)["message"]
-    title = " ".join(work.get("title", []))
+    title = " ".join(work.get("title", []) + work.get("subtitle", []))
     authors = work.get("author", [])
     family = authors[0].get("family", "") if authors else ""
     return _compare("crossref", entry, title, family, str(_year(work)))
