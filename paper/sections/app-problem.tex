@@ -56,6 +56,22 @@ disagreement may be a legitimate ACL change between the calls. Zanzibar's snapsh
 SpiceDB's revision tokens prevent such mixing~\cite{pang2019zanzibar,authzed2026protecting}, and we pin
 filter and check to one revision when measuring disagreement (Section~\ref{sec:engines}).
 
+\paragraph{The trusted computing base in full.}
+The observation trusts (i)~the authorizer's check API and the authorization data it reads (A1),
+including the freshness of ACLs copied into chunk metadata; (ii)~the layer's mapping of a request to
+checks: the subject taken from a verified token (Appendix~\ref{sec:sys-identity}) and the adapter code
+that turns the subject, its groups and each chunk's identifier and attributes into the engine's check
+request; (iii)~the binding of content to identifier and metadata in the store and in ingestion (A2);
+(iv)~the decision cache, its keys, time to live and invalidation, and the engine's own staleness,
+which together set $\delta$; and (v)~the fail-closed path (A3). It does not trust the filter APIs, the
+translators, the store's filter semantics or index, the widening loop, or a reranker or redactor,
+which receive only permitted hits. The trusted part has failed before. Two faults in the layer's own
+adapters let the check itself admit, beyond any re-check: a SpiceDB adapter that checked groups as
+separate subjects and so bypassed an exclusion, and a Cedar adapter that dropped values a
+\texttt{forbid} rule needed (Table~\ref{tab:conf-faults}); the project's acceptance scenarios and
+review found them, and both were fixed before the version we evaluate. With the re-check turned off,
+the filter and its translator join the trusted computing base (Appendix~\ref{sec:sys-retrieval}).
+
 \subsection{Caches, staleness and count certificates}\label{app:certificates}
 
 \paragraph{Caches and staleness.}
