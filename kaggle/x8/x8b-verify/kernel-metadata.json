@@ -1,0 +1,15 @@
+{
+  "id": "muzakkirhussain1/wardowl-x8b-verify",
+  "title": "wardowl-x8b-verify",
+  "code_file": "x8b_verify.py",
+  "language": "python",
+  "kernel_type": "script",
+  "is_private": true,
+  "enable_gpu": false,
+  "enable_tpu": false,
+  "enable_internet": true,
+  "dataset_sources": [],
+  "kernel_sources": ["muzakkirhussain1/wardowl-x8b-control-seed7"],
+  "competition_sources": [],
+  "machine_shape": "None"
+}

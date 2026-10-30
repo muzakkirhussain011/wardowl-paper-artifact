@@ -1,0 +1,160 @@
+{
+ "passes": {
+  "faiss": 1105,
+  "M1-off": 1105,
+  "M2-off": 1105,
+  "M3-off": 1105,
+  "M1-on": 1105,
+  "M2-on": 1105,
+  "M3-on": 1105
+ },
+ "mutations": {
+  "M1": {
+   "questions": 1105,
+   "exposed_off": 1103,
+   "violations_on_questions": 1103,
+   "incomplete_on_questions": 1103,
+   "exposed_no_violation": 0,
+   "violation_not_exposed": 0,
+   "exposed_not_incomplete": 0,
+   "incomplete_not_exposed": 0,
+   "questions_where_counts_differ": 0,
+   "unreadable_off": 15317,
+   "violations_on": 15317,
+   "k5_without_k10": 0,
+   "answer_canary": 138,
+   "answer_canary_not_in_prompt": 0,
+   "prompt_canary": 805,
+   "prompt_canary_not_in_chunk": 0
+  },
+  "M2": {
+   "questions": 1105,
+   "exposed_off": 751,
+   "violations_on_questions": 751,
+   "incomplete_on_questions": 751,
+   "exposed_no_violation": 0,
+   "violation_not_exposed": 0,
+   "exposed_not_incomplete": 0,
+   "incomplete_not_exposed": 0,
+   "questions_where_counts_differ": 0,
+   "unreadable_off": 4834,
+   "violations_on": 4834,
+   "k5_without_k10": 0,
+   "answer_canary": 13,
+   "answer_canary_not_in_prompt": 0,
+   "prompt_canary": 360,
+   "prompt_canary_not_in_chunk": 0
+  },
+  "M3": {
+   "questions": 1105,
+   "exposed_off": 533,
+   "violations_on_questions": 533,
+   "incomplete_on_questions": 533,
+   "exposed_no_violation": 0,
+   "violation_not_exposed": 0,
+   "exposed_not_incomplete": 0,
+   "incomplete_not_exposed": 0,
+   "questions_where_counts_differ": 0,
+   "unreadable_off": 7642,
+   "violations_on": 7642,
+   "k5_without_k10": 0,
+   "answer_canary": 107,
+   "answer_canary_not_in_prompt": 0,
+   "prompt_canary": 503,
+   "prompt_canary_not_in_chunk": 0
+  }
+ },
+ "m3_off_where": {
+  "own tenant": 4979,
+  "shared passage": 126
+ },
+ "m3_off_by_category": {
+  "generic": {
+   "questions": 108,
+   "u5": 67,
+   "u10": 68
+  },
+  "targeted": {
+   "questions": 376,
+   "u5": 2,
+   "u10": 3
+  },
+  "forbidden": {
+   "questions": 189,
+   "u5": 189,
+   "u10": 189
+  },
+  "redteam": {
+   "questions": 432,
+   "u5": 270,
+   "u10": 273
+  }
+ },
+ "m3_off_by_type": {
+  "alice": {
+   "questions": 113,
+   "u5": 57,
+   "u10": 57
+  },
+  "bob": {
+   "questions": 113,
+   "u5": 60,
+   "u10": 60
+  },
+  "carol": {
+   "questions": 113,
+   "u5": 33,
+   "u10": 33
+  },
+  "dave": {
+   "questions": 113,
+   "u5": 58,
+   "u10": 59
+  },
+  "erin": {
+   "questions": 113,
+   "u5": 49,
+   "u10": 49
+  },
+  "frank": {
+   "questions": 113,
+   "u5": 63,
+   "u10": 65
+  },
+  "grace": {
+   "questions": 23,
+   "u5": 11,
+   "u10": 11
+  },
+  "heidi": {
+   "questions": 23,
+   "u5": 15,
+   "u10": 15
+  },
+  "mallory": {
+   "questions": 21,
+   "u5": 21,
+   "u10": 21
+  },
+  "ivan": {
+   "questions": 90,
+   "u5": 36,
+   "u10": 36
+  },
+  "judy": {
+   "questions": 90,
+   "u5": 44,
+   "u10": 46
+  },
+  "peggy": {
+   "questions": 90,
+   "u5": 45,
+   "u10": 45
+  },
+  "trent": {
+   "questions": 90,
+   "u5": 36,
+   "u10": 36
+  }
+ }
+}

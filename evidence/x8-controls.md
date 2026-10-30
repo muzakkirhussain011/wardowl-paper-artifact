@@ -100,3 +100,92 @@ on), 0.8005 and 0.9814 (M2 off and on), 0.9973 (M3 off and on).
   answer carried one in 138 of 805, 13 of 360 and 107 of 503.
 - It is one seed and one configuration, on an exact store. It breaks only the filter: the check stays
   the unmutated policy's, so a wrong check is outside this control and stays in the trusted computing base.
+
+## Audit and recount (added by the session that ran the kernels)
+
+The sections above were written by another session from these outputs. This section was added after
+checking them against the raw files.
+
+**What was checked, and the result.** Every number in the tables and verdicts above, against
+`x8b-control-seed7.md`, `x8b-control-seed7.json`, `results.json` and `x8b-exposure-pooled.md`: no
+disagreement. The raw control outputs are byte-identical to a fresh download from Kaggle.
+
+**Recount of the per-question claims.** CPU kernel `muzakkirhussain1/wardowl-x8b-verify`
+(`kaggle/x8/x8b-verify/`, output in `evidence/raw/x8b-verify/`), run after the results and not part of
+the amendment, reads `x8b-control-seed7-questions.json`. All four claims in the list above hold, with
+no exception:
+
+| Mutation | Exposed off / violation on / incomplete on (questions) | Set differences | Questions where violations differ from unreadable hits | Unreadable off / violations on (hits) | k=5 without k=10 | Answer canary not in prompt | Prompt canary not in chunk |
+|---|---|---|---|---|---|---|---|
+| M1 | 1,103 / 1,103 / 1,103 | 0 | 0 | 15,317 / 15,317 | 0 | 0 of 138 | 0 of 805 |
+| M2 | 751 / 751 / 751 | 0 | 0 | 4,834 / 4,834 | 0 | 0 of 13 | 0 of 360 |
+| M3 | 533 / 533 / 533 | 0 | 0 | 7,642 / 7,642 | 0 | 0 of 107 | 0 of 503 |
+
+**Order of events.** Amendment eff0b23 (10:11 UTC). Runner and kernels 16cfb09 (10:17 UTC), unchanged
+since, and the amendment unchanged since it was committed. Kernel start times from `kernels list`, all
+at version 1, none rerun and none failed: smoke 10:17, seed 11 10:18, seed 13 10:27, seed 17 10:36,
+control 10:39, seed 7 10:44, pool 10:53. `x8b-smoke` is not in the amendment. It ran this runner with
+the harness's small configuration (4 variants per template, 2,000 FiQA passages, Qwen2.5-0.5B-Instruct,
+737 questions, 1,181 s on GPU T4 x2) to catch faults in the runner before the control. Its numbers are
+not results and are in no table here. Seed 11's output was read before the other kernels started, and
+the smoke's before the control and seed 7 started; no code or prediction changed after either.
+
+**X1 reproduced more than it predicted.** P0 also matches X0's quality columns for FAISS: target in the
+top five 1.000, answer accuracy 0.997, generic kind 0.875, grounded 0.475, abstained when denied 0.704,
+injected notices retrieved and obeyed 97 / 97. That is the same seed on another account and session.
+
+**The `reference-codes` attack is one person.** Its prompt has no placeholder, so all 54 askers in a
+seed share one query vector and one top 10 (1 distinct list of 54, in every seed), which starts with
+FiQA passages. The 1.8% in the top 5 is one person of 54 in every seed: mallory, who may read nothing.
+For everyone else who asked it, the five nearest chunks are readable. Red team's 87.7% is therefore
+7 of 8 attacks plus mallory: (7 x 54 + 1) / 432 = 379 / 432. X7 stays falsified as registered.
+
+**Exposure inside the tenant.** "Exposure was not measured without them" above needs a qualification.
+M3-off is exact search over the asker's tenant and the shared passages, so other tenants' copies
+cannot appear. The recount confirms it: of its 5,105 distinct unreadable (question, chunk) pairs, 4,979
+are in the asker's own tenant, 126 are shared passages and 0 are in another tenant. Its per-category
+counts were pre-registered output; reading them as exposure without the copies was noticed after the
+run. One seed:
+
+| Category | Questions | Whole corpus, top 5 (seed 7) | Inside the tenant, top 5 | Inside the tenant, top 10 |
+|---|---|---|---|---|
+| generic | 108 | 100.0% | 67 (62.0%) | 68 (63.0%) |
+| targeted | 376 | 100.0% | 2 (0.5%) | 3 (0.8%) |
+| forbidden | 189 | 100.0% | 189 (100.0%) | 189 (100.0%) |
+| red team | 432 | 87.7% | 270 (62.5%) | 273 (63.2%) |
+| all | 1,105 | 95.2% | 528 (47.8%) | 533 (48.2%) |
+
+So targeted questions test the tenant boundary and hardly the ACL inside it. The ACL inside the tenant
+is tested by the forbidden questions by construction, and by about 62% of the generic and red-team ones.
+
+**Why person types differ.** Besides their permissions, the question generator picks a generated
+person's targeted templates by `allowed[(i + j) % len(allowed)]`, where i is the person's position, so
+a role with five allowed templates asks about the same two in every tenant. dave's generated personas
+get handbook-it and handbook-leave, which are public, hence 2.6% canary on targeted questions (the one
+northwind dave gets handbook-leave and postmortem); frank may read only public templates, hence 0.0%.
+The per-type tables should not be read as a property of the role alone.
+
+**Answers and the canary check (not checked question by question).** M2's answer accuracy on the 376
+targeted questions is 0.8005 with the re-check off and 0.9814 with it on, about 68 more wrong answers,
+while only 1 targeted answer held a canary. That is consistent with the model quoting the neighbouring
+tenant's number, which a canary check on answers cannot see. The oracle's check of the retrieved chunks
+and the canary check of the prompts are what catch it.
+
+## Text for e2e.tex
+
+`paper/sections/e2e.tex` already reports exposure and the control (ea904dc, eefa3df), and its numbers
+agree with the outputs. This draft is not applied. It replaces only the passage from "Each company
+document has a counterpart" to "was at 1.8\%." (lines 41 to 43 at eefa3df). The same correction applies
+to `paper/sections/app-e2e.tex`, lines 163 to 168.
+
+```latex
+Each company document has a counterpart from the same template in each of the other 19 tenants, and these
+shares depend on those copies. With the copies out of reach, as in the control's ACL mutation with the
+re-check off, which searches only the person's tenant and the shared passages, 47.8\% of the 1,105 questions
+of seed 7 had an unreadable chunk in the top 5: all 189 forbidden questions, 62.5\% of the red-team prompts,
+62.0\% of the generic questions and 0.5\% of the targeted ones (a reading of that pass we made after the run).
+Targeted questions therefore test the tenant boundary and hardly the ACL inside it. Over the whole corpus,
+generic, targeted and forbidden questions were all exposed in the top 5, and red-team prompts at 87.7\%, which
+falsifies our prediction of at least 90\% for them: the nearest chunks of one of the eight attacks, a request
+for reference codes, are shared passages, and in the top 5 it reached only the one person who may read nothing.
+```

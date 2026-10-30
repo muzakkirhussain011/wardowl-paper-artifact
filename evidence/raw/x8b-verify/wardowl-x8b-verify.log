@@ -1,0 +1,44 @@
+[{"stream_name":"stdout","time":1.37455268,"data":"/kaggle/input/notebooks/muzakkirhussain1/wardowl-x8b-control-seed7/x8b-control-seed7-questions.json\n"}
+,{"stream_name":"stdout","time":1.6411638640000001,"data":"# X8b recount of the control's per-question claims, seed 7\n"}
+,{"stream_name":"stdout","time":1.6411957579999998,"data":"\n"}
+,{"stream_name":"stdout","time":1.6412018609999999,"data":"| Mutation | Questions | Exposed off | Violations on | Incomplete on | Exposed, no violation | Violation, not exposed | Exposed, not incomplete | Incomplete, not exposed | Questions where counts differ | Unreadable off | Violations on | k=5 without k=10 | Answer canary | Answer canary not in prompt | Prompt canary | Prompt canary not in chunk |\n"}
+,{"stream_name":"stdout","time":1.641216021,"data":"|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1.641219183,"data":"| M1 | 1105 | 1103 | 1103 | 1103 | 0 | 0 | 0 | 0 | 0 | 15317 | 15317 | 0 | 138 | 0 | 805 | 0 |\n"}
+,{"stream_name":"stdout","time":1.641222356,"data":"| M2 | 1105 | 751 | 751 | 751 | 0 | 0 | 0 | 0 | 0 | 4834 | 4834 | 0 | 13 | 0 | 360 | 0 |\n"}
+,{"stream_name":"stdout","time":1.641225173,"data":"| M3 | 1105 | 533 | 533 | 533 | 0 | 0 | 0 | 0 | 0 | 7642 | 7642 | 0 | 107 | 0 | 503 | 0 |\n"}
+,{"stream_name":"stdout","time":1.641228145,"data":"\n"}
+,{"stream_name":"stdout","time":1.641230821,"data":"## M3-off: distinct (question, chunk) unreadable pairs by where the chunk lies\n"}
+,{"stream_name":"stdout","time":1.641233552,"data":"\n"}
+,{"stream_name":"stdout","time":1.641236119,"data":"- own tenant: 4979\n"}
+,{"stream_name":"stdout","time":1.6412388390000001,"data":"- shared passage: 126\n"}
+,{"stream_name":"stdout","time":1.641241499,"data":"- other tenant: 0\n"}
+,{"stream_name":"stdout","time":1.641244088,"data":"\n"}
+,{"stream_name":"stdout","time":1.641246616,"data":"## M3-off: questions with an unreadable hit\n"}
+,{"stream_name":"stdout","time":1.641249582,"data":"\n"}
+,{"stream_name":"stdout","time":1.641252101,"data":"| Group | Questions | k=5 | k=10 |\n"}
+,{"stream_name":"stdout","time":1.641254743,"data":"|---|---|---|---|\n"}
+,{"stream_name":"stdout","time":1.6412573190000002,"data":"| generic | 108 | 67 | 68 |\n"}
+,{"stream_name":"stdout","time":1.6412600080000002,"data":"| targeted | 376 | 2 | 3 |\n"}
+,{"stream_name":"stdout","time":1.641262681,"data":"| forbidden | 189 | 189 | 189 |\n"}
+,{"stream_name":"stdout","time":1.6412722290000001,"data":"| redteam | 432 | 270 | 273 |\n"}
+,{"stream_name":"stdout","time":1.641274973,"data":"| alice | 113 | 57 | 57 |\n"}
+,{"stream_name":"stdout","time":1.64127757,"data":"| bob | 113 | 60 | 60 |\n"}
+,{"stream_name":"stdout","time":1.641280251,"data":"| carol | 113 | 33 | 33 |\n"}
+,{"stream_name":"stdout","time":1.641283082,"data":"| dave | 113 | 58 | 59 |\n"}
+,{"stream_name":"stdout","time":1.641285689,"data":"| erin | 113 | 49 | 49 |\n"}
+,{"stream_name":"stdout","time":1.641288266,"data":"| frank | 113 | 63 | 65 |\n"}
+,{"stream_name":"stdout","time":1.6412909199999999,"data":"| grace | 23 | 11 | 11 |\n"}
+,{"stream_name":"stdout","time":1.641293642,"data":"| heidi | 23 | 15 | 15 |\n"}
+,{"stream_name":"stdout","time":1.641296193,"data":"| ivan | 90 | 36 | 36 |\n"}
+,{"stream_name":"stdout","time":1.641298778,"data":"| judy | 90 | 44 | 46 |\n"}
+,{"stream_name":"stdout","time":1.641301344,"data":"| mallory | 21 | 21 | 21 |\n"}
+,{"stream_name":"stdout","time":1.641304022,"data":"| peggy | 90 | 45 | 45 |\n"}
+,{"stream_name":"stdout","time":1.641306806,"data":"| trent | 90 | 36 | 36 |\n"}
+,{"stream_name":"stdout","time":1.6413094510000001,"data":"\n"}
+,{"stream_name":"stderr","time":4.878873077,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4.878909525,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":5.441309211,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":5.441343932,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":7.784488906,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":9.277809538,"data":"[NbConvertApp] Writing 300044 bytes to __results__.html\n"}
+]
