@@ -127,7 +127,7 @@ widely shared content apart, before reaching for search-time effort.
 \subsection{pgvector: a plan cache, then a scan budget}\label{sec:qual-pgvector}
 
 pgvector 0.8 scans the HNSW graph in order of distance and applies the filter to each row; with iterative scans it continues until
-enough rows pass or a limit is reached~\cite{pgvector2026pgvector}, either \texttt{hnsw.max\_scan\_tuples} (20,000 by default) or a
+enough rows pass or it reaches a limit~\cite{pgvector2026pgvector}: \texttt{hnsw.max\_scan\_tuples} (20,000 by default) or a
 memory bound. We hypothesized that the limit caused the empty answers. A decision taken before the scan matters more: whether PostgreSQL
 runs the HNSW scan at all.
 

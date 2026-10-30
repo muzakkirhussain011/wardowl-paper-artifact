@@ -34,11 +34,24 @@ jobs:
           out=$(mktemp -d)
           python bib/refcheck.py "$RUNNER_TEMP/main.aux" bib/references.bib bib/web.bib "$out/report.md" "$out/report.tsv"
           echo "out=$out" >> "$GITHUB_ENV"
+      - name: Read the first page of the PDFs a machine check cannot read
+        run: |
+          set +e
+          sudo apt-get install -y -q poppler-utils > /dev/null
+          read_pdf() {
+            curl -sL -A "Mozilla/5.0" -o "$RUNNER_TEMP/$1.pdf" -w "$1: HTTP %{http_code}, %{content_type}, %{size_download} bytes, $2\n" "$2" >> "$out/pdfs.txt"
+            pdftotext -f 1 -l 1 -layout "$RUNNER_TEMP/$1.pdf" - 2>/dev/null | head -45 > "$out/$1.txt"
+          }
+          read_pdf wang2007-purdue https://www.cs.purdue.edu/homes/ninghui/papers/fgdb_vldb07.pdf
+          read_pdf wang2007-vldb https://www.vldb.org/conf/2007/papers/research/p555-wang.pdf
+          read_pdf mckeeman1998-hp https://www.hpl.hp.com/hpjournal/dtj/vol10num1/vol10num1art9.pdf
+          read_pdf mckeeman1998-swarthmore https://www.cs.swarthmore.edu/~bylvisa1/cs97/f13/Papers/DifferentialTestingForSoftware.pdf
       - name: Publish the report
         env:
           TOKEN: ${{ github.token }}
         run: |
           cd "$out"
+          # Reading only: nothing below changes what was checked.
           git init -q
           git checkout -q -b results/refcheck
           git add -A

@@ -29,9 +29,21 @@ jobs:
             git fetch -q --depth 1 "$wardowl" "refs/heads/results/$branch:refs/evidence/$branch"
           done
           git fetch -q "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
-            refs/heads/results/reproducers:refs/evidence/reproducers
+            refs/heads/results/reproducers:refs/evidence/reproducers \
+            refs/heads/results/cerbos-extra:refs/evidence/cerbos-extra
+          # The experiments' code, so that the archive holds it as well as the public branches do.
+          for branch in conformance-campaign x1-underretrieval x2-x5 x3-x6 x4-x7; do
+            git fetch -q --depth 1 "$wardowl" "refs/heads/paper/$branch:refs/evidence/paper-$branch"
+          done
+          git fetch -q --depth 1 "$wardowl" refs/heads/main:refs/evidence/wardowl-main
           export GIT_INDEX_FILE="$RUNNER_TEMP/index"
           git read-tree HEAD
+          for branch in conformance-campaign x1-underretrieval x2-x5 x3-x6 x4-x7; do
+            git read-tree --prefix="harness/$branch/benchmarks-paper/" "refs/evidence/paper-$branch:benchmarks/paper"
+            git read-tree --prefix="harness/$branch/workflows/" "refs/evidence/paper-$branch:.github/workflows"
+          done
+          git read-tree --prefix=harness/wardowl-main/acceptance-kaggle/ refs/evidence/wardowl-main:acceptance/kaggle
+          git read-tree --prefix=evidence/raw/results-cerbos-extra/ refs/evidence/cerbos-extra
           git read-tree --prefix=evidence/raw/ci-artifacts/ refs/evidence/archive
           git read-tree --prefix=evidence/raw/results-x2-x5/ refs/evidence/x2-x5
           git read-tree --prefix=evidence/raw/results-x3-x6/ refs/evidence/x3-x6

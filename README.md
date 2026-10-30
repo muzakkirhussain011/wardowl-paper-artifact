@@ -6,8 +6,9 @@ RAG across Vector Stores and Authorization Engines" by Syed Muzakkir Hussain.
 The paper tests one enforcement layer, [wardowl](https://github.com/muzakkirhussain011/wardowl), across 13
 vector stores and seven authorization engines. The author develops that library. Appendix A of the paper maps
 every experiment to its versions and runs, and Appendix B lists every hypothesis with its registration and
-verdict. The evaluation code lives in the wardowl repository, under `benchmarks/paper/`; this repository holds
-what was registered, what came out and the text.
+verdict. The evaluation code lives in the wardowl repository, on its branches `paper/*` under `benchmarks/paper/`
+and on `main` under `acceptance/kaggle/`; the tag `evidence-v1` copies it to `harness/`. This repository holds what
+was registered, what came out and the text.
 
 | Path | What it holds |
 |---|---|
