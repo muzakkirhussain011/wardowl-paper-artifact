@@ -139,10 +139,11 @@ is a policy-authoring pitfall, not a fault of Cerbos or the layer, and the layer
 records it. \emph{Redis and MongoDB missed matching chunks} in 26 and 19 runs with long and huge
 string values, always passing the sound-only retry. Both stores truncate a long term when they index
 it and look up the whole term when they search: RediSearch keeps at most 4,096 bytes of a tag value,
-which the layer's hex encoding reaches at 2,048 bytes of field and value, and the Atlas Search index
-keeps 8,181 characters. A value equal to the kept prefix of a longer one would also match it, a false
-admit that the re-check catches. The Redis limit is not in its documentation; MongoDB documents it for
-one index field type but not for the vector-search filter type the layer uses.
+which the layer's hex encoding reaches at 2,048 bytes of field and value, and the vector-search
+index's filter fields keep 8,191 characters (a reproducer without the layer measured the cut; the
+campaign's diagnosis had assumed the 8,181 that MongoDB documents for another field type). A value
+equal to the kept prefix of a longer one would also match it, a false admit that the re-check
+catches. Neither limit is in the documentation of the field type the layer uses.
 
 Of the errors, 479 came from OpenFGA and SpiceDB, which refused whole batches with HTTP~400. OpenFGA
 accepts at most 100 contextual tuples per request, and one generated subject in five is in more than
@@ -248,9 +249,9 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag Kit & \confrag Recall; Leak
  & \confrag Store and search a term over the limit as its SHA-256 digest (PR~\#167)
  & \confrag Report drafted, not filed \tabularnewline
-\confrag MongoDB Atlas 8.0
- & \confrag Strings are cut at 8,181 characters when indexed, documented for one index field type
-   only: the same effects as for Redis
+\confrag MongoDB Atlas 8.0, 8.3
+ & \confrag Strings in vector-search filter fields are cut at 8,191 characters when indexed,
+   undocumented (8,181 is documented for another field type): the same effects as for Redis
  & \confrag Kit & \confrag Recall; Leak
  & \confrag As for Redis (PR~\#167)
  & \confrag Report drafted, not filed \tabularnewline

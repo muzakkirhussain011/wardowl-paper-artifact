@@ -20,9 +20,13 @@ Every measurement passes through one enforcement layer, which the authors wrote,
 filter translators could be mistaken for a store fault. The conformance kit compares every answer
 with an in-memory reference that shares no code with the translators, and the retrieval audit uses
 each store's own exact search as a second baseline. Of the faults we attribute to a store or engine,
-those found by our experiments come with a reproducer that uses only the vendor's own client
-\tbd{results of running them}; the others rest on the vendors' documentation, which
-Table~\ref{tab:conf-faults} cites.
+those found by our experiments come with a reproducer that uses only the vendor's own client, and
+each showed the reported behavior when run on GitHub-hosted runners on 30 October 2026 against the
+version we evaluated and the vendor's latest release (Redis 8.10.2 and 8.10.3, MongoDB Atlas Local
+8.0.30 and 8.3.13, Cerbos 0.56.0 and 0.57.0, and Chroma 1.5.9, still its latest). Running them
+corrected one figure: MongoDB's vector-search filter fields keep 8,191 characters, not the 8,181 we
+had taken from its documentation of another field type. The other rows rest on the vendors'
+documentation, which Table~\ref{tab:conf-faults} cites.
 
 \paragraph{Versions, settings and hardware.}
 Results hold for the versions and settings we state (for example pgvector 0.8.7 and Qdrant 1.19.2)
