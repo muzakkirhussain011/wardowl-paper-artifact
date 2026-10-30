@@ -110,7 +110,7 @@ leak in 4,420 questions, the one-sided 95\% upper bound is $1 - 0.05^{1/4420} \a
 10^{-4}$ per question (Section~\ref{sec:prob-metrics}). Per person the bound stays at a single run's
 $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$: the same personas recur in every run with the same
 permissions, so a fault tied to a permission shape would recur too, and counting person-runs would
-overstate the evidence. Pooling the ten configurations would not shrink these bounds honestly, since
+overstate the evidence. Pooling the configurations would not shrink these bounds honestly, since
 they share questions and the layer's code. The violation count is zero because the filter and the
 check read the same ACL metadata here; Sections~\ref{sec:conformance} and~\ref{sec:engines} test
 configurations in which they do not.
