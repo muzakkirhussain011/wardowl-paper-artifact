@@ -39,8 +39,12 @@ and before running, measures both on FAISS: exposure, the share of questions who
 read, and a mutation positive control, which breaks the pushed-down filter in three ways (it admits everything, also admits the neighboring
 tenant, or drops the ACL clause) with the re-check off and on. Over the four seeds, 95.2\% of the 4,420 questions had an unreadable chunk in the
 unfiltered top 5, 99.8\% in the top 10, and 72.9\% had one carrying a canary in the top 5. Each company document has a counterpart from the same
-template in each of the other 19 tenants, and we did not measure exposure without those copies. Generic, targeted and forbidden questions were all exposed in the
-top 5, and red-team prompts at 87.7\%, which falsifies our prediction of at least 90\% for them, because one of the eight attacks was at 1.8\%.
+template in each of the other 19 tenants, and these shares depend on those copies: on seed 7, 95.2\% of the 1,105 questions were exposed in the top 5 over the
+whole corpus and 47.8\% with the other tenants out of reach, in the control's ACL mutation with the re-check off, which searches only the person's tenant and the
+shared passages (a reading of that pass we made after the run). There the shares were 100\% for forbidden questions, 62.5\% for red-team prompts, 62.0\% for generic
+questions and 0.5\% for targeted ones, so targeted questions test the tenant boundary and hardly the ACL inside it. Over the whole corpus, generic, targeted and
+forbidden questions were all exposed in the top 5, and red-team prompts at 87.7\%, which falsifies our prediction of at least 90\% for them: the nearest chunks of one
+of the eight attacks, a request for reference codes, are shared passages, and in the top 5 it reached only the one person who may read nothing.
 The control ran on seed 7, and its predictions held (Appendix~\ref{app:e2e-control}). The unmutated pass reproduced the first run's FAISS row. With the
 re-check off, the three mutations put an unreadable hit in the top 10 for 1,103, 751 and 533 of the 1,105 questions and a canary into 805, 360 and 503
 prompts, and all four of the harness's leak checks failed. With the re-check on, under the same filters, no unreadable hit came back and no canary was

@@ -42,7 +42,8 @@ consider a query whose neighbours are the shared passages.
 
 The shares are the same to one decimal in every seed; the seed changes the document text and the
 sample but not the templates or personas. Each company document has a counterpart from the same
-template and pool entry in each of the other 19 tenants, and exposure was not measured without them.
+template and pool entry in each of the other 19 tenants. "Exposure inside the tenant" below gives the
+shares without them, for seed 7.
 The per-person-type and per-attack tables are in `evidence/raw/x8b-pool/x8b-exposure-pooled.md`.
 
 ## Mutation control, seed 7
@@ -68,7 +69,8 @@ Per question, over the 1,105 main retrievals (k = 5 and k = 10):
 | M2 | on | 0 | 0 | 0 | 0 | 0 | 751 | 4,834 | 751 | 0.703 |
 | M3 | on | 0 | 0 | 0 | 0 | 0 | 533 | 7,642 | 533 | 0.548 |
 
-Checked question by question on `x8b-control-seed7-questions.json` (not only as totals):
+Checked question by question on `x8b-control-seed7-questions.json` (not only as totals), first with an awk
+script on a local copy of that file, then by the recount kernel described under "Audit and recount":
 
 - For each mutation, the questions with an unreadable hit in the off pass are exactly the questions
   with a violation in the on pass, and exactly the questions marked incomplete in the on pass.
@@ -140,7 +142,7 @@ FiQA passages. The 1.8% in the top 5 is one person of 54 in every seed: mallory,
 For everyone else who asked it, the five nearest chunks are readable. Red team's 87.7% is therefore
 7 of 8 attacks plus mallory: (7 x 54 + 1) / 432 = 379 / 432. X7 stays falsified as registered.
 
-**Exposure inside the tenant.** "Exposure was not measured without them" above needs a qualification.
+**Exposure inside the tenant.**
 M3-off is exact search over the asker's tenant and the shared passages, so other tenants' copies
 cannot appear. The recount confirms it: of its 5,105 distinct unreadable (question, chunk) pairs, 4,979
 are in the asker's own tenant, 126 are shared passages and 0 are in another tenant. Its per-category
@@ -174,7 +176,7 @@ and the canary check of the prompts are what catch it.
 ## Text for e2e.tex
 
 `paper/sections/e2e.tex` already reports exposure and the control (ea904dc, eefa3df), and its numbers
-agree with the outputs. This draft is not applied. It replaces only the passage from "Each company
+agree with the outputs. This draft was applied on 2026-10-30, with the whole-corpus share of seed 7 added. It replaced only the passage from "Each company
 document has a counterpart" to "was at 1.8\%." (lines 41 to 43 at eefa3df). The same correction applies
 to `paper/sections/app-e2e.tex`, lines 163 to 168.
 

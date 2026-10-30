@@ -161,10 +161,15 @@ mask, and counted the chunks the asking person may not read by the oracle, and t
 canary of a document that person may not read (Table~\ref{tab:e2e-exposure}). The shares are the same to one decimal in every seed;
 the seed changes document text and the sample of questions but not the templates or personas. Each
 company document has a counterpart from the same template and pool entry in each of the other 19
-tenants, and we did not measure exposure on a corpus without such copies. Of the seven predictions, one failed in part: targeted questions
+tenants, and these shares depend on those copies. The control's ACL mutation below, with the re-check off, is exact search over the
+person's tenant and the shared passages: of its 5,105 distinct unreadable (question, chunk) pairs, 4,979 are in the person's own tenant, 126 are shared passages and none is in
+another tenant. We noticed only after the run that this pass measures exposure inside the tenant. On seed 7, in the top 5, it is 100\% for the 189 forbidden questions,
+62.5\% for red-team prompts, 62.0\% for generic questions, 0.5\% for targeted ones and 47.8\% overall, against 95.2\% over the whole corpus, so targeted questions test the
+tenant boundary and hardly the ACL inside it. Of the seven predictions, one failed in part: targeted questions
 cleared the predicted 90\% in the top 5 in every seed, and red-team prompts did not, at 87.7\% in
-every seed. One attack, a request for reference codes, was exposed for 1.8\% of its questions in the top 5 and 96.3\% in the
-top 10, since its nearest chunks are almost all readable; the other seven attacks were at 100\%. We had
+every seed. One attack, a request for reference codes, has no placeholder, so all its askers in a seed share one query, whose nearest chunks
+are shared passages: in the top 5 it exposed only the one person who may read nothing (1.8\% of its questions), and in the top 10 it exposed 96.3\%; the other seven attacks
+were at 100\%. We had
 reasoned from the counterpart documents and had not considered such a query.
 
 \begin{table}[tbp]
@@ -205,7 +210,7 @@ M1 with the re-check off returned the same ten chunk ids as the unfiltered exact
 control to the exposure measurement. Each pass with the re-check off failed exactly the harness's four leak checks (every hit readable, and no canary in a
 chunk, a prompt or an answer). Each pass with it on failed two others: the re-check found violations, and people who may read something got
 empty results (887, 38 and 449 retrievals).
-We compared the passes question by question, not only in total. For each mutation, the questions with an unreadable hit
+We compared the passes question by question, not only in total, and a separate kernel recounted the comparison with no exception. For each mutation, the questions with an unreadable hit
 with the re-check off are exactly those with a violation with it on and exactly those marked incomplete, and on
 each question the number of violations equals the number of unreadable hits. Every canary in an answer was also in that question's
 prompt, as the design of the canaries requires (Appendix~\ref{sec:e2e-setup}).
