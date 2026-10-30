@@ -26,6 +26,14 @@ jobs:
         with:
           root_file: main.tex
           working_directory: paper
+      - name: Report LaTeX warnings, fail on undefined references
+        run: |
+          grep -nE "LaTeX Warning|Package .* Warning|Overfull|Float too large|Missing character" paper/main.log | head -150 || true
+          grep -E "Output written on" paper/main.log || true
+          if grep -qE "There were undefined (references|citations)|(Citation|Reference) .* undefined" paper/main.log; then
+            echo "::error::undefined references or citations in main.log"
+            exit 1
+          fi
       - uses: actions/upload-artifact@v4
         with:
           name: paper-pdf
