@@ -7,9 +7,11 @@
 # index creation is retried while mongot (the search process) is still starting; that changes
 # nothing in what is created. Part 2 (added 2026-10-30, not in the draft) measures the limit: one
 # document per length, each searched by its whole value, in a second collection with its own index.
+# Part 3 (added after the first run) narrows the limit to the character, asks whether a prefix of a
+# long value finds it, and tells bytes from characters, in a third collection.
 #
 # Needs a MongoDB Atlas Local deployment (mongod and mongot) whose test database has no collections
-# c and d. MONGOSH says how to call mongosh (default: mongosh); MONGODB_URI where to connect. The
+# c, d and e. MONGOSH says how to call mongosh (default: mongosh); MONGODB_URI where to connect. The
 # script exits 0 when every step ran, whatever the searches answered; the RESULT lines say what
 # they answered.
 set -u
@@ -104,6 +106,44 @@ for (let i = 0; i < docs.length; i++) {
                        filter: { t: { $in: [value] } } } },
     { $project: { _id: 1 } },
   ]).toArray());
+}
+
+// ---- part 3 (added after run 41007436602, where 8,182 characters were found and 8,192 were not,
+// and part 1's 9,000-character document was not found by its first 8,181 characters).
+// 3a: whole-value search at every length from 8,182 to 8,192 (one letter each, from l).
+// 3b: part 1's 9,000-character document searched by its first k characters, k = 8,182 to 8,192:
+//     if the index keeps a prefix of a long value, one k finds it.
+// 3c: two-byte characters (U+00E8 to U+00EB, one each): whole-value search at 4,090, 4,095, 4,096
+//     and 4,100 characters, which are 8,180, 8,190, 8,192 and 8,200 bytes in UTF-8, to tell a limit
+//     in bytes from one in characters.
+const fine = [];
+for (let k = 8182; k <= 8192; k++) fine.push(k);
+const docs3 = fine.map((k, i) => ({ _id: `ascii${k}`, v: [0.1, 0.2], t: [String.fromCharCode(108 + i).repeat(k)] }));
+const wide = [4090, 4095, 4096, 4100];
+for (let i = 0; i < wide.length; i++) {
+  docs3.push({ _id: `utf8x2_${wide[i]}`, v: [0.1, 0.2], t: [String.fromCharCode(0xe8 + i).repeat(wide[i])] });
+}
+db.e.insertMany(docs3);
+retry("createSearchIndex ve", () => db.e.createSearchIndex("ve", "vectorSearch", {
+  fields: [
+    { type: "vector", path: "v", numDimensions: 2, similarity: "cosine" },
+    { type: "filter", path: "t" },
+  ],
+}));
+waitQueryable(db.e, "ve");
+const inE = (value) => db.e.aggregate([
+  { $vectorSearch: { index: "ve", path: "v", queryVector: [0.1, 0.2], exact: true, limit: 20,
+                     filter: { t: { $in: [value] } } } },
+  { $project: { _id: 1 } },
+]).toArray();
+for (let i = 0; i < docs3.length; i++) {
+  const value = docs3[i].t[0];
+  ids(`part 3, ${docs3[i]._id} (${value.length} characters, ${Buffer.byteLength(value, "utf8")} UTF-8 bytes) searched whole`,
+      () => inE(value));
+}
+for (let i = 0; i < fine.length; i++) {
+  ids(`part 3, part 1's collection searched with the first ${fine[i]} characters of the 9,000-character value`,
+      () => find("a".repeat(fine[i])));
 }
 print("done");
 EOF

@@ -7,7 +7,9 @@ boolean keys) in a fresh child process with Python's fault handler on, because a
 process; the parent reports how the child ended. The draft's sizes come first: 1,001 and 15,500,
 which the draft expects to be refused with the depth error, and 16,500 and 40,000, which it expects
 to crash. Then, if some size crashed and a smaller one did not, the parent bisects between the
-largest size that did not crash and the smallest that did, to 100 clauses.
+largest size that did not crash and the smallest that did, to 100 clauses. One fix to the draft's
+code: the draft named the collection "t", which chromadb 1.5.9 refuses (names need 3 to 512
+characters), so it is "repro" here.
 
     python chroma_crash.py            # the parent: every size, then the bisection
     python chroma_crash.py child N    # one child: the draft's code with N clauses
@@ -31,7 +33,7 @@ RESOLUTION = 100
 def child(n: int) -> None:
     import chromadb
 
-    c = chromadb.EphemeralClient().create_collection("t", embedding_function=None)
+    c = chromadb.EphemeralClient().create_collection("repro", embedding_function=None)
     c.add(ids=["a"], embeddings=[[1.0, 0.0, 0.0]], metadatas=[{"k0": True}])
     where = {"$or": [{f"k{i}": {"$eq": True}} for i in range(n)]}
     print(f"CHILD querying with {n} clauses, where-document {len(json.dumps(where))} characters", flush=True)

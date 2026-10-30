@@ -1,8 +1,10 @@
 """Reproducer of the first report in disclosure/chroma.md: a `$or` of about 1,000 operands fails with
 "Expression tree is too large (maximum depth 1000)". chromadb only; no wardowl.
 
-The draft's code, with a label on each printed line and the versions printed first. Exits 0 when
-both queries ran (whether they answered or raised); the RESULT lines say which.
+The draft's code, with a label on each printed line and the versions printed first, and one fix:
+the draft named the collection "t", which chromadb 1.5.9 refuses (names need 3 to 512 characters),
+so it is "repro" here. Exits 0 when both queries ran (whether they answered or raised); the RESULT
+lines say which.
 """
 
 import platform
@@ -11,7 +13,7 @@ import chromadb
 
 print(f"chromadb {chromadb.__version__}, Python {platform.python_version()}, {platform.platform()}")
 
-c = chromadb.EphemeralClient().create_collection("t", embedding_function=None)
+c = chromadb.EphemeralClient().create_collection("repro", embedding_function=None)
 c.add(ids=["a"], embeddings=[[0.1, 0.2]], metadatas=[{"g": 1, "g::i:1": True}])
 
 flat = {"$or": [{"g": {"$eq": i}} for i in range(1001)]}
