@@ -5,6 +5,8 @@
 
 ## What happened?
 
+Thanks for Chroma. I ran into a limit on the number of operands in a filter that I could not find in the docs, and I wanted to pass it on. Please correct me if I have misread anything.
+
 A `where` whose top level is `$or` over 1,001 simple conditions, or over 1,000 clauses that are each a `$or` of two simple conditions, raises `InternalError` (see the log output). The flat document is one level deep and the nested one two, so the depth SQLite refuses grows with the number of operands, not with the nesting of the `where` document.
 
 In `rust/segment/src/sqlite_metadata.rs` (tag 1.5.9), `CompositeExpression::eval` starts from a bound `false` (or `true` for `$and`) and folds in each child with `Expr::expr(expr).or(child.eval())`, so a flat `$or` of n clauses becomes a left-deep chain of binary ORs n levels deep. The filter docs state no limit on the number of operands.
@@ -28,11 +30,13 @@ for where in (flat, nested):
 
 Expected: `[['a']]` for both, or a documented limit on the number of operands.
 
-Impact: a permission filter for a user in many groups, with one clause per group, fails whole. It fails closed, so this is an availability limit, not a wrong answer.
+Where I met it: a permission filter for a user in many groups, with one clause per group, is refused as a whole. It fails safely, with a clear error, so this is an availability limit and not a wrong answer.
 
-Suggested resolution: build n-ary `$and` and `$or` as one node rather than a chain, or document the limit in operands.
+If it helps, one option would be to build n-ary `$and` and `$or` as one node rather than a chain, or to document the limit in operands. You know this code far better than I do, so please take that only as a suggestion.
 
-This came up in differential testing for a research paper on permission-aware retrieval, which will describe the behaviour and cite this issue.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+
+I used an AI coding agent to help with the testing and this write-up. The code and output here come from real runs, and I will follow this issue and answer any questions.
 
 ## Versions
 

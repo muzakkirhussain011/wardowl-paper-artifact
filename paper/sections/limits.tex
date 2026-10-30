@@ -21,9 +21,11 @@ this paper refer to, and this evaluation found faults in that code as well as in
 controlled. None of our findings is a chunk returned through the layer outside the readable set at the checked revision. They can still matter for
 deployments that trust a pushed-down filter without a re-check, and Chroma's crash lets any user in enough groups stop an application that passes
 their groups to Chroma (Appendix~\ref{app:ethics}). For the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
-translator meets we prepared reports with minimal reproducers that do not need our library;
+translator meets we wrote reports with minimal reproducers that do not need our library, and on 2026-10-30 sent those for Redis
+(\url{https://github.com/RediSearch/RediSearch/issues/12106}), Chroma (\url{https://github.com/chroma-core/chroma/issues/7969},
+\url{https://github.com/chroma-core/chroma/issues/7970}) and MongoDB (as documentation feedback, which has no public link);
 Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report's status. SpiceDB's staleness beyond its documented bound, OPA's residual negation and pgvector's plan
-choice have no report. \tbd{filing dates, links and vendor responses, once the reports are filed}
+choice have no report. \tbd{Cerbos issue link; any vendor responses before posting}
 
 \paragraph{Use of AI assistance.}\label{sec:limits-ai}
 An AI coding agent produced most of the artifacts of this work under the author's direction: the library's code, the conformance kit and its

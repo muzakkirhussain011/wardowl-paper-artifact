@@ -8,7 +8,7 @@
 
 ## Current Behavior
 
-This is a documentation suggestion, not a bug: Cerbos behaves as CEL and its documentation say.
+Thanks for Cerbos. This is a documentation suggestion, not a bug: Cerbos behaves as CEL and its documentation say. The fault I met was in my own translator, which I have since fixed.
 
 With a rule condition `request.principal.id in request.resource.attr.allowed_users`:
 
@@ -19,7 +19,7 @@ The operators table describes `in` as "Membership in lists or maps" and `hasInte
 
 ## Expected Behavior
 
-One sentence on the [conditions page](https://docs.cerbos.dev/cerbos/latest/policies/conditions) that `in`, `hasIntersection` and the list functions make the condition unsatisfied when the attribute is not a list (and that `in` on a map tests its keys), and one on the query plan page that plan operators keep CEL's types, so adapters must not translate `in` to an operator that also matches a scalar.
+Perhaps one sentence on the [conditions page](https://docs.cerbos.dev/cerbos/latest/policies/conditions) that `in`, `hasIntersection` and the list functions make the condition unsatisfied when the attribute is not a list (and that `in` on a map tests its keys), and one on the query plan page that plan operators keep CEL's types, so adapters must not translate `in` to an operator that also matches a scalar.
 
 ## Steps To Reproduce
 
@@ -58,6 +58,8 @@ curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read",
 
 ## Anything else?
 
-Found by wardowl's conformance kit, as a disagreement between filter and check on chunks whose ACL fields hold a string instead of a list. wardowl documents the same limit for its own plan translation; this note is about Cerbos's documentation only. A research paper on permission-aware retrieval will mention this behaviour and cite this issue.
+Found by wardowl's conformance kit, as a disagreement between filter and check on chunks whose ACL fields hold a string instead of a list. wardowl now restricts its translator and documents the same limit; this note is about Cerbos's documentation only, and you know your docs far better than I do, so please take it only as a suggestion.
+
+A research paper on permission-aware retrieval mentions this behavior, as a gap in my adapter and not as a fault of Cerbos. If anything here is wrong, or if you would like the paper to describe it differently, please tell me and I will update it.
 
 AI disclosure: this report and its reproducer were drafted with an AI coding agent (Claude Code), and the reproducer's output above comes from running it in CI on both versions.

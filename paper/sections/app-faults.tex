@@ -107,13 +107,13 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
    match, and a value equal to the kept prefix matches the longer one
  & \confrag Kit & \confrag Recall; Leak
  & \confrag Store and search a term over the limit as its SHA-256 digest (PR~\#167)
- & \confrag Report drafted, not filed \tabularnewline
+ & \confrag Reported 2026-10-30 (RediSearch issue \#12106) \tabularnewline
 \confrag MongoDB Atlas 8.0, 8.3
  & \confrag Strings in vector-search filter fields are cut at 8,191 characters when indexed,
    undocumented (8,181 is documented for another field type): the same effects as for Redis
  & \confrag Kit & \confrag Recall; Leak
  & \confrag As for Redis (PR~\#167)
- & \confrag Report drafted, not filed \tabularnewline
+ & \confrag Documentation feedback sent 2026-10-30 \tabularnewline
 \confrag Elasticsearch, OpenSearch, Milvus, Qdrant
  & \confrag Size and syntax limits refuse a write or query: 32,766-byte terms; array-element and JSON
    sizes; field-name grammar
@@ -127,7 +127,7 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag Kit; \S\ref{sec:qual-size} & \confrag Avail.; Crash
  & \confrag Nest \texttt{\$and} and \texttt{\$or} 16 to a node; past four size bounds, filter 1,000
    candidates itself (PR~\#187)
- & \confrag Report drafted, not filed \tabularnewline
+ & \confrag Reported 2026-10-30 (Chroma issues \#7969, \#7970) \tabularnewline
 \confrag Qdrant
  & \confrag \texttt{.}, \texttt{[}, \texttt{]} and \texttt{"} in a field name are path syntax:
    \texttt{team.name} reaches a nested object

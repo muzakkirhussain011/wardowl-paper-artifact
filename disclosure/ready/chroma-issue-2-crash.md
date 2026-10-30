@@ -5,7 +5,9 @@
 
 ## What happened?
 
-A flat `$or` of about 16,500 or more `$eq` clauses on distinct boolean keys kills the client process with SIGSEGV on the first `query`, with no Python exception and no Rust panic message. Smaller filters get the expression-depth error instead, which is a separate report.
+Thanks for Chroma. I found that a very large filter ends the embedded client process instead of returning an error, and I wanted to pass it on. Please correct me if I have misread anything.
+
+A flat `$or` of about 16,500 or more `$eq` clauses on distinct boolean keys ends the client process with SIGSEGV on the first `query`, with no Python exception and no Rust panic message. Smaller filters get the expression-depth error instead, which I reported separately in #7969.
 
 ```python
 import chromadb
@@ -27,11 +29,13 @@ Each count ran once in a fresh child process, with a main-thread stack limit of 
 
 Under gdb, in an earlier run, the main thread received SIGSEGV in `chromadb_rust_bindings.abi3.so` with the stack about 16,500 frames deep, the innermost frames all returning to one address in that library, while the tokio and sqlx-sqlite worker threads were idle. So the main thread appears to run out of stack in one recursive function of the Rust bindings, before SQLite sees the query. The per-clause correspondence is inferred from the frame count, since the library has no symbols. A stack overflow depends on the stack size, so another limit would probably move the threshold; I did not test that.
 
-Impact: a client-supplied filter can take down the host process. An application that builds `where` from a user's group memberships can be crashed by a user in enough groups. A single-node server may share the code path; I did not test that.
+This needs an unusually large filter, so I don't expect it to affect most users. It matters mainly for an application that builds `where` from a user's group memberships, where a user in enough groups could end the process. A single-node server may share the code path; I did not test that.
 
-Suggested resolution: render n-ary `$and` and `$or` as a balanced tree, or with sea-query's `Cond::any()` and `Cond::all()`, and validate the size of a `where` with a clear error rather than letting native code overflow. A documented size limit for local mode would also help.
+If it helps, one option would be to render n-ary `$and` and `$or` as a balanced tree, or with sea-query's `Cond::any()` and `Cond::all()`, and to validate the size of a `where` with a clear error. A documented size limit for local mode would also help. You know this code far better than I do, so please take that only as a suggestion.
 
-This came up in differential testing for a research paper on permission-aware retrieval, which will describe the behaviour and cite this issue.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+
+I used an AI coding agent to help with the testing and this write-up. The code and output here come from real runs, and I will follow this issue and answer any questions.
 
 ## Versions
 

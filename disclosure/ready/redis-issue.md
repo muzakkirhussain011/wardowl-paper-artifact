@@ -5,6 +5,8 @@
 
 **Describe the bug**
 
+Thanks for RediSearch. I noticed what looks like a mismatch in how long TAG values are handled, and I wanted to pass it on. Please correct me if I have misread the intended behavior.
+
 A TAG value longer than 4,096 bytes is cut when it is indexed, while a query looks the value up as given. So for such a value:
 
 1. `@field:{<whole value>}` does not find the document.
@@ -40,8 +42,10 @@ The first search returns `doc:long` and the second returns `doc:prefix` only, or
 
 **Additional context**
 
-Applications that filter on TAG values they do not control (identifiers, group names, hashes of paths) silently miss documents, and a value equal to the first 4,096 bytes of another matches it. An access-control filter built this way can admit a document granted to a different, longer name.
+Values this long are uncommon, so I don't expect this to affect most users. Where it does apply, in applications that filter on TAG values they do not control (identifiers, group names, hashes of paths), a document can be missed silently, and a value equal to the first 4,096 bytes of another matches it. An access-control filter built this way could admit a document granted to a different, longer name, which is why I thought it worth mentioning.
 
-Suggested resolution: apply the same limit to query values, so that both sides agree, or refuse a longer value at indexing with an error, and document the limit on the tag fields page and in `FT.CREATE`.
+If it helps, one option would be to apply the same limit to query values, so that both sides agree, or to refuse a longer value at indexing with an error, and to document the limit on the tag fields page and in `FT.CREATE`. You know this code far better than I do, so please take that only as a suggestion.
 
-This came up in differential testing for a research paper on permission-aware retrieval, which will describe the behaviour and cite this issue.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+
+I used an AI coding agent to help with the testing and this write-up. The commands and results above come from real runs, and I will follow this issue and answer any questions.
