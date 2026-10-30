@@ -74,8 +74,9 @@ jobs:
               echo "TBD markers left:"
               grep -rno '\\tbd{' "$pkg/paper_arXiv/sections" | wc -l
             } > "$out/arxiv/checks.txt"
-            docker run --rm -v "$pkg/paper_arXiv:/w" -w /w ghcr.io/xu-cheng/texlive-full:latest \
-              sh -c 'pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex | tail -3' \
+            # TeX Live 2025 is arXiv's default (info.arxiv.org/help/submit_tex.html, read 2026-10-30).
+            docker run --rm -v "$pkg/paper_arXiv:/w" -w /w texlive/texlive:TL2025-historic \
+              sh -c 'pdflatex --version | head -1; pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex | tail -3' \
               >> "$out/arxiv/checks.txt" 2>&1 || true
             if [ -f "$pkg/paper_arXiv/main.pdf" ]; then
               pdftotext -layout paper/main.pdf "$pkg/a.txt"
