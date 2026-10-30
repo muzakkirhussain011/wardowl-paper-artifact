@@ -1,7 +1,9 @@
 # Draft upstream note: Cerbos (documentation suggestion, not a bug)
 
 Status: draft, not filed. Low priority: Cerbos behaves as CEL and its documentation say. File only if
-the paper cites it.
+the paper cites it. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Cerbos 0.56.0
+and 0.57.0 (the latest release that day), in workflow runs 41007436602, 41007779363 and
+41008151303; see "Reproduced (2026-10-30)".
 Where: https://github.com/cerbos/cerbos/issues (documentation), for
 https://docs.cerbos.dev/cerbos/latest/policies/conditions and the query plan pages.
 
@@ -56,6 +58,30 @@ curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read",
   "principal":{"id":"zoe","roles":["user"]},"resource":{"kind":"document"}}'
 # KIND_CONDITIONAL: "zoe" in request.resource.attr.allowed_users
 ```
+
+## Reproduced (2026-10-30)
+
+Script `disclosure/reproducers/cerbos.sh`: the two curl requests above, byte for byte, against a
+PDP started from the image with the policy above as its only policy
+(`disclosure/reproducers/cerbos-policies/document.yaml`, mounted at `/policies`) and the image's
+default configuration. Workflow `.github/workflows/reproducers.yml`, GitHub-hosted ubuntu-24.04
+runners, runs 41007436602, 41007779363 and 41008151303; outputs on branch `results/reproducers`
+under `runs/<run id>/cerbos-tested/` and `cerbos-latest/`.
+
+| Image | Digest | `/api/server_info` |
+|---|---|---|
+| `ghcr.io/cerbos/cerbos:0.56.0` (the version tested) | `sha256:540643bc67ba628011a150ad1d3370f285daa38995be5cd7a4be181da902bec1` | 0.56.0, commit `98604d71`, built 2026-09-30 |
+| `ghcr.io/cerbos/cerbos:0.57.0` (latest release, 2026-10-23) | `sha256:e5e3b150b3cb0090975605254f255164567d67e233634199fb20972e3eaff300` | 0.57.0, commit `43125124`, built 2026-10-23 |
+
+Every run, both versions, the same answers:
+
+- CheckResources: `d1` `EFFECT_DENY`, `d2` `EFFECT_ALLOW`.
+- PlanResources: `"filter":{"kind":"KIND_CONDITIONAL","condition":{"expression":{"operator":"in",
+  "operands":[{"value":"zoe"},{"variable":"request.resource.attr.allowed_users"}]}}}`.
+
+Both as stated under "What happens"; the comment after the second request paraphrases this
+`filter` object (the answers carried no `filterDebug` field). The plan request's singular `action`
+field was accepted by both versions.
 
 ## Suggested resolution
 

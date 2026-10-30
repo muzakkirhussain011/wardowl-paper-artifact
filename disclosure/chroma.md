@@ -1,13 +1,17 @@
 # Draft upstream report: Chroma
 
-Status: draft, not filed. Confirm with the reproducer below before filing; run 1 saw the error
-through wardowl, whose filter had the shape of the second query.
+Status: draft, not filed. Reproduced on 2026-10-30 with the reproducer below (one fix: the
+collection name) on chromadb 1.5.9, still the latest release that day, in workflow runs
+41007779363 and 41008151303; see "Reproduced (2026-10-30)". Run 1 of the campaign saw the error
+through wardowl, whose filter had the shape of the second query; the reproducer showed that the
+first, flat query fails the same way, so the title and "What happens" no longer say the `$or` is
+nested.
 Where: https://github.com/chroma-core/chroma/issues
 
 ## Title
 
-A `$or` with about 1,000 operands, nested two levels deep, fails with "Expression tree is too large
-(maximum depth 1000)"
+A `$or` with about 1,000 operands fails with "Expression tree is too large (maximum depth 1000)",
+whether flat or nested
 
 ## Version
 
@@ -15,17 +19,23 @@ A `$or` with about 1,000 operands, nested two levels deep, fails with "Expressio
 
 ## What happens
 
-A `where` whose top level is `$or` over 1,000 clauses, each a `$or` of two simple conditions, raises
-`InternalError: Expression tree is too large (maximum depth 1000)`. The document is two levels deep;
-the limit seems to count operands as depth [unverified: inferred from the message]. The filter docs
-state no limit on the number of operands.
+A `where` whose top level is `$or` over 1,001 simple conditions, or over 1,000 clauses that are each
+a `$or` of two simple conditions, raises `InternalError: Error executing plan: Internal error: error
+returned from database: (code: 1) Expression tree is too large (maximum depth 1000)`. The flat
+document is one level deep and the nested one two, so the depth SQLite refuses grows with the
+number of operands, not with the nesting of the `where` document; item 1 of the second report below
+gives the cause in the code. The filter docs state no limit on the number of operands.
+
+(Corrected 2026-10-30. This paragraph first described only the nested query, with the error text
+shortened, and called the operand count a guess from the message; the reproducer showed the flat
+query failing too, with the full text above.)
 
 ## Reproducer (Python, chromadb only)
 
 ```python
 import chromadb
 
-c = chromadb.EphemeralClient().create_collection("t", embedding_function=None)
+c = chromadb.EphemeralClient().create_collection("repro", embedding_function=None)
 c.add(ids=["a"], embeddings=[[0.1, 0.2]], metadatas=[{"g": 1, "g::i:1": True}])
 
 flat = {"$or": [{"g": {"$eq": i}} for i in range(1001)]}
@@ -39,6 +49,24 @@ for where in (flat, nested):
 
 Expected: `[['a']]` for both, or a documented limit on the number of operands. Seen in our run:
 the error above for queries shaped like `nested`.
+
+Changed on 2026-10-30: the collection was named `"t"`, which chromadb 1.5.9 refuses before any
+query (`InvalidArgumentError: Validation error: name: Expected a name containing 3-512 characters
+from [a-zA-Z0-9._-], starting and ending with a character in [a-zA-Z0-9]. Got: t`, run
+41007436602); it is `"repro"` now. Nothing else changed.
+
+## Reproduced (2026-10-30)
+
+Script `disclosure/reproducers/chroma_depth.py`: the code above, with a label on each printed line.
+Workflow `.github/workflows/reproducers.yml`, GitHub-hosted ubuntu-24.04 runners, Python 3.12.15,
+chromadb 1.5.9 from PyPI (the newest release on PyPI and the GitHub release marked Latest on
+2026-10-30, so the "tested" and "latest" jobs ran the same version). Runs 41007779363 and
+41008151303; outputs on branch `results/reproducers` under `runs/<run id>/chroma-depth-tested/` and
+`chroma-depth-latest/`. Every job printed, for `flat` and for `nested` alike:
+
+    InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)
+
+So both queries fail; neither returns `[['a']]`.
 
 ## Impact
 
@@ -55,8 +83,11 @@ Build n-ary `$and`/`$or` as one node rather than a chain, or document the limit 
 
 Status: draft, not filed; Syed decides whether and where to file (a public issue or a private
 security report, since an end user who belongs to many groups could trigger it through an
-application). Source: X3 run 40940385704 (`evidence/x3-x6-run1.md`, "X3: Chroma, refusal and
-crash"); the follow-up run under faulthandler will add the stack and the crash threshold.
+application). Reproduced on 2026-10-30 with the reproducer below (one fix: the collection name) on
+chromadb 1.5.9, still the latest release that day, in workflow runs 41007779363 and 41008151303; see
+"Reproduced (2026-10-30)" at the end. Source: X3 run 40940385704 (`evidence/x3-x6-run1.md`,
+"X3: Chroma, refusal and crash"); the follow-up run under faulthandler will add the stack and the
+crash threshold.
 
 ## Title
 
@@ -91,11 +122,14 @@ chromadb 1.5.9, `EphemeralClient`, Linux (GitHub-hosted ubuntu-24.04 runner, Pyt
 ```python
 import chromadb
 
-c = chromadb.EphemeralClient().create_collection("t", embedding_function=None)
+c = chromadb.EphemeralClient().create_collection("repro", embedding_function=None)
 c.add(ids=["a"], embeddings=[[1.0, 0.0, 0.0]], metadatas=[{"k0": True}])
 where = {"$or": [{f"k{i}": {"$eq": True}} for i in range(40_000)]}
 c.query(query_embeddings=[[1.0, 0.0, 0.0]], n_results=1, where=where)  # SIGSEGV
 ```
+
+Changed on 2026-10-30: the collection was named `"t"`, which chromadb 1.5.9 refuses (names need 3
+to 512 characters); it is `"repro"` now. Nothing else changed.
 
 ## Impact
 
@@ -109,3 +143,32 @@ Render n-ary `$and` and `$or` as a balanced tree (or with sea-query's `Cond::any
 `Cond::all()`), and validate the size of a `where` with a clear error rather than letting native
 code overflow. Documenting a size limit for local mode would help users. wardowl now nests its
 disjunctions and refuses to send a `where` beyond conservative bounds (PR #187).
+
+## Reproduced (2026-10-30)
+
+Script `disclosure/reproducers/chroma_crash.py`: the code above, with the clause count as a
+parameter, run once per count in a fresh child process with Python's fault handler on (a crash ends
+the process, so the parent reports how each child ended). Counts: 1,001 and 15,500, expected to be
+refused, and 16,500 and 40,000, expected to crash; then a bisection between the largest count that
+did not crash and the smallest that did, to 100 clauses. Workflow
+`.github/workflows/reproducers.yml`, GitHub-hosted ubuntu-24.04 runners, Python 3.12.15, chromadb
+1.5.9 from PyPI (the newest release that day, so the "tested" and "latest" jobs ran the same
+version), main-thread stack limit 16 MiB (`ulimit -s` 16384). Runs 41007779363 and 41008151303;
+outputs on branch `results/reproducers` under `runs/<run id>/chroma-crash-tested/` and
+`chroma-crash-latest/`.
+
+The same outcome in every job:
+
+| Clauses | Outcome | Exit status |
+|---|---|---|
+| 1,001 | `InternalError` "... Expression tree is too large (maximum depth 1000)" | 0 |
+| 15,500; 16,000; 16,250; 16,375; 16,437 | the same error | 0 |
+| 16,500 | SIGSEGV, no Python exception | -11 |
+| 40,000 | SIGSEGV, no Python exception | -11 |
+
+The fault handler printed "Fatal Python error: Segmentation fault" with the innermost frame
+`chromadb/api/rust.py, line 582 in _query`, called from `chromadb/api/models/Collection.py, line
+265 in query`, the same location as in run 40982986417. On this one-record collection the
+threshold lies between 16,437 clauses (refused) and 16,500 (crash), inside the 15,500 to 16,500
+bracket of item 2. A stack overflow depends on the main thread's stack size (16 MiB here), so
+another limit would move the threshold [not tested].

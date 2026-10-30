@@ -1,6 +1,8 @@
 # Draft upstream report: Redis Query Engine (RediSearch)
 
-Status: draft, not filed. Confirm with the reproducer below on the version named before filing.
+Status: draft, not filed. Reproduced on 2026-10-30 with the reproducer below, unchanged, on Redis
+8.10.2 and 8.10.3 (the latest release that day), in workflow runs 41007436602, 41007779363 and
+41008151303; see "Reproduced (2026-10-30)".
 Where: https://github.com/RediSearch/RediSearch/issues (bug), with a docs note for
 https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/.
 
@@ -43,6 +45,29 @@ Expected: the first search returns `doc:long`, the second `doc:prefix` only (or 
 long value with an error). Seen in our conformance runs (through a client that hex-encodes values):
 documents holding values over the limit were never returned by a search for their value; the
 reproducer above also predicts the second search returns both keys.
+
+## Reproduced (2026-10-30)
+
+Script `disclosure/reproducers/redis.sh`: the commands above, unchanged, sent with the server
+image's own redis-cli (`docker exec redis redis-cli ...`), by `.github/workflows/reproducers.yml` on
+GitHub-hosted ubuntu-24.04 runners. Runs 41007436602, 41007779363 and 41008151303; each job's
+output is on branch `results/reproducers` under `runs/<run id>/redis-tested/` and
+`redis-latest/`.
+
+| Image | Digest | `redis_version`, search module |
+|---|---|---|
+| `redis:8.10.2-alpine` (the version tested) | `sha256:9f8d2d789b9a1d1e3f283f979aa9cbf393373806472e1ccd460e2f9c869b833b` | 8.10.2, `search` 81001 |
+| `redis:8.10.3-alpine` (latest release, GitHub release marked Latest) | `sha256:21090af93f8324db2f0f0f4f38a7c60369d47d917e000c3423d89d2ae2883537` | 8.10.3, `search` 81001 |
+
+Every run, both versions: `FT.CREATE` answered `OK`; both `HSET` calls answered `1` (no error
+for the long value); the search for the 5,000-byte value answered `0`; the search for its first
+4,096 bytes answered `2`, `doc:long`, `doc:prefix`. So the second search returns both keys, as
+predicted above.
+
+The script also checks the boundary, which the reproducer above does not: a 4,096-byte value is
+found by its whole value (`1`, `doc:b4096`) and a 4,097-byte value is not (`0`), so values are cut
+when they are longer than 4,096 bytes. The source lines cited under "What happens" were not re-read
+for these runs; the behaviour agrees with them.
 
 ## Impact
 
