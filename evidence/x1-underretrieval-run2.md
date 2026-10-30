@@ -12,8 +12,10 @@ Run 1 is `evidence/x1-underretrieval-run1.md`; the diagnosis that led to amendme
 
 ## What ran
 
-Kaggle, account muzakkirhussain1, CPU sessions: `x1run2-prep` (corpus, embeddings, exact baseline,
-question table), shards `x1run2-shard-a` (hnsw-m16-efc64 build 0, with the two replays first),
+Kaggle, account muzakkirhussain1. One GPU session: `x1run2-prep-gpu` on a T4 (corpus, embeddings,
+exact baseline, question table; corrected 2026-10-30, this line first named the abandoned CPU attempt
+`x1run2-prep`, see `investigations/x0-x1-pgvector-gap.md`). Four CPU sessions: shards
+`x1run2-shard-a` (hnsw-m16-efc64 build 0, with the two replays first),
 `-shard-b` (hnsw-m16-efc64 builds 1 and 2) and `-shard-c` (hnsw-m32-efc200 builds 0 to 2, then the
 Qdrant grid), and `x1run2-stats` (10,000 bootstrap resamples, seed 20261026; 798 s). 194,291 result
 rows of 49 settings; 1,489 questions (the scenario's 1,105 and 384 probe questions of 24
@@ -108,8 +110,9 @@ Readings:
 | per-tenant graphs (is_tenant, m = 0) | as run | 0.952 | 0.001 | 6.58 |
 | shared passages in a separate collection | as run | 0.949 | 0.003 | 12.9 |
 
-Run 1 (`x1-underretrieval-run1.md`) agrees within the build-to-build range: as run 0.619, ACORN
-0.761, per-tenant 0.943, separate 0.948, hnsw_ef 512 0.709. Q3's segment manipulation did not
+Run 1 (`x1-underretrieval-run1.md`) agrees within 0.05: as run 0.619, ACORN 0.761, per-tenant 0.943,
+separate 0.948, hnsw_ef 512 0.709 (corrected 2026-10-30: this line said "within the build-to-build
+range", which per-tenant, 0.009 from run 2 against a range of 0.001, is not). Q3's segment manipulation did not
 differ in the end: both the as-run and the one-segment layouts ended with one segment holding
 points (`data_segments`), so the -0.030 difference is a difference between builds, not layouts.
 

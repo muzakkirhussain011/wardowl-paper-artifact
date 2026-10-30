@@ -44,7 +44,7 @@ asynchronous drivers. It uses the filter already obtained from the authorizer, a
 returns passes the same re-check as any other. The hits of the first search that the repair
 discards are re-checked in the same call, so a store that ignored the filter still shows up as
 violations. A failed count or search ends the request with an error and no hits, as any other
-failure does (assumption A3). Proposition~\ref{prop:reduction} therefore holds unchanged.
+failure does (assumption A3). Observation~\ref{prop:reduction} therefore holds unchanged.
 
 \paragraph{A sampled recall monitor.}
 Neither the count nor the flag can see mis-retrieval. For a configurable share of pre-filtered
@@ -77,8 +77,8 @@ re-checked by the layer and by an independent oracle, and latency is the median 
 with $k = 10$.
 
 Seven hypotheses were pre-registered. The count detects every short first search without a false
-alarm (H5.1); exact repair leaves no result empty or short and reaches recall@10 of at least 0.999
-on the queries it repairs (H5.2); no repair changes the median latency of the queries that do not
+alarm (H5.1); exact repair without a bound leaves no result empty or short and reaches recall@10 of
+at least 0.999 on the queries it repairs (H5.2); no repair changes the median latency of the queries that do not
 trigger it by more than 5\% either way (H5.3); no repair changes Qdrant's false-completeness rate, because its loss is mis-retrieval
 (H5.4); the monitor samples 1\% of searches and its recall agrees with the harness's (H5.5);
 widening recovers less than exact repair on the searches that trigger it (H5.6); and on the
@@ -149,7 +149,7 @@ back short only for people who could read fewer than $k$ chunks, which the count
 Qdrant did under-retrieve on MS MARCO, which X0 and X1 never saw on the enterprise corpus: 3.5\% of its
 answers with $k = 10$ were short.
 
-\paragraph{Exact repair (H5.2, confirmed).}
+\paragraph{Exact repair (H5.2, confirmed for the unbounded arm).}
 Repaired exactly without a bound, no answer was empty or short, and the repaired answers reached
 recall@10 of 1.0000: on 576 triggered retrievals for pgvector on the enterprise corpus, on 323 for
 pgvector and 644 for Qdrant on MS MARCO, which had returned 992, 574 and 1,091 short answers under
@@ -158,7 +158,9 @@ bound decided where repair applied. On the enterprise corpus every short answer 
 readable chunks, so all three bounds repaired all of them; on MS MARCO a bound of 1,000 repaired 0.5\%
 of pgvector's answers out of 1.7\% triggered, and every short answer of Qdrant had more than 10,000
 readable chunks, so the bounded arms repaired none and reported each as \emph{over\_limit} and not
-complete. Where the repair ran, the count and the exact search together took 30.1\,ms at the median
+complete. At the default bound of 10,000, then, 0.1\% of pgvector's answers and all of Qdrant's 3.5\%
+stayed short on MS MARCO. Where the repair ran without a bound, the count and the exact search
+together took 30.1\,ms at the median
 and 40.2\,ms at p95 of a triggered pgvector retrieval on the enterprise corpus, 108.6 and 220.7\,ms on
 MS MARCO, and 37.9 and 50.4\,ms for Qdrant.
 
@@ -204,8 +206,9 @@ of 15.9 against 6.1\,ms. pgvector's tuple limit raised alone lowered the enterpr
 empty-result rate only from 0.089 to 0.072, because the scan's memory bound then stops it, as X1 found
 (Section~\ref{sec:qual-pgvector}).
 
-The two tools divide the work. A count tells a short answer from a small readable set without error,
-and exact repair within its bound fixes the answer for tens to hundreds of milliseconds spent on that
-answer. Neither sees a full answer of the wrong chunks, which was most of the loss on both stores
+The two tools divide the work. A count tells a short answer from a small readable set without error.
+Exact repair without a bound fixes every short answer for tens to hundreds of milliseconds spent on
+that answer; within a bound it fixes only the answers whose readable set fits, none of Qdrant's on MS
+MARCO. Neither sees a full answer of the wrong chunks, which was most of the loss on both stores
 (pgvector's recall@10 on the enterprise corpus was 0.782 after exact repair, 0.667 without it); only
 a sampled exact search sees it, and only a better index or layout removes it.

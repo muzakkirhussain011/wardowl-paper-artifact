@@ -7,7 +7,8 @@ commit `182bcbc` to branch `paper/conformance-campaign` at 2026-10-29 15:50:07 U
 digests for Redis and MongoDB terms over their index limits) and main `438a176` (#166). The package
 still reports version 2.1.0. Read on 2026-10-29 from the run page and the merged job summary of the
 `summary` job (signed-in browser); artifacts were not downloaded. Status: **Success**, 2 h 6 min 27 s,
-10 artifacts, 8 jobs (Keto in its own job, Casbin split over two). Triage that predicted these results:
+10 artifacts, 10 jobs from the jobs API (`evidence/compute.md`): nine campaign jobs, with Keto in its
+own job and Casbin split over two, and `summary` (corrected 2026-10-30; this line said 8). Triage that predicted these results:
 `investigations/conformance-run1-triage.md`.
 
 ## Merged summary (copied)

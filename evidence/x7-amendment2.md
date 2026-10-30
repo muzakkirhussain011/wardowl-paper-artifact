@@ -5,8 +5,9 @@ Written 2026-10-30. GitHub Actions run 40969846593 (attempt 1), branch `paper/x4
 `fix/revocation-faults` at `3c6559f3ecfd850bcd59416f14237d85887ba498` (PR #186). Pre-registration:
 amendment 2 in `benchmarks/paper/PREREG_X4_X7.md` (commit `618b108`, before the harness `32af4b7`, the
 smoke run 40952219346 and this run). Results: branch `results/x4-x7`, directory `40969846593-1/`
-(`x7_report.md`, `x7a_revocation.csv`, `x7b_faults.csv`, raw JSON lines per job). Five jobs:
-x7a-cerbos, x7a-spicedb, x7b-pgvector, x7b-qdrant, x7b-spicedb; 480 records; 140 fault episodes,
+(`x7_report.md`, `x7a_revocation.csv`, `x7b_faults.csv`, raw JSON lines per job). Five experiment jobs:
+x7a-cerbos, x7a-spicedb, x7b-pgvector, x7b-qdrant, x7b-spicedb (the run lists eight with `plan`,
+`report` and a skipped `matrix.job`; `evidence/compute.md`); 480 records; 140 fault episodes,
 none excluded by guard G4.
 
 ## Verdicts as printed (every one CONFIRMED)

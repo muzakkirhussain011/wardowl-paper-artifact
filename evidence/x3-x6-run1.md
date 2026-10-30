@@ -32,8 +32,9 @@ FiQA 57,638 passages and 6,648 queries, SciDocs subset 12,000; FiQA tokens per p
 median 95. Client and server versions as pre-registered (chromadb 1.5.9, lancedb 0.40.0, faiss-cpu
 1.15.1, psycopg 3.3.6 seen in the setup logs).
 
-Jobs: `data`, `run` (12 matrix jobs: 5 X6 jobs, one per store, and 7 X3 jobs) and `summary`
-(statistics and publishing). `jobs.json`: data, run and summary all `success`. The X6 jobs ran from
+Jobs: `data`, `run` (12 matrix jobs: 5 X6 jobs, one per store, and 7 X3 jobs), `summary` (statistics)
+and `publish to results/x3-x6`, 15 jobs in the jobs API (`evidence/compute.md`; corrected 2026-10-30,
+this line counted publishing inside `summary`). `jobs.json`: data, run and summary all `success`. The X6 jobs ran from
 about 19:30 to 20:50 (runner time); X3 from 19:30 to 21:50; statistics 22:26 to 22:33.
 
 ## X6: what ran

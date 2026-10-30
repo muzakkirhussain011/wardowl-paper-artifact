@@ -8,7 +8,7 @@
 % after a smoke run, before any full result). Every number is as x4_stats.py and x7_stats.py printed.
 % "The fixes, tested": evidence/x7-amendment2.md (run 40969846593, amendment 2, library at 3c6559f).
 
-Proposition~\ref{prop:reduction} lets a pushed-down filter be wrong without a leak, but not without
+Observation~\ref{prop:reduction} lets a pushed-down filter be wrong without a leak, but not without
 cost: a false denial silently loses recall, and a false admit becomes a violation. We ask whether the
 filters \sys{} compiles from four engines admit exactly what the same engines' checks allow,
 separating three causes of disagreement: a translation fault, which persists at one revision;
@@ -79,13 +79,17 @@ independent oracle on every pair. Below it, stress profiles.}
 \label{tab:eng-agree}
 \end{table}
 
-Table~\ref{tab:eng-agree} shows no translation fault. In the seven profiles that hold the model as
-intended, 6.3 million pairs produced no disagreement between filter and check, and every check agreed
+Table~\ref{tab:eng-agree} shows no translation fault in the seven profiles that hold the model as
+intended, with each ACL field in the shape the policy assumes: 6.3 million pairs produced no
+disagreement between filter and check, and every check agreed
 with the oracle (one-sided 95\% bound on users with any disagreement: 0.5\% per profile). The
 oracle control reported nothing and the planted control exactly its 16,774 false admits and 1,233
-false denials. The only disagreement at one revision is the data-shape gap of
-Section~\ref{sec:conf-campaign}: when 10\% of documents store a one-value ACL list as a plain value,
-Cerbos's plan admits what its check denies in 569 pairs (0.063\% of pairs; 52.5\% of users, 95\%
+false denials. The only disagreement at one revision is the type gap in the layer's Cerbos adapter
+that the campaign reproduced (Section~\ref{sec:conf-campaign}): the translator maps CEL's \texttt{in},
+\texttt{==} and \texttt{hasIntersection} to $\mathrm{In}$, which also matches a scalar, while Cerbos's
+check treats \texttt{in} on a scalar as an error and denies. When 10\% of documents store a one-value
+ACL list as a plain value, the adapter's filter admits what the check denies in 569 pairs (0.063\% of
+pairs; 52.5\% of users, 95\%
 interval 48.3\% to 56.3\%), always on such a document and reproducibly; the re-check turns each
 into a violation. OPA's policy, which reads a field as one value or a list, stays exact on the same
 data. Neither translator dropped a negation: with bans, Cerbos's plan and OPA's
@@ -129,7 +133,7 @@ default 2\,s timeout, so every retrieval through it failed closed and its recall
 \subsection{Latency and caching}\label{sec:eng-latency}
 
 An uncached filter took a median 0.9\,ms (OpenFGA, 10 objects, a model without intersection) to
-324\,ms (OpenFGA's full model, 100,000 objects), 22 to 30\,ms for SpiceDB once its limit binds,
+324\,ms (OpenFGA's full model, 100,000 objects), 22 to 29\,ms for SpiceDB once its limit binds,
 1.2\,ms for Cerbos, and 1.7 to 13.6\,ms for OPA's filter documents and 116\,ms for its partial
 evaluation over 1,500 documents. A check took 0.13 to 1.4\,ms per hit on those worlds. Caching paid as
 predicted for OpenFGA, SpiceDB and OPA, at least 17.5 times faster in every pre-registered cell.
@@ -158,21 +162,26 @@ Cerbos (policy file reload) & 2.55 & 5.02 & 30.02 & 30.03 & 31.04 \\
 \caption{Median seconds from a revocation to the first of three consecutive retrievals without the
 revoked chunk; 40 trials per cell, the cache warmed just before. ``Shared'' polls a second replica
 sharing the cache through Redis. $\dagger$: at least one trial exceeded the stated bound, the ttl
-(none after invalidation, 1\,s for the replica) plus the engine's stated staleness; Cerbos states
-none.}
+(none after invalidation, 1\,s for the replica) plus the engine's stated staleness, by more than the
+1\,s we allowed for polling; Cerbos states no staleness.}
 \label{tab:eng-revoke}
 \end{table}
 
 \paragraph{Revocation.}
+Table~\ref{tab:eng-revoke} gives the measured $\delta$ of each serving path
+(Definition~\ref{def:criteria}), and a dagger marks a violation of the $\delta$ the path states.
 The cache's time to live is the realized delay, not merely a bound: every ttl median in
 Table~\ref{tab:eng-revoke} lies within 34\,ms of 5\,s or 30\,s, and invalidation ends the delay at
 once, or within the shared replica's 1\,s local copy. Permissions copied into chunk metadata were
 revoked within milliseconds whatever the cache: the store filters current metadata, and cached
 decisions are keyed by it. Two sources of truth were stale themselves.
 Cerbos reloaded a rewritten policy file in a median 2.5\,s (at most 4.0\,s). SpiceDB under
-\texttt{minimizeLatency}, \sys{}'s default, took a median 3.3\,s and at most 8.7\,s, beyond the
-6.5\,s predicted from its quantization window~\cite{authzed2026consistency,authzed2026reference}, and in 28 polls a revoked
-chunk reappeared after it had disappeared. Invalidation does not survive such an engine: the next call
+\texttt{minimizeLatency}, \sys{}'s default, took a median 3.3\,s, with 95\% of trials within 4.9\,s, and
+in 28 polls a revoked chunk reappeared after it had disappeared. One of its 40 trials took 8.7\,s,
+beyond the 6.5\,s we had registered as the limit: the 5.5\,s that its quantization
+window~\cite{authzed2026consistency,authzed2026reference} implies, plus the 1\,s allowed for polling.
+That single trial falsified the prediction, and the rerun below did not reproduce it: the same cell's
+40 trials took at most 5.2\,s, within the 5.5\,s. Invalidation does not survive such an engine: the next call
 refills the cache from the stale snapshot, which the cache holds for its full ttl, so 79 of 80 SpiceDB
 revocations with invalidation exceeded their bound (medians 30.0 and 31.0\,s), and Cerbos's took as
 long. After invalidation the bound is ttl plus staleness, not staleness; a cache that declines to
@@ -180,10 +189,12 @@ refill during the engine's staleness window would restore it, which we evaluate 
 
 \paragraph{Faults.}
 We injected 14 faults into each engine, by a proxy or by killing the server, and five or eight into
-pgvector and Qdrant, in 1,090 episodes of a 3\,s baseline, a 12\,s fault and recovery. No retrieval
-returned a chunk outside the user's readable set: 0 leaks in 623,279 requests (at most
-$4.8 \times 10^{-6}$ per request, one-sided 95\%), while a control that turned the engine's denials
-into allows leaked in every engine. Every engine-caused failure was the layer's authorization error
+pgvector and Qdrant, in 1,090 episodes of a 3\,s baseline, a 12\,s fault and recovery. Outside the
+control below, no retrieval returned a chunk outside the user's readable set, in 623,279 requests over
+1,050 episodes. Requests within an episode share its fault, so we bound the rate per episode, at most
+$2.8 \times 10^{-3}$ (one-sided 95\%), not per request, and only over the faults we injected. The
+control, 40 episodes that turned the engine's denials
+into allows, leaked in every engine. Every engine-caused failure was the layer's authorization error
 with a message naming no host. Transport faults (server down, connections refused or never answered,
 delays past the 2\,s timeout, HTTP 500 and 503) failed every request inside the fault, and recovery
 took a median 0.02 to 0.18\,s after removal. A circuit breaker failed requests in under 0.1\,ms
@@ -199,15 +210,17 @@ inside the window.
 The run exposed five defects in the layer, and we fixed all five. After an invalidation the cache
 now caches nothing for the engine's declared staleness, and the SpiceDB adapter, whose documentation
 had promised 5\,s, declares 11\,s without full consistency: twice the documented
-5.5\,s~\cite{authzed2026reference}, since we
+5.5\,s~\cite{authzed2026reference}, since one trial had
 measured 8.7\,s. An empty LookupResources stream now yields no filter, so the retriever post-filters
 and checks every candidate. Every store failure is raised as one search error with a fixed message
-and the client's exception as its cause. And pgvector can set a statement timeout. A targeted rerun, pre-registered
-as an amendment before it ran, with requests started every 0.2\,s so that some are in flight when a
+and the client's exception as its cause. And pgvector can set a statement timeout. A targeted rerun,
+an implementation check specified in writing after the main results and before running,
+with requests started every 0.2\,s so that some are in flight when a
 fault begins, confirmed all of its predictions. With invalidation, all 160 SpiceDB and Cerbos
 revocations took effect within the predicted bound (the declared staleness plus 1\,s, and 1\,s more
 on the replica): medians of
-4.8\,s (at most 5.2\,s) for SpiceDB and 3.9\,s for Cerbos, against 30 and 31\,s before. SpiceDB itself
+4.8\,s (at most 5.2\,s) for SpiceDB and 3.9\,s for Cerbos, against 30 and 31\,s before. Without a
+cache, SpiceDB took a median 4.7\,s and at most 5.2\,s, so the first run's 8.7\,s did not recur. SpiceDB itself
 still flapped, serving a revoked chunk again after it had gone in 16 to 28 polls per condition; the
 cache no longer prolongs that. Under the emptied stream, 3,520 retrievals failed closed instead of
 returning nothing, and with only the lookups emptied 3,180 returned exactly the right answer through
@@ -216,5 +229,5 @@ statement timeout turned a table lock into failures after a median 1.003\,s with
 against 80 hanging requests and a median of 5\,s without it; for a connection that is accepted but never answered it cannot
 help, since the server never sees the statement, and every request hung or failed after 5\,s with or
 without it, as predicted. Only a deadline on the whole retrieval, which the layer does not yet offer,
-would bound that case. In 10,303 requests under these faults no chunk leaked (one-sided 95\% bound
-$2.9 \times 10^{-4}$ per request).
+would bound that case. In 10,303 requests under these faults no chunk leaked; over the rerun's 140
+episodes that bounds the rate at $2.1 \times 10^{-2}$ per episode (one-sided 95\%).

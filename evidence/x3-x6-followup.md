@@ -278,3 +278,15 @@ one frame per clause would give; that correspondence is inferred, not shown by a
 2. **FAISS's build offset** has no mechanism beyond "the index object" (memory placement is a
    candidate; not measured), and the pre-stated reading is inconclusive.
 3. **pgvector's residual** W0a-against-W1 difference after vacuum (1.5 ms on 60 ms): not explained.
+
+## The Chroma fix in CI (added 2026-10-30)
+
+wardowl PR #187 (https://github.com/muzakkirhussain011/wardowl/pull/187, branch
+`fix/chroma-filter-depth`) was merged on 2026-10-30 at 10:00:44 UTC, merge commit `2a1c6c0`; it is in no
+release yet (the latest is v2.1.0). Read from the public API: the 19 check runs on its head commit
+`d9cb074` concluded `success`, except `pinecone (the service)` and `batch`, which were `skipped`. The
+`test` job (workflow run 41008616635, job 123909147635, completed 06:03:09 UTC) runs the library and
+adapter tests against real servers and embedded stores, Chroma among them. The fix's commit `627be45`
+adds, in `tests/test_backends.py`, a search of real Chroma for subjects in 1,001 and in 40,000 groups,
+and `tests/test_chroma_probe.py` for the flat `$or`. The fallback beyond the bounds reads 1,000
+candidates; its recall has not been measured.
