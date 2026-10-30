@@ -1,14 +1,17 @@
 % Retrieval Quality Under Permission-Shaped Filters: body of Section~\ref{sec:quality} (the \section
 % heading and its label stay in main.tex). Labels defined here: sec:qual-audit, tab:qual-x0,
-% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, sec:qual-size,
-% tab:qual-size. X3 (sec:qual-size) is from evidence/x3-x6-run1.md (GitHub Actions run 40940385704,
+% sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, tab:qual-frontiers,
+% tab:qual-x2tests, sec:qual-size, tab:qual-size. X2 (sec:qual-frontiers) is from
+% evidence/x2-x5-run1.md (GitHub Actions run 40921769714, commit 884ce18; pre-registration
+% PREREG_X2_X5.md at 828ea27), every number as x2x5_stats.py printed it; QPS from each store's
+% build-0 job. X3 (sec:qual-size) is from evidence/x3-x6-run1.md (GitHub Actions run 40940385704,
 % commit a191626), every number as x3_stats.py printed it; Chroma's seeds 3 and 4, the X3 verdicts
 % over five seeds, pgvector's plans and the crash's location and threshold are from
 % evidence/x3-x6-followup.md (run 40982986417, commit 9e22b89, amendment 4).
 % Sources: evidence/kaggle-scale-run-2026-10-24.md (X0), evidence/x8-run.md (X8 repeats),
 % evidence/x1-underretrieval-run1.md and evidence/x1-underretrieval-run2.md (X1; run 2 is the
 % reference for every X1 number), investigations/x0-x1-pgvector-gap.md and
-% investigations/filtered-recall-gaps.md (mechanisms). X2 is pending and marked \tbd{}.
+% investigations/filtered-recall-gaps.md (mechanisms).
 
 Security held in every configuration of Section~\ref{sec:e2e}; this section asks what the
 permission filter cost. We first audit the enterprise scenario at common settings, then diagnose the
@@ -211,10 +214,12 @@ a hierarchy of 100 divisions, 10 departments each and 10 teams each, assigned ei
 are topical), five seeds of each. A subject receives divisions, departments and teams until it may
 read a target share of the corpus, from 0.06\% to 100\%, and its filter is either one disjunction over
 its groups or a tenant clause conjoined with a disjunction over a grant twice as large, a shape in
-which each clause alone passes far more than both. For clustered layouts the questions are drawn
-either from those whose 100 nearest passages are at least half readable (\emph{positively
-correlated}) or from those with nothing readable among their 1,000 nearest (\emph{negatively
-correlated}). For every question and subject we compute, from exact scores, the global selectivity,
+which each clause alone passes far more than both. Questions come from a pool of 20,000 MS MARCO
+questions: four drawn at random for a subject of an uncorrelated layout; for a subject of a clustered
+layout, four from those whose 100 nearest passages are at least half readable (\emph{positively
+correlated}) and four from those with nothing readable among their 1,000 nearest (\emph{negatively
+correlated}), the best by the criterion when fewer than four qualify (684 of the 6,200 pairs). Ten subjects per seed and cell make 1,050
+subjects. For every question and subject we compute, from exact scores, the global selectivity,
 the local selectivity among the 100 and 1,000 nearest passages, the rank of the first readable
 passage, ACORN's query correlation~\cite{patel2024acorn}, the global-local selectivity of Amanbayev
 et al.~\cite{amanbayev2026filtered} and the over-fetch estimate of HCBGen~\cite{lim2026revisiting}.
@@ -222,20 +227,193 @@ et al.~\cite{amanbayev2026filtered} and the over-fetch estimate of HCBGen~\cite{
 Ten approximate stores run against FAISS over a flat index: pgvector, Qdrant, Elasticsearch,
 OpenSearch, Weaviate, Redis, Milvus, MongoDB, LanceDB and Chroma, each at its default, at five levels
 of its search-effort parameter, with its store-specific options (pgvector's raised scan limits and
-strict order, Qdrant's ACORN and per-tenant graphs, Weaviate's filter strategies, Redis's hybrid
-policies, Elasticsearch's quantized index types) and with its own exact search where it has one, in
-three fresh builds per store. Each pgvector search is planned with its own values, so the plan-cache
-effect of Section~\ref{sec:qual-pgvector} cannot arise, and the share of searches whose plan uses the
-HNSW index is recorded. Throughput is measured end to end through the layer with one client thread
-and compared only within a job; recall is compared across jobs. The same harness runs the enterprise
-scenario, whose as-run settings must reproduce the audit's recall within 0.03 for seven of nine
-stores. We pre-registered four hypotheses: that negatively correlated questions lose at least 0.05
+strict order, Qdrant's ACORN and per-tenant graphs, Weaviate's filter strategy and flat-search cutoff,
+Redis's hybrid policies, LanceDB's refinement and post-filtering, and on the enterprise corpus
+Elasticsearch's \texttt{int8\_hnsw} index beside its default \texttt{bbq\_hnsw}) and with its own
+exact search where it has one (not Milvus or Chroma), in three fresh builds per store; exact searches,
+which do not use the index, run on the first build, and FAISS on one. On MS MARCO the per-tenant
+graphs are queried by the subjects with a tenant clause. Each pgvector search is planned with its own
+values, so the plan-cache effect of Section~\ref{sec:qual-pgvector} cannot arise, and the share of
+searches whose plan uses the HNSW index is recorded. Throughput is measured end to end through the
+layer with one client thread and compared only within a job; recall is compared across jobs. Each
+setting has a share of its job's time; one that runs out keeps a prefix of a fixed order that cycles
+through cells and subjects. The same harness runs the enterprise scenario, whose as-run settings must
+reproduce the audit's recall within 0.03 for seven of nine stores. We pre-registered four hypotheses: that negatively correlated questions lose at least 0.05
 of recall@10 against uncorrelated ones at defaults in at least six stores (H2.1); that local
 selectivity predicts recall better than global selectivity (H2.2); that raising search effort
 narrows but does not close that gap (H2.3); and that intermediate selectivities are harder than very
 small ones, which stores answer by brute force (H2.4).
-\tbd{X2 full run (GitHub Actions run 40921769714): frontiers per store and regime (figure);
-verdicts on H2.1 to H2.4 with intervals; recall by measured axis; validity checks V1 to V5.}
+
+\paragraph{What ran.}
+X2 ran on GitHub Actions hosted runners (four CPUs, 16\,GB), one store per job: PostgreSQL 17.11
+with pgvector 0.8.7, Qdrant 1.19.2, Elasticsearch 9.5.5, OpenSearch 3.9.0, Weaviate 1.39.12, Redis
+8.10.2, Milvus (image 3.0.2), MongoDB Atlas Local 8.0.30, LanceDB 0.40.0 and Chroma 1.5.9. The
+validity checks held. Every exact setting, and FAISS, returned the exact answer to every question it
+ran (recall@10 1.000); no hit was unreadable and no canary appeared; and every subject granted 0.5\%
+or more could read within 25\% of its target share. Eight of the nine stores of the audit reproduced
+the recall@10 of its first run within 0.03 at its settings (Table~\ref{tab:qual-x0}), pgvector among
+them at 0.730 against 0.732, with every search planned with its own values. Chroma reached 0.990
+against 0.883: at about 1\,s a retrieval its share of the job's time covered only 381 to 407 of the
+1,468 questions, the first questions of each person, which for most people ask about a document they
+may read, the kind it answered best in the audit (overlap@5 of 0.989, against 0.82 to 0.84 for the
+other kinds). On
+MS MARCO Chroma was not measured, a deviation from the plan. Each of its three builds loaded the million
+passages in 22 to 28 minutes, but a filtered retrieval then took 137 to 221\,s, so the twenty
+warm-up retrievals of each setting used up the setting's time and none reached a timed pass; under
+the pre-registered procedure a rerun cannot finish within a job.
+
+% Proposed figure fig:qual-frontiers (data in evidence/x2-x5-run1.md, "Frontier data"): one panel
+% per store on MS MARCO, recall@10 against QPS of the build-0 job, default, sweep, other options
+% and exact marked. Proposed figure fig:qual-axes: recall@10 at default by rho_1000 bin and by
+% sigma_g bin per store (x2_axes.csv).
+\begin{table}[tbp]
+\centering
+\footnotesize
+\begin{tabular}{@{}lrrlrrlrrrr@{}}
+\toprule
+ & \multicolumn{2}{c}{Default} & \multicolumn{3}{c}{Most search effort} & \multicolumn{3}{c}{Best other option} & Exact & Ent. \\
+\cmidrule(lr){2-3}\cmidrule(lr){4-6}\cmidrule(lr){7-9}
+Store & R@10 & QPS & Setting & R@10 & QPS & Option & R@10 & QPS & QPS & R@10 \\
+\midrule
+pgvector & 0.575 & 75.3 & \texttt{ef\_search} 1,000 & 0.927 & 14.8 & both scan limits & 0.949 & 12.9 & 0.26 & 0.112 \\
+Qdrant & 0.799 & 205.3 & \texttt{hnsw\_ef} 1,024 & 0.898 & 96.7 & ACORN 1.0 & 0.997 & 28.5 & 22.6 & 0.641 \\
+Elasticsearch & 0.806 & 185.1 & candidates 10,000 & 0.878 & 107.2 & & & & 52.1 & 0.815 \\
+OpenSearch & 0.998 & 105.3 & \texttt{ef\_search} 512 & 0.999 & 91.5 & & & & 15.8 & 0.948 \\
+Weaviate & 0.968 & 136.1 & \texttt{ef} 1,024 & 0.994 & 77.1 & sweeping & 0.995 & 104.3 & 24.8 & 0.923 \\
+Redis & 0.971 & 54.1 & \texttt{EF\_RUNTIME} 1,000 & 0.999 & 49.9 & & & & 17.0 & 0.987 \\
+Milvus & 0.972 & 68.6 & \texttt{ef} 512 & 0.999 & 98.1 & & & & & 0.864 \\
+MongoDB & 0.996 & 24.1 & candidates 10,000 & 1.000 & 10.3 & & & & 18.7 & 0.953 \\
+LanceDB & 0.437 & 67.9 & \texttt{nprobes} 500 & 0.450 & 24.1 & refine 30 & 0.908 & 37.9 & 4.6 & 0.439 \\
+Chroma & \multicolumn{9}{c}{not measured: 137 to 221\,s per retrieval} & 0.983 \\
+FAISS (flat) & & & & & & & & & 0.91 & 1.000 \\
+\bottomrule
+\end{tabular}
+\caption{X2 on MS MARCO (1,000,000 passages; 6,200 question--subject pairs over every layout,
+correlation regime and selectivity). R@10: recall@10, the mean over three builds (exact settings:
+one). QPS: one client thread through the layer, the median of three passes in the store's build-0
+job, so comparable only within a row. Most search effort: the top of the store's five-level sweep.
+pgvector's default has iterative scans off; ``both scan limits'' raises \texttt{hnsw.max\_scan\_tuples}
+to 1,000,000 and \texttt{hnsw.scan\_mem\_multiplier} to 16 at \texttt{ef\_search} 100; its exact
+search answered 998 pairs in its time. Qdrant's ACORN option has \texttt{max\_selectivity} 1.0 and
+\texttt{hnsw\_ef} 512. Ent.: recall@10 at the default on the enterprise corpus (1,468 questions;
+Elasticsearch's \texttt{bbq\_hnsw}, 0.888 with \texttt{int8\_hnsw}; Chroma on 407).}
+\label{tab:qual-frontiers}
+\end{table}
+
+\paragraph{Defaults.}
+At the settings a user gets without tuning, recall@10 on MS MARCO ranged from 0.437 and 0.575 to
+0.998 (Table~\ref{tab:qual-frontiers}). The two lowest are documented defaults. pgvector without
+iterative scans filters the 40 candidates its index returns and stops: 32.4\% of the retrievals on MS
+MARCO and 61.6\% on the enterprise corpus came back empty (recall@10 0.575 and 0.112), against 0.3\%
+and 9.7\% with the iterative scans the layer configures (recall@10 0.897 and 0.661 at
+\texttt{ef\_search} 100). LanceDB's default IVF-PQ index ranks by quantized distances: raising
+\texttt{nprobes} from 10 to 500 moved recall@10 only from 0.424 to 0.450 at a third of the throughput,
+while re-ranking 30 times $k$ candidates by their full vectors reached 0.908. Elsewhere effort bought
+recall at a price in throughput, and the stores' own options bought more: Qdrant reached 0.898 at the
+top of its sweep but 0.997 with ACORN, and Weaviate's sweeping filter strategy reached 0.995 against
+0.968 for its default ACORN strategy~\cite{weaviate2026vectorindex}, at 104.3 against 136.1 queries
+per second. Index builds varied little except Qdrant's: its recall@10 at the default ranged from
+0.759 to 0.878 over three builds of the same data, as in X1.
+
+\begin{table}[tbp]
+\centering
+\footnotesize
+\begin{tabular}{@{}llllll@{}}
+\toprule
+Store & \multicolumn{1}{c}{$G$ (H2.1)} & \multicolumn{1}{c}{$D$ (H2.2)} & & \multicolumn{1}{c}{$V$ (H2.4)} & \\
+\midrule
+pgvector & 0.4242 (0.4154, 0.4332) gap & 0.3650 (0.3321, 0.3989) & local & 0.9267 (0.8867, 0.9600) & U-shaped \\
+Qdrant & 0.0343 (0.0196, 0.0487) & $-0.2032$ ($-0.2194$, $-0.1876$) & global & 0.5403 (0.5165, 0.5653) & U-shaped \\
+Elasticsearch & 0.1371 (0.1242, 0.1500) gap & 0.2439 (0.2116, 0.2754) & local & 0.2338 (0.2032, 0.2650) & U-shaped \\
+OpenSearch & $-0.0014$ ($-0.0029$, 0.0001) none & $-0.0601$ ($-0.0793$, $-0.0411$) & n.a. & 0.0005 (0.0000, 0.0015) & \\
+Weaviate & 0.0549 (0.0478, 0.0618) gap & $-0.3900$ ($-0.4159$, $-0.3644$) & global & 0.1780 (0.1578, 0.1980) & U-shaped \\
+Redis & $-0.0794$ ($-0.0871$, $-0.0719$) & $-0.0757$ ($-0.0870$, $-0.0647$) & global & 0.0000 (0.0000, 0.0000) & monotone \\
+Milvus & 0.0136 (0.0080, 0.0194) none & $-0.5307$ ($-0.5469$, $-0.5140$) & global & 0.1037 (0.0925, 0.1150) & U-shaped \\
+MongoDB & $-0.0037$ ($-0.0055$, $-0.0019$) none & $-0.0804$ ($-0.1016$, $-0.0593$) & global & 0.0012 (0.0005, 0.0020) & \\
+LanceDB & 0.2535 (0.2423, 0.2649) gap & 0.5382 (0.5080, 0.5674) & local & $-0.0098$ ($-0.0332$, 0.0212) & monotone \\
+\bottomrule
+\end{tabular}
+\caption{X2's pre-registered statistics on MS MARCO at the stores' defaults, with 95\% intervals from
+a cluster bootstrap over subjects (10,000 resamples). $G$: recall@10 of uncorrelated minus negatively
+correlated questions at selectivities 2\% to 30\% (``gap'' needs $G \ge 0.05$, an interval above 0 and
+the same sign in at least four of five seeds; ``none'' $|G| < 0.02$ with the interval inside
+$\pm 0.03$). $D$: $|\rho_S(\text{recall@10}, \rho_{1000})| - |\rho_S(\text{recall@10}, \sigma_g)|$,
+Spearman over the 6,200 pairs (``local'' $D \ge 0.05$ with the interval above 0, ``global'' $D < 0$
+with it below; n.a.: fewer than 100 pairs with recall below 1). $V$: recall@10 at 0.06\% minus the
+lowest at 0.5\%, 2\% and 10\%, clustered layouts, negatively correlated questions, one disjunction
+(``U-shaped'' needs $V \ge 0.05$, an interval above 0 and four seeds; ``monotone'' $V \le 0$). A blank
+label is neither outcome. Chroma was not measured.}
+\label{tab:qual-x2tests}
+\end{table}
+
+\paragraph{Correlation (H2.1, inconclusive).}
+Negatively correlated questions lost at least 0.05 of recall@10 in four stores, not the six we had
+predicted, and no loss beyond 0.02 in three (Table~\ref{tab:qual-x2tests}): pgvector lost 0.424,
+LanceDB 0.254, Elasticsearch 0.137 and Weaviate 0.055, each in all five seeds; OpenSearch, MongoDB and
+Milvus stayed within 0.014 at recall@10 of 0.97 to 1.00. The other two show why one number per store
+misleads. Redis's recall was \emph{higher} for negatively correlated questions, by 0.079, and the cost
+appeared as latency: in the build-0 job those questions at 10\% and 30\% selectivity were answered
+exactly at a median of 56.8 and 147.1\,ms, against 0.908 and 0.858 of recall at 2.2 and 2.7\,ms for
+uncorrelated ones, consistent with Redis switching from batches of graph neighbors to brute force over
+the filter's matches when the batches find too few~\cite{redis2026vectors}. OpenSearch and MongoDB
+paid the same way, more mildly (24.6 against 15.3\,ms, and 68.0 against 33.3\,ms, at 10\%). Qdrant's
+gap of 0.034 (0.020 to 0.049) averages opposite effects: at 2\% its recall@10 was 0.024 for
+uncorrelated questions, 0.312 for negatively and 0.808 for positively correlated ones, and at 30\%
+0.818, 0.565 and 0.985 (build 0). A random 2\% of the graph is the hardest permitted subgraph to
+traverse, since few of a node's neighbors belong to it; topical groups stay better connected.
+
+\paragraph{Local or global selectivity (H2.2, falsified).}
+Local selectivity predicted recall better than global selectivity in three stores and worse in five;
+the pre-registered rule calls the hypothesis falsified once half of the assessable stores (eight;
+OpenSearch had too few misses) go the other way. The split follows the mechanism. Where recall depends on what lies near the question, in pgvector's scan in order of
+distance, LanceDB's probed partitions and Elasticsearch, local selectivity won ($D$ of 0.244 to
+0.538), and ACORN's query correlation correlated with recall more strongly still (Spearman 0.562 to
+0.672). Where the store chooses its search path from the filter's estimated size, as Qdrant, Weaviate
+and Redis document~\cite{qdrant2026search,weaviate2026vectorindex,redis2026vectors}, and in Milvus and
+MongoDB, small filters are searched exactly and global selectivity won ($D$ of $-0.531$ to $-0.076$).
+HCBGen's over-fetch estimate, which grows as the readable set shrinks, correlated \emph{positively}
+with recall in eight of the nine stores (up to 0.551), the opposite sign to a measure of difficulty,
+for the same reason. No single axis describes every store; the paper therefore reports recall against
+several (released with the run).
+
+\paragraph{Effort and the gap (H2.3, confirmed).}
+At the top of each sweep the gap narrowed and remained in two of the four stores that had one, as
+predicted. pgvector's fell from 0.424 to 0.172 (0.161 to 0.183) at \texttt{ef\_search} 1,000, and
+LanceDB's moved by 0.001 at 500 probes, at its quantization floor. Weaviate's closed, to 0.004 at
+\texttt{ef} 1,024. Elasticsearch's widened, from 0.137 to 0.162 at 10,000 candidates: more candidates
+helped uncorrelated questions more. pgvector reached recall@10 of 0.95 for uncorrelated questions at
+\texttt{ef\_search} 400 and for negatively correlated ones at no level of its sweep; Weaviate needed one
+more level for them (\texttt{ef} 256 against 128).
+
+\paragraph{Intermediate filters (H2.4, confirmed).}
+Five stores lost more at an intermediate selectivity than at the smallest, as predicted. On clustered
+layouts with negatively correlated questions and one disjunction, recall@10 at 0.06\%, 0.5\%, 2\% and
+10\% was 0.927, 0.380, 0.000 and 0.000 for pgvector at its default (whose planner chose the exact
+plan for most of the smallest filters, below), 1.000, 1.000, 0.460 and 0.489 for Qdrant, 0.841,
+0.727, 0.641 and 0.607 for Elasticsearch, and 1.000 down to 0.822 and 0.896 at 10\% for Weaviate and
+Milvus. Redis stayed at 1.000 and LanceDB near its floor (0.197 to 0.235); OpenSearch and MongoDB lost
+at most 0.0012. Very selective permission filters are therefore the easy case for most stores; the
+hard ones admit between 0.5\% and 10\% of the corpus.
+
+\paragraph{pgvector's plans.}
+With each search planned with its own values, PostgreSQL chose the HNSW scan for 98.6\% of the
+enterprise searches at \texttt{ef\_search} 40 to 200, as in X1's custom plans, but for 88.9\% at 400
+and none at 1,000, where its cost estimate made the exact plan cheaper: recall@10 1.000 at a median
+of 169.7\,ms, against 0.670 at 17.9\,ms with \texttt{ef\_search} 200. On MS MARCO, at the default
+setting, it chose the exact plan for 86\% to 94\% of the searches at 0.06\% selectivity, for up to
+39\% at 0.5\%, and for none above.
+These switches are the planner's, made per search; the plan cache of Section~\ref{sec:qual-pgvector},
+which decides once per statement and connection, had no role here.
+
+\paragraph{The enterprise corpus.}
+The enterprise results agree with X1 and the audit. Qdrant reached 0.663 at \texttt{hnsw\_ef} 128,
+0.864 at 1,024, 0.830 with ACORN at its default gate and 0.953 with ACORN at gate 1.0 and
+\texttt{hnsw\_ef} 512, and 0.941 with per-tenant graphs at \texttt{hnsw\_ef} 128 at a similar latency
+(4.7 against 4.9\,ms). Elasticsearch's default index for 768 dimensions, \texttt{bbq\_hnsw},
+lost against \texttt{int8\_hnsw} at every level (0.815 against 0.888 at the default, 0.867 against
+0.966 at 500 candidates). Turning off Weaviate's flat-search cutoff lowered its recall@10 from 0.923
+to 0.837 here and from 0.968 to 0.812 on MS MARCO: the exact scan of filters below 40,000 objects
+carries much of its recall.
 
 \subsection{Filter size}\label{sec:qual-size}
 

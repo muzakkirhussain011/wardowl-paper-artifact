@@ -889,3 +889,21 @@
   urldate      = {2026-10-30},
   annote       = {gincostestimate starts the entry pages fetched at the number of pending pages ("pay attention to pending list") and charges them at random\_page\_cost in the startup cost}
 }
+
+@misc{redis2026vectors,
+  author       = {{Redis}},
+  title        = {Vector search concepts},
+  howpublished = {Redis documentation (Redis Query Engine)},
+  url          = {https://redis.io/docs/latest/develop/ai/search-and-query/vectors/},
+  urldate      = {2026-10-29},
+  annote       = {Filtered KNN runs in batches mode or ad hoc brute force, chosen by heuristics and switchable during a run from batches to brute force; HYBRID\_POLICY BATCHES or ADHOC\_BF overrides it; brute force is always accurate; HNSW EF\_RUNTIME defaults to 10}
+}
+
+@misc{weaviate2026vectorindex,
+  author       = {{Weaviate}},
+  title        = {Vector index},
+  howpublished = {Weaviate Documentation},
+  url          = {https://docs.weaviate.io/weaviate/config-refs/indexing/vector-index},
+  urldate      = {2026-10-29},
+  annote       = {HNSW: ef -1 (dynamic, 100 to 500), flatSearchCutoff 40000, filterStrategy acorn by default since v1.34 (sweeping; pathseer from v1.40), all mutable after creation}
+}
