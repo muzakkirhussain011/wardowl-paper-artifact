@@ -1,0 +1,49 @@
+Unable to find image 'mongodb/mongodb-atlas-local:8.0.30' locally
+8.0.30: Pulling from mongodb/mongodb-atlas-local
+2164d2820af9: Pulling fs layer
+1754cf659fb5: Pulling fs layer
+0e0df305ff09: Pulling fs layer
+3c5757f00e1a: Pulling fs layer
+6940e6bc0c1c: Pulling fs layer
+61878b2874fc: Pulling fs layer
+0b032b9c860c: Pulling fs layer
+9345a84db485: Pulling fs layer
+d3534db32a89: Pulling fs layer
+3c5757f00e1a: Waiting
+6940e6bc0c1c: Waiting
+61878b2874fc: Waiting
+0b032b9c860c: Waiting
+9345a84db485: Waiting
+d3534db32a89: Waiting
+1754cf659fb5: Verifying Checksum
+1754cf659fb5: Download complete
+0e0df305ff09: Verifying Checksum
+0e0df305ff09: Download complete
+2164d2820af9: Download complete
+61878b2874fc: Verifying Checksum
+61878b2874fc: Download complete
+0b032b9c860c: Verifying Checksum
+0b032b9c860c: Download complete
+9345a84db485: Verifying Checksum
+9345a84db485: Download complete
+3c5757f00e1a: Verifying Checksum
+3c5757f00e1a: Download complete
+d3534db32a89: Verifying Checksum
+d3534db32a89: Download complete
+6940e6bc0c1c: Verifying Checksum
+6940e6bc0c1c: Download complete
+2164d2820af9: Pull complete
+1754cf659fb5: Pull complete
+0e0df305ff09: Pull complete
+3c5757f00e1a: Pull complete
+6940e6bc0c1c: Pull complete
+61878b2874fc: Pull complete
+0b032b9c860c: Pull complete
+9345a84db485: Pull complete
+d3534db32a89: Pull complete
+Digest: sha256:165a9ddc39e6086b802fc5d964c5530e7668ae4ce787631c897b4a6acbf62ed9
+Status: Downloaded newer image for mongodb/mongodb-atlas-local:8.0.30
+6bfb98fe75c73f4ef1ce83d5878894c0e966fcce63f784dd6a78c03251b7d0d1
+
+added 622 packages in 34s
+mongodb answered after about 2 s
