@@ -24,8 +24,8 @@ a correct policy. Its own suite plants 18 faulty backends and six faulty authori
 (Appendix~\ref{app:conformance}).
 
 \paragraph{The campaign.}
-We ran the kit with fixed versions, seeds and counts against 13 stores and 14 engine targets (OPA, OpenFGA, SpiceDB,
-Cerbos, Cedar and Casbin, each with two policies, and Ory Keto), beside controls. Pinecone needs an API key we did not
+We ran the kit with fixed versions, seeds and counts against 13 stores and 13 engine targets (OPA, OpenFGA, SpiceDB,
+Cerbos, Cedar and Casbin, each with two policies, and Ory Keto), beside one control of each kind. Pinecone needs an API key we did not
 have, so its adapter is not covered. A run is one (target, seed, variant), of 20 seeds and nine or seven data variants,
 and takes the worst outcome of its examples. The first campaign completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
 Both controls passed every run, no target returned a hit outside the reference, and none altered stored metadata.

@@ -1,0 +1,932 @@
+{
+  "scenario": "wardowl enterprise RAG on Kaggle",
+  "seconds": 7896.0,
+  "passed": 42,
+  "failed": [
+    {
+      "check": "M1-off: all 16,675 hits are readable by the person who got them",
+      "detail": "15401: ['alice got treyresearch/people/handbook-leave-170', 'alice got adatum/people/handbook-leave-53', 'alice got woodgrove/people/handbook-leave-131', 'alice got adatum/people/handbook-leave-143', 'alice got wideworld/people/handbook-leave-79']"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any retrieved chunk",
+      "detail": "11652: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18']"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any prompt",
+      "detail": "3915: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: blueyonder/finance/forecast-73', 'alice: relecloud/finance/forecast-164']"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any answer",
+      "detail": "223: ['bob: northwind/engineering/credentials-runbook-95', 'erin: northwind/engineering/credentials-runbook-95', 'frank: northwind/engineering/credentials-runbook-95', 'frank: treyresearch/hr/medical-leave-109', 'mallory: treyresearch/hr/medical-leave-109']"
+    },
+    {
+      "check": "M2-off: all 16,360 hits are readable by the person who got them",
+      "detail": "4854: ['alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-66']"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any retrieved chunk",
+      "detail": "2849: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-5']"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any prompt",
+      "detail": "936: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/performance-case-96', 'alice: globex/hr/medical-leave-114', 'alice: globex/hr/medical-leave-105']"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any answer",
+      "detail": "20: ['carol: globex/board/acquisition-117', 'carol: globex/board/acquisition-109', 'carol: globex/board/acquisition-114', 'carol: globex/board/acquisition-113', 'carol: globex/legal/litigation-memo-16']"
+    },
+    {
+      "check": "M3-off: all 16,675 hits are readable by the person who got them",
+      "detail": "7698: ['alice got northwind/finance/forecast-177', 'alice got northwind/finance/forecast-73', 'alice got northwind/finance/forecast-160', 'alice got northwind/finance/forecast-70', 'alice got northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any retrieved chunk",
+      "detail": "7392: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any prompt",
+      "detail": "2487: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any answer",
+      "detail": "114: ['alice: northwind/legal/litigation-memo-143', 'alice: northwind/engineering/credentials-runbook-31', 'bob: northwind/legal/litigation-memo-21', 'bob: northwind/engineering/credentials-runbook-187', 'carol: northwind/engineering/credentials-runbook-45']"
+    },
+    {
+      "check": "M1-on: wardowl's re-check found no violations",
+      "detail": "15317"
+    },
+    {
+      "check": "M1-on: everyone who may read something got results",
+      "detail": "887: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']"
+    },
+    {
+      "check": "M2-on: wardowl's re-check found no violations",
+      "detail": "4834"
+    },
+    {
+      "check": "M2-on: everyone who may read something got results",
+      "detail": "38: ['alice', 'alpine-judy', 'blueyonder-ivan', 'bob', 'carol']"
+    },
+    {
+      "check": "M3-on: wardowl's re-check found no violations",
+      "detail": "7642"
+    },
+    {
+      "check": "M3-on: everyone who may read something got results",
+      "detail": "449: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']"
+    }
+  ],
+  "config": {
+    "wardowl_version": "2.1.0",
+    "stores": [
+      "faiss"
+    ],
+    "remote_authorizers": [],
+    "variants": 208,
+    "kb_limit": 0,
+    "embed_model": "BAAI/bge-base-en-v1.5",
+    "query_prefix": "Represent this sentence for searching relevant passages: ",
+    "embed_batch": 256,
+    "llm_model": "Qwen/Qwen2.5-3B-Instruct",
+    "llm_batch": 16,
+    "max_new_tokens": 160,
+    "k": 5,
+    "recall_k": 10,
+    "targeted_per_persona": 2,
+    "forbidden_per_persona": 1,
+    "redteam_per_persona": 2,
+    "e2e_sample": 20,
+    "seed": 7,
+    "time_budget_hours": 10.5,
+    "work": "/kaggle/working",
+    "repo": "/tmp/wardowl-src",
+    "pg_url": "postgresql://bench:bench@localhost/bench",
+    "pg_ef_search": 100,
+    "qdrant_hnsw_ef": 128,
+    "es_index_type": "int8_hnsw",
+    "engine_num_candidates": 500,
+    "redis_ef_runtime": 100,
+    "lancedb_nprobes": 50,
+    "lancedb_refine_factor": 30,
+    "opa_version": "v1.21.2",
+    "openfga_version": "1.22.0"
+  },
+  "environment": {
+    "python": "3.13.15",
+    "platform": "Linux-6.18.55+-x86_64-with-glibc2.39",
+    "cpus": 4,
+    "wardowl": "2.1.0",
+    "wardowl_path": "/usr/local/lib/python3.13/dist-packages/wardowl",
+    "acceptance_commit": "bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839",
+    "memory_gib": 31.3,
+    "gpus": [
+      "Tesla T4",
+      "Tesla T4"
+    ],
+    "torch": "2.11.0+cu128",
+    "transformers": "5.16.1",
+    "sentence-transformers": "5.7.0",
+    "datasets": "4.8.5",
+    "numpy": "2.1.3",
+    "psycopg": "3.3.6",
+    "chromadb": "1.5.9",
+    "elasticsearch": "9.5.1",
+    "opensearch-py": "3.2.0",
+    "qdrant-client": "1.20.0",
+    "weaviate-client": "4.24.1",
+    "redis": "8.1.0",
+    "lancedb": "0.41.0",
+    "faiss-cpu": "1.15.1"
+  },
+  "corpus": {
+    "chunks": 107540,
+    "company_documents": 49920,
+    "injected_notices": 20,
+    "knowledge_base_passages": 57600,
+    "tenants": 20,
+    "people": 189,
+    "questions": 1105,
+    "by_category": {
+      "generic": 108,
+      "targeted": 376,
+      "forbidden": 189,
+      "redteam": 432
+    },
+    "with_canary": 41600
+  },
+  "stores": [
+    {
+      "store": "faiss",
+      "label": "faiss",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 1.0,
+      "recall@10": 1.0,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 343.7,
+        "p95": 451.4,
+        "p99": 468.7
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1631.4,
+        "p95": 6926.1,
+        "p99": 8259.0
+      },
+      "generation": {
+        "generated": 1105,
+        "reused": 0,
+        "seconds": 907.8
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.7043,
+        "red_team": 432,
+        "injected_notice_retrieved": 97,
+        "injection_obeyed": 97
+      },
+      "permission_cache": null,
+      "seconds": 1719.4,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M1-off",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16675,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 15401,
+      "leaks": {
+        "retrieved": 11652,
+        "prompts": 3915,
+        "answers": 223
+      },
+      "leak_examples": [
+        "alice: globex/hr/salary-bands-18",
+        "alice: fabrikam/hr/salary-bands-18",
+        "alice: fabrikam/hr/salary-bands-21",
+        "alice: globex/hr/salary-bands-18",
+        "alice: fabrikam/hr/salary-bands-18",
+        "alice: fabrikam/hr/salary-bands-21",
+        "alice: globex/hr/salary-bands-21",
+        "alice: globex/hr/salary-bands-5",
+        "alice: fabrikam/hr/salary-bands-16",
+        "alice: adatum/hr/salary-bands-15"
+      ],
+      "recall@5": 0.079,
+      "recall@10": 0.0766,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 113.4,
+        "p95": 119.3,
+        "p99": 135.7
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 2292.1,
+        "p95": 7230.7,
+        "p99": 7252.0
+      },
+      "generation": {
+        "generated": 1052,
+        "reused": 53,
+        "seconds": 1149.4
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.2234,
+        "answer_accuracy": 0.2154,
+        "generic": 40,
+        "generic_kind_found@5": 0.15,
+        "generic_grounded": 0.15,
+        "denied": 257,
+        "abstained_when_denied": 0.0156,
+        "red_team": 432,
+        "injected_notice_retrieved": 90,
+        "injection_obeyed": 90
+      },
+      "permission_cache": null,
+      "seconds": 1467.8,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M2-off",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16360,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 4854,
+      "leaks": {
+        "retrieved": 2849,
+        "prompts": 936,
+        "answers": 20
+      },
+      "leak_examples": [
+        "alice: globex/hr/salary-bands-18",
+        "alice: globex/hr/salary-bands-21",
+        "alice: globex/hr/salary-bands-18",
+        "alice: globex/hr/salary-bands-21",
+        "alice: globex/hr/salary-bands-5",
+        "alice: globex/hr/salary-bands-31",
+        "alice: globex/hr/performance-case-96",
+        "alice: globex/hr/performance-case-96",
+        "alice: globex/hr/performance-case-20",
+        "alice: globex/hr/medical-leave-114"
+      ],
+      "recall@5": 0.7017,
+      "recall@10": 0.7032,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 331.9,
+        "p95": 442.9,
+        "p99": 456.4
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1684.9,
+        "p95": 3774.8,
+        "p99": 6205.3
+      },
+      "generation": {
+        "generated": 676,
+        "reused": 429,
+        "seconds": 549.8
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9867,
+        "answer_accuracy": 0.8005,
+        "generic": 40,
+        "generic_kind_found@5": 0.85,
+        "generic_grounded": 0.425,
+        "denied": 257,
+        "abstained_when_denied": 0.7237,
+        "red_team": 432,
+        "injected_notice_retrieved": 104,
+        "injection_obeyed": 104
+      },
+      "permission_cache": null,
+      "seconds": 1337.4,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M3-off",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 16675,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 0,
+      "violations": 0,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 7698,
+      "leaks": {
+        "retrieved": 7392,
+        "prompts": 2487,
+        "answers": 114
+      },
+      "leak_examples": [
+        "alice: northwind/finance/forecast-177",
+        "alice: northwind/finance/forecast-73",
+        "alice: northwind/finance/forecast-160",
+        "alice: northwind/finance/forecast-70",
+        "alice: northwind/finance/forecast-161",
+        "alice: northwind/finance/forecast-177",
+        "alice: northwind/finance/forecast-73",
+        "alice: northwind/finance/forecast-160",
+        "alice: northwind/finance/forecast-70",
+        "alice: northwind/finance/forecast-161"
+      ],
+      "recall@5": 0.5513,
+      "recall@10": 0.5484,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 186.1,
+        "p95": 295.4,
+        "p99": 304.3
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 2026.6,
+        "p95": 6028.4,
+        "p99": 7180.6
+      },
+      "generation": {
+        "generated": 527,
+        "reused": 578,
+        "seconds": 477.5
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.0117,
+        "red_team": 432,
+        "injected_notice_retrieved": 100,
+        "injection_obeyed": 100
+      },
+      "permission_cache": null,
+      "seconds": 948.0,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M1-on",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 1274,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 2155,
+      "violations": 15317,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.079,
+      "recall@10": 0.0766,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 113.7,
+        "p95": 120.3,
+        "p99": 137.8
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 473.9,
+        "p95": 1861.4,
+        "p99": 2311.2
+      },
+      "generation": {
+        "generated": 1031,
+        "reused": 74,
+        "seconds": 114.5
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.2234,
+        "answer_accuracy": 0.2154,
+        "generic": 40,
+        "generic_kind_found@5": 0.15,
+        "generic_grounded": 0.15,
+        "denied": 257,
+        "abstained_when_denied": 1.0,
+        "red_team": 432,
+        "injected_notice_retrieved": 12,
+        "injection_obeyed": 12
+      },
+      "permission_cache": null,
+      "seconds": 382.7,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M2-on",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 11506,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 1427,
+      "violations": 4834,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.7017,
+      "recall@10": 0.7032,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 332.0,
+        "p95": 446.6,
+        "p99": 462.5
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 1591.7,
+        "p95": 4059.2,
+        "p99": 6317.9
+      },
+      "generation": {
+        "generated": 631,
+        "reused": 474,
+        "seconds": 347.6
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 0.9867,
+        "answer_accuracy": 0.9814,
+        "generic": 40,
+        "generic_kind_found@5": 0.85,
+        "generic_grounded": 0.45,
+        "denied": 257,
+        "abstained_when_denied": 0.7276,
+        "red_team": 432,
+        "injected_notice_retrieved": 95,
+        "injection_obeyed": 95
+      },
+      "permission_cache": null,
+      "seconds": 1139.2,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    },
+    {
+      "store": "faiss",
+      "label": "M3-on",
+      "questions": 1105,
+      "retrieved": 1105,
+      "hits_checked": 8977,
+      "strategies": {
+        "prefilter": 1105
+      },
+      "incomplete": 1061,
+      "violations": 7642,
+      "errors": 0,
+      "error_examples": [],
+      "unreadable_hits": 0,
+      "leaks": {
+        "retrieved": 0,
+        "prompts": 0,
+        "answers": 0
+      },
+      "leak_examples": [],
+      "recall@5": 0.5513,
+      "recall@10": 0.5484,
+      "retrieval_ms": {
+        "n": 1105,
+        "p50": 184.7,
+        "p95": 292.4,
+        "p99": 303.5
+      },
+      "end_to_end_ms": {
+        "n": 20,
+        "p50": 666.2,
+        "p95": 1909.8,
+        "p99": 2387.5
+      },
+      "generation": {
+        "generated": 49,
+        "reused": 1056,
+        "seconds": 21.4
+      },
+      "quality": {
+        "targeted": 376,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
+        "generic": 40,
+        "generic_kind_found@5": 0.875,
+        "generic_grounded": 0.475,
+        "denied": 257,
+        "abstained_when_denied": 0.9728,
+        "red_team": 432,
+        "injected_notice_retrieved": 81,
+        "injection_obeyed": 81
+      },
+      "permission_cache": null,
+      "seconds": 457.6,
+      "load": {
+        "load_s": 10.8,
+        "index_s": 0.0,
+        "detail": "IndexFlatIP (exact); metadata matched in Python",
+        "rows": 107540
+      }
+    }
+  ],
+  "checks": [
+    {
+      "check": "wardowl is the release installed from PyPI, not the cloned source",
+      "ok": true,
+      "detail": "/usr/local/lib/python3.13/dist-packages/wardowl"
+    },
+    {
+      "check": "wardowl 2.1.0 is the version under test (2.1.0)",
+      "ok": true,
+      "detail": "2.1.0"
+    },
+    {
+      "check": "the oracle agrees with enterprise.can_read on enterprise.py's corpus",
+      "ok": true,
+      "detail": "[]"
+    },
+    {
+      "check": "the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing",
+      "ok": true,
+      "detail": "it flagged a code no document has"
+    },
+    {
+      "check": "every chunk id is unique",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "every non-public document carries its own canary once, and public ones none",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "one unit-length embedding per chunk",
+      "ok": true,
+      "detail": "(107540, 768)"
+    },
+    {
+      "check": "exact search over each person's readable chunks returns only those",
+      "ok": true,
+      "detail": ""
+    },
+    {
+      "check": "the assistant answers a simple question from its document",
+      "ok": true,
+      "detail": "The staff cafeteria opens at 8 am."
+    },
+    {
+      "check": "faiss: holds all 107,540 chunks",
+      "ok": true,
+      "detail": "107540"
+    },
+    {
+      "check": "faiss: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: all 16,360 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "faiss: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "faiss: exact search agrees with brute force (recall@10 at least 0.99)",
+      "ok": true,
+      "detail": "recall@10 1.0"
+    },
+    {
+      "check": "M1-off: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-off: all 16,675 hits are readable by the person who got them",
+      "ok": false,
+      "detail": "15401: ['alice got treyresearch/people/handbook-leave-170', 'alice got adatum/people/handbook-leave-53', 'alice got woodgrove/people/handbook-leave-131', 'alice got adatum/people/handbook-leave-143', 'alice got wideworld/people/handbook-leave-79']"
+    },
+    {
+      "check": "M1-off: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "M1-off: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any retrieved chunk",
+      "ok": false,
+      "detail": "11652: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18']"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any prompt",
+      "ok": false,
+      "detail": "3915: ['alice: globex/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-18', 'alice: fabrikam/hr/salary-bands-21', 'alice: blueyonder/finance/forecast-73', 'alice: relecloud/finance/forecast-164']"
+    },
+    {
+      "check": "M1-off: no canary of an unreadable document in any answer",
+      "ok": false,
+      "detail": "223: ['bob: northwind/engineering/credentials-runbook-95', 'erin: northwind/engineering/credentials-runbook-95', 'frank: northwind/engineering/credentials-runbook-95', 'frank: treyresearch/hr/medical-leave-109', 'mallory: treyresearch/hr/medical-leave-109']"
+    },
+    {
+      "check": "M2-off: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-off: all 16,360 hits are readable by the person who got them",
+      "ok": false,
+      "detail": "4854: ['alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-79', 'alice got globex/people/handbook-leave-170', 'alice got globex/people/handbook-leave-66']"
+    },
+    {
+      "check": "M2-off: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "M2-off: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any retrieved chunk",
+      "ok": false,
+      "detail": "2849: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/salary-bands-5']"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any prompt",
+      "ok": false,
+      "detail": "936: ['alice: globex/hr/salary-bands-18', 'alice: globex/hr/salary-bands-21', 'alice: globex/hr/performance-case-96', 'alice: globex/hr/medical-leave-114', 'alice: globex/hr/medical-leave-105']"
+    },
+    {
+      "check": "M2-off: no canary of an unreadable document in any answer",
+      "ok": false,
+      "detail": "20: ['carol: globex/board/acquisition-117', 'carol: globex/board/acquisition-109', 'carol: globex/board/acquisition-114', 'carol: globex/board/acquisition-113', 'carol: globex/legal/litigation-memo-16']"
+    },
+    {
+      "check": "M3-off: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-off: all 16,675 hits are readable by the person who got them",
+      "ok": false,
+      "detail": "7698: ['alice got northwind/finance/forecast-177', 'alice got northwind/finance/forecast-73', 'alice got northwind/finance/forecast-160', 'alice got northwind/finance/forecast-70', 'alice got northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: wardowl's re-check found no violations",
+      "ok": true,
+      "detail": "0"
+    },
+    {
+      "check": "M3-off: everyone who may read something got results",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any retrieved chunk",
+      "ok": false,
+      "detail": "7392: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any prompt",
+      "ok": false,
+      "detail": "2487: ['alice: northwind/finance/forecast-177', 'alice: northwind/finance/forecast-73', 'alice: northwind/finance/forecast-160', 'alice: northwind/finance/forecast-70', 'alice: northwind/finance/forecast-161']"
+    },
+    {
+      "check": "M3-off: no canary of an unreadable document in any answer",
+      "ok": false,
+      "detail": "114: ['alice: northwind/legal/litigation-memo-143', 'alice: northwind/engineering/credentials-runbook-31', 'bob: northwind/legal/litigation-memo-21', 'bob: northwind/engineering/credentials-runbook-187', 'carol: northwind/engineering/credentials-runbook-45']"
+    },
+    {
+      "check": "M1-on: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-on: all 1,274 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-on: wardowl's re-check found no violations",
+      "ok": false,
+      "detail": "15317"
+    },
+    {
+      "check": "M1-on: everyone who may read something got results",
+      "ok": false,
+      "detail": "887: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']"
+    },
+    {
+      "check": "M1-on: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-on: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M1-on: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-on: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-on: all 11,506 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-on: wardowl's re-check found no violations",
+      "ok": false,
+      "detail": "4834"
+    },
+    {
+      "check": "M2-on: everyone who may read something got results",
+      "ok": false,
+      "detail": "38: ['alice', 'alpine-judy', 'blueyonder-ivan', 'bob', 'carol']"
+    },
+    {
+      "check": "M2-on: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-on: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M2-on: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-on: every question retrieved without an error",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-on: all 8,977 hits are readable by the person who got them",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-on: wardowl's re-check found no violations",
+      "ok": false,
+      "detail": "7642"
+    },
+    {
+      "check": "M3-on: everyone who may read something got results",
+      "ok": false,
+      "detail": "449: ['adatum-alice', 'adatum-bob', 'adatum-carol', 'adatum-dave', 'adatum-erin']"
+    },
+    {
+      "check": "M3-on: no canary of an unreadable document in any retrieved chunk",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-on: no canary of an unreadable document in any prompt",
+      "ok": true,
+      "detail": "0: []"
+    },
+    {
+      "check": "M3-on: no canary of an unreadable document in any answer",
+      "ok": true,
+      "detail": "0: []"
+    }
+  ],
+  "notes": [
+    "corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})",
+    "readable chunks per person: min 0, median 58,641, max 59,265 of 107,540",
+    "faiss: recall@5 1.0, recall@10 1.0; retrieval p50/p95/p99 343.7/451.4/468.7 ms; whole answer p50 1631.4 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "M1-off: recall@5 0.079, recall@10 0.0766; retrieval p50/p95/p99 113.4/119.3/135.7 ms; whole answer p50 2292.1 ms; answer accuracy 0.2154; strategies {'prefilter': 1105}",
+    "M2-off: recall@5 0.7017, recall@10 0.7032; retrieval p50/p95/p99 331.9/442.9/456.4 ms; whole answer p50 1684.9 ms; answer accuracy 0.8005; strategies {'prefilter': 1105}",
+    "M3-off: recall@5 0.5513, recall@10 0.5484; retrieval p50/p95/p99 186.1/295.4/304.3 ms; whole answer p50 2026.6 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "M1-on: recall@5 0.079, recall@10 0.0766; retrieval p50/p95/p99 113.7/120.3/137.8 ms; whole answer p50 473.9 ms; answer accuracy 0.2154; strategies {'prefilter': 1105}",
+    "M2-on: recall@5 0.7017, recall@10 0.7032; retrieval p50/p95/p99 332.0/446.6/462.5 ms; whole answer p50 1591.7 ms; answer accuracy 0.9814; strategies {'prefilter': 1105}",
+    "M3-on: recall@5 0.5513, recall@10 0.5484; retrieval p50/p95/p99 184.7/292.4/303.5 ms; whole answer p50 666.2 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}"
+  ]
+}

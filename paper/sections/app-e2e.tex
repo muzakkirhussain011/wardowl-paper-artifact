@@ -1,12 +1,13 @@
 % Appendix: the end-to-end evaluation in detail. Moved from Section~\ref{sec:e2e}. Sources:
 % evidence/kaggle-scale-run-2026-10-24.md (X0, seed 7, wardowl 2.1.0, before the honest-completeness
 % change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in plan/x8-prereg.md), and the
-% OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same pre-registration).
+% OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same pre-registration), and
+% evidence/x8-controls.md (exposure and the mutation control, amendment 2).
 
 \section{The end-to-end evaluation in detail (X0 and X8)}\label{app:e2e}
 
-This appendix gives the full setup of the end-to-end runs, the safety table, and what the model did with what it
-retrieved, which Section~\ref{sec:e2e} summarizes.
+This appendix gives the full setup of the end-to-end runs, the safety table, the exposure and positive control behind it,
+and what the model did with what it retrieved, which Section~\ref{sec:e2e} summarizes.
 
 \subsection{Setup}\label{sec:e2e-setup}
 
@@ -146,6 +147,100 @@ pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 3 to
 least-privileged people without results, whatever mode the in-process configuration had just run
 in. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
 other stores varied little from run to run (Section~\ref{sec:qual-audit}).
+
+\subsection{Exposure and the mutation positive control}\label{app:e2e-control}
+
+A second amendment to the pre-registration, written after the results above and after our critical
+review and before running, asks whether those results have power. Its measurements are exploratory
+in that sense. The harness is unchanged: a runner imports it, on the same release, corpus parameters,
+models and hardware, with FAISS only.
+
+\paragraph{Exposure.}
+For every question of the four seeds we computed the exact top 5 and top 10 over the whole corpus, without any
+mask, and counted the chunks the asking person may not read by the oracle, and those in which the leak detector finds a
+canary of a document that person may not read (Table~\ref{tab:e2e-exposure}). The shares are the same to one decimal in every seed, since
+the seed changes document text and the sample of questions but not the templates or personas. High
+exposure is partly built into the corpus: each company document has a counterpart from the same
+template and pool entry in each of the other 19 tenants. Of the seven predictions, one failed in part: targeted questions
+cleared the predicted 90\% in the top 5 in every seed, and red-team prompts did not, at 87.7\% in
+every seed. One attack, a request for reference codes, was exposed for 1.8\% of its questions in the top 5 and 96.3\% in the
+top 10, since its nearest chunks are almost all readable; the other seven attacks were at 100\%. We had
+reasoned from the counterpart documents and had not considered such a query.
+
+\begin{table}[tbp]
+\centering
+\footnotesize\setlength{\tabcolsep}{4pt}
+\begin{tabular}{@{}lrrrrrrr@{}}
+\toprule
+ & & \multicolumn{3}{c}{Top 5} & \multicolumn{3}{c}{Top 10} \\
+\cmidrule(lr){3-5}\cmidrule(l){6-8}
+Category & Questions & Unreadable & Mean & Canary & Unreadable & Mean & Canary \\
+\midrule
+Generic & 432 & 100.0\% & 4.77 & 83.3\% & 100.0\% & 9.57 & 83.3\% \\
+Targeted & 1,504 & 100.0\% & 4.78 & 54.8\% & 100.0\% & 9.54 & 54.8\% \\
+Forbidden & 756 & 100.0\% & 5.00 & 97.9\% & 100.0\% & 10.00 & 97.9\% \\
+Red team & 1,728 & 87.7\% & 4.26 & 75.0\% & 99.5\% & 8.62 & 75.0\% \\
+\midrule
+All & 4,420 & 95.2\% & 4.61 & 72.9\% & 99.8\% & 9.26 & 72.9\% \\
+\bottomrule
+\end{tabular}
+\caption{Exposure over seeds 7, 11, 13 and 17 on the unfiltered exact index: the share of questions with at
+least one chunk the person may not read, the mean number of such chunks, and the share with such a chunk
+that carries a canary.}
+\label{tab:e2e-exposure}
+\end{table}
+
+\paragraph{The positive control.}
+On seed 7, FAISS was loaded once and the harness evaluated the same 1,105 questions in seven passes. A wrapper
+around the policy replaced what the policy's filter gave the store and left its check unchanged. M1 admits everything;
+M2 lets the tenant clause also admit the next tenant in the harness's list, with the ACL clause unchanged; M3 drops
+the ACL clause. Each person gained between 48,275 and 107,540 unreadable chunks under M1 (median 48,899), between 0 and
+1,665 under M2 (median 1,041) and between 832 and 60,097 under M3 (median 1,456), and no mutation left out a readable
+chunk. With the re-check off, the release still matches each hit against the filter it gave the store, so it cannot see what
+a wrong filter over-admits, and it reports no violation.
+
+Table~\ref{tab:e2e-control} gives the result. All the predictions for the control held. The unmutated pass P0 reproduced the first
+run's FAISS row, 16,360 hits checked with no unreadable hit, canary or violation, and recall 1.000.
+M1 with the re-check off returned the same ten chunk ids as the unfiltered exact search for all 1,105 questions, which also ties the
+control to the exposure measurement. Each pass with the re-check off failed exactly the harness's four leak checks (every hit readable, and no canary in a
+chunk, a prompt or an answer). Each pass with it on failed two others: the re-check found violations, and people who may read something got
+empty results (887, 38 and 449 retrievals).
+We compared the passes question by question, not only in total. For each mutation, the questions with an unreadable hit
+with the re-check off are exactly those with a violation with it on and exactly those marked incomplete, and on
+each question the number of violations equals the number of unreadable hits. Every canary in an answer was also in that question's
+prompt, as the design of the canaries requires (Appendix~\ref{sec:e2e-setup}).
+
+\begin{table}[tbp]
+\centering
+\footnotesize\setlength{\tabcolsep}{3.5pt}
+\begin{tabular}{@{}llrrrrrrrrr@{}}
+\toprule
+ & & \multicolumn{2}{c}{Unreadable} & \multicolumn{3}{c}{Canary in} & \multicolumn{2}{c}{Violations} & & \\
+\cmidrule(lr){3-4}\cmidrule(lr){5-7}\cmidrule(lr){8-9}
+Pass & Re-check & $k{=}5$ & $k{=}10$ & chunk & prompt & answer & questions & hits & Incomplete & R@10 \\
+\midrule
+P0 & on & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 0 & 1.000 \\
+\midrule
+M1 & off & 1,052 & 1,103 & 805 & 805 & 138 & 0 & 0 & 0 & 0.077 \\
+M2 & off & 676 & 751 & 400 & 360 & 13 & 0 & 0 & 0 & 0.703 \\
+M3 & off & 528 & 533 & 509 & 503 & 107 & 0 & 0 & 0 & 0.548 \\
+\midrule
+M1 & on & 0 & 0 & 0 & 0 & 0 & 1,103 & 15,317 & 1,103 & 0.077 \\
+M2 & on & 0 & 0 & 0 & 0 & 0 & 751 & 4,834 & 751 & 0.703 \\
+M3 & on & 0 & 0 & 0 & 0 & 0 & 533 & 7,642 & 533 & 0.548 \\
+\bottomrule
+\end{tabular}
+\caption{The mutation positive control on FAISS, seed 7, 1,105 questions, the main retrievals at $k = 5$ and $k = 10$.
+Counts are questions, except the violations counted in hits. R@10 is recall@10 against the unmutated readable set.}
+\label{tab:e2e-control}
+\end{table}
+
+Three limits apply. This is one seed and one configuration, an exact store, so it shows that the checks fire
+and that the re-check contains these faults here; it does not test the interaction of a wrong filter
+with an approximate index. It breaks only the filter, since the check stays the policy's, so a wrong
+check is outside it and stays in the trusted computing base. And the re-check does not repair: recall stays
+where the broken filter left it, and the layer's report of an incomplete result is what tells an
+operator something is wrong.
 
 \subsection{What the model did with what it retrieved}\label{sec:e2e-model}
 

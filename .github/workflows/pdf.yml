@@ -54,6 +54,38 @@ jobs:
             mkdir "$out/pages"
             pdftoppm -r 60 -png paper/main.pdf "$out/pages/p"
           fi
+          # The arXiv source package: arXiv publishes the source, so comments are stripped. The
+          # stripped package is compiled again, without BibTeX, and must give the same text.
+          if [ -f paper/main.bbl ]; then
+            pip install -q arxiv-latex-cleaner==1.0.8
+            pkg=$(mktemp -d)
+            cp -r paper "$pkg/paper"
+            rm -f "$pkg"/paper/main.{pdf,aux,log,blg,fls,fdb_latexmk,out}
+            (cd "$pkg" && arxiv_latex_cleaner paper --keep_bib)
+            rm -f "$pkg"/paper_arXiv/*.bib
+            mkdir -p "$out/arxiv"
+            tar -C "$pkg/paper_arXiv" -czf "$out/arxiv/arxiv-source.tar.gz" .
+            tar -tzf "$out/arxiv/arxiv-source.tar.gz" | sort > "$out/arxiv/files.txt"
+            {
+              echo "percent signs starting a comment line:"
+              grep -rlE '^[[:space:]]*%[^%]' "$pkg/paper_arXiv" | wc -l
+              echo "evidence/ or plan/ paths left in the source:"
+              grep -rnE 'evidence/|plan/|PREREG_' "$pkg/paper_arXiv" | wc -l
+              echo "TBD markers left:"
+              grep -rno '\\tbd{' "$pkg/paper_arXiv/sections" | wc -l
+            } > "$out/arxiv/checks.txt"
+            docker run --rm -v "$pkg/paper_arXiv:/w" -w /w ghcr.io/xu-cheng/texlive-full:latest \
+              sh -c 'pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex >/dev/null; pdflatex -interaction=nonstopmode main.tex | tail -3' \
+              >> "$out/arxiv/checks.txt" 2>&1 || true
+            if [ -f "$pkg/paper_arXiv/main.pdf" ]; then
+              pdftotext -layout paper/main.pdf "$pkg/a.txt"
+              pdftotext -layout "$pkg/paper_arXiv/main.pdf" "$pkg/b.txt"
+              echo "pages: $(pdfinfo "$pkg/paper_arXiv/main.pdf" | awk '/^Pages/{print $2}')" >> "$out/arxiv/checks.txt"
+              echo "text lines differing from the main build: $(diff "$pkg/a.txt" "$pkg/b.txt" | grep -c '^[<>]')" >> "$out/arxiv/checks.txt"
+            else
+              echo "the stripped package did not compile" >> "$out/arxiv/checks.txt"
+            fi
+          fi
           cd "$out"
           git init -q
           git checkout -q -b results/pdf

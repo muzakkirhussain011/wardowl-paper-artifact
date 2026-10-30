@@ -5,8 +5,8 @@
 % honest-completeness change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in
 % plan/x8-prereg.md), and the OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same
 % pre-registration, in evidence/x8-run.md). Amendment 2 (exposure and the mutation control,
-% plan/x8-prereg.md, kaggle/x8/x8b_run.py) is running; its results replace the \tbd{} below, in one
-% short paragraph.
+% plan/x8-prereg.md, kaggle/x8/x8b_run.py): evidence/x8-controls.md, with its tables in
+% Appendix~\ref{app:e2e-control}.
 
 Here the whole pipeline runs as an organization would run it: many tenants and people in one index, adversarial questions,
 and a language model that answers from what retrieval returns. The goal is a leak test that bounds the leak rate per question
@@ -37,7 +37,18 @@ These numbers have power only if the questions came near content the asking pers
 enforcement is broken. A second amendment to the pre-registration, exploratory in that it was specified in writing after the main results
 and before running, measures both on FAISS: exposure, the share of questions whose unfiltered exact top $k$ holds a chunk the person may not
 read, and a mutation positive control, which breaks the pushed-down filter in three ways (it admits everything, also admits the neighboring
-tenant, or drops the ACL clause) with the re-check off and on. \tbd{exposure and positive control (X8 amendment 2)}
+tenant, or drops the ACL clause) with the re-check off and on. Over the four seeds, 95.2\% of the 4,420 questions had an unreadable chunk in the
+unfiltered top 5, 99.8\% in the top 10, and 72.9\% had one carrying a canary in the top 5; the corpus builds in part of this, since each company
+document has a counterpart from the same template in each of the other 19 tenants. Generic, targeted and forbidden questions were all exposed in the
+top 5, and red-team prompts at 87.7\%, which falsifies our prediction of at least 90\% for them, because one of the eight attacks was at 1.8\%.
+The control ran on seed 7, and its predictions held (Appendix~\ref{app:e2e-control}). The unmutated pass reproduced the first run's FAISS row. With the
+re-check off, the three mutations put an unreadable hit in the top 10 for 1,103, 751 and 533 of the 1,105 questions and a canary into 805, 360 and 503
+prompts, and all four of the harness's leak checks failed. With the re-check on, under the same filters, no unreadable hit came back and no canary was
+exposed: the re-check reported as a violation every unreadable hit the other pass had returned (15,317, 4,834 and 7,642), on exactly those questions, and the
+layer marked each of them incomplete. Recall stayed where the broken filter left it (0.077, 0.703 and 0.548 at $k = 10$), so the re-check contains such a fault and
+reports it without repairing it. A test reading only answers would have seen little of this: the answer held a canary for 138 of the 805, 13 of the 360
+and 107 of the 503 questions. The control breaks the filter only, on one seed and an exact store; a wrong check is outside it and stays in the trusted
+computing base.
 
 \paragraph{Containment held while quality did not.}
 pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four runs, people who could each read 624 chunks, and the

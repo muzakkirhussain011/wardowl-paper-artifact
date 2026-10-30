@@ -54,7 +54,9 @@ the loss.
         user-document pairs, filters and checks never disagreed in the profiles that hold the model as
         intended. No chunk outside the readable set was returned in 1,050 fault episodes or in four runs of
         each of eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and
-        $1.6 \times 10^{-2}$ per person, one-sided 95\%, over the generator's question distribution).
+        $1.6 \times 10^{-2}$ per person, one-sided 95\%, over the generator's question distribution). A
+        mutation control shows that the leak checks fail when the filter is broken on purpose and that
+        the re-check contains the fault.
   \item \emph{An audit, diagnosis and repair of retrieval quality} (Sections~\ref{sec:quality}
         and~\ref{sec:repair}). Mean recall@10 at common settings ranged from 0.55 to 0.98 over eight
         stores searched approximately, under this layer's schema. Pre-registered experiments trace

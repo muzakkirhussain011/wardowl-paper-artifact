@@ -16,7 +16,8 @@ rerun the evaluation on one release, and outside the 100\% selectivity cells we 
 bounds over the generator's distribution; we apply no correction for multiple comparisons across cells.
 
 \paragraph{Ethics and disclosure.}\label{sec:limits-ethics}
-No human subjects took part: people, documents, ACLs and canaries are synthetic, and every store and engine ran in containers or processes we
+The author develops \sys{}, the layer under test, at \url{https://github.com/muzakkirhussain011/wardowl}, the repository that the pull-request numbers in
+this paper refer to, and this evaluation found faults in that code as well as in others' (Table~\ref{tab:conf-findings}). No human subjects took part: people, documents, ACLs and canaries are synthetic, and every store and engine ran in containers or processes we
 controlled. None of our findings is a chunk returned through the layer outside the readable set at the checked revision. They can still matter for
 deployments that trust a pushed-down filter without a re-check, and Chroma's crash lets any user in enough groups stop an application that passes
 their groups to Chroma (Appendix~\ref{app:ethics}). For the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
@@ -25,20 +26,19 @@ Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report
 choice have no report. \tbd{filing dates, links and vendor responses, once the reports are filed}
 
 \paragraph{Use of AI assistance.}\label{sec:limits-ai}
-An AI coding agent produced most of the artifacts of this work under the authors' direction: the library's code, the conformance kit and its
+An AI coding agent produced most of the artifacts of this work under the author's direction: the library's code, the conformance kit and its
 meta-tests, the independent oracles, the experiment harnesses and analysis scripts, the drafts of the pre-registrations, the evidence summaries of each
 run, the checks of every reference against a primary record, and drafts of this text. Unverifiable reference fields were omitted rather than guessed. The
-numbers audit and the critical review that this version answers were run by separate agent instances. The authors chose the research questions, took the
-decisions recorded with the pre-registrations and reviews, and are responsible for every claim. \tbd{extent of the authors' own review of the code,
+numbers audit and the critical review that this version answers were run by separate agent instances. The author chose the research questions, took the
+decisions recorded with the pre-registrations and reviews, and is responsible for every claim. \tbd{extent of the author's own review of the code,
 pre-registrations, evidence summaries and text} \tbd{Final human check of every reference before submission.} Because the system under test, the oracles
 that judge it, the meta-tests that judge the oracles and the scripts that compute the verdicts come from one agent, a misconception shared among them would
 pass every check, a common-mode risk to validity that repeated runs cannot remove. Three things limit it, without removing it: the oracles were written
 without the library's filter code, the vendor reproducers use only the vendors' clients, and we release the outputs so that others can recompute the verdicts.
-AI tools are not authors. This statement follows the venue's policy on large language models and arXiv's policy on generative AI.
+AI tools are not authors. This statement follows arXiv's policy on generative AI.
 
 \paragraph{Reproducibility.}\label{sec:limits-repro}
 We release the library at the evaluated commits, the conformance kit, every harness script, the Kaggle notebooks and GitHub workflows that ran them, the
-pre-registrations with their dated amendments, and the raw outputs with container image digests and seeds \tbd{archive DOI}. For review, an anonymized mirror with
-the package renamed is provided. Compute: about 35 hours of Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
+pre-registrations with their dated amendments, and the raw outputs with container image digests and seeds \tbd{archive DOI}. Compute: about 37 hours of Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
 listed per experiment in Appendix~\ref{app:compute}; no experiment reported here ran on a local machine. Data and model licenses are in
 Appendix~\ref{app:licenses}.

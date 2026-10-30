@@ -1,10 +1,10 @@
 % Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG
 % Venue style is applied later (NeurIPS 2027 E&D style once released); this preprint layout uses the
-% standard article class. \tbd{} marks what is still open: the X8 amendment 2 results in e2e.tex, and
-% in limits.tex the filing of vendor reports, the human check of references, the extent of the
-% authors' review and the archive DOI.
+% standard article class. \tbd{} marks what is still open, all of it in limits.tex: the filing of
+% vendor reports, the human check of references, the extent of the author's review and the archive DOI.
 % Structure (decision of 2026-10-30): a main text of at most 20 pages, then the bibliography, then
 % appendices. Everything cut from the main text is in an appendix; nothing measured was dropped.
+\pdfoutput=1
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
 \usepackage[T1]{fontenc}
@@ -20,7 +20,7 @@
 \usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,skip=5pt]{caption}
-\usepackage[hidelinks]{hyperref}
+\usepackage[hidelinks,pdfauthor={Syed Muzakkir Hussain},pdftitle={Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines}]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
 % Run-in paragraph headings with less space above than the article class's 3.25ex.
@@ -34,7 +34,7 @@
 \newtheorem{observation}{Observation}
 
 \title{Leak-Free but Not Loss-Free:\\Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
-\author{Anonymous Authors}
+\author{Syed Muzakkir Hussain\\\texttt{muzakkirhussain011@gmail.com}}
 \date{}
 
 \begin{document}
@@ -56,7 +56,8 @@ to some least-privileged people in five of eight runs, which the evaluated relea
 complete; we trace these losses to graph layout and a plan cache and measure what detection and bounded
 repair recover. Eleven end-to-end configurations, four runs each over 107,540 chunks, had no leak: a
 one-sided 95\% bound of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per person, over the
-generator's question distribution. No returned chunk was unreadable at the revision the re-check read,
+generator's question distribution. A control that broke the filter on purpose tripped the leak checks,
+and the re-check contained it. No returned chunk was unreadable at the revision the re-check read,
 in any tested configuration; information about unreadable chunks still was revealed through latency,
 counts, recall and scores, and revocation took up to a cache's time to live or an engine's staleness.
 \end{abstract}

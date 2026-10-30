@@ -4,7 +4,8 @@ Permission-aware retrieval is usually described as a filter. We have argued that
 parts, translators, approximate indexes and filter APIs, around a small trusted computing base centered on the check API. Re-checking
 every hit makes containment independent of the untrusted parts, and our measurements agree: no leak in any of eleven end-to-end
 configurations (one-sided 95\% bounds of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per person, over the question
-generator's distribution), and none in 1,050 fault episodes ($2.8 \times 10^{-3}$ per episode, over the faults we injected).
+generator's distribution), and none in 1,050 fault episodes ($2.8 \times 10^{-3}$ per episode, over the faults we injected). When we broke
+the filter on purpose, the leak checks failed as they should and the re-check contained the fault.
 
 Containment, however, is the easy part, and it is not all that security asks. The checked revision can be stale. Latency, counts, recall
 and scores told an attacker when unreadable chunks lay near a query. And the untrusted parts still decide how much of what a subject may

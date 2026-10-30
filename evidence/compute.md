@@ -49,5 +49,7 @@ The two runs that did not conclude `success`: the follow-up's `fu-cb-elasticsear
 | End-to-end, first run (seed 7) | 2.8 | `kaggle-scale-run-2026-10-24.md` ("total run 2.8 hours") |
 | End-to-end, three repeats (X8) | 2.8 each, 8.4 | `x8-run.md` ("each 2.8 hours") |
 | End-to-end, OpenFGA, four runs | 0.9 each, 3.6 | `x8-run.md` ("0.9 hours each") |
+| End-to-end, exposure, four seeds (X8 amendment 2) | 0.5 | The last `time` field of each kernel log in `evidence/raw/x8b-seed*/`: 443, 429, 385 and 414 s. The pool kernel took 9 s and is not listed |
+| End-to-end, mutation control (X8 amendment 2) | 2.2 | The last `time` field of `evidence/raw/x8b-control-seed7/wardowl-x8b-control-seed7.log`: 7,960 s |
 | Diagnosis grid, run 1 (X1) | 7.3 | `x1-underretrieval-run1.md` ("Successfully ran in 26312.7s") |
 | Diagnosis grid, run 2 (X1) | 6.1 wall, 12.5 session hours | From the Kaggle kernel logs, read 2026-10-30 with `kernels output` (the last `time` field of each log, in seconds): `x1run2-prep-gpu` 417, `x1run2-shard-a` 8,254, `-shard-b` 15,411, `-shard-c` 20,207, and `x1run2-stats` about 830 (`raw/x1run2-stats/x1run2-stats.log`): 44,719 s, 12.4 h, written as 12.5 with session start-up. Wall clock: prep pushed 19:12 UTC, statistics ended about 01:18 UTC, 6.1 h. One GPU session and four CPU sessions. |
