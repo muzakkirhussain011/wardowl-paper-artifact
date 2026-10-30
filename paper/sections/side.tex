@@ -3,7 +3,9 @@
 % sec:side-results, tab:side-auc. Sources: benchmarks/paper/PREREG_X3_X6.md on branch paper/x3-x6
 % (X6, with amendments 1 to 3, all made before any full result); results from evidence/x3-x6-run1.md
 % (GitHub Actions run 40940385704, commit a191626). Every number is as x6_stats.py printed it; the
-% two places where the script departs from the written rules are stated in the text.
+% two places where the script departs from the written rules are stated in the text. The follow-up
+% analyses (amendment 4, written after the results were seen; run 40982986417, commit 9e22b89) are
+% from evidence/x3-x6-followup.md, as x3x6_followup.py printed them; they change no verdict.
 
 Proposition~\ref{prop:reduction} bounds what a subject can \emph{read}; it says nothing about what
 the timing or shape of an answer reveals. B\"{u}ttcher and Clarke required of secure full-text
@@ -192,21 +194,37 @@ falsification bound of 0.80 on every store, and at $p = 10\%$ it was 0.912 to 0.
 assumed that the 1,000 nearest candidates are all secrets. Hubs may not be secrets, so they remain in
 the background, interleaved with the secrets: a probe's 1,000th secret ranked as deep as 1,040 to
 1,271 (the deepest per seed), and readable hubs among the post-filter's 1,000 candidates filled the
-answer. On FAISS, $W_1$ returned 0.375, 3.35 and 7.60 hits on average at $p = 1\%$, 10\% and 50\%, in
-proportion to $p$ as about 35 hubs would give, and its answer was complete for 62.5\% of probes at
-$p = 50\%$, which accounts for the AUC of 0.688, since every $W_0^g$ answer was complete. The count channel is only as strong as
-readable content among the secrets is scarce.
+answer. On FAISS, $W_1$ returned 0.375, 3.35 and 7.60 hits on average at $p = 1\%$, 10\% and 50\%, and
+its answer was complete for 62.5\% of probes at $p = 50\%$, which accounts for the AUC of 0.688, since
+every $W_0^g$ answer was complete. A follow-up check, which we pre-registered as an amendment after
+seeing these results, confirmed the mechanism probe by probe: the 1,000 nearest passages of each
+$m = 1{,}000$ probe held between 1 and 231 hubs (45.7 on average) and no passage that was neither a
+hub nor a secret, and FAISS returned exactly the smaller of 10 and the number of readable hubs among
+them, for all 40 probes and every attacker; the same count over the background predicted every
+$W_0^g$ answer. The count channel is only as strong as readable content among the secrets is scarce.
 
 The second failure is a latency difference on FAISS at $m = 1$: paired AUC 0.667 (0.617 to 0.717).
 Its answers were identical in both worlds for all 360 pairs, the mean difference was 0.05 to 0.14\,ms
 on 7 to 46\,ms, and the AUC was the same at $m = 10$ (0.672), with ten times as many secrets among the
 candidates. Configurations whose answers are identical in both worlds show such offsets, of either
 sign, at every $m$: FAISS's exact pre-filter was faster on $W_1$ (paired AUC 0.25 to 0.35), and
-pgvector's exact search was 1.5 to 3.5 times slower on $W_0^g$ (0.12 to 0.17). We attribute the FAISS
-result to the difference between two index objects, each $W_0^g$ being built later in the seed than
-$W_1$, rather than to the secret; the run does not prove it. The split of each retrieval's time
-between store and authorizer, which the raw records hold, would show where the difference lies, and
-an A/A comparison across two builds of one world would measure it.
+pgvector's exact search was 1.5 to 3.5 times slower on $W_0^g$ (0.12 to 0.17).
+
+Two follow-up analyses, fixed in the same amendment before they ran, examined this offset. In the
+main run's records the whole difference lay in FAISS's own search call: 0.115\,ms (95\% interval
+0.076 to 0.154; paired AUC 0.681) against 0.106\,ms of latency, with the same number of widening
+rounds in all 360 pairs and no difference in $W_1$'s direction in the authorizer ($-0.001$\,ms) or
+the rest of the layer ($-0.010$\,ms). A second run then built, for each group, $W_1$ again and
+$W_0^g$ twice, just before the group, and measured them with the original $W_1$ in random order. It
+reproduced the direction of the offset, more weakly ($W_1$ against the first $W_0^g$: 0.597, 0.539
+to 0.656, at $m = 1$), and two builds of identical content differed by as much: $W_1$ against its
+own rebuild 0.600 (0.547 to 0.653), the second build of $W_0^g$ against the first 0.361 (0.308 to
+0.414), at every $m$ alike. With builds matched in time, the difference in content gave 0.447 (0.392
+to 0.506) at $m = 1$, but 0.742 (0.700 to 0.783) at $m = 1{,}000$, where the widening channel is real.
+The reading we fixed in advance called the offset a build difference only if that $m = 1$ interval
+lay within $[0.40, 0.60]$; it reaches 0.392, so the formal reading is inconclusive. What the numbers
+show is that two FAISS indexes of the same content differ in search time by as much as $W_1$ and
+$W_0^g$ did, while the secret adds no detectable offset of its own at $m = 1$.
 
 \paragraph{Constant work (H2, falsified).}
 Fetching the cap in one round removed the widening channel from latency pooled over $m$ and $p$ on
@@ -245,7 +263,17 @@ channel pooled (0.461 and 0.486), and their intervals at $m = 1{,}000$ (0.325 to
 0.575) were too wide at 40 clusters for the script's window; under the rule's one-sided wording both
 stores would be confirmed. On pgvector (0.147, 0.123 to 0.172) and FAISS (0.276, 0.246 to 0.306)
 latency carried the build offsets described under H1, the same at every $m$ and so not about the
-secrets. The in-memory control failed G1.
+secrets. The follow-up traced pgvector's to the tables' state. At the start of every group the table
+built last had no page marked all-visible, because autovacuum had not yet reached it (40 of 40
+groups), while the table built at the start of the seed always had; in the main run the table built
+last was $W_0^g$. Exact search slowed with the share of groups a table started unvacuumed: a mean of
+59.9\,ms on $W_1$, never unvacuumed at a group's start, 61.4 and 74.3\,ms on later builds unvacuumed in
+4 and 15 of the 40 groups, and 107\,ms on the build unvacuumed in 34. Once every table had been vacuumed, the four
+ran the same plan with the same buffer counts in the same time. By the reading fixed in advance this
+too is inconclusive (matched content 0.567, 0.530 to 0.602), and a small difference remains after
+vacuuming that we cannot explain. Qdrant's exact search showed no difference between builds in any
+comparison (0.493 to 0.505); the Elasticsearch part of the follow-up was lost when its runner stopped
+responding, so Elasticsearch has no such comparison. The in-memory control failed G1.
 
 \paragraph{Collection statistics (H5).}
 BM25 on Elasticsearch and IDF-weighted sparse search on Qdrant revealed nearby secrets through their

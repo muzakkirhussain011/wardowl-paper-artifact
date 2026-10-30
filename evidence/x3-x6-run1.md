@@ -650,3 +650,25 @@ Observations and mechanisms:
   mean latency; H6 must be reported with the script defect.
 - X3: every store but Chroma accepts 40,000 groups with unchanged recall; latency grows up to 272
   times (pgvector); Chroma refuses from 1,000 groups and crashes the process at 40,000.
+
+## Follow-up (2026-10-30): amendment 4, run 40982986417
+
+The computations requested above were pre-registered as amendment 4 (written after these results
+were seen) and run on GitHub Actions as run 40982986417; the full record is
+`evidence/x3-x6-followup.md`. In short:
+
+- Requests 1 to 5 ran in full; request 6 ran for FAISS, pgvector and Qdrant (see the last point).
+  Chroma's seeds 3 and 4 complete X3: X3-H1 is now
+  confirmed (84 of 84 parts), X3-H2 confirmed for Chroma (refuses in 5 seeds), X3-H4 for Chroma stays
+  inconclusive by its rule; every other store's X3 tables reproduce this run's.
+- The hub mechanism holds probe by probe: FAISS returned exactly min(10, readable hubs among the
+  1,000 nearest) for all 40 m = 1,000 probes at every p (1 to 231 hubs, mean 45.7).
+- FAISS's m = 1 difference lies wholly in FAISS's own search call, with equal widening rounds; two
+  builds of the same content differ as much (cross-build A/A 0.361, age 0.600), but the reading fixed
+  in advance prints inconclusive (matched content 0.447, interval 0.392 to 0.506).
+- pgvector's `pre-exact` offset follows the vacuum state: the table built last before each group
+  had no all-visible page at the group's start in 40 of 40 groups; vacuumed tables plan and run alike.
+- Chroma crashes between 15,500 and 16,500 groups, inside `chromadb/api/rust.py` `_query`, with the
+  main thread about 16,500 frames deep in one recursive function of its Rust bindings.
+- Request 6 is partly missing: the Elasticsearch cross-build job was lost when its runner stopped
+  responding, so Elasticsearch has no cross-build comparison.

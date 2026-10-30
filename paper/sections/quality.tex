@@ -2,7 +2,9 @@
 % heading and its label stay in main.tex). Labels defined here: sec:qual-audit, tab:qual-x0,
 % sec:qual-qdrant, tab:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, sec:qual-size,
 % tab:qual-size. X3 (sec:qual-size) is from evidence/x3-x6-run1.md (GitHub Actions run 40940385704,
-% commit a191626), every number as x3_stats.py printed it.
+% commit a191626), every number as x3_stats.py printed it; Chroma's seeds 3 and 4, the X3 verdicts
+% over five seeds, pgvector's plans and the crash's location and threshold are from
+% evidence/x3-x6-followup.md (run 40982986417, commit 9e22b89, amendment 4).
 % Sources: evidence/kaggle-scale-run-2026-10-24.md (X0), evidence/x8-run.md (X8 repeats),
 % evidence/x1-underretrieval-run1.md and evidence/x1-underretrieval-run2.md (X1; run 2 is the
 % reference for every X1 number), investigations/x0-x1-pgvector-gap.md and
@@ -286,15 +288,16 @@ LanceDB (exact) & 53.6 & 57.0 & 66.3 & 149 & 424 & 7.94 & 1.000 \\
 Cassandra & 109 & 166 & 90.7 & 124 & 308 & 2.78 & 0.996--1.000 \\
 FAISS (flat) & 385 & 390 & 403 & 424 & 454 & 1.19 & 1.000 \\
 In-memory & 432 & 439 & 451 & 475 & 503 & 1.17 & n/a \\
-Chroma (3 seeds) & 4,416 & 10,689 & refused & refused & crashed & n/a & 1.000 \\
+Chroma & 4,340 & 10,627 & refused & refused & crashed & n/a & 1.000 \\
 \bottomrule
 \end{tabular}
 \caption{Filter size (X3): median end-to-end latency of a retrieval through the layer by the number of
 groups $G$ in the subject's filter, the median over three passes of 30 questions in each of five
 seeds (levels of 10 and 4,000 groups are in the released report). Ratio: median latency with 40,000
 groups over that with one, paired by question. Recall@10 against exact search over the readable set
-is the same at every level unless a range (one group to 40,000) is given. Chroma completed three
-seeds, with 10 questions per level because its first retrieval took more than 2\,s; ``refused'':
+is the same at every level unless a range (one group to 40,000) is given. Chroma's seeds 3 and 4 come
+from a follow-up run of the same harness on the same data, and it ran 10 questions per level because
+its first retrieval took more than 2\,s; ``refused'':
 every retrieval failed with SQLite's expression-depth error; ``crashed'': the process ended with
 signal 11. Images and clients are those of the conformance campaign
 (Section~\ref{sec:conf-campaign}), at default index settings.}
@@ -305,20 +308,23 @@ Table~\ref{tab:qual-size} shows the result. Every translator returned at every l
 in a median 197\,ms (Cassandra's fallback with 40,000 groups) and 120\,ms (pgvector), and every store
 but Chroma accepted every level in every seed without one failed retrieval, the five stores without a
 prediction included; no documented limit was reached. Acceptance with 40,000 groups was confirmed for
-each of the eight stores we predicted (X3-H2). X3-H1 nevertheless printed inconclusive: its other 77
-parts held, but Chroma completed only three of the five seeds the rule requires. Each Chroma seed
-took 22 minutes, and the harness, which gives each store of a job an equal share of the job's time,
-skipped the last two seeds although the job then finished about three hours early. This is a deviation;
-the two seeds remain to be run (\tbd{Chroma seeds 3 and 4}).
+each of the eight stores we predicted (X3-H2). In the main run Chroma completed only three of the five
+seeds the rules require: each of its seeds took 22 minutes, and the harness, which gave each store of
+a job an equal share of the job's time, skipped the last two although the job then finished about
+three hours early. We ran those two seeds afterwards, exactly as written, on the same data and in a
+job of their own, under an amendment to the pre-registration written after the results were seen;
+recomputed with them, every other store's tables came out unchanged. With five seeds, X3-H1 holds in
+all 84 of its parts.
 
 Latency grew as predicted where we predicted it (X3-H3 confirmed in all three parts). pgvector's
 median rose 272-fold (95\% interval 264 to 288) from one group to 40,000: by a factor of 1.6 up to
-100 groups, then roughly in proportion to $G$ once the layer sends array parameters, which the GIN
-index cannot serve.
-Its answers did not change: recall@10 was 0.967 at every level, and the paired difference between
-40,000 groups and one was 0.000 (0.000 to 0.000), so the scan met rows in the same order and only the
-test applied to each row grew more expensive. The plans recorded at each level are not yet extracted
-(\tbd{pgvector plans}). FAISS and the in-memory backend slowed 1.19 and 1.17 times, and Cassandra's
+100 groups, then roughly in proportion to $G$. The plans show why, and that the reason we
+pre-registered did not decide it. At every level and in every seed the planner chose the same HNSW
+index scan, never the GIN index, not even for one group, and the scan removed the same rows through
+the filter at every level (55 to 142 for each seed's first question); only the cost of testing each
+row grew, so that question took 1.1 to 2.6\,ms with one group and 239 to 566\,ms with 40,000. Its
+answers did not change either: recall@10 was 0.967 at every level, and the paired difference between
+40,000 groups and one was 0.000 (0.000 to 0.000). FAISS and the in-memory backend slowed 1.19 and 1.17 times, and Cassandra's
 102 per-group queries with 100 groups took 1.85 times as long (1.82 to 1.87) as its single fallback
 query with 1,000. The other eight servers slowed 11 to 99 times, mostly beyond 1,000 groups, and with
 40,000 groups the translation alone took 31 to 48\,ms of medians between 72 and 306\,ms: much of the
@@ -337,15 +343,21 @@ SQLite's ``Expression tree is too large (maximum depth 1000)'', which Chroma rai
 \texttt{InternalError}: because the layer stores list values as boolean keys
 (Table~\ref{tab:conf-faults}), its disjunction holds one clause per group, 102 with 100 groups and
 1,002 with 1,000, and SQLite limits an expression's depth to 1,000. With 40,000 groups the process
-died with signal 11, a segmentation fault, during its first retrieval, in all three seeds as in both
+died with signal 11, a segmentation fault, during its first retrieval, in all five seeds as in both
 smoke runs. The layer's translation had succeeded (2.66 million characters in 101\,ms), no message was
 printed, and no error reached the layer: the application's process ends with the store's. A filter
-that kills the client process is a denial of service, not a refusal. Chroma renders an $n$-ary
+that kills the client process is a denial of service, not a refusal. The amendment's exploratory part
+located the crash. Python's fault handler placed it in Chroma's call into its native core, and under gdb the main
+thread was about 16,500 frames deep in a single recursive function of Chroma's Rust bindings when its
+stack ran out, before SQLite saw the query. One retrieval per level, each in a fresh process, put the
+threshold between 15,500 groups, refused with SQLite's error, and 16,500, which crashed, consistent
+with one stack frame per clause of the disjunction. Chroma renders an $n$-ary
 disjunction as a left-deep chain of binary ORs, so the depth grows with the number of clauses; the
 layer now nests its disjunctions sixteen clauses to a node, which keeps the depth near 50 for 1,000
 groups, and never sends a filter beyond conservative bounds on parameters, depth, nesting and size,
 filtering 1,000 candidates itself instead, as its Cassandra adapter already did. In the project's CI
 the fixed layer retrieved exactly the permitted chunks for subjects in 1,001 and 40,000 groups. A
 report to Chroma is drafted. Chroma was also the slowest store at every level
-it accepted, 4.4\,s with one group and 10.7\,s with 100, and each refused retrieval still took about
-4\,s. With three seeds, its X3-H2 verdict is inconclusive.
+it accepted, 4.3\,s with one group and 10.6\,s with 100, and each refused retrieval still took about
+4\,s. With five seeds, its X3-H2 verdict is confirmed; X3-H4 stays inconclusive for Chroma, as the
+rule needs an accepted level of at least 1,000 groups.
