@@ -167,7 +167,7 @@ passages of MS MARCO~\cite{bajaj2016ms}, in a hierarchy of teams assigned at ran
 (\emph{clustered}), five seeds of each, with 1,050 subjects, 6,200 question--subject pairs and selectivities from 0.06\% to 100\%. \emph{Negatively
 correlated} questions have nothing readable among their 1,000 nearest passages, the best by that criterion when fewer than four qualify. Ten approximate
 stores run against FAISS over a flat index, each at its default, at five levels of search effort and with its own options, in three fresh builds. Chroma
-was not measured: a filtered retrieval took 137 to 221\,s, so none reached a timed pass. Every exact setting returned the exact answer, no hit was unreadable,
+was not measured: a filtered retrieval took 137 to 221\,s, so none reached a timed pass. Every exact setting returned the exact answer,
 and eight of the audit's nine stores reproduced the recall@10 of its first run within 0.03 (pgvector at 0.730 against 0.732). Appendix~\ref{app:frontier} gives
 the design.
 

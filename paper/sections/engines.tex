@@ -11,7 +11,7 @@ cost. We ask whether the filters \sys{} compiles from four engines admit exactly
 checks allow, separating a translation fault, which persists at one revision, from revision skew, a write
 between the two calls, and from truncated list APIs. We then measure how long a revocation keeps admitting
 and whether the layer fails closed. We tested OpenFGA 1.22.0, SpiceDB 1.56.2, OPA 1.21.2 and Cerbos 0.56.0
-on five seeds of a generated world of 120 users and 1,500 documents against an independent oracle. \emph{One
+on five seeds of a generated world of 120 users, the subjects, and 1,500 documents against an independent oracle. \emph{One
 revision} means SpiceDB's \texttt{atExactSnapshot}; OpenFGA has no snapshot token, so its store was read quiescent;
 OPA and Cerbos are stateless per request (Appendix~\ref{app:engines}).
 
