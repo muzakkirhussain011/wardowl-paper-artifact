@@ -2,7 +2,8 @@
 # Reproducer of disclosure/mongodb.md: string values in a vectorSearch index's `filter` fields over
 # a length limit are not found by their whole value. mongosh only; nothing else, and no wardowl.
 #
-# Part 1 is the draft's reproducer. The draft leaves one step as a comment ("once
+# Part 1 is the draft's reproducer, with its prefix corrected from 8,181 to 8,191 characters after
+# the first two runs (see the comment there). The draft leaves one step as a comment ("once
 # db.c.getSearchIndexes("vi")[0].queryable is true"); here it is a loop that polls that field. The
 # index creation is retried while mongot (the search process) is still starting; that changes
 # nothing in what is created. Part 2 (added 2026-10-30, not in the draft) measures the limit: one
@@ -54,8 +55,11 @@ function ids(label, f) {
   }
 }
 
-// ---- part 1: the draft's reproducer
-const long = "a".repeat(9000), prefix = "a".repeat(8181);
+// ---- part 1: the draft's reproducer, corrected after runs 41007436602 and 41007779363. The draft
+// took the prefix at 8,181 characters, the token type's documented limit; the filter type keeps
+// 8,191, so an 8,181-character prefix matched only its own document. The prefix is 8,191 characters
+// here, and the draft's 8,181-character search is kept as a third call.
+const long = "a".repeat(9000), prefix = "a".repeat(8191);
 db.c.insertMany([
   { _id: "long", v: [0.1, 0.2], t: [long] },
   { _id: "prefix", v: [0.1, 0.2], t: [prefix] },
@@ -74,11 +78,12 @@ const find = (value) => db.c.aggregate([
   { $project: { _id: 1 } },
 ]).toArray();
 const l = ids("find(long), the 9,000-character value", () => find(long));       // expected [ { _id: "long" } ]
-const p = ids("find(prefix), its first 8,181 characters", () => find(prefix));  // expected [ { _id: "prefix" } ]
+const p = ids("find(prefix), its first 8,191 characters", () => find(prefix));  // expected [ { _id: "prefix" } ]
+ids("find of its first 8,181 characters (the draft as first written)", () => find("a".repeat(8181)));
 
 const same = (a, b) => a !== null && JSON.stringify([...a].sort()) === JSON.stringify([...b].sort());
 if (same(l, []) && same(p, ["long", "prefix"])) {
-  print("RESULT verdict: reproduced (the whole value finds nothing; its first 8,181 characters find both documents)");
+  print("RESULT verdict: reproduced (the whole value finds nothing; its first 8,191 characters find both documents)");
 } else if (same(l, ["long"]) && same(p, ["prefix"])) {
   print("RESULT verdict: not reproduced (each search finds only its own document)");
 } else {
