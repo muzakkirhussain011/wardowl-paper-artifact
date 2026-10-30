@@ -1,0 +1,32 @@
+{
+  "reproducer": "cerbos",
+  "version": "tested",
+  "target": "ghcr.io/cerbos/cerbos:0.56.0",
+  "command": "sh disclosure/reproducers/cerbos.sh",
+  "exit_status": 0,
+  "seconds": 0,
+  "run_id": "41114474172",
+  "commit": "38f4ae7d8ebbdea4c41afaccca42ecec69bb24a3",
+  "versions": [
+    "reproducer: cerbos",
+    "version label: tested",
+    "target: ghcr.io/cerbos/cerbos:0.56.0",
+    "commit: 38f4ae7d8ebbdea4c41afaccca42ecec69bb24a3",
+    "run: 41114474172 attempt 1",
+    "runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64",
+    "started: 2026-10-30T19:20:55Z",
+    "image digest: ghcr.io/cerbos/cerbos@sha256:540643bc67ba628011a150ad1d3370f285daa38995be5cd7a4be181da902bec1",
+    "image id: sha256:9769be8555e0d7a5bf8da1d9b5bb6b64dfa7a8350a6a42d752e7dae7cbc6e584",
+    "image labels: {\"org.opencontainers.image.created\":\"2026-09-30T06:22:34Z\",\"org.opencontainers.image.name\":\"cerbos\",\"org.opencontainers.image.revision\":\"98604d71b79dafdc16ac57e4712fc435227e7c0f\",\"org.opencontainers.image.source\":\"https://github.com/cerbos/cerbos\",\"org.opencontainers.image.version\":\"0.56.0\"}",
+    "server_info: {\"version\":\"0.56.0\", \"commit\":\"98604d71b79dafdc16ac57e4712fc435227e7c0f\", \"buildDate\":\"2026-09-30T06:22:34Z\"}",
+    "curl: curl 8.5.0 (x86_64-pc-linux-gnu) libcurl/8.5.0 OpenSSL/3.0.13 zlib/1.3 brotli/1.1.0 zstd/1.5.5 libidn2/2.3.7 libpsl/0.21.2 (+libidn2/2.3.7) libssh/0.10.6/openssl/zlib nghttp2/1.59.0 librtmp/2.3 OpenLDAP/2.6.10"
+  ],
+  "results": [
+    "check d1 (allowed_users \"zoe\"): EFFECT_DENY",
+    "check d2 (allowed_users [\"zoe\"]): EFFECT_ALLOW",
+    "plan kind: KIND_CONDITIONAL",
+    "plan condition: {\"expression\":{\"operator\":\"in\",\"operands\":[{\"value\":\"zoe\"},{\"variable\":\"request.resource.attr.allowed_users\"}]}}",
+    "plan filterDebug: ",
+    "verdict: reproduced (check denies d1, allows d2; the plan is a conditional 'in')"
+  ]
+}
