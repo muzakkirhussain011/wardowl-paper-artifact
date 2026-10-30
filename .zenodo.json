@@ -1,0 +1,25 @@
+{
+  "title": "Leak-Free but Not Loss-Free: research artifact (pre-registrations, evidence and raw outputs)",
+  "upload_type": "dataset",
+  "description": "Pre-registrations with dated amendments, run evidence, raw outputs, vendor reproducers and the LaTeX source for the preprint \"Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines\". The evaluation code is in the wardowl repository, under benchmarks/paper/. Prepared corpora and embeddings are left out: they can be rebuilt from the seeds, and the corpora's licenses limit redistribution.",
+  "creators": [
+    {
+      "name": "Hussain, Syed Muzakkir"
+    }
+  ],
+  "license": "cc-by-4.0",
+  "keywords": [
+    "retrieval-augmented generation",
+    "access control",
+    "vector databases",
+    "differential testing",
+    "side channels"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://github.com/muzakkirhussain011/wardowl",
+      "relation": "isSupplementTo",
+      "resource_type": "software"
+    }
+  ]
+}

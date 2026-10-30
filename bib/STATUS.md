@@ -480,3 +480,9 @@ Existing entries now cited for the first time, not re-checked today (see their r
 ## Build note (2026-10-26)
 
 All `note` fields were renamed to `annote` so that plainnat does not print internal provenance remarks (several contained raw underscores and broke the build). Before submission, move genuine venue information (for example accepted-at statements once confirmed by the publisher) into proper fields.
+
+## Build note (2026-10-30)
+
+Counts on 2026-10-30: `references.bib` 206 entries, 118 of them cited by the paper; `web.bib` 97 entries, 65 cited; 183 cited in all. The Summary above gives the counts of the first build on 2026-10-26, before later checks added entries. `REFERENCE_CHECK.md` lists the 183 with links, for the author's check by hand.
+
+The 77 undated `web.bib` entries now have `year` and `note = {Accessed <urldate>}`, both taken from their `urldate`. Without a year, plainnat printed a stray ", ." after `howpublished` when an author had several entries. The year is the year of access, not of publication, and the note says so in the bibliography.

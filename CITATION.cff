@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this artifact, please cite the paper."
+title: "Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
+type: dataset
+authors:
+  - family-names: Hussain
+    given-names: Syed Muzakkir
+    email: muzakkirhussain011@gmail.com
+repository-code: "https://github.com/muzakkirhussain011/wardowl"
+repository-artifact: "https://github.com/muzakkirhussain011/wardowl-paper"
+keywords:
+  - retrieval-augmented generation
+  - access control
+  - vector databases
+  - differential testing
+  - side channels
+preferred-citation:
+  type: article
+  title: "Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
+  authors:
+    - family-names: Hussain
+      given-names: Syed Muzakkir
+  year: 2026
