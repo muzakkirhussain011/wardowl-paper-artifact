@@ -9,7 +9,14 @@
 % rather than per item (2.0.0: "the fixes from the project's own security audit of every module";
 % 1.4.0: "fail-closed gaps found by review"); "Accept." means the release notes attribute it to the
 % acceptance scenarios (2.1.0) or to the Kaggle scale run (the unreleased honest-completeness
-% change). Confirm each row with maintainers before publication.
+% change). "n.s." means neither CHANGELOG.md (any version) nor docs/review.md attributes the row.
+% Rows found by the later experiments (Found by "\S n"): Chroma's crash from evidence/x3-x6-run1.md
+% ("X3: Chroma, refusal and crash") and wardowl PR #187; SpiceDB staleness, the cache refill and the
+% empty LookupResources stream from evidence/x4-x7-run1.md and x7-amendment2.md, PR #186; OPA's
+% residual from evidence/x4-x7-run1.md (X4-H3); pgvector's plans from evidence/x8-run.md and
+% investigations/x0-x1-pgvector-gap.md. PRs #167, #186 and #187 were open on 2026-10-30. The
+% Upstream column was checked against vendor pages and trackers on 2026-10-30 (bib/STATUS.md).
+% Confirm each row with maintainers before publication.
 
 Proposition~\ref{prop:reduction} shields security from filter faults, but not maximality, and it
 rests on stores returning the metadata they stored (A2). A filter that admits too much shows up
@@ -142,9 +149,10 @@ accepts at most 100 contextual tuples per request, and one generated subject in 
 300 groups; long identifiers exceeded its size limits. SpiceDB object identifiers admit only a
 restricted alphabet, which excludes \texttt{zo\"e} and \texttt{7.0}. The layer failed closed in every
 case, but only after a round trip, with an error that did not name the limit. The other 140 store
-errors were documented size limits that fail loudly and return nothing: Lucene's 32,766-byte term in
-Elasticsearch and OpenSearch, Milvus's array-element and JSON sizes, Chroma's expression depth of
-1,000, and Qdrant's grammar for field names. Ory Keto and Casbin ran out of the shared time budget
+errors came from the stores' own limits, which fail loudly and return nothing: Lucene's 32,766-byte term in
+Elasticsearch and OpenSearch, Milvus's array-element and JSON sizes, Chroma's rules for metadata
+keys, which refused 20 writes, and SQLite's expression depth of 1,000 under Chroma, which refused 20
+queries, and Qdrant's grammar for field names. Ory Keto and Casbin ran out of the shared time budget
 after 72 and 43 of 140 runs, all passing; Pinecone was skipped for want of a key.
 
 \paragraph{Fixes and run 2.}
@@ -165,18 +173,21 @@ policy as written and never the reverse. No run in either campaign leaked or alt
 \subsection{Faults and semantic gaps}\label{sec:conf-results}
 
 Table~\ref{tab:conf-faults} lists the faults and semantic gaps in stores and engines that the
-project's release notes, code comments and documentation record, up to the version we evaluate.
-\emph{Found by} follows the release notes: \emph{Review}, attributed collectively to the project's
-own code review or security audit; \emph{Accept.}, to the acceptance scenarios against real servers
-or the scale run of Section~\ref{sec:e2e}; \emph{Kit}, the campaign of
-Section~\ref{sec:conf-campaign}; \tbd{}, not stated. \emph{Effect} is the consequence
-without the mitigation: \emph{Leak}, a false admit, which the re-check turns into a violation;
-\emph{Leak*}, wrong stored or returned metadata, which also passes a re-check that reads chunk
-metadata, because (A1) or (A2) fails; \emph{Leak\textdagger}, a check that itself admits, beyond any
-re-check; \emph{Recall}, readable chunks silently missing; \emph{Stale}, a revoked grant admitting
-until the store shows the write; \emph{Wrong rows}, a write reaching chunks it did not name; and
-\emph{Avail.}, requests failing closed. \emph{None (adapter)} marks a fault in \sys{}'s own adapter
-where the engine behaves as configured.
+project's release notes, code comments and documentation record, up to the version we evaluate,
+and those that this paper's later experiments exposed. \emph{Found by} follows the release notes:
+\emph{Review}, attributed collectively to the project's own code review or security audit;
+\emph{Accept.}, to the acceptance scenarios against real servers or the scale run of
+Section~\ref{sec:e2e}; \emph{Kit}, the campaign of Section~\ref{sec:conf-campaign}; \emph{n.s.},
+not stated. A later finding names the section of its experiment (\S$n$). \emph{Effect} is the
+consequence without the mitigation: \emph{Leak}, a false admit, which the re-check turns into a
+violation; \emph{Leak*}, wrong stored or returned metadata, which also passes a re-check that reads
+chunk metadata, because (A1) or (A2) fails; \emph{Leak\textdagger}, a check that itself admits,
+beyond any re-check; \emph{Recall}, readable chunks silently missing; \emph{Stale}, a revoked grant
+that still admits for a while after the change; \emph{Wrong rows}, a write reaching chunks it did
+not name; \emph{Avail.}, requests failing closed; \emph{Perf.}, slower retrieval, as without a
+pre-filter; and \emph{Crash}, the client process killed. PR~\#$n$ marks a mitigation in a pull
+request not yet released. \emph{None (adapter)} marks a fault in \sys{}'s own adapter or cache where
+the engine behaves as configured.
 
 \begin{table}[tbp]
 \centering
@@ -190,96 +201,112 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
 \confrag Elasticsearch, OpenSearch
  & \confrag Keyword fields compare as strings: a \texttt{terms} query for \texttt{1} matches
    \texttt{"1"}
- & \confrag \tbd{} & \confrag Leak
+ & \confrag n.s. & \confrag Leak
  & \confrag Type-tagged terms in one keyword field; metadata unindexed
- & \confrag \tbd{} \tabularnewline
+ & \confrag Not stated~\cite{elastic2026keyword,opensearch2026keyword} \tabularnewline
 \confrag pgvector (jsonb)
  & \confrag Numbers compare by value: $\mathrm{In}(\texttt{level},\{1\})$ matched a stored
    \texttt{1.0}
  & \confrag Review & \confrag Leak
  & \confrag Compare integers by the stored number's text
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented~\cite{postgresql2026json} \tabularnewline
 \confrag pgvector (jsonb)
  & \confrag A float of magnitude $\geq 10^{16}$, which Python's JSON encoder writes with an
    exponent, is stored and returned as an integer
  & \confrag Review & \confrag Leak*
  & \confrag Write such floats with a fraction
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented~\cite{postgresql2026json} \tabularnewline
 \confrag pgvector 0.8
  & \confrag Iterative HNSW scans stop at \texttt{hnsw.max\_scan\_tuples} or a memory limit: few or
    no rows under selective filters
  & \confrag Accept. & \confrag Recall
  & \confrag Honest completeness; both limits documented
- & \confrag \tbd{} \tabularnewline
+ & \confrag Limits documented~\cite{pgvector2026pgvector} \tabularnewline
+\confrag pgvector via psycopg
+ & \confrag Prepared statements: after five custom plans PostgreSQL may switch to a generic plan
+   that reads the GIN index and sorts (exact, about 50 times slower) or keep custom HNSW plans
+   (lossy), decided at run time
+ & \confrag \S\ref{sec:qual-pgvector}, \S\ref{sec:e2e} & \confrag Recall or Perf.
+ & \confrag None yet
+ & \confrag Rule documented~\cite{postgresql2026prepare,psycopg2026prepared} \tabularnewline
 \confrag Chroma 1.5.x, local mode
  & \confrag Array metadata of a deleted collection reappears on new records elsewhere and matches
    \texttt{where} filters (chroma-core/chroma\#7594)
- & \confrag \tbd{} & \confrag Leak*
+ & \confrag n.s. & \confrag Leak*
  & \confrag No array metadata; metadata rebuilt from an exact JSON copy
- & \confrag Issue \#7594; status \tbd{} \tabularnewline
+ & \confrag Open; fix unmerged~\cite{sjmurdoch2026bug} \tabularnewline
 \confrag Redis; Weaviate
- & \confrag Distinct values merge: TAG matching ignores case; \texttt{field} tokenization may trim
-   whitespace, joining \texttt{"hr "} and \texttt{"hr"}
- & \confrag \tbd{} & \confrag Leak
+ & \confrag Distinct values merge: TAG matching ignores case by default; \texttt{field}
+   tokenization trims whitespace, joining \texttt{"hr "} and \texttt{"hr"}
+ & \confrag n.s. & \confrag Leak
  & \confrag Hex-encoded terms (Redis); a separator at both ends of each term (Weaviate)
- & \confrag \tbd{} \tabularnewline
+ & \confrag Redis: documented~\cite{redis2026tag}; Weaviate: in
+   code~\cite{weaviate2026tokenizergo}, not docs~\cite{weaviate2026inverted} \tabularnewline
 \confrag Redis 8.10
  & \confrag Tag values are cut at 4,096 bytes when indexed and looked up whole: long values never
    match, and a value equal to the kept prefix matches the longer one
  & \confrag Kit & \confrag Recall; Leak
- & \confrag Store and search a term over the limit as its SHA-256 digest
- & \confrag Report drafted; \tbd{filed} \tabularnewline
+ & \confrag Store and search a term over the limit as its SHA-256 digest (PR~\#167)
+ & \confrag Report drafted, not filed \tabularnewline
 \confrag MongoDB Atlas 8.0
  & \confrag Strings are cut at 8,181 characters when indexed, documented for one index field type
    only: the same effects as for Redis
  & \confrag Kit & \confrag Recall; Leak
- & \confrag As for Redis
- & \confrag Note drafted; \tbd{filed} \tabularnewline
-\confrag Elasticsearch, OpenSearch, Milvus, Chroma, Qdrant
+ & \confrag As for Redis (PR~\#167)
+ & \confrag Report drafted, not filed \tabularnewline
+\confrag Elasticsearch, OpenSearch, Milvus, Qdrant
  & \confrag Size and syntax limits refuse a write or query: 32,766-byte terms; array-element and JSON
-   sizes; expression depth 1,000; field-name grammar
+   sizes; field-name grammar
  & \confrag Kit & \confrag Avail.
- & \confrag None needed: each fails closed \tbd{or refuse up front}
- & \confrag Limits documented \tabularnewline
+ & \confrag None needed: each fails closed with an error and returns nothing
+ & \confrag Term limit~\cite{elastic2026ignore} and JSON size~\cite{milvus2026json} documented;
+   Qdrant's grammar in its source \tabularnewline
+\confrag Chroma 1.5.9, local mode
+ & \confrag A flat \texttt{\$or} of about 1,000 clauses exceeds SQLite's expression depth; one of
+   about 40,000 kills the client process (SIGSEGV)
+ & \confrag Kit; \S\ref{sec:qual-size} & \confrag Avail.; Crash
+ & \confrag Nest \texttt{\$and} and \texttt{\$or} 16 to a node; past four size bounds, filter 1,000
+   candidates itself (PR~\#187)
+ & \confrag Report drafted, not filed \tabularnewline
 \confrag Qdrant
  & \confrag \texttt{.}, \texttt{[}, \texttt{]} and \texttt{"} in a field name are path syntax:
    \texttt{team.name} reaches a nested object
- & \confrag \tbd{} & \confrag Leak
+ & \confrag n.s. & \confrag Leak
  & \confrag Refuse such field names
- & \confrag \tbd{} \tabularnewline
+ & \confrag Path syntax documented~\cite{qdrant2026filtering} \tabularnewline
 \confrag Pinecone, MongoDB, Milvus, LanceDB, Redis, Vespa
  & \confrag A missing or empty filter means ``match everything''
  & \confrag Review & \confrag Leak
  & \confrag Raise \texttt{NothingMatches}; send no query
- & \confrag \tbd{} \tabularnewline
+ & \confrag Filters optional, e.g.~\cite{pinecone2026search,mongodb2026run} \tabularnewline
 \confrag Elasticsearch, OpenSearch, Redis, Vespa
  & \confrag Partial results as success: failed or timed-out shards under HTTP 200; RESP3 timeout
    warnings; degraded coverage
  & \confrag Review & \confrag Recall
  & \confrag Disallow partial results; raise on each marker
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented~\cite{elastic2026run,opensearch2026search,redis2026configuration,vespa2026graceful} \tabularnewline
 \confrag Pinecone serverless; MongoDB Atlas
  & \confrag Writes become searchable only after a delay (eventual consistency; index lag)
- & \confrag \tbd{} & \confrag Stale
+ & \confrag n.s. & \confrag Stale
  & \confrag Writes wait until a search sees them (Pinecone: up to 30\,s)
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented~\cite{pinecone2026check,mongodb2026configure} \tabularnewline
 \confrag Cassandra 5.0
  & \confrag Paxos timestamps of lightweight transactions do not order with plain writes: an older
    permission could overwrite a newer one
  & \confrag Review & \confrag Leak*
  & \confrag Plain writes only
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented by DataStax~\cite{datastax2026query} \tabularnewline
 \confrag Milvus (pymilvus)
  & \confrag Reads and deletes by identifier quote identifiers into an expression: the identifier
    \texttt{a\textquotesingle,\textquotesingle b} also selects \texttt{a} and \texttt{b}
  & \confrag Review & \confrag Wrong rows
  & \confrag Identifiers as filter parameters
- & \confrag \tbd{} \tabularnewline
+ & \confrag pymilvus PR \#3823 open~\cite{sungbin10152026fix} \tabularnewline
 \midrule
 \confrag OpenFGA
  & \confrag ListObjects stops at its result limit (1,000 by default) and returns a partial list
    without saying so
- & \confrag \tbd{} & \confrag Recall
+ & \confrag n.s. & \confrag Recall
  & \confrag At the limit, no filter: post-filter
  & \confrag Limits documented~\cite{openfga2026openfga} \tabularnewline
 \confrag OpenFGA
@@ -290,22 +317,48 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
 \confrag SpiceDB
  & \confrag LookupResources may stop at the request limit (1,000 by default) or return results
    conditional on a caveat
- & \confrag \tbd{} & \confrag Recall; Leak
+ & \confrag n.s. & \confrag Recall; Leak
  & \confrag In either case, no filter: post-filter
- & \confrag \tbd{} \tabularnewline
+ & \confrag Documented in the API~\cite{authzed2026permissionserviceproto} \tabularnewline
+\confrag SpiceDB (adapter)
+ & \confrag An empty LookupResources stream, which is also what a stream cut before its first line
+   looks like, was read as ``nothing readable''
+ & \confrag \S\ref{sec:eng-revoke} & \confrag Recall
+ & \confrag No filter: post-filter, checking every candidate (PR~\#186)
+ & \confrag None (adapter) \tabularnewline
 \confrag SpiceDB (adapter)
  & \confrag Groups checked as separate subjects bypass exclusion: under
    \texttt{viewer - banned}, a banned user read through a group
  & \confrag Accept. & \confrag Leak\textdagger
  & \confrag Check the user only; SpiceDB resolves the memberships it stores
  & \confrag None (adapter) \tabularnewline
+\confrag SpiceDB 1.56
+ & \confrag Under \texttt{minimizeLatency}, a revoked permission admitted for up to 8.7\,s, past the
+   5.5\,s its documented defaults imply, and could reappear after it had gone
+ & \confrag \S\ref{sec:eng-revoke} & \confrag Stale
+ & \confrag Declare 11\,s of staleness; after \texttt{invalidate()} the cache holds back that long
+   (PR~\#186)
+ & \confrag Bound documented~\cite{authzed2026consistency,authzed2026reference} \tabularnewline
+\confrag SpiceDB, Cerbos (cache)
+ & \confrag After \texttt{invalidate()}, \sys{}'s cache refilled from the engine's stale answer and
+   held the revoked grant for its full ttl
+ & \confrag \S\ref{sec:eng-revoke} & \confrag Stale
+ & \confrag Cache nothing for the engine's declared staleness after \texttt{invalidate()}
+   (PR~\#186)
+ & \confrag None (adapter) \tabularnewline
+\confrag OPA (partial evaluation)
+ & \confrag The residual keeps \texttt{not (x in [])} even for users with no ban, and \sys{}'s
+   filters have no negation: one ban rule leaves every user without a pre-filter
+ & \confrag \S\ref{sec:eng-agree} & \confrag Perf.
+ & \confrag None; such users are post-filtered
+ & \confrag Not stated~\cite{opa2026evaluating,opa2026writing} \tabularnewline
 \confrag Cerbos
  & \confrag CEL \texttt{==} compares a list field whole, and \texttt{in} or
    \texttt{hasIntersection} on a single value is an error (denied); In matches lists by element
  & \confrag Review; Kit & \confrag Leak
  & \confrag Translate \texttt{and}, \texttt{or}, \texttt{hasIntersection}, \texttt{in} and
    \texttt{==} only; else post-filter; documented
- & \confrag Documentation note drafted \tabularnewline
+ & \confrag Documentation note drafted, not filed \tabularnewline
 \confrag Cedar (adapter)
  & \confrag Values Cedar cannot hold (floats, nulls, integers beyond 64 bits) and keys starting with
    \texttt{\_\_} were dropped, so a \texttt{forbid} on them stopped applying
@@ -316,18 +369,18 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag An identifier outside the engine's syntax makes it refuse the whole request
  & \confrag Review & \confrag Avail.
  & \confrag Deny such a chunk without sending it
- & \confrag \tbd{} \tabularnewline
+ & \confrag Syntax in API specs~\cite{openfga2026openfgaproto,authzed2026coreproto} \tabularnewline
 \confrag OpenFGA (adapter)
  & \confrag More than 100 contextual tuples, or a user or group identifier over its size limit, makes
    it refuse the whole request
  & \confrag Kit & \confrag Avail.
- & \confrag Refuse such a subject before sending, naming the limit
+ & \confrag Refuse such a subject before sending, naming the limit (PR~\#167)
  & \confrag None (adapter) \tabularnewline
 \confrag SpiceDB (adapter)
  & \confrag A subject or group identifier outside the object-identifier syntax makes it refuse the
    whole request
  & \confrag Kit & \confrag Avail.
- & \confrag Refuse such a subject before sending, naming the limit
+ & \confrag Refuse such a subject before sending, naming the limit (PR~\#167)
  & \confrag None (adapter) \tabularnewline
 \confrag Ory Keto (adapter)
  & \confrag Batches above \texttt{limit.max\_batch\_check\_size} (10 by default) are refused with
@@ -338,27 +391,33 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
 \bottomrule
 \end{tabular}
 \caption{Faults and semantic gaps in vector stores (top) and authorization engines (bottom),
-collected from the project's release notes, code comments and documentation; the legend is in
-Section~\ref{sec:conf-results}. Every row will be confirmed with the maintainers of the store or
-engine before publication.}
+collected from the project's release notes, code comments and documentation and from this paper's
+later experiments; the legend is in Section~\ref{sec:conf-results}. Every row will be confirmed with
+the maintainers of the store or engine before publication.}
 \label{tab:conf-faults}
 \end{table}
 
-Rows marked \emph{Kit} come from the campaign of Section~\ref{sec:conf-campaign}; the others record
-the project's development before it. Nine entries let a filter admit a chunk the subject may not
-read, which leaks without the re-check and becomes a violation with it, as
-Proposition~\ref{prop:reduction} predicts. The five Leak* and Leak\textdagger{} entries lie beyond
-any re-check: the kit's exact comparison of returned with stored metadata targets the first kind, and
-only a test of the policy itself reaches the second. The remaining effects cost recall, freshness or
-availability; where a fix was needed, the lost recall had been reported as a complete answer, the
+Rows marked \emph{Kit} come from the campaign of Section~\ref{sec:conf-campaign} and rows marked
+with a section from this paper's later experiments; the others record the project's development
+before them. Nine entries let a filter admit a chunk the subject may not read, which leaks without
+the re-check and becomes a violation with it, as Proposition~\ref{prop:reduction} predicts. The five
+Leak* and Leak\textdagger{} entries lie beyond any re-check: the kit's exact comparison of returned
+with stored metadata targets the first kind, and only a test of the policy itself reaches the
+second. The remaining effects cost recall, freshness, speed or availability, and one crashed the
+client process; where a fix was needed, the lost recall had been reported as a complete answer, the
 dishonesty that Section~\ref{sec:sys-complete} removes. Before the campaign, the record credited
-review or the acceptance scenarios, never the kit, whose role had been to keep each class fixed once
-it entered the generator and the meta-tests. The campaign added five entries and confirmed a sixth
-(Cerbos), all in classes the generator targets, long values, many groups, unusual identifiers and
-scalar fields, at sizes that the continuous-integration runs had not reached. Several entries, the
-five marked as adapter faults among them, are faults in \sys{}'s own code that a store's or engine's
-behavior exposed; any other integration meets the same behavior. Recall lost by approximate
-indexes under selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured
-in Section~\ref{sec:quality} instead. Every row will be confirmed with the maintainers of the store or
+review or the acceptance scenarios where it credited anything, never the kit, whose role had been
+to keep each class fixed once it entered the generator and the meta-tests. The campaign added five
+entries, counting five stores' size limits as one, and confirmed a sixth (Cerbos), all in classes
+the generator targets, long values, many groups, unusual identifiers and scalar fields, at sizes
+that the continuous-integration runs had not reached; the filter-size experiment then showed that
+one of those limits, Chroma's, can also crash the client, and it now has a row of its own. The later
+experiments added five more entries: SpiceDB's staleness beyond its documented bound, faults in
+\sys{}'s cache and SpiceDB adapter, a vacuous negation that OPA's partial evaluation keeps, and
+pgvector's run-time choice between a lossy and an exact plan. Several entries, the seven marked as
+adapter faults among them, are faults in \sys{}'s own code that a store's or engine's behavior
+exposed; any other integration meets the same behavior. Recall lost by approximate indexes under
+selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured in
+Section~\ref{sec:quality} instead. Every row will be confirmed with the maintainers of the store or
 engine before publication, and reported upstream where it reflects their behavior rather than an
 adapter fault.

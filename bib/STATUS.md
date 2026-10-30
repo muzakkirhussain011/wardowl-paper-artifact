@@ -413,6 +413,31 @@ Stonebraker and Wong 1974 (CR); Büttcher and Clarke FAST 2005 (UX); Bailey, Haw
 | ioannidis1997parametric | Parametric Query Optimization | verified-now (2026-10-30) | CR 10.1007/s007780050037: title, four authors in order, VLDB Journal 6(2) 132-151, 1997 |
 | postgresql2026prepare | PREPARE (PostgreSQL 16 documentation) | verified-now (2026-10-30) | page title; Notes on custom and generic plans read |
 | psycopg2026prepared | Prepared statements (Psycopg 3 documentation) | verified-now (2026-10-30) | page title; prepare_threshold behaviour read |
+| elastic2026ignore | ignore_above (Elasticsearch Reference) | verified-now (2026-10-30) | page title; the 32766-byte Lucene term limit and the failure of indexed fields on longer values read |
+| milvus2026json | JSON Field (Milvus Documentation) | verified-now (2026-10-30) | page title; FAQ sentence on the 65,536-byte limit read |
+| postgresql2026json | JSON Types (PostgreSQL 18 documentation, Section 8.14) | verified-now (2026-10-30) | page title, "current" = 18.6; numbers map to numeric, trailing zeroes insignificant for equality, E notation printed without it (1.230e-5 example) |
+| elastic2026keyword | Keyword type family (Elasticsearch reference) | verified-now (2026-10-30) | page title; numeric identifiers as keyword suggested; checked that no sentence says a number is compared as a string |
+| opensearch2026keyword | Keyword field type (OpenSearch Documentation) | verified-now (2026-10-30) | page title; both halves of the page read; numeric identifiers as keyword, range queries compare as strings, nothing on numeric terms |
+| sjmurdoch2026bug | GitHub issue chroma-core/chroma#7594 | verified-now (2026-10-30) | GH API: title, author, opened 2026-08-16, state open, label bug, 2 comments; fix PR #7595 open, unmerged |
+| redis2026tag | Tag fields (Redis documentation) | verified-now (2026-10-30) | page title; case-insensitive by default, CASESENSITIVE; no length limit stated |
+| weaviate2026tokenizergo | tokenizer.go (weaviate/weaviate at v1.39.12) | verified-now (2026-10-30) | GH raw file at the tag and on main: tokenizeField trims whitespace (strings.TrimFunc, unicode.IsSpace) |
+| weaviate2026inverted | Inverted indexes (Weaviate Documentation) | verified-now (2026-10-30) | page title; field tokenization described, no statement on trimming (also checked config-refs/collections) |
+| qdrant2026filtering | Filtering (Qdrant documentation) | verified-now (2026-10-30) | page title; Nested key section: dot and [] path syntax; first 100,000 characters read |
+| pinecone2026search | Search with a vector (Pinecone API reference, 2026-07) | verified-now (2026-10-30) | page title, API version; filter not among the required body fields |
+| mongodb2026run | Run Vector Search ANN and ENN Queries (MongoDB Vector Search) | verified-now (2026-10-30) | page title; fields table (from the .md variant): filter Optional |
+| elastic2026run | Run a search (Elasticsearch API documentation) | verified-now (2026-10-30) | page title; allow_partial_search_results default true, partial results on shard timeouts or failures |
+| opensearch2026search | Search API (OpenSearch Documentation) | verified-now (2026-10-30) | page title; allow_partial_search_results default true |
+| redis2026configuration | Configuration parameters (Redis Search) | verified-now (2026-10-30) | page title; search-on-timeout values RETURN (default), RETURN_STRICT, FAIL |
+| vespa2026graceful | Graceful Query Coverage Degradation (Vespa documentation) | verified-now (2026-10-30) | page title; degraded results on timeout, coverage element and degraded flags |
+| pinecone2026check | Check data freshness (Pinecone Docs) | verified-now (2026-10-30) | page title; "Pinecone is eventually consistent" sentence |
+| mongodb2026configure | Configure mongot (Self-Managed MongoDB Search and Vector Search) | verified-now (2026-10-30) | page title; refresh interval default 1000 ms, delay between a write and being able to query it; mongot in Atlas confirmed on the Deployment Options page |
+| datastax2026query | Query timestamps in Cassandra drivers (DataStax) | verified-now (2026-10-30) | page title; "don't mix LWTs and other mutation operations on a single table"; the Apache Cassandra DML page checked and silent |
+| sungbin10152026fix | GitHub pull request milvus-io/pymilvus#3823 | verified-now (2026-10-30) | GH API: title, author, opened 2026-10-06, open, unmerged; body read; tracker search found no matching issue |
+| authzed2026permissionserviceproto | permission_service.proto (authzed/api, main) | verified-now (2026-10-30) | GH raw file: optional_limit, after_result_cursor, LOOKUP_PERMISSIONSHIP_CONDITIONAL_PERMISSION comments |
+| authzed2026coreproto | core.proto (authzed/api, main) | verified-now (2026-10-30) | GH raw file: ObjectReference.object_id pattern and 1,024-byte limit |
+| openfga2026openfgaproto | openfga.proto (openfga/api, main) | verified-now (2026-10-30) | GH raw file: TupleKey user 512 bytes, object pattern 2 to 256 non-whitespace characters, 100 contextual tuples |
+| authzed2026reference | Reference: spicedb (AuthZed documentation) | verified-now (2026-10-30) | page heading (the HTML title is generic); quantization interval default 5s, max staleness percent default 0.1 |
+| pgvector2026pgvector, authzed2026consistency, opa2026evaluating, opa2026writing, postgresql2026prepare, psycopg2026prepared | (existing entries, re-read for the fault table) | re-read (2026-10-30) | pgvector README: max_scan_tuples 20,000, scan_mem_multiplier 1; consistency page: minimize_latency, configurable staleness window, no default stated; OPA pages: nothing on simplifying not over an empty collection; PREPARE notes and psycopg prepare_threshold re-read (the psycopg page does not state the default 5) |
 
 ## Build note (2026-10-26)
 

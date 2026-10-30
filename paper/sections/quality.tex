@@ -291,7 +291,12 @@ SQLite's ``Expression tree is too large (maximum depth 1000)'', which Chroma rai
 died with signal 11, a segmentation fault, during its first retrieval, in all three seeds as in both
 smoke runs. The layer's translation had succeeded (2.66 million characters in 101\,ms), no message was
 printed, and no error reached the layer: the application's process ends with the store's. A filter
-that kills the client process is a denial of service, not a refusal (\tbd{disclosure to Chroma; the
-layer to refuse such filters before sending them}). Chroma was also the slowest store at every level
+that kills the client process is a denial of service, not a refusal. Chroma renders an $n$-ary
+disjunction as a left-deep chain of binary ORs, so the depth grows with the number of clauses; the
+layer now nests its disjunctions sixteen clauses to a node, which keeps the depth near 50 for 1,000
+groups, and never sends a filter beyond conservative bounds on parameters, depth, nesting and size,
+filtering 1,000 candidates itself instead, as its Cassandra adapter already did. In the project's CI
+the fixed layer retrieved exactly the permitted chunks for subjects in 1,001 and 40,000 groups. A
+report to Chroma is drafted. Chroma was also the slowest store at every level
 it accepted, 4.4\,s with one group and 10.7\,s with 100, and each refused retrieval still took about
 4\,s. With three seeds, its X3-H2 verdict is inconclusive.

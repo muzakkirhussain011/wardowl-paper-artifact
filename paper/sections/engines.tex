@@ -113,7 +113,7 @@ translation fault only when filter and check read one revision (Section~\ref{sec
 
 Non-streaming ListObjects and LookupResources with the layer's limit of 1,000 both returned exactly
 $\min(N, 1000)$ objects; ListObjects adds no other field~\cite{openfga2026openfga} and
-LookupResources attaches a continuation cursor whatever $N$~\cite{authzed2026protecting}, so neither
+LookupResources attaches a continuation cursor whatever $N$~\cite{authzed2026permissionserviceproto}, so neither
 signals truncation. Without those limits both returned all 100,000 objects in time: streamed ListObjects in a median 1.7
 to 2.0\,s, within its 3\,s deadline, and unlimited LookupResources in 2.6 to 3.7\,s. \sys{} returned
 an exact filter for every $N \le 999$ and none for $N \ge 1000$ in all 540 calls, never a short one;
@@ -171,7 +171,7 @@ revoked within milliseconds whatever the cache: the store filters current metada
 decisions are keyed by it. Two sources of truth were stale themselves.
 Cerbos reloaded a rewritten policy file in a median 2.5\,s (at most 4.0\,s). SpiceDB under
 \texttt{minimizeLatency}, \sys{}'s default, took a median 3.3\,s and at most 8.7\,s, beyond the
-6.5\,s predicted from its quantization window~\cite{authzed2026consistency}, and in 28 polls a revoked
+6.5\,s predicted from its quantization window~\cite{authzed2026consistency,authzed2026reference}, and in 28 polls a revoked
 chunk reappeared after it had disappeared. Invalidation does not survive such an engine: the next call
 refills the cache from the stale snapshot, which the cache holds for its full ttl, so 79 of 80 SpiceDB
 revocations with invalidation exceeded their bound (medians 30.0 and 31.0\,s), and Cerbos's took as
@@ -198,7 +198,8 @@ inside the window.
 \paragraph{The fixes, tested.}
 The run exposed five defects in the layer, and we fixed all five. After an invalidation the cache
 now caches nothing for the engine's declared staleness, and the SpiceDB adapter, whose documentation
-had promised 5\,s, declares 11\,s without full consistency: twice the documented 5.5\,s, since we
+had promised 5\,s, declares 11\,s without full consistency: twice the documented
+5.5\,s~\cite{authzed2026reference}, since we
 measured 8.7\,s. An empty LookupResources stream now yields no filter, so the retriever post-filters
 and checks every candidate. Every store failure is raised as one search error with a fixed message
 and the client's exception as its cause. And pgvector can set a statement timeout. A targeted rerun, pre-registered

@@ -655,3 +655,228 @@
   urldate      = {2026-10-30},
   annote       = {A query is prepared after it runs more than prepare\_threshold times on a connection; None disables}
 }
+
+% =====================================================================
+% Added 2026-10-30 for the Upstream column of the fault table (tab:conf-faults). Every page was read
+% on 2026-10-30; the annote says what was verified, and STATUS.md has one row per entry.
+% =====================================================================
+
+@misc{postgresql2026json,
+  author       = {{The PostgreSQL Global Development Group}},
+  title        = {{JSON} Types},
+  howpublished = {PostgreSQL Documentation, version 18, Section 8.14},
+  url          = {https://www.postgresql.org/docs/current/datatype-json.html},
+  urldate      = {2026-10-30},
+  annote       = {``current'' resolved to 18.6 at access. JSON numbers map onto numeric; trailing fractional zeroes are semantically insignificant for equality checks; numbers entered with E notation are printed without it (1.230e-5 as 0.00001230)}
+}
+
+@misc{elastic2026keyword,
+  author       = {{Elastic}},
+  title        = {Keyword type family},
+  howpublished = {Elasticsearch reference documentation},
+  url          = {https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/keyword},
+  urldate      = {2026-10-30},
+  annote       = {Suggests mapping numeric identifiers as keyword; no sentence says that a number indexed into, or queried against, a keyword field is compared as a string}
+}
+
+@misc{opensearch2026keyword,
+  author       = {{OpenSearch Project}},
+  title        = {Keyword field type},
+  howpublished = {OpenSearch Documentation},
+  url          = {https://docs.opensearch.org/latest/mappings/supported-field-types/keyword/},
+  urldate      = {2026-10-30},
+  annote       = {Numeric identifiers are often better mapped as keyword; range queries on keyword fields compare values as strings; nothing on a numeric term matching a string value}
+}
+
+@misc{sjmurdoch2026bug,
+  author       = {{sjmurdoch}},
+  title        = {[Bug]: \texttt{delete\_collection} leaves list-valued metadata behind, which reappears on records written to the next collection},
+  howpublished = {GitHub issue chroma-core/chroma\#7594},
+  year         = {2026},
+  month        = aug,
+  url          = {https://github.com/chroma-core/chroma/issues/7594},
+  urldate      = {2026-10-30},
+  annote       = {Opened 16 August 2026 (GitHub API), label bug; open on 2026-10-30 with two comments, neither from a maintainer. Fix proposed in pull request 7595 by Xsidz, open and unmerged on 2026-10-30}
+}
+
+@misc{redis2026tag,
+  author       = {{Redis}},
+  title        = {Tag fields},
+  howpublished = {Redis documentation (Redis Query Engine)},
+  url          = {https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/},
+  urldate      = {2026-10-30},
+  annote       = {Case sensitivity: case-insensitive matching by default; CASESENSITIVE preserves case. The page states no maximum length for a tag value}
+}
+
+@misc{weaviate2026tokenizergo,
+  author       = {{Weaviate}},
+  title        = {tokenizer.go},
+  howpublished = {GitHub repository weaviate/weaviate, entities/tokenizer, tag v1.39.12},
+  url          = {https://raw.githubusercontent.com/weaviate/weaviate/v1.39.12/entities/tokenizer/tokenizer.go},
+  urldate      = {2026-10-30},
+  annote       = {tokenizeField, comment ``trims white spaces; the whole trimmed input is the one and only token'': strings.TrimFunc with unicode.IsSpace. The same on main}
+}
+
+@misc{weaviate2026inverted,
+  author       = {{Weaviate}},
+  title        = {Inverted indexes},
+  howpublished = {Weaviate Documentation},
+  url          = {https://docs.weaviate.io/weaviate/concepts/indexing/inverted-index},
+  urldate      = {2026-10-30},
+  annote       = {field tokenization: no splitting, the entire value is one token; nothing on trimming whitespace. The collection definition page (weaviate/config-refs/collections) also says nothing on trimming}
+}
+
+@misc{qdrant2026filtering,
+  author       = {{Qdrant}},
+  title        = {Filtering},
+  howpublished = {Qdrant documentation},
+  url          = {https://qdrant.tech/documentation/search/filtering/},
+  urldate      = {2026-10-30},
+  annote       = {Nested key: a dot steps into an object and [] into the elements of an array (country.name, country.cities[].population). The first 100,000 of about 116,000 characters were read}
+}
+
+@misc{pinecone2026search,
+  author       = {{Pinecone}},
+  title        = {Search with a vector},
+  howpublished = {Pinecone API reference, version 2026-07 (data plane, query)},
+  url          = {https://docs.pinecone.io/reference/api/latest/data-plane/query},
+  urldate      = {2026-10-30},
+  annote       = {The request body's filter (an object) is not required; required are topK and one of vector, id or sparseVector}
+}
+
+@misc{mongodb2026run,
+  author       = {{MongoDB}},
+  title        = {Run Vector Search {ANN} and {ENN} Queries},
+  howpublished = {MongoDB Vector Search documentation (the \texttt{\$vectorSearch} stage)},
+  url          = {https://www.mongodb.com/docs/vector-search/query/aggregation-stages/vector-search-stage/},
+  urldate      = {2026-10-30},
+  annote       = {Fields table, read from the page's .md variant: filter, Object, Optional, an MQL expression on an indexed field for pre-filtering}
+}
+
+@misc{elastic2026run,
+  author       = {{Elastic}},
+  title        = {Run a search},
+  howpublished = {Elasticsearch API documentation},
+  url          = {https://www.elastic.co/docs/api/doc/elasticsearch/operation/operation-search},
+  urldate      = {2026-10-30},
+  annote       = {allow\_partial\_search\_results: if true and there are shard request timeouts or shard failures, the request returns partial results; default true}
+}
+
+@misc{opensearch2026search,
+  author       = {{OpenSearch Project}},
+  title        = {Search {API}},
+  howpublished = {OpenSearch Documentation},
+  url          = {https://docs.opensearch.org/latest/api-reference/search-apis/search/},
+  urldate      = {2026-10-30},
+  annote       = {allow\_partial\_search\_results: whether to return partial results if the request encounters an error or times out; default true}
+}
+
+@misc{redis2026configuration,
+  author       = {{Redis}},
+  title        = {Configuration parameters},
+  howpublished = {Redis documentation (Redis Search)},
+  url          = {https://redis.io/docs/latest/develop/ai/search-and-query/administration/configuration/},
+  urldate      = {2026-10-30},
+  annote       = {search-on-timeout: RETURN, the default, returns the results accumulated until the query timed out; RETURN\_STRICT (8.10 and later) also returns partial results; FAIL returns an error}
+}
+
+@misc{vespa2026graceful,
+  author       = {{Vespa}},
+  title        = {Graceful Query Coverage Degradation},
+  howpublished = {Vespa documentation},
+  url          = {https://docs.vespa.ai/en/graceful-degradation.html},
+  urldate      = {2026-10-30},
+  annote       = {A query that cannot complete within its timeout can return a degraded result set; the coverage element carries degraded flags (timeout, adaptive-timeout, match-phase, non-ideal-state)}
+}
+
+@misc{pinecone2026check,
+  author       = {{Pinecone}},
+  title        = {Check data freshness},
+  howpublished = {Pinecone Docs},
+  url          = {https://docs.pinecone.io/guides/index-data/check-data-freshness},
+  urldate      = {2026-10-30},
+  annote       = {``Pinecone is eventually consistent, so there can be a slight delay before new or changed records are visible to queries''}
+}
+
+@misc{mongodb2026configure,
+  author       = {{MongoDB}},
+  title        = {Configure \texttt{mongot}},
+  howpublished = {Self-Managed MongoDB Search and Vector Search documentation},
+  url          = {https://www.mongodb.com/docs/search/self-managed/current/configuration/reference/},
+  urldate      = {2026-10-30},
+  annote       = {Refresh interval (default 1000 ms): mongot waits that long before refreshing an index to make recently indexed changes visible to queries, the delay between writing a document and being able to query it. Atlas runs the same mongot process beside mongod (page MongoDB Search Deployment Options); the Atlas overview pages read state no consistency model}
+}
+
+@misc{datastax2026query,
+  author       = {{DataStax}},
+  title        = {Query timestamps in {Cassandra} drivers},
+  howpublished = {DataStax driver documentation},
+  url          = {https://docs.datastax.com/en/datastax-drivers/developing/query-timestamps.html},
+  urldate      = {2026-10-30},
+  annote       = {Do not mix LWTs and other mutation operations on a single table: an anti-pattern, because non-LWT operations use a different timestamp mechanism, even with server timestamps. The Apache Cassandra DML page (cassandra.apache.org, developing/cql/dml) says nothing on mixing them}
+}
+
+@misc{sungbin10152026fix,
+  author       = {{sungbin1015}},
+  title        = {fix: escape {VARCHAR} primary keys in {MilvusClient} get/query/delete by ids},
+  howpublished = {GitHub pull request milvus-io/pymilvus\#3823},
+  year         = {2026},
+  month        = oct,
+  url          = {https://github.com/milvus-io/pymilvus/pull/3823},
+  urldate      = {2026-10-30},
+  annote       = {Opened 6 October 2026, open and unmerged on 2026-10-30: VARCHAR keys are wrapped in single quotes without escaping, so a delete by ids holding a quote can delete an unrelated row. A search of the pymilvus tracker found no issue for get or delete by ids}
+}
+
+@misc{authzed2026permissionserviceproto,
+  author       = {{AuthZed}},
+  title        = {permission\_service.proto (authzed.api.v1)},
+  howpublished = {GitHub repository authzed/api},
+  url          = {https://raw.githubusercontent.com/authzed/api/main/authzed/api/v1/permission_service.proto},
+  urldate      = {2026-10-30},
+  annote       = {LookupResourcesRequest.optional\_limit closes the stream after that many resources; each response carries after\_result\_cursor; LOOKUP\_PERMISSIONSHIP\_CONDITIONAL\_PERMISSION means permission only if a caveat condition is met. Read on main}
+}
+
+@misc{authzed2026coreproto,
+  author       = {{AuthZed}},
+  title        = {core.proto (authzed.api.v1)},
+  howpublished = {GitHub repository authzed/api},
+  url          = {https://raw.githubusercontent.com/authzed/api/main/authzed/api/v1/core.proto},
+  urldate      = {2026-10-30},
+  annote       = {ObjectReference.object\_id: letters, digits and the characters / \_ | - = + (or a lone *), at most 1,024 bytes. Read on main}
+}
+
+@misc{openfga2026openfgaproto,
+  author       = {{OpenFGA}},
+  title        = {openfga.proto (openfga.v1)},
+  howpublished = {GitHub repository openfga/api},
+  url          = {https://raw.githubusercontent.com/openfga/api/main/openfga/v1/openfga.proto},
+  urldate      = {2026-10-30},
+  annote       = {TupleKey: user at most 512 bytes; object 2 to 256 characters without whitespace; at most 100 contextual tuples (ContextualTupleKeys max\_items). Read on main}
+}
+
+@misc{authzed2026reference,
+  author       = {{AuthZed}},
+  title        = {Reference: \texttt{spicedb}},
+  howpublished = {AuthZed (SpiceDB) documentation},
+  url          = {https://authzed.com/docs/spicedb/concepts/commands},
+  urldate      = {2026-10-30},
+  annote       = {spicedb serve options: datastore-revision-quantization-interval, default 5s; datastore-revision-quantization-max-staleness-percent, default 0.1, the share of the interval by which a stale revision may be chosen; 5.5 s with both defaults. The HTML title reads only Page - Authzed Docs, so the heading is used}
+}
+
+@misc{elastic2026ignore,
+  author       = {{Elastic}},
+  title        = {ignore\_above},
+  howpublished = {Elasticsearch Reference, mapping parameters},
+  url          = {https://www.elastic.co/docs/reference/elasticsearch/mapping-reference/ignore-above},
+  urldate      = {2026-10-30},
+  annote       = {States Lucene's term byte-length limit of 32766 and that indexed fields fail on longer values}
+}
+
+@misc{milvus2026json,
+  author       = {{Milvus}},
+  title        = {{JSON} Field},
+  howpublished = {Milvus Documentation},
+  url          = {https://milvus.io/docs/use-json-fields.md},
+  urldate      = {2026-10-30},
+  annote       = {FAQ: each JSON field is limited to 65,536 bytes}
+}
