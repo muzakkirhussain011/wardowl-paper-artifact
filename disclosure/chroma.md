@@ -76,9 +76,15 @@ chromadb 1.5.9, `EphemeralClient`, Linux (GitHub-hosted ubuntu-24.04 runner, Pyt
    chain of binary ORs n levels deep, which SQLite refuses beyond 1,000.
 2. A flat `$or` of about 40,000 `$eq` clauses on distinct boolean keys kills the client process
    with SIGSEGV on the first `query`, with no Python exception and no Rust panic message, in 5 of 5
-   processes. 10,000 clauses gave the error of item 1 instead. The cause is not established; a
-   stack overflow in native code (recursive rendering or dropping of a 40,000-deep expression tree)
-   is the likeliest [unverified].
+   processes. 10,000 clauses gave the error of item 1 instead. A bisection on one corpus put the
+   threshold between 15,500 clauses (refused with the depth error) and 16,500 (crash), the same
+   bracket in two runs. Python's fault handler places the crash in `chromadb/api/rust.py`, line 582,
+   `_query`; under gdb the main thread received SIGSEGV in `chromadb_rust_bindings.abi3.so` with the
+   stack about 16,500 frames deep, the innermost frames all returning to one address in that library,
+   while the tokio and sqlx-sqlite worker threads were idle. So the main thread ran out of stack in one
+   recursive function of the Rust bindings, about one frame per clause [the per-clause
+   correspondence is inferred from the frame count; the library has no symbols], before SQLite saw
+   the query. Evidence: `evidence/x3-x6-followup.md`, item 6 (run 40982986417).
 
 ## Reproducer (Python, chromadb only; item 2 ends the interpreter)
 
