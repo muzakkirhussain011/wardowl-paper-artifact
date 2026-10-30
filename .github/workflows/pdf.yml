@@ -1,13 +1,15 @@
 name: PDF
 
 # Builds the paper and the study material in the cloud on every push, so nothing is compiled on the
-# author's laptop. The PDFs are the run's artifacts.
+# author's laptop. The PDF, its log, a page count, the table of contents and page images go to the
+# branch results/pdf (replaced on each build), readable with git fetch.
 on:
   push:
+    branches: [main]
   workflow_dispatch:
 
 permissions:
-  contents: read
+  contents: write
 
 concurrency:
   group: pdf-${{ github.ref }}
@@ -22,19 +24,51 @@ jobs:
         with:
           persist-credentials: false
       - name: Compile the paper
+        id: compile
+        continue-on-error: true
         uses: xu-cheng/latex-action@v3
         with:
           root_file: main.tex
           working_directory: paper
-      - name: Report LaTeX warnings, fail on undefined references
+      - name: Publish the build to results/pdf
+        if: always()
+        env:
+          TOKEN: ${{ github.token }}
         run: |
-          grep -nE "LaTeX Warning|Package .* Warning|Overfull|Float too large|Missing character" paper/main.log | head -150 || true
-          grep -E "Output written on" paper/main.log || true
+          sudo apt-get install -y -q poppler-utils > /dev/null
+          out=$(mktemp -d)
+          for f in main.pdf main.log main.toc main.blg; do
+            [ -f "paper/$f" ] && cp "paper/$f" "$out/" || true
+          done
+          {
+            echo "commit: $GITHUB_SHA"
+            echo "compile outcome: ${{ steps.compile.outcome }}"
+            grep -E "Output written on" paper/main.log || true
+            echo "--- warnings ---"
+            grep -nE "LaTeX Warning|Package .* Warning|Overfull|Float too large|Missing character|^!" paper/main.log | head -200 || true
+            echo "--- bibtex ---"
+            grep -E "^Warning|^I couldn't|error message" paper/main.blg | head -50 || true
+          } > "$out/warnings.txt"
+          if [ -f paper/main.pdf ]; then
+            pdfinfo paper/main.pdf > "$out/pdfinfo.txt"
+            mkdir "$out/pages"
+            pdftoppm -r 60 -png paper/main.pdf "$out/pages/p"
+          fi
+          cd "$out"
+          git init -q
+          git checkout -q -b results/pdf
+          git add -A
+          git -c user.name="pdf build" -c user.email="pdf@localhost" commit -q -m "PDF of $GITHUB_SHA"
+          git push -q -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" results/pdf
+      - name: Fail on a failed compile or undefined references
+        run: |
+          [ "${{ steps.compile.outcome }}" = "success" ] || { echo "::error::the paper did not compile"; exit 1; }
           if grep -qE "There were undefined (references|citations)|(Citation|Reference) .* undefined" paper/main.log; then
             echo "::error::undefined references or citations in main.log"
             exit 1
           fi
       - uses: actions/upload-artifact@v4
+        if: always()
         with:
           name: paper-pdf
           path: paper/main.pdf
