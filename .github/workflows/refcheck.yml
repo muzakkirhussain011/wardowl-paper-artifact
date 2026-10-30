@@ -26,8 +26,10 @@ jobs:
         with:
           python-version: "3.12"
       - name: Check the references
+        env:
+          TOKEN: ${{ github.token }}
         run: |
-          git fetch -q origin results/pdf
+          git fetch -q "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" results/pdf
           git show FETCH_HEAD:main.aux > "$RUNNER_TEMP/main.aux"
           out=$(mktemp -d)
           python bib/refcheck.py "$RUNNER_TEMP/main.aux" bib/references.bib bib/web.bib "$out/report.md" "$out/report.tsv"
