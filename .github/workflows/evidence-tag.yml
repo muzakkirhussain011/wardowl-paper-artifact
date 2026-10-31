@@ -1,16 +1,31 @@
 name: Evidence tag
 
-# Builds the tag evidence-v1 in the cloud: this repository plus the CI artifacts and results branches of
-# the paper's runs, read from the public wardowl repository. The DOI archives this tag. Rebuilt whenever
-# this file changes or the workflow is run by hand, so it is rebuilt after the last change to the text.
+# Builds the tag evidence-v1 in the cloud: this repository, the CI artifacts and results branches of the
+# paper's runs, and the library at the exact commits those runs used (not branch heads). The DOI archives
+# this tag, so the tag must hold what ran and must not move after publication.
+#
+# Published means: a GitHub release exists for the tag, or the file evidence/ARCHIVE_DOI exists on the branch
+# this workflow runs from. Add that file, holding the DOI, as soon as the DOI is minted. Once the tag is
+# published this workflow refuses to run; a later change needs a new tag with its own DOI (copy this file and
+# change TAG).
+#
+# Before publication the tag may be rebuilt on request, and only on request: run this workflow by hand with
+# rebuild_before_publication set to yes (Actions, Evidence tag, Run workflow, or
+# `gh workflow run evidence-tag.yml -f rebuild_before_publication=yes`). Without that answer it stops if the
+# tag exists. Nothing triggers it on a push.
 on:
-  push:
-    branches: [main]
-    paths: [.github/workflows/evidence-tag.yml]
   workflow_dispatch:
+    inputs:
+      rebuild_before_publication:
+        description: "yes: replace an existing evidence-v1 that has not been published. Anything else: stop if it exists."
+        required: true
+        default: "no"
 
 permissions:
   contents: write
+
+env:
+  TAG: evidence-v1
 
 jobs:
   tag:
@@ -21,29 +36,72 @@ jobs:
         with:
           fetch-depth: 0
           persist-credentials: false
-      - name: Build and push the tag
+      - name: Refuse to replace a published tag
+        id: gate
+        env:
+          TOKEN: ${{ github.token }}
+          REBUILD: ${{ inputs.rebuild_before_publication }}
+        run: |
+          if [ -e evidence/ARCHIVE_DOI ]; then
+            echo "::error::evidence/ARCHIVE_DOI exists, so $TAG is published. Make a new tag; this one does not move."
+            exit 1
+          fi
+          release=$(curl -s -o /dev/null -w '%{http_code}' -H "Authorization: Bearer ${TOKEN}" \
+            "${GITHUB_API_URL}/repos/${GITHUB_REPOSITORY}/releases/tags/${TAG}")
+          case "$release" in
+            200) echo "::error::A GitHub release exists for $TAG, so it is published. Make a new tag; this one does not move."; exit 1 ;;
+            404) ;;
+            *) echo "::error::Could not tell whether $TAG has a release (HTTP $release). Stopping."; exit 1 ;;
+          esac
+          current=$(git ls-remote "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" "refs/tags/${TAG}" | cut -f1)
+          if [ -n "$current" ] && [ "$REBUILD" != yes ]; then
+            echo "::error::$TAG exists at $current. To replace it before publication, run with rebuild_before_publication=yes."
+            exit 1
+          fi
+          echo "current=$current" >> "$GITHUB_OUTPUT"
+      - name: Build the tag
         env:
           TOKEN: ${{ github.token }}
         run: |
+          set -euo pipefail
           wardowl=https://github.com/muzakkirhussain011/wardowl.git
-          for branch in archive x2-x5 x3-x6 x4-x7; do
-            git fetch -q --depth 1 "$wardowl" "refs/heads/results/$branch:refs/evidence/$branch"
-          done
+          # Results branches of the library, at the commits read for the paper (2026-10-31).
+          git fetch -q --depth 1 "$wardowl" \
+            dfda5dbeda08f7bf5dc77f423b14edc106a88195:refs/evidence/archive \
+            f4c175b7a8b469a8481b2235aaee4f4a3d3fe77b:refs/evidence/x2-x5 \
+            c43ec349c28d9ef8d20202c0808752170b112141:refs/evidence/x3-x6 \
+            0202df847bf733a83a6257323edec37b5f48e6ca:refs/evidence/x4-x7
+          # This repository's outputs of the vendor reproducers and the extra Cerbos tests.
           git fetch -q "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" \
             refs/heads/results/reproducers:refs/evidence/reproducers \
             refs/heads/results/cerbos-extra:refs/evidence/cerbos-extra
-          # The experiments' code, so that the archive holds it as well as the public branches do.
-          for branch in conformance-campaign x1-underretrieval x2-x5 x3-x6 x4-x7; do
-            git fetch -q --depth 1 "$wardowl" "refs/heads/paper/$branch:refs/evidence/paper-$branch"
-          done
-          git fetch -q --depth 1 "$wardowl" refs/heads/main:refs/evidence/wardowl-main
           export GIT_INDEX_FILE="$RUNNER_TEMP/index"
           git read-tree HEAD
-          for branch in conformance-campaign x1-underretrieval x2-x5 x3-x6 x4-x7; do
-            git read-tree --prefix="harness/$branch/benchmarks-paper/" "refs/evidence/paper-$branch:benchmarks/paper"
-            git read-tree --prefix="harness/$branch/workflows/" "refs/evidence/paper-$branch:.github/workflows"
-          done
-          git read-tree --prefix=harness/wardowl-main/acceptance-kaggle/ refs/evidence/wardowl-main:acceptance/kaggle
+          # The library at the exact commits of the paper's runs (Appendix A of the paper, REPRODUCE.md):
+          # the package, its tests, the harnesses, the setup scripts (benchmarks/kaggle_setup.sh and
+          # kaggle_stores.sh among them), the workflows and the lock file. Only the site's media under
+          # docs/_static/ stay out: no run read them, and they are 9 MB per commit.
+          commits="$RUNNER_TEMP/COMMITS.tsv"
+          printf 'folder\tcommit\tused by\n' > "$commits"
+          while IFS='|' read -r folder sha used; do
+            git fetch -q --depth 1 "$wardowl" "$sha:refs/evidence/commit-$folder"
+            [ "$(git rev-parse "refs/evidence/commit-$folder^{commit}")" = "$sha" ]
+            git ls-tree -r "$sha" | grep -v -P '\tdocs/_static/' | sed "s#\t#\tharness/$folder/#" | git update-index --index-info
+            printf '%s\t%s\t%s\n' "$folder" "$sha" "$used" >> "$commits"
+          done <<'COMMITS'
+          x0-x8-bf25bd0|bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839|X0, X8, X8-FGA and X8 amendment 2: wardowl 2.1.0 (this commit is tag v2.1.0) and the acceptance scripts
+          x1-run1-947fb8f|947fb8f11efa917ec86402d381c1983d143df7df|X1 run 1 scripts, with wardowl 2.1.0 from PyPI
+          x1-run2-a956424|a95642429d508340946ee3679b65db2eedd36dc1|X1 run 2 (branch paper/x1-underretrieval)
+          x2-x5-884ce18|884ce18397966859ebb803427cc23a5023431739|X2 and X5, run 40921769714 (branch paper/x2-x5)
+          x3-x6-a191626|a1916263f118f92a3446e6b98ec812549e82261a|X3 and X6, run 40940385704 (branch paper/x3-x6)
+          x3-x6-followup-9e22b89|9e22b895c6323e9d5198ce150c415757680994aa|X3 and X6 follow-up (amendment 4), run 40982986417
+          x4-x7-e66dffc|e66dffc2a24b89b3ae60cd10db02e0363ff4387a|X4 and X7, run 40919304635; its wardowl/ is that of fix/engine-limits at e7776f0
+          x7-amendment2-harness-41292bd|41292bd2aa21814b025fbac31a1be94cf8744855|X7 amendment 2 harness, run 40969846593
+          x7-amendment2-library-3c6559f|3c6559f3ecfd850bcd59416f14237d85887ba498|X7 amendment 2 library (fix/revocation-faults, PR 186)
+          conformance-run1-5d0f414|5d0f414a346511ad48a6c1c8b411259e6d908b84|Conformance campaign run 1, run 40313285885
+          conformance-run2-182bcbc|182bcbc53b9135c1c9bca4f0652a0f94ff2b9938|Conformance campaign run 2, run 40905549149
+          COMMITS
+          git update-index --add --cacheinfo "100644,$(git hash-object -w "$commits"),harness/COMMITS.tsv"
           git read-tree --prefix=evidence/raw/results-cerbos-extra/ refs/evidence/cerbos-extra
           git read-tree --prefix=evidence/raw/ci-artifacts/ refs/evidence/archive
           git read-tree --prefix=evidence/raw/results-x2-x5/ refs/evidence/x2-x5
@@ -52,9 +110,41 @@ jobs:
           git read-tree --prefix=evidence/raw/results-reproducers/ refs/evidence/reproducers
           tree=$(git write-tree)
           unset GIT_INDEX_FILE
+          # What must be there, or the tag would not hold what the paper promises.
+          for path in REPRODUCE.md LICENSE.md harness/COMMITS.tsv \
+            harness/x0-x8-bf25bd0/benchmarks/kaggle_setup.sh \
+            harness/x0-x8-bf25bd0/benchmarks/kaggle_stores.sh \
+            harness/x0-x8-bf25bd0/benchmarks/stores.py \
+            harness/x0-x8-bf25bd0/acceptance/enterprise.py \
+            harness/x0-x8-bf25bd0/acceptance/kaggle/enterprise_rag.py \
+            harness/x0-x8-bf25bd0/wardowl/testing.py \
+            harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py \
+            harness/x1-run2-a956424/benchmarks/kaggle_setup.sh \
+            harness/x2-x5-884ce18/.github/workflows/paper-x2-x5.yml \
+            harness/x3-x6-a191626/.github/workflows/paper-x3-x6.yml \
+            harness/x4-x7-e66dffc/.github/workflows/paper-x4-x7.yml \
+            harness/conformance-run2-182bcbc/.github/workflows/paper-conformance.yml \
+            evidence/raw/ci-artifacts/MANIFEST.tsv \
+            evidence/raw/results-reproducers/runs \
+            evidence/raw/results-cerbos-extra \
+            evidence/raw/x1run2-shard-a/x1run2/runs \
+            evidence/raw/x8-seed11/answers.jsonl; do
+            git cat-file -e "$tree:$path" || { echo "::error::$path is missing from the tree"; exit 1; }
+          done
           commit=$(git -c user.name="Syed Muzakkir Hussain" -c user.email="muzakkirhussain011@gmail.com" \
             commit-tree "$tree" -p HEAD \
-            -m "Evidence archive v1: the repository plus the CI artifacts and results branches of the paper's runs")
-          git tag -f evidence-v1 "$commit"
-          git ls-tree -r -l evidence-v1 | awk '{s+=$4} END{printf "%d files, %.0f MB\n", NR, s/1048576}'
-          git push -f "https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git" refs/tags/evidence-v1
+            -m "Evidence archive v1: the repository, the CI artifacts and results branches of the paper's runs, and the library at the runs' commits")
+          echo "commit=$commit" >> "$GITHUB_ENV"
+          git ls-tree -r -l "$commit" | awk '{s+=$4} END{printf "%d files, %.0f MB\n", NR, s/1048576}'
+      - name: Push the tag
+        env:
+          TOKEN: ${{ github.token }}
+          CURRENT: ${{ steps.gate.outputs.current }}
+        run: |
+          remote="https://x-access-token:${TOKEN}@github.com/${GITHUB_REPOSITORY}.git"
+          if [ -n "$CURRENT" ]; then
+            # Replaces only the tag the gate saw, and only before publication.
+            git push --force-with-lease="refs/tags/${TAG}:${CURRENT}" "$remote" "${commit}:refs/tags/${TAG}"
+          else
+            git push "$remote" "${commit}:refs/tags/${TAG}"
+          fi
