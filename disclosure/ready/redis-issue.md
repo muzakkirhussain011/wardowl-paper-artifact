@@ -12,7 +12,7 @@ A TAG value longer than 4,096 bytes is cut when it is indexed, while a query loo
 1. `@field:{<whole value>}` does not find the document.
 2. `@field:{<first 4,096 bytes of it>}` finds it, together with any document whose tag really is that shorter value.
 
-`tokenizeTagString` copies each tag with `rm_strndup(tok, MIN(toklen, MAX_TAG_LEN))`, where `#define MAX_TAG_LEN 0x1000` ("Tags are limited to 4096 each"), in both the case-sensitive branch and the lowercase fallback (`src/tag_index.c`, lines 38-39 and 140-150 at commit `400ff19597dacab7676524130239bd0d9362ae88`). The [tag field documentation](https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/) states no length limit.
+`tokenizeTagString` copies each tag with `rm_strndup(tok, MIN(toklen, MAX_TAG_LEN))`, where `#define MAX_TAG_LEN 0x1000` ("Tags are limited to 4096 each"), in both the case-sensitive branch and the lowercase fallback (`src/tag_index.c`, lines 39-40 and 140-150 at commit `400ff19597dacab7676524130239bd0d9362ae88`). The [tag field documentation](https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/) states no length limit.
 
 **To Reproduce**
 
@@ -46,6 +46,6 @@ So a filter on such a field can miss a document, and can match one that holds a 
 
 If it helps, one option would be to apply the same limit to query values, so that both sides agree, or to refuse a longer value at indexing with an error, and to document the limit on the tag fields page and in `FT.CREATE`. You know this code far better than I do, so please take that only as a suggestion.
 
-I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted to let you know before it appears. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
 
 The commands and results above come from real runs, and I will follow this issue and answer any questions.

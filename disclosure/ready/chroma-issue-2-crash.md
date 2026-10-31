@@ -33,7 +33,7 @@ I met this with a filter built from a user's group memberships, one clause per g
 
 If it helps, one option would be to render n-ary `$and` and `$or` as a balanced tree, or with sea-query's `Cond::any()` and `Cond::all()`, and to validate the size of a `where` with a clear error. A documented size limit for local mode would also help. You know this code far better than I do, so please take that only as a suggestion.
 
-I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted to let you know before it appears. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
 
 The code and output here come from real runs, and I will follow this issue and answer any questions.
 

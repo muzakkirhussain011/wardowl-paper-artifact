@@ -9,6 +9,13 @@ first, flat query fails the same way, so the title and "What happens" no longer 
 nested.
 Where: https://github.com/chroma-core/chroma/issues
 
+State on 2026-10-31: open, no comments (GitHub API). The last paragraph of `disclosure/ready/chroma-issue-1-depth.md` was
+corrected that day, and the filed issue is to be edited to match: it no longer says the maintainers hear of the behavior
+first, because the library's public pull request #187 had described the filter fault earlier on 2026-10-30. The run ids
+in this file belong to the paper's private development repository, so their pages are not public. Every job's output is
+public: `runs/<run id>/` on branch `results/reproducers` of the artifact repository, and
+`evidence/raw/results-reproducers/runs/<run id>/` in the tag `evidence-v1`. `REPRODUCE.md` says how to rerun them.
+
 ## Title
 
 A `$or` with about 1,000 operands fails with "Expression tree is too large (maximum depth 1000)",
@@ -86,8 +93,12 @@ Status: filed 2026-10-30 as https://github.com/chroma-core/chroma/issues/7970, a
 `disclosure/ready/chroma-issue-2-crash.md`. This file is the working draft and its evidence. Reproduced on 2026-10-30 with the reproducer below (one fix: the collection name) on
 chromadb 1.5.9, still the latest release that day, in workflow runs 41007779363 and 41008151303; see
 "Reproduced (2026-10-30)" at the end. Source: X3 run 40940385704 (`evidence/x3-x6-run1.md`,
-"X3: Chroma, refusal and crash"); the follow-up run under faulthandler will add the stack and the
-crash threshold.
+"X3: Chroma, refusal and crash"); the follow-up run 40982986417 under faulthandler added the stack and the
+crash threshold (`evidence/x3-x6-followup.md`).
+
+State on 2026-10-31: open, no comments (GitHub API). The last paragraph of `disclosure/ready/chroma-issue-2-crash.md` was
+corrected that day, and the filed issue is to be edited to match: it no longer says the maintainers hear of the behavior
+first, because the library's public pull request #187 had described it earlier on 2026-10-30.
 
 ## Title
 

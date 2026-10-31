@@ -7,6 +7,15 @@ Status: filed 2026-10-30 as https://github.com/RediSearch/RediSearch/issues/1210
 Where: https://github.com/RediSearch/RediSearch/issues (bug), with a docs note for
 https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/.
 
+State on 2026-10-31: open, no comments (GitHub API). Two corrections to the text in `disclosure/ready/redis-issue.md`
+that day, which the filed issue is to be edited to match: the source lines are 39-40, not 38-39; and its last
+paragraph no longer says the maintainers hear of the behavior first, because the library's public pull request #167 had
+described it earlier on 2026-10-30.
+
+The three run ids belong to the paper's private development repository, so their pages are not public. Every job's
+output is public: `runs/<run id>/` on branch `results/reproducers` of the artifact repository, and
+`evidence/raw/results-reproducers/runs/<run id>/` in the tag `evidence-v1`. `REPRODUCE.md` says how to rerun them.
+
 ## Title
 
 TAG values longer than 4,096 bytes are cut at indexing but not in queries: the document is not
@@ -21,7 +30,7 @@ found by its value, and is found by the value's first 4,096 bytes
 
 `tokenizeTagString` copies each tag with `rm_strndup(tok, MIN(toklen, MAX_TAG_LEN))`, where
 `#define MAX_TAG_LEN 0x1000` ("Tags are limited to 4096 each"), in both the case-sensitive branch and
-the lowercase fallback (`src/tag_index.c`, lines 38-39 and 140-150 at the commit above). The query
+the lowercase fallback (`src/tag_index.c`, lines 39-40 and 140-150 at the commit above). The query
 side looks the value up as given. So for a value over 4,096 bytes:
 
 1. `@field:{<whole value>}` does not find the document;
@@ -68,7 +77,8 @@ predicted above.
 The script also checks the boundary, which the reproducer above does not: a 4,096-byte value is
 found by its whole value (`1`, `doc:b4096`) and a 4,097-byte value is not (`0`), so values are cut
 when they are longer than 4,096 bytes. The source lines cited under "What happens" were not re-read
-for these runs; the behaviour agrees with them.
+for these runs; the behaviour agrees with them. They were re-read on 2026-10-31 at the commit above: the comment is on
+line 39, the `#define` on line 40, and `rm_strndup` on lines 146 and 149.
 
 ## Impact
 

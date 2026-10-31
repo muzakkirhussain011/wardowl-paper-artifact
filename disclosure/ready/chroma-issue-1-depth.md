@@ -34,7 +34,7 @@ Where I met it: a permission filter for a user in many groups, with one clause p
 
 If it helps, one option would be to build n-ary `$and` and `$or` as one node rather than a chain, or to document the limit in operands. You know this code far better than I do, so please take that only as a suggestion.
 
-I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted you to hear about it first. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
+I came across this while testing for a research paper on permission-aware retrieval. The paper mentions this behavior, and I wanted to let you know before it appears. If anything here is wrong, or if you would like the paper to describe it differently or to mention a fix, please tell me and I will update it.
 
 The code and output here come from real runs, and I will follow this issue and answer any questions.
 

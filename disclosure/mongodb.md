@@ -1,7 +1,12 @@
 # Draft upstream report: MongoDB Atlas Vector Search
 
 Status: sent 2026-10-30 as documentation feedback, with the text in `disclosure/ready/mongodb-feedback.md`; there is
-no public link. That text says strings this long are uncommon, which was not measured, and the form cannot be edited.
+no public link, so a reader cannot confirm that it arrived, and no reply is known. That text says strings this long are
+uncommon, which was not measured. It also says the maintainers hear of the behavior first, although the library's public
+pull requests #167 and #188 had described it earlier on 2026-10-30. The form cannot be edited, so the file stays as sent.
+The three run ids below belong to the paper's private development repository, so their pages are not public; every job's
+output is public, under `runs/<run id>/` on branch `results/reproducers` of the artifact repository and under
+`evidence/raw/results-reproducers/runs/<run id>/` in the tag `evidence-v1`. `REPRODUCE.md` says how to rerun them.
 This file is the working draft and its evidence. Reproduced on 2026-10-30 on Atlas Local 8.0.30 and 8.3.13 (the latest
 release that day) in workflow runs 41007436602, 41007779363 and 41008151303, with one correction:
 the `filter` type keeps 8,191 characters, not the 8,181 first inferred from the documented `token`
