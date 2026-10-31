@@ -53,7 +53,7 @@ excluded.
 \footnotesize\setlength{\tabcolsep}{4pt}
 \begin{tabular}{@{}llrr@{}}
 \toprule
-Experiment & Platform & Wall clock & Session or job hours \\
+Experiment & Platform & Wall clock & Hours \\
 \midrule
 End-to-end, first run (seed 7) & Kaggle, $2\times$T4, 4 CPUs & 2.8\,h & 2.8 \\
 End-to-end, three repeats (X8) & Kaggle, $2\times$T4, 4 CPUs, one session each & 2.9 to 3.3\,h each & 9.2 \\
@@ -74,8 +74,8 @@ Frontiers and repair (X2, X5) & GitHub-hosted runners, 72 jobs & 10.6\,h & 98.7 
 \caption{Compute of the runs reported in the paper. Kaggle sessions have 4 CPUs and 31.3\,GiB of
 memory; GitHub-hosted runners have 4 virtual CPUs and 16\,GB. Jobs counts every job of the workflow
 run, including data, plan, report, summary and publish jobs, from GitHub's jobs API (the X7 rerun and
-the follow-up each include jobs the workflow skipped, one and three). Job hours sum the run times of
-the jobs that started; wall clock includes queueing. Kaggle hours are the last time stamp of each kernel log. Smoke runs that tested the harnesses, whose numbers were never analysed,
+the follow-up each include jobs the workflow skipped, one and three). On GitHub, hours sum the run times of
+the jobs that started; wall clock includes queueing. On Kaggle, hours are session hours, the last time stamp of each kernel log. Smoke runs that tested the harnesses, whose numbers were never analysed,
 and runs cancelled before they produced results are not listed.}
 \label{tab:app-compute}
 \end{table}
