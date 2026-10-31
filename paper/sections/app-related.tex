@@ -9,8 +9,8 @@ This appendix gives the full account behind Section~\ref{sec:related}. Our state
 \paragraph{Enterprise search and document-level security.}
 B\"{u}ttcher and Clarke gave the founding security model for multi-user full-text
 search~\cite{buttcher2005security}. Filtering results ranked with global BM25 statistics lets any user
-who can create files infer how many unreadable files contain a term (to within about 0.5\% from ranks
-alone, with roughly ten binary-search queries); their fix, query integration, restricts every posting
+who can create files infer how many unreadable files contain a term (about 0.5\% in their example, from ranks
+alone); their fix, query integration, restricts every posting
 list to the user's searchable set before ranking, at between 39\% faster and 17\% slower, and they
 require that no aspect of the output, including its order, depend on unsearchable content. Bailey,
 Hawking and Matson modeled late binding, whose cost grows with the results checked times the
@@ -128,7 +128,7 @@ membership with about 30 natural-looking queries~\cite{naseh2025riddle}; and in 
 8-gram output guard cut verbatim copying to 0.0\% while an adaptive three-query attacker still
 recovered 48.3\% of hidden facts~\cite{liu2026protection}. Such defenses are probabilistic and
 model-side. Cross-tenant work reaches our premise: retrieval ranks by relevance, not authorization,
-and attribute-based gating at retrieval removed cross-tenant leakage~\cite{arceo2026securing};
+and attribute-based gating at retrieval~\cite{arceo2026securing} and a unified PostgreSQL data layer~\cite{budigi2026beyond} are reported to remove cross-tenant leakage;
 re-checking authorization at the graph-expansion boundary of hybrid RAG cut a retrieval-pivot risk of
 0.95 to near zero~\cite{thornton2026retrieval}; Microsoft researchers call prompt sanitization and
 output filtering fundamentally probabilistic~\cite{bhatt2025enterprise}; GPT-4.1 reaches only
@@ -144,8 +144,8 @@ access~\cite{jones2020oauth}, the MCP authorization specification requires audie
 forbids passing a client's token upstream~\cite{mcp2026model}, and MITRE ATLAS mitigation AML.M0027
 says an agent should never hold permissions its user would not~\cite{mitre2026atlas}; yet 40.55\% of
 7,973 live remote MCP servers exposed tools without authentication~\cite{zhou2026first}. This
-literature shows why enforcement must be deterministic and precede generation, but does not test
-whether an enforcement layer is faithful or what it costs in recall. Corpus
+literature shows why enforcement must be deterministic and precede generation. Where it evaluates a layer it does so on one system,
+and we found no oracle-based test across stores and engines. Corpus
 poisoning~\cite{zou2025poisonedrag} acts through content a reader may read, and information-flow
 control for agents~\cite{costa2025securing,wu2024systemlevel} constrains where retrieved content may
 flow after it is read; both are complementary to a retrieval guarantee. We adopt token-bound identity

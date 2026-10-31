@@ -85,7 +85,7 @@ the store returns, the identifier and attributes that the check evaluates belong
 content is returned. (A3) \emph{Fail closed}: an error, timeout or malformed answer from the authorizer
 ends the request with no hits.
 
-\begin{observation}[Security does not depend on the filter or the store]\label{prop:reduction}
+\begin{observation}[Security does not depend on the filter or the index]\label{prop:reduction}
 Under \textup{(A1)} to \textup{(A3)}, if the layer returns only candidates that passed
 $\mathrm{check}$, every result it returns is secure, whatever predicate $\varphi_s$ was compiled and
 however the store evaluated or approximated it. If, moreover, every check reads a revision that
@@ -119,7 +119,7 @@ filter and its translator join the trusted computing base.
 
 \paragraph{Staleness and count certificates.}
 If the engine may lack the writes of the last $\delta_e$ seconds and the layer caches each decision for at most a time
-to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache. A layer can set $c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or
+to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache. On a short answer, a layer can set $c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or
 if a filter-only count shows that every chunk passing $\varphi_s$ was among the candidates (Appendix~\ref{app:certificates}).
 
 \subsection{Threat model}\label{sec:prob-threat}

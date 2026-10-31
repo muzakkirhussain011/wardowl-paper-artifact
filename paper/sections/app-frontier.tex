@@ -185,13 +185,13 @@ the filter's matches when the batches find too few~\cite{redis2026vectors}. Open
 paid the same way, more mildly (24.6 against 15.3\,ms, and 68.0 against 33.3\,ms, at 10\%). Qdrant's
 gap of 0.034 (0.020 to 0.049) averages opposite effects: at 2\% its recall@10 was 0.024 for
 uncorrelated questions, 0.312 for negatively and 0.808 for positively correlated ones, and at 30\%
-0.818, 0.565 and 0.985 (build 0). A random 2\% of the graph is the hardest permitted subgraph to
-traverse, since few of a node's neighbors belong to it; topical groups stay better connected.
+0.818, 0.565 and 0.985 (build 0). This is consistent with a random 2\% of the graph being the hardest permitted subgraph to
+traverse, since few of a node's neighbors would belong to it and topical groups would stay better connected; we did not measure connectivity.
 
 \paragraph{Local or global selectivity (H2.2, falsified).}
 Local selectivity predicted recall better than global selectivity in three stores and worse in five;
 the pre-registered rule calls the hypothesis falsified once half of the assessable stores (eight;
-OpenSearch had too few misses) go the other way. The split follows the mechanism. Where recall depends on what lies near the question, in pgvector's scan in order of
+OpenSearch had too few misses) go the other way. The split is consistent with the mechanism. Where recall depends on what lies near the question, in pgvector's scan in order of
 distance, LanceDB's probed partitions and Elasticsearch, local selectivity won ($D$ of 0.244 to
 0.538), and ACORN's query correlation correlated with recall more strongly still (Spearman 0.562 to
 0.672). Where the store chooses its search path from the filter's estimated size, as Qdrant, Weaviate

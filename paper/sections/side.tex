@@ -17,15 +17,15 @@ much can a subject learn from these departures about whether unreadable chunks e
 
 \subsection{A distinguishing game}\label{sec:side-game}
 
-Two worlds of equal size differ only in where $m$ unreadable chunks lie. In $W_1$ they are the $m$ passages most
-similar to a probe query; in $W_0$ each is replaced by a passage of another domain, far from every probe and cut to
-the same length, at the same position in the index. The attacker's readable set is identical in both worlds. It
+Two worlds of equal size differ in the 1,233 unreadable chunks of one group of nine probes. In $W_1$ each probe's $m$ secrets are its $m$ most
+similar passages, for $m$ from 1 to 1,000; in $W_0$ each secret is replaced by a passage of another domain, far from every probe and cut to
+the same length, at the same position in the index. So a probe labeled $m$ has $m$ secrets near it, and the other $1{,}233 - m$ lie beyond the depth the layer explores for it, though not outside the index; each world is a separate build. The attacker's readable set is identical in both worlds. It
 issues the probe and sees what a caller of the layer saw in the version we measured: the latency, the number of hits,
 the completeness flag, the mean score of the hits, and the hits themselves, from which it can compute recall@10
 against the exact top ten of its own readable set. The detection fields of Section~\ref{sec:repair} are also visible
 to a caller; they postdate this experiment and are an untested observable. The \emph{differencing attacker}, our
 primary adversary, sees the same probe in both worlds, as someone who repeats a query before and after a document is
-added, and must say which observation is $W_1$; its success is the paired AUC, the share of probes whose $W_1$ observation lies further in the predicted
+added (we compared separately built indexes; adding to a live index was not measured), and must say which observation is $W_1$; its success is the paired AUC, the share of probes whose $W_1$ observation lies further in the predicted
 direction than their $W_0$ observation. An attacker who knows the sign of a difference gains as much below 0.5 as
 above it, so the size of a channel is $|\mathrm{AUC} - 0.5|$. This is a forced choice: the attacker is told that one of the two worlds holds the secrets. It does not measure
 detecting a change against no change, which needs a false-positive rate on identical content, measured only for some configurations below. The secrets
@@ -87,7 +87,7 @@ Appendix~\ref{sec:side-setup} gives the design, and Table~\ref{tab:side-hyp} the
   \addplot[dashdotted, mark=diamond*] coordinates {(1,0.49)(10,0.50)(100,0.48)(1000,0.60)};
   \node[font=\scriptsize, anchor=north east] at (axis cs:95,0.30) {pgvector, recall};
 \nextgroupplot[title={Exact pre-filter, latency}, xlabel={Unreadable chunks near the query, $m$}]
-  \fill[gray!18] (axis cs:1,0.186) rectangle (axis cs:1000,0.789);
+  \fill[gray!18] (axis cs:1,0.167) rectangle (axis cs:1000,0.817);
   \draw[densely dashed, gray] (axis cs:0.8,0.5) -- (axis cs:1250,0.5);
   \addplot[mark=*] coordinates {(1,0.25)(10,0.30)(100,0.25)(1000,0.35)};
   \addplot[dashed, mark=square*] coordinates {(1,0.17)(10,0.14)(100,0.13)(1000,0.12)};
@@ -114,8 +114,8 @@ values.}
 
 Every pre-registered cell ran: 520,320 retrievals without an error, none returning a chunk outside the attacker's readable set.
 Figure~\ref{fig:side-auc} shows the channels by $m$. Three cautions come first. Two builds of identical content gave paired latency AUCs
-of 0.342 to 0.608 for FAISS's post-filter, and $|\mathrm{AUC} - 0.5|$ up to 0.24 for its pre-filter, 0.31 for pgvector's exact search and
-under 0.01 for Qdrant's exact search; the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC between about 0.6 and 0.8 is
+of 0.342 to 0.608 for FAISS's post-filter, and, per $m$, $|\mathrm{AUC} - 0.5|$ up to 0.38 for its pre-filter, 0.33 for pgvector's exact search and
+0.08 for Qdrant's exact search (0.24, 0.31 and under 0.01 pooled over $m$); the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC between about 0.6 and 0.8 is
 therefore not by itself evidence about the secrets. We read growth with $m$ as the sign of a channel and a flat curve as an offset, a criterion we adopted after seeing these results. Second, every $W_0^g$ is built later in its seed than
 $W_1$, so build age is aligned with world in every latency cell. Third, intervals resample (seed, probe) pairs while the demonstrated noise is per build, so latency intervals are too narrow. We apply no correction for multiple
 comparisons; the verdicts rest on the cells the hypotheses name.
@@ -124,7 +124,7 @@ comparisons; the verdicts rest on the cells the hypotheses name.
 Where the prediction rested on the loop alone, the post-filter's latency separated the worlds as predicted. At $m = 100$ one more widening round
 made $W_1$ slower, with paired AUCs of 0.850 (0.762 to 0.925) on FAISS, 0.800 (0.713 to 0.887) on Qdrant and 0.825 (0.738 to 0.900) on
 Elasticsearch at $p = 10\%$, and 0.925 to 0.975 on all four stores at $p = 50\%$; pgvector's 0.662 (0.550 to 0.762) at $p = 10\%$ was
-inconclusive. At $m = 1{,}000$ these attackers reach 1.000. The attacker reading 1\% has no forward latency channel: 0.113 to 0.588 at $m = 100$ and 0.025 to 0.575 at $m = 1{,}000$, reversed on pgvector, while its count AUC at $m = 1{,}000$ is 1.000. Two parts failed. At $m = 1{,}000$ and $p = 50\%$ the count AUC was 0.613 to 0.688, below the falsification bound of 0.80, because
+inconclusive. At $m = 1{,}000$ these attackers reach 1.000. The attacker reading 1\% has no forward latency channel: 0.113 to 0.588 at $m = 100$ and 0.025 to 0.575 at $m = 1{,}000$, reversed on pgvector and FAISS and, at the edge of its interval, on Qdrant, while its count AUC at $m = 1{,}000$ is 1.000. Two parts failed. At $m = 1{,}000$ and $p = 50\%$ the count AUC was 0.613 to 0.688, below the falsification bound of 0.80, because
 readable hub passages among the candidates filled the answer. And FAISS's latency at $m = 1$ gave 0.667 (0.617 to 0.717) on identical answers:
 two builds of the same content differed by as much, though the reading we fixed in advance for that follow-up is formally inconclusive.
 
@@ -151,6 +151,6 @@ No padder ran. Padded latency was computed afterwards from the recorded latencie
 outside the rule. What the computation does give is the cost: padding raised mean latency 5.2 to 6.7 times in those configurations. Exact search cost 1.53, 2.01 and 8.10 times the
 mean latency of the approximate pre-filter on Qdrant, Elasticsearch and pgvector.
 
-In sum, the largest channels at $m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48), and
-pgvector's approximate pre-filter (0.38). On the shared index, only exact pre-filtering returned the same answer in both worlds; a separated index does so by construction. Appendix~\ref{app:side-results} gives the full
+In sum, pooled over attackers, the largest channels at $m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48, part of it the build offset above), and
+pgvector's approximate pre-filter (0.38); per attacker, the post-filter's latency and pgvector's pre-filter reached 0.50 at $p = 10\%$ and 50\%, and the count 0.50 at $p = 1\%$. On the shared index, only searches that ran exactly, whether requested or chosen by the planner (Qdrant's small filters), returned the same answer in both worlds; a separated index does so by construction. Appendix~\ref{app:side-results} gives the full
 results, costs and the build-offset forensics.

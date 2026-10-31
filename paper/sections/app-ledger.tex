@@ -11,14 +11,13 @@
 
 Table~\ref{tab:app-ledger} lists every hypothesis and prediction with its registration document, its commit or
 amendment, whether it was written before or after the results it concerns, the run that judged it, the verdict as the
-analysis script printed it, and a class: \emph{conf.}, confirmatory, written before any result of its experiment;
+analysis script printed it, and a class: \emph{conf.}, confirmatory, written before any full-size result of its experiment, smoke runs of a harness being earlier exposure where they occurred;
 \emph{expl.}, exploratory, specified in writing after the main results and before running; or \emph{impl.}, an implementation
 check of a fix or of the harness. A reader can check the ordering to different degrees. For the experiments on GitHub Actions,
 the pre-registration commit is an ancestor of the run's head commit (\texttt{git merge-base --is-ancestor}), and the run's creation time, which
-GitHub records, follows the commit. For the Kaggle runs nothing independent supports the order of writing and running. Git dates are self-reported. The X8
+GitHub records, follows the commit. For the Kaggle runs the evidence is weaker. Git dates are self-reported. GitHub's public activity record shows X1's branch pushed at 947fb8f on 2026-10-26 at 09:50 UTC, with its registration commits as ancestors, and each X1 kernel clones its commit from there, so that a kernel cannot have run before the push; run 1's public notebook log prints 947fb8f, while run 2's log is the author's copy (\path{evidence/raw/x1-branch-activity.json}). No such record supports X8. The X8
 pre-registration and its amendments were committed before the runs in a private repository, which was not public then; the public artifact repository
-that now holds those commits was created on 2026-10-30 at 21:29 UTC, after every Kaggle run. X1's commits are on a public branch of the library's repository, but no
-Actions run bounds them. Apart from the notebooks of X0 and X1's first run, the kernels are private; readers can check their outputs and logs, in the artifact and in the public Kaggle
+that holds those commits was first created on 2026-10-30 at 21:29 UTC, after every Kaggle run, and recreated on 2026-10-31 at 22:32 UTC, before its archive, to drop private planning notes from its history; the commits named here kept their hashes. Apart from the notebooks of X0 and X1's first run, the kernels are private; readers can check their outputs and logs, in the artifact and in the public Kaggle
 dataset \url{https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence}. The store logs of X0, X8 and X8-FGA carry dates, while the kernel logs, which are all that amendment 2 has, hold only seconds since their start, and any of these date at most a run, not the writing. The artifact's \texttt{evidence/raw/KAGGLE\_KERNELS.tsv} lists the start times Kaggle's API reported to the author, which agree with the commit dates but cannot be checked by others. Rules and full wording are in the
 pre-registration files. The confirmatory class is relative to a stated earlier exposure: the X1 predictions followed the published
 aggregates of X0; the X2 and X5 predictions followed X0, the verdicts of X1's first run and earlier MS MARCO benchmarks in the library's

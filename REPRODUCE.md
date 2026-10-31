@@ -28,37 +28,37 @@ Short names used in the table:
 
 | Paper item | Run | Script | Data | Summary |
 |---|---|---|---|---|
-| `tab:conf-findings`, this paper's findings on stores and engines | Conformance runs 40313285885, 40905549149; vendor reproducers | `harness/conformance-run2-182bcbc/benchmarks/paper/conformance_campaign.py`, kit `harness/conformance-run2-182bcbc/wardowl/testing.py`; `disclosure/reproducers/` | `evidence/raw/ci-artifacts/40905549149/conformance-summary.zip`, `evidence/raw/ci-artifacts/40313285885/conformance-summary.zip`; `evidence/raw/results-reproducers/runs/41008151303/` | `evidence/conformance-campaign-run1.md`, `evidence/conformance-campaign-run2.md`, `disclosure/redis.md`, `disclosure/mongodb.md`, `disclosure/chroma.md`, `disclosure/cerbos.md` |
-| `tab:eng-revoke`, revocation delay | X7, 40919304635 | `harness/x4-x7-e66dffc/benchmarks/paper/x7_revocation_faults.py`, `harness/x4-x7-e66dffc/benchmarks/paper/x7_stats.py` | `X47` `x7a_revocation.csv`; raw `evidence/raw/ci-artifacts/40919304635/x4x7-x7a-acl.zip` and its siblings `x4x7-x7a-*.zip` | `evidence/x4-x7-run1.md`; the fixes tested, `evidence/x7-amendment2.md` with `X7A` `x7a_revocation.csv` |
-| `fig:qual-audit`, recall@10 per store, four runs | X0, X8 | `E2E`; `kaggle/x8/x8_run.py` | `evidence/raw/x0-seed7/results.json`, `evidence/raw/x8-seed11/results.json`, `evidence/raw/x8-seed13/results.json`, `evidence/raw/x8-seed17/results.json`, field `recall@10`. Printed only: no run stored its k=10 hits | `evidence/x8-run.md`, "Retrieval quality across the four runs" |
-| `fig:qual-frontiers`, recall against throughput on MS MARCO | X2, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x2_frontiers.py`, `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x2_frontier.csv` (cell `all`; QPS from build 0, recall the mean of three builds); rows `evidence/raw/ci-artifacts/40921769714/x2x5-res-x2-m-pgvector-b0.zip` and its siblings | `evidence/x2-x5-run1.md`, "Frontier data" |
-| `tab:rep-summary`, repair | X5, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x5_mitigation.py`, `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x5_arms.csv`; rows `evidence/raw/ci-artifacts/40921769714/x2x5-res-x5-m-pgvector-b0.zip` and its siblings, members `rows/*.jsonl.gz` | `evidence/x2-x5-run1.md`, "X5 arms" |
-| `fig:side-auc`, paired AUC against the number of documents | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/x6_side_channels.py`, `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_cells.csv`, `x6_report.md`; same-content ranges `FU` `fu_crossbuild_cells.csv`; records `evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-faiss.zip` and its siblings, member `x6-<store>.jsonl`. The paper's $W_0^g$ is the slot `W0` in the data | `evidence/x3-x6-run1.md`, "Exploratory: all paired AUCs"; `evidence/x3-x6-followup.md` |
+| `tab:conf-findings` (Table 1), this paper's findings on stores and engines | Conformance runs 40313285885, 40905549149; vendor reproducers | `harness/conformance-run2-182bcbc/benchmarks/paper/conformance_campaign.py`, kit `harness/conformance-run2-182bcbc/wardowl/testing.py`; `disclosure/reproducers/` | `evidence/raw/ci-artifacts/40905549149/conformance-summary.zip`, `evidence/raw/ci-artifacts/40313285885/conformance-summary.zip`; `evidence/raw/results-reproducers/runs/41008151303/` | `evidence/conformance-campaign-run1.md`, `evidence/conformance-campaign-run2.md`, `disclosure/redis.md`, `disclosure/mongodb.md`, `disclosure/chroma.md`, `disclosure/cerbos.md` |
+| `tab:eng-revoke` (Table 2), revocation delay | X7, 40919304635 | `harness/x4-x7-e66dffc/benchmarks/paper/x7_revocation_faults.py`, `harness/x4-x7-e66dffc/benchmarks/paper/x7_stats.py` | `X47` `x7a_revocation.csv`; raw `evidence/raw/ci-artifacts/40919304635/x4x7-x7a-acl.zip` and its siblings `x4x7-x7a-*.zip` | `evidence/x4-x7-run1.md`; the fixes tested, `evidence/x7-amendment2.md` with `X7A` `x7a_revocation.csv` |
+| `fig:qual-audit` (Figure 1), recall@10 per store, four runs | X0, X8 | `E2E`; `kaggle/x8/x8_run.py` | `evidence/raw/x0-seed7/results.json`, `evidence/raw/x8-seed11/results.json`, `evidence/raw/x8-seed13/results.json`, `evidence/raw/x8-seed17/results.json`, field `recall@10`. Printed only: no run stored its k=10 hits | `evidence/x8-run.md`, "Retrieval quality across the four runs" |
+| `fig:qual-frontiers` (Figure 2), recall against throughput on MS MARCO | X2, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x2_frontiers.py`, `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x2_frontier.csv` (cell `all`; QPS from build 0, recall the mean of three builds); rows `evidence/raw/ci-artifacts/40921769714/x2x5-res-x2-m-pgvector-b0.zip` and its siblings | `evidence/x2-x5-run1.md`, "Frontier data" |
+| `tab:rep-summary` (Table 3), repair | X5, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x5_mitigation.py`, `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x5_arms.csv`; rows `evidence/raw/ci-artifacts/40921769714/x2x5-res-x5-m-pgvector-b0.zip` and its siblings, members `rows/*.jsonl.gz` | `evidence/x2-x5-run1.md`, "X5 arms" |
+| `fig:side-auc` (Figure 3), paired AUC against the number of documents | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/x6_side_channels.py`, `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_cells.csv`, `x6_report.md`; same-content ranges `FU` `fu_crossbuild_cells.csv`; records `evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-faiss.zip` and its siblings, member `x6-<store>.jsonl`. The paper's $W_0^g$ is the slot `W0` in the data | `evidence/x3-x6-run1.md`, "Exploratory: all paired AUCs"; `evidence/x3-x6-followup.md` |
 
 ### Appendices
 
 | Paper item | Run | Script | Data | Summary |
 |---|---|---|---|---|
-| `tab:app-map`, the experiments | All | | GitHub API for run times and head commits; `harness/COMMITS.tsv`; `evidence/raw/KAGGLE_KERNELS.tsv` | `evidence/compute.md`, section 2 below |
-| `tab:app-ledger`, every hypothesis | All | | `plan/x8-prereg.md`; `harness/x1-run2-a956424/benchmarks/paper/PREREGISTRATION.md`, `harness/x2-x5-884ce18/benchmarks/paper/PREREG_X2_X5.md`, `harness/x3-x6-followup-9e22b89/benchmarks/paper/PREREG_X3_X6.md`, `harness/x4-x7-e66dffc/benchmarks/paper/PREREG_X4_X7.md`, with amendment 2 in `harness/x7-amendment2-harness-41292bd/benchmarks/paper/PREREG_X4_X7.md`; verdicts in the summaries of each run | The `evidence/*.md` files; the weakness of the Kaggle ordering is in `evidence/ARTIFACT_GAPS.md` |
-| `tab:sys-precedents`, components and precedents | None | | `bib/references.bib`, `bib/web.bib`; the library at `harness/x0-x8-bf25bd0/wardowl/` | `literature/Permission aware retrieval literature review.md` |
-| `tab:conf-faults`, faults and semantic gaps | Conformance runs; other rows as cited | `harness/conformance-run2-182bcbc/tests/test_testing_kit.py` for planted faults | `harness/conformance-run2-182bcbc/CHANGELOG.md`, `harness/conformance-run2-182bcbc/docs/review.md`; `evidence/raw/results-reproducers/runs/41008151303/` | `investigations/conformance-run1-triage.md`, `evidence/x3-x6-run1.md`, `evidence/x4-x7-run1.md`, `evidence/x7-amendment2.md` |
-| `tab:eng-agree`, filter against check | X4, 40919304635 | `harness/x4-x7-e66dffc/benchmarks/paper/x4_engines.py`, `harness/x4-x7-e66dffc/benchmarks/paper/x4_stats.py` | `X47` `x4a_profiles.csv`; raw `X47` `raw/`, `evidence/raw/ci-artifacts/40919304635/x4x7-x4-policy.zip` and its siblings | `evidence/x4-x7-run1.md` |
-| `tab:qual-x0`, retrieval quality in the scenario | X0, X8; re-analysis in X1 run 1 | `E2E`; `harness/x1-run1-947fb8f/benchmarks/paper/x0_reanalysis.py` | `results.json` of `evidence/raw/x0-seed7/` and `evidence/raw/x8-seed*/`; overlap@5 `evidence/raw/x1-run1/x0/recall5_by_person_type.csv` | `evidence/x8-run.md`, `evidence/x1-underretrieval-run1.md` |
-| `tab:qual-qdrant`, Qdrant under permission filters | X1 run 2; run 1 for the comparison | `harness/x1-run2-a956424/benchmarks/paper/x1_underretrieval.py`, `harness/x1-run2-a956424/benchmarks/paper/x1_stats.py`, `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py`; kernels `kaggle/x1run2/` | `S1` `summary_by_setting.csv`, `summary_by_build.csv`; per-question rows with hits at k=5 and k=10, `evidence/raw/x1run2-shard-c/x1run2/runs/qdrant__*.parquet`; run 1, `evidence/raw/x1-run1/x1/stats/` | `evidence/x1-underretrieval-run2.md` |
+| `tab:app-map` (Table 4), the experiments | All | | GitHub API for run times and head commits; `harness/COMMITS.tsv`; `evidence/raw/KAGGLE_KERNELS.tsv` | `evidence/compute.md`, section 2 below |
+| `tab:app-ledger` (Table 5), every hypothesis | All | | `plan/x8-prereg.md`; `harness/x1-run2-a956424/benchmarks/paper/PREREGISTRATION.md`, `harness/x2-x5-884ce18/benchmarks/paper/PREREG_X2_X5.md`, `harness/x3-x6-followup-9e22b89/benchmarks/paper/PREREG_X3_X6.md`, `harness/x4-x7-e66dffc/benchmarks/paper/PREREG_X4_X7.md`, with amendment 2 in `harness/x7-amendment2-harness-41292bd/benchmarks/paper/PREREG_X4_X7.md`; verdicts in the summaries of each run | The `evidence/*.md` files; the weakness of the Kaggle ordering is in `evidence/ARTIFACT_GAPS.md` |
+| `tab:sys-precedents` (Table 6), components and precedents | None | | `bib/references.bib`, `bib/web.bib`; the library at `harness/x0-x8-bf25bd0/wardowl/` | `literature/Permission aware retrieval literature review.md` |
+| `tab:conf-faults` (Table 7), faults and semantic gaps | Conformance runs; other rows as cited | `harness/conformance-run2-182bcbc/tests/test_testing_kit.py` for planted faults | `harness/conformance-run2-182bcbc/CHANGELOG.md`, `harness/conformance-run2-182bcbc/docs/review.md`; `evidence/raw/results-reproducers/runs/41008151303/` | `investigations/conformance-run1-triage.md`, `evidence/x3-x6-run1.md`, `evidence/x4-x7-run1.md`, `evidence/x7-amendment2.md` |
+| `tab:eng-agree` (Table 8), filter against check | X4, 40919304635 | `harness/x4-x7-e66dffc/benchmarks/paper/x4_engines.py`, `harness/x4-x7-e66dffc/benchmarks/paper/x4_stats.py` | `X47` `x4a_profiles.csv`; raw `X47` `raw/`, `evidence/raw/ci-artifacts/40919304635/x4x7-x4-policy.zip` and its siblings | `evidence/x4-x7-run1.md` |
+| `tab:qual-x0` (Table 9), retrieval quality in the scenario | X0, X8; re-analysis in X1 run 1 | `E2E`; `harness/x1-run1-947fb8f/benchmarks/paper/x0_reanalysis.py` | `results.json` of `evidence/raw/x0-seed7/` and `evidence/raw/x8-seed*/`; overlap@5 `evidence/raw/x1-run1/x0/recall5_by_person_type.csv` | `evidence/x8-run.md`, `evidence/x1-underretrieval-run1.md` |
+| `tab:qual-qdrant` (Table 10), Qdrant under permission filters | X1 run 2; run 1 for the comparison | `harness/x1-run2-a956424/benchmarks/paper/x1_underretrieval.py`, `harness/x1-run2-a956424/benchmarks/paper/x1_stats.py`, `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py`; kernels `kaggle/x1run2/` | `S1` `summary_by_setting.csv`, `summary_by_build.csv`; per-question rows with hits at k=5 and k=10, `evidence/raw/x1run2-shard-c/x1run2/runs/qdrant__*.parquet`; run 1, `evidence/raw/x1-run1/x1/stats/` | `evidence/x1-underretrieval-run2.md` |
 | Text of `sec:qual-pgvector` and the appendix grid `app:x1grid` | X1 run 2 | As above | `S1` `summary_by_setting.csv`, `plans.csv`, `explain_summary.csv`, `predictions.csv`, `intervals.csv`, `paired.csv`, `report.md`; rows `evidence/raw/x1run2-shard-a/x1run2/runs/`, `evidence/raw/x1run2-shard-b/x1run2/runs/`, `evidence/raw/x1run2-shard-c/x1run2/runs/`; plans `evidence/raw/x1run2-shard-a/x1run2/explain/`, `evidence/raw/x1run2-shard-a/x1run2/explain_raw/` | `evidence/x1-underretrieval-run2.md`, `investigations/x0-x1-pgvector-gap.md` |
-| `tab:qual-frontiers`, X2 on MS MARCO | X2, 40921769714 | As `fig:qual-frontiers` | `X25` `x2_settings.csv`, `x2_frontier.csv`, `x2_builds.csv` | `evidence/x2-x5-run1.md` |
-| `tab:qual-x2tests`, X2's statistics | X2, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x2_h21.csv`, `x2_h22.csv`, `x2_h23.csv`, `x2_h24.csv`, `x2_axes.csv` | `evidence/x2-x5-run1.md` |
-| `tab:qual-size`, filter size | X3, 40940385704; Chroma's seeds 3 and 4 from the follow-up, 40982986417 | `harness/x3-x6-a191626/benchmarks/paper/x3_filter_scaling.py`, `harness/x3-x6-a191626/benchmarks/paper/x3_stats.py`, `harness/x3-x6-followup-9e22b89/benchmarks/paper/x3x6_followup.py` | `X36` `x3_levels.csv`, `x3_ratios.csv`, `x3_recall.csv`, `x3_verdicts.csv`; records `evidence/raw/ci-artifacts/40940385704/x3x6-results-x3-search.zip` and its siblings; `evidence/raw/ci-artifacts/40982986417/x3x6-results-fu-x3-chroma.zip` | `evidence/x3-x6-run1.md`, `evidence/x3-x6-followup.md` |
-| `tab:rep-results`, X5, all arms | X5, 40921769714 | As `tab:rep-summary` | `X25` `x5_arms.csv`, `x5_confusion.csv`, `x5_paired_tests.csv` | `evidence/x2-x5-run1.md` |
-| `tab:side-hyp`, side-channel hypotheses | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/PREREG_X3_X6.md`, `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_verdicts.csv`, `x6_report.md`. Where the script departs from the written rules, the paper's text says so | `evidence/x3-x6-run1.md` |
-| `tab:side-auc`, paired AUC | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_report.md`, `x6_cells.csv`; records as `fig:side-auc` | `evidence/x3-x6-run1.md` |
-| `tab:e2e-safety`, safety over four runs | X0, X8, X8-FGA | `E2E`; `kaggle/x8/x8_run.py`, `kaggle/x8/x8fga_run.py` | `results.md` and `results.json` of `evidence/raw/x0-seed7/`, `evidence/raw/x8-seed*/`, `evidence/raw/x8fga-seed*/`; per question, `answers.jsonl` in the same folders, with k=5 hits only | `evidence/x8-run.md` |
-| `tab:e2e-exposure`, exposure | X8 amendment 2 | `kaggle/x8/x8b_run.py`; kernels `kaggle/x8/x8b-seed7/` and its siblings, `kaggle/x8/x8b-pool/` | `evidence/raw/x8b-pool/x8b-exposure-pooled.md`, `evidence/raw/x8b-pool/x8b-exposure-pooled.json`; per seed and question, `evidence/raw/x8b-seed7/x8b-exposure-seed7.json` and its siblings | `evidence/x8-controls.md` |
-| `tab:e2e-control`, the mutation control | X8 amendment 2, seed 7 | `kaggle/x8/x8b_run.py`, `kaggle/x8/x8b-control-seed7/`; recount `kaggle/x8/x8b-verify/` | `evidence/raw/x8b-control-seed7/x8b-control-seed7.md`, per question `evidence/raw/x8b-control-seed7/x8b-control-seed7-questions.json`; recount `evidence/raw/x8b-verify/x8b-verify.md` | `evidence/x8-controls.md` |
-| `tab:limits-rls`, row-level security against the pre-filter | The library's own benchmark of 2026-10-22, before this paper's experiments and not pre-registered | `harness/rls-side-run-42fcca6/benchmarks/kaggle_benchmark.ipynb`, `harness/rls-side-run-42fcca6/benchmarks/permissions_bench.py` | `harness/x0-x8-bf25bd0/benchmarks/results/fiqa-row-level-security.md`, `harness/x0-x8-bf25bd0/benchmarks/results/fiqa-qwen3-embedding-0.6b.md`. Summaries only; the run's raw output is not in the archive | The results files above |
-| `tab:app-x0-settings`, store settings | X0, X8 | `harness/x0-x8-bf25bd0/benchmarks/kaggle_setup.sh`, `harness/x0-x8-bf25bd0/benchmarks/kaggle_stores.sh`, `E2E` | `results.md`, section on stores, in `evidence/raw/x0-seed7/` and `evidence/raw/x8-seed*/` | `investigations/filtered-recall-gaps.md` |
-| `tab:app-compute`, compute | All | | GitHub jobs API; last `time` field of each kernel log in `evidence/raw/` | `evidence/compute.md` |
+| `tab:qual-frontiers` (Table 11), X2 on MS MARCO | X2, 40921769714 | As `fig:qual-frontiers` (Figure 2) | `X25` `x2_settings.csv`, `x2_frontier.csv`, `x2_builds.csv` | `evidence/x2-x5-run1.md` |
+| `tab:qual-x2tests` (Table 12), X2's statistics | X2, 40921769714 | `harness/x2-x5-884ce18/benchmarks/paper/x2x5_stats.py` | `X25` `x2_h21.csv`, `x2_h22.csv`, `x2_h23.csv`, `x2_h24.csv`, `x2_axes.csv` | `evidence/x2-x5-run1.md` |
+| `tab:qual-size` (Table 13), filter size | X3, 40940385704; Chroma's seeds 3 and 4 from the follow-up, 40982986417 | `harness/x3-x6-a191626/benchmarks/paper/x3_filter_scaling.py`, `harness/x3-x6-a191626/benchmarks/paper/x3_stats.py`, `harness/x3-x6-followup-9e22b89/benchmarks/paper/x3x6_followup.py` | `X36` `x3_levels.csv`, `x3_ratios.csv`, `x3_recall.csv`, `x3_verdicts.csv`; records `evidence/raw/ci-artifacts/40940385704/x3x6-results-x3-search.zip` and its siblings; `evidence/raw/ci-artifacts/40982986417/x3x6-results-fu-x3-chroma.zip` | `evidence/x3-x6-run1.md`, `evidence/x3-x6-followup.md` |
+| `tab:rep-results` (Table 14), X5, all arms | X5, 40921769714 | As `tab:rep-summary` (Table 3) | `X25` `x5_arms.csv`, `x5_confusion.csv`, `x5_paired_tests.csv` | `evidence/x2-x5-run1.md` |
+| `tab:side-hyp` (Table 15), side-channel hypotheses | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/PREREG_X3_X6.md`, `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_verdicts.csv`, `x6_report.md`. Where the script departs from the written rules, the paper's text says so | `evidence/x3-x6-run1.md` |
+| `tab:side-auc` (Table 16), paired AUC | X6, 40940385704 | `harness/x3-x6-a191626/benchmarks/paper/x6_stats.py` | `X36` `x6_report.md`, `x6_cells.csv`; records as `fig:side-auc` (Figure 3) | `evidence/x3-x6-run1.md` |
+| `tab:e2e-safety` (Table 17), safety over four runs | X0, X8, X8-FGA | `E2E`; `kaggle/x8/x8_run.py`, `kaggle/x8/x8fga_run.py` | `results.md` and `results.json` of `evidence/raw/x0-seed7/`, `evidence/raw/x8-seed*/`, `evidence/raw/x8fga-seed*/`; per question, `answers.jsonl` in the same folders, with k=5 hits only | `evidence/x8-run.md` |
+| `tab:e2e-exposure` (Table 18), exposure | X8 amendment 2 | `kaggle/x8/x8b_run.py`; kernels `kaggle/x8/x8b-seed7/` and its siblings, `kaggle/x8/x8b-pool/` | `evidence/raw/x8b-pool/x8b-exposure-pooled.md`, `evidence/raw/x8b-pool/x8b-exposure-pooled.json`; per seed and question, `evidence/raw/x8b-seed7/x8b-exposure-seed7.json` and its siblings | `evidence/x8-controls.md` |
+| `tab:e2e-control` (Table 19), the mutation control | X8 amendment 2, seed 7 | `kaggle/x8/x8b_run.py`, `kaggle/x8/x8b-control-seed7/`; recount `kaggle/x8/x8b-verify/` | `evidence/raw/x8b-control-seed7/x8b-control-seed7.md`, per question `evidence/raw/x8b-control-seed7/x8b-control-seed7-questions.json`; recount `evidence/raw/x8b-verify/x8b-verify.md` | `evidence/x8-controls.md` |
+| `tab:limits-rls` (Table 20), row-level security against the pre-filter | The library's own benchmark of 2026-10-22, before this paper's experiments and not pre-registered | `harness/rls-side-run-42fcca6/benchmarks/kaggle_benchmark.ipynb`, `harness/rls-side-run-42fcca6/benchmarks/permissions_bench.py` | `harness/x0-x8-bf25bd0/benchmarks/results/fiqa-row-level-security.md`, `harness/x0-x8-bf25bd0/benchmarks/results/fiqa-qwen3-embedding-0.6b.md`. Summaries only; the run's raw output is not in the archive | The results files above |
+| `tab:app-x0-settings` (Table 21), store settings | X0, X8 | `harness/x0-x8-bf25bd0/benchmarks/kaggle_setup.sh`, `harness/x0-x8-bf25bd0/benchmarks/kaggle_stores.sh`, `E2E` | `results.md`, section on stores, in `evidence/raw/x0-seed7/` and `evidence/raw/x8-seed*/` | `investigations/filtered-recall-gaps.md` |
+| `tab:app-compute` (Table 22), compute | All | | GitHub jobs API; last `time` field of each kernel log in `evidence/raw/` | `evidence/compute.md` |
 
 ## 2. Runs, versions and where each came from
 
@@ -85,8 +85,9 @@ are the trustworthy times.
 
 The Kaggle runs' outputs and logs, without embedding matrices, are also in the public dataset
 [muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence). Its
-description says which account ran what. Kaggle unpacks gzip files on upload, so the 195 `.gz` files under `evidence/raw/`
-appear there without that suffix, at their unpacked sizes.
+description says which account ran what. Kaggle unpacks gzip files on upload, so the 195 `.gz` files in the Kaggle folders of `evidence/raw/`
+appear there without that suffix, at their unpacked sizes. 18 `.log` files also differ in size from the tag; the one compared,
+`x8b-verify/wardowl-x8b-verify.log`, has carriage returns added and is otherwise identical.
 
 ## 3. How to rerun
 
@@ -130,7 +131,7 @@ corpora are not here. A rebuild can be compared with the digests of the original
   5.16.1, sentence-transformers 5.7.0, datasets 4.8.5, psycopg 3.3.6, chromadb 1.5.9, elasticsearch 9.5.1, opensearch-py
   3.2.0, qdrant-client 1.20.0, redis 8.1.0 and faiss-cpu 1.15.1. X0 had weaviate-client 4.24.0 and lancedb 0.40.0; the
   later runs had 4.24.1 and 0.41.0, so the runs were not on one set of versions. To pin a rerun, replace the `pip install`
-  line with these versions. Redis comes from its package repository, unpinned: 8.10.2 in X0 and 8.10.3 in X8, by each
+  line with these versions. PostgreSQL comes from `apt-get install -y postgresql`, unpinned. Redis comes from its package repository, unpinned: 8.10.2 in X0 and 8.10.3 in X8, by each
   run's `redis.log`. The Kaggle image digest of each kernel is in `evidence/raw/KAGGLE_KERNELS.tsv`; an image can be
   retired.
 
@@ -139,17 +140,20 @@ corpora are not here. A rebuild can be compared with the digests of the original
 - X1 run 2: push, in order, `kaggle/x1run2/x1run2-prep-gpu/`, then `kaggle/x1run2/x1run2-shard-a/`,
   `kaggle/x1run2/x1run2-shard-b/` and `kaggle/x1run2/x1run2-shard-c/` side by side, then `kaggle/x1run2/x1run2-stats/`. Their
   `kernel_sources` name the private account, so change them, and `id`, to your own account (`kaggle/x1run2/make.sh` writes
-  these folders). Wall clock 6.1 hours; 12.4 session hours.
+  these folders). Wall clock 6.1 hours; 12.5 session hours.
 - `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py` installs wardowl from that commit with
   `qdrant-client>=1.16`, `sentence-transformers>=3`, `datasets>=2.19`, `psutil`, `pyarrow` and `scipy`, not pinned. Each
   folder's `manifest.json` records what ran. Statistics: 10,000 bootstrap resamples, seed 20261026.
-- X1 run 1 ran 7.3 hours in one session with the notebook in `kaggle/x1-run1/`.
+- X1 run 1 ran 7.3 hours in one session with the notebook in `kaggle/x1-run1/`. The notebook sets
+  `BRANCH = "paper/x1-underretrieval"`, whose head has since moved to `a956424` (run 2). To rerun run 1, use `947fb8f` in its
+  clone and its install line.
 
 ### GitHub-hosted experiments (X2 to X7, conformance)
 
 Fork `muzakkirhussain011/wardowl`, push the commit named in section 2 to a branch, and dispatch its workflow. The jobs install
-from `uv.lock` by hash (`uv export --frozen`, `pip install --require-hashes`), and each records its image digests in a
-`versions` record, so these are pinned much better than the Kaggle runs. They publish to the fork's `results/*` branches.
+from `uv.lock` by hash (`uv export --frozen`, `pip install --require-hashes`), and most record their image digests in a
+`versions` record; X2 and X5 start images by tag and record each server's version and commit in `job.json`. These are still
+pinned much better than the Kaggle runs. They publish to the fork's `results/*` branches.
 
 | Experiment | Workflow at that commit | Inputs | Job hours |
 |---|---|---|---|
@@ -177,8 +181,8 @@ Not done:
 - No independent rerun exists, and the author did not rerun any experiment to write this file. Rebuilding the prepared
   corpora from the seeds has not been tried.
 - Nobody has confirmed that the Kaggle kernels still run on today's images, or that a fork can run the GitHub workflows.
-- The recomputation in the artifact review covers a few numbers only, listed there. Most numbers were read from what the
-  scripts printed.
+- Separate AI-agent audits recomputed a sample of numbers from the raw records. They are not independent parties. Most numbers
+  elsewhere were read from what the scripts printed.
 
 Done on 2026-10-31, by re-reading stored outputs only:
 
@@ -191,7 +195,8 @@ Done on 2026-10-31, by re-reading stored outputs only:
 ## 5. What is left out, and why
 
 - **Embedding matrices and query vectors** (`*.npy`): large, reproducible only with the models above, and derived from
-  corpora whose terms limit redistribution. On Kaggle they remain in the kernels' own output.
+  corpora whose terms limit redistribution. On Kaggle they remain in the kernels' own output, which is public for the two public
+  notebooks; the same terms apply there (`LICENSE.md`).
 - **CI artifacts `x2x5-data-*`, `x2x5-emb-*`, `x3x6-data`** (27 rows of `evidence/raw/ci-artifacts/MANIFEST.tsv`, the largest
   1.6 GB): prepared corpora and embeddings, for the same reasons. **They expire on GitHub:** the `x3x6-data` artifacts on
   2026-11-28, all the others on 2027-01-27, by the `expires_at` column of `MANIFEST.tsv`. After that, rebuilding is the only

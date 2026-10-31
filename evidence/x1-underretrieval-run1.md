@@ -17,7 +17,7 @@ re-derived.
 
 ## Setup
 
-One Kaggle session (GPU T4 x2, 4 CPUs, 31.3 GiB RAM, Python 3.13.15, wardowl 2.1.0 from PyPI,
+One Kaggle session (GPU T4 x2, 4 CPUs, 31.3 GiB RAM, Python 3.13.15, wardowl installed from commit `947fb8f`, whose `wardowl/` tree equals tag `v2.1.0`,
 acceptance scripts at commit `947fb8f11efa917ec86402d381c1983d143df7df`, qdrant-client 1.20.0,
 Qdrant server 1.19.2 build `016542aa`, psycopg 3.3.6) ran four steps in order: X0, a
 re-analysis of the 2026-10-24 scale run (`notebookd8377caca8`, 11,050 answer lines, 1,105 per

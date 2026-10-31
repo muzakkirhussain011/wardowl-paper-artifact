@@ -72,8 +72,8 @@ sharing the cache through Redis. $\dagger$: at least one trial exceeded the stat
 
 Table~\ref{tab:eng-revoke} gives the measured $\delta$ of each serving path, and a dagger marks a violation
 of the $\delta$ the path states. The cache's time to live is the realized delay (X7-H2 confirmed), and invalidation ends the delay at once, or within the
-shared replica's 1\,s local copy. Permissions copied into chunk metadata were revoked within milliseconds
-(X7-H4 confirmed). Two sources of truth were stale themselves. Cerbos reloaded a rewritten policy file in a
+shared replica's 1\,s local copy. Permissions copied into chunk metadata took effect within milliseconds of the write to the store
+(X7-H4 confirmed); the delay of copying them from a source system was not measured. Two sources of truth were stale themselves. Cerbos reloaded a rewritten policy file in a
 median 2.5\,s. SpiceDB under \texttt{minimizeLatency}, the layer's default, took a median
 3.3\,s; in 28 polls a revoked chunk reappeared after it had disappeared, and one of 40 trials took 8.7\,s,
 beyond the 6.5\,s we had registered (X7-H5 falsified), which we have not explained; a rerun's 40 trials took at most 5.2\,s.
@@ -95,7 +95,7 @@ population of faults: they replay 13 fault kinds, each episode cycling 10 fixed 
 The control, 40 episodes that turned the engine's denials into allows, is the fault class that does leak: it leaked in every engine, as a wrong check must, and is
 excluded from the bound. Every engine-caused
 failure was the layer's authorization error with a message naming no host. Recovery took a median 0.02 to
-0.18\,s after a proxy fault's removal and 0.08 to 0.47\,s after a killed server's restart. Two behaviors needed work: an empty LookupResources stream read as ``no
+0.18\,s after a transport fault's removal and 0.08 to 0.47\,s after a killed server's restart. Two behaviors needed work: an empty LookupResources stream read as ``no
 readable documents'' (4,746 retrievals returned nothing without an error, losing recall only), and store failures
 surfaced as the clients' own exceptions. The rerun confirmed both fixes: in the 10,303 requests of its 20 SpiceDB episodes
 no chunk leaked, and its 120 store episodes reported none either ($2.1 \times 10^{-2}$ per episode over all 140). For a connection that is accepted but never answered, only a

@@ -74,7 +74,7 @@ where the range over builds is larger, as for Qdrant, we say so.
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,3) {22--25};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,2) {0.732; 0.993};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,2) {6.5--8.1; 386--399};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,1) {0.551};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,1) {0.552};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,1) {4.3--4.7};
 \end{axis}
 \end{tikzpicture}
@@ -119,13 +119,12 @@ or reachability, and per-tenant graphs remove the copies and the island at once,
 
 The registered predictions, which test recall by question category and by intervention, held in both runs of the grid (Q1 confirmed; Table~\ref{tab:qual-qdrant} in
 Appendix~\ref{app:qdrant}). Recall@10 for the least-privileged people was 1.000, against 0.369 (95\% interval 0.334 to 0.402) for
-company documents among everyone else, and 97.5\% of the hits that did not count were shared passages. ACORN, which explores
+company documents among everyone else, and 97.5\% of the top-five hits that did not count were shared passages. ACORN, which explores
 neighbors of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 over all questions from 0.656 to 0.808 at a 3\% latency
 cost; per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.952, faster than the as-run layout, and a separate collection for the
 shared passages reached 0.949. These means have ranges of 0.086 and 0.127 over three builds of the same data, as run and with ACORN, wider than any interval over people. Raising \texttt{hnsw\_ef} from 128 to 512 added 0.103 (0.090 to 0.116) at 1.6 times the latency (Q4
-inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified), so
-ACORN helps but did not suffice under this layout. Q3, on segment layout, stayed inconclusive, since both layouts ended with one segment
-holding points. For layouts like this one the measurements favor changing the layout over raising search-time effort: when
+inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified). At \texttt{hnsw\_ef} 128 ACORN did not reach the layout change; in the frontier experiment, with its gate at 1.0 and \texttt{hnsw\_ef} 512, it reached 0.953 against 0.941 for per-tenant graphs at \texttt{hnsw\_ef} 128, with about 60\% of their throughput on the one build timed. Q3, on segment layout, stayed inconclusive, since both layouts ended with one segment
+holding points. For layouts like this one, changing the layout cost less than reaching the same recall through search-time effort: when
 permission groups or tenants cover large, semantically interleaved parts of a collection, give each tenant its own graph, or keep
 widely shared content apart.
 
@@ -139,7 +138,7 @@ runs the HNSW scan at all.
 \paragraph{The plan cache.}
 The layer binds the filter's values and $k$ as parameters. psycopg prepares a statement on its sixth execution on a
 connection~\cite{psycopg2026prepared}; PostgreSQL then uses a generic plan when its estimated cost is not much higher than the custom
-plans' average~\cite{postgresql2026prepare}, and that plan reads the rows the GIN index returns and sorts them: an exact search. Under the default configuration only 0.9\% of the searches on
+plans' average~\cite{postgresql2026prepare}, and that plan reads the rows the GIN index returns and sorts them: an exact search. Under the default configuration, after a vacuum, only 0.9\% of the searches on
 the scenario's questions used the HNSW index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values, 98.1\% used it, with
 recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5 confirmed, an exploratory hypothesis specified in writing after the grid's
 first run and before its second; P4, which had predicted that generic plans make no difference, falsified, with recall@10 lower by 0.343 under custom
@@ -151,7 +150,7 @@ generic executions, with recall@5 of 0.998 at 335\,ms. That command changes more
 scan~\cite{postgresql2026selfuncs}, which is consistent with a generic plan that looks expensive after a bulk load until a vacuum merges the list. Autovacuum runs on its own
 schedule, and the variation across the end-to-end runs would fit it, but we did not record its timing there and cannot say what decided their modes: the same configuration ran
 fast by its median in three of eight runs, one of them a mixture, and exact in five. A measurement of pgvector through prepared statements can therefore
-report one of two systems, fifty times apart in latency and 0.3 apart in recall, with no benchmark setting naming which. Planning
+report one of two systems, 16 to 64 times apart in latency and about 0.3 apart in recall, with no benchmark setting naming which. Planning
 every search with its own values removed the choice in the frontier experiment (Appendix~\ref{app:frontier}).
 
 \paragraph{The scan's budget.}
@@ -273,5 +272,5 @@ stores.
 
 \paragraph{Filter size.}
 Varying only a disjunction's length from 1 to 40,000 groups, with the same 10\% of a 100,000-chunk corpus readable at every level, recall did not depend on length in
-any of the eight approximate stores that accepted every level (X3-H4 confirmed), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other
-servers. Chroma alone refused, from 1,000 groups, and at about 16,500 groups its client process crashed (Appendix~\ref{sec:qual-size}).
+any of the ten approximate stores that accepted every level (X3-H4 confirmed for the eight it names), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other
+servers. Chroma alone refused, from 1,000 groups, and at about 16,500 groups, with a 16\,MiB stack, its local client process crashed (Appendix~\ref{sec:qual-size}).

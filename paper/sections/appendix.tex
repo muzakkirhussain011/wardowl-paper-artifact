@@ -61,7 +61,7 @@ End-to-end, OpenFGA, four runs & Kaggle, $2\times$T4, 4 CPUs, one session each &
 End-to-end, exposure, four seeds & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.1\,h each & 0.5 \\
 End-to-end, mutation control & Kaggle, $2\times$T4, 4 CPUs & 2.2\,h & 2.2 \\
 Diagnosis grid, run 1 (X1) & Kaggle, $2\times$T4, 4 CPUs & 7.3\,h & 7.3 \\
-Diagnosis grid, run 2 (X1) & Kaggle: 1 GPU session, 4 CPU sessions & 6.1\,h & 12.4 \\
+Diagnosis grid, run 2 (X1) & Kaggle: 1 GPU session, 4 CPU sessions & 6.1\,h & 12.5 \\
 Conformance campaign, run 1 & GitHub-hosted runners, 7 jobs & 2.9\,h & 6.6 \\
 Conformance campaign, run 2 & GitHub-hosted runners, 10 jobs & 2.1\,h & 8.2 \\
 Engines (X4, X7) & GitHub-hosted runners, 15 jobs & 2.0\,h & 15.3 \\
@@ -71,7 +71,7 @@ Their follow-up & GitHub-hosted runners, 11 jobs & 2.2\,h & 7.4 \\
 Frontiers and repair (X2, X5) & GitHub-hosted runners, 72 jobs & 10.6\,h & 98.7 \\
 \bottomrule
 \end{tabular}
-\caption{Compute of the runs reported in the paper. Kaggle sessions have 4 CPUs and 31.3\,GiB of
+\caption{Compute of the paper's experiments; the row-level security side run (4,331\,s on Kaggle) and the vendor reproducers' short runs are not listed. Kaggle sessions have 4 CPUs and 31.3\,GiB of
 memory; GitHub-hosted runners have 4 virtual CPUs and 16\,GB. Jobs counts every job of the workflow
 run, including data, plan, report, summary and publish jobs, from GitHub's jobs API (the X7 rerun and
 the follow-up each include jobs the workflow skipped, one and three). On GitHub, hours sum the run times of

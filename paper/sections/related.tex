@@ -29,13 +29,13 @@ The collapse of post-filtering is well measured~\cite{patel2024acorn,li2025attri
 search~\cite{wang2023efficient,gollapudi2023filtereddiskann,cai2024navigating} take the predicate as part of the query rather than compile it from an
 external policy; benchmarks control or measure selectivity and correlation~\cite{zhang2026vecbench,amanbayev2026filtered}, and HCBGen shows that neither alone is a
 stable proxy for difficulty~\cite{lim2026revisiting}. None of these uses real ACLs, and neither do we. Permission-specific indexes are recent~\cite{zhong2026honeybee,han2026dont}, and a
-vision paper asks for correctness criteria~\cite{yalamarthi2026policyaware}. We propose no index. We found no evaluation of per-query disjunctions over hundreds
+vision paper says Wang et al.'s criteria must be extended to vector search and compares enforcement strategies' recall on pgvector~\cite{yalamarthi2026policyaware}. We propose no index. We found no evaluation of per-query disjunctions over hundreds
 or thousands of group labels, and no audit of production stores under such filters at documented, tuned and exact settings.
 
 \paragraph{RAG privacy and agents.}
 Anyone who can query a RAG system can drain its store~\cite{zeng2024good,qi2024follow}, and model-side defenses are
-probabilistic~\cite{bhatt2025enterprise}. Attribute-based gating at retrieval removed cross-tenant leakage~\cite{arceo2026securing}. Corpus
-poisoning~\cite{zou2025poisonedrag} and information-flow control for agents~\cite{costa2025securing} are complementary. We found no test in this literature of whether a layer is faithful or what it costs in recall.
+probabilistic~\cite{bhatt2025enterprise}. Attribute-based gating at retrieval~\cite{arceo2026securing} and a unified PostgreSQL data layer~\cite{budigi2026beyond} are reported to remove cross-tenant leakage, each on one system. Corpus
+poisoning~\cite{zou2025poisonedrag} and information-flow control for agents~\cite{costa2025securing} are complementary. We found no oracle-based test across stores and engines.
 
 \paragraph{Side channels and testing.}
 Our game tests a restricted form of noninterference~\cite{goguen1982security}. Timing has long revealed hidden content on the

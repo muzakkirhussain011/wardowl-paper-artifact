@@ -1,6 +1,7 @@
 # What the artifact does not hold, and why
 
-Written 2026-10-31, after an independent artifact review of the tag `evidence-v1` as it stood on 2026-10-30. This file
+Written 2026-10-31, after an artifact review of the tag `evidence-v1` as it stood on 2026-10-30, by a separate instance of the
+AI agent that helped write this repository, so not an independent party. Updated 2026-11-01 after a second such review. This file
 records what is still missing or weak, so that nobody has to find it out. `REPRODUCE.md` is the map of what is here.
 
 ## Per-question outputs
@@ -39,10 +40,13 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
   UTC, 41 seconds after ba64c23's. But the kernels are private, so a stranger can't check these times. The stored logs date the
   runs only in part: the server logs of X8 and `openfga.log` of X8-FGA hold dates, `x1run2-*/x1run2/manifest.json` holds start
   times, and the kernel logs of X8 amendment 2 hold only seconds since the start.
-- **The same weakness applies to X1 run 2.** Its pre-registration commits are on a public branch of the library, but no
-  Actions run bounds them.
+- **X1 is better placed.** GitHub's public activity record for the library's branch `paper/x1-underretrieval`, copied to
+  `evidence/raw/x1-branch-activity.json`, shows the branch created at `947fb8f` on 2026-10-26 at 09:50:53 UTC and pushed to
+  `a956424` on 2026-10-29 at 16:55:40 UTC. The registration commits are its ancestors, and each kernel clones its commit from
+  there, so a kernel cannot have run before the push. Run 1's public notebook log prints `947fb8f`; run 2's log is the author's
+  copy, because its kernels are private. No Actions run bounds them.
 - **The GitHub experiments do not have this weakness:** their run times and head commits are in GitHub's own records, and
-  the review confirmed the ancestry the paper claims.
+  the ancestry the paper claims can be checked with `git merge-base --is-ancestor` on the public library.
 
 ## Kaggle kernels
 

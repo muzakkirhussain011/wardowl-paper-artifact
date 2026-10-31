@@ -154,8 +154,8 @@ None of our findings is a chunk returned through the layer outside the readable 
 revision, because the re-check contains filter faults. They can still matter for deployments that
 trust a pushed-down filter without a re-check: a filter that admits more than the check would leak
 there, and one, Chroma's crash on a large filter, lets any user in enough groups stop an application
-that passes their groups to Chroma. For four behaviors in third-party components that our experiments
+that passes their groups to Chroma in local mode. For four behaviors in third-party components that our experiments
 found (the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
 translator meets), we sent a report with a minimal reproducer that does not need our library, on 2026-10-30, after our public pull requests had described the behaviors (Section~\ref{sec:limits-ethics}), and
-Table~\ref{tab:conf-faults} gives each report's status at the time of writing. SpiceDB's staleness
-beyond its documented bound, OPA's residual negation and pgvector's plan choice have no report.
+Table~\ref{tab:conf-faults} gives each report's status at the time of writing. One unexplained SpiceDB trial
+past its documented bound, OPA's residual negation and pgvector's plan choice have no report.

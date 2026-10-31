@@ -29,7 +29,7 @@ Chroma & 0.877 & 0.879 & 0.010 & 0.987 & 0.876 & 1432--1481 \\
 LanceDB & 0.840 & 0.874 & 0.039 & 0.949 & 0.821 & 22--25 \\
 pgvector, fast mode (2 runs) & 0.695 & 0.732 & 0.000 & 0.724 & 0.686 & 6.5--8.1 \\
 pgvector, exact mode (2 runs) & 0.993 & 0.993 & 0.002 & & & 386--399 \\
-Qdrant & 0.557 & 0.551 & 0.026 & 1.000 & 0.523 & 4.3--4.7 \\
+Qdrant & 0.557 & 0.552 & 0.026 & 1.000 & 0.523 & 4.3--4.7 \\
 \bottomrule
 \end{tabular}
 \caption{Retrieval quality in the enterprise scenario (Section~\ref{sec:e2e}), four runs of 1,105
@@ -101,8 +101,7 @@ a traversal trapped in the wrong region would predict. ACORN's 0.808 has a 95\% 
 One prediction failed. We expected ACORN's default gate, which engages when the estimated
 selectivity is at most 0.4, to engage for some people and not others, because the planner's
 independence estimate for a typical employee sits near 0.4. It engaged for everyone, and the gate
-at 1.0 gave identical recall. The paper therefore claims that ACORN helps but does not suffice under
-this layout, not that its gate misfires. A third hypothesis, that recall varies with the segment
+at 1.0 gave identical recall. So at \texttt{hnsw\_ef} 128 ACORN helps without reaching the layout change, and its gate does not misfire; with more effort it matches the change at lower throughput (Appendix~\ref{app:frontier}). A third hypothesis, that recall varies with the segment
 layout, remains inconclusive: at the as-run setting recall@10 varied by up to 0.086 between three
 builds of the same data (by up to 0.127 with ACORN),
 and the layout built as one segment scored 0.030 lower (0.018 to 0.042), but in the end the as-run
@@ -133,7 +132,7 @@ them: an exact search. The first diagnosis run recorded no executed plans, and m
 second recorded the plan of every search (X1 run 2). Hypothesis P4 is confirmatory, pre-registered
 before the first run; P5 is exploratory, specified in writing after the first run's results and
 before the second ran.
-Under the default configuration, only 0.9\% of the searches on the scenario's questions used the HNSW
+Under the default configuration, after a vacuum, only 0.9\% of the searches on the scenario's questions used the HNSW
 index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values, 98.1\% used
 the HNSW index, with recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5
 confirmed; P4, which had predicted that generic plans make no difference, falsified,
@@ -150,7 +149,7 @@ schedule, and the variation across the end-to-end runs would fit it, but we did 
 its timing there and cannot say what decided their modes: the same configuration ran fast by its median in three of eight runs, one of them a
 mixture of fast and exact searches, and exact in five (Section~\ref{sec:e2e-safety}). A measurement
 of pgvector through prepared statements can therefore
-report one of two systems, fifty times apart in latency and 0.3 apart in recall, with no benchmark setting naming which.
+report one of two systems, 16 to 64 times apart in latency and about 0.3 apart in recall, with no benchmark setting naming which.
 The harness of Section~\ref{sec:qual-frontiers} plans
 every search with its own values, and so can a deployment, with
 \texttt{plan\_cache\_mode = force\_custom\_plan} or by not preparing the search statement.

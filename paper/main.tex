@@ -1,4 +1,4 @@
-% Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
+% Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
 % This preprint layout uses the standard article class. \tbd{} marks what is still open: only the
 % archive DOI, in limits.tex.
 % Structure: a main text of about 20 pages, then the bibliography, then appendices. Everything cut
@@ -20,7 +20,7 @@
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,skip=5pt]{caption}
 \usepackage{xurl}
-\usepackage[hidelinks,pdfauthor={Syed Muzakkir Hussain},pdftitle={Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines}]{hyperref}
+\usepackage[hidelinks,pdfauthor={Syed Muzakkir Hussain},pdftitle={Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines}]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
 % Run-in paragraph headings with less space above than the article class's 3.25ex.
@@ -33,7 +33,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{observation}{Observation}
 
-\title{Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
+\title{Testing Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
 \author{Syed Muzakkir Hussain\\\texttt{muzakkirhussain011@gmail.com}}
 \date{}
 
@@ -41,24 +41,23 @@
 \maketitle
 
 \begin{abstract}
-Retrieval-augmented generation (RAG) places the chunks most similar to a question into a language
-model's prompt. Similarity ignores authorization, so a shared index can hand a subject a chunk it may
-not read; OWASP lists this as LLM08. An old remedy pushes
-the access predicate into the query and checks what comes back. We measure one layer that does this,
-developed by the author and created in October 2026: it compiles authorization policies into filters for
-vector stores, re-checks every hit and fails closed. Permissions are synthetic, no adaptive adversary ran
-and no other layer was compared. Testing 13 stores differentially found no hit outside the reference, plus
-two truncations we found undocumented (4,096 bytes on Redis, 8,191 characters on MongoDB). On one generated
-model per engine profile, filters and checks disagreed at one revision only on a type gap in one translator.
-On one synthetic corpus with tenant copies, mean recall@10 at mixed tuned and default
-settings ranged from 0.55 to 0.98 over eight approximate stores, and pgvector gave empty answers to people
-who could read something in five of eight runs, reported as complete. A side run on another corpus found
-row-level security at recall@10 of at least 0.998, at median latencies up to 608\,ms. In eleven end-to-end configurations,
-four runs each, no returned chunk lay outside the readable set at the revision the re-check read: with the
-3,746 distinct (person, question) pairs taken as independent, a one-sided 95\% bound of
+Retrieval-augmented generation (RAG) puts the chunks most similar to a question into a model's prompt.
+Similarity ignores authorization, so a shared index can hand a subject a chunk it may not read. We measure one
+layer, the author's own, created in October 2026 and run at several versions: it compiles authorization
+policies into filters for vector stores, re-checks every hit and fails closed. Permissions are synthetic, no adaptive adversary ran and no other layer
+was compared. Differential testing of 13 stores found no hit outside the reference on its generated data;
+separate reproducers show two undocumented truncations (4,096 bytes on Redis, 8,191 characters on MongoDB) that
+also let a value match by its prefix. On one generated model per engine profile, filters and checks disagreed
+at one revision only on one translator's type gap. On one synthetic corpus with tenant copies, mean recall@10 at
+mixed settings ranged from 0.55 to 0.98 over eight approximate stores, and on pgvector people with readable
+chunks got empty answers in five of eight runs, which the layer reported as complete. A side run on another
+corpus gave row-level security recall@10 of at least 0.998, at median latencies up to 608\,ms. In eleven
+end-to-end configurations, four runs each with static permissions, no returned chunk lay outside the readable
+set: with the 3,746 distinct (person, question) pairs taken as independent, a one-sided 95\% bound of
 $8.0 \times 10^{-4}$ per question, and $1.6 \times 10^{-2}$ per person, though the 189 people are 13 role types.
-The re-check dropped nothing in those runs; end to end, only a one-seed mutation control exercised it. In forced-choice tests latency, counts, recall and scores revealed nearby unreadable chunks, and
-the evaluated code served revoked chunks up to 38.4\,s after invalidation.
+The re-check dropped nothing in those runs; end to end, only a one-seed mutation control exercised it. In
+forced-choice tests latency, counts and recall revealed unreadable chunks near a query, and scores a group of
+them in the collection; the evaluated code served revoked chunks up to 38.4\,s after invalidation.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}

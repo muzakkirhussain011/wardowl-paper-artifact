@@ -11,7 +11,7 @@ identifiers are GitHub Actions runs of the library's repository unless marked; \
 \emph{M} the MS MARCO corpus. No single version of the library was evaluated throughout
 (Appendix~\ref{sec:limits-limits}). Kernels named below, apart from the two public notebooks of X0 and X1 run 1, are private, on the Kaggle
 account muzakkirhussain1; their logs are in the artifact and in the public dataset
-\url{https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence}.
+\url{https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence} (version 2).
 
 \begingroup
 \scriptsize
@@ -46,7 +46,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag \S\ref{sec:qual-qdrant}, \S\ref{sec:qual-pgvector}; App.~\ref{app:quality}
  & \maprag The diagnosis grid, Qdrant and pgvector hypotheses; also an offline re-analysis of X0's answers
  & \maprag Kaggle, one session; 1,489 questions; one pgvector build, 11 settings (12 items skipped for time); five Qdrant layouts, three builds each
- & \maprag wardowl 2.1.0 from PyPI; scripts 947fb8f
+ & \maprag wardowl from commit 947fb8f, whose package tree equals tag v2.1.0; scripts 947fb8f
  & \maprag PostgreSQL 16, pgvector 0.8.7; Qdrant 1.19.2
  & \maprag Kaggle notebook wardowl-under-retrieval-diagnosis-run-1 (then note\-book11401c38ff), version 362442153, 2026-10-26 \tabularnewline
 \maprag X1, run 2
@@ -55,7 +55,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag Kaggle, one GPU and four CPU sessions; 1,489 questions, three timed passes; three builds per layout; 49 settings
  & \maprag Branch paper/x1-underretrieval at a956424 (version 2.1.0)
  & \maprag PostgreSQL 16, pgvector 0.8.7; Qdrant 1.19.2
- & \maprag Kaggle kernels x1run2-prep-gpu, -shard-a, -b, -c, -stats, 2026-10-29 \tabularnewline
+ & \maprag Kaggle kernels x1run2-prep-gpu, -shard-a, -b, -c, -stats, 2026-10-29 and 30 \tabularnewline
 \maprag X2
  & \maprag \S\ref{sec:qual-frontiers}; App.~\ref{app:frontier}
  & \maprag The frontier experiment: recall against throughput, correlation and selectivity
@@ -73,7 +73,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
 \maprag X4
  & \maprag \S\ref{sec:engines}; App.~\ref{app:engines}
  & \maprag Engine filters against engine checks: agreement, revision skew, truncation, latency
- & \maprag GitHub-hosted, as X2; five seeds; 13 profiles, 600 subjects and 900,000 pairs each
+ & \maprag GitHub-hosted, as X2; five seeds; 13 profiles, 600 subjects each, 900,000 pairs in each of the 11 that gave any user a filter
  & \maprag Harness e66dffc on paper/x4-x7; library fix/engine-limits at e7776f0
  & \maprag OpenFGA 1.22.0; SpiceDB 1.56.2; OPA 1.21.2; Cerbos 0.56.0; PostgreSQL 17 (image pgvector/pgvector:pg17); FAISS 1.15.1
  & \maprag 40919304635, created 2026-10-29 17:13 UTC \tabularnewline

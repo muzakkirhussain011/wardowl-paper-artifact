@@ -99,8 +99,8 @@ query with 1,000. The other eight servers slowed 11 to 99 times, mostly beyond 1
 cost of a long filter lies in building and shipping it. LanceDB, which scans exactly, slowed 7.94
 times.
 
-Recall did not depend on the filter's length (X3-H4 confirmed for each of the eight approximate
-stores that accepted every level). The paired difference between 40,000 groups and one was 0.000,
+Recall did not depend on the filter's length in the ten approximate stores that accepted every level
+(X3-H4 confirmed for each of the eight it names; pgvector's paired difference was 0.000, and Cassandra's is below). The paired difference between 40,000 groups and one was 0.000,
 with an interval of 0.000 to 0.000, for Qdrant, Elasticsearch, OpenSearch, Weaviate, MongoDB and
 Vespa, 0.000 ($-0.0007$ to 0.0007) for Redis, and 0.012 (0.006 to 0.019) for Milvus, whose recall rose
 from 0.987 to 0.999 with the longer filter, within the pre-registered band; Cassandra's fallback,
@@ -119,7 +119,7 @@ part, likewise specified in writing after the main results and before running,
 located the crash. Python's fault handler placed it in Chroma's call into its native core, and under gdb the main
 thread was about 16,500 frames deep in a single recursive function of Chroma's Rust bindings when its
 stack ran out, before SQLite saw the query. One retrieval per level, each in a fresh process, put the
-threshold between 15,500 groups, refused with SQLite's error, and 16,500, which crashed, consistent
+threshold between 15,500 groups, refused with SQLite's error, and 16,500, which crashed, on runners with a 16\,MiB main-thread stack limit (another limit would move it, which we did not test), consistent
 with one stack frame per clause of the disjunction. Chroma renders an $n$-ary
 disjunction as a left-deep chain of binary ORs, so the depth grows with the number of clauses; the
 layer now nests its disjunctions sixteen clauses to a node, which keeps the depth near 50 for 1,000

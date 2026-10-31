@@ -68,7 +68,7 @@ OPA, sharing data, bans & partial evaluation & 0 & n/a & n/a \\
 \bottomrule
 \end{tabular}
 \caption{Filter against check at one revision: five seeds of 120 users and 1,500 documents, 900,000
-(user, document) pairs per profile. Above the rule, each engine's check also agreed with the
+(user, document) pairs in each profile that gave filters. Above the rule, each engine's check also agreed with the
 oracle on every pair. Below it, stress profiles.}
 \label{tab:eng-agree}
 \end{table}
@@ -141,8 +141,8 @@ Table~\ref{tab:eng-revoke} gives the measured $\delta$ of each serving path
 (Definition~\ref{def:criteria}), and a dagger marks a violation of the $\delta$ the path states.
 The cache's time to live is the realized delay, not merely a bound: every ttl median in
 Table~\ref{tab:eng-revoke} lies within 34\,ms of 5\,s or 30\,s, and invalidation ends the delay at
-once, or within the shared replica's 1\,s local copy. Permissions copied into chunk metadata were
-revoked within milliseconds whatever the cache: the store filters current metadata, and cached
+once, or within the shared replica's 1\,s local copy. Permissions copied into chunk metadata took effect
+within milliseconds of the write to the store, whatever the cache (the delay of copying them from a source system was not measured): the store filters current metadata, and cached
 decisions are keyed by it. Two sources of truth were stale themselves.
 Cerbos reloaded a rewritten policy file in a median 2.5\,s (at most 4.0\,s). SpiceDB under
 \texttt{minimizeLatency}, \sys{}'s default, took a median 3.3\,s, with 95\% of trials within 4.9\,s, and
@@ -167,7 +167,7 @@ control, 40 episodes that turned the engine's denials
 into allows, is the fault class that does leak: it leaked in every engine, and it is outside the bound. Every engine-caused failure was the layer's authorization error
 with a message naming no host. Transport faults (server down, connections refused or never answered,
 delays past the 2\,s timeout, HTTP 500 and 503) failed every request inside the fault. Recovery
-took a median 0.02 to 0.18\,s after the proxy's faults were removed, and 0.08 to 0.47\,s after a killed server was started again (OPA, Cerbos, OpenFGA, SpiceDB), a case the pre-registration left exploratory. A circuit breaker failed requests in under 0.1\,ms
+took a median 0.02 to 0.18\,s after the proxy's faults were removed, and 0.08 to 0.47\,s after a killed server was started again (OPA, Cerbos, OpenFGA, SpiceDB), a case the pre-registration left exploratory. A circuit breaker failed requests in at most about 0.1\,ms
 instead of 2\,s, at the price of a median 3.1 to 3.6\,s to the first success after recovery; a warm
 30\,s cache answered every request through the 12\,s outages. Answers altered in content failed
 closed, except that an empty LookupResources stream reads as ``no readable documents'': 4,746

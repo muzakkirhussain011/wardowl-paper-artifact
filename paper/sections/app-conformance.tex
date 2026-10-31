@@ -93,7 +93,7 @@ the asynchronous path (alone or behind a cache). Several meta-tests record a gap
 \texttt{1}/\texttt{"1"}, case or Unicode pairs in its data; comparing only the identifiers of filtered
 asynchronous searches; skipping the asynchronous search when the synchronous one refused a filter;
 and cached answers hiding batch dependence. In this history the kit's blind spots lay in what it
-generated and what it compared, never in its oracle.
+generated and what it compared; none has yet been found in its oracle.
 
 \subsection{A controlled campaign}\label{sec:conf-campaign}
 
@@ -105,8 +105,8 @@ stores were tested: pgvector 0.8.7 on PostgreSQL 17.11, Redis 8.10.2, Cassandra 
 Local 8.0.30, Chroma 1.5.9, LanceDB 0.40.0 and FAISS 1.15.1, beside the in-memory reference as a
 control. The fifteenth store target, Pinecone, needs an API key we did not have and was skipped in
 both runs, so the layer's Pinecone adapter is not covered here. The 14
-engine targets were OPA 1.21.2, OpenFGA 1.22.0, SpiceDB 1.56.2, Cerbos 0.56.0, Cedar 4.12.2 and Casbin
-1.43.0, each with a metadata-ACL policy and a tenant policy, plus Ory Keto 26.2.0 and the in-process
+engine targets were OPA 1.21.2, OpenFGA 1.22.0, SpiceDB 1.56.2, Cerbos 0.56.0, Cedar (cedarpy 4.12.2) and Casbin
+(casbin 1.43.0), each with a metadata-ACL policy and a tenant policy, plus Ory Keto 26.2.0 and the in-process
 metadata-ACL authorizer as a control. Container image digests are recorded with the results. Each
 store target ran 20 seeds of nine data variants and each engine target 20 seeds of seven
 (Appendix~\ref{app:kit}). A \emph{run} is one (target, seed, variant) and takes the worst outcome of
@@ -135,8 +135,8 @@ it and look up the whole term when they search: RediSearch keeps at most 4,096 b
 which the layer's hex encoding reaches at 2,048 bytes of field and value, and the vector-search
 index's filter fields keep 8,191 characters (a reproducer without the layer measured the cut; the
 campaign's diagnosis had assumed the 8,181 that MongoDB documents for another field type). A value
-equal to the kept prefix of a longer one also matches it, a false admit that the re-check catches;
-the reproducers show this, while the campaign's generator holds no such pairs. Neither limit is in
+equal to the kept prefix of a longer one also matches it, a false admit that the re-check should catch;
+the reproducers, which do not use the layer, show the admit, while the campaign's generator holds no such pairs. Neither limit is in
 the documentation of the field type the layer uses.
 
 Of the errors, 479 came from OpenFGA and SpiceDB, which refused whole batches with HTTP~400. OpenFGA
@@ -166,7 +166,7 @@ engines' 560 runs. A run takes its worst subject's outcome, so the other subject
 still reached the engine, but only 81 runs reached it with every subject: the campaign's evidence on
 these two engines is thin, and Section~\ref{sec:engines} tests them on data within their limits.
 Keto and Casbin completed all 140 runs each, every one
-passing. The 140 store errors were the documented limits above, unchanged. The 39 Cerbos runs
+passing. The 140 store errors were the limits above, unchanged. The 39 Cerbos runs
 disagreed again, and the harness now attributes each disagreeing hit: in all 280, the pushed-down
 filter gave the reference answer and Cerbos's check denied, so the filter over-approximated the
 policy as written and never the reverse. No run in either campaign returned a hit outside the

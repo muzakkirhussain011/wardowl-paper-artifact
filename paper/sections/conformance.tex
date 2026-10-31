@@ -29,12 +29,12 @@ Casbin offer no filter, so there the kit exercises the check path only; OPA, Ope
 reference answer. Pinecone needs an API key we did not
 have, so its adapter is not covered. A run is one (target, seed, variant), of 20 seeds and nine or seven data variants,
 and takes the worst outcome of its examples. The first campaign completed 4,315 runs: 3,612 passed, 84 were violations and 619 were errors.
-The main result is a null: both controls passed every run, no target returned a hit outside the reference, and none altered stored metadata.
+The main result is a null: both controls passed every run, no target returned a hit outside the reference on the generated data, and none altered stored metadata.
 Of the violations, 39 came from the layer's Cerbos translator, whose $\mathrm{In}$ also matches a scalar where Cerbos's check denies: a type gap in the adapter, not a fault of Cerbos, which the project's review had found and the campaign
 reproduced (Appendix~\ref{sec:conf-campaign}). The other 45 were Redis (26) and MongoDB (19), which cut a long term when they index it and look up the
 whole term when they search: at 4,096 bytes of tag value, which the layer's hex encoding reaches at 2,048 bytes of field and
-value, and at 8,191 characters. A value equal to the kept prefix of a longer one also matches it, a false admit that the re-check catches; the reproducers show this, and the campaign's generator holds no such pairs. We did not measure whether real ACL values reach such lengths. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
-140 were stores' documented limits, which fail loudly and return nothing.
+value, and at 8,191 characters. A value equal to the kept prefix of a longer one also matches it, a false admit that the re-check should catch; the reproducers, which do not use the layer, show the admit, and the campaign's generator holds no such pairs. We did not measure whether real ACL values reach such lengths. Of the errors, 479 were OpenFGA and SpiceDB refusing whole batches with HTTP~400, and
+140 were stores' limits, some documented and some not, which fail loudly and return nothing.
 
 We changed the four adapters. The second campaign, of
 4,480 runs, had 3,822 passes, 39 violations, 479 refusals and 140 errors, as the diagnosis predicted, and Redis and MongoDB
@@ -55,7 +55,7 @@ Store or engine & Finding & Found by & Effect & In \sys{}; upstream \\
  & \findrag Campaign & \findrag Recall; false admit
  & \findrag Digest of long terms (PR~\#167); reported \tabularnewline
 \findrag Elasticsearch, OpenSearch, Milvus, Qdrant
- & \findrag Documented size and syntax limits refuse a write or query
+ & \findrag Size and syntax limits, some documented and some not, refuse a write or query
  & \findrag Campaign & \findrag Availability
  & \findrag None needed: fail closed \tabularnewline
 \findrag Chroma 1.5.9, local mode
@@ -109,6 +109,6 @@ them 18 that record the project's development before this paper.}
 
 Table~\ref{tab:conf-findings} collects what this paper's experiments exposed. Counted by kind, the campaign
 found two store behaviors with a correctness effect, two availability faults in the layer's own adapters
-and the documented limits of five stores, which fail closed, and it reproduced one known gap. Four of the table's eleven rows
+and the limits of five stores, some documented and some not, which fail closed, and it reproduced one known gap. Four of the table's eleven rows
 are faults in \sys{}'s own adapters or cache that a store's or engine's behavior exposed, so part of what the study found is its own
 instrument; the reproducers of the reported behaviors use only the vendors' clients.

@@ -41,7 +41,7 @@ re-check rests membership in the readable set on a trusted computing base around
 (Observation~\ref{prop:reduction}), whose size we did not measure: a faulty
 filter or a lossy index can then cost recall but cannot put a chunk outside the readable set into an answer. We ask how much is lost, where, how fresh the check is, what the answers still reveal, and whether anyone can tell.
 
-We found the following. In what we tested, no returned chunk lay outside the subject's readable set at the revision the
+We found the following. Outside positive controls built to leak, in what we tested no returned chunk lay outside the subject's readable set at the revision the
 re-check read; we call such a chunk a \emph{leak}. In the end-to-end runs the re-check dropped nothing, so those runs would
 look the same with it off; only a one-seed mutation control, and a data-shape profile of one translator, exercised it. The
 revision can be stale: revoked chunks were served for up to 38.4\,s after an invalidation, past the stated
@@ -56,10 +56,10 @@ layouts retrieval quality ranged from near perfect to missing most of the exact 
         per path, and count-honesty for the claim that an answer is complete, and state the trusted computing base.
   \item \emph{Testing of the enforcement path} (Sections~\ref{sec:conformance},
         \ref{sec:engines} and~\ref{sec:e2e}). Differential testing across 13 of the 14 stores found no hit outside the
-        reference and no altered metadata, two truncations with a correctness effect at long values, two availability faults
-        in the layer's adapters and documented limits that fail closed; only four of the seven engines have filters to compare.
+        reference on its generated data and no altered metadata; two truncations, which at long values lose matching chunks and, as separate reproducers show, also admit a longer value by its prefix; two availability faults
+        in the layer's adapters; and limits that fail closed, not all of them documented. Only four of the seven engines have filters to compare.
         At one revision, over 6.3 million user-document pairs from one generated model per
-        profile, filters and checks never disagreed in the profiles that hold the model as intended. No chunk outside the readable set was returned in 1,050 fault episodes or
+        profile, filters and checks never disagreed in the profiles that hold the model as intended. No chunk outside the readable set was returned in 1,050 fault episodes (a further 40 control episodes turned denials into allows and leaked, as they must) or
         in four runs of each of eleven end-to-end configurations ($8.0 \times 10^{-4}$ per question, $1.6 \times 10^{-2}$ per person and
         0.21 per role type, one-sided 95\%, under independence assumptions Section~\ref{sec:e2e-safety} qualifies). A mutation control on one seed and an exact store shows that the leak checks fail when
         the filter is broken on purpose and that the re-check contains that fault.
@@ -71,12 +71,12 @@ layouts retrieval quality ranged from near perfect to missing most of the exact 
         pgvector's two modes to PostgreSQL's plan cache. A count flagged all 2,657 truly short answers
         without a false alarm, which on unchanging data follows from what a count is, but no count sees a full answer of the wrong chunks.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered forced-choice game, shown one
-        query's observation in two worlds and told that one holds $m$ unreadable chunks near the query, a subject picked
+        query's observation in two worlds and told that in one the query's $m$ nearest passages are unreadable chunks (the worlds differ in 1,233 such chunks, the others beyond the depth the layer explores for that query), a subject picked
         that world from the widening post-filter's latency with paired AUC 0.66 to 0.98 at $m = 100$ and 1.000 at $m = 1{,}000$ when
         it could read 10\% or 50\% of the background; reading 1\%, it had no forward latency channel (0.03 to 0.59) but a
-        count channel at $m = 1{,}000$ (1.000). BM25 and IDF scores gave 0.98 to 1.00 at those $m$, a known channel that prior work takes to term and text
+        count channel at $m = 1{,}000$ (1.000). BM25 and IDF scores gave 0.98 to 1.00 at those $m$, in worlds that differ by 1,233 chunks whatever $m$, a known channel that prior work takes to term and text
         recovery~\cite{wang2017sidechannel,espiritu2026plaintext}. Of
-        the game's hypotheses H1 and H2 were falsified, and H4 and H5a are inconclusive.
+        the game's hypotheses H1 and H2 were falsified, and H3b, H4, H5a and H6 are inconclusive as printed.
 \end{itemize}
 
 We do not propose an index, and we do not defend against prompt injection in readable content. The library,

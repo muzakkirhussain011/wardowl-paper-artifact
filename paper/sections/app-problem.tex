@@ -80,7 +80,7 @@ to (A3) the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a ca
 invalidation is meant to restore $\delta_e$-freshness for the subjects it names; it can do so only if
 the cache does not then store answers the engine computes from a snapshot older than the
 invalidation. Section~\ref{sec:eng-revoke} measures $\delta$ per path (Table~\ref{tab:eng-revoke}).
-When permissions are copied into chunk metadata, and for engines read at full consistency, revocation
+When permissions are copied into chunk metadata, timed from the write to the store, and for engines read at full consistency, revocation
 took effect in a median of 0.01\,s or less; for engines behind a cache it took the time to live
 (medians within 34\,ms of 5\,s and 30\,s), and invalidation ended that delay at once, or within 1\,s
 on a replica sharing the cache. Two sources of truth were stale themselves. Under SpiceDB's default
@@ -95,7 +95,7 @@ a rerun confirmed it: all 160 SpiceDB and Cerbos revocations with invalidation t
 declared staleness plus 1\,s, and 1\,s more on the replica.
 
 \paragraph{Count certificates.}
-Security needs no knowledge of $R_\tau(s)$; completeness does. A layer can set $c = 1$ count-honestly
+Security needs no knowledge of $R_\tau(s)$; completeness does. On a short answer, a layer can set $c = 1$ count-honestly
 only if (a)~the store searched exactly under $\varphi_s$, deep enough that $k$ candidates survived the
 re-check or none remained, or (b)~a filter-only count shows that every chunk passing $\varphi_s$ was
 among the candidates. Conversely, a count of at least $k$ alongside fewer than $k$ candidates proves

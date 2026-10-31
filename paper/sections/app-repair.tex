@@ -142,13 +142,13 @@ As the design above says, this holds by logic on unchanging data, so the result 
 992 for pgvector on the enterprise corpus, 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS
 MARCO ($k = 5$ and $k = 10$ together), and every answer it marked \emph{exhausted} held all $\min(k,
 R)$ readable chunks. Qdrant on the enterprise corpus had no truly short answer: its first searches came
-back short only for people who could read fewer than $k$ chunks, which the count marked exhausted.
+back short only for the one person who may read nothing, which the count marked exhausted.
 Qdrant did under-retrieve on MS MARCO: 3.5\% of its
 answers with $k = 10$ were short. On the enterprise corpus X0 and X1's second run never saw that, and X1's first run saw it rarely (0.6\% of as-run answers with $k = 5$, and 1.1\% in the one-segment layout).
 
 \paragraph{Exact repair (H5.2, confirmed for the unbounded arm).}
 Repaired exactly without a bound, no answer was empty or short, and the repaired answers reached
-recall@10 of 1.0000: on 576 triggered retrievals for pgvector on the enterprise corpus, on 323 for
+recall@10 of 1.0000: on 513 triggered retrievals for pgvector on the enterprise corpus (of 576; the other 63 are the person who may read nothing, for whom recall is undefined), on 323 for
 pgvector and 644 for Qdrant on MS MARCO, which had returned 992, 574 and 1,091 short answers under
 \emph{report} ($k = 5$ and $k = 10$ over three builds). Recall@10 rose from 0.667 to 0.782, from 0.900 to 0.915 and from 0.807 to 0.842. The
 bound decided where repair applied. On the enterprise corpus every short answer had at most 1,000
@@ -174,8 +174,8 @@ the run cannot separate the two. Over all questions, every repair arm's median l
 \paragraph{Mis-retrieval (H5.4, confirmed).}
 No repair touched Qdrant's loss on the enterprise corpus: 58.1\% of its answers marked complete under
 \emph{report} were not maximal, and 57.3\% under every repair arm, a difference of $-0.008$ (95\%
-interval $-0.027$ to 0.000). The small change is the count marking the short answers of people with
-fewer than $k$ readable chunks exhausted, and so complete and correct; no answer was repaired. Across
+interval $-0.027$ to 0.000). The small change is the count marking the empty answers of the one person who may read nothing
+exhausted, and so complete and correct; no answer was repaired. Across
 the table, exact repair lowered the false-completeness rate only as far as short answers had caused it
 (0.551 to 0.480 for pgvector on the enterprise corpus); the rest is mis-retrieval, which a full answer
 hides from any count.
@@ -190,7 +190,7 @@ on MS MARCO. A 1\% sample is thus enough to see the loss that \texttt{complete} 
 
 \paragraph{Widening (H5.6, confirmed).}
 On the 421 questions that triggered in both arms, exact repair beat widening by 0.085 of recall@10
-(95\% interval 0.064 to 0.110; Wilcoxon $p = 5.6 \times 10^{-30}$), and widening cost more: 360.9 and
+(95\% interval 0.064 to 0.110), and widening cost more: 360.9 and
 1,572.7\,ms at p95 of a triggered pgvector retrieval, on the enterprise corpus and on MS MARCO, against
 40.2 and 220.7\,ms for exact repair. A wider approximate search filled the short answers, since it
 left none empty or short, but did not rank them exactly.
