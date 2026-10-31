@@ -1,6 +1,6 @@
 # Triage: conformance campaign run 1
 
-Written 2026-10-29. Input: `D:\CV_2\wardowl-paper\evidence\conformance-campaign-run1.md` (workflow
+Written 2026-10-29. Input: `evidence/conformance-campaign-run1.md` (workflow
 run 40313285885, campaign commit `5d0f414`, wardowl 2.1.0), plus the public check-run annotations of
 its engines, sql-and-kv and vector-dbs jobs (GitHub API, unauthenticated; the job logs and artifacts
 need a signed-in account and were not read). Nothing was run locally; all execution is in GitHub
@@ -200,7 +200,7 @@ the path changed), with `reference_side` all `filter`.
 and queries `@wardowl_terms:{<hex> | ...}` with the whole hex term (`redis.py:74`). RediSearch's tag
 tokenizer copies each token with `rm_strndup(tok, MIN(toklen, MAX_TAG_LEN))` where
 `#define MAX_TAG_LEN 0x1000` ("Tags are limited to 4096 each")
-([src/tag_index.c:38-39, 140-150 at RediSearch master 400ff19](https://github.com/RediSearch/RediSearch/blob/400ff19597dacab7676524130239bd0d9362ae88/src/tag_index.c#L38-L150));
+([src/tag_index.c:39-40, 140-150 at RediSearch master 400ff19](https://github.com/RediSearch/RediSearch/blob/400ff19597dacab7676524130239bd0d9362ae88/src/tag_index.c#L39-L150));
 the lookup side passes the query value through unchanged (`TagIndex_OpenReader`, same file). A term
 is `field \x1f s: value` (`wardowl/backends/_engines.py:29-30`), so any field and value over 2,048
 UTF-8 bytes is stored cut and never found by its full value. The Redis tag field docs state no

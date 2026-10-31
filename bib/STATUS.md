@@ -1,6 +1,6 @@
 # Bibliography status: wardowl permission-aware retrieval paper
 
-Built 2026-10-26 from the six notes files in `D:\CV_2\research_notes\Permission aware retrieval literature review\` and the citations in `D:\CV_2\reports\Permission aware retrieval literature review.md`.
+Built 2026-10-26 from six notes files that the author keeps outside this repository and the citations in `literature/Permission aware retrieval literature review.md`.
 
 ## Summary
 
@@ -483,7 +483,7 @@ All `note` fields were renamed to `annote` so that plainnat does not print inter
 
 ## Build note (2026-10-30)
 
-Counts on 2026-10-30: `references.bib` 206 entries, 118 of them cited by the paper; `web.bib` 97 entries, 65 cited; 183 cited in all. The Summary above gives the counts of the first build on 2026-10-26, before later checks added entries. `REFERENCE_CHECK.md` lists the 183 with links, for the author's check by hand.
+Counts on 2026-10-30: `references.bib` 206 entries, 118 of them cited by the paper; `web.bib` 97 entries, 65 cited; 183 cited in all. The Summary above gives the counts of the first build on 2026-10-26, before later checks added entries.
 
 Machine check of all 183 cited references (`bib/refcheck.py`, workflow `refcheck.yml`, report on branch `results/refcheck`), 2026-10-30. It compares titles, first authors and years with Crossref and arXiv, and for other links looks for at least 70% of the title's words on the page. It does not check volumes, issues or pages. First run: 158 ok, 25 flagged. Each flagged one was then read:
 
@@ -497,3 +497,22 @@ Machine check of all 183 cited references (`bib/refcheck.py`, workflow `refcheck
 Secret scan of the tag `evidence-v1`, 2026-10-30 (branch `results/secret-scan`): 6,044 files with all 348 CI artifacts unzipped. No token pattern and no personal detail matched. Its 79 gitleaks hits, and 81 in the history, are all in two model-answer caches, `evidence/raw/x0-seed7/cache/` and `evidence/raw/x8b-control-seed7/cache/`: a sentence ending in a word such as "credentials", then the next JSON key, a 64-character hexadecimal cache key.
 
 The 77 undated `web.bib` entries now have `year` and `note = {Accessed <urldate>}`, both taken from their `urldate`. Without a year, plainnat printed a stray ", ." after `howpublished` when an author had several entries. The year is the year of access, not of publication, and the note says so in the bibliography.
+
+## Added 2026-10-31 (audit of the paper's text)
+
+Each entry was added to answer a finding of the three reviews in `wardowl-audit-2026-10-31`, and each source was read as stated.
+
+| Key | File | What was checked |
+|---|---|---|
+| `wang2017sidechannel` | references.bib | Crossref (DOI 10.1109/SP.2017.50: title, six authors, pages 673-692, May 2017). Full text read with `pdftotext` from https://stressattack.github.io/paper/sp17stress.pdf, the authors' site, because the copy at cs.princeton.edu/~lw19 answered HTTP 404. Read for: threat model (attacker writes documents to a shared index), Elasticsearch, Solr and MySQL survey, GitHub, Orchestrate.io and Xen.do case studies, term extraction and document counts, rank-only attacks, countermeasures |
+| `espiritu2026plaintext` | references.bib | arXiv API (2608.11730, 2026-08-12, primary class cs.CR, journal-ref 35th USENIX Security Symposium, 3753-3772), usenix.org presentation page (title, authors, first page). Full text read with `pdftotext` from arxiv.org/pdf/2608.11730. Read for: RLS timing through leakproof predicates; DLS scoring and prefix expansion with inserted documents; their statement that a timing delta on DLS was not reliable in preliminary experiments; cross-region and load effects; mitigations. No mention of vector search or RAG |
+| `dar2023rls` | references.bib | Crossref (DOI 10.1145/3588943: title, authors, PACMMOD 1(1), 1-25). Not read in full; cited only as the RLS timing work that `espiritu2026plaintext` builds on |
+| `rasin2024vulnerability` | references.bib | Crossref (DOI 10.1145/3676288.3676306: title, authors, SSDBM 2024, 1-4). Not read in full; cited only as above |
+| `nvd2025cve202565111` | web.bib | NVD REST API (description, published 2025-11-21; the page itself answers HTTP 403 to scripts), OSV GO-2025-4151, and GitHub advisory GHSA-9m7r-g8hg-x3vr read directly ("This only affects `LookupResources`; other APIs calculate permissionship correctly"; `<v1.47.1`) |
+| `cedar2026cedarspec` | web.bib | `cedar-lean/Cedar/Thm/TPE.lean` read at main (283 lines): theorems `reauthorize_is_sound`, `partial_authorize_decision_is_sound`. A search found no peer-reviewed report of this theorem; "not peer reviewed" means only that |
+| `cedar2026cedarpolicy` | web.bib | docs.rs, cedar-policy 4.14.0: crate index (`tpe` listed under experimental features) and `Authorizer` (`is_authorized_partial`, available on feature `partial-eval`) |
+| `raghuram2026onewayglass` | web.bib | PyPI JSON API (version 0.3.0, upload 2026-08-23) and its README. Not peer reviewed. The paper cites what the README states about its own measurements; they were not reproduced |
+
+Citations corrected against their sources on 2026-10-31, without new keys: `opensearch2026efficient` (the fallback is stated for the Faiss engine, since 3.5, with a setting that disables it); `aws2026access` (real-time verification only for connectors that support it; not S3 or Custom); `couzon2026filtered` (cap is point count over average links per node, times four, example about 19%); `qdrant2026search` (planner by threshold; the 3,333 points are our arithmetic and the neighbor expansion is from Qdrant's source at v1.19.2); `li2025attribute` ("often fail", not "could not reach"); `pang2019zanzibar` (checks for all candidate results, and Expand for building search indexes; "late-bound" is not its word); `wang2007correctness` (security is indistinguishability across policy-equivalent states; the paper's word is "maximum"; the straightforward extension of authorization-view query modification to queries with negation is called not sound; the proof of its Theorem 4 is in a technical report); `patel2024acorn` and `lim2026revisiting` (neither concerns permission filters, so they are no longer cited for that).
+
+Counts after these additions: `references.bib` 210 entries, `web.bib` 101 entries. The new entries have not been through `bib/refcheck.py`.

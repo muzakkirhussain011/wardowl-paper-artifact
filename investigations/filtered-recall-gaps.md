@@ -1,11 +1,11 @@
 # Investigation: Qdrant's 0.56 recall and pgvector's empty results in the 2026-10-24 Kaggle run
 
-Written 2026-10-26. Read-only investigation: no code in `D:\Projects\wardowl` was changed and nothing
-was run against a store. Input: `D:\CV_2\wardowl-paper\evidence\kaggle-scale-run-2026-10-24.md`.
+Written 2026-10-26. Read-only investigation: no code in the wardowl repository was changed and nothing
+was run against a store. Input: `evidence/kaggle-scale-run-2026-10-24.md`.
 
 Conventions:
 
-- **Code references** are `file:line` in `D:\Projects\wardowl` at HEAD `5c1d04a`. Every file cited
+- **Code references** are `file:line` in the wardowl repository at commit `5c1d04a`. Every file cited
   is byte-identical to tag `v2.1.0` = commit `bf25bd0f`, the commit the run used (checked with
   `git diff v2.1.0 -- <files>`; only `enterprise_rag.ipynb` changed since then, in its first cell).
 - **Store references** are to official docs, or to source at the exact versions the run used:
