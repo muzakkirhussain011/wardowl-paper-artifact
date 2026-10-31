@@ -14,6 +14,9 @@ records what is still missing or weak, so that nobody has to find it out. `REPRO
 | X8 amendment 2, control, seed 7 | `evidence/raw/x8b-control-seed7/answers.jsonl`, `x8b-control-seed7-questions.json` | Unreadable hits per question only (`u10`) | |
 | X1 runs 1 and 2 | `evidence/raw/x1-run1/x1/runs/`, `evidence/raw/x1run2-shard-*/x1run2/runs/`, parquet | Present (`hits10`) | Fetched for run 2 on 2026-10-31 |
 | X2, X5 | `rows/*.jsonl.gz` in the zips `x2x5-res-*` of run 40921769714 | Present (`hits10`) | |
+| X3, X6 | One record per retrieval, in `x3-<store>.jsonl` and `x6-<store>.jsonl` in the zips `x3x6-results-*` of run 40940385704: latency, count, and for X3 the recall | No hit identifiers | |
+| X4, X7 | One record per subject, trial or episode, in `raw/*.jsonl.gz` of each results folder | Not applicable | |
+| Conformance runs | Findings per target in `findings/` in the zips `conformance-*` of runs 40313285885 and 40905549149 | Not applicable | |
 
 **The k=10 hit lists of X0, X8 and X8-FGA do not exist.** `_write_answers` in `enterprise_rag.py` writes the k=5 hits and
 the answer; the k=10 retrieval is scored and dropped. So recall@10 of those eight runs, which Figure `fig:qual-audit` and

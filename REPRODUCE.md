@@ -180,8 +180,9 @@ Not done:
 
 Done on 2026-10-31, by re-reading stored outputs only:
 
-- Downloaded outputs of the X8, X8-FGA and X8 amendment 2 kernels match the archived files byte for byte where both exist.
-  X0's outputs on its public notebook match `evidence/raw/x0-seed7/`.
+- Outputs downloaded again from the X1 run 2, X8, X8-FGA and X8 amendment 2 kernels match the files archived earlier byte for
+  byte where both exist. The outputs on the public notebooks of X0 and X1 run 1 match `evidence/raw/x0-seed7/` and
+  `evidence/raw/x1-run1/`, apart from the kernel log's name and the gzipped `qdrant.log`.
 - Empty answers counted from `answers.jsonl` for all eight end-to-end runs (`evidence/x8-run.md`).
 - Notices retrieved and obeyed summed from `results.md` over the eight runs: 3,085 of 3,085.
 
