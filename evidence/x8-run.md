@@ -31,7 +31,8 @@ the people. The verdict on prediction 3 does not change: seeds 11 and 13 fall ou
 ## What ran
 
 Script kernels `muzakkirhussain1/wardowl-x8-seed11`, `-seed13` and `-seed17`, one seed per Kaggle
-GPU T4 x2 session (4 CPUs, 31.3 GiB), each 2.8 hours. wardowl 2.1.0 from PyPI, acceptance scripts at
+GPU T4 x2 session (4 CPUs, 31.3 GiB), 2.9 to 3.3 hours each (the last `time` field of each kernel log: 11,773, 11,144 and
+10,356 s). wardowl 2.1.0 from PyPI, acceptance scripts at
 `bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839`, PostgreSQL 16.15 with pgvector 0.8.7, the notebook's
 default configuration. Every run: 107,540 chunks (49,920 company documents in 20 tenants, 41,600 with
 a canary; 20 injected notices; 57,600 FiQA passages), 189 people, 1,105 questions (108 generic,
@@ -70,9 +71,15 @@ Weaviate, Redis and LanceDB 65,440 each (16,360 per run); pgvector 65,047 (16,17
 + 16,173); pgvector + OPA 65,071 (16,178 + 16,360 + 16,360 + 16,173).
 
 **Leak bound (pre-registered analysis).** Zero leaks in n = 4 x 1,105 = 4,420 questions per
-configuration; questions are sampled afresh per seed over fresh document text, and the analysis
-treats them as independent. One-sided 95% bound: 1 - 0.05^(1/4420) = 6.8 x 10^-4 leaks per question,
-for each configuration (X0 alone: 2.7 x 10^-3). Per person the bound stays per run,
+configuration; the pre-registered analysis treats them as independent. One-sided 95% bound:
+1 - 0.05^(1/4420) = 6.8 x 10^-4 leaks per question, for each configuration (X0 alone: 2.7 x 10^-3).
+
+**Corrected 2026-10-31: the questions are not all sampled afresh.** Recounted from the four `answers.jsonl`
+(X0 and X8), for every configuration: 3,746 distinct (person, question) pairs, of which 216 are in all four
+seeds, 26 in two and 3,504 in one. Taken as independent they give 1 - 0.05^(1/3746) = 8.0 x 10^-4 per question,
+the figure the paper reports; it gives 6.8 x 10^-4 once, as the pre-registered figure.
+
+Per person the bound stays per run,
 1 - 0.05^(1/189) = 1.6 x 10^-2: the 189 personas repeat across seeds with the same permissions, so a
 fault tied to a permission shape would recur, and pooling person-runs would overstate independence.
 
@@ -153,7 +160,7 @@ runs.
 ## X8-FGA (amendment 1)
 
 Kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` (2026-10-29 and 30,
-GPU T4 x2, 0.9 hours each), pushed after the amendment's commits (ba64c23, 1a25086). Raw outputs:
+GPU T4 x2, 0.6 to 0.9 hours each by the last `time` field of each kernel log: 3,418, 2,116, 3,269 and 3,219 s), pushed after the amendment's commits (ba64c23, 1a25086). Raw outputs:
 `evidence/raw/x8fga-seedNN/` (`results.md`, `results.json`, `answers.jsonl`, the model-answer cache, kernel log,
 `openfga.log`).
 
@@ -181,7 +188,7 @@ Permission cache: 7,603 to 7,797 hits and 10,729 to 10,847 misses per run.
 - F1, OpenFGA starts and every tuple is written: **holds** in all four runs.
 - F2, safety for pgvector + OpenFGA: **holds**. 0 unreadable hits, canaries, violations and errors in
   64,845 checked hits over 4,420 questions; one-sided 95% bound 1 - 0.05^(1/4420) = 6.8 x 10^-4 per
-  question.
+  question as pre-registered, 8.0 x 10^-4 on the 3,746 distinct pairs (see the correction above).
 - F3, every OpenFGA retrieval pre-filtered: **holds** (no ListObjects answer reached the limit or
   the deadline).
 - F4, pgvector shows one of the two known modes: **holds as worded**, with a caveat. Seeds 7, 13 and
@@ -207,8 +214,8 @@ Answer quality held up better than recall (target in the top five 0.94 to 0.98).
 
 ## Consequences for the paper
 
-- Section 9 (`e2e.tex`): four runs, 653,638 checked hits, no leak; bound 6.8 x 10^-4 per question
-  per configuration; the run-to-run table; the matcher description replaces the paraphrase
+- Section 9 (`e2e.tex`): four runs, 653,638 checked hits, no leak; bound 8.0 x 10^-4 per question
+  per configuration (corrected from 6.8 x 10^-4, see above); the run-to-run table; the matcher description replaces the paraphrase
   placeholder; injection totals.
 - Section 6 (`quality.tex`): X0's single-run pgvector number must not be reported as a property of
   the configuration; report both modes with their frequency (2 of 4) and the mechanism.

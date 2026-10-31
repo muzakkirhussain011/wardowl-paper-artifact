@@ -25,8 +25,8 @@ Qdrant & 1.19.2 & HNSW cosine, $m = 16$, \texttt{ef\_construct} 100, full-scan t
 Elasticsearch & 9.5.5 & \texttt{int8\_hnsw}, \texttt{num\_candidates} 500 \\
 OpenSearch & 3.9.0 & Lucene HNSW, \texttt{num\_candidates} 500 \\
 Weaviate & 1.39.12 & HNSW (defaults), indexed while importing \\
-Redis & 8.10.3 & HNSW, \texttt{EF\_RUNTIME} 100 \\
-LanceDB & lancedb 0.41.0 & \texttt{IVF\_PQ}, \texttt{nprobes} 50, \texttt{refine\_factor} 30 \\
+Redis & 8.10.2 (first run), 8.10.3 (repeats) & HNSW, \texttt{EF\_RUNTIME} 100 \\
+LanceDB & lancedb 0.40.0 (first run), 0.41.0 (repeats) & \texttt{IVF\_PQ}, \texttt{nprobes} 50, \texttt{refine\_factor} 30 \\
 Chroma & 1.5.9 & HNSW cosine (defaults) \\
 \bottomrule
 \end{tabular}
@@ -34,7 +34,7 @@ Chroma & 1.5.9 & HNSW cosine (defaults) \\
 one Kaggle session, two T4 GPUs, four CPUs, 31.3\,GiB of memory; embeddings bge-base-en-v1.5, 768
 dimensions, unit length. The setup scripts pin the server versions of Qdrant, Elasticsearch,
 OpenSearch, Weaviate, PostgreSQL's pgvector, OPA and OpenFGA; Redis comes from its package repository
-and the embedded stores from PyPI, at the versions the three repeat runs recorded.}
+and the embedded stores from PyPI, so their versions moved between the first run and the three repeats, as the logs record.}
 \label{tab:app-x0-settings}
 \end{table}
 
@@ -56,12 +56,12 @@ excluded.
 Experiment & Platform & Wall clock & Session or job hours \\
 \midrule
 End-to-end, first run (seed 7) & Kaggle, $2\times$T4, 4 CPUs & 2.8\,h & 2.8 \\
-End-to-end, three repeats (X8) & Kaggle, $2\times$T4, 4 CPUs, one session each & 2.8\,h each & 8.4 \\
-End-to-end, OpenFGA, four runs & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.9\,h each & 3.6 \\
+End-to-end, three repeats (X8) & Kaggle, $2\times$T4, 4 CPUs, one session each & 2.9 to 3.3\,h each & 9.2 \\
+End-to-end, OpenFGA, four runs & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.6 to 0.9\,h each & 3.3 \\
 End-to-end, exposure, four seeds & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.1\,h each & 0.5 \\
 End-to-end, mutation control & Kaggle, $2\times$T4, 4 CPUs & 2.2\,h & 2.2 \\
 Diagnosis grid, run 1 (X1) & Kaggle, $2\times$T4, 4 CPUs & 7.3\,h & 7.3 \\
-Diagnosis grid, run 2 (X1) & Kaggle: 1 GPU session, 4 CPU sessions & 6.1\,h & 12.5 \\
+Diagnosis grid, run 2 (X1) & Kaggle: 1 GPU session, 4 CPU sessions & 6.1\,h & 12.4 \\
 Conformance campaign, run 1 & GitHub-hosted runners, 7 jobs & 2.9\,h & 6.6 \\
 Conformance campaign, run 2 & GitHub-hosted runners, 10 jobs & 2.1\,h & 8.2 \\
 Engines (X4, X7) & GitHub-hosted runners, 15 jobs & 2.0\,h & 15.3 \\
@@ -75,7 +75,7 @@ Frontiers and repair (X2, X5) & GitHub-hosted runners, 72 jobs & 10.6\,h & 98.7 
 memory; GitHub-hosted runners have 4 virtual CPUs and 16\,GB. Jobs counts every job of the workflow
 run, including data, plan, report, summary and publish jobs, from GitHub's jobs API (the X7 rerun and
 the follow-up each include jobs the workflow skipped, one and three). Job hours sum the run times of
-the jobs that started; wall clock includes queueing. Smoke runs that tested the harnesses, whose numbers were never analysed,
+the jobs that started; wall clock includes queueing. Kaggle hours are the last time stamp of each kernel log. Smoke runs that tested the harnesses, whose numbers were never analysed,
 and runs cancelled before they produced results are not listed.}
 \label{tab:app-compute}
 \end{table}

@@ -6,59 +6,52 @@
 % plan/x8-prereg.md), and the OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same
 % pre-registration, in evidence/x8-run.md). Amendment 2 (exposure and the mutation control,
 % plan/x8-prereg.md, kaggle/x8/x8b_run.py): evidence/x8-controls.md, with its tables in
-% Appendix~\ref{app:e2e-control}.
+% Appendix~\ref{app:e2e-control}. The recount of distinct (person, question) pairs and of empty answers per
+% person: raw/x0-seed7/answers.jsonl, raw/x8-seed*/answers.jsonl, raw/x8fga-seed*/answers.jsonl, and
+% enterprise_rag.py at bf25bd0, questions().
 
-Here the whole pipeline runs as an organization would run it: many tenants and people in one index, adversarial questions,
-and a language model that answers from what retrieval returns. The goal is a leak test that bounds the leak rate per question
-and per person, not a measure of answer quality.
+Here the whole pipeline runs on one synthetic scenario: many tenants and people in one index, fixed red-team prompts,
+and a language model that answers from what retrieval returns. The goal is a leak test, not a measure of answer quality.
 
 \paragraph{Setup.}
 The index holds 107,540 chunks: 49,920 synthetic company documents in 20 tenants, of which 41,600 carry a unique canary string; 20
 notices, each carrying a prompt injection; and 57,600 FiQA passages~\cite{maia2018www18} that every tenant may read. 189 people, the
-scenario's subjects, span the tenants: a typical employee may read 58,641 chunks, the least privileged 624, and one person nothing.
+scenario's subjects, are 13 role types repeated across the tenants: a typical employee may read 58,641 chunks, the least privileged 624, and one person nothing.
 They ask 1,105 questions: 108 generic, 376 targeted at a document they may read, 189 at a document they may not, and 432 red-team
 prompts. The policy, a tenant boundary and per-document ACLs, runs in ten configurations (FAISS over a flat index, the eight approximate
 stores of Figure~\ref{fig:qual-audit}, and pgvector with the policy written in OPA) and in an eleventh, with the ACLs as 74,960 OpenFGA
 tuples, which ran in four further runs after a harness fault of ours stopped it from starting. The scenario ran four times, with seeds
-7, 11, 13 and 17, on release 2.1.0; the repeats and their predictions were pre-registered after the first run and before any repeat.
-Permissions did not change during a run, so these runs test containment, not freshness (Appendix~\ref{sec:e2e-setup}).
+7, 11, 13 and 17, on release 2.1.0; Redis, LanceDB and the Weaviate client moved one version after the first run, against the pre-registration's ``everything else identical''
+(Appendix~\ref{sec:e2e-setup}). The repeats and their predictions were pre-registered after the first run and before any repeat.
+Permissions did not change during a run, so the revision a check read makes no difference here: these runs test containment, not freshness.
 
 \paragraph{Safety.}\label{sec:e2e-safety}
 No configuration in any run returned an unreadable chunk or exposed a canary (Table~\ref{tab:e2e-safety} in
-Appendix~\ref{app:e2e-safety}). Treating the questions of different runs as independent, no leak in 4,420 questions gives a one-sided
-95\% upper bound of $1 - 0.05^{1/4420} \approx 6.8 \times 10^{-4}$ per question, separately for each of the eleven configurations. Per
+Appendix~\ref{app:e2e-safety}). How far that generalizes depends on what counts as a trial. Of each run's 1,105 (person, question) pairs, 216 use the same text in every seed, with only the documents under them changing: the
+108 generic questions, which are 12 strings asked by nine people, and the 108 prompts of the two attacks that have no placeholder. The others are drawn per seed from document templates and attacks, with 208 entity names per template, and 26 of them recur by chance in a second seed. The runs' stored questions thus hold 3,746 distinct pairs, not 4,420, the same for every configuration; taking those as independent, $1 - 0.05^{1/3746} \approx 8.0 \times 10^{-4}$ per question (one-sided 95\%), separately for each of the eleven
+configurations. Per
 person the bound stays at a single run's $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$, because the same people recur in every run with
-the same permissions. As a secondary count the runs checked 783,888 hits, which are not independent trials. The bounds are over the
-question generator's distribution and say nothing about an adversary who adapts its queries; for such an adversary we rely on
-Observation~\ref{prop:reduction} and its trusted computing base. No violation occurred either: in the in-process configurations the filter
-and the re-check evaluate the same ACL metadata, and with OPA and OpenFGA they come from the engine's separate APIs and agreed on every hit.
+the same permissions. A fault tied to a permission shape would recur too, and the 189 people have 13 shapes, for which the same formula gives 0.21. As a secondary count the runs checked 783,888 hits, which are not independent trials. All of these bounds are over this
+question generator and say nothing about an adversary who adapts its queries; none was run, and for such an adversary we rely only on
+Observation~\ref{prop:reduction} and its trusted computing base.
+
+No violation occurred either, so in 783,888 hits the re-check dropped nothing, and these runs would look the same with it off. What they test is that stores round-trip metadata and that implementations of
+one predicate agree: in the in-process configurations filter and re-check evaluate the same ACL metadata, with OPA and OpenFGA they come from the engine's separate APIs, and the oracle that judges a leak is a separate plain implementation from the same source as the layer.
 
 These numbers have power only if the questions came near content the asking person may not read, and if the pipeline's checks fire when
 enforcement is broken. A second amendment to the pre-registration, exploratory in that it was specified in writing after the main results
-and before running, measures both on FAISS: exposure, the share of questions whose unfiltered exact top $k$ holds a chunk the person may not
-read, and a mutation positive control, which breaks the pushed-down filter in three ways (it admits everything, also admits the neighboring
-tenant, or drops the ACL clause) with the re-check off and on. Over the four seeds, 95.2\% of the 4,420 questions had an unreadable chunk in the
-unfiltered top 5, 99.8\% in the top 10, and 72.9\% had one carrying a canary in the top 5. Each company document has a counterpart from the same
-template in each of the other 19 tenants, and these shares depend on those copies: on seed 7, 95.2\% of the 1,105 questions were exposed in the top 5 over the
-whole corpus and 47.8\% with the other tenants out of reach, in the control's ACL mutation with the re-check off, which searches only the person's tenant and the
-shared passages (a reading of that pass we made after the run). There the shares were 100\% for forbidden questions, 62.5\% for red-team prompts, 62.0\% for generic
-questions and 0.5\% for targeted ones, so targeted questions test the tenant boundary and hardly the ACL inside it. Over the whole corpus, generic, targeted and
-forbidden questions were all exposed in the top 5, and red-team prompts at 87.7\%, which falsifies our prediction of at least 90\% for them: the nearest chunks of one
-of the eight attacks, a request for reference codes, are shared passages, and in the top 5 it reached only the one person who may read nothing.
-The control ran on seed 7, and its predictions held (Appendix~\ref{app:e2e-control}). The unmutated pass reproduced the first run's FAISS row. With the
-re-check off, the three mutations put an unreadable hit in the top 10 for 1,103, 751 and 533 of the 1,105 questions and a canary into 805, 360 and 503
-prompts, and all four of the harness's leak checks failed. With the re-check on, under the same filters, no unreadable hit came back and no canary was
-exposed: the re-check reported as a violation every unreadable hit the other pass had returned (15,317, 4,834 and 7,642), on exactly those questions, and the
-layer marked each of them incomplete. Recall stayed where the broken filter left it (0.077, 0.703 and 0.548 at $k = 10$), so the re-check contains such a fault and
-reports it without repairing it. A test reading only answers would have seen little of this: the answer held a canary for 138 of the 805, 13 of the 360
-and 107 of the 503 questions. The control breaks the filter only, on one seed and an exact store; a wrong check is outside it and stays in the trusted
-computing base.
+and before running, measures both on FAISS (Appendix~\ref{app:e2e-control}). Over the four seeds, 95.2\% of the 4,420 questions had an unreadable chunk in the
+unfiltered top 5, mostly through the copies in other tenants: inside the tenant, on seed 7, the share was 47.8\%, and for targeted questions 0.5\%, so those test the tenant boundary and
+hardly the ACL. Red-team prompts reached 87.7\%, which falsifies our prediction of at least 90\%. The control, on seed 7, breaks the pushed-down filter in three ways (it admits everything, also admits the neighboring
+tenant, or drops the ACL clause) with the re-check off and on. With it off, an unreadable hit reached the top 10 for 1,103, 751 and 533 of the 1,105 questions and all four of the harness's leak checks failed; the answer itself held a canary for only 138, 13 and 107. With it on, no unreadable hit came back: the re-check reported each as a violation (15,317, 4,834 and 7,642) and the layer marked those questions incomplete, while recall stayed where the broken filter left it (0.077, 0.703 and 0.548 at $k = 10$). So the re-check contains such a fault and
+reports it without repairing it.
+
+This is the only end-to-end evidence that the re-check does anything, and it is narrow: one seed, one exact store, the filter mutated only, and since the check is untouched, containment there holds by construction, so its value is that it validates the harness. Nothing inside the trusted
+computing base was mutated, no wrong filter met an approximate index, and the red-team prompts change only the query text.
 
 \paragraph{Containment held while quality did not.}
-pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four runs, people who could each read 624 chunks, and the
-release reported those empty answers as complete. Our prediction that 3 to 25 people would receive no results in every repeat was falsified,
+pgvector gave empty answers to 10, 1, 0 and 7 questions from people who could read something in the four runs, on 9, 1, 0 and 7 people, all least-privileged and each able to read 624 chunks. Each of them asked five questions, and none got more than two empty answers, so nobody who could read something received no results at all. The release reported those empty answers as complete. Our prediction that 3 to 25 people would receive no results in every repeat, scored by the harness on this count of answers, was falsified,
 because it assumed that the first run's mode was a property of the configuration; the other four predictions held. Over its eight runs the
-configuration ran exact in five and, by its median, fast in three, and in two of the five exact runs one person still received no results,
-which we have not explained. With OpenFGA, pgvector's recall@10 was between 0.693 and 0.758 in every run, and Qdrant's between 0.535 and 0.561.
-The 3B model obeyed the injected notice all 3,069 times it was retrieved, which is outside our threat model and marks where a retrieval
+configuration ran exact in five and, by its median, fast in three, with at least one empty answer in five of the eight (10, 1, 0, 7, 1, 1, 0, 0); the one empty answer in each of two exact runs we have not explained. With OpenFGA, pgvector's recall@10 was between 0.693 and 0.758 in every run, and Qdrant's between 0.535 and 0.561.
+The 3B model's answer carried the marker the injected notice asks for in all 3,085 retrievals of it, which is outside our threat model and marks where a retrieval
 guarantee ends (Appendix~\ref{sec:e2e-model}).

@@ -128,8 +128,7 @@ filtering 1,000 candidates itself instead, as its Cassandra adapter already did;
 what those 1,000 candidates cost in recall. In the CI of the pull request that made the change
 (\url{https://github.com/muzakkirhussain011/wardowl/pull/187}, merged on 2026-10-30 with its checks
 green, not yet in a release), the fixed layer retrieved exactly the permitted chunks from real Chroma
-for subjects in 1,001 and 40,000 groups. A
-report to Chroma is drafted. Chroma was also the slowest store at every level
+for subjects in 1,001 and 40,000 groups. We reported both behaviors to Chroma on 2026-10-30, after that pull request was public (issues \#7969 and \#7970; Section~\ref{sec:limits-ethics}). Chroma was also the slowest store at every level
 it accepted, 4.3\,s with one group and 10.6\,s with 100, and each refused retrieval still took about
 4\,s. With five seeds, its X3-H2 verdict is confirmed; X3-H4 stays inconclusive for Chroma, as the
 rule needs an accepted level of at least 1,000 groups.

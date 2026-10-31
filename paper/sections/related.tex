@@ -1,10 +1,10 @@
 % Related Work: body of Section~\ref{sec:related} (the \section heading and its label stay in main.tex).
 % The full account, with every precedent's figures and the industry systems, is in
 % Appendix~\ref{app:related}. The enforcement design is not claimed as new; the contribution is
-% verification and measurement.
+% testing and measurement. "We found no" statements report searches, not exhaustive ones.
 
-Permission-aware retrieval draws on literatures that rarely cite one another; each settled part of the design we test, and none
-verifies the whole. Appendix~\ref{app:related} gives the full account, including native store features and commercial systems such as
+Permission-aware retrieval draws on literatures that rarely cite one another; each settled part of the design we test, and we found none that tests the whole. Our statements that we found no prior work report
+searches, which are not exhaustive. Appendix~\ref{app:related} gives the full account, including native store features and commercial systems such as
 Amazon Bedrock's knowledge bases~\cite{aws2026access}, for which we found no independent evaluation of permission correctness.
 
 \paragraph{Enterprise search and databases.}
@@ -12,33 +12,33 @@ B\"{u}ttcher and Clarke gave the founding security model for multi-user full-tex
 unreadable files, and query integration fixes it~\cite{buttcher2005security}. Bailey et al.\ modeled late binding and fetched growing
 blocks of candidates~\cite{bailey2006secure}. The pre-filter we test is query integration applied to approximate search, and its widening
 post-filter is their loop; we claim neither. Query modification~\cite{stonebraker1974access}, Truman semantics~\cite{rizvi2004extending} and
-the sound, secure and maximal criteria~\cite{wang2007correctness} frame what a pushed-down filter does and owes. Zerber~\cite{zerr2008zerber}
+the sound, secure and maximum criteria~\cite{wang2007correctness} frame what a pushed-down filter does and owes. Zerber~\cite{zerr2008zerber}
 and searchable encryption~\cite{song2000practical} protect an index from an untrusted server, whereas we trust the store's host. This lineage
-proves rewriting correct under exact evaluation; we test components that carry no such proofs, under approximate search.
+gives criteria, not a general proof: Wang et al.\ note that the straightforward extension of authorization-view query modification to queries with negation is not sound, and give a sound and secure algorithm for cell-level policies under exact relational evaluation. We test
+translators and approximate indexes, for which we found no such proof.
 
 \paragraph{Authorization.}
-Zanzibar is late-bound and uses snapshot tokens against applying an old ACL to new content~\cite{pang2019zanzibar}; its descendants added reverse
+In Zanzibar, answering a search query requires ACL checks for all candidate results, Expand lets clients build indexes for access-controlled content, and snapshot tokens guard against applying an old ACL to new content~\cite{pang2019zanzibar}; its descendants added reverse
 lookups with documented size limits~\cite{openfga2026search,authzed2026protecting}, and policy engines compile filters through engineering
 artifacts~\cite{opa2026evaluating,cerbos2026cerbos}. Margrave~\cite{fisler2005verification}, Zelkova~\cite{backes2018semanticbased} and Cedar's
-differential testing~\cite{disselkoen2024how} address the policy and its check path. We found no peer-reviewed semantics or correctness proof for
+differential testing~\cite{disselkoen2024how} address the policy and its check path. Cedar's public specification also proves its type-aware partial evaluator sound in Lean~\cite{cedar2026cedarspec}, but for residuals against concrete authorization, not a store's filter language, and the Cedar adapter we test does not use it. We found no peer-reviewed semantics or correctness proof for
 any policy-to-filter translator.
 
 \paragraph{Filtered search and permission-aware indexes.}
 The collapse of post-filtering is well measured~\cite{patel2024acorn,li2025attribute,kim2026racorn1}. Index designs for attribute-filtered
 search~\cite{wang2023efficient,gollapudi2023filtereddiskann,cai2024navigating} take the predicate as part of the query rather than compile it from an
-external policy; benchmarks control selectivity and correlation~\cite{zhang2026vecbench,amanbayev2026filtered}, and HCBGen shows that neither alone is a
-stable proxy for difficulty~\cite{lim2026revisiting}. None uses real ACLs. Permission-specific indexes are recent~\cite{zhong2026honeybee,han2026dont}, and a
+external policy; benchmarks control or measure selectivity and correlation~\cite{zhang2026vecbench,amanbayev2026filtered}, and HCBGen shows that neither alone is a
+stable proxy for difficulty~\cite{lim2026revisiting}. None of these uses real ACLs, and neither do we. Permission-specific indexes are recent~\cite{zhong2026honeybee,han2026dont}, and a
 vision paper asks for correctness criteria~\cite{yalamarthi2026policyaware}. We propose no index. We found no evaluation of per-query disjunctions over hundreds
 or thousands of group labels, and no audit of production stores under such filters at documented, tuned and exact settings.
 
 \paragraph{RAG privacy and agents.}
 Anyone who can query a RAG system can drain its store~\cite{zeng2024good,qi2024follow}, and model-side defenses are
 probabilistic~\cite{bhatt2025enterprise}. Attribute-based gating at retrieval removed cross-tenant leakage~\cite{arceo2026securing}. Corpus
-poisoning~\cite{zou2025poisonedrag} and information-flow control for agents~\cite{costa2025securing} are complementary. This literature shows why enforcement
-must be deterministic and precede generation, but does not test whether a layer is faithful or what it costs in recall.
+poisoning~\cite{zou2025poisonedrag} and information-flow control for agents~\cite{costa2025securing} are complementary. We found no test in this literature of whether a layer is faithful or what it costs in recall.
 
 \paragraph{Side channels and testing.}
 Our game tests a restricted form of noninterference~\cite{goguen1982security}. Timing has long revealed hidden content on the
-web~\cite{felten2000timing,gelernter2015crosssite}, and padding is the simplest case of predictive mitigation~\cite{askarov2010predictive}. Database engines
-have mature logic-bug oracles~\cite{rigger2020testing,rigger2020detecting}, while vector databases have none~\cite{xie2025toward,wang2025towards}. Our testing is
+web~\cite{felten2000timing,gelernter2015crosssite}, and padding is the simplest case of predictive mitigation~\cite{askarov2010predictive}. On access control over shared indexes the closest work is stronger than ours, on keyword search and relational predicates~\cite{wang2017sidechannel,dar2023rls,rasin2024vulnerability,espiritu2026plaintext}; Section~\ref{sec:side-results} relates our results to it. Database engines
+have mature logic-bug oracles~\cite{rigger2020testing,rigger2020detecting}; for vector databases a testing roadmap reports only simplified metamorphic cases~\cite{wang2025towards}, and we found none for filter semantics~\cite{xie2025toward}. Our testing is
 differential in McKeeman's sense~\cite{mckeeman1998differential}, and it evaluates its relations under exact search, so that approximation cannot confound them.

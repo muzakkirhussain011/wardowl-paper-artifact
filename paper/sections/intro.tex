@@ -12,67 +12,74 @@ index~\cite{roychowdhury2024confusedpilot}.
 
 The remedy is old. Query modification adds the access predicate to the query before it
 runs~\cite{stonebraker1974access}; multi-user full-text search showed that statistics computed over
-unreadable documents reveal them~\cite{buttcher2005security}; enterprise search checked results late, in
-growing blocks~\cite{bailey2006secure}; Zanzibar checks each result against a central authorization
-service~\cite{pang2019zanzibar}. Managed RAG services combine these steps~\cite{aws2026access}, and recent
-work builds permissions into the vector index itself~\cite{zhong2026honeybee,han2026dont}.
+unreadable documents reveal them~\cite{buttcher2005security}, and later attacks turned that observation, and
+timing, into term and plaintext recovery against shared search indexes and row-level
+security~\cite{wang2017sidechannel,espiritu2026plaintext}; enterprise search checked results late, in
+growing blocks~\cite{bailey2006secure}; a search over content that Zanzibar protects checks its candidate results
+against a central authorization service~\cite{pang2019zanzibar}. Managed RAG services combine these
+steps~\cite{aws2026access}, and recent work builds permissions into the vector index
+itself~\cite{zhong2026honeybee,han2026dont}.
 
-What is not known is whether the stack that implements the remedy is faithful. Three things stand
-between an organization's policy and the chunks a model sees. \emph{First, the policy is compiled by
-translators.} Filter APIs are code paths separate from check APIs, every store has its own filter
-language, and we found no published guarantee that the paths agree. \emph{Second, the filter runs inside
-an approximate index.} Permission filters are hard cases for filtered nearest-neighbor search: they are
-can be selective, they take a disjunction over many groups, and organizational structure, not meaning,
-decides which chunks they admit~\cite{patel2024acorn,lim2026revisiting}. \emph{Third, failures are
+Three things stand between an organization's policy and the chunks a model sees. \emph{First, the policy is
+compiled by translators.} Filter APIs are code paths separate from check APIs, every store has its own filter
+language, and we found no published guarantee that the paths agree; they have diverged, as when SpiceDB's
+LookupResources missed results its other APIs computed correctly~\cite{nvd2025cve202565111}. \emph{Second, the
+filter runs inside an approximate index.} Recall in filtered nearest-neighbor search depends on a filter's
+selectivity and its correlation with the question, though neither alone predicts
+it~\cite{patel2024acorn,lim2026revisiting}; a permission filter can be selective, takes a disjunction over many
+groups, and admits chunks by organizational structure, not meaning. \emph{Third, failures are
 silent.} Under Truman semantics~\cite{rizvi2004extending} a subject who receives three chunks, or none,
 cannot tell whether that is all it may read or all that the index found.
 
-We test one enforcement layer as deployed, \sys{}, an open-source library that compiles an organization's
-existing policy into filters for 14 vector stores, from seven authorization engines, re-checks every hit
-with the authorizer and fails closed (Section~\ref{sec:system}), and we use it as an instrument. The
-re-check rests security on a small trusted computing base around the check API
-(Observation~\ref{prop:reduction}): a faulty filter or a lossy index can then cost recall but cannot
-put a chunk outside the readable set into an answer. The open questions become how much is lost, where,
-how fresh the check is, what the answers still reveal, and whether anyone can tell. Our answer is the
-title, with its scope stated. By \emph{leak-free} we mean one thing: in every store and engine we
-tested, no returned chunk lay outside the subject's readable set at the revision the re-check read.
-That revision can be stale, and the release we evaluated exceeded its stated bound after an invalidation.
-Other observables of an answer still revealed information about unreadable chunks. And retrieval quality
-ranged from near perfect to missing most of what a subject may read, and the application could not see
-the loss.
+This paper is a measurement study of one enforcement layer, \sys{}, an open-source library that the author develops and
+whose public repository was created in October 2026. It compiles an organization's policy into filters for 14 vector
+stores, from ACL metadata or from four authorization engines, checks hits through those and three more engines, re-checks
+every hit and fails closed (Section~\ref{sec:system}). The results describe this layer at the versions we state, on
+synthetic permission layouts. We ran no adaptive adversary and compare no other layer; our one native baseline is a side
+run on another corpus (Section~\ref{sec:qual-native}). Under stated assumptions, the
+re-check rests membership in the readable set on a trusted computing base around the check API
+(Observation~\ref{prop:reduction}), whose size we did not measure: a faulty
+filter or a lossy index can then cost recall but cannot put a chunk outside the readable set into an answer. We ask how much is lost, where, how fresh the check is, what the answers still reveal, and whether anyone can tell.
+
+We found the following. In what we tested, no returned chunk lay outside the subject's readable set at the revision the
+re-check read; we call such a chunk a \emph{leak}. In the end-to-end runs the re-check dropped nothing, so those runs would
+look the same with it off; only a one-seed mutation control, and a data-shape profile of one translator, exercised it. The
+revision can be stale: revoked chunks were served for up to 38.4\,s after an invalidation, past the stated
+bound. Other observables of an answer revealed information about unreadable chunks. And on our
+layouts retrieval quality ranged from near perfect to missing most of the exact top ten for some people, unseen by the application.
 
 \paragraph{Contributions.}
 \begin{itemize}
-  \item \emph{A formulation} (Section~\ref{sec:problem}). We adapt the sound, secure and maximal
-        criteria of Wang et al.~\cite{wang2007correctness} to top-$k$ retrieval under an external
-        authorizer, add freshness, with a measured staleness $\delta$ per path, and count-honesty for the
-        claim that an answer is complete, and state the trusted computing base.
-  \item \emph{Verification of the enforcement path} (Sections~\ref{sec:conformance},
-        \ref{sec:engines} and~\ref{sec:e2e}). Differential testing across 13 of the 14 stores and seven
-        engines found two undocumented store behaviors with a correctness effect, two availability faults
-        in the layer's adapters and documented limits that fail closed. At one revision, over 6.3 million
-        user-document pairs, filters and checks never disagreed in the profiles that hold the model as
-        intended. No chunk outside the readable set was returned in 1,050 fault episodes or in four runs of
-        each of eleven end-to-end configurations ($6.8 \times 10^{-4}$ per question and
-        $1.6 \times 10^{-2}$ per person, one-sided 95\%, over the generator's question distribution). A
-        mutation control shows that the leak checks fail when the filter is broken on purpose and that
-        the re-check contains the fault.
+  \item \emph{A formulation} (Section~\ref{sec:problem}). We adapt the sound and maximal criteria of Wang et
+        al.~\cite{wang2007correctness} to top-$k$ retrieval under an external authorizer, replace their indistinguishability
+        notion of security with a weaker property of the returned set, add freshness, with a measured staleness $\delta$
+        per path, and count-honesty for the claim that an answer is complete, and state the trusted computing base.
+  \item \emph{Testing of the enforcement path} (Sections~\ref{sec:conformance},
+        \ref{sec:engines} and~\ref{sec:e2e}). Differential testing across 13 of the 14 stores found no hit outside the
+        reference and no altered metadata, two truncations with a correctness effect at long values, two availability faults
+        in the layer's adapters and documented limits that fail closed; only four of the seven engines have filters to compare.
+        At one revision, over 6.3 million user-document pairs from one generated model per
+        profile, filters and checks never disagreed in the profiles that hold the model as intended. No chunk outside the readable set was returned in 1,050 fault episodes or
+        in four runs of each of eleven end-to-end configurations ($8.0 \times 10^{-4}$ per question, $1.6 \times 10^{-2}$ per person and
+        0.21 per role type, one-sided 95\%, under independence assumptions Section~\ref{sec:e2e-safety} qualifies). A mutation control on one seed and an exact store shows that the leak checks fail when
+        the filter is broken on purpose and that the re-check contains that fault.
   \item \emph{An audit, diagnosis and repair of retrieval quality} (Sections~\ref{sec:quality}
-        and~\ref{sec:repair}). Mean recall@10 at default or tuned settings ranged from 0.55 to 0.98 over eight
-        stores searched approximately, under this layer's schema. Pre-registered experiments trace
-        Qdrant's loss to an islanded permitted subgraph (0.656 in the shared layout, 0.952 with
-        per-tenant graphs) and pgvector's to PostgreSQL's plan cache and two scan limits. A count flagged all
-        2,657 truly short answers without a false alarm, and exact repair without a bound left none empty
-        or short, but no count sees a full answer of the wrong chunks.
-  \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered
-        distinguishing game, a subject who repeated a query could tell that 100 or more unreadable
-        chunks had appeared near it from the widening post-filter's latency (paired AUC 0.80 to 0.98, except
-        pgvector's 0.66 for an attacker reading 10\% of the background) and from BM25 and IDF scores (0.98
-        to 1.00). Exact pre-filtering returned identical answers.
+        and~\ref{sec:repair}). Mean recall@10 ranged from 0.55 to 0.98 over eight stores searched approximately, on
+        one synthetic corpus with 19 near-identical copies of each company document, under this layer's schema and at settings some of them tuned.
+        A diagnosis grid with another question mix gave Qdrant 0.656 in the shared layout and 0.952 with per-tenant graphs, consistent with
+        an islanded permitted subgraph that we did not measure directly; plans recorded under an exploratory hypothesis tie
+        pgvector's two modes to PostgreSQL's plan cache. A count flagged all 2,657 truly short answers
+        without a false alarm, which on unchanging data follows from what a count is, but no count sees a full answer of the wrong chunks.
+  \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered forced-choice game, shown one
+        query's observation in two worlds and told that one holds $m$ unreadable chunks near the query, a subject picked
+        that world from the widening post-filter's latency with paired AUC 0.66 to 0.98 at $m = 100$ and 1.000 at $m = 1{,}000$ when
+        it could read 10\% or 50\% of the background; reading 1\%, it had no forward latency channel (0.03 to 0.59) but a
+        count channel at $m = 1{,}000$ (1.000). BM25 and IDF scores gave 0.98 to 1.00 at those $m$, a known channel that prior work takes to term and text
+        recovery~\cite{wang2017sidechannel,espiritu2026plaintext}. Of
+        the game's hypotheses H1 and H2 were falsified, and H4 and H5a are inconclusive.
 \end{itemize}
 
 We do not propose an index, and we do not defend against prompt injection in readable content. The library,
-the conformance kit, the pre-registrations and the raw outputs are released with the paper
-(Section~\ref{sec:limits}). Appendix~\ref{app:map} maps every experiment to its versions and runs, and
-Appendix~\ref{app:ledger} lists every hypothesis with its registration and verdict; labels such as P5 below
-refer to that ledger.
+the conformance kit, the pre-registrations and raw outputs, with the gaps that Section~\ref{sec:limits} lists, are released at
+\url{https://github.com/muzakkirhussain011/wardowl-paper-artifact}. Appendix~\ref{app:map} maps every experiment to its versions and
+runs, and Appendix~\ref{app:ledger} lists every hypothesis with its registration and verdict; labels such as P5 below refer to that ledger.

@@ -12,11 +12,11 @@ When a pre-filtered search on a backend that does not declare exact search retur
 $n = \min(\#\{d : m_d \models \varphi_s\},\ L)$, a filter-only count that stops at a limit $L$. If $n \le h$, the store
 returned every chunk the filter admits (\emph{exhausted}); if $n > h$, chunks that pass the filter were missed
 (\emph{missed}). After a proven miss the layer can search again exactly under the same filter, when the count is at
-most a bound $B$ (10,000 by default); above the bound the first hits are kept and the result says \emph{over\_limit}. The
-alternative \emph{widen} repeats the search with more effort; it is cheaper but certifies nothing. Every hit passes the same
-re-check and a failed count or search fails closed, so Observation~\ref{prop:reduction} holds unchanged. A sampled
-\emph{monitor} also runs the exact search for a configurable share of requests and reports the overlap of the two top-$k$
-lists, since neither count nor flag can see mis-retrieval.
+most a bound $B$ (10,000 by default); above the bound the result says \emph{over\_limit}. The
+alternative \emph{widen} repeats the search with more effort and certifies nothing. Every hit passes the same
+re-check, so Observation~\ref{prop:reduction} holds unchanged. A sampled
+\emph{monitor} also runs the exact search for a share of requests and reports the overlap of the two top-$k$
+lists.
 
 \paragraph{Evaluation.}
 We evaluate the policies on pgvector and Qdrant, on the enterprise scenario (1,468 questions with something to read) and the
@@ -49,15 +49,14 @@ than $k$ chunks, and repaired nothing.}
 
 \paragraph{Results.}
 The count raised no false alarm and flagged every truly short first search as \emph{missed}: 992 of 992 for pgvector on the
-enterprise corpus, and 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS MARCO (H5.1 confirmed). Repaired exactly
+enterprise corpus, and 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS MARCO, pooling $k = 5$ and 10 over three builds of the same pairs (H5.1 confirmed).
+On unchanging data this follows from what a count is, since a count above $h$ proves a miss, so it checks the stores' counts and the harness and is no discovery; a write between the search and
+the count, the case that could make it wrong, was not tested. Repaired exactly
 without a bound, no answer was empty or short, and the repaired answers reached recall@10 of 1.0000 (H5.2 confirmed for the
-unbounded arm). The bound decides where repair applies: on the enterprise corpus all three bounds repaired every short answer;
-on MS MARCO a bound of 1,000 repaired 0.5\% of pgvector's answers out of 1.7\% triggered, and every short answer of Qdrant had
+unbounded arm), as exact search should. The bound decides where repair applies: on MS MARCO every short answer of Qdrant had
 more than 10,000 readable chunks, so the bounded arms repaired none and reported each as \emph{over\_limit} and not complete. The
-cost on queries that did not trigger is inconclusive (H5.3): of 60 latency ratios, 45 lay in the band of 0.95 to 1.05 and none
-above the falsification bound of 1.10. No repair touched Qdrant's loss on the enterprise corpus (H5.4 confirmed): 58.1\% of its
-answers marked complete were not maximal under \emph{report} and 57.3\% under every repair arm. The 1\% monitor estimated Qdrant's
-recall within 0.030 and 0.004 (H5.5 confirmed), so a 1\% sample is enough to see the loss that the flag cannot. Exact repair beat
+cost on queries that did not trigger is inconclusive (H5.3). No repair touched Qdrant's loss on the enterprise corpus (H5.4 confirmed). The 1\% monitor estimated Qdrant's
+recall within 0.030 and 0.004 (H5.5 confirmed), so on these corpora a 1\% sample was enough to see the loss that the flag cannot. Exact repair beat
 widening by 0.085 of recall@10 (95\% interval 0.064 to 0.110) on the 421 questions that triggered in both arms (H5.6 confirmed).
 On the enterprise corpus Qdrant's per-tenant graphs reached recall@10 of 0.939 while the best library arm on the shared layout
 reached 0.654 (H5.7 confirmed). Neither count nor repair sees a full answer of the wrong chunks, which was most of the loss on both

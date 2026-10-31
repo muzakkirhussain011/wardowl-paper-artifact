@@ -19,7 +19,7 @@ authorized as that user~\cite{jones2020oauth}. Given the authorization data at r
 time $t(\tau)$, the \emph{policy} decides $P_\tau(s,d) \in \{0,1\}$, whether $s$ may read chunk $d$. The
 \emph{readable set} is $R_\tau(s) = \{d \in D : P_\tau(s,d) = 1\}$, written $R(s)$ when the revision is clear,
 and the \emph{exact answer} is $T^\star = \mathrm{top}_k(q, R_\tau(s))$. Our experiments compute $P$ with an
-independent oracle written without the layer's code. An external \emph{authorizer} enforces the policy: a
+oracle, a separate plain implementation of the same predicate that does not call the layer. An external \emph{authorizer} enforces the policy: a
 relationship-based engine in the style of Zanzibar~\cite{pang2019zanzibar}, a policy engine, or ACL metadata
 copied from a source system. Its \emph{check API} answers $\mathrm{check}_\tau(s,d) \in \{0,1\}$, reading
 revision $\tau$. Many authorizers also expose a \emph{filter API}, such as OpenFGA's ListObjects, SpiceDB's
@@ -39,15 +39,19 @@ ranked list $H$ of at most $k$ chunks and a flag $c \in \{0,1\}$ claiming that $
 
 Wang et al.\ judge fine-grained access control in relational databases by three criteria: an answer
 is \emph{sound} if it is consistent with the answer computed without access control, \emph{secure}
-if it reveals nothing the policy forbids, and \emph{maximal} if it returns as much as the first two
-allow~\cite{wang2007correctness}. We adapt them to top-$k$ retrieval under Truman semantics, in which a
+if it does not depend on information the policy withholds, so that database states the policy cannot
+tell apart give the same answer, and \emph{maximum} (our \emph{maximal}) if it returns as much as the first two
+allow~\cite{wang2007correctness}. We adapt soundness and maximality to top-$k$ retrieval under Truman semantics, in which a
 query is answered over the subject's restricted view rather than rejected~\cite{rizvi2004extending}, so
-the reference answer is the exact answer over the readable set.
+the reference answer is the exact answer over the readable set. We do not adapt their security. What we call
+\emph{secure} below is much weaker: it asks only that each returned chunk be readable, and an empty answer satisfies it.
+Their notion fails wherever an answer changes with unreadable content, as Section~\ref{sec:side} shows it does.
 
 \begin{definition}[Criteria for permission-aware top-$k$ retrieval]\label{def:criteria}
 Fix a subject $s$, a query $q$ and a depth $k$, for a request issued at time $t$. Each hit $d$ is
 checked at some revision $\tau_d$ (different hits may be checked at different revisions, for example
-when some decisions come from a cache), and $\tau$ is the latest of these revisions. $\varphi_s$ is
+when some decisions come from a cache), and $\tau$ is the latest of these revisions, or, when no hit
+was checked, the latest revision committed before $t$. $\varphi_s$ is
 the predicate the store searched under (the constant true for an unfiltered search), $\sigma_{(k)}$
 the $k$-th highest similarity in $R_\tau(s)$ (the lowest if $|R_\tau(s)| < k$), and
 $T^\star_\epsilon = \{d \in R_\tau(s) : \sigma(q,d) \ge \sigma_{(k)} - \epsilon\}$ the chunks that
@@ -69,8 +73,9 @@ belong to the exact answer up to ties within $\epsilon$. A result $(H,c)$ is
 
 Security, and freshness for the $\delta$ that the serving path states, are required of every result,
 and count-honesty is required of the flag; soundness and completeness are what approximate search trades away.
-Count-honesty is relative to $\varphi_s$: it implies completeness only when $\varphi_s$ has no false denials, and
-it never implies soundness. Security concerns the returned set only; everything else a caller observes we treat
+By these requirements the code we ran did not qualify on every path: it exceeded its stated $\delta$ after an
+invalidation (Section~\ref{sec:eng-revoke}), and the release we ran end to end was not count-honest (Section~\ref{sec:system}).
+Security concerns the returned set only; everything else a caller observes we treat
 as a side channel (Section~\ref{sec:side}). Appendix~\ref{app:criteria} discusses the criteria against their
 sources.
 
@@ -94,7 +99,8 @@ $d \in R_{\tau_d}(s)$. If a check cannot be completed, (A3) gives $H = \emptyset
 restates the condition on $\tau_d$. No step refers to $\varphi_s$ or to the store's search procedure.
 \end{proof}
 
-The statement is close to definitional, hence an observation. Its content is what it leaves out: no assumption
+The statement is close to definitional, hence an observation: it is an argument about a code path, and no rate we
+report estimates it. Its content is what it leaves out: no assumption
 about $\varphi_s$, the filter APIs, the translators, the store's filter semantics or its index, and it holds for
 every query, chosen adaptively or not. The re-check sees filter faults in one direction only: a \emph{false admit},
 where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, becomes a violation; a \emph{false denial}, where $\varphi_s$
@@ -105,42 +111,45 @@ The observation trusts (i)~the check API and the authorization data it reads (A1
 copied into chunk metadata; (ii)~the layer's mapping of a request to checks, from the verified token to the adapter
 code; (iii)~the binding of content to identifier and metadata in the store and in ingestion (A2); (iv)~the decision
 cache and the engine's own staleness, which together set $\delta$; and (v)~the fail-closed path (A3). It does not
-trust the filter APIs, the translators, the store's filter semantics or index, or the widening loop. The trusted part
-has failed before: two faults in the layer's own adapters let the check itself admit (Table~\ref{tab:conf-faults} in
-Appendix~\ref{sec:conf-results}), and both were fixed before the version we evaluate. With the re-check turned off, the
+trust the filter APIs, the translators, the store's filter semantics or index, or the widening loop. We give no measure
+of its size. The trusted part has failed: two faults in the layer's own adapters let the check itself admit
+(Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results}), both fixed before the version we evaluate, and in the code
+we ran the cache held revoked grants past its bound (Section~\ref{sec:eng-revoke}). With the re-check turned off, the
 filter and its translator join the trusted computing base.
 
 \paragraph{Staleness and count certificates.}
 If the engine may lack the writes of the last $\delta_e$ seconds and the layer caches each decision for at most a time
-to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache; Section~\ref{sec:eng-revoke}
-measures $\delta$ per path. A layer can set $c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or
-if a filter-only count shows that every chunk passing $\varphi_s$ was among the candidates; a count of at least $k$ alongside
-fewer than $k$ candidates proves under-retrieval (Appendix~\ref{app:certificates}).
+to live $\ell$, the layer is $(\ell + \delta_e)$-fresh, or $\delta_e$-fresh without a cache. A layer can set $c = 1$ count-honestly only if the store searched exactly under $\varphi_s$, or
+if a filter-only count shows that every chunk passing $\varphi_s$ was among the candidates (Appendix~\ref{app:certificates}).
 
 \subsection{Threat model}\label{sec:prob-threat}
 
 The adversary is an authenticated subject, or an agent or application acting for one, who may issue any number of
 arbitrary queries through the layer, chosen adaptively and including red-team prompts, to obtain the content of any
 chunk outside its readable set or to learn whether such chunks exist near a query. It does not control the
-authorizer, the store or the layer's host. \emph{In scope} are disclosure across users and tenants through retrieval
+authorizer, the store or the layer's host. Only Observation~\ref{prop:reduction} speaks to this adversary: we ran no adaptive
+attack, and our red-team prompts are fixed templates that change only the query text. \emph{In scope} are disclosure across users and tenants through retrieval
 results; faults in filter compilation, store filter semantics and approximate indexes; authorizer outages and malformed
 answers; identity confusion~\cite{hardy1988confused}; and revocation within the $\delta$ the path states. \emph{Out of
 scope} are prompt injection and poisoning in readable content~\cite{zou2025poisonedrag}; wrong upstream permissions;
 extraction within the readable set~\cite{zeng2024good}; and compromise of the store or its hosts. We say that a side
-channel \emph{reveals} information about unreadable chunks, reserving \emph{leak} for returned content.
+channel \emph{reveals} information about unreadable chunks, reserving \emph{leak} for returned content, a narrower use than
+in much of the security literature, where such a disclosure is also a leak.
 Appendix~\ref{app:threat} gives the full model.
 
 \subsection{Metrics}\label{sec:prob-metrics}
 
 A \emph{leak} is a returned chunk outside $R_\tau(s)$ as the oracle decides it, or a canary string from an unreadable
 document found in a hit, a prompt or an answer~\cite{carlini2019secret}. Hits cluster by question and by subject, so when
-no leak occurs we bound the rate per question and per subject, with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$
-for zero events in $n$ trials~\cite{hanley1983if}. These bounds hold over the distribution of the question generator and
-of the injected faults; for an adaptive adversary only Observation~\ref{prop:reduction} and its trusted computing base
+no leak occurs we state the rate per question and per subject, with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$
+for zero events in $n$ trials~\cite{hanley1983if}. That formula assumes independent trials. Our questions and people are only
+partly so, and a deterministic predicate does not generate Bernoulli trials, so read these bounds as a summary of how many
+distinct cases ran clean (Section~\ref{sec:e2e-safety}). They hold over the question generator and
+the injected faults; for an adaptive adversary only Observation~\ref{prop:reduction} and its trusted computing base
 speak. \emph{Permission-recall@$k$} (recall, for short) is $|H \cap T^\star_\epsilon| / \min(k, |R_\tau(s)|)$ with
 $\epsilon = 10^{-4}$, against exact search over the readable set, so it charges filter false denials and index misses alike.
 The \emph{under-retrieval rate} is the share of retrievals that are not complete, the \emph{empty-result rate} the share
 returning none to subjects who can read something, and the \emph{false-completeness rate} the share of results with $c = 1$
 that are not maximal. \emph{Selectivity} is the fraction of the corpus that passes a filter. Rates carry 95\% intervals from
-a cluster bootstrap over subjects, and comparisons are paired on the same questions; the measured correlation axes are in
-Appendix~\ref{app:metrics}.
+a cluster bootstrap over subjects, conditional on the index builds we made, and comparisons are paired on the same questions;
+the measured correlation axes are in Appendix~\ref{app:metrics}.

@@ -1,12 +1,10 @@
 % Appendix: related work in full. Moved from Section~\ref{sec:related}; each paragraph credits its
 % precedents and ends by stating how this paper differs. The enforcement design is not claimed as
-% new; the contribution is verification and measurement.
-% Do not quote vec2text's 92% figure without first reading seputis2025rethinking (see bib/STATUS.md).
+% new; the contribution is testing and measurement.
 
 \section{Related work in full}\label{app:related}
 
-Permission-aware retrieval draws on literatures that rarely cite one another; each settled part of
-the design we test, and none verifies the whole.
+This appendix gives the full account behind Section~\ref{sec:related}. Our statements that we found no prior work report searches, which are not exhaustive.
 
 \paragraph{Enterprise search and document-level security.}
 B\"{u}ttcher and Clarke gave the founding security model for multi-user full-text
@@ -25,14 +23,13 @@ content~\cite{mangtani2006documentlevel}. Fagin et al.\ studied search over a co
 intranet~\cite{fagin2003searching}, the setting in which these documents and their readers live. The
 pre-filter we test is query integration applied to approximate nearest-neighbor (ANN) search, and
 its widening post-filter is Bailey et al.'s loop; we claim neither. We use B\"{u}ttcher and Clarke's
-consistency definition to frame side channels of filtered vector search, which we found no prior work
-to measure. A separate line protects the index from its server. Zerber bounds what an index reveals
+consistency definition to frame side channels of filtered vector search. Their score channel has since been exploited and extended: Wang et al.'s STRESS attack discovers terms in other tenants' documents and counts documents holding a term, on shared indexes in Elasticsearch and on services such as GitHub, with rank-only variants and proposed countermeasures~\cite{wang2017sidechannel}, and Espiritu and Cash reach indexed terms and approximate text through document-level security in Elasticsearch and OpenSearch~\cite{espiritu2026plaintext}. The nearest peer-reviewed work to our side-channel measurement is therefore on keyword search and is stronger than ours there. We found no peer-reviewed measurement of these channels for filtered vector search, though one open-source project reports them in process~\cite{raghuram2026onewayglass}. A separate line protects the index from its server. Zerber bounds what an index reveals
 about terms under statistical attacks, with limited trust in the central indexer~\cite{zerr2008zerber},
 and Zerber+R adds top-$k$ ranking over such an index~\cite{zerr2009zerberr}; searchable encryption
 protects keyword search~\cite{song2000practical,curtmola2006searchable}, and secure kNN protects
 similarity search over encrypted vectors~\cite{wong2009secure}. Those works assume an untrusted
-server; ours trusts the store's host (Section~\ref{sec:prob-threat}) and asks whether the deployed
-query path is faithful.
+server; ours trusts the store's host (Section~\ref{sec:prob-threat}) and asks how one layer's
+query path behaves.
 
 \paragraph{Database access control.}
 System R gave relational databases discretionary GRANT and REVOKE~\cite{griffiths1976authorization},
@@ -42,32 +39,31 @@ conjoining the applicable rules' qualifications with the user's query~\cite{ston
 which is what a pushed-down permission filter does. Rizvi et al.\ separated Truman semantics, which
 silently answer over the user's restricted view as Oracle's Virtual Private Database does, from
 non-Truman semantics, which reject queries that authorized data cannot
-answer~\cite{rizvi2004extending,oracle2026using}. Wang et al.\ defined sound, secure and maximal
-answers, found no algorithm of the time that was both sound and secure, and showed that the cell-level
+answer~\cite{rizvi2004extending,oracle2026using}. Wang et al.\ defined sound, secure and maximum
+answers, with security as indistinguishability across database states the policy cannot tell apart; they showed that the cell-level
 disclosure control of Hippocratic databases~\cite{lefevre2004limiting} violates soundness and
-maximality~\cite{wang2007correctness}; Kabra et al.\ showed that functions evaluated before the authorization predicate reveal data through their values
+the maximum property, noted that the straightforward extension of authorization-view query modification to queries with negation is not sound, and gave a sound and secure algorithm for cell-level policies, with the proof of one theorem left to a technical report~\cite{wang2007correctness}; Kabra et al.\ showed that functions evaluated before the authorization predicate reveal data through their values
 and error messages~\cite{kabra2006redundancy}; and optimal security-aware query processing is
 impossible for the full relational calculus~\cite{guarnieri2014optimal}. Sieve enforces large numbers
 of fine-grained policies from a middleware above the database~\cite{pappachan2020sieve}. PostgreSQL
 row-level security brings these lessons to production with default deny, leakproof functions and
-documented covert channels through key checks~\cite{postgresql2026row}. We did not measure such native
-enforcement (Appendix~\ref{sec:limits-limits}). The layer we test is query modification with Truman
+documented covert channels through key checks~\cite{postgresql2026row}, and its timing has been attacked, first to test whether a value exists~\cite{dar2023rls,rasin2024vulnerability} and then to recover records~\cite{espiritu2026plaintext}. Of such native
+enforcement we report only a side run of its recall and latency on another corpus (Appendix~\ref{sec:limits-native}), not its channels. The layer we test is query modification with Truman
 semantics, and
 its re-check deliberately keeps the redundancy that Kabra et al.\ remove, because its filter and its
-check come from different code paths. This lineage proves rewriting correct under exact evaluation; we
-adapt its criteria to top-$k$ retrieval (Section~\ref{sec:problem}) and test components that carry no
-such proofs, under approximate search, where maximality can fail even when the predicate is right.
+check come from different code paths. This lineage gives criteria and, for cell-level policies under exact relational evaluation, a proved algorithm, not a general proof that rewriting is correct. We
+adapt its soundness and maximality to top-$k$ retrieval and weaken its security (Section~\ref{sec:problem}), and test translators and approximate indexes, for which we found no such
+proofs, where maximality can fail even when the predicate is right.
 
 \paragraph{Authorization systems and policy-to-filter compilation.}
 Zanzibar stores more than two trillion ACL tuples and answers millions of checks per second at p95
-latency under 10\,ms, but has no API that lists what a user may read: Google's search is late-bound,
-with tens to hundreds of checks per result page, and snapshot tokens prevent the ``new enemy''
+latency under 10\,ms. Answering a search query there requires ACL checks for all candidate results, often tens to hundreds of checks per set of results, and its Expand API lets clients build search indexes for access-controlled content; snapshot tokens prevent the ``new enemy''
 problem of applying an old ACL to new content~\cite{pang2019zanzibar}. Its open-source descendants,
 built on relationship-based access control~\cite{fong2011relationshipbaseda}, added reverse lookups
 with caveats. OpenFGA recommends ListObjects for about 1,000 accessible objects and by default stops a
 non-streaming call at 1,000 results or 3 seconds~\cite{openfga2026search,openfga2026openfga}; SpiceDB
 recommends LookupResources below about 10,000 resources and otherwise a bulk-check loop pinned to one
-revision~\cite{authzed2026protecting}. A truncated allow-list is safe but silently loses recall.
+revision~\cite{authzed2026protecting}, and CVE-2025-65111 is a case in which, for one schema shape before version 1.47.1, LookupResources missed results while its other APIs computed permissions correctly~\cite{nvd2025cve202565111}. A truncated allow-list is safe but silently loses recall.
 Policy engines compile filters through engineering artifacts: OPA's partial evaluation, available since
 2018, emits SQL conditions for a documented fragment of its
 language~\cite{sandall2018write,opa2026evaluating,opa2026writing}, and Cerbos's query plans return
@@ -78,19 +74,19 @@ Margrave checks properties of access-control policies and the impact of changing
 them~\cite{fisler2005verification}, Zelkova reasons about AWS access policies with an SMT
 solver~\cite{backes2018semanticbased}, mutation testing targets access-control
 policies~\cite{martin2007fault}, and Cedar's production code is differentially tested against a model
-with machine-checked proofs~\cite{disselkoen2024how}. These address the policy and its check path; we
+with machine-checked proofs~\cite{disselkoen2024how}. These address the policy and its check path. The nearest result we found to a verified filter is the Lean theorem \texttt{reauthorize\_is\_sound} for Cedar's type-aware partial evaluator, in its public specification~\cite{cedar2026cedarspec}: re-authorizing a residual with concrete inputs equals direct authorization. It concerns residuals, not a translation into a store's filter language; we found no peer-reviewed report of it; and the layer's Cedar adapter does not use the evaluator (Appendix~\ref{sec:sys-contracts}). We
 found no peer-reviewed semantics or correctness proof for any policy-to-filter translator. We propose
 no authorizer or filter API. We measure, at one revision
-token, how often each engine's filters disagree with its own check API and when its list APIs
+token, how often each engine's filters disagree with its own check API on one generated model and when its list APIs
 truncate (Section~\ref{sec:engines}), and rely on the re-check so that such faults cost recall, not
-security.
+membership in the readable set.
 
 \paragraph{Filtered ANN search and access-aware vector indexes.}
 Graph indexes such as HNSW~\cite{malkov2020efficient} answer filtered queries by filtering before,
 after or during traversal. With pass fraction $p$, a post-filter needs about $k/p$ candidates when passing items
 are spread evenly and $O(n)$ when they lie far from the query~\cite{patel2024acorn}, and the collapse
 is well measured: post-filtering stayed below 0.9 recall on LAION-1M even with positively correlated
-filters~\cite{patel2024acorn}, Faiss-HNSW and ACORN could not reach 0.9 recall@10 at 0.1\%
+filters~\cite{patel2024acorn}, Faiss-HNSW with post-filtering and ACORN often failed at 0.1\%
 selectivity~\cite{li2025attribute}, and without a fallback ACORN-1's recall falls to 0.03--0.10 at
 0.3\% pass fraction~\cite{kim2026racorn1}. pgvector filters after the index scan, so a filter matching
 10\% of rows yields about four matches at the default search depth~\cite{pgvector2026pgvector}.
@@ -101,15 +97,15 @@ indexes~\cite{li2025sieve} and structures for range filters~\cite{zuo2024serf,xu
 and systems combine vector and relational predicates in one engine~\cite{wei2020analyticdbv,zhang2023vbase};
 all take the predicate as part of the query rather than compile it from an external policy.
 Engines now fall back to exact scoring for restrictive
-filters~\cite{aquino2024filtering,rodriguez2024how,trent2025filtered}; since version 3.5, OpenSearch
-does so whenever approximate search returns fewer than $k$ results while at least $k$ documents
-pass~\cite{opensearch2026efficient}. Filtered-DiskANN cites user privileges as motivation but
+filters~\cite{aquino2024filtering,rodriguez2024how,trent2025filtered}; since version 3.5, OpenSearch's Faiss engine
+does so when efficient-filtered search returns fewer than $k$ results while at least $k$ documents
+pass, unless a setting disables it~\cite{opensearch2026efficient}. Filtered-DiskANN cites user privileges as motivation but
 evaluates single-label filters~\cite{gollapudi2023filtereddiskann}; the NeurIPS'23 Big-ANN filtered
 track uses conjunctions of one or two tags without analyzing correlation~\cite{simhadri2025results};
 later benchmarks sweep selectivity down to 0.1\%~\cite{li2025attribute,iff2026benchmarking,shi2025filtered}
-and control query-filter correlation~\cite{zhang2026vecbench,amanbayev2026filtered,lu2026indepth};
+and control or measure query-filter correlation~\cite{zhang2026vecbench,amanbayev2026filtered,lu2026indepth};
 and HCBGen shows that neither selectivity nor correlation alone is a stable proxy for
-difficulty~\cite{lim2026revisiting}. None uses real ACLs. Permission-specific indexes are recent and
+difficulty~\cite{lim2026revisiting}. None of those we read uses real ACLs, and neither do we. Permission-specific indexes are recent and
 assume role-based access control. HoneyBee partitions by role structure, with up to 13.5$\times$ lower
 latency than PostgreSQL row-level security at 1.24$\times$ the memory, on synthetic permissions and
 with a cost model that ignores query-permission correlation~\cite{zhong2026honeybee}; Veda builds an
@@ -155,7 +151,7 @@ control for agents~\cite{costa2025securing,wu2024systemlevel} constrains where r
 flow after it is read; both are complementary to a retrieval guarantee. We adopt token-bound identity
 rather than claim it, exclude extraction within the readable set and injection in permitted content
 (Section~\ref{sec:prob-threat}), and take the timing channel that SpliceLeak made practical in RAG
-infrastructure~\cite{sun2026agentassisted} as motivation to measure side channels of filtered
+infrastructure~\cite{sun2026agentassisted} as one motivation to measure side channels of filtered
 retrieval.
 
 \paragraph{Side channels and information flow.}
@@ -167,7 +163,7 @@ history~\cite{felten2000timing}, and the response times of search endpoints let 
 extract private data~\cite{gelernter2015crosssite}. Black-box mitigation delays outputs to a predicted
 schedule~\cite{askarov2010predictive}, and language-based work combines such mitigation with
 information-flow control~\cite{zhang2012languagebased}; the padding we measure is the simplest such
-schedule, a fixed budget. We propose no mitigation beyond these. What we add is a measurement of how
+schedule, a fixed budget. We propose no mitigation beyond these. For keyword search the attacks cited under enterprise search above are stronger than our game, and their countermeasures, per-tenant indexes and document frequencies from public data, are the ones to read. What we add is a forced-choice measurement, through one layer, of how
 much each enforcement path of filtered vector search reveals, and of what removing it costs.
 
 \paragraph{Testing methodology.}
@@ -177,11 +173,11 @@ query with a non-optimizing or partitioned rewrite of itself~\cite{rigger2020det
 and later oracles reach query plans and graph databases~\cite{ba2023testing,ba2024keep,kamm2023testing}.
 All descend from differential~\cite{mckeeman1998differential} and
 metamorphic~\cite{chen2018metamorphic,segura2016survey} testing, often with property-based input
-generation~\cite{claessen2000quickcheck,maciver2019hypothesis}. Vector databases have no such oracles:
+generation~\cite{claessen2000quickcheck,maciver2019hypothesis}. For the filter semantics of vector databases we found no such oracles:
 a study of 1,671 bug-fix pull requests in 15 vector databases found 57.3\% of bugs to be functional
 failures, with filter abnormality as a fault class, but does not mention differential or metamorphic
 testing~\cite{xie2025toward}, and a testing roadmap lists oracle definition as an open
-challenge~\cite{wang2025towards}. The Secret Sharer inserted canaries to estimate unintended
+challenge and reports only simplified metamorphic cases~\cite{wang2025towards}. The Secret Sharer inserted canaries to estimate unintended
 memorization~\cite{carlini2019secret}. In reporting, ANN work plots recall-throughput
 frontiers~\cite{aumuller2020annbenchmarks}, yet the Big-ANN results paper and HoneyBee give no error
 bars~\cite{simhadri2025results,zhong2026honeybee}, short of the practice recommended for ML
@@ -215,11 +211,11 @@ times~\cite{openfga2026rag}. Enterprise assistants mirror ACLs into their indexe
 for the next connector synchronization, daily for Coveo's Dynamics 365 provider~\cite{coveo2026coveo}.
 The closest commercial analogue to the layer we test is Amazon Bedrock's managed knowledge-base ACL
 awareness: it pre-filters on crawled ACLs, verifies each returned document against the data source in
-real time, lets denials override grants and withholds documents on transient errors, while stating
+real time for the connectors that support it (not S3 or custom sources), lets denials override grants and withholds documents on transient errors, while stating
 that the feature is not a security boundary~\cite{aws2026access}. Open-source projects cover several
 stores with metadata only~\cite{langchain2026pebbloretrieval}, or one store with self-reported
 tests~\cite{gelevanog2026permissionaware}. We claim no novelty for pre-filtering with a live re-check
 and failing closed, which Bedrock ships. We found no independent evaluation of permission
 correctness, and no published recall evaluation, for any of these products, and no project that
 combines many vector stores with many authorization engines; the latter is an engineering property of
-our harness, not a research claim, and the former is what our measurements supply.
+our harness, not a research claim, and our measurements of one layer do not stand in for an evaluation of these products.

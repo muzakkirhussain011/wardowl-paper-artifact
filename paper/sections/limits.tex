@@ -4,32 +4,29 @@
 % marked \tbd{} must be settled before the preprint.
 
 \paragraph{Limitations.}
-Appendix~\ref{sec:limits-limits} states these in full. \emph{Leak-free} means that no returned chunk lay outside the
+Appendix~\ref{sec:limits-limits} states these in full. This is a measurement of one layer, developed by the author and created in October 2026, with no comparator layer and no adaptive adversary run, on synthetic permission layouts. That no returned chunk leaked means that none lay outside the
 readable set at the revision the check read, under the stated trusted computing base. It does not mean fresh, nor that
 unreadable chunks leave no trace, and the detection fields of Section~\ref{sec:repair} are observables we did not measure.
-Every permission layout is generated, and the enterprise layout has 19 near-identical copies of each company document; Qdrant's recall depends on that
-layout (Section~\ref{sec:qual-qdrant}), so these recall numbers should not be read as an estimate for an organization without such copies. Every
+The enterprise layout has 19 near-identical copies of each company document, and Qdrant's recall depends on that
+layout, so these recall numbers should not be read as an estimate for an organization without such copies. Every
 measurement passes through one layer, and some numbers are properties of its schema as much as of a store. No single version of the library was
-evaluated throughout, and PostgreSQL and the embedding dimension differ across experiments (Appendix~\ref{app:map}). We did not measure native
-enforcement (PostgreSQL row-level security, document-level security in Elasticsearch and OpenSearch), sweep the share of near-duplicate chunks or
-rerun the evaluation on one release, and outside the 100\% selectivity cells we have no unfiltered baseline per store. Zero-leak results are upper
-bounds over the generator's distribution; we apply no correction for multiple comparisons across cells. The system under test, its oracles, the
+evaluated throughout: the end-to-end numbers are for release 2.1.0, which has known defects, the fixes we report were tested piecemeal and not end to end, and PostgreSQL, the embedding dimension and store versions differ across experiments (Appendix~\ref{app:map}). PostgreSQL row-level security was measured only in a side run (Section~\ref{sec:qual-native}). We did not measure document-level security in Elasticsearch and OpenSearch, sweep the share of near-duplicate chunks or
+rerun the evaluation on one release, and outside the 100\% selectivity cells we have no unfiltered baseline per store. Zero-leak bounds treat repeated cases as independent, which the design supports only in part; we apply no correction for multiple comparisons across cells. The system under test, its oracles, the
 meta-tests that judge the oracles and the scripts that compute the verdicts share one source, so a misconception common to them would pass every check, a
-common-mode risk that repeated runs cannot remove. Three things limit it, without removing it: the oracles were written without the library's filter code,
-the vendor reproducers use only the vendors' clients, and we release the outputs so that others can recompute the verdicts.
+common-mode risk that repeated runs cannot remove, and no independent party has rerun anything. Three things limit it, without removing it: the oracles were written without the library's filter code,
+the vendor reproducers use only the vendors' clients, and we release outputs so that others can recompute verdicts, with the gaps listed below.
 
 \paragraph{Ethics and disclosure.}\label{sec:limits-ethics}
 The author develops \sys{}, the layer under test, at \url{https://github.com/muzakkirhussain011/wardowl}, the repository that the pull-request numbers in
 this paper refer to, and this evaluation found faults in that code as well as in others' (Table~\ref{tab:conf-findings}). No human subjects took part: people, documents, ACLs and canaries are synthetic, and every store and engine ran in containers or processes we
 controlled. None of our findings is a chunk returned through the layer outside the readable set at the checked revision. They can still matter for
 deployments that trust a pushed-down filter without a re-check, and Chroma's crash lets any user in enough groups stop an application that passes
-their groups to Chroma (Appendix~\ref{app:ethics}). For the truncation in Redis and in MongoDB, Chroma's crash and the CEL semantics that the Cerbos
-translator meets we wrote reports with minimal reproducers that do not need our library, and on 2026-10-30 sent those for Redis
-(\url{https://github.com/RediSearch/RediSearch/issues/12106}), Chroma (\url{https://github.com/chroma-core/chroma/issues/7969},
-\url{https://github.com/chroma-core/chroma/issues/7970}), Cerbos (\url{https://github.com/cerbos/cerbos/issues/3456}) and MongoDB (as documentation
-feedback, which has no public link);
+their groups to Chroma (Appendix~\ref{app:ethics}). The timeline, all on 2026-10-30 in UTC: our public pull requests described the behaviors first (\#167 on Redis and MongoDB, merged 02:16; \#187 on Chroma's crash, merged 10:00; \#188 on MongoDB, merged 12:22). We then filed reports with minimal reproducers that do not need our library:
+Redis (\url{https://github.com/RediSearch/RediSearch/issues/12106}, 15:54), Chroma (\url{https://github.com/chroma-core/chroma/issues/7969},
+\url{https://github.com/chroma-core/chroma/issues/7970}, 15:56), Cerbos (\url{https://github.com/cerbos/cerbos/issues/3456}, 19:15) and MongoDB (documentation
+feedback, no public link). So these vendors heard no earlier than the public did, including of a crash that users can reach, filed as an ordinary public issue; we found no security policy file in Chroma's repository.
 Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report's status. SpiceDB's staleness beyond its documented bound, OPA's residual negation and pgvector's plan
-choice have no report. No maintainer had replied to these reports by 2026-10-30.
+choice have no report. No maintainer had replied on the four public issues by 2026-10-31.
 
 \paragraph{Use of AI assistance.}\label{sec:limits-ai}
 Under the author's direction, an AI coding agent produced most of the library's code, the conformance kit, the oracles, the harnesses and the analysis
@@ -38,7 +35,7 @@ critical review cited here were run by separate instances of it. The author chos
 pre-registrations and reviews, and takes full responsibility for the content.
 
 \paragraph{Reproducibility.}\label{sec:limits-repro}
-We release the library at the evaluated commits, the conformance kit, every harness script, the Kaggle notebooks and GitHub workflows that ran them, the
-pre-registrations with their dated amendments, and the raw outputs with container image digests and seeds \tbd{archive DOI}. Compute: about 37 hours of Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
+The artifact is at \url{https://github.com/muzakkirhussain011/wardowl-paper-artifact}, tag \texttt{evidence-v1} \tbd{archive DOI}. It holds this text, the
+pre-registrations with their dated amendments, the raw outputs with container image digests and seeds, the vendor reproducers, the Kaggle runners, and the library at the commits the runs used; \texttt{REPRODUCE.md} maps each table to its data and \texttt{evidence/ARTIFACT\_GAPS.md} lists what is missing. The main gaps: the end-to-end runs stored answers and hits at $k = 5$ only, so their recall@10, and the check of the other hits against the oracle, are printed counters; the Kaggle runs did not pin their Python dependencies; and no rebuild of the prepared corpora has been shown. Compute: about 38 hours of Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
 listed per experiment in Appendix~\ref{app:compute}; no experiment reported here ran on a local machine. Data and model licenses are in
 Appendix~\ref{app:licenses}.

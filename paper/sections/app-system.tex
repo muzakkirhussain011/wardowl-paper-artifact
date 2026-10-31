@@ -44,7 +44,7 @@ Component & Precedent & Role in this paper \\
  & \sysrag \textbf{Contribution}: the oracle for differential testing across the 14 stores the layer
    supports, 13 of them run (Section~\ref{sec:conformance}) \tabularnewline
 \sysrag Count-honest completeness
- & \sysrag Exact search when fewer than $k$ approximate results return~\cite{opensearch2026efficient}
+ & \sysrag Exact search when fewer than $k$ approximate results return, in OpenSearch's Faiss engine~\cite{opensearch2026efficient}
  & \sysrag \textbf{Contribution}: an exactness declaration and a flag that never reports a short
    approximate answer as complete (Appendix~\ref{sec:sys-complete} and Section~\ref{sec:repair}) \tabularnewline
 \sysrag Composition and tenant scopes
@@ -71,10 +71,10 @@ authorizer implements and which returns one Boolean per hit, in order; $\mathrm{
 which returns a filter $\varphi_s$ selecting \emph{exactly} what $s$ may read, or nothing; and,
 optionally, $\mathrm{scope\_for}(s)$, which returns a \emph{necessary} condition $\psi_s$, such as
 the subject's tenant, that every readable chunk satisfies. Besides ACLs copied into chunk metadata,
-user functions and tenants, \sys{} supports seven engines: OPA (through a filter document its policy
+user functions and tenants, \sys{} supports seven engines: its adapters for OPA (through a filter document its policy
 returns), OpenFGA, SpiceDB and Cerbos offer
-filters~\cite{openfga2026perform,authzed2026protecting,cerbos2026cerbos}, and Ory Keto, Cedar and
-Casbin offer checks only. A \emph{search backend} declares whether
+filters~\cite{openfga2026perform,authzed2026protecting,cerbos2026cerbos}, and those for Ory Keto, Cedar and
+Casbin offer checks only. This describes the adapters, not the engines: Cedar exposes \texttt{is\_authorized\_partial} and an experimental type-aware partial evaluator~\cite{cedar2026cedarpolicy}, which the adapter does not use. A \emph{search backend} declares whether
 $\mathrm{search}(q,k,\varphi)$ applies a filter inside the search, and returns at most $k$ hits,
 best first, with metadata exactly as stored, since the re-check decides on it (A2). Adapters cover
 14 stores (pgvector, Qdrant, Milvus, MongoDB Atlas, Weaviate, Redis, LanceDB, FAISS, Vespa,
@@ -135,8 +135,8 @@ rejected, not coerced).
 Every result carries the flag $c$ of Section~\ref{sec:prob-setup}. The release we ran end to end
 (2.1.0) set $c = 1$ for any pre-filtered result without violations, an empty one included, and for any
 post-filter whose last search came back short, so it was not count-honest: in the runs of
-Section~\ref{sec:e2e} it reported empty answers as complete for least-privileged people who could read
-624 chunks each. Section~\ref{sec:qual-pgvector} traces those answers to pgvector's plan cache and the
+Section~\ref{sec:e2e} it reported empty answers as complete for questions from least-privileged people who could read
+624 chunks each. Section~\ref{sec:qual-pgvector} relates those answers to pgvector's plan cache and the
 scan's two limits. The current code (PR~\#166, not yet in a release) lets a backend declare \texttt{exact\_search} when it ranks every chunk that satisfies the filter, so that a
 short answer proves nothing else matches; only the in-memory reference and FAISS over a flat index
 (its default) do. With $e$ the declaration and $v$ the number of violations, a pre-filtered result has
@@ -149,7 +149,7 @@ $c = 1$ does not certify maximality, and we measure mis-retrieval offline
 (Section~\ref{sec:quality}). One assumption remains: an unfiltered post-filter reads a short list as
 the end of the store, which fails for pgvector with iterative scans off (at most
 \texttt{hnsw.ef\_search} rows, 40 by default). Count-based certification and a bounded exact
-fallback, as in OpenSearch~\cite{opensearch2026efficient}, are evaluated in Section~\ref{sec:repair}.
+fallback, as in OpenSearch's Faiss engine~\cite{opensearch2026efficient}, are evaluated in Section~\ref{sec:repair}.
 
 \subsection{Composition, tenants and caching}\label{sec:sys-compose}
 
@@ -170,7 +170,7 @@ filter, it becomes the post-filter's scope.
 A caching wrapper stores, per subject and action, the filter, the scope, and each decision keyed by
 the chunk's identifier and metadata. Its time to live (30\,s by default) is a stated revocation
 bound, and an explicit invalidation ends it at once, also for answers that calls in flight obtained
-before it, provided the engine answers from current data. In the release we evaluate, an engine
+before it, provided the engine answers from current data. In the code we ran in the engine study, a branch of release 2.1.0 (Appendix~\ref{app:map}), an engine
 that serves a stale snapshot after the revocation can refill the cache, which then holds the stale
 answer for a full time to live, a violation of the stated bound; Section~\ref{sec:eng-revoke} found
 this, and the fix it evaluates caches nothing for the engine's declared staleness after an

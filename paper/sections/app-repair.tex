@@ -18,8 +18,8 @@ complete with respect to $\varphi_s$ (\emph{exhausted}). If $n > h$, chunks that
 missed (\emph{missed}). The count is the second certificate of Section~\ref{sec:prob-criteria}; it
 never raises a false alarm, because a count above $h$ proves a miss, and it never certifies falsely,
 because a count no larger than $h$ proves that nothing else passes $\varphi_s$. Both statements hold
-for the store's state at the time of the count; a write between the search and the count can make
-either one stale, as any read without a snapshot can. It costs one query per short answer, and the
+for the store's state at the time of the count, so H5.1 below is a logical consequence on unchanging data; a write between the search and the count can make
+either one stale, as any read without a snapshot can, and we did not test that case. It costs one query per short answer, and the
 limit keeps that query bounded on stores that count by scanning.
 
 \paragraph{Repair by bounded exact search.}
@@ -31,9 +31,9 @@ cannot trigger a scan of all of it; above the bound the first hits are kept and 
 \emph{over\_limit}. With $L = B + 1$ one count both detects and bounds. The alternative
 \emph{widen} repeats the search on the same store with more effort, for example a larger scan budget
 or ACORN, and merges the two answers; it is cheaper but certifies nothing, since a wider approximate
-search can still miss. OpenSearch already falls back to exact search inside the engine when an
-approximate filtered search returns fewer than $k$ results~\cite{opensearch2026efficient}; the layer
-does the same above the store, for stores that do not.
+search can still miss. OpenSearch's Faiss engine already falls back to exact search when an
+approximate filtered search returns fewer than $k$ results and at least $k$ documents pass, unless a setting disables it~\cite{opensearch2026efficient}; the layer
+does the same above the store, for stores and engines that do not. The OpenSearch configurations we ran use its Lucene engine.
 
 \paragraph{Security.}
 The repair is one more search step in the layer's single plan, shared by the synchronous and
@@ -70,7 +70,7 @@ whose wider search is pgvector with a million-tuple scan limit, a sixteenfold sc
 monitor; and, for comparison, the store-native alternatives alone: pgvector's tuple limit raised to a
 million, Qdrant's ACORN at gate 1.0, and, on the enterprise corpus, Qdrant's per-tenant graphs. Each
 question retrieves with $k = 5$ and $k = 10$ in a first pass and twice more with $k = 10$; every hit is
-re-checked by the layer and by an independent oracle, and latency is the median of the three passes
+re-checked by the layer and by the oracle, a separate plain implementation of the predicate, and latency is the median of the three passes
 with $k = 10$.
 
 Seven hypotheses were pre-registered. The count detects every short first search without a false
@@ -138,13 +138,13 @@ retrievals. Latency compares arms within one store and corpus only.}
 \end{table}
 
 \paragraph{Detection (H5.1, confirmed).}
-The count raised no false alarm and flagged every truly short first search as \emph{missed}: 992 of
+As the design above says, this holds by logic on unchanging data, so the result checks the stores' counts and the harness. The count raised no false alarm and flagged every truly short first search as \emph{missed}: 992 of
 992 for pgvector on the enterprise corpus, 574 of 574 for pgvector and 1,091 of 1,091 for Qdrant on MS
 MARCO ($k = 5$ and $k = 10$ together), and every answer it marked \emph{exhausted} held all $\min(k,
 R)$ readable chunks. Qdrant on the enterprise corpus had no truly short answer: its first searches came
 back short only for people who could read fewer than $k$ chunks, which the count marked exhausted.
-Qdrant did under-retrieve on MS MARCO, which X0 and X1 never saw on the enterprise corpus: 3.5\% of its
-answers with $k = 10$ were short.
+Qdrant did under-retrieve on MS MARCO: 3.5\% of its
+answers with $k = 10$ were short. On the enterprise corpus X0 and X1's second run never saw that, and X1's first run saw it rarely (0.6\% of as-run answers with $k = 5$, and 1.1\% in the one-segment layout).
 
 \paragraph{Exact repair (H5.2, confirmed for the unbounded arm).}
 Repaired exactly without a bound, no answer was empty or short, and the repaired answers reached

@@ -40,16 +40,21 @@ from the five chunks. An eleventh configuration, pgvector with the policy's ACLs
 OpenFGA relationship tuples behind the caching authorizer, pre-filters with ListObjects. It did not
 start in the runs below: our harness set OpenFGA's ListObjects deadline to 20\,s while leaving its
 request timeout at the default, and OpenFGA 1.22 refuses to start with a deadline longer than the
-request timeout. We had first recorded this as an infrastructure failure; the server's log shows
-otherwise. With the timeout raised and nothing else changed, the configuration ran in four further
+request timeout. With the timeout raised and nothing else changed, the configuration ran in four further
 runs with the same seeds, pre-registered as an amendment before they started; each also repeated
 the in-process pgvector configuration.
 
 \paragraph{Runs.}
-The scenario ran four times with seeds 7, 11, 13 and 17 on the same software and hardware (one
-Kaggle session with two T4 GPUs each; Appendix~\ref{app:compute}). The seed changes the document
-text, the sample of questions and the order in which people ask; the permission templates and
-personas are fixed, so the runs repeat the layout with fresh documents and questions. The repeats
+The scenario ran four times with seeds 7, 11, 13 and 17, on one Kaggle session with two T4 GPUs each
+(Appendix~\ref{app:compute}). The software was not identical across runs, a deviation from the
+pre-registration's ``everything else identical'': the first run (seed 7) had Redis 8.10.2, lancedb 0.40.0 and
+weaviate-client 4.24.0, and the three repeats had Redis 8.10.3, lancedb 0.41.0 and weaviate-client 4.24.1,
+as the runs' logs record. The other recorded versions match, among them Elasticsearch 9.5.5, OpenSearch 3.9.0, Qdrant 1.19.2, Weaviate 1.39.12,
+chromadb 1.5.9 and faiss-cpu 1.15.1. So the ranges for Redis and LanceDB in Figure~\ref{fig:qual-audit} span two versions.
+The first run also used another Kaggle account of the same session type.
+The seed changes the document
+text, part of the sample of questions and the order in which people ask; the permission templates,
+personas and the 216 pairs of Section~\ref{sec:e2e-safety} are fixed, so the runs repeat the layout with fresh documents and mostly fresh questions. The repeats
 and their predictions were pre-registered after the first run and before any repeat. The runs used
 the released version 2.1.0, before the change of Appendix~\ref{sec:sys-complete}; permissions did not
 change during a run, so these runs test containment, not freshness, which
@@ -103,49 +108,48 @@ reported an error.}
 \end{table}
 
 No configuration in any run returned an unreadable chunk or exposed a canary
-(Table~\ref{tab:e2e-safety}). We bound the leak rate per question, separately for each of the eleven
-configurations, treating the questions of different runs, which are sampled afresh over fresh
-documents, as independent: with no leak in 4,420 questions, the one-sided 95\% upper bound is
-$1 - 0.05^{1/4420} \approx 6.8 \times 10^{-4}$ per question (Section~\ref{sec:prob-metrics}). Per
+(Table~\ref{tab:e2e-safety}). The bounds of Section~\ref{sec:e2e-safety} count distinct (person, question) pairs. In the generator
+(\texttt{questions()} in the harness at bf25bd0), the generic pairs are 12 fixed strings asked by nine people, and two of the eight attacks, the 54 \texttt{ignore-instructions} and 54 \texttt{reference-codes} prompts of a run, have no
+placeholder, while the attack assigned to a person does not depend on the seed. So 216 of 1,105 pairs, 19.5\%, are the same in all four seeds. The other pairs choose an entity from a pool of 208 per seed. The runs' stored questions, the same for every configuration of a seed, hold 3,746 distinct pairs: 216 in all four seeds, 26 by chance in two and 3,504 in one. The one-sided 95\% bound, separately for each of the eleven
+configurations and taking those pairs as independent, is $1 - 0.05^{1/3746} \approx 8.0 \times 10^{-4}$ per question (Section~\ref{sec:prob-metrics}); the pre-registered analysis, which treated all 4,420 as independent, gives $6.8 \times 10^{-4}$. They are not fully independent even so: a document question comes from 12 templates and a red-team prompt from eight, and the same people ask them. Per
 person the bound stays at a single run's $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$: the same
 personas recur in every run with the same permissions, so a fault tied to a permission shape would
-recur too, and counting person-runs would overstate the evidence. Pooling the configurations would not
+recur too. The 189 people are 13 role types, since the persona's name fixes its groups, repeated across tenants, and over 13 the formula gives 0.21. Pooling the configurations would not
 shrink these bounds honestly, since they share questions and the layer's code. The first of the five
 pre-registered predictions for the repeats, that no unreadable hit, canary or violation would occur,
 held, and so did the amendment's for OpenFGA, which started in every run and pre-filtered every
 question. As a secondary count, the runs checked 783,888 hits, not independent trials, since hits
 cluster by question and by person, and a fault in the layer would affect a question, not a random hit.
 
-The bounds are over the distribution of the question generator: the 1,105 questions of a run are
-sampled by the scenario's generator, and a binomial bound over sampled questions says nothing about
-an adversary who adapts its queries to what it sees. For such an adversary we rely on
+These bounds are over the question generator, and a binomial bound over sampled questions says nothing about
+an adversary who adapts its queries to what it sees. No such adversary was run. For one we rely on
 Observation~\ref{prop:reduction}, which does not depend on the query, and on its trusted computing
 base.
 
-No violation occurred. In the in-process configurations the filter and the re-check evaluate the same
+No violation occurred, so across these runs the re-check dropped nothing, and the same outcome would appear with it off. In the in-process configurations the filter and the re-check evaluate the same
 ACL metadata under the same reference semantics, so a violation would need a store to translate or
 evaluate the filter wrongly; with OPA and OpenFGA, filter and check come from the engine's separate
 APIs, and they agreed on every hit. Sections~\ref{sec:conformance} and~\ref{sec:engines} test
-configurations and data shapes on which they do not.
+configurations and data shapes on which they do not. These runs thus test whether two implementations of one predicate agree and whether a store round-trips metadata.
 
 Two observations qualify the result. First, it is a statement about this layer under assumptions
-(A1) to (A3) of Observation~\ref{prop:reduction}, exercised with adversarial inputs, not a proof:
+(A1) to (A3) of Observation~\ref{prop:reduction}, not a proof, and the inputs called adversarial are weak:
 the red-team prompts can only change the query text, and the layer never lets text choose the
 subject (Appendix~\ref{sec:sys-identity}). Second, containment held while quality did not, and quality
-did not repeat. pgvector returned no hits at all to 10, 1, 0 and 7 least-privileged people in the four
-runs, people who could each read 624 chunks, and the layer, before the change of
+did not repeat. pgvector returned empty answers to 10, 1, 0 and 7 questions in the four
+runs, from people who could read something. The harness counts answers, not people: the check's number is one entry per empty question. By the stored answers, the four runs' empties fell on 9, 1, 0 and 7 people, all least-privileged and each able to read 624 chunks, and one person in the first run had two; each asked five questions, so everyone got hits on at least three. In the first run eight of the ten were on red-team prompts and two on questions about documents the person could not read. The person who may read nothing is excluded from the check. The layer, before the change of
 Appendix~\ref{sec:sys-complete}, reported those empty answers as complete. The same configuration ran
 in one of two modes, fast and lossy or exact and about fifty times slower, for a reason
-Section~\ref{sec:qual-pgvector} traces to PostgreSQL's plan cache. Our third prediction, that 3 to 25
-people would receive no results in every repeat, was falsified: two repeats fell outside it, because
+Section~\ref{sec:qual-pgvector} ties to PostgreSQL's plan cache in a separate run. Our third prediction, that 3 to 25
+people would receive no results in every repeat, was scored on this count and falsified: two repeats fell outside it, because
 it assumed that the first run's mode was a property of the configuration. Over its eight runs the
 configuration ran exact in five and, by its median, fast in three, one of them a mixture whose p95 of
-433\,ms shows that part of its searches ran exact. The seed did not decide which: seeds 7, 11 and 17
-each ran fast in one run and exact in another. In two of the five exact runs one person still received
-no results, which we have not explained. With OpenFGA, whose pre-filter lists the readable documents,
-pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 3 to 10
-least-privileged people without results, whatever mode the in-process configuration had just run
-in. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
+433\,ms shows that part of its searches ran exact, and it gave at least one empty answer in five of the eight (10, 1, 0, 7, 1, 1, 0, 0). The seed did not decide which: seeds 7, 11 and 17
+each ran fast in one run and exact in another. In two of the five exact runs one person received one
+empty answer, which we have not explained. With OpenFGA, whose pre-filter lists the readable documents,
+pgvector was lossy in every run, with recall@10 between 0.693 and 0.758 and 7, 8, 3 and 10
+empty answers on 6, 8, 3 and 9 least-privileged people, whatever mode the in-process configuration had just run
+in; its plans were not recorded, so we have only an inference from the code for this. Qdrant answered every question, but with recall@10 between 0.535 and 0.561 in every run. The
 other stores varied little from run to run (Section~\ref{sec:qual-audit}).
 
 \subsection{Exposure and the mutation positive control}\label{app:e2e-control}
@@ -242,8 +246,8 @@ Counts are questions, except the violations counted in hits. R@10 is recall@10 a
 
 Three limits apply. This is one seed and one configuration, an exact store, so it shows that the checks fire
 and that the re-check contains these faults here; it does not test the interaction of a wrong filter
-with an approximate index. It breaks only the filter, since the check stays the policy's, so a wrong
-check is outside it and stays in the trusted computing base. And the re-check does not repair: recall stays
+with an approximate index, and exposure was measured on FAISS only. It breaks only the filter, since the check stays the policy's, so a wrong
+check is outside it and stays in the trusted computing base, and containment under an untouched check holds by construction. It was also added after a review of the results. And the re-check does not repair: recall stays
 where the broken filter left it, and the layer's report of an incomplete result is what tells an
 operator something is wrong.
 
@@ -253,8 +257,9 @@ Prompt injection in readable content is outside our threat model (Section~\ref{s
 but the runs measure where the boundary lies. Each tenant's injected notice is readable by that
 tenant's employees and contractors, so retrieving it for them is correct. Over all eight runs the
 notice was retrieved between 1 and 117 times per configuration and run, depending on the store's
-ranking, and the 3B model followed its instruction every time it was retrieved: 3,069 of 3,069
-times. Retrieval-time enforcement decides which content reaches the model, not what the model does
+ranking, and the harness counted its marker string in the 3B model's answer the same number of times: 3,085 of 3,085.
+This count of ``obeyed'' is the marker anywhere in an answer, and the notice's own text holds the marker, so an answer that repeats the notice counts too. In the stored answers of all eight runs the marker appeared in exactly the answers whose top five held the notice.
+Retrieval-time enforcement decides which content reaches the model, not what the model does
 with it; defenses against injected instructions in permitted
 content~\cite{greshake2023not,debenedetti2025defeating} are complementary.
 

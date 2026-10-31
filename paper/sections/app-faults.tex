@@ -194,7 +194,7 @@ Store or engine & Fault or semantic gap & Found by & Effect & Mitigation in \sys
  & \confrag None (adapter) \tabularnewline
 \confrag SpiceDB 1.56
  & \confrag Under \texttt{minimizeLatency}, a revoked permission admitted for 8.7\,s in 1 of 40
-   trials, past the 5.5\,s its documented defaults imply (a rerun's 40 trials: at most 5.2\,s), and
+   trials, past the 5.5\,s its documented defaults imply, which we have not explained (a rerun's 40 trials: at most 5.2\,s), and
    could reappear after it had gone
  & \confrag \S\ref{sec:eng-revoke} & \confrag Stale
  & \confrag Declare 11\,s of staleness; after \texttt{invalidate()} the cache holds back that long
@@ -261,10 +261,9 @@ the re-check and becomes a violation with it, as Observation~\ref{prop:reduction
 Leak* and Leak\textdagger{} entries lie beyond any re-check: the kit's exact comparison of returned
 with stored metadata targets the first kind, and only a test of the policy itself reaches the
 second. The remaining effects cost recall, freshness, speed or availability, and one crashed the
-client process; where a fix was needed, the lost recall had been reported as a complete answer, the
-dishonesty that Appendix~\ref{sec:sys-complete} removes. Before the campaign, the record credited
-review or the acceptance scenarios where it credited anything, never the kit, whose role had been
-to keep each class fixed once it entered the generator and the meta-tests.
+client process; where a fix was needed, the lost recall had been reported as a complete answer, which
+Appendix~\ref{sec:sys-complete} changes. Before the campaign, the record credited
+review or the acceptance scenarios where it credited anything, never the kit.
 
 Counted by kind, the campaign found two store behaviors with a correctness effect, Redis and MongoDB
 cutting a long term at indexing, undocumented for the field type the layer uses; two availability
@@ -274,9 +273,9 @@ gap, in the Cerbos adapter's translator. All lie in what the generator targets, 
 groups, unusual identifiers and scalar fields, at sizes that the continuous-integration runs had not
 reached. The filter-size experiment then showed that one of those limits, Chroma's, can also crash
 the client, which is a store behavior of its own. The other experiments added SpiceDB's staleness
-beyond its documented bound, in one trial, faults in \sys{}'s cache and SpiceDB adapter, a vacuous
+beyond its documented bound, in one unexplained trial, faults in \sys{}'s cache and SpiceDB adapter, a vacuous
 negation that OPA's partial evaluation keeps, and pgvector's scan limits and its run-time choice
-between a lossy and an exact plan. Several entries, the eight marked as
+between a lossy and an exact plan. Of the eleven rows of Table~\ref{tab:conf-findings}, four are faults in \sys{}'s own adapters or cache. Several entries, the eight marked as
 adapter faults among them, are faults in \sys{}'s own code that a store's or engine's behavior
 exposed; any other integration meets the same behavior. Recall lost by approximate indexes under
 selective or misaligned filters, such as Qdrant's filtered HNSW traversal, is measured in

@@ -139,7 +139,7 @@ corpora are not here. A rebuild can be compared with the digests of the original
 - X1 run 2: push, in order, `kaggle/x1run2/x1run2-prep-gpu/`, then `kaggle/x1run2/x1run2-shard-a/`,
   `kaggle/x1run2/x1run2-shard-b/` and `kaggle/x1run2/x1run2-shard-c/` side by side, then `kaggle/x1run2/x1run2-stats/`. Their
   `kernel_sources` name the private account, so change them, and `id`, to your own account (`kaggle/x1run2/make.sh` writes
-  these folders). Wall clock 6.1 hours; 12.5 session hours.
+  these folders). Wall clock 6.1 hours; 12.4 session hours.
 - `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py` installs wardowl from that commit with
   `qdrant-client>=1.16`, `sentence-transformers>=3`, `datasets>=2.19`, `psutil`, `pyarrow` and `scipy`, not pinned. Each
   folder's `manifest.json` records what ran. Statistics: 10,000 bootstrap resamples, seed 20261026.

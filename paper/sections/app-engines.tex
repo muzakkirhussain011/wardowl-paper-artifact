@@ -27,8 +27,8 @@ sharing data, and its own partial evaluation~\cite{opa2026evaluating,opa2026writ
 whose residual we translate (equality and membership to $\mathrm{In}$, conjunction and disjunction
 as such, anything else to no filter). Cerbos derives filters from query plans~\cite{cerbos2026cerbos}.
 OPA and Cerbos omit bans here, because the filter language (Appendix~\ref{sec:sys-contracts}) has no
-negation; stress profiles add bans and one-value ACL fields stored without a list. An independent
-Python oracle evaluates the model, and two controls (filter and check both the oracle; a filter with
+negation, and Cerbos also omits folders, with each principal's groups already flattened, so that profile holds a smaller model; stress profiles add bans and one-value ACL fields stored without a list. There is one generated model per profile. A separate plain
+Python implementation of the model is the oracle, and two controls (filter and check both the oracle; a filter with
 2\% planted errors) validate the counting.
 
 \emph{One revision} means SpiceDB's \texttt{atExactSnapshot} at the token of the last
@@ -69,14 +69,14 @@ OPA, sharing data, bans & partial evaluation & 0 & n/a & n/a \\
 \end{tabular}
 \caption{Filter against check at one revision: five seeds of 120 users and 1,500 documents, 900,000
 (user, document) pairs per profile. Above the rule, each engine's check also agreed with the
-independent oracle on every pair. Below it, stress profiles.}
+oracle on every pair. Below it, stress profiles.}
 \label{tab:eng-agree}
 \end{table}
 
 Table~\ref{tab:eng-agree} shows no translation fault in the seven profiles that hold the model as
 intended, with each ACL field in the shape the policy assumes: 6.3 million pairs produced no
 disagreement between filter and check, and every check agreed
-with the oracle (one-sided 95\% bound on users with any disagreement: 0.5\% per profile). The
+with the oracle (one-sided 95\% bound on users with any disagreement: 0.5\% per profile, over this generator's worlds; the pairs are seven policy and engine combinations repeated over five seeds, not 6.3 million independent cases). The
 oracle control reported nothing and the planted control exactly its 16,774 false admits and 1,233
 false denials. The only disagreement at one revision is the type gap in the layer's Cerbos adapter
 that the campaign reproduced (Appendix~\ref{sec:conf-campaign}): the translator maps CEL's \texttt{in},
@@ -86,8 +86,8 @@ ACL list as a plain value, the adapter's filter admits what the check denies in 
 pairs; 52.5\% of users, 95\%
 interval 48.3\% to 56.3\%), always on such a document and reproducibly; the re-check turns each
 into a violation. OPA's policy, which reads a field as one value or a list, stays exact on the same
-data. Neither translator dropped a negation: with bans, Cerbos's plan and OPA's
-residual both kept a \texttt{not}, and no user received a filter. For OPA this falsified our
+data. Neither translator dropped a negation, but vacuously: with bans, Cerbos's plan and OPA's
+residual both kept a \texttt{not}, and no user received a filter, so negation in a filter is untested. For OPA this falsified our
 prediction that partial evaluation would simplify \texttt{not (x in [])} away for the 73 users with no
 ban in scope; it does not, so one ban rule makes OPA's partially evaluated filter unavailable to
 everyone, who are then served by post-filtering.
@@ -160,13 +160,14 @@ refill during the engine's staleness window would restore it, which we evaluate 
 We injected 14 faults into each engine, by a proxy or by killing the server, and five or eight into
 pgvector and Qdrant, in 1,090 episodes of a 3\,s baseline, a 12\,s fault and recovery. Outside the
 control below, no retrieval returned a chunk outside the user's readable set, in 623,279 requests over
-1,050 episodes. Requests within an episode share its fault, so we bound the rate per episode, at most
-$2.8 \times 10^{-3}$ (one-sided 95\%), not per request, and only over the faults we injected. The
+1,050 episodes. Requests within an episode share its fault, so we state the rate per episode,
+$2.8 \times 10^{-3}$ (one-sided 95\%), not per request. These episodes are not samples from a population of faults: ten per (target, fault, condition) replay 13 fault kinds, each episode cycling 10 fixed
+(user, query) pairs, and over the 13 kinds the formula gives 0.21. The
 control, 40 episodes that turned the engine's denials
-into allows, leaked in every engine. Every engine-caused failure was the layer's authorization error
+into allows, is the fault class that does leak: it leaked in every engine, and it is outside the bound. Every engine-caused failure was the layer's authorization error
 with a message naming no host. Transport faults (server down, connections refused or never answered,
-delays past the 2\,s timeout, HTTP 500 and 503) failed every request inside the fault, and recovery
-took a median 0.02 to 0.18\,s after removal. A circuit breaker failed requests in under 0.1\,ms
+delays past the 2\,s timeout, HTTP 500 and 503) failed every request inside the fault. Recovery
+took a median 0.02 to 0.18\,s after the proxy's faults were removed, and 0.08 to 0.47\,s after a killed server was started again (OPA, Cerbos, OpenFGA, SpiceDB), a case the pre-registration left exploratory. A circuit breaker failed requests in under 0.1\,ms
 instead of 2\,s, at the price of a median 3.1 to 3.6\,s to the first success after recovery; a warm
 30\,s cache answered every request through the 12\,s outages. Answers altered in content failed
 closed, except that an empty LookupResources stream reads as ``no readable documents'': 4,746
@@ -180,7 +181,7 @@ The run exposed five defects in the layer, and we fixed all five. After an inval
 now caches nothing for the engine's declared staleness, and the SpiceDB adapter, whose documentation
 had promised 5\,s, declares 11\,s without full consistency: twice the documented
 5.5\,s~\cite{authzed2026reference}, since one trial had
-measured 8.7\,s. An empty LookupResources stream now yields no filter, so the retriever post-filters
+measured 8.7\,s, which stays unexplained. An empty LookupResources stream now yields no filter, so the retriever post-filters
 and checks every candidate. Every store failure is raised as one search error with a fixed message
 and the client's exception as its cause. And pgvector can set a statement timeout. A targeted rerun,
 an implementation check specified in writing after the main results and before running,
@@ -198,5 +199,5 @@ statement timeout turned a table lock into failures after a median 1.003\,s with
 against 80 hanging requests and a median of 5\,s without it; for a connection that is accepted but never answered it cannot
 help, since the server never sees the statement, and every request hung or failed after 5\,s with or
 without it, as predicted. Only a deadline on the whole retrieval, which the layer does not yet offer,
-would bound that case. In 10,303 requests under these faults no chunk leaked; over the rerun's 140
-episodes that bounds the rate at $2.1 \times 10^{-2}$ per episode (one-sided 95\%).
+would bound that case. In the 10,303 requests of the 20 SpiceDB episodes under these faults no chunk leaked, and the 120 store episodes reported no leak either; over the rerun's 140
+episodes the formula gives $2.1 \times 10^{-2}$ per episode (one-sided 95\%).

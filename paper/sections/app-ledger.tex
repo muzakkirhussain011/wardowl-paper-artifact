@@ -13,12 +13,18 @@ Table~\ref{tab:app-ledger} lists every hypothesis and prediction with its regist
 amendment, whether it was written before or after the results it concerns, the run that judged it, the verdict as the
 analysis script printed it, and a class: \emph{conf.}, confirmatory, written before any result of its experiment;
 \emph{expl.}, exploratory, specified in writing after the main results and before running; or \emph{impl.}, an implementation
-check of a fix or of the harness. A reader verifies the ordering in two ways: the pre-registration commit is an ancestor of the
-run's head commit (\texttt{git merge-base --is-ancestor}), and the GitHub Actions run's creation time follows the commit; Kaggle
-runs are ordered by their kernels' version history, and these repositories will be archived. Rules and full wording are in the
+check of a fix or of the harness. A reader can check the ordering to different degrees. For the experiments on GitHub Actions,
+the pre-registration commit is an ancestor of the run's head commit (\texttt{git merge-base --is-ancestor}), and the run's creation time, which
+GitHub records, follows the commit. For the Kaggle runs nothing independent supports the order of writing and running. Git dates are self-reported. The X8
+pre-registration and its amendments were committed before the runs in a private repository, which was not public then; the public artifact repository
+that now holds those commits was created on 2026-10-30 at 21:29 UTC, after every Kaggle run. X1's commits are on a public branch of the library's repository, but no
+Actions run bounds them. Apart from the notebooks of X0 and X1's first run, the kernels are private; readers can check their outputs and logs, in the artifact and in the public Kaggle
+dataset \url{https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence}. The store logs of X0, X8 and X8-FGA carry dates, while the kernel logs, which are all that amendment 2 has, hold only seconds since their start, and any of these date at most a run, not the writing. The artifact's \texttt{evidence/raw/KAGGLE\_KERNELS.tsv} lists the start times Kaggle's API reported to the author, which agree with the commit dates but cannot be checked by others. Rules and full wording are in the
 pre-registration files. The confirmatory class is relative to a stated earlier exposure: the X1 predictions followed the published
-aggregates of X0, the X2 and X5 predictions followed X0, the verdicts of X1's first run and earlier MS MARCO benchmarks in the library's
-repository, and the X8 predictions followed X0.
+aggregates of X0; the X2 and X5 predictions followed X0, the verdicts of X1's first run and earlier MS MARCO benchmarks in the library's
+repository; the X8 predictions followed X0; and the library's FiQA benchmarks, among them the row-level security run of
+Appendix~\ref{sec:limits-native}, preceded all of them. $\ast$: the reference setting changed after run 1, so run 2's verdict is not purely confirmatory. The labels H2
+and H5 of X6 are unrelated to H2.1 to H2.4 of X2 and H5.1 to H5.7 of X5.
 
 \begingroup
 \scriptsize
@@ -42,13 +48,13 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \endfoot
 \bottomrule
 \endlastfoot
-\ledgergroup{X1, the diagnosis grid. PREREGISTRATION.md, branch paper/x1-underretrieval: 7c991cd (2026-10-26 09:01), amendment 1 fb2ef64 (09:49, before any result), amendment 2 eeb7d2b (2026-10-29 15:46) and its revision 80e3f56 (16:54). Run 1: Kaggle, 2026-10-26. Run 2: Kaggle, prep pushed 2026-10-29 19:12. By amendment 2 every verdict is judged on run 2; run 1's is given first.}
+\ledgergroup{X1, the diagnosis grid. PREREGISTRATION.md, branch paper/x1-underretrieval: 7c991cd (2026-10-26 09:01), amendment 1 fb2ef64 (09:49, before any result), amendment 2 eeb7d2b (2026-10-29 15:46) and its revisions afadde4 (16:02, the prep may embed on the CPU) and 80e3f56 (16:54). Run 1: Kaggle, 2026-10-26. Run 2: Kaggle, prep pushed 2026-10-29 19:12. By amendment 2 every verdict is judged on run 2; run 1's is given first.}
 \lrag Q1 & \lrag Islanded permitted subgraph in Qdrant & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag confirmed; confirmed & conf. \tabularnewline
 \lrag Q2 & \lrag ACORN's default gate engages unreliably & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag falsified; falsified & conf. \tabularnewline
 \lrag Q3 & \lrag Recall varies by build and segment layout & \lrag 7c991cd & \lrag Before run 1; layout fixed by am.~2 & \lrag Runs 1, 2 & \lrag inconclusive; inconclusive & conf. \tabularnewline
 \lrag Q4 & \lrag \texttt{hnsw\_ef} 128 was not the cause & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag inconclusive; inconclusive & conf. \tabularnewline
-\lrag P1 & \lrag The iterative scan's budget runs out & \lrag 7c991cd; am.~2 & \lrag Before run 1; reference setting changed after run 1, before run 2 & \lrag Runs 1, 2 & \lrag confirmed; inconclusive & conf. \tabularnewline
-\lrag P2 & \lrag Mis-retrieval from shallow, relaxed scans & \lrag 7c991cd; am.~2 & \lrag Before run 1; reference setting changed after run 1, before run 2 & \lrag Runs 1, 2 & \lrag inconclusive; inconclusive & conf. \tabularnewline
+\lrag P1 & \lrag The iterative scan's budget runs out & \lrag 7c991cd; am.~2 & \lrag Before run 1; reference setting changed after run 1, before run 2 & \lrag Runs 1, 2 & \lrag confirmed; inconclusive & conf.$^{\ast}$ \tabularnewline
+\lrag P2 & \lrag Mis-retrieval from shallow, relaxed scans & \lrag 7c991cd; am.~2 & \lrag Before run 1; reference setting changed after run 1, before run 2 & \lrag Runs 1, 2 & \lrag inconclusive; inconclusive & conf.$^{\ast}$ \tabularnewline
 \lrag P3 & \lrag The planner overestimates a least-privileged filter & \lrag 7c991cd & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag inconclusive; confirmed & conf. \tabularnewline
 \lrag P4 & \lrag Generic plans make no difference & \lrag 7c991cd; am.~1 & \lrag Before run 1 & \lrag Runs 1, 2 & \lrag falsified; falsified & conf. \tabularnewline
 \lrag P5 & \lrag The plan cache decides whether pgvector searches the graph & \lrag eeb7d2b, 80e3f56 & \lrag After run 1, before run 2 & \lrag Run 2 & \lrag confirmed & expl. \tabularnewline
@@ -56,11 +62,11 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \ledgergroup{X2, the frontier experiment. PREREG\_X2\_X5.md, branch paper/x2-x5: 828ea27 (2026-10-29 16:24), alone, before any harness code. Run 40921769714 at 884ce18, created 17:29.}
 \lrag H2.1 & \lrag Negative correlation costs recall at defaults & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag inconclusive & conf. \tabularnewline
 \lrag H2.2 & \lrag Local axes predict recall better than global selectivity & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag falsified & conf. \tabularnewline
-\lrag H2.3 & \lrag Effort narrows the gap but does not close it & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
-\lrag H2.4 & \lrag The hardest filters are the intermediate ones & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed (per store, ``U-shaped'', ``monotone'' or ``neither'') & conf. \tabularnewline
+\lrag H2.3 & \lrag Effort narrows the gap but does not close it & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed by its rule, on two of four stores; LanceDB's narrowing is 0.001 & conf. \tabularnewline
+\lrag H2.4 & \lrag Intermediate filters are harder than the smallest (registered as ``the hardest filters are the intermediate ones''; the test does not ask whether recall recovers) & \lrag 828ea27 & \lrag Before any X2 result & \lrag 40921769714 & \lrag confirmed (per store, ``U-shaped'', ``monotone'' or ``neither'') & conf. \tabularnewline
 \midrule
 \ledgergroup{X5, repair. The same document and commit; the same run.}
-\lrag H5.1 & \lrag A count certifies short results without false alarms & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
+\lrag H5.1 & \lrag A count certifies short results without false alarms & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed (follows from the count on unchanging data) & conf. \tabularnewline
 \lrag H5.2 & \lrag Exact repair removes empty and short results & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed (the rule names the unbounded arm) & conf. \tabularnewline
 \lrag H5.3 & \lrag The repairs cost nothing on untriggered queries & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag inconclusive & conf. \tabularnewline
 \lrag H5.4 & \lrag Repairs do not touch mis-retrieval & \lrag 828ea27 & \lrag Before any X5 result & \lrag 40921769714 & \lrag confirmed & conf. \tabularnewline
@@ -86,7 +92,7 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag H5a & \lrag BM25, IDF-weighted sparse: score channel at every $m$ & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag inconclusive for both stores & conf. \tabularnewline
 \lrag H5b & \lrag \texttt{ts\_rank\_cd}: no score channel & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag confirmed & conf. \tabularnewline
 \lrag H5c & \lrag Fusion changes the hit list for at least 25\% of probes & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag confirmed & conf. \tabularnewline
-\lrag H6 & \lrag Padding removes the latency channel & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag inconclusive (script defect; confirmed under the written rule) & conf. \tabularnewline
+\lrag H6 & \lrag Padding removes the latency channel & \lrag 5da58ee & \lrag Before any full result & \lrag 40940385704 & \lrag inconclusive (script defect; confirmed under the written rule, by construction, since padding was computed afterwards) & conf. \tabularnewline
 \lrag Am.~4, B & \lrag Readings fixed in advance for FAISS's post-filter at $m = 1$, FAISS's pre-filter and pgvector's exact search; hubs; plans; vacuum state; the crash's threshold & \lrag ba67dd8 & \lrag After the main results, before running & \lrag 40982986417 & \lrag inconclusive for the three readings; hub mechanism as predicted; no verdict changes & expl. \tabularnewline
 \midrule
 \ledgergroup{X4, filters against checks. PREREG\_X4\_X7.md, branch paper/x4-x7: eafafa9 (2026-10-29 16:28), alone, before any harness code; amendment 1 ba00ca6 (17:07), after a smoke run, before any full result. Run 40919304635 at e66dffc, created 17:13.}
@@ -123,20 +129,20 @@ Label & Hypothesis or prediction & Commit & Written & Run & Verdict as printed &
 \lrag A2-H7 & \lrag Store errors carry a fixed message & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \lrag A2-H8 & \lrag Fail closed, replicated & \lrag 618b108 & \lrag As above & \lrag 40969846593 & \lrag confirmed & impl. \tabularnewline
 \midrule
-\ledgergroup{X8, the end-to-end repeats. plan/x8-prereg.md in the paper's repository: 875d98e (2026-10-29 15:44), after X0, before any repeat; kernels wardowl-x8-seed11, -seed13, -seed17 at bf25bd0 of the acceptance scripts.}
+\ledgergroup{X8, the end-to-end repeats. plan/x8-prereg.md, committed in the author's then private repository: 875d98e (git date 2026-10-29 15:44), after X0, before any repeat; kernels wardowl-x8-seed11, -seed13, -seed17 at bf25bd0 of the acceptance scripts.}
 \lrag X8-1 & \lrag No unreadable hit, canary or violation in any run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \lrag X8-2 & \lrag Qdrant recall@10 between 0.45 and 0.70 in every run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
-\lrag X8-3 & \lrag pgvector returns nothing to 3 to 25 people in every run & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag falsified & conf. \tabularnewline
+\lrag X8-3 & \lrag pgvector returns nothing to 3 to 25 people in every run (the harness's count is of empty answers, not people) & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag falsified & conf. \tabularnewline
 \lrag X8-4 & \lrag Redis, Elasticsearch and OpenSearch at or above 0.90 & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
-\lrag X8-5 & \lrag The model obeys every injected notice it retrieves & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
+\lrag X8-5 & \lrag The model obeys every injected notice it retrieves (scored as the notice's marker in the answer) & \lrag 875d98e & \lrag After X0, before the repeats & \lrag X8 kernels & \lrag holds & conf. \tabularnewline
 \midrule
-\ledgergroup{X8-FGA, amendment 1 of the same file: ba64c23 and 1a25086 (2026-10-29 21:58), after X0 and X8, before these runs; kernels wardowl-x8fga-seed7, -seed11, -seed13, -seed17.}
+\ledgergroup{X8-FGA, amendment 1 of the same file: ba64c23 and 1a25086 (git date 2026-10-29 21:58), after X0 and X8, before these runs; kernels wardowl-x8fga-seed7, -seed11, -seed13, -seed17.}
 \lrag F1 & \lrag OpenFGA starts and every tuple is written & \lrag ba64c23 & \lrag After the main results, before running & \lrag X8-FGA kernels & \lrag holds & impl. \tabularnewline
 \lrag F2 & \lrag Safety for pgvector with OpenFGA & \lrag ba64c23 & \lrag As above & \lrag X8-FGA kernels & \lrag holds & expl. \tabularnewline
 \lrag F3 & \lrag Every retrieval with OpenFGA uses the pre-filter & \lrag ba64c23, 1a25086 & \lrag As above & \lrag X8-FGA kernels & \lrag holds & impl. \tabularnewline
 \lrag F4 & \lrag In-process pgvector shows one of the two known modes & \lrag ba64c23 & \lrag As above & \lrag X8-FGA kernels & \lrag holds as worded, with a caveat: one run was a mixture & expl. \tabularnewline
 \midrule
-\ledgergroup{X8, amendment 2 of the same file: eff0b23 (2026-10-30 10:11), after X0, X8, X8-FGA and the critical review, before any of its runs.}
-\lrag Am.~2 & \lrag Exposure and the mutation control: the seven predictions numbered X1 to X7 in that text, unrelated to the experiment codes & \lrag eff0b23 & \lrag After the main results, before running & \lrag x8b kernels & \lrag Six hold; the seventh holds for targeted questions and is falsified for red-team prompts (87.7\%, predicted at least 90\%) & expl. \tabularnewline
+\ledgergroup{X8, amendment 2 of the same file: eff0b23 (git date 2026-10-30 10:11), after X0, X8, X8-FGA and the critical review, before any of its runs.}
+\lrag Am.~2 & \lrag Exposure and the mutation control: seven predictions, E1 to E7 here; plan/x8-prereg.md and evidence/x8-controls.md number them X1 to X7, unrelated to the experiment codes & \lrag eff0b23 & \lrag After the main results, before running & \lrag wardowl-x8b kernels & \lrag E1 to E6 hold; E7 holds for targeted questions and is falsified for red-team prompts (87.7\%, predicted at least 90\%) & expl. \tabularnewline
 \end{longtable}
 \endgroup

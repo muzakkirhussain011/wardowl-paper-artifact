@@ -117,7 +117,7 @@ recall at a price in throughput, and the stores' own options bought more: Qdrant
 top of its sweep but 0.997 with ACORN, and Weaviate's sweeping filter strategy reached 0.995 against
 0.968 for its default ACORN strategy~\cite{weaviate2026vectorindex}, at 104.3 against 136.1 queries
 per second. Index builds varied little except Qdrant's: its recall@10 at the default ranged from
-0.759 to 0.878 over three builds of the same data, as in X1.
+0.759 to 0.878 over three builds of the same data, as in X1, wider than the intervals below, which resample subjects and are conditional on the builds.
 
 To separate the filter's cost from the index's own error, Table~\ref{tab:qual-frontiers} also gives
 recall@10 at 100\% selectivity, where the filter passes everything. At the defaults that baseline
@@ -136,7 +136,7 @@ of that build was 1.000 for Elasticsearch (its exact search, at 52; 0.878 for it
 at 107), 0.999 for OpenSearch and Milvus,
 0.997 for Redis, 0.995 for Weaviate, 0.979 for Qdrant (ACORN at its default gate, at 69), 0.578 for
 pgvector (its default without iterative scans; with them it served at most 16) and 0.438 for LanceDB;
-MongoDB reached 50 at no setting (at most 28). A calibrated comparison would need every store timed
+MongoDB reached 50 at no setting (at most 28). The threshold of 50 is this reading's and not the pre-registration's. A calibrated comparison would need every store timed
 on one machine, or a reference workload on each runner, and interpolation along each sweep.
 
 \begin{table}[tbp]
@@ -203,9 +203,8 @@ for the same reason. No single axis describes every store; the paper therefore r
 several (released with the run).
 
 \paragraph{Effort and the gap (H2.3, confirmed).}
-At the top of each sweep the gap narrowed and remained in two of the four stores that had one, as
-predicted. pgvector's fell from 0.424 to 0.172 (0.161 to 0.183) at \texttt{ef\_search} 1,000, and
-LanceDB's moved by 0.001 at 500 probes, at its quantization floor. Weaviate's closed, to 0.004 at
+At the top of each sweep the gap narrowed and remained in two of the four stores that had one, which meets the rule's bar of half. pgvector's fell from 0.424 to 0.172 (0.161 to 0.183) at \texttt{ef\_search} 1,000, and
+LanceDB's moved by 0.001 at 500 probes, at its quantization floor, a negligible narrowing that still counts under the rule. Weaviate's closed, to 0.004 at
 \texttt{ef} 1,024. Elasticsearch's widened, from 0.137 to 0.162 at 10,000 candidates: more candidates
 helped uncorrelated questions more. pgvector reached recall@10 of 0.95 for uncorrelated questions at
 \texttt{ef\_search} 400 and for negatively correlated ones at no level of its sweep; Weaviate needed one
@@ -219,8 +218,7 @@ layouts with negatively correlated questions and one disjunction, recall@10 at 0
 plan for most of the smallest filters, below), 1.000, 1.000, 0.460 and 0.489 for Qdrant, 0.841,
 0.727, 0.641 and 0.607 for Elasticsearch, and 1.000 down to 0.822 and 0.896 at 10\% for Weaviate and
 Milvus. Redis stayed at 1.000 and LanceDB near its floor (0.197 to 0.235); OpenSearch and MongoDB lost
-at most 0.0012. In this regime very selective permission filters are therefore the easy case for most
-stores, and the hard ones admit between 0.5\% and 10\% of the corpus.
+at most 0.0012. In this regime very selective permission filters were therefore the easy case for five of the nine stores; the test does not tell us where recall is lowest.
 
 \paragraph{pgvector's plans.}
 With each search planned with its own values, PostgreSQL chose the HNSW scan for 98.6\% of the

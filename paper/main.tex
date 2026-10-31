@@ -1,9 +1,8 @@
-% Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG
-% Venue style is applied later (NeurIPS 2027 E&D style once released); this preprint layout uses the
-% standard article class. \tbd{} marks what is still open, all of it in limits.tex: the Cerbos issue
-% link, any vendor responses, and the archive DOI.
-% Structure (decision of 2026-10-30): a main text of at most 20 pages, then the bibliography, then
-% appendices. Everything cut from the main text is in an appendix; nothing measured was dropped.
+% Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
+% This preprint layout uses the standard article class. \tbd{} marks what is still open: only the
+% archive DOI, in limits.tex.
+% Structure: a main text of about 20 pages, then the bibliography, then appendices. Everything cut
+% from the main text is in an appendix; nothing measured was dropped.
 \pdfoutput=1
 \documentclass[11pt]{article}
 \usepackage[margin=1in]{geometry}
@@ -20,7 +19,7 @@
 \usepgfplotslibrary{groupplots}
 \pgfplotsset{compat=1.18}
 \usepackage[font=small,skip=5pt]{caption}
-\usepackage[hidelinks,pdfauthor={Syed Muzakkir Hussain},pdftitle={Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines}]{hyperref}
+\usepackage[hidelinks,pdfauthor={Syed Muzakkir Hussain},pdftitle={Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines}]{hyperref}
 \usepackage[numbers,sort&compress]{natbib}
 
 % Run-in paragraph headings with less space above than the article class's 3.25ex.
@@ -33,7 +32,7 @@
 \newtheorem{definition}{Definition}
 \newtheorem{observation}{Observation}
 
-\title{Leak-Free but Not Loss-Free:\\Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
+\title{Verifying Permission-Aware Retrieval for RAG\\across Vector Stores and Authorization Engines}
 \author{Syed Muzakkir Hussain\\\texttt{muzakkirhussain011@gmail.com}}
 \date{}
 
@@ -42,24 +41,23 @@
 
 \begin{abstract}
 Retrieval-augmented generation (RAG) places the chunks most similar to a question into a language
-model's prompt. Similarity ignores authorization, so an index shared by readers with different
-permissions can hand a subject a chunk it may not read; OWASP lists this as LLM08. The remedy is old:
-push the access predicate into the query and check what comes back. We ask whether today's stack
-implements it faithfully, by testing one enforcement layer that compiles an existing authorization
-policy into filters for production vector stores, re-checks every hit and fails closed. We formalize
-secure, fresh, sound, complete and count-honest top-$k$ retrieval with a stated trusted computing
-base. Differential testing of 13 stores and seven authorization engines found two undocumented store
-behaviors that cost recall, adapter faults and documented limits that fail closed; filters and checks
-disagreed at one revision only on a type gap in one translator. Mean recall@10 at default or tuned settings
-ranged from 0.55 to 0.98 over eight stores searched approximately, and one store returned no results
-to some least-privileged people in five of eight runs, which the evaluated release reported as
-complete; we trace these losses to graph layout and a plan cache and measure what detection and bounded
-repair recover. Eleven end-to-end configurations, four runs each over 107,540 chunks, had no leak: a
-one-sided 95\% bound of $6.8 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per person, over the
-generator's question distribution. A control that broke the filter on purpose tripped the leak checks,
-and the re-check contained it. No returned chunk was unreadable at the revision the re-check read,
-in any tested configuration; information about unreadable chunks still was revealed through latency,
-counts, recall and scores, and revocation took up to a cache's time to live or an engine's staleness.
+model's prompt. Similarity ignores authorization, so a shared index can hand a subject a chunk it may
+not read; OWASP lists this as LLM08. An old remedy pushes
+the access predicate into the query and checks what comes back. We measure one layer that does this,
+developed by the author and created in October 2026: it compiles authorization policies into filters for
+vector stores, re-checks every hit and fails closed. Permissions are synthetic, no adaptive adversary ran
+and no other layer was compared. Testing 13 stores differentially found no hit outside the reference, plus
+two truncations we found undocumented (4,096 bytes on Redis, 8,191 characters on MongoDB). On one generated
+model per engine profile, filters and checks disagreed at one revision only on a type gap in one translator.
+On one synthetic corpus with tenant copies, mean recall@10 at mixed tuned and default
+settings ranged from 0.55 to 0.98 over eight approximate stores, and pgvector gave empty answers to people
+who could read something in five of eight runs, reported as complete. A side run on another corpus found
+row-level security at recall@10 of at least 0.998, at median latencies up to 608\,ms. In eleven end-to-end configurations,
+four runs each, no returned chunk lay outside the readable set at the revision the re-check read: with the
+3,746 distinct (person, question) pairs taken as independent, a one-sided 95\% bound of
+$8.0 \times 10^{-4}$ per question, and $1.6 \times 10^{-2}$ per person, though the 189 people are 13 role types.
+The re-check dropped nothing in those runs; end to end, only a one-seed mutation control exercised it. In forced-choice tests latency, counts, recall and scores revealed nearby unreadable chunks, and
+the evaluated code served revoked chunks up to 38.4\,s after invalidation.
 \end{abstract}
 
 \section{Introduction}\label{sec:intro}

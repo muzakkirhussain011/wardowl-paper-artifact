@@ -9,7 +9,9 @@ use, are defined only here. Table~\ref{tab:app-map} gives, for each, where it is
 and how often it ran, the library commit, the versions of stores and engines, and the run identifiers. Numeric run
 identifiers are GitHub Actions runs of the library's repository unless marked; \emph{E} is the enterprise corpus and
 \emph{M} the MS MARCO corpus. No single version of the library was evaluated throughout
-(Appendix~\ref{sec:limits-limits}).
+(Appendix~\ref{sec:limits-limits}). Kernels named below, apart from the two public notebooks of X0 and X1 run 1, are private, on the Kaggle
+account muzakkirhussain1; their logs are in the artifact and in the public dataset
+\url{https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence}.
 
 \begingroup
 \scriptsize
@@ -60,7 +62,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag GitHub-hosted, 4 vCPUs, 16\,GB, one store per job; E, 1,468 scorable pairs; M, 5 seeds of 2 layouts, 1,050 subjects, 6,200 pairs; 3 builds per store
  & \maprag Branch paper/x2-x5 at 884ce18, from feat/under-retrieval at db28517 (PR~\#168)
  & \maprag PostgreSQL 17.11, pgvector 0.8.7; Qdrant 1.19.2; Elasticsearch 9.5.5; OpenSearch 3.9.0; Weaviate 1.39.12; Redis 8.10.2; Milvus 3.0.2 (image); MongoDB Atlas Local 8.0.30; LanceDB 0.40.0; Chroma 1.5.9; FAISS 1.15.1
- & \maprag 40921769714, created 2026-10-29 17:29 UTC \tabularnewline
+ & \maprag 40921769714, created 2026-10-29 17:29 UTC; concluded cancelled, since one job (x2-m-chroma-b2) reached the runner's timeout \tabularnewline
 \maprag X3
  & \maprag \S\ref{sec:qual-frontiers}; App.~\ref{sec:qual-size}
  & \maprag Filter size: 1 to 40,000 groups, a fixed readable set
@@ -95,7 +97,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag GitHub-hosted, as X2; five seeds; Elasticsearch's part lost with its runner
  & \maprag Branch paper/x3-x6 at 9e22b89
  & \maprag As X3
- & \maprag 40982986417, created 2026-10-30 00:58 UTC \tabularnewline
+ & \maprag 40982986417, created 2026-10-30 00:58 UTC; concluded failure, since one job (fu-cb-elasticsearch) lost its runner \tabularnewline
 \maprag X7
  & \maprag \S\ref{sec:eng-revoke}; App.~\ref{app:eng-revoke}
  & \maprag Revocation delay per path and faults
@@ -115,7 +117,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag Three repeats of X0
  & \maprag Kaggle, $2\times$T4, 4 CPUs, one session per seed; seeds 11, 13, 17
  & \maprag As X0
- & \maprag As X0
+ & \maprag As X0, except Redis 8.10.3, lancedb 0.41.0 and weaviate-client 4.24.1 (X0: 8.10.2, 0.40.0, 4.24.0)
  & \maprag Kaggle kernels wardowl-x8-seed11, -seed13, -seed17 \tabularnewline
 \maprag X8-FGA (X8, amendment 1)
  & \maprag \S\ref{sec:e2e}; App.~\ref{app:e2e}
@@ -130,7 +132,7 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag Kaggle, as X8; FAISS only; seeds 7, 11, 13, 17 (exposure), seed 7 (control)
  & \maprag As X0
  & \maprag FAISS, as X0
- & \maprag Kaggle kernels x8b-seed7, -seed11, -seed13, -seed17, x8b-control-seed7, x8b-pool \tabularnewline
+ & \maprag Kaggle kernels wardowl-x8b-seed7, -seed11, -seed13, -seed17, wardowl-x8b-control-seed7, wardowl-x8b-pool \tabularnewline
 \maprag Confor\-mance campaign, runs 1 and 2
  & \maprag \S\ref{sec:conformance}; App.~\ref{app:conformance}, \ref{sec:conf-results}
  & \maprag The kit against stores and engines
@@ -144,6 +146,6 @@ Code & Where & What it tests & Platform; seeds and builds & Library commit & Sto
  & \maprag GitHub-hosted, ubuntu-24.04; the tested and the latest version of each
  & \maprag None
  & \maprag Redis 8.10.2, 8.10.3; MongoDB Atlas Local 8.0.30, 8.3.13; Cerbos 0.56.0, 0.57.0; Chroma 1.5.9
- & \maprag 41007436602, 41007779363, 41008151303 (the paper's repository) \tabularnewline
+ & \maprag 41007436602, 41007779363, 41008151303, in the author's private repository, so these pages do not open; the outputs are in the artifact, under evidence/raw/results-reproducers/ \tabularnewline
 \end{longtable}
 \endgroup

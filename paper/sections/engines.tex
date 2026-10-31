@@ -11,7 +11,8 @@ cost. We ask whether the filters \sys{} compiles from four engines admit exactly
 checks allow, separating a translation fault, which persists at one revision, from revision skew, a write
 between the two calls, and from truncated list APIs. We then measure how long a revocation keeps admitting
 and whether the layer fails closed. We tested OpenFGA 1.22.0, SpiceDB 1.56.2, OPA 1.21.2 and Cerbos 0.56.0
-on five seeds of a generated world of 120 users, the subjects, and 1,500 documents against an independent oracle. \emph{One
+on five seeds of a generated world of 120 users, the subjects, and 1,500 documents, against an oracle that is a separate plain
+implementation of the same model. \emph{One
 revision} means SpiceDB's \texttt{atExactSnapshot}; OpenFGA has no snapshot token, so its store was read quiescent;
 OPA and Cerbos are stateless per request (Appendix~\ref{app:engines}).
 
@@ -19,10 +20,13 @@ OPA and Cerbos are stateless per request (Appendix~\ref{app:engines}).
 In the seven profiles that hold the model as intended, 6.3 million (user, document) pairs produced no
 disagreement between filter and check, and every check agreed with the oracle (one-sided 95\% bound on
 users with any disagreement: 0.5\% per profile; X4-H1 confirmed; Table~\ref{tab:eng-agree} in
-Appendix~\ref{sec:eng-agree}). The only disagreement at one revision is the Cerbos type gap: when 10\% of
+Appendix~\ref{sec:eng-agree}). These pairs repeat one generated model per profile over five seeds, and the
+OPA and Cerbos profiles omit bans (Cerbos's also folders), so this has little power to find a schema-shape fault such as
+CVE-2025-65111, in which SpiceDB before 1.47.1 missed LookupResources results~\cite{nvd2025cve202565111}. The only disagreement at one revision is the Cerbos type gap: when 10\% of
 documents store a one-value ACL list as a plain value, the adapter's filter admits what the check denies
 in 569 pairs (0.063\% of pairs; 52.5\% of users, 95\% interval 48.3\% to 56.3\%), and the re-check turns
-each into a violation (X4-H2 confirmed). Neither translator dropped a negation (X4-H3 confirmed), but OPA's
+each into a violation (X4-H2 confirmed). Neither translator dropped a negation, but vacuously: with bans no user received a
+filter (X4-H3 confirmed as registered), so negation in a filter is untested. OPA's
 partial evaluation keeps \texttt{not (x in [])} even for the 73 users with no ban in scope, which falsified
 our availability prediction: one ban rule makes that filter unavailable to everyone, who are then
 post-filtered.
@@ -30,13 +34,13 @@ post-filtered.
 \paragraph{Revision skew and truncation.}
 Unpinned under a writer committing 20 toggles a second, filter and check disagreed in every OpenFGA trial,
 in 81.5\% of SpiceDB trials with \texttt{fullyConsistent} (95\% interval 76.0\% to 86.5\%) and in 13.0\% of
-OPA trials (8.5\% to 18.0\%). A write between the calls explained every disagreeing pair, and none
-reproduced; pinned to one SpiceDB snapshot, 200 trials produced no disagreement (X4-H4 confirmed). An online
+OPA trials (8.5\% to 18.0\%). In those conditions a write between the calls explained every disagreeing pair, an attribution that is
+generous where windows hold dozens of writes (medians of 59 and 208 for OpenFGA), and none reproduced; under SpiceDB's default
+\texttt{minimizeLatency} it explained 226 of 228. Pinned to one SpiceDB snapshot, 200 trials produced no disagreement (X4-H4 confirmed). An online
 violation is thus evidence of a translation fault only when filter and check read one revision. ListObjects and
-LookupResources with the layer's limit of 1,000 returned exactly $\min(N, 1000)$ objects without signalling
-truncation; the layer gave an exact filter for every $N \le 999$ and none for $N \ge 1000$ in all 540 calls (X4-H5
-confirmed). The cost lies at the limit: with 1,000 or 1,001 readable documents among 100,000, recall@10 fell to 0.855
-to 0.891 per level, against 1.000 below the limit and from 3,000 readable documents up (X4-H6 confirmed).
+LookupResources with the layer's limit of 1,000 truncated without a signal, and the layer gave no filter at the limit in all 540 calls (X4-H5
+confirmed), at a cost: with 1,000 or 1,001 readable documents among 100,000, recall@10 fell to 0.855
+to 0.891 (X4-H6 confirmed).
 
 \subsection{Revocation and faults}\label{sec:eng-revoke}
 
@@ -67,30 +71,32 @@ sharing the cache through Redis. $\dagger$: at least one trial exceeded the stat
 \end{table}
 
 Table~\ref{tab:eng-revoke} gives the measured $\delta$ of each serving path, and a dagger marks a violation
-of the $\delta$ the path states. The cache's time to live is the realized delay (every ttl median lies
-within 34\,ms of 5\,s or 30\,s; X7-H2 confirmed), and invalidation ends the delay at once, or within the
+of the $\delta$ the path states. The cache's time to live is the realized delay (X7-H2 confirmed), and invalidation ends the delay at once, or within the
 shared replica's 1\,s local copy. Permissions copied into chunk metadata were revoked within milliseconds
 (X7-H4 confirmed). Two sources of truth were stale themselves. Cerbos reloaded a rewritten policy file in a
-median 2.5\,s (at most 4.0\,s). SpiceDB under \texttt{minimizeLatency}, the layer's default, took a median
+median 2.5\,s. SpiceDB under \texttt{minimizeLatency}, the layer's default, took a median
 3.3\,s; in 28 polls a revoked chunk reappeared after it had disappeared, and one of 40 trials took 8.7\,s,
-beyond the 6.5\,s we had registered (X7-H5 falsified); a rerun's 40 trials took at most 5.2\,s. Invalidation did
-not survive such an engine: the next call refilled the cache from the stale snapshot, so 79 of 80 SpiceDB revocations
-with invalidation exceeded their bound (medians 30.0 and 31.0\,s; X7-H1 and X7-H3 falsified in these cells), and
+beyond the 6.5\,s we had registered (X7-H5 falsified), which we have not explained; a rerun's 40 trials took at most 5.2\,s.
+Invalidation did not survive such an engine: the next call refilled the cache from the stale snapshot, so 79 of 80 SpiceDB revocations
+with invalidation exceeded their bound (medians 30.0 and 31.0\,s, maximum 38.4\,s; X7-H1 and X7-H3 falsified in these cells), and
 Cerbos's took as long.
 
 We fixed this and four other defects the run exposed: after an invalidation the cache now caches nothing for the
-engine's declared staleness (11\,s for SpiceDB without full consistency). A targeted rerun, an implementation check
+engine's declared staleness (11\,s for SpiceDB without full consistency, set from the one 8.7\,s trial). A targeted rerun, an implementation check
 specified in writing after the main results and before running, confirmed every prediction (A2-H1 to A2-H8): all 160
 SpiceDB and Cerbos revocations with invalidation took effect within the declared staleness plus 1\,s, and 1\,s more on
-the replica, at medians of 4.8\,s (at most 5.2\,s) and 3.9\,s against 30 and 31\,s before.
+the replica, at medians of 4.8\,s (at most 5.2\,s) and 3.9\,s against 30 and 31\,s before. With a maximum of 5.2\,s the rerun shows
+that the fix holds, not that 11\,s is tight, and these fixes have not been through the end-to-end runs.
 
 We injected 14 faults into each engine, and five or eight into pgvector and Qdrant, in 1,090 episodes. Outside
 the control below, no retrieval returned a chunk outside the user's readable set, in 623,279 requests over 1,050
-episodes: at most $2.8 \times 10^{-3}$ per episode (one-sided 95\%), over the faults we injected (X7-H6 confirmed).
-The control, 40 episodes that turned the engine's denials into allows, leaked in every engine. Every engine-caused
-failure was the layer's authorization error with a message naming no host, and recovery took a median 0.02 to
-0.18\,s after a transport fault's removal. Two behaviors needed work: an empty LookupResources stream read as ``no
+episodes. The one-sided 95\% formula gives $2.8 \times 10^{-3}$ per episode (X7-H6 confirmed), but these episodes are not samples from a
+population of faults: they replay 13 fault kinds, each episode cycling 10 fixed (user, query) pairs, and the same formula over the 13 kinds gives 0.21.
+The control, 40 episodes that turned the engine's denials into allows, is the fault class that does leak: it leaked in every engine, as a wrong check must, and is
+excluded from the bound. Every engine-caused
+failure was the layer's authorization error with a message naming no host. Recovery took a median 0.02 to
+0.18\,s after a proxy fault's removal and 0.08 to 0.47\,s after a killed server's restart. Two behaviors needed work: an empty LookupResources stream read as ``no
 readable documents'' (4,746 retrievals returned nothing without an error, losing recall only), and store failures
-surfaced as the clients' own exceptions. The rerun confirmed both fixes, and in its 10,303 requests over 140 episodes
-no chunk leaked ($2.1 \times 10^{-2}$ per episode). For a connection that is accepted but never answered, only a
+surfaced as the clients' own exceptions. The rerun confirmed both fixes: in the 10,303 requests of its 20 SpiceDB episodes
+no chunk leaked, and its 120 store episodes reported none either ($2.1 \times 10^{-2}$ per episode over all 140). For a connection that is accepted but never answered, only a
 deadline on the whole retrieval, which the layer does not yet offer, would bound the wait.

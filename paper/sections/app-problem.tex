@@ -8,16 +8,17 @@ threat model and metrics.
 
 \subsection{Reading the criteria}\label{app:criteria}
 
-Security, and freshness for the $\delta$ that the serving path states, are required of every result,
-and count-honesty is required of the flag. Soundness and completeness are what approximate search
-trades away; permission-recall@$k$, the under-retrieval rate and the false-completeness rate
-(Section~\ref{sec:prob-metrics}) measure the shortfall. Count-honesty is relative to $\varphi_s$: it
-implies completeness only when $\varphi_s$ has no false denials, $R_\tau(s) \subseteq E(\varphi_s)$,
-and it never implies soundness, since a full answer of the wrong chunks satisfies it. A flag with
+Permission-recall@$k$, the under-retrieval rate and the false-completeness rate
+(Section~\ref{sec:prob-metrics}) measure the shortfall of soundness and completeness. Count-honesty
+implies completeness only when $R_\tau(s) \subseteq E(\varphi_s)$,
+and a full answer of the wrong chunks satisfies it. A flag with
 $c = 1$ only for maximal results would need exact search to set; Appendix~\ref{sec:sys-complete} shows
 that the layer we test is count-honest relative to $\varphi_s$ and no more. Wang et al.'s soundness
 compares an answer with the unrestricted one; ours compares it with the exact answer over the
-readable set, which is what a Truman subject is owed. Score fidelity is a separate conformance
+readable set, which is what a Truman subject is owed. Their security quantifies over database states
+that the policy cannot tell apart and requires the same answer on all of them, so it resists collusion and repeated queries; our \emph{secure} asks only that each returned chunk be readable at the revision its check read, which an
+empty answer satisfies, and it is strictly weaker. The two worlds of Section~\ref{sec:side-game} are such states for the attacker, and answers that differ between them, in hits or in count, would fail
+Wang et al.'s definition. Score fidelity is a separate conformance
 property (finite scores in non-increasing order, Section~\ref{sec:conformance}); mis-ordering inside
 a store, such as the slightly out-of-order output of pgvector's relaxed iterative
 scans~\cite{pgvector2026pgvector}, shows in recall, not in security. Security concerns the returned
@@ -29,12 +30,9 @@ Truman semantics a short answer looks like an answer to a subject who can read l
 is a partial step toward non-Truman behavior, letting the layer say that an answer may be
 incomplete.
 
-With the readable set defined by the policy and (A1) equating the check with the policy, the
-statement is close to definitional, and we call it an observation for that reason. Its content is
-what it leaves out: no assumption about $\varphi_s$, the filter APIs, the translators, the store's
-filter semantics or its index. It moves the burden of security onto a small trusted computing base,
-stated in Section~\ref{sec:prob-criteria}, and turns everything else into a question of completeness, soundness and freshness. It
-also holds for every query, chosen adaptively or not, which no sampled measurement can show.
+Observation~\ref{prop:reduction} moves the burden of security onto the trusted computing base of
+Section~\ref{sec:prob-criteria}, whose size we did not measure, and turns everything else into a question of completeness, soundness and freshness.
+That it holds for every query, chosen adaptively or not, is something no sampled measurement can show, and we ran no adaptive adversary.
 
 Three consequences follow. \emph{First, the re-check sees filter faults in one direction only.} A
 \emph{false admit}, where $\varphi_s$ accepts a chunk outside $R_\tau(s)$, reaches the re-check, which
@@ -89,10 +87,10 @@ on a replica sharing the cache. Two sources of truth were stale themselves. Unde
 \texttt{minimizeLatency}, revoked chunks were served for a median 3.3\,s and, in one of 40 trials of
 the first run, 8.7\,s, beyond the 6.5\,s we had registered as the limit (the documented 5.5\,s plus
 1\,s for polling); a rerun stayed within 5.2\,s. Cerbos took a median 2.5\,s to reload a rewritten policy file, and
-states no bound. In front of these two engines, the release we evaluated violated its stated bound:
+states no bound. In front of these two engines, the code we ran violated its stated bound:
 after an invalidation the next call refilled the cache from the stale snapshot and held it for the
 full time to live, so 79 of 80 SpiceDB revocations with invalidation exceeded the bound, with medians
-of 30 and 31\,s. The fix caches nothing for the engine's declared staleness after an invalidation, and
+of 30 and 31\,s and a maximum of 38.4\,s. The fix caches nothing for the engine's declared staleness after an invalidation, and
 a rerun confirmed it: all 160 SpiceDB and Cerbos revocations with invalidation took effect within the
 declared staleness plus 1\,s, and 1\,s more on the replica.
 
@@ -101,12 +99,12 @@ Security needs no knowledge of $R_\tau(s)$; completeness does. A layer can set $
 only if (a)~the store searched exactly under $\varphi_s$, deep enough that $k$ candidates survived the
 re-check or none remained, or (b)~a filter-only count shows that every chunk passing $\varphi_s$ was
 among the candidates. Conversely, a count of at least $k$ alongside fewer than $k$ candidates proves
-under-retrieval; OpenSearch uses this test to switch to exact search~\cite{opensearch2026efficient}.
+under-retrieval; OpenSearch uses this test to switch to exact search for its Faiss engine, unless a setting disables it~\cite{opensearch2026efficient}.
 Both certificates are relative to $\varphi_s$, so completeness with respect to $R_\tau(s)$ also needs
 a filter free of false denials, which we test offline rather than certify at run time. A layer that
 marks a short or empty approximate result complete is not count-honest; the release of \sys{} we ran
 end to end was not, and in the runs of Section~\ref{sec:e2e} it reported empty answers as complete for
-up to ten least-privileged people per run, each of whom could read 624 chunks.
+up to ten questions per run, from people who could read 624 chunks each.
 
 \subsection{The threat model in full}\label{app:threat}
 
@@ -116,8 +114,8 @@ any number of arbitrary queries through the layer, chosen adaptively and includi
 red-team prompts, to obtain the content of any chunk outside the subject's readable set, across
 users or tenants, or to learn whether such chunks exist near a query. The adversary does not control
 the authorizer, the store or the layer's host. Observation~\ref{prop:reduction} covers adaptive
-queries; our measurements sample questions from a generator and bound failure rates over that
-distribution only (Section~\ref{sec:prob-metrics}).
+queries, but we ran no adaptive adversary: our measurements draw questions from a generator, whose red-team prompts change only the query text, and describe that
+generator only (Section~\ref{sec:prob-metrics}).
 
 \paragraph{In scope.}
 (i)~Cross-user and cross-tenant disclosure through retrieval results. (ii)~Faults in the composed
@@ -135,7 +133,7 @@ chunks or graph hops, is covered only if it passes through the same re-check~\ci
 \paragraph{Out of scope.}
 (i)~Prompt injection carried in readable content, poisoning of readable content~\cite{zou2025poisonedrag},
 and anything the model does with retrieved content, including exfiltration after correct retrieval
-as in EchoLeak~\cite{nvd2025cve202532711}; we report that the model obeyed every injected notice it
+as in EchoLeak~\cite{nvd2025cve202532711}; we report that the model's answers carried the injected notice's marker whenever it was
 retrieved (Section~\ref{sec:e2e}) to mark where our claim ends. (ii)~Wrong upstream permissions:
 over-broad ACLs are enforced faithfully, as by assistants that inherit source
 permissions~\cite{microsoft2026data}. (iii)~Extraction or membership inference over readable
@@ -170,14 +168,14 @@ an unreadable document found in a hit, a prompt or an answer; canaries follow th
 inserted secrets~\cite{carlini2019secret}, used as a deterministic enforcement check rather than a
 memorization estimate. When no leak occurs, the unit of the bound matters. Hits are not independent
 trials: they cluster by question and by subject, and a fault in the layer would affect a question or
-a permission shape, not a random hit. We therefore bound the leak rate per question and per subject,
-with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ trials, the rule of
+a permission shape, not a random hit. We therefore state the leak rate per question and per subject,
+with the one-sided 95\% bound $1 - 0.05^{1/n} \approx 3/n$ for zero events in $n$ independent trials, the rule of
 three~\cite{hanley1983if}. For the end-to-end runs of Section~\ref{sec:e2e} this gives about
-$6.8 \times 10^{-4}$ per question for each configuration (4,420 questions) and $1.6 \times 10^{-2}$
-per subject (the scenario's 189 people, who recur across runs), not the $3.8 \times 10^{-6}$ that
+$8.0 \times 10^{-4}$ per question for each configuration (3,746 distinct pairs among 4,420 questions), $1.6 \times 10^{-2}$
+per subject (the scenario's 189 people, who recur across runs) and 0.21 per role type (their 13 types), not the $3.8 \times 10^{-6}$ that
 783,888 checked hits would suggest; for the injected faults of Section~\ref{sec:eng-revoke}, about
-$2.8 \times 10^{-3}$ per fault episode (1,050 episodes). These bounds hold over the distribution of the
-question generator and of the injected faults; they say nothing about an adaptive adversary, for
+$2.8 \times 10^{-3}$ per fault episode (1,050 episodes), or 0.21 over the 13 fault kinds they replay. Independence holds only in part for each of these, and a deterministic predicate does not generate Bernoulli trials. The numbers describe the
+question generator and the injected faults; they say nothing about an adaptive adversary, for
 which only Observation~\ref{prop:reduction} and its trusted computing base speak. The
 \emph{violation rate}, the share of store candidates the re-check rejects, measures how far the
 pushed-down filter over-approximates, not the security of the layer.
