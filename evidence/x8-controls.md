@@ -175,10 +175,11 @@ and the canary check of the prompts are what catch it.
 
 ## Text for e2e.tex
 
-`paper/sections/e2e.tex` already reports exposure and the control (ea904dc, eefa3df), and its numbers
-agree with the outputs. This draft was applied on 2026-10-30, with the whole-corpus share of seed 7 added. It replaced only the passage from "Each company
-document has a counterpart" to "was at 1.8\%." (lines 41 to 43 at eefa3df). The same correction applies
-to `paper/sections/app-e2e.tex`, lines 163 to 168.
+`paper/sections/e2e.tex` already reports exposure and the control, in the two commits of 2026-10-30 that
+added those paragraphs, and its numbers agree with the outputs. This draft was applied on 2026-10-30, with the
+whole-corpus share of seed 7 added. It replaced only the passage from "Each company document has a counterpart"
+to "was at 1.8\%.", three lines of the file as it stood that day. The same correction applies to the matching
+passage of `paper/sections/app-e2e.tex`.
 
 ```latex
 Each company document has a counterpart from the same template in each of the other 19 tenants, and these

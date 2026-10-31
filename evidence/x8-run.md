@@ -2,8 +2,31 @@
 
 Written 2026-10-30. Pre-registration: `plan/x8-prereg.md` (2026-10-29, before any X8 run).
 Raw outputs: `evidence/raw/x8-seed11/`, `evidence/raw/x8-seed13/`, `evidence/raw/x8-seed17/`
-(`results.md`, `results.json`, the kernel log and the servers' logs, fetched with `kernels output`).
-X0, the run being repeated, is `evidence/kaggle-scale-run-2026-10-24.md` (seed 7).
+(`results.md`, `results.json`, `answers.jsonl` with the k=5 hits and the answer per question, the model-answer
+cache, the kernel log and the servers' logs, fetched with `kernels output`; `answers.jsonl` and the cache were added on
+2026-10-31). The k=10 hit lists were not written by the harness, so recall@10 is a printed number
+(`evidence/ARTIFACT_GAPS.md`). X0, the run being repeated, is `evidence/kaggle-scale-run-2026-10-24.md` (seed 7).
+
+**Corrected 2026-10-31: the "people with no results" are empty answers.** The check "everyone who may read something got
+results" (`enterprise_rag.py:2011-2016` at `bf25bd0`) counts one entry per question, not per person, and the wording in
+this file and in the pre-registration took it for people. Counted from each run's `answers.jsonl`, as answers with no hits
+where the exact baseline has hits (FAISS's row of the same person and question, or for X8-FGA, which has no FAISS pass,
+leaving out mallory, the one person who may read nothing, whose 21 questions are empty in every store):
+
+| Run | pgvector: empty answers / people | pgvector + OPA | pgvector + OpenFGA |
+|---|---|---|---|
+| X0, seed 7 | 10 / 9 | 10 / 9 | did not start |
+| X8, seed 11 | 1 / 1 | 0 / 0 | did not start |
+| X8, seed 13 | 0 / 0 | 0 / 0 | did not start |
+| X8, seed 17 | 7 / 7 | 7 / 7 | did not start |
+| X8-FGA, seed 7 | 1 / 1 | | 7 / 6 |
+| X8-FGA, seed 11 | 1 / 1 | | 8 / 8 |
+| X8-FGA, seed 13 | 0 / 0 | | 3 / 3 |
+| X8-FGA, seed 17 | 0 / 0 | | 10 / 9 |
+
+Nobody who may read something got an empty answer on every question: each of these people asked 5 questions and got hits
+on 3 or 4 of them. So wherever this file says "people with no results" below, read "empty answers"; the table above gives
+the people. The verdict on prediction 3 does not change: seeds 11 and 13 fall outside 3 to 25 in either unit.
 
 ## What ran
 
@@ -20,10 +43,10 @@ permission templates and personas are fixed by the scenario.
 
 | Run | Checks passed / failed | Failed checks |
 |---|---|---|
-| X0, seed 7 | 87 / 3 | pgvector empty results (10 people); pgvector + OPA the same 10; OpenFGA did not start |
-| seed 11 | 88 / 2 | pgvector empty results (1: tailspin-judy); OpenFGA did not start |
+| X0, seed 7 | 87 / 3 | pgvector empty results (10 answers, 9 people); pgvector + OPA the same 10; OpenFGA did not start |
+| seed 11 | 88 / 2 | pgvector empty results (1 answer: tailspin-judy); OpenFGA did not start |
 | seed 13 | 89 / 1 | OpenFGA did not start |
-| seed 17 | 87 / 3 | pgvector empty results (7 people, all "judy" personas); pgvector + OPA the same 7; OpenFGA did not start |
+| seed 17 | 87 / 3 | pgvector empty results (7 answers, 7 people, all "judy" personas); pgvector + OPA the same 7; OpenFGA did not start |
 
 "OpenFGA did not start": `http://127.0.0.1:18080/healthz did not answer within 180 s`, in all four
 runs. The cause is the harness: each X8 run's `openfga.log` ends in `panic: configured request
@@ -98,11 +121,15 @@ plans and the index state to settle what decides the switch.
 
 | Run | Configurations reporting | Injected notices retrieved | Obeyed | Per configuration |
 |---|---|---|---|---|
-| X0, seed 7 | 9 | 482 | 482 | 7 to 106 |
+| X0, seed 7 | 10 | 498 | 498 | 7 to 106 |
 | seed 11 | 10 | 741 | 741 | 11 to 117 |
 | seed 13 | 10 | 768 | 768 | 3 to 112 |
 | seed 17 | 10 | 652 | 652 | 1 to 108 |
-| **All four** | | **2,643** | **2,643** | 1 to 117 |
+| **All four** | | **2,659** | **2,659** | 1 to 117 |
+
+(Corrected 2026-10-31: the X0 row left out pgvector + OPA, 16 of 16, and read 9 configurations, 482; X0's `results.md`
+has 10 rows and 498. With the 426 of X8-FGA, whose four runs give 137, 62, 110 and 117 over both configurations, the eight
+runs sum to 3,085 of 3,085.)
 
 FAISS: target document in the top five for every targeted question in all four runs; answer
 accuracy 0.984 to 0.997. Qdrant: target in the top five for 0.338 to 0.399 of targeted questions.
@@ -121,13 +148,14 @@ runs.
 4. **Redis, Elasticsearch and OpenSearch at or above 0.90 recall@10 in every run, holds.** Lowest:
    OpenSearch 0.933 (seed 13).
 5. **The model obeys every retrieved injected notice, holds.** 2,161 of 2,161 in the three X8 runs
-   (2,643 of 2,643 with X0).
+   (2,659 of 2,659 with X0).
 
 ## X8-FGA (amendment 1)
 
 Kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` (2026-10-29 and 30,
 GPU T4 x2, 0.9 hours each), pushed after the amendment's commits (ba64c23, 1a25086). Raw outputs:
-`evidence/raw/x8fga-seedNN/` (`results.md`, `results.json`, kernel log, `openfga.log`).
+`evidence/raw/x8fga-seedNN/` (`results.md`, `results.json`, `answers.jsonl`, the model-answer cache, kernel log,
+`openfga.log`).
 
 OpenFGA started in every run (its log holds only the three start-up warnings about disabled
 authentication and TLS) and the harness wrote 74,960 tuples in 109 to 119 s each time.

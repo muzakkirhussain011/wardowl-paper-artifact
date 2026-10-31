@@ -1,12 +1,16 @@
 # Evidence: X1 run 2, under-retrieval under permission filters
 
 Written 2026-10-30. Pre-registration: `benchmarks/paper/PREREGISTRATION.md` on branch
-`paper/x1-underretrieval` (worktree `D:\Projects\wardowl-x1`), with amendment 1 (2026-10-26) and
+`paper/x1-underretrieval`, with amendment 1 (2026-10-26) and
 amendment 2 (2026-10-29, after run 1 and before run 2; items 1 to 9 at commit eeb7d2b, items 10 to 12
 "revised after the smoke run" at 80e3f56, before any full run). Harness at a956424.
-Raw outputs: `evidence/raw/x1run2-stats/x1run2-stats/` (`report.md`, `summary_by_setting.csv`,
+Statistics: `evidence/raw/x1run2-stats/x1run2-stats/` (`report.md`, `summary_by_setting.csv`,
 `summary_by_build.csv`, `intervals.csv`, `paired.csv`, `plans.csv`, `explain_summary.csv`,
 `qdrant_paths.csv`, `acorn_engagement.csv`, `predictions.csv`, `manifest.json`, `x1_stats.log`).
+Raw outputs, added on 2026-10-31: `evidence/raw/x1run2-prep-gpu/`, `evidence/raw/x1run2-shard-a/`, `-b/` and `-c/`, each
+with `x1run2/runs/*.parquet` (per-question rows with the hits at k=5 and k=10), `x1run2/meta/` (131 setting records),
+`x1run2/explain/`, `x1run2/explain_raw/` and the logs; `evidence/raw/x1run2-smoke/` holds the smoke run. Embedding matrices
+and query vectors are left out.
 Run 1 is `evidence/x1-underretrieval-run1.md`; the diagnosis that led to amendment 2 is
 `investigations/x0-x1-pgvector-gap.md`.
 

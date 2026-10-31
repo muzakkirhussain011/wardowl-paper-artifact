@@ -5,8 +5,7 @@ outputs, without the embeddings, are in `evidence/raw/x0-seed7/`.
 
 Source: Kaggle notebook `muzakkirhussainsyed/notebookd8377caca8` (private then), output `results.md` and
 `results.json`, run on or about 2026-10-24, read on 2026-10-26. Raw outputs (`results.json`,
-`answers.jsonl` 6.21 MB, per-store logs) remain in the notebook's output and should be downloaded
-and archived with the paper's artifact.
+`answers.jsonl` 6.21 MB, per-store logs) are in `evidence/raw/x0-seed7/`.
 
 ## Setup
 
@@ -22,9 +21,11 @@ and archived with the paper's artifact.
 
 ## Outcome: 87 checks passed, 3 failed
 
-1. pgvector: "everyone who may read something got results": 10 people failed
-   (e.g. blueyonder-judy, coho-judy, contoso-judy, fabrikam-judy, northwind-eu-judy).
-2. pgvector + OPA: the same 10 people.
+1. pgvector: "everyone who may read something got results": 10 failed
+   (e.g. blueyonder-judy, coho-judy, contoso-judy, fabrikam-judy, northwind-eu-judy). (Corrected 2026-10-31: the 10
+   counts questions, not people. `answers.jsonl` holds 10 empty answers among 9 people, coho-judy twice; each of the 9
+   asked 5 questions and got hits on 3 or 4 of them. See `evidence/x8-run.md`.)
+2. pgvector + OPA: the same 10.
 3. pgvector + OpenFGA: did not run; OpenFGA's `/healthz` did not answer within 180 s. (Corrected 2026-10-30:
    not infrastructure. The harness sets the ListObjects deadline to 20 s above OpenFGA's request
    timeout, and OpenFGA 1.22.0 refuses to start; the X8 runs' `openfga.log` shows the panic. See
