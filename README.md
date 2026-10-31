@@ -1,41 +1,61 @@
-# Leak-Free but Not Loss-Free
+# Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
 
-Research artifact for the preprint "Leak-Free but Not Loss-Free: Verifying Permission-Aware Retrieval for
-RAG across Vector Stores and Authorization Engines" by Syed Muzakkir Hussain.
+Research artifact for the preprint of that title by Syed Muzakkir Hussain.
 
-The paper tests one enforcement layer, [wardowl](https://github.com/muzakkirhussain011/wardowl), across 13
-vector stores and seven authorization engines. The author develops that library. Appendix A of the paper maps
-every experiment to its versions and runs, and Appendix B lists every hypothesis with its registration and
-verdict. The evaluation code lives in the wardowl repository, on its branches `paper/*` under `benchmarks/paper/`
-and on `main` under `acceptance/kaggle/`; the tag `evidence-v1` copies it to `harness/`. This repository holds what
-was registered, what came out and the text.
+The paper tests one enforcement layer, [wardowl](https://github.com/muzakkirhussain011/wardowl), across 13 vector stores
+and seven authorization engines. **The author develops wardowl**, so this is not an independent evaluation of it.
+
+## How to find things
+
+- **From a table or figure to its data and code:** [`REPRODUCE.md`](REPRODUCE.md). It maps every table and figure to the
+  run, the script and the data files, says how to rerun each class of experiment, and says plainly what has not been
+  rerun.
+- **What is missing, and why:** [`evidence/ARTIFACT_GAPS.md`](evidence/ARTIFACT_GAPS.md).
+- **From a code like X1 or X8 to its versions and run ids:** the paper's Appendix A; `REPRODUCE.md` repeats the ids.
+- **What was predicted, and when:** the paper's Appendix B, `plan/x8-prereg.md`, and the `PREREG*` files under
+  `harness/*/benchmarks/paper/` in the tag.
+- **Every Kaggle run's outputs and logs, browsable without git:** the public dataset
+  [muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence).
+
+## Which version to read
+
+The branch `main` holds what was registered, what came out, and the text. The tag `evidence-v1` is the archive version:
+it adds the CI artifacts and results branches of the paper's runs and the library at the commits those runs used.
+Build it with `.github/workflows/evidence-tag.yml`. The workflow refuses to replace the tag once it has been published.
+An archive DOI does not exist yet; the paper and this file will name it when it does.
 
 | Path | What it holds |
 |---|---|
+| `REPRODUCE.md` | The map from the paper to the data and code, and how to rerun |
 | `paper/` | The LaTeX source. GitHub Actions builds the PDF on every push, to the branch `results/pdf` |
 | `plan/` | The paper plan, and the pre-registration of the end-to-end repeats with its dated amendments |
-| `evidence/` | One summary per run, with what each number was read from. `compute.md` gives the compute per experiment |
-| `evidence/raw/` | Raw outputs of the Kaggle runs. In the tag `evidence-v1`, also the CI artifacts and results branches (see below) |
+| `evidence/` | One summary per run, with what each number was read from. `compute.md` gives the compute per experiment, and `ARTIFACT_GAPS.md` what is missing |
+| `evidence/raw/` | Raw outputs and logs of the Kaggle runs: X0, X1 runs 1 and 2, X8, X8-FGA, X8 amendment 2 and the recount. `KAGGLE_KERNELS.tsv` lists each kernel, its account and its server times |
 | `disclosure/` | The vendor reports with their minimal reproducers, which do not need wardowl. `reproducers.yml` runs them |
 | `reviews/` | The numbers audit and the critical review the paper answers, with the decisions taken |
 | `investigations/` | Diagnoses that turned into experiments |
-| `literature/`, `bib/` | The literature review, the bibliography, its verification status and the reference checklist |
-| `kaggle/` | The Kaggle runners and kernels |
+| `literature/`, `bib/` | The literature review, the bibliography and its verification status |
+| `kaggle/` | The Kaggle runners and kernels. The kernels of the first two runs are public notebooks; those of the later runs are private, and their outputs are in the dataset above |
 
-## Raw outputs
+The tag `evidence-v1` adds to this tree:
 
-The tag `evidence-v1`, which the DOI in the paper archives, adds to this tree:
-
-- `evidence/raw/ci-artifacts/`: the GitHub Actions artifacts of the paper's runs, one folder per run, with
-  `MANIFEST.tsv` (name, size, digest, dates and whether each artifact was copied) and `SHA256SUMS`.
+- `harness/<experiment>-<commit>/`: the wardowl library at the exact commit of each run: the package, tests, harnesses,
+  setup scripts, workflows and lock file. Only the site's media under `docs/_static/` stay out. `harness/COMMITS.tsv` names
+  each folder's full commit hash and the runs that used it.
+- `evidence/raw/ci-artifacts/`: the GitHub Actions artifacts of the paper's runs, one folder per run, with `MANIFEST.tsv`
+  (name, size, digest, dates and whether each artifact was copied) and `SHA256SUMS`.
 - `evidence/raw/results-*/`: the published summaries of those runs, from the wardowl branches `results/*`.
 - `evidence/raw/results-reproducers/`: the outputs of the vendor reproducers.
 
-Prepared corpora and embeddings (the artifacts `x2x5-data`, `x2x5-emb` and `x3x6-data`) are left out. They can be
-rebuilt from the seeds, and the corpora's own licenses limit redistribution. `MANIFEST.tsv` lists each one.
+## What is left out
 
-Model answers in the raw outputs may quote FiQA passages and synthetic company documents. The canaries, people,
-ACLs and "credentials" in them are all synthetic, so a secret scanner's hits on those files are false alarms.
+Embedding matrices and query vectors, and the CI artifacts `x2x5-data-*`, `x2x5-emb-*` and `x3x6-data`, which hold prepared
+corpora and embeddings. Each left-out CI artifact has a row in `MANIFEST.tsv` with its expiry date: `x3x6-data` on
+2026-11-28 and the rest on 2027-01-27, after which they can only be rebuilt. Rebuilding has not been tested.
+`REPRODUCE.md` gives the corpus and model identifiers and the digests a rebuild can be compared with.
+
+Model answers in the raw outputs may quote FiQA passages and synthetic company documents. The canaries, people, ACLs and
+"credentials" in them are all synthetic, so a secret scanner's hits on those files are false alarms.
 
 ## Citing
 
@@ -43,5 +63,6 @@ See `CITATION.cff`. The arXiv identifier will be added when the preprint is post
 
 ## License
 
-See `LICENSE.md`: MIT for code, CC BY 4.0 for text and data the author produced. Third-party material stays under
-its own terms.
+Mixed; `LICENSE.md` is the full statement. Code is under MIT. Text and data the author produced are under CC BY 4.0. The
+paper's text and figures under `paper/` are not licensed until the preprint is posted. FiQA text quoted in the outputs,
+and answers generated by Qwen2.5-3B-Instruct, stay under their own terms and are for non-commercial research only.
