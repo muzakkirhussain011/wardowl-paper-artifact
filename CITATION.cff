@@ -1,6 +1,6 @@
 cff-version: 1.2.0
 message: "If you use this artifact, please cite the paper. REPRODUCE.md maps each table and figure to its data."
-title: "Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
+title: "Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
 type: dataset
 version: evidence-v1
 authors:
@@ -18,7 +18,7 @@ keywords:
   - side channels
 preferred-citation:
   type: article
-  title: "Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
+  title: "Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
   authors:
     - family-names: Hussain
       given-names: Syed Muzakkir

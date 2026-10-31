@@ -49,3 +49,6 @@ InternalError Error executing plan: Internal error: error returned from database
 ```
 
 The same line is printed for `flat` and for `nested`.
+
+
+Edit 2026-11-01: I first wrote that I wanted you to hear about this first, but our public pull requests had already described it, so I corrected that sentence.

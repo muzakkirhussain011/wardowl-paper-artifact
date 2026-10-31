@@ -10,7 +10,7 @@ nested.
 Where: https://github.com/chroma-core/chroma/issues
 
 State on 2026-10-31: open, no comments (GitHub API). The last paragraph of `disclosure/ready/chroma-issue-1-depth.md` was
-corrected that day, and the filed issue is to be edited to match: it no longer says the maintainers hear of the behavior
+corrected that day, and the filed issue was edited to match on 2026-11-01, with a note saying so: it no longer says the maintainers hear of the behavior
 first, because the library's public pull request #187 had described the filter fault earlier on 2026-10-30. The run ids
 in this file belong to the paper's private development repository, so their pages are not public. Every job's output is
 public: `runs/<run id>/` on branch `results/reproducers` of the artifact repository, and
@@ -97,7 +97,7 @@ chromadb 1.5.9, still the latest release that day, in workflow runs 41007779363 
 crash threshold (`evidence/x3-x6-followup.md`).
 
 State on 2026-10-31: open, no comments (GitHub API). The last paragraph of `disclosure/ready/chroma-issue-2-crash.md` was
-corrected that day, and the filed issue is to be edited to match: it no longer says the maintainers hear of the behavior
+corrected that day, and the filed issue was edited to match on 2026-11-01, with a note saying so: it no longer says the maintainers hear of the behavior
 first, because the library's public pull request #187 had described it earlier on 2026-10-30.
 
 ## Title

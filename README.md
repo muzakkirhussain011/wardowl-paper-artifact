@@ -1,4 +1,4 @@
-# Verifying Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
+# Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
 
 Research artifact for the preprint of that title by Syed Muzakkir Hussain.
 

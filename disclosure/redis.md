@@ -8,7 +8,7 @@ Where: https://github.com/RediSearch/RediSearch/issues (bug), with a docs note f
 https://redis.io/docs/latest/develop/ai/search-and-query/advanced-concepts/tags/.
 
 State on 2026-10-31: open, no comments (GitHub API). Two corrections to the text in `disclosure/ready/redis-issue.md`
-that day, which the filed issue is to be edited to match: the source lines are 39-40, not 38-39; and its last
+that day, which the filed issue was edited to match on 2026-11-01, with a note saying so: the source lines are 39-40, not 38-39; and its last
 paragraph no longer says the maintainers hear of the behavior first, because the library's public pull request #167 had
 described it earlier on 2026-10-30.
 

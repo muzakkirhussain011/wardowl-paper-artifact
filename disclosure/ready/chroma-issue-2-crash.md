@@ -51,3 +51,6 @@ Fatal Python error: Segmentation fault
   File ".../chromadb/api/rust.py", line 582 in _query
   File ".../chromadb/api/models/Collection.py", line 265 in query
 ```
+
+
+Edit 2026-11-01: I first wrote that I wanted you to hear about this first, but our public pull requests had already described it, so I corrected that sentence.

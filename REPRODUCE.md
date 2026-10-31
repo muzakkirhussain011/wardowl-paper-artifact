@@ -81,7 +81,7 @@ are the trustworthy times.
 | X8 amendment 2 | Kaggle, private kernels `muzakkirhussain1/wardowl-x8b-seed7`, `-seed11`, `-seed13`, `-seed17`, `-control-seed7`, `-pool`; smoke `-smoke`; recount `-verify` | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
 | Conformance run 1 | GitHub-hosted | `harness/conformance-run1-5d0f414/` | 40313285885 | `success` |
 | Conformance run 2 | GitHub-hosted | `harness/conformance-run2-182bcbc/` | 40905549149 | `success` |
-| Vendor reproducers | GitHub-hosted, in the paper's private development repository | None: `disclosure/reproducers/` uses the vendors' clients only | 41007436602, 41007779363, 41008151303. These pages are not public; the outputs are in `evidence/raw/results-reproducers/runs/` | `success` |
+| Vendor reproducers | GitHub-hosted, in the paper's private development repository | None: `disclosure/reproducers/` uses the vendors' clients only | 41007436602, 41007779363, 41008151303, and 41249047470, a public rerun on 2026-10-31 with the same verdicts. The first three pages are not public; the outputs are in `evidence/raw/results-reproducers/runs/` | `success` |
 
 The Kaggle runs' outputs and logs, without embedding matrices, are also in the public dataset
 [muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence). Its

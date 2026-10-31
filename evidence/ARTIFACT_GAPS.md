@@ -71,12 +71,22 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
   by `expires_at` in `MANIFEST.tsv`. After those dates a rerun of X3 and X6 from the same prepared data, or a follow-up against it,
   is not possible.
 
+## History of this repository
+
+A first public repository of this name was created on 2026-10-30 at 21:29 UTC, and the tag `evidence-v1` was built there. On
+2026-10-31 its `main` was rewritten from commit `ee8a98b` on, to remove the author's private posting checklist and reference
+checklist, which were working notes and not results. GitHub still served the old commits by hash, so that repository was deleted
+and this one created on 2026-10-31 at 22:32 UTC, before any DOI; the first had no stars, forks or watchers. Commits before
+`ee8a98b`, among them every pre-registration commit the paper cites (`875d98e`, `ba64c23`, `1a25086`, `eff0b23`), kept their
+hashes. Later commits did not, so the run records on branch `results/reproducers` name head commits `d115e6f`, `38f4ae7` and
+`6872caa`, which exist only in the author's private repository. The reproducers' files last changed at commit `a91da71`.
+
 ## Provenance of the vendor reproducers
 
 The run ids 41007436602, 41007779363 and 41008151303 are of the paper's private development repository, so a stranger can't open
 them; only the outputs on branch `results/reproducers` are public, and those are self-reported copies. Later runs on that branch
-name head commits of the same repository, and `38f4ae7` (run 41114474172) is not on any public branch. A run of
-`.github/workflows/reproducers.yml` on the public repository would give public run ids, at a later date.
+name head commits of the same repository, and `38f4ae7` (run 41114474172) is not on any public branch. Run 41249047470 of
+`.github/workflows/reproducers.yml`, on this public repository on 2026-10-31, gave the same verdicts, and its page is public.
 
 ## Archive and licenses
 
@@ -94,6 +104,15 @@ name head commits of the same repository, and `38f4ae7` (run 41114474172) is not
 - `plan/paper-plan-v1.md` keeps its plan sections, including venue choices. They are what was planned at the time. Its progress
   log was removed on 2026-10-31 because it was an operational diary and pointed to a file that no longer exists; `evidence/` and
   the git log hold the same events.
+- The secret scan looks for token shapes and has no rules for personal data; personal strings were checked separately.
+- Run 40909137062 (`paper-x3-x6`, commit `2af1dd8`, "at smoke size first") has no folder here: it was a smoke run of the
+  workflow, before the registered runs.
+- Kaggle's public API gives `lastRunTime` 2026-10-28T21:35:06Z and 21:35:31Z for the two public notebooks, later than the runs
+  that `evidence/raw/KAGGLE_KERNELS.tsv` dates to 2026-10-24 19:05:06 and 2026-10-26 10:02:06. Two long runs 25 seconds apart do
+  not fit, and the cause is not established. Bounds that anyone can check: PyPI's upload of wardowl 2.1.0 at 2026-10-24T18:57:58Z,
+  which X0 installs, and the start time in X1 run 1's `manifest.json`, 2026-10-26T10:09:12.
+- X2 and X5 hold no container image digests: `benchmarks/paper/x2x5_services.sh` starts images by tag, and each job's `job.json`
+  records the server's version and commit. Conformance, X3, X4 and X7 hold digests.
 - `plan/x8-prereg.md` still counts "people" in its prediction X8-3, because a pre-registration is not rewritten. The unit is
   corrected in `evidence/x8-run.md`.
 - The Redis over-admission was filed as a public issue, although the behavior can match a different value and RediSearch's
