@@ -1,0 +1,1 @@
+{"requestId":"r", "action":"read", "resourceKind":"groups", "filter":{"kind":"KIND_CONDITIONAL", "condition":{"expression":{"operator":"hasIntersection", "operands":[{"variable":"request.resource.attr.allowed_groups"}, {"value":["eng"]}]}}}, "cerbosCallId":"01M6A1SQA8YR8QT7JQFATHMWHX"}

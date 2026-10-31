@@ -1,0 +1,1 @@
+{"requestId":"r", "action":"read", "resourceKind":"tenant", "filter":{"kind":"KIND_CONDITIONAL", "condition":{"expression":{"operator":"eq", "operands":[{"variable":"request.resource.attr.tenant"}, {"value":"acme"}]}}}, "cerbosCallId":"01M6A1SQAP79NHEE69SMCJXA3M"}
