@@ -1,0 +1,15 @@
+Unable to find image 'ghcr.io/cerbos/cerbos:0.56.0' locally
+0.56.0: Pulling from cerbos/cerbos
+b65864e841b1: Pulling fs layer
+94e33582f832: Pulling fs layer
+b65864e841b1: Verifying Checksum
+b65864e841b1: Download complete
+b65864e841b1: Pull complete
+94e33582f832: Verifying Checksum
+94e33582f832: Download complete
+94e33582f832: Pull complete
+Digest: sha256:540643bc67ba628011a150ad1d3370f285daa38995be5cd7a4be181da902bec1
+Status: Downloaded newer image for ghcr.io/cerbos/cerbos:0.56.0
+2e656163f4e1ad0fbbe1e3eae09919d910e797c2cabc4caa0fed4ae02d581eba
+the server image's own client is used
+cerbos answered after about 4 s
