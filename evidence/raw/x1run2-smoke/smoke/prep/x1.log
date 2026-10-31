@@ -1,0 +1,41 @@
+[16:59:16] python: 3.13.15
+[16:59:16] platform: Linux-6.18.55+-x86_64-with-glibc2.39
+[16:59:16] cpus: 4
+[16:59:16] wardowl: 2.1.0
+[16:59:16] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl
+[16:59:16] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1
+[16:59:16] memory_gib: 31.3
+[16:59:16] gpus: []
+[16:59:16] torch: 2.11.0+cpu
+[16:59:16] transformers: 5.16.1
+[16:59:16] sentence-transformers: 5.7.0
+[16:59:16] datasets: 4.8.5
+[16:59:16] numpy: 2.1.3
+[16:59:16] psycopg: 3.3.6
+[16:59:16] chromadb: None
+[16:59:16] elasticsearch: None
+[16:59:16] opensearch-py: None
+[16:59:16] qdrant-client: 1.20.0
+[16:59:16] weaviate-client: None
+[16:59:16] redis: None
+[16:59:16] lancedb: None
+[16:59:16] faiss-cpu: None
+[16:59:16] pandas: 2.3.3
+[16:59:16] pyarrow: 23.0.1
+[16:59:16] scipy: 1.16.3
+[16:59:16] psycopg-pool: 3.3.3
+[16:59:16] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': [], 'cuda': None}
+[16:59:16] wardowl_installed: True
+[16:59:16] == stage corpus
+[16:59:27] 6,648 FiQA queries for the probe set
+[16:59:27] probe set: 24 people, 384 questions
+[16:59:27] == stage corpus: done in 11 s
+[16:59:27] == stage embeddings
+[16:59:27] cached embeddings copied from /kaggle/input: none
+[17:26:37] == stage embeddings: done in 1630 s
+[17:26:37] == stage exact baseline
+[17:26:37] == stage exact baseline: done in 0 s
+[17:26:37] == stage alignment variables
+[17:26:38] == stage alignment variables: done in 1 s
+[17:26:38] 169 questions of 11 people; 10 fixed EXPLAIN questions
+[17:26:38] X1 finished in 0.46 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/prep/manifest.json)

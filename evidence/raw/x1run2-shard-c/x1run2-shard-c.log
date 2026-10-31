@@ -1,0 +1,1137 @@
+[{"stream_name":"stdout","time":3.353986054,"data":"[19:21:13] role shard-c; no setting starts after 8.5 h of this session\n"}
+,{"stream_name":"stdout","time":3.360839069,"data":"[19:21:13] wardowl and the paper's scripts at a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":3.360867836,"data":"[19:21:13] $ /usr/bin/python3 -m pip install -q wardowl[pgvector,qdrant] @ git+https://github.com/muzakkirhussain011/wardowl.git@a95642429d508340946ee3679b65db2eedd36dc1 qdrant-client\u003e=1.16 sentence-transformers\u003e=3 datasets\u003e=2.19 psutil pyarrow scipy\n"}
+,{"stream_name":"stdout","time":18.747618893,"data":"[19:21:29] exit code 0\n"}
+,{"stream_name":"stdout","time":19.221595041,"data":"[19:21:29] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --stores pgvector,qdrant --families hnsw-m32-efc200 --out /kaggle/working/x1run2 --pin-from /kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/x1run2 --cache /tmp/x1-cache --resume --deadline 1793332273.8964164\n"}
+,{"stream_name":"stdout","time":26.376257131,"data":"[19:21:36] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":26.376296967,"data":"[19:21:36] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":26.376349767,"data":"[19:21:36] cpus: 4\n"}
+,{"stream_name":"stdout","time":26.376362316,"data":"[19:21:36] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":26.376439387,"data":"[19:21:36] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":26.376569148,"data":"[19:21:36] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":26.376580614,"data":"[19:21:36] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":26.376743774,"data":"[19:21:36] gpus: []\n"}
+,{"stream_name":"stdout","time":26.376765884,"data":"[19:21:36] torch: 2.11.0+cpu\n"}
+,{"stream_name":"stdout","time":26.376828659,"data":"[19:21:36] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":26.376841936,"data":"[19:21:36] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":26.376910007,"data":"[19:21:36] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":26.376980349,"data":"[19:21:36] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":26.377064237,"data":"[19:21:36] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":26.37711738,"data":"[19:21:36] chromadb: None\n"}
+,{"stream_name":"stdout","time":26.377179254,"data":"[19:21:36] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":26.377223488,"data":"[19:21:36] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":26.377291362,"data":"[19:21:36] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":26.377391508,"data":"[19:21:36] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":26.377465519,"data":"[19:21:36] redis: None\n"}
+,{"stream_name":"stdout","time":26.377567921,"data":"[19:21:36] lancedb: None\n"}
+,{"stream_name":"stdout","time":26.377649119,"data":"[19:21:36] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":26.377710155,"data":"[19:21:36] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":26.377762872,"data":"[19:21:36] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":26.377810885,"data":"[19:21:36] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":26.377882787,"data":"[19:21:36] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":26.377969416,"data":"[19:21:36] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': [], 'cuda': None}\n"}
+,{"stream_name":"stdout","time":26.37805836,"data":"[19:21:36] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":26.379585251,"data":"[19:21:36] == stage corpus\n"}
+,{"stream_name":"stdout","time":26.379954821,"data":"\n"}
+,{"stream_name":"stdout","time":26.379966858,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":26.382380678,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":26.388877685,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":27.755099156,"data":"[19:21:38] 49,920 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":32.462378189,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":34.719281067,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 143455.38 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 140951.27 examples/s]\n"}
+,{"stream_name":"stdout","time":37.538885649,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":37.563108816,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":37.563529214,"data":"  note: corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stderr","time":38.269203781,"data":"\rGenerating queries split:   0%|          | 0/6648 [00:00\u003c?, ? examples/s]\rGenerating queries split: 100%|██████████| 6648/6648 [00:00\u003c00:00, 782240.17 examples/s]\n"}
+,{"stream_name":"stdout","time":38.374744846,"data":"[19:21:48] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":38.383590788,"data":"[19:21:48] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":38.38594526,"data":"[19:21:48] == stage corpus: done in 12 s\n"}
+,{"stream_name":"stdout","time":38.386397432,"data":"[19:21:48] == stage embeddings\n"}
+,{"stream_name":"stdout","time":41.359420622,"data":"[19:21:51] cached embeddings copied from /kaggle/input: ['/kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/cache/chunks-BAAI_bge-base-en-v1.5-3165378041584035.npy']\n"}
+,{"stream_name":"stdout","time":41.975963681,"data":"[19:21:52] adopted from /kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/x1run2: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']\n"}
+,{"stream_name":"stdout","time":42.231370824,"data":"\n"}
+,{"stream_name":"stdout","time":42.23140523,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":88.145221277,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2515.00it/s]\n"}
+,{"stream_name":"stdout","time":89.385572729,"data":"[19:22:39] embeddings from /tmp/x1-cache/chunks-BAAI_bge-base-en-v1.5-3165378041584035.npy\n"}
+,{"stream_name":"stdout","time":142.567740917,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":142.575842223,"data":"[19:23:33] query vectors pinned from /kaggle/working/x1run2/query_vectors.npy (largest difference from this encoding: 4.36e-04)\n"}
+,{"stream_name":"stdout","time":142.809312547,"data":"[19:23:33] == stage embeddings: done in 104 s\n"}
+,{"stream_name":"stdout","time":142.809854228,"data":"[19:23:33] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":142.809980792,"data":"\n"}
+,{"stream_name":"stdout","time":142.810003061,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":149.734616504,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":149.74989144,"data":"  note: readable chunks per person: min 0, median 58,433, max 59,265 of 107,540\n"}
+,{"stream_name":"stdout","time":149.750638181,"data":"[19:23:40] == stage exact baseline: done in 7 s\n"}
+,{"stream_name":"stdout","time":149.751176922,"data":"[19:23:40] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":167.342963272,"data":"[19:23:57] /kaggle/working/x1run2/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)\n"}
+,{"stream_name":"stdout","time":167.34405741,"data":"[19:23:57] == stage alignment variables: done in 18 s\n"}
+,{"stream_name":"stdout","time":167.375316933,"data":"[19:23:57] 1,489 questions of 213 people; 50 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":167.376357284,"data":"[19:23:57] == stage pgvector: start and load\n"}
+,{"stream_name":"stdout","time":167.458265977,"data":"[19:23:58] $ bash /tmp/wardowl-src/benchmarks/kaggle_setup.sh\n"}
+,{"stream_name":"stderr","time":171.5261894,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stderr","time":231.713170061,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\n"}
+,{"stream_name":"stderr","time":231.713203315,"data":"\n"}
+,{"stream_name":"stderr","time":231.713209175,"data":"You are in 'detached HEAD' state. You can look around, make experimental\n"}
+,{"stream_name":"stderr","time":231.713213663,"data":"changes and commit them, and you can discard any commits you make in this\n"}
+,{"stream_name":"stderr","time":231.713218414,"data":"state without impacting any branches by switching back to a branch.\n"}
+,{"stream_name":"stderr","time":231.713223221,"data":"\n"}
+,{"stream_name":"stderr","time":231.713227594,"data":"If you want to create a new branch to retain commits you create, you may\n"}
+,{"stream_name":"stderr","time":231.713232386,"data":"do so (now or later) by using -c with the switch command. Example:\n"}
+,{"stream_name":"stderr","time":231.713236976,"data":"\n"}
+,{"stream_name":"stderr","time":231.713241881,"data":"  git switch -c \u003cnew-branch-name\u003e\n"}
+,{"stream_name":"stderr","time":231.71324702,"data":"\n"}
+,{"stream_name":"stderr","time":231.713251312,"data":"Or undo this operation with:\n"}
+,{"stream_name":"stderr","time":231.713255894,"data":"\n"}
+,{"stream_name":"stderr","time":231.713260249,"data":"  git switch -\n"}
+,{"stream_name":"stderr","time":231.713264751,"data":"\n"}
+,{"stream_name":"stderr","time":231.713269494,"data":"Turn off this advice by setting config variable advice.detachedHead to false\n"}
+,{"stream_name":"stderr","time":231.713273955,"data":"\n"}
+,{"stream_name":"stdout","time":254.632071951,"data":" * Starting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":256.843866926,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":257.11805823,"data":" * Restarting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":259.532454983,"data":"   ...done.\n"}
+,{"stream_name":"stderr","time":259.587314135,"data":"NOTICE:  database \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stderr","time":259.63972584,"data":"NOTICE:  role \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stdout","time":259.834593148,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\n"}
+,{"stream_name":"stdout","time":273.490251258,"data":"[19:25:44]   loaded 20,000 of 107,540 chunks (13 s)\n"}
+,{"stream_name":"stdout","time":286.4844248,"data":"[19:25:57]   loaded 40,000 of 107,540 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":300.557465077,"data":"[19:26:11]   loaded 60,000 of 107,540 chunks (41 s)\n"}
+,{"stream_name":"stdout","time":314.516684636,"data":"[19:26:25]   loaded 80,000 of 107,540 chunks (55 s)\n"}
+,{"stream_name":"stdout","time":328.430122741,"data":"[19:26:38]   loaded 100,000 of 107,540 chunks (68 s)\n"}
+,{"stream_name":"stdout","time":333.504299774,"data":"[19:26:44]   loaded 107,540 of 107,540 chunks (74 s)\n"}
+,{"stream_name":"stdout","time":366.88464815,"data":"[19:27:17] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}\n"}
+,{"stream_name":"stdout","time":366.920640865,"data":"[19:27:17] == stage pgvector: start and load: done in 200 s\n"}
+,{"stream_name":"stdout","time":366.922471853,"data":"[19:27:17] == stage pgvector hnsw-m32-efc200-b0\n"}
+,{"stream_name":"stdout","time":484.920325328,"data":"[19:29:15] pgvector index hnsw-m32-efc200 build 0: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 0, 'm': 32, 'ef_construction': 200, 'seconds': 117.0, 'builder': \"harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)\", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}\n"}
+,{"stream_name":"stdout","time":484.921858538,"data":"[19:29:15] == stage pgvector: vacuum\n"}
+,{"stream_name":"stdout","time":485.99216976,"data":"[19:29:16] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 1146, 'n_entry_pages': 252, 'n_data_pages': 401, 'n_entries': 50109, 'version': 2}\n"}
+,{"stream_name":"stdout","time":485.993001579,"data":"[19:29:16] == stage pgvector: vacuum: done in 1 s\n"}
+,{"stream_name":"stdout","time":485.993694701,"data":"[19:29:16] == stage pgvector: filter estimates\n"}
+,{"stream_name":"stdout","time":486.354284867,"data":"[19:29:16] == stage pgvector: filter estimates: done in 0 s\n"}
+,{"stream_name":"stdout","time":486.354461233,"data":"[19:29:16] -- pgvector hnsw-m32-efc200-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":638.877523347,"data":"[19:31:49]   pgvector hnsw-m32-efc200-b0 p-asrun: 250 of 1489 questions (152 s)\n"}
+,{"stream_name":"stdout","time":800.108243612,"data":"[19:34:30]   pgvector hnsw-m32-efc200-b0 p-asrun: 500 of 1489 questions (313 s)\n"}
+,{"stream_name":"stdout","time":981.287352144,"data":"[19:37:31]   pgvector hnsw-m32-efc200-b0 p-asrun: 750 of 1489 questions (494 s)\n"}
+,{"stream_name":"stdout","time":1125.443221889,"data":"[19:39:55]   pgvector hnsw-m32-efc200-b0 p-asrun: 1000 of 1489 questions (639 s)\n"}
+,{"stream_name":"stdout","time":1269.114606369,"data":"[19:42:19]   pgvector hnsw-m32-efc200-b0 p-asrun: 1250 of 1489 questions (782 s)\n"}
+,{"stream_name":"stdout","time":1434.257806465,"data":"[19:45:04]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 1 of 3 (947 s)\n"}
+,{"stream_name":"stdout","time":1897.250882727,"data":"[19:52:47]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 2 of 3 (1410 s)\n"}
+,{"stream_name":"stdout","time":2379.857218881,"data":"[20:00:50]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 3 of 3 (1893 s)\n"}
+,{"stream_name":"stderr","time":2396.842166945,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2396.842232936,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2396.843138093,"data":"[20:01:07] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2396.844652107,"data":"[20:01:07] WARNING: pgvector hnsw-m32-efc200-b0 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":2396.844686045,"data":"[20:01:07] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2397.089782466,"data":"[20:01:07]    pgvector hnsw-m32-efc200-b0 p-asrun: recall@5 0.9989100817438693, recall@10 1.0, ERR 0.0006811989100817438, p50 414.3 ms, 1910 s, HNSW plans 0.007 of 2978\n"}
+,{"stream_name":"stdout","time":2397.092395666,"data":"[20:01:07] -- pgvector hnsw-m32-efc200-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":2422.33127514,"data":"[20:01:32]   pgvector hnsw-m32-efc200-b0 pg-custom: 250 of 1489 questions (25 s)\n"}
+,{"stream_name":"stdout","time":2444.563155283,"data":"[20:01:55]   pgvector hnsw-m32-efc200-b0 pg-custom: 500 of 1489 questions (47 s)\n"}
+,{"stream_name":"stdout","time":2465.532677745,"data":"[20:02:16]   pgvector hnsw-m32-efc200-b0 pg-custom: 750 of 1489 questions (68 s)\n"}
+,{"stream_name":"stdout","time":2492.113577402,"data":"[20:02:42]   pgvector hnsw-m32-efc200-b0 pg-custom: 1000 of 1489 questions (94 s)\n"}
+,{"stream_name":"stdout","time":2513.161124786,"data":"[20:03:03]   pgvector hnsw-m32-efc200-b0 pg-custom: 1250 of 1489 questions (115 s)\n"}
+,{"stream_name":"stdout","time":2531.697448543,"data":"[20:03:22]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 1 of 3 (134 s)\n"}
+,{"stream_name":"stdout","time":2594.187248687,"data":"[20:04:24]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 2 of 3 (196 s)\n"}
+,{"stream_name":"stdout","time":2660.795662987,"data":"[20:05:31]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 3 of 3 (263 s)\n"}
+,{"stream_name":"stdout","time":2663.75244824,"data":"[20:05:34] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2663.752497752,"data":"[20:05:34] WARNING: pgvector hnsw-m32-efc200-b0 pg-custom: 357 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":2663.753101844,"data":"[20:05:34] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":2694.689586942,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2694.689671927,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2695.612223104,"data":"[20:06:06]    pgvector hnsw-m32-efc200-b0 pg-custom: recall@5 0.6983651226158037, recall@10 0.7253405994550408, ERR 0.10013623978201634, p50 33.9 ms, 298 s, HNSW plans 0.986 of 2978\n"}
+,{"stream_name":"stdout","time":2695.615304301,"data":"[20:06:06] -- pgvector hnsw-m32-efc200-b0 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2722.478474224,"data":"[20:06:33]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 250 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":2746.327758942,"data":"[20:06:56]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 500 of 1489 questions (50 s)\n"}
+,{"stream_name":"stdout","time":2769.017069769,"data":"[20:07:19]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 750 of 1489 questions (73 s)\n"}
+,{"stream_name":"stdout","time":2796.700844955,"data":"[20:07:47]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 1000 of 1489 questions (101 s)\n"}
+,{"stream_name":"stdout","time":2825.487912791,"data":"[20:08:16]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 1250 of 1489 questions (129 s)\n"}
+,{"stream_name":"stdout","time":2845.497789878,"data":"[20:08:36]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 1 of 3 (149 s)\n"}
+,{"stream_name":"stdout","time":2914.239161884,"data":"[20:09:44]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 2 of 3 (218 s)\n"}
+,{"stream_name":"stdout","time":2983.494214336,"data":"[20:10:54]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 3 of 3 (287 s)\n"}
+,{"stream_name":"stdout","time":2986.104813897,"data":"[20:10:56] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2986.104918484,"data":"[20:10:56] WARNING: pgvector hnsw-m32-efc200-b0 pg-hnsw: 357 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":2986.105024958,"data":"[20:10:56] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":3015.528778597,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":3015.528822191,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":3016.428914129,"data":"[20:11:26]    pgvector hnsw-m32-efc200-b0 pg-hnsw: recall@5 0.6983651226158037, recall@10 0.7253405994550408, ERR 0.10013623978201634, p50 37.4 ms, 320 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":3016.431622303,"data":"[20:11:26] -- pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":3065.332725707,"data":"[20:12:15]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 250 of 1489 questions (48 s)\n"}
+,{"stream_name":"stdout","time":3106.223075575,"data":"[20:12:56]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 500 of 1489 questions (89 s)\n"}
+,{"stream_name":"stdout","time":3146.236368679,"data":"[20:13:36]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 750 of 1489 questions (129 s)\n"}
+,{"stream_name":"stdout","time":3207.269384518,"data":"[20:14:37]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 1000 of 1489 questions (190 s)\n"}
+,{"stream_name":"stdout","time":3314.381067087,"data":"[20:16:24]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 1250 of 1489 questions (297 s)\n"}
+,{"stream_name":"stdout","time":3339.812749385,"data":"[20:16:50]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 1 of 3 (322 s)\n"}
+,{"stream_name":"stdout","time":3473.317754332,"data":"[20:19:03]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 2 of 3 (456 s)\n"}
+,{"stream_name":"stdout","time":3602.92271772,"data":"[20:21:13]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 3 of 3 (586 s)\n"}
+,{"stream_name":"stderr","time":3609.096171928,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":3609.096217703,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":3609.39971868,"data":"[20:21:19]    pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: recall@5 0.8346049046321524, recall@10 0.8704359673024524, ERR 0.0, p50 32.3 ms, 593 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":3609.40126287,"data":"[20:21:19] -- pgvector hnsw-m32-efc200-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":3631.72416853,"data":"[20:21:42]   pgvector hnsw-m32-efc200-b0 pc-ef400: 250 of 1489 questions (22 s)\n"}
+,{"stream_name":"stdout","time":3652.663138656,"data":"[20:22:03]   pgvector hnsw-m32-efc200-b0 pc-ef400: 500 of 1489 questions (43 s)\n"}
+,{"stream_name":"stdout","time":3672.264088309,"data":"[20:22:22]   pgvector hnsw-m32-efc200-b0 pc-ef400: 750 of 1489 questions (62 s)\n"}
+,{"stream_name":"stdout","time":3697.484353237,"data":"[20:22:48]   pgvector hnsw-m32-efc200-b0 pc-ef400: 1000 of 1489 questions (88 s)\n"}
+,{"stream_name":"stdout","time":3723.741601998,"data":"[20:23:14]   pgvector hnsw-m32-efc200-b0 pc-ef400: 1250 of 1489 questions (114 s)\n"}
+,{"stream_name":"stdout","time":3742.403997942,"data":"[20:23:32]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 1 of 3 (132 s)\n"}
+,{"stream_name":"stdout","time":3805.330945805,"data":"[20:24:35]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 2 of 3 (195 s)\n"}
+,{"stream_name":"stdout","time":3868.830101255,"data":"[20:25:39]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 3 of 3 (259 s)\n"}
+,{"stream_name":"stdout","time":3871.098623642,"data":"[20:25:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":3871.098834953,"data":"[20:25:41] WARNING: pgvector hnsw-m32-efc200-b0 pc-ef400: 352 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":3871.098952875,"data":"[20:25:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":3897.264101093,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":3897.264143211,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":3898.121224435,"data":"[20:26:08]    pgvector hnsw-m32-efc200-b0 pc-ef400: recall@5 0.7177111716621253, recall@10 0.7463215258855587, ERR 0.09673024523160763, p50 31.7 ms, 288 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":3898.123961212,"data":"[20:26:08] -- pgvector hnsw-m32-efc200-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":3925.473625431,"data":"[20:26:36]   pgvector hnsw-m32-efc200-b0 pd-lim10: 250 of 1489 questions (27 s)\n"}
+,{"stream_name":"stdout","time":3951.13947347,"data":"[20:27:01]   pgvector hnsw-m32-efc200-b0 pd-lim10: 500 of 1489 questions (52 s)\n"}
+,{"stream_name":"stdout","time":3975.485503086,"data":"[20:27:26]   pgvector hnsw-m32-efc200-b0 pd-lim10: 750 of 1489 questions (77 s)\n"}
+,{"stream_name":"stdout","time":4004.779223165,"data":"[20:27:55]   pgvector hnsw-m32-efc200-b0 pd-lim10: 1000 of 1489 questions (106 s)\n"}
+,{"stream_name":"stdout","time":4035.269136238,"data":"[20:28:25]   pgvector hnsw-m32-efc200-b0 pd-lim10: 1250 of 1489 questions (137 s)\n"}
+,{"stream_name":"stdout","time":4059.168577263,"data":"[20:28:49]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 1 of 3 (160 s)\n"}
+,{"stream_name":"stdout","time":4136.170633692,"data":"[20:30:06]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 2 of 3 (237 s)\n"}
+,{"stream_name":"stdout","time":4210.776698044,"data":"[20:31:21]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 3 of 3 (312 s)\n"}
+,{"stream_name":"stdout","time":4213.52783166,"data":"[20:31:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":4213.527903281,"data":"[20:31:24] WARNING: pgvector hnsw-m32-efc200-b0 pd-lim10: 357 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":4213.528020601,"data":"[20:31:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":4239.477297247,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":4239.477338809,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":4240.305540152,"data":"[20:31:50]    pgvector hnsw-m32-efc200-b0 pd-lim10: recall@5 0.7636239782016349, recall@10 0.7828337874659401, ERR 0.10013623978201634, p50 43.1 ms, 341 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":4240.309226189,"data":"[20:31:50] == stage pgvector hnsw-m32-efc200-b0: done in 3873 s\n"}
+,{"stream_name":"stdout","time":4240.31103599,"data":"[20:31:50] == stage pgvector hnsw-m32-efc200-b1\n"}
+,{"stream_name":"stdout","time":4369.949374201,"data":"[20:34:00] pgvector index hnsw-m32-efc200 build 1: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 1, 'm': 32, 'ef_construction': 200, 'seconds': 128.5, 'builder': \"harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)\", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}\n"}
+,{"stream_name":"stdout","time":4369.950260516,"data":"[20:34:00] -- pgvector hnsw-m32-efc200-b1 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":4520.317442235,"data":"[20:36:30]   pgvector hnsw-m32-efc200-b1 p-asrun: 250 of 1489 questions (150 s)\n"}
+,{"stream_name":"stdout","time":4684.750663522,"data":"[20:39:15]   pgvector hnsw-m32-efc200-b1 p-asrun: 500 of 1489 questions (314 s)\n"}
+,{"stream_name":"stdout","time":4860.76241239,"data":"[20:42:11]   pgvector hnsw-m32-efc200-b1 p-asrun: 750 of 1489 questions (490 s)\n"}
+,{"stream_name":"stdout","time":5005.556693252,"data":"[20:44:36]   pgvector hnsw-m32-efc200-b1 p-asrun: 1000 of 1489 questions (635 s)\n"}
+,{"stream_name":"stdout","time":5144.629699759,"data":"[20:46:55]   pgvector hnsw-m32-efc200-b1 p-asrun: 1250 of 1489 questions (774 s)\n"}
+,{"stream_name":"stdout","time":5312.401937452,"data":"[20:49:42]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 1 of 3 (942 s)\n"}
+,{"stream_name":"stdout","time":5809.717368061,"data":"[20:58:00]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 2 of 3 (1439 s)\n"}
+,{"stream_name":"stdout","time":6275.34657862,"data":"[21:05:45]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 3 of 3 (1905 s)\n"}
+,{"stream_name":"stderr","time":6290.862744513,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":6290.862791041,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":6290.863186489,"data":"[21:06:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":6290.86338979,"data":"[21:06:01] WARNING: pgvector hnsw-m32-efc200-b1 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":6290.863616425,"data":"[21:06:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":6291.03325097,"data":"[21:06:01]    pgvector hnsw-m32-efc200-b1 p-asrun: recall@5 0.9990463215258855, recall@10 1.0, ERR 0.0006811989100817438, p50 416.5 ms, 1921 s, HNSW plans 0.007 of 2978\n"}
+,{"stream_name":"stdout","time":6291.035405245,"data":"[21:06:01] -- pgvector hnsw-m32-efc200-b1 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":6313.472329057,"data":"[21:06:24]   pgvector hnsw-m32-efc200-b1 pg-custom: 250 of 1489 questions (22 s)\n"}
+,{"stream_name":"stdout","time":6333.442698459,"data":"[21:06:43]   pgvector hnsw-m32-efc200-b1 pg-custom: 500 of 1489 questions (42 s)\n"}
+,{"stream_name":"stdout","time":6351.95695732,"data":"[21:07:02]   pgvector hnsw-m32-efc200-b1 pg-custom: 750 of 1489 questions (60 s)\n"}
+,{"stream_name":"stdout","time":6376.087229051,"data":"[21:07:26]   pgvector hnsw-m32-efc200-b1 pg-custom: 1000 of 1489 questions (84 s)\n"}
+,{"stream_name":"stdout","time":6400.608728214,"data":"[21:07:51]   pgvector hnsw-m32-efc200-b1 pg-custom: 1250 of 1489 questions (109 s)\n"}
+,{"stream_name":"stdout","time":6421.554126804,"data":"[21:08:12]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 1 of 3 (130 s)\n"}
+,{"stream_name":"stdout","time":6487.408809052,"data":"[21:09:17]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 2 of 3 (196 s)\n"}
+,{"stream_name":"stdout","time":6553.962576423,"data":"[21:10:24]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 3 of 3 (262 s)\n"}
+,{"stream_name":"stdout","time":6556.605415975,"data":"[21:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":6556.605483219,"data":"[21:10:27] WARNING: pgvector hnsw-m32-efc200-b1 pg-custom: 355 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":6556.605653563,"data":"[21:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":6585.850423297,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":6585.850467077,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":6586.725910103,"data":"[21:10:57]    pgvector hnsw-m32-efc200-b1 pg-custom: recall@5 0.6975476839237057, recall@10 0.7197547683923705, ERR 0.10286103542234333, p50 34.4 ms, 295 s, HNSW plans 0.986 of 2978\n"}
+,{"stream_name":"stdout","time":6586.728951828,"data":"[21:10:57] -- pgvector hnsw-m32-efc200-b1 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":6613.506697553,"data":"[21:11:24]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 250 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":6636.286120654,"data":"[21:11:46]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 500 of 1489 questions (49 s)\n"}
+,{"stream_name":"stdout","time":6657.057398545,"data":"[21:12:07]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 750 of 1489 questions (70 s)\n"}
+,{"stream_name":"stdout","time":6683.012340261,"data":"[21:12:33]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 1000 of 1489 questions (96 s)\n"}
+,{"stream_name":"stdout","time":6710.240970947,"data":"[21:13:00]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 1250 of 1489 questions (123 s)\n"}
+,{"stream_name":"stdout","time":6729.594785796,"data":"[21:13:20]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 1 of 3 (142 s)\n"}
+,{"stream_name":"stdout","time":6799.708655754,"data":"[21:14:30]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 2 of 3 (212 s)\n"}
+,{"stream_name":"stdout","time":6877.404606561,"data":"[21:15:47]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 3 of 3 (290 s)\n"}
+,{"stream_name":"stdout","time":6880.236499948,"data":"[21:15:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":6880.237074836,"data":"[21:15:50] WARNING: pgvector hnsw-m32-efc200-b1 pg-hnsw: 355 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":6880.238238729,"data":"[21:15:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":6914.705961299,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":6914.706057682,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":6915.705025582,"data":"[21:16:26]    pgvector hnsw-m32-efc200-b1 pg-hnsw: recall@5 0.6975476839237057, recall@10 0.7197547683923705, ERR 0.10286103542234333, p50 37.7 ms, 328 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":6915.70908325,"data":"[21:16:26] -- pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":6974.578842351,"data":"[21:17:25]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 250 of 1489 questions (58 s)\n"}
+,{"stream_name":"stdout","time":7017.702433804,"data":"[21:18:08]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 500 of 1489 questions (101 s)\n"}
+,{"stream_name":"stdout","time":7053.977998427,"data":"[21:18:44]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 750 of 1489 questions (137 s)\n"}
+,{"stream_name":"stdout","time":7103.122352335,"data":"[21:19:33]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 1000 of 1489 questions (186 s)\n"}
+,{"stream_name":"stdout","time":7191.262891681,"data":"[21:21:01]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 1250 of 1489 questions (275 s)\n"}
+,{"stream_name":"stdout","time":7215.227687577,"data":"[21:21:25]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 1 of 3 (299 s)\n"}
+,{"stream_name":"stdout","time":7345.310235838,"data":"[21:23:35]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 2 of 3 (429 s)\n"}
+,{"stream_name":"stdout","time":7477.914581505,"data":"[21:25:48]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 3 of 3 (561 s)\n"}
+,{"stream_name":"stderr","time":7484.350590458,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":7484.350633722,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":7484.676726502,"data":"[21:25:55]    pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: recall@5 0.8331062670299729, recall@10 0.8660762942779292, ERR 0.0, p50 32.9 ms, 569 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":7484.678485454,"data":"[21:25:55] -- pgvector hnsw-m32-efc200-b1 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":7508.464299507,"data":"[21:26:19]   pgvector hnsw-m32-efc200-b1 pc-ef400: 250 of 1489 questions (23 s)\n"}
+,{"stream_name":"stdout","time":7530.258379848,"data":"[21:26:40]   pgvector hnsw-m32-efc200-b1 pc-ef400: 500 of 1489 questions (45 s)\n"}
+,{"stream_name":"stdout","time":7550.342944015,"data":"[21:27:00]   pgvector hnsw-m32-efc200-b1 pc-ef400: 750 of 1489 questions (65 s)\n"}
+,{"stream_name":"stdout","time":7575.346714984,"data":"[21:27:25]   pgvector hnsw-m32-efc200-b1 pc-ef400: 1000 of 1489 questions (90 s)\n"}
+,{"stream_name":"stdout","time":7601.688104188,"data":"[21:27:52]   pgvector hnsw-m32-efc200-b1 pc-ef400: 1250 of 1489 questions (116 s)\n"}
+,{"stream_name":"stdout","time":7622.329019715,"data":"[21:28:12]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 1 of 3 (137 s)\n"}
+,{"stream_name":"stdout","time":7687.213063222,"data":"[21:29:17]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 2 of 3 (202 s)\n"}
+,{"stream_name":"stdout","time":7752.531997597,"data":"[21:30:23]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 3 of 3 (267 s)\n"}
+,{"stream_name":"stdout","time":7754.966294421,"data":"[21:30:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":7754.966345234,"data":"[21:30:25] WARNING: pgvector hnsw-m32-efc200-b1 pc-ef400: 355 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":7754.966482725,"data":"[21:30:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":7781.855842575,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":7781.855891473,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":7782.705366526,"data":"[21:30:53]    pgvector hnsw-m32-efc200-b1 pc-ef400: recall@5 0.720708446866485, recall@10 0.7410081743869211, ERR 0.1008174386920981, p50 35.6 ms, 297 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":7782.707941075,"data":"[21:30:53] -- pgvector hnsw-m32-efc200-b1 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":7811.088736832,"data":"[21:31:21]   pgvector hnsw-m32-efc200-b1 pd-lim10: 250 of 1489 questions (28 s)\n"}
+,{"stream_name":"stdout","time":7837.388645548,"data":"[21:31:47]   pgvector hnsw-m32-efc200-b1 pd-lim10: 500 of 1489 questions (54 s)\n"}
+,{"stream_name":"stdout","time":7862.586488156,"data":"[21:32:13]   pgvector hnsw-m32-efc200-b1 pd-lim10: 750 of 1489 questions (79 s)\n"}
+,{"stream_name":"stdout","time":7892.327265923,"data":"[21:32:42]   pgvector hnsw-m32-efc200-b1 pd-lim10: 1000 of 1489 questions (109 s)\n"}
+,{"stream_name":"stdout","time":7923.758468746,"data":"[21:33:14]   pgvector hnsw-m32-efc200-b1 pd-lim10: 1250 of 1489 questions (140 s)\n"}
+,{"stream_name":"stdout","time":7948.41329117,"data":"[21:33:38]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 1 of 3 (165 s)\n"}
+,{"stream_name":"stdout","time":8025.851476738,"data":"[21:34:56]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 2 of 3 (243 s)\n"}
+,{"stream_name":"stdout","time":8102.470149749,"data":"[21:36:13]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 3 of 3 (319 s)\n"}
+,{"stream_name":"stdout","time":8105.252722577,"data":"[21:36:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":8105.252946092,"data":"[21:36:15] WARNING: pgvector hnsw-m32-efc200-b1 pd-lim10: 355 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":8105.253092081,"data":"[21:36:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":8131.614040604,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":8131.614100183,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":8132.451317147,"data":"[21:36:42]    pgvector hnsw-m32-efc200-b1 pd-lim10: recall@5 0.7677111716621253, recall@10 0.784741144414169, ERR 0.10286103542234333, p50 43.7 ms, 349 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":8132.454805352,"data":"[21:36:42] == stage pgvector hnsw-m32-efc200-b1: done in 3892 s\n"}
+,{"stream_name":"stdout","time":8132.456913538,"data":"[21:36:43] == stage pgvector hnsw-m32-efc200-b2\n"}
+,{"stream_name":"stdout","time":8263.273843047,"data":"[21:38:53] pgvector index hnsw-m32-efc200 build 2: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 2, 'm': 32, 'ef_construction': 200, 'seconds': 129.6, 'builder': \"harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)\", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}\n"}
+,{"stream_name":"stdout","time":8263.274872758,"data":"[21:38:53] -- pgvector hnsw-m32-efc200-b2 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":8414.593380371,"data":"[21:41:25]   pgvector hnsw-m32-efc200-b2 p-asrun: 250 of 1489 questions (151 s)\n"}
+,{"stream_name":"stdout","time":8577.302415537,"data":"[21:44:07]   pgvector hnsw-m32-efc200-b2 p-asrun: 500 of 1489 questions (314 s)\n"}
+,{"stream_name":"stdout","time":8750.56027269,"data":"[21:47:01]   pgvector hnsw-m32-efc200-b2 p-asrun: 750 of 1489 questions (487 s)\n"}
+,{"stream_name":"stdout","time":8893.290363946,"data":"[21:49:23]   pgvector hnsw-m32-efc200-b2 p-asrun: 1000 of 1489 questions (630 s)\n"}
+,{"stream_name":"stdout","time":9033.132659214,"data":"[21:51:43]   pgvector hnsw-m32-efc200-b2 p-asrun: 1250 of 1489 questions (769 s)\n"}
+,{"stream_name":"stdout","time":9192.920096397,"data":"[21:54:23]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 1 of 3 (929 s)\n"}
+,{"stream_name":"stdout","time":9669.950308356,"data":"[22:02:20]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 2 of 3 (1406 s)\n"}
+,{"stream_name":"stdout","time":10140.814418273,"data":"[22:10:11]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 3 of 3 (1877 s)\n"}
+,{"stream_name":"stderr","time":10156.694464474,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":10156.694524448,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":10156.695248901,"data":"[22:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":10156.69547725,"data":"[22:10:27] WARNING: pgvector hnsw-m32-efc200-b2 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":10156.695624453,"data":"[22:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":10156.889201223,"data":"[22:10:27]    pgvector hnsw-m32-efc200-b2 p-asrun: recall@5 0.9986376021798365, recall@10 0.999591280653951, ERR 0.0006811989100817438, p50 416.3 ms, 1893 s, HNSW plans 0.007 of 2978\n"}
+,{"stream_name":"stdout","time":10156.891584189,"data":"[22:10:27] -- pgvector hnsw-m32-efc200-b2 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":10179.395671628,"data":"[22:10:49]   pgvector hnsw-m32-efc200-b2 pg-custom: 250 of 1489 questions (22 s)\n"}
+,{"stream_name":"stdout","time":10199.497779526,"data":"[22:11:10]   pgvector hnsw-m32-efc200-b2 pg-custom: 500 of 1489 questions (42 s)\n"}
+,{"stream_name":"stdout","time":10218.44032457,"data":"[22:11:28]   pgvector hnsw-m32-efc200-b2 pg-custom: 750 of 1489 questions (61 s)\n"}
+,{"stream_name":"stdout","time":10243.346243124,"data":"[22:11:53]   pgvector hnsw-m32-efc200-b2 pg-custom: 1000 of 1489 questions (86 s)\n"}
+,{"stream_name":"stdout","time":10263.792117721,"data":"[22:12:14]   pgvector hnsw-m32-efc200-b2 pg-custom: 1250 of 1489 questions (106 s)\n"}
+,{"stream_name":"stdout","time":10281.677959859,"data":"[22:12:32]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 1 of 3 (124 s)\n"}
+,{"stream_name":"stdout","time":10340.308178361,"data":"[22:13:30]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 2 of 3 (183 s)\n"}
+,{"stream_name":"stdout","time":10398.971308478,"data":"[22:14:29]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 3 of 3 (241 s)\n"}
+,{"stream_name":"stdout","time":10401.253059679,"data":"[22:14:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":10401.253131233,"data":"[22:14:31] WARNING: pgvector hnsw-m32-efc200-b2 pg-custom: 335 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":10401.253295567,"data":"[22:14:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":10427.301339309,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":10427.301382375,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":10428.130672881,"data":"[22:14:58]    pgvector hnsw-m32-efc200-b2 pg-custom: recall@5 0.6989100817438693, recall@10 0.7215258855585831, ERR 0.08651226158038147, p50 31.8 ms, 270 s, HNSW plans 0.986 of 2978\n"}
+,{"stream_name":"stdout","time":10428.133492469,"data":"[22:14:58] -- pgvector hnsw-m32-efc200-b2 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":10449.998650252,"data":"[22:15:20]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 250 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":10469.94844524,"data":"[22:15:40]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 500 of 1489 questions (41 s)\n"}
+,{"stream_name":"stdout","time":10488.61529592,"data":"[22:15:59]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 750 of 1489 questions (60 s)\n"}
+,{"stream_name":"stdout","time":10512.475933054,"data":"[22:16:23]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 1000 of 1489 questions (84 s)\n"}
+,{"stream_name":"stdout","time":10537.721694481,"data":"[22:16:48]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 1250 of 1489 questions (109 s)\n"}
+,{"stream_name":"stdout","time":10555.637330426,"data":"[22:17:06]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 1 of 3 (127 s)\n"}
+,{"stream_name":"stdout","time":10617.323669637,"data":"[22:18:07]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 2 of 3 (189 s)\n"}
+,{"stream_name":"stdout","time":10678.406615495,"data":"[22:19:08]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 3 of 3 (250 s)\n"}
+,{"stream_name":"stdout","time":10680.648936034,"data":"[22:19:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":10680.649028107,"data":"[22:19:11] WARNING: pgvector hnsw-m32-efc200-b2 pg-hnsw: 335 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":10680.649133592,"data":"[22:19:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":10706.795373948,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":10706.79542114,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":10707.647777701,"data":"[22:19:38]    pgvector hnsw-m32-efc200-b2 pg-hnsw: recall@5 0.6989100817438693, recall@10 0.7215258855585831, ERR 0.08651226158038147, p50 33.0 ms, 279 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":10707.650356907,"data":"[22:19:38] -- pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":10752.270728022,"data":"[22:20:22]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 250 of 1489 questions (44 s)\n"}
+,{"stream_name":"stdout","time":10787.239699371,"data":"[22:20:57]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 500 of 1489 questions (79 s)\n"}
+,{"stream_name":"stdout","time":10822.508611478,"data":"[22:21:33]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 750 of 1489 questions (114 s)\n"}
+,{"stream_name":"stdout","time":10876.47748241,"data":"[22:22:27]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 1000 of 1489 questions (168 s)\n"}
+,{"stream_name":"stdout","time":10971.764085713,"data":"[22:24:02]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 1250 of 1489 questions (263 s)\n"}
+,{"stream_name":"stdout","time":10996.649550286,"data":"[22:24:27]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 1 of 3 (288 s)\n"}
+,{"stream_name":"stdout","time":11133.269278805,"data":"[22:26:43]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 2 of 3 (425 s)\n"}
+,{"stream_name":"stdout","time":11268.684418989,"data":"[22:28:59]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 3 of 3 (560 s)\n"}
+,{"stream_name":"stderr","time":11275.293270137,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":11275.293314782,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":11275.609818942,"data":"[22:29:06]    pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: recall@5 0.8310626702997275, recall@10 0.860558583106267, ERR 0.0, p50 33.2 ms, 568 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":11275.611567795,"data":"[22:29:06] -- pgvector hnsw-m32-efc200-b2 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":11299.110452642,"data":"[22:29:29]   pgvector hnsw-m32-efc200-b2 pc-ef400: 250 of 1489 questions (23 s)\n"}
+,{"stream_name":"stdout","time":11320.992492962,"data":"[22:29:51]   pgvector hnsw-m32-efc200-b2 pc-ef400: 500 of 1489 questions (45 s)\n"}
+,{"stream_name":"stdout","time":11341.622615968,"data":"[22:30:12]   pgvector hnsw-m32-efc200-b2 pc-ef400: 750 of 1489 questions (65 s)\n"}
+,{"stream_name":"stdout","time":11366.672450549,"data":"[22:30:37]   pgvector hnsw-m32-efc200-b2 pc-ef400: 1000 of 1489 questions (91 s)\n"}
+,{"stream_name":"stdout","time":11393.895243266,"data":"[22:31:04]   pgvector hnsw-m32-efc200-b2 pc-ef400: 1250 of 1489 questions (118 s)\n"}
+,{"stream_name":"stdout","time":11413.195208647,"data":"[22:31:23]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 1 of 3 (137 s)\n"}
+,{"stream_name":"stdout","time":11480.218090873,"data":"[22:32:30]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 2 of 3 (204 s)\n"}
+,{"stream_name":"stdout","time":11545.135955984,"data":"[22:33:35]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 3 of 3 (269 s)\n"}
+,{"stream_name":"stdout","time":11547.554745531,"data":"[22:33:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":11547.554892889,"data":"[22:33:38] WARNING: pgvector hnsw-m32-efc200-b2 pc-ef400: 332 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":11547.555059687,"data":"[22:33:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":11574.440454406,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":11574.44050547,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":11575.29642445,"data":"[22:34:05]    pgvector hnsw-m32-efc200-b2 pc-ef400: recall@5 0.7224795640326975, recall@10 0.7433923705722072, ERR 0.0837874659400545, p50 34.3 ms, 299 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":11575.299166908,"data":"[22:34:05] -- pgvector hnsw-m32-efc200-b2 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":11603.303014788,"data":"[22:34:33]   pgvector hnsw-m32-efc200-b2 pd-lim10: 250 of 1489 questions (27 s)\n"}
+,{"stream_name":"stdout","time":11629.435294201,"data":"[22:34:59]   pgvector hnsw-m32-efc200-b2 pd-lim10: 500 of 1489 questions (54 s)\n"}
+,{"stream_name":"stdout","time":11654.603412181,"data":"[22:35:25]   pgvector hnsw-m32-efc200-b2 pd-lim10: 750 of 1489 questions (79 s)\n"}
+,{"stream_name":"stdout","time":11684.959164874,"data":"[22:35:55]   pgvector hnsw-m32-efc200-b2 pd-lim10: 1000 of 1489 questions (109 s)\n"}
+,{"stream_name":"stdout","time":11716.166411544,"data":"[22:36:26]   pgvector hnsw-m32-efc200-b2 pd-lim10: 1250 of 1489 questions (140 s)\n"}
+,{"stream_name":"stdout","time":11740.979297625,"data":"[22:36:51]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 1 of 3 (165 s)\n"}
+,{"stream_name":"stdout","time":11818.80116946,"data":"[22:38:09]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 2 of 3 (243 s)\n"}
+,{"stream_name":"stdout","time":11897.87889871,"data":"[22:39:28]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 3 of 3 (322 s)\n"}
+,{"stream_name":"stdout","time":11900.810497222,"data":"[22:39:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":11900.810578114,"data":"[22:39:31] WARNING: pgvector hnsw-m32-efc200-b2 pd-lim10: 335 short results; EXPLAIN covers 200, empty ones first\n"}
+,{"stream_name":"stdout","time":11900.810724218,"data":"[22:39:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stderr","time":11927.863358864,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":11927.863425851,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":11928.704493738,"data":"[22:39:59]    pgvector hnsw-m32-efc200-b2 pd-lim10: recall@5 0.7737057220708448, recall@10 0.7910081743869208, ERR 0.08651226158038147, p50 44.7 ms, 353 s, HNSW plans 1.000 of 2978\n"}
+,{"stream_name":"stdout","time":11928.708125977,"data":"[22:39:59] == stage pgvector hnsw-m32-efc200-b2: done in 3796 s\n"}
+,{"stream_name":"stdout","time":11929.002162734,"data":"[22:39:59] $ service postgresql stop\n"}
+,{"stream_name":"stdout","time":11929.337090116,"data":" * Stopping PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":11930.018865631,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":11931.600219288,"data":"[22:40:02] == stage qdrant: start\n"}
+,{"stream_name":"stdout","time":11931.600253792,"data":"[22:40:02] $ bash /tmp/wardowl-src/benchmarks/kaggle_stores.sh qdrant\n"}
+,{"stream_name":"stdout","time":11935.315248986,"data":"qdrant is up\n"}
+,{"stream_name":"stdout","time":11935.458294578,"data":"[22:40:06] Qdrant server: {'title': 'qdrant - vector search engine', 'version': '1.19.2', 'commit': '016542aa5deb6c66380bb137badf73d54f742bde'}\n"}
+,{"stream_name":"stdout","time":11935.459279054,"data":"[22:40:06] == stage qdrant: start: done in 4 s\n"}
+,{"stream_name":"stdout","time":11935.477018002,"data":"[22:40:06] == stage qdrant as-run-b0\n"}
+,{"stream_name":"stdout","time":11949.839312134,"data":"[22:40:20]   loaded 20,000 of 107,540 chunks (13 s)\n"}
+,{"stream_name":"stdout","time":11963.863740196,"data":"[22:40:34]   loaded 40,000 of 107,540 chunks (27 s)\n"}
+,{"stream_name":"stdout","time":11980.651959002,"data":"[22:40:51]   loaded 60,000 of 107,540 chunks (44 s)\n"}
+,{"stream_name":"stdout","time":11997.610618992,"data":"[22:41:08]   loaded 80,000 of 107,540 chunks (61 s)\n"}
+,{"stream_name":"stdout","time":12014.828751767,"data":"[22:41:25]   loaded 100,000 of 107,540 chunks (78 s)\n"}
+,{"stream_name":"stdout","time":12021.033102761,"data":"[22:41:31]   loaded 107,540 of 107,540 chunks (84 s)\n"}
+,{"stream_name":"stdout","time":12082.65063723,"data":"[22:42:33]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":12082.679234028,"data":"[22:42:33] qdrant as-run build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":12082.679948853,"data":"[22:42:33] -- qdrant as-run-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":12087.027001024,"data":"[22:42:37]   qdrant as-run-b0 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12090.783122794,"data":"[22:42:41]   qdrant as-run-b0 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12094.599611314,"data":"[22:42:45]   qdrant as-run-b0 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":12098.281007981,"data":"[22:42:48]   qdrant as-run-b0 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12101.973207911,"data":"[22:42:52]   qdrant as-run-b0 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12105.672028346,"data":"[22:42:56]   qdrant as-run-b0 q-asrun: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":12116.025124686,"data":"[22:43:06]   qdrant as-run-b0 q-asrun: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":12126.326059399,"data":"[22:43:16]   qdrant as-run-b0 q-asrun: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":12126.737959222,"data":"[22:43:17]    qdrant as-run-b0 q-asrun: recall@5 0.694550408719346, recall@10 0.6891008174386921, ERR 0.0, p50 7.0 ms, 44 s\n"}
+,{"stream_name":"stdout","time":12126.738486702,"data":"[22:43:17] -- qdrant as-run-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":12130.695794711,"data":"[22:43:21]   qdrant as-run-b0 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12134.590281306,"data":"[22:43:25]   qdrant as-run-b0 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12138.576280444,"data":"[22:43:29]   qdrant as-run-b0 qa-acorn040: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":12142.455564746,"data":"[22:43:32]   qdrant as-run-b0 qa-acorn040: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12146.211680026,"data":"[22:43:36]   qdrant as-run-b0 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12150.560668774,"data":"[22:43:41]   qdrant as-run-b0 qa-acorn040: pass 1 of 3 (24 s)\n"}
+,{"stream_name":"stdout","time":12161.624711782,"data":"[22:43:52]   qdrant as-run-b0 qa-acorn040: pass 2 of 3 (35 s)\n"}
+,{"stream_name":"stdout","time":12172.634632625,"data":"[22:44:03]   qdrant as-run-b0 qa-acorn040: pass 3 of 3 (46 s)\n"}
+,{"stream_name":"stdout","time":12173.026387113,"data":"[22:44:03]    qdrant as-run-b0 qa-acorn040: recall@5 0.8655313351498637, recall@10 0.8636239782016348, ERR 0.0, p50 7.4 ms, 46 s\n"}
+,{"stream_name":"stdout","time":12173.027042867,"data":"[22:44:03] -- qdrant as-run-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":12176.888116045,"data":"[22:44:07]   qdrant as-run-b0 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12180.67335182,"data":"[22:44:11]   qdrant as-run-b0 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12184.576043206,"data":"[22:44:15]   qdrant as-run-b0 qa-acorn100: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":12188.35717304,"data":"[22:44:18]   qdrant as-run-b0 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":12192.080468205,"data":"[22:44:22]   qdrant as-run-b0 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12195.939328452,"data":"[22:44:26]   qdrant as-run-b0 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":12208.010707292,"data":"[22:44:38]   qdrant as-run-b0 qa-acorn100: pass 2 of 3 (35 s)\n"}
+,{"stream_name":"stdout","time":12218.906570138,"data":"[22:44:49]   qdrant as-run-b0 qa-acorn100: pass 3 of 3 (46 s)\n"}
+,{"stream_name":"stdout","time":12219.310527943,"data":"[22:44:49]    qdrant as-run-b0 qa-acorn100: recall@5 0.8655313351498637, recall@10 0.8636239782016348, ERR 0.0, p50 7.3 ms, 46 s\n"}
+,{"stream_name":"stdout","time":12219.311153412,"data":"[22:44:49] -- qdrant as-run-b0 qb-ef64: {'hnsw_ef': 64}\n"}
+,{"stream_name":"stdout","time":12222.699751541,"data":"[22:44:53]   qdrant as-run-b0 qb-ef64: 250 of 1489 questions (3 s)\n"}
+,{"stream_name":"stdout","time":12225.915683822,"data":"[22:44:56]   qdrant as-run-b0 qb-ef64: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":12229.088648426,"data":"[22:44:59]   qdrant as-run-b0 qb-ef64: 750 of 1489 questions (10 s)\n"}
+,{"stream_name":"stdout","time":12232.40629635,"data":"[22:45:02]   qdrant as-run-b0 qb-ef64: 1000 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":12235.594231847,"data":"[22:45:06]   qdrant as-run-b0 qb-ef64: 1250 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12239.286469286,"data":"[22:45:09]   qdrant as-run-b0 qb-ef64: pass 1 of 3 (20 s)\n"}
+,{"stream_name":"stdout","time":12248.341737264,"data":"[22:45:18]   qdrant as-run-b0 qb-ef64: pass 2 of 3 (29 s)\n"}
+,{"stream_name":"stdout","time":12257.27178365,"data":"[22:45:27]   qdrant as-run-b0 qb-ef64: pass 3 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":12257.671841284,"data":"[22:45:28]    qdrant as-run-b0 qb-ef64: recall@5 0.6377384196185286, recall@10 0.6294277929155313, ERR 0.0, p50 5.8 ms, 38 s\n"}
+,{"stream_name":"stdout","time":12257.672481244,"data":"[22:45:28] -- qdrant as-run-b0 qb-ef512: {'hnsw_ef': 512}\n"}
+,{"stream_name":"stdout","time":12262.920413793,"data":"[22:45:33]   qdrant as-run-b0 qb-ef512: 250 of 1489 questions (5 s)\n"}
+,{"stream_name":"stdout","time":12268.315497853,"data":"[22:45:38]   qdrant as-run-b0 qb-ef512: 500 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":12274.016198166,"data":"[22:45:44]   qdrant as-run-b0 qb-ef512: 750 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12279.123625834,"data":"[22:45:49]   qdrant as-run-b0 qb-ef512: 1000 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":12284.227656407,"data":"[22:45:54]   qdrant as-run-b0 qb-ef512: 1250 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":12289.509117369,"data":"[22:46:00]   qdrant as-run-b0 qb-ef512: pass 1 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":12304.919434925,"data":"[22:46:15]   qdrant as-run-b0 qb-ef512: pass 2 of 3 (47 s)\n"}
+,{"stream_name":"stdout","time":12320.332403143,"data":"[22:46:30]   qdrant as-run-b0 qb-ef512: pass 3 of 3 (63 s)\n"}
+,{"stream_name":"stdout","time":12320.739432402,"data":"[22:46:31]    qdrant as-run-b0 qb-ef512: recall@5 0.8059945504087194, recall@10 0.8051089918256131, ERR 0.0, p50 11.1 ms, 63 s\n"}
+,{"stream_name":"stdout","time":12320.740130064,"data":"[22:46:31] -- qdrant as-run-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":12338.012648223,"data":"[22:46:48]   qdrant as-run-b0 qc-exact: 250 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":12355.499353487,"data":"[22:47:06]   qdrant as-run-b0 qc-exact: 500 of 1489 questions (34 s)\n"}
+,{"stream_name":"stdout","time":12374.400114508,"data":"[22:47:24]   qdrant as-run-b0 qc-exact: 750 of 1489 questions (53 s)\n"}
+,{"stream_name":"stdout","time":12390.290093165,"data":"[22:47:40]   qdrant as-run-b0 qc-exact: 1000 of 1489 questions (69 s)\n"}
+,{"stream_name":"stdout","time":12405.866983145,"data":"[22:47:56]   qdrant as-run-b0 qc-exact: 1250 of 1489 questions (85 s)\n"}
+,{"stream_name":"stdout","time":12424.056829037,"data":"[22:48:14]   qdrant as-run-b0 qc-exact: pass 1 of 3 (103 s)\n"}
+,{"stream_name":"stdout","time":12475.95595313,"data":"[22:49:06]   qdrant as-run-b0 qc-exact: pass 2 of 3 (155 s)\n"}
+,{"stream_name":"stdout","time":12527.190423098,"data":"[22:49:57]   qdrant as-run-b0 qc-exact: pass 3 of 3 (206 s)\n"}
+,{"stream_name":"stdout","time":12527.593000507,"data":"[22:49:58]    qdrant as-run-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 43.1 ms, 207 s\n"}
+,{"stream_name":"stdout","time":12527.594394782,"data":"[22:49:58] == stage qdrant as-run-b0: done in 592 s\n"}
+,{"stream_name":"stdout","time":12527.72590436,"data":"[22:49:58] == stage qdrant as-run-b1\n"}
+,{"stream_name":"stdout","time":12540.190722078,"data":"[22:50:10]   loaded 20,000 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":12553.840948338,"data":"[22:50:24]   loaded 40,000 of 107,540 chunks (25 s)\n"}
+,{"stream_name":"stdout","time":12567.891482177,"data":"[22:50:38]   loaded 60,000 of 107,540 chunks (39 s)\n"}
+,{"stream_name":"stdout","time":12584.872831894,"data":"[22:50:55]   loaded 80,000 of 107,540 chunks (56 s)\n"}
+,{"stream_name":"stdout","time":12601.34524382,"data":"[22:51:11]   loaded 100,000 of 107,540 chunks (72 s)\n"}
+,{"stream_name":"stdout","time":12607.07158769,"data":"[22:51:17]   loaded 107,540 of 107,540 chunks (78 s)\n"}
+,{"stream_name":"stdout","time":12672.209389402,"data":"[22:52:22]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":12672.238939369,"data":"[22:52:22] qdrant as-run build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":12672.2396648,"data":"[22:52:22] -- qdrant as-run-b1 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":12676.279706424,"data":"[22:52:26]   qdrant as-run-b1 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12680.128635393,"data":"[22:52:30]   qdrant as-run-b1 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12684.038996829,"data":"[22:52:34]   qdrant as-run-b1 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":12687.953908581,"data":"[22:52:38]   qdrant as-run-b1 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12691.557126938,"data":"[22:52:42]   qdrant as-run-b1 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12695.332361726,"data":"[22:52:45]   qdrant as-run-b1 q-asrun: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":12705.907029555,"data":"[22:52:56]   qdrant as-run-b1 q-asrun: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":12716.426031257,"data":"[22:53:06]   qdrant as-run-b1 q-asrun: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":12716.826038771,"data":"[22:53:07]    qdrant as-run-b1 q-asrun: recall@5 0.6794277929155312, recall@10 0.6746594005449592, ERR 0.0, p50 7.3 ms, 45 s\n"}
+,{"stream_name":"stdout","time":12716.826575808,"data":"[22:53:07] -- qdrant as-run-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":12721.221472172,"data":"[22:53:11]   qdrant as-run-b1 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12725.087698696,"data":"[22:53:15]   qdrant as-run-b1 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12728.954802524,"data":"[22:53:19]   qdrant as-run-b1 qa-acorn040: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":12732.767887535,"data":"[22:53:23]   qdrant as-run-b1 qa-acorn040: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12736.391494853,"data":"[22:53:26]   qdrant as-run-b1 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12740.185295734,"data":"[22:53:30]   qdrant as-run-b1 qa-acorn040: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":12751.004071507,"data":"[22:53:41]   qdrant as-run-b1 qa-acorn040: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":12761.954306265,"data":"[22:53:52]   qdrant as-run-b1 qa-acorn040: pass 3 of 3 (45 s)\n"}
+,{"stream_name":"stdout","time":12762.354137661,"data":"[22:53:52]    qdrant as-run-b1 qa-acorn040: recall@5 0.8286103542234333, recall@10 0.8240463215258854, ERR 0.0, p50 7.3 ms, 46 s\n"}
+,{"stream_name":"stdout","time":12762.354805891,"data":"[22:53:52] -- qdrant as-run-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":12766.277563076,"data":"[22:53:56]   qdrant as-run-b1 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":12770.164472661,"data":"[22:54:00]   qdrant as-run-b1 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":12774.159826644,"data":"[22:54:04]   qdrant as-run-b1 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":12777.966266473,"data":"[22:54:08]   qdrant as-run-b1 qa-acorn100: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12781.678714957,"data":"[22:54:12]   qdrant as-run-b1 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":12785.544713274,"data":"[22:54:16]   qdrant as-run-b1 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":12796.926558191,"data":"[22:54:27]   qdrant as-run-b1 qa-acorn100: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":12807.510035829,"data":"[22:54:38]   qdrant as-run-b1 qa-acorn100: pass 3 of 3 (45 s)\n"}
+,{"stream_name":"stdout","time":12807.908251171,"data":"[22:54:38]    qdrant as-run-b1 qa-acorn100: recall@5 0.8286103542234333, recall@10 0.8240463215258854, ERR 0.0, p50 7.3 ms, 46 s\n"}
+,{"stream_name":"stdout","time":12807.90902452,"data":"[22:54:38] -- qdrant as-run-b1 qb-ef64: {'hnsw_ef': 64}\n"}
+,{"stream_name":"stdout","time":12811.217311889,"data":"[22:54:41]   qdrant as-run-b1 qb-ef64: 250 of 1489 questions (3 s)\n"}
+,{"stream_name":"stdout","time":12814.403861991,"data":"[22:54:44]   qdrant as-run-b1 qb-ef64: 500 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":12817.649151173,"data":"[22:54:48]   qdrant as-run-b1 qb-ef64: 750 of 1489 questions (10 s)\n"}
+,{"stream_name":"stdout","time":12820.959201558,"data":"[22:54:51]   qdrant as-run-b1 qb-ef64: 1000 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":12824.097491245,"data":"[22:54:54]   qdrant as-run-b1 qb-ef64: 1250 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12827.339367091,"data":"[22:54:57]   qdrant as-run-b1 qb-ef64: pass 1 of 3 (19 s)\n"}
+,{"stream_name":"stdout","time":12836.679825397,"data":"[22:55:07]   qdrant as-run-b1 qb-ef64: pass 2 of 3 (29 s)\n"}
+,{"stream_name":"stdout","time":12845.822614525,"data":"[22:55:16]   qdrant as-run-b1 qb-ef64: pass 3 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":12846.219962302,"data":"[22:55:16]    qdrant as-run-b1 qb-ef64: recall@5 0.6168937329700271, recall@10 0.6147138964577656, ERR 0.0, p50 6.0 ms, 38 s\n"}
+,{"stream_name":"stdout","time":12846.220609992,"data":"[22:55:16] -- qdrant as-run-b1 qb-ef512: {'hnsw_ef': 512}\n"}
+,{"stream_name":"stdout","time":12851.59306176,"data":"[22:55:22]   qdrant as-run-b1 qb-ef512: 250 of 1489 questions (5 s)\n"}
+,{"stream_name":"stdout","time":12856.937249677,"data":"[22:55:27]   qdrant as-run-b1 qb-ef512: 500 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":12862.54310959,"data":"[22:55:33]   qdrant as-run-b1 qb-ef512: 750 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":12867.573624074,"data":"[22:55:38]   qdrant as-run-b1 qb-ef512: 1000 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":12872.499822117,"data":"[22:55:43]   qdrant as-run-b1 qb-ef512: 1250 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":12877.805711416,"data":"[22:55:48]   qdrant as-run-b1 qb-ef512: pass 1 of 3 (31 s)\n"}
+,{"stream_name":"stdout","time":12893.887117963,"data":"[22:56:04]   qdrant as-run-b1 qb-ef512: pass 2 of 3 (48 s)\n"}
+,{"stream_name":"stdout","time":12909.208316629,"data":"[22:56:19]   qdrant as-run-b1 qb-ef512: pass 3 of 3 (63 s)\n"}
+,{"stream_name":"stdout","time":12909.612502701,"data":"[22:56:20]    qdrant as-run-b1 qb-ef512: recall@5 0.7869209809264306, recall@10 0.7835831062670301, ERR 0.0, p50 11.1 ms, 63 s\n"}
+,{"stream_name":"stdout","time":12909.614101996,"data":"[22:56:20] == stage qdrant as-run-b1: done in 382 s\n"}
+,{"stream_name":"stdout","time":12909.719611504,"data":"[22:56:20] == stage qdrant as-run-b2\n"}
+,{"stream_name":"stdout","time":12922.272889414,"data":"[22:56:32]   loaded 20,000 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":12935.402969091,"data":"[22:56:45]   loaded 40,000 of 107,540 chunks (24 s)\n"}
+,{"stream_name":"stdout","time":12950.446541207,"data":"[22:57:00]   loaded 60,000 of 107,540 chunks (39 s)\n"}
+,{"stream_name":"stdout","time":12966.079145174,"data":"[22:57:16]   loaded 80,000 of 107,540 chunks (55 s)\n"}
+,{"stream_name":"stdout","time":12982.460749167,"data":"[22:57:33]   loaded 100,000 of 107,540 chunks (71 s)\n"}
+,{"stream_name":"stdout","time":12987.055190137,"data":"[22:57:37]   loaded 107,540 of 107,540 chunks (76 s)\n"}
+,{"stream_name":"stdout","time":13051.16364071,"data":"[22:58:41]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":13051.195292402,"data":"[22:58:41] qdrant as-run build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":13051.196288071,"data":"[22:58:41] -- qdrant as-run-b2 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":13054.992448092,"data":"[22:58:45]   qdrant as-run-b2 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13058.692174645,"data":"[22:58:49]   qdrant as-run-b2 q-asrun: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":13062.334272027,"data":"[22:58:52]   qdrant as-run-b2 q-asrun: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":13065.947469334,"data":"[22:58:56]   qdrant as-run-b2 q-asrun: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13069.407314422,"data":"[22:58:59]   qdrant as-run-b2 q-asrun: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":13073.071481882,"data":"[22:59:03]   qdrant as-run-b2 q-asrun: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":13083.278768441,"data":"[22:59:13]   qdrant as-run-b2 q-asrun: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":13093.415583253,"data":"[22:59:23]   qdrant as-run-b2 q-asrun: pass 3 of 3 (42 s)\n"}
+,{"stream_name":"stdout","time":13093.817954374,"data":"[22:59:24]    qdrant as-run-b2 q-asrun: recall@5 0.6095367847411444, recall@10 0.6027929155313352, ERR 0.0, p50 6.9 ms, 43 s\n"}
+,{"stream_name":"stdout","time":13093.818678222,"data":"[22:59:24] -- qdrant as-run-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":13097.539364216,"data":"[22:59:28]   qdrant as-run-b2 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13101.678382772,"data":"[22:59:32]   qdrant as-run-b2 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13105.321826747,"data":"[22:59:35]   qdrant as-run-b2 qa-acorn040: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":13108.940765949,"data":"[22:59:39]   qdrant as-run-b2 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13112.53557089,"data":"[22:59:43]   qdrant as-run-b2 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":13116.238463163,"data":"[22:59:46]   qdrant as-run-b2 qa-acorn040: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":13126.692859398,"data":"[22:59:57]   qdrant as-run-b2 qa-acorn040: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":13137.436541277,"data":"[23:00:07]   qdrant as-run-b2 qa-acorn040: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":13137.834058861,"data":"[23:00:08]    qdrant as-run-b2 qa-acorn040: recall@5 0.7400544959128066, recall@10 0.7363760217983651, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":13137.83474877,"data":"[23:00:08] -- qdrant as-run-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":13141.696048574,"data":"[23:00:12]   qdrant as-run-b2 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13145.509955024,"data":"[23:00:16]   qdrant as-run-b2 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13149.176863167,"data":"[23:00:19]   qdrant as-run-b2 qa-acorn100: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":13152.864094752,"data":"[23:00:23]   qdrant as-run-b2 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13156.397710355,"data":"[23:00:26]   qdrant as-run-b2 qa-acorn100: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":13160.605368431,"data":"[23:00:31]   qdrant as-run-b2 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":13171.190653923,"data":"[23:00:41]   qdrant as-run-b2 qa-acorn100: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":13181.753876699,"data":"[23:00:52]   qdrant as-run-b2 qa-acorn100: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":13182.151176906,"data":"[23:00:52]    qdrant as-run-b2 qa-acorn100: recall@5 0.7400544959128066, recall@10 0.7363760217983651, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":13182.151853461,"data":"[23:00:52] -- qdrant as-run-b2 qb-ef64: {'hnsw_ef': 64}\n"}
+,{"stream_name":"stdout","time":13185.519005473,"data":"[23:00:56]   qdrant as-run-b2 qb-ef64: 250 of 1489 questions (3 s)\n"}
+,{"stream_name":"stdout","time":13188.950041392,"data":"[23:00:59]   qdrant as-run-b2 qb-ef64: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":13192.305654077,"data":"[23:01:02]   qdrant as-run-b2 qb-ef64: 750 of 1489 questions (10 s)\n"}
+,{"stream_name":"stdout","time":13195.577200417,"data":"[23:01:06]   qdrant as-run-b2 qb-ef64: 1000 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":13198.751783723,"data":"[23:01:09]   qdrant as-run-b2 qb-ef64: 1250 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":13202.041475037,"data":"[23:01:12]   qdrant as-run-b2 qb-ef64: pass 1 of 3 (20 s)\n"}
+,{"stream_name":"stdout","time":13211.451629156,"data":"[23:01:21]   qdrant as-run-b2 qb-ef64: pass 2 of 3 (29 s)\n"}
+,{"stream_name":"stdout","time":13220.681597794,"data":"[23:01:31]   qdrant as-run-b2 qb-ef64: pass 3 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":13221.09340586,"data":"[23:01:31]    qdrant as-run-b2 qb-ef64: recall@5 0.5621253405994551, recall@10 0.5555177111716622, ERR 0.0, p50 6.0 ms, 39 s\n"}
+,{"stream_name":"stdout","time":13221.094131103,"data":"[23:01:31] -- qdrant as-run-b2 qb-ef512: {'hnsw_ef': 512}\n"}
+,{"stream_name":"stdout","time":13226.759015626,"data":"[23:01:37]   qdrant as-run-b2 qb-ef512: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":13232.46727798,"data":"[23:01:43]   qdrant as-run-b2 qb-ef512: 500 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":13238.057281836,"data":"[23:01:48]   qdrant as-run-b2 qb-ef512: 750 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":13243.331997181,"data":"[23:01:53]   qdrant as-run-b2 qb-ef512: 1000 of 1489 questions (22 s)\n"}
+,{"stream_name":"stdout","time":13248.476239333,"data":"[23:01:59]   qdrant as-run-b2 qb-ef512: 1250 of 1489 questions (27 s)\n"}
+,{"stream_name":"stdout","time":13254.518038044,"data":"[23:02:05]   qdrant as-run-b2 qb-ef512: pass 1 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":13270.443976095,"data":"[23:02:20]   qdrant as-run-b2 qb-ef512: pass 2 of 3 (49 s)\n"}
+,{"stream_name":"stdout","time":13286.603064375,"data":"[23:02:37]   qdrant as-run-b2 qb-ef512: pass 3 of 3 (65 s)\n"}
+,{"stream_name":"stdout","time":13287.012295779,"data":"[23:02:37]    qdrant as-run-b2 qb-ef512: recall@5 0.6854223433242507, recall@10 0.6854904632152589, ERR 0.0, p50 11.7 ms, 66 s\n"}
+,{"stream_name":"stdout","time":13287.013792236,"data":"[23:02:37] == stage qdrant as-run-b2: done in 377 s\n"}
+,{"stream_name":"stdout","time":13287.119732647,"data":"[23:02:37] == stage qdrant is-tenant-b0\n"}
+,{"stream_name":"stdout","time":13300.067396614,"data":"[23:02:50]   loaded 20,000 of 107,540 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":13313.885600189,"data":"[23:03:04]   loaded 40,000 of 107,540 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":13328.733009628,"data":"[23:03:19]   loaded 60,000 of 107,540 chunks (40 s)\n"}
+,{"stream_name":"stdout","time":13349.526703239,"data":"[23:03:40]   loaded 80,000 of 107,540 chunks (61 s)\n"}
+,{"stream_name":"stdout","time":13372.67982615,"data":"[23:04:03]   loaded 100,000 of 107,540 chunks (84 s)\n"}
+,{"stream_name":"stdout","time":13379.435149209,"data":"[23:04:09]   loaded 107,540 of 107,540 chunks (91 s)\n"}
+,{"stream_name":"stdout","time":13439.49746283,"data":"[23:05:10]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":13439.527603845,"data":"[23:05:10] qdrant is-tenant build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":13439.528281846,"data":"[23:05:10] -- qdrant is-tenant-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":13443.519075059,"data":"[23:05:14]   qdrant is-tenant-b0 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13447.385637201,"data":"[23:05:17]   qdrant is-tenant-b0 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13451.363503309,"data":"[23:05:21]   qdrant is-tenant-b0 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":13455.230361473,"data":"[23:05:25]   qdrant is-tenant-b0 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":13458.935840733,"data":"[23:05:29]   qdrant is-tenant-b0 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":13462.645339665,"data":"[23:05:33]   qdrant is-tenant-b0 q-asrun: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":13472.994855039,"data":"[23:05:43]   qdrant is-tenant-b0 q-asrun: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":13483.219152777,"data":"[23:05:53]   qdrant is-tenant-b0 q-asrun: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":13483.627258146,"data":"[23:05:54]    qdrant is-tenant-b0 q-asrun: recall@5 0.6709809264305178, recall@10 0.6657356948228883, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":13483.628073818,"data":"[23:05:54] -- qdrant is-tenant-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":13487.813109597,"data":"[23:05:58]   qdrant is-tenant-b0 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13491.623207897,"data":"[23:06:02]   qdrant is-tenant-b0 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13495.493290503,"data":"[23:06:06]   qdrant is-tenant-b0 qa-acorn040: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":13499.244501247,"data":"[23:06:09]   qdrant is-tenant-b0 qa-acorn040: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":13502.852451665,"data":"[23:06:13]   qdrant is-tenant-b0 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":13506.582442139,"data":"[23:06:17]   qdrant is-tenant-b0 qa-acorn040: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":13517.391535567,"data":"[23:06:27]   qdrant is-tenant-b0 qa-acorn040: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":13528.212722234,"data":"[23:06:38]   qdrant is-tenant-b0 qa-acorn040: pass 3 of 3 (45 s)\n"}
+,{"stream_name":"stdout","time":13528.626599154,"data":"[23:06:39]    qdrant is-tenant-b0 qa-acorn040: recall@5 0.8474114441416893, recall@10 0.8454359673024523, ERR 0.0, p50 7.2 ms, 45 s\n"}
+,{"stream_name":"stdout","time":13528.627308602,"data":"[23:06:39] -- qdrant is-tenant-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":13532.475154985,"data":"[23:06:43]   qdrant is-tenant-b0 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13536.320567238,"data":"[23:06:46]   qdrant is-tenant-b0 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13540.214428549,"data":"[23:06:50]   qdrant is-tenant-b0 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":13544.007263185,"data":"[23:06:54]   qdrant is-tenant-b0 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13547.624361093,"data":"[23:06:58]   qdrant is-tenant-b0 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":13551.393904482,"data":"[23:07:01]   qdrant is-tenant-b0 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":13562.767355023,"data":"[23:07:13]   qdrant is-tenant-b0 qa-acorn100: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":13573.701703304,"data":"[23:07:24]   qdrant is-tenant-b0 qa-acorn100: pass 3 of 3 (45 s)\n"}
+,{"stream_name":"stdout","time":13574.116900121,"data":"[23:07:24]    qdrant is-tenant-b0 qa-acorn100: recall@5 0.8474114441416893, recall@10 0.8454359673024523, ERR 0.0, p50 7.3 ms, 45 s\n"}
+,{"stream_name":"stdout","time":13574.117659099,"data":"[23:07:24] -- qdrant is-tenant-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":13590.405681167,"data":"[23:07:40]   qdrant is-tenant-b0 qc-exact: 250 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":13606.632330784,"data":"[23:07:57]   qdrant is-tenant-b0 qc-exact: 500 of 1489 questions (32 s)\n"}
+,{"stream_name":"stdout","time":13623.817948115,"data":"[23:08:14]   qdrant is-tenant-b0 qc-exact: 750 of 1489 questions (49 s)\n"}
+,{"stream_name":"stdout","time":13638.367191304,"data":"[23:08:28]   qdrant is-tenant-b0 qc-exact: 1000 of 1489 questions (64 s)\n"}
+,{"stream_name":"stdout","time":13652.602613357,"data":"[23:08:43]   qdrant is-tenant-b0 qc-exact: 1250 of 1489 questions (78 s)\n"}
+,{"stream_name":"stdout","time":13668.765771286,"data":"[23:08:59]   qdrant is-tenant-b0 qc-exact: pass 1 of 3 (94 s)\n"}
+,{"stream_name":"stdout","time":13715.336766839,"data":"[23:09:45]   qdrant is-tenant-b0 qc-exact: pass 2 of 3 (141 s)\n"}
+,{"stream_name":"stdout","time":13761.849745601,"data":"[23:10:32]   qdrant is-tenant-b0 qc-exact: pass 3 of 3 (187 s)\n"}
+,{"stream_name":"stdout","time":13762.276622378,"data":"[23:10:32]    qdrant is-tenant-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 39.2 ms, 188 s\n"}
+,{"stream_name":"stdout","time":13762.278397337,"data":"[23:10:32] == stage qdrant is-tenant-b0: done in 475 s\n"}
+,{"stream_name":"stdout","time":13762.412446311,"data":"[23:10:32] == stage qdrant is-tenant-b1\n"}
+,{"stream_name":"stdout","time":13775.662549623,"data":"[23:10:46]   loaded 20,000 of 107,540 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":13789.164397146,"data":"[23:10:59]   loaded 40,000 of 107,540 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":13806.112209827,"data":"[23:11:16]   loaded 60,000 of 107,540 chunks (43 s)\n"}
+,{"stream_name":"stdout","time":13823.512603602,"data":"[23:11:34]   loaded 80,000 of 107,540 chunks (60 s)\n"}
+,{"stream_name":"stdout","time":13839.270869255,"data":"[23:11:49]   loaded 100,000 of 107,540 chunks (76 s)\n"}
+,{"stream_name":"stdout","time":13845.238178019,"data":"[23:11:55]   loaded 107,540 of 107,540 chunks (82 s)\n"}
+,{"stream_name":"stdout","time":13905.29831678,"data":"[23:12:55]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":13905.329498191,"data":"[23:12:55] qdrant is-tenant build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":13905.330238178,"data":"[23:12:55] -- qdrant is-tenant-b1 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":13909.130623858,"data":"[23:12:59]   qdrant is-tenant-b1 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13913.289034022,"data":"[23:13:03]   qdrant is-tenant-b1 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":13916.91929371,"data":"[23:13:07]   qdrant is-tenant-b1 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":13920.543249093,"data":"[23:13:11]   qdrant is-tenant-b1 q-asrun: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13924.011186566,"data":"[23:13:14]   qdrant is-tenant-b1 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":13927.490386433,"data":"[23:13:18]   qdrant is-tenant-b1 q-asrun: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":13937.406315205,"data":"[23:13:27]   qdrant is-tenant-b1 q-asrun: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":13947.19979885,"data":"[23:13:37]   qdrant is-tenant-b1 q-asrun: pass 3 of 3 (42 s)\n"}
+,{"stream_name":"stdout","time":13947.595083561,"data":"[23:13:38]    qdrant is-tenant-b1 q-asrun: recall@5 0.6568119891008174, recall@10 0.6471389645776566, ERR 0.0, p50 6.8 ms, 42 s\n"}
+,{"stream_name":"stdout","time":13947.59573206,"data":"[23:13:38] -- qdrant is-tenant-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":13951.291421298,"data":"[23:13:41]   qdrant is-tenant-b1 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13955.008691854,"data":"[23:13:45]   qdrant is-tenant-b1 qa-acorn040: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":13958.729931004,"data":"[23:13:49]   qdrant is-tenant-b1 qa-acorn040: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":13962.388292799,"data":"[23:13:52]   qdrant is-tenant-b1 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":13965.963988978,"data":"[23:13:56]   qdrant is-tenant-b1 qa-acorn040: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":13969.628718152,"data":"[23:14:00]   qdrant is-tenant-b1 qa-acorn040: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":13980.135399108,"data":"[23:14:10]   qdrant is-tenant-b1 qa-acorn040: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":13990.511694107,"data":"[23:14:21]   qdrant is-tenant-b1 qa-acorn040: pass 3 of 3 (43 s)\n"}
+,{"stream_name":"stdout","time":13990.91368253,"data":"[23:14:21]    qdrant is-tenant-b1 qa-acorn040: recall@5 0.7756130790190735, recall@10 0.7696866485013625, ERR 0.0, p50 7.0 ms, 43 s\n"}
+,{"stream_name":"stdout","time":13990.914487031,"data":"[23:14:21] -- qdrant is-tenant-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":13995.170930239,"data":"[23:14:25]   qdrant is-tenant-b1 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":13998.850597338,"data":"[23:14:29]   qdrant is-tenant-b1 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":14002.593996737,"data":"[23:14:33]   qdrant is-tenant-b1 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":14006.254304152,"data":"[23:14:36]   qdrant is-tenant-b1 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":14009.798976512,"data":"[23:14:40]   qdrant is-tenant-b1 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":14013.477527431,"data":"[23:14:44]   qdrant is-tenant-b1 qa-acorn100: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":14023.943939007,"data":"[23:14:54]   qdrant is-tenant-b1 qa-acorn100: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":14034.397572571,"data":"[23:15:04]   qdrant is-tenant-b1 qa-acorn100: pass 3 of 3 (43 s)\n"}
+,{"stream_name":"stdout","time":14034.795177483,"data":"[23:15:05]    qdrant is-tenant-b1 qa-acorn100: recall@5 0.7756130790190735, recall@10 0.7696866485013625, ERR 0.0, p50 7.0 ms, 44 s\n"}
+,{"stream_name":"stdout","time":14034.796985048,"data":"[23:15:05] == stage qdrant is-tenant-b1: done in 272 s\n"}
+,{"stream_name":"stdout","time":14034.912732879,"data":"[23:15:05] == stage qdrant is-tenant-b2\n"}
+,{"stream_name":"stdout","time":14048.122824085,"data":"[23:15:18]   loaded 20,000 of 107,540 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":14060.951198156,"data":"[23:15:31]   loaded 40,000 of 107,540 chunks (25 s)\n"}
+,{"stream_name":"stdout","time":14076.163608256,"data":"[23:15:46]   loaded 60,000 of 107,540 chunks (40 s)\n"}
+,{"stream_name":"stdout","time":14092.275289682,"data":"[23:16:02]   loaded 80,000 of 107,540 chunks (56 s)\n"}
+,{"stream_name":"stdout","time":14108.606408428,"data":"[23:16:19]   loaded 100,000 of 107,540 chunks (73 s)\n"}
+,{"stream_name":"stdout","time":14114.539766959,"data":"[23:16:25]   loaded 107,540 of 107,540 chunks (79 s)\n"}
+,{"stream_name":"stdout","time":14171.147703863,"data":"[23:17:21]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":14171.181152451,"data":"[23:17:21] qdrant is-tenant build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":14171.18204658,"data":"[23:17:21] -- qdrant is-tenant-b2 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":14174.923034882,"data":"[23:17:25]   qdrant is-tenant-b2 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":14178.564453134,"data":"[23:17:29]   qdrant is-tenant-b2 q-asrun: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":14182.339349383,"data":"[23:17:32]   qdrant is-tenant-b2 q-asrun: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":14185.938592758,"data":"[23:17:36]   qdrant is-tenant-b2 q-asrun: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":14189.434022082,"data":"[23:17:39]   qdrant is-tenant-b2 q-asrun: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":14193.013959891,"data":"[23:17:43]   qdrant is-tenant-b2 q-asrun: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":14203.066154958,"data":"[23:17:53]   qdrant is-tenant-b2 q-asrun: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":14212.880244378,"data":"[23:18:03]   qdrant is-tenant-b2 q-asrun: pass 3 of 3 (42 s)\n"}
+,{"stream_name":"stdout","time":14213.290060062,"data":"[23:18:03]    qdrant is-tenant-b2 q-asrun: recall@5 0.6486376021798366, recall@10 0.6409400544959128, ERR 0.0, p50 6.8 ms, 42 s\n"}
+,{"stream_name":"stdout","time":14213.290712736,"data":"[23:18:03] -- qdrant is-tenant-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":14217.012743411,"data":"[23:18:07]   qdrant is-tenant-b2 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":14220.814490792,"data":"[23:18:11]   qdrant is-tenant-b2 qa-acorn040: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":14224.654685757,"data":"[23:18:15]   qdrant is-tenant-b2 qa-acorn040: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":14228.36981436,"data":"[23:18:18]   qdrant is-tenant-b2 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":14232.437476958,"data":"[23:18:22]   qdrant is-tenant-b2 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":14236.050681634,"data":"[23:18:26]   qdrant is-tenant-b2 qa-acorn040: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":14246.561868647,"data":"[23:18:37]   qdrant is-tenant-b2 qa-acorn040: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":14256.958802764,"data":"[23:18:47]   qdrant is-tenant-b2 qa-acorn040: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":14257.359530938,"data":"[23:18:47]    qdrant is-tenant-b2 qa-acorn040: recall@5 0.7961852861035422, recall@10 0.7901907356948229, ERR 0.0, p50 7.0 ms, 44 s\n"}
+,{"stream_name":"stdout","time":14257.360154213,"data":"[23:18:47] -- qdrant is-tenant-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":14261.053876634,"data":"[23:18:51]   qdrant is-tenant-b2 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":14264.746900039,"data":"[23:18:55]   qdrant is-tenant-b2 qa-acorn100: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":14268.523223285,"data":"[23:18:59]   qdrant is-tenant-b2 qa-acorn100: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":14272.219533666,"data":"[23:19:02]   qdrant is-tenant-b2 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":14275.726172958,"data":"[23:19:06]   qdrant is-tenant-b2 qa-acorn100: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":14279.308485447,"data":"[23:19:09]   qdrant is-tenant-b2 qa-acorn100: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":14289.875318728,"data":"[23:19:20]   qdrant is-tenant-b2 qa-acorn100: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":14300.240057547,"data":"[23:19:30]   qdrant is-tenant-b2 qa-acorn100: pass 3 of 3 (43 s)\n"}
+,{"stream_name":"stdout","time":14300.631311745,"data":"[23:19:31]    qdrant is-tenant-b2 qa-acorn100: recall@5 0.7961852861035422, recall@10 0.7901907356948229, ERR 0.0, p50 7.0 ms, 43 s\n"}
+,{"stream_name":"stdout","time":14300.633054441,"data":"[23:19:31] == stage qdrant is-tenant-b2: done in 266 s\n"}
+,{"stream_name":"stdout","time":14300.737078437,"data":"[23:19:31] == stage qdrant tenant-m0-b0\n"}
+,{"stream_name":"stdout","time":14312.976784352,"data":"[23:19:43]   loaded 20,000 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":14326.144212908,"data":"[23:19:56]   loaded 40,000 of 107,540 chunks (24 s)\n"}
+,{"stream_name":"stdout","time":14340.720066661,"data":"[23:20:11]   loaded 60,000 of 107,540 chunks (39 s)\n"}
+,{"stream_name":"stdout","time":14358.965345962,"data":"[23:20:29]   loaded 80,000 of 107,540 chunks (57 s)\n"}
+,{"stream_name":"stdout","time":14375.962356731,"data":"[23:20:46]   loaded 100,000 of 107,540 chunks (74 s)\n"}
+,{"stream_name":"stdout","time":14382.587949111,"data":"[23:20:53]   loaded 107,540 of 107,540 chunks (81 s)\n"}
+,{"stream_name":"stdout","time":15479.578917993,"data":"[23:39:10]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":15479.629455776,"data":"[23:39:10] qdrant tenant-m0 build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":15479.632208911,"data":"[23:39:10] -- qdrant tenant-m0-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":15483.873423373,"data":"[23:39:14]   qdrant tenant-m0-b0 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":15488.003778364,"data":"[23:39:18]   qdrant tenant-m0-b0 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":15492.066979126,"data":"[23:39:22]   qdrant tenant-m0-b0 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":15496.040998711,"data":"[23:39:26]   qdrant tenant-m0-b0 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":15499.873358717,"data":"[23:39:30]   qdrant tenant-m0-b0 q-asrun: 1250 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":15503.826814198,"data":"[23:39:34]   qdrant tenant-m0-b0 q-asrun: pass 1 of 3 (24 s)\n"}
+,{"stream_name":"stdout","time":15514.701441923,"data":"[23:39:45]   qdrant tenant-m0-b0 q-asrun: pass 2 of 3 (35 s)\n"}
+,{"stream_name":"stdout","time":15525.779428458,"data":"[23:39:56]   qdrant tenant-m0-b0 q-asrun: pass 3 of 3 (46 s)\n"}
+,{"stream_name":"stdout","time":15526.321960492,"data":"[23:39:56]    qdrant tenant-m0-b0 q-asrun: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.5 ms, 47 s\n"}
+,{"stream_name":"stdout","time":15526.322765098,"data":"[23:39:56] -- qdrant tenant-m0-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":15530.230987803,"data":"[23:40:00]   qdrant tenant-m0-b0 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":15534.306954257,"data":"[23:40:04]   qdrant tenant-m0-b0 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":15538.495447233,"data":"[23:40:09]   qdrant tenant-m0-b0 qa-acorn040: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":15542.356165441,"data":"[23:40:12]   qdrant tenant-m0-b0 qa-acorn040: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":15547.672210314,"data":"[23:40:18]   qdrant tenant-m0-b0 qa-acorn040: 1250 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":15551.580934257,"data":"[23:40:22]   qdrant tenant-m0-b0 qa-acorn040: pass 1 of 3 (25 s)\n"}
+,{"stream_name":"stdout","time":15562.576850087,"data":"[23:40:33]   qdrant tenant-m0-b0 qa-acorn040: pass 2 of 3 (36 s)\n"}
+,{"stream_name":"stdout","time":15573.442556522,"data":"[23:40:43]   qdrant tenant-m0-b0 qa-acorn040: pass 3 of 3 (47 s)\n"}
+,{"stream_name":"stdout","time":15573.820835207,"data":"[23:40:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":15573.820990099,"data":"[23:40:44] WARNING: qdrant tenant-m0-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":15573.821018567,"data":"[23:40:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":15573.845185389,"data":"[23:40:44]    qdrant tenant-m0-b0 qa-acorn040: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.3 ms, 47 s\n"}
+,{"stream_name":"stdout","time":15573.84586621,"data":"[23:40:44] -- qdrant tenant-m0-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":15577.705324192,"data":"[23:40:48]   qdrant tenant-m0-b0 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":15581.722643214,"data":"[23:40:52]   qdrant tenant-m0-b0 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":15585.603026009,"data":"[23:40:56]   qdrant tenant-m0-b0 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":15589.341351584,"data":"[23:40:59]   qdrant tenant-m0-b0 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":15593.0554784,"data":"[23:41:03]   qdrant tenant-m0-b0 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":15596.803922925,"data":"[23:41:07]   qdrant tenant-m0-b0 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":15607.585291842,"data":"[23:41:18]   qdrant tenant-m0-b0 qa-acorn100: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":15618.294305462,"data":"[23:41:28]   qdrant tenant-m0-b0 qa-acorn100: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":15618.667861174,"data":"[23:41:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":15618.667894562,"data":"[23:41:29] WARNING: qdrant tenant-m0-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":15618.66798834,"data":"[23:41:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":15618.689872737,"data":"[23:41:29]    qdrant tenant-m0-b0 qa-acorn100: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.3 ms, 45 s\n"}
+,{"stream_name":"stdout","time":15618.690645702,"data":"[23:41:29] -- qdrant tenant-m0-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":15634.033524791,"data":"[23:41:44]   qdrant tenant-m0-b0 qc-exact: 250 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":15650.0010982,"data":"[23:42:00]   qdrant tenant-m0-b0 qc-exact: 500 of 1489 questions (31 s)\n"}
+,{"stream_name":"stdout","time":15667.084617414,"data":"[23:42:17]   qdrant tenant-m0-b0 qc-exact: 750 of 1489 questions (48 s)\n"}
+,{"stream_name":"stdout","time":15681.251799149,"data":"[23:42:31]   qdrant tenant-m0-b0 qc-exact: 1000 of 1489 questions (62 s)\n"}
+,{"stream_name":"stdout","time":15695.048366405,"data":"[23:42:45]   qdrant tenant-m0-b0 qc-exact: 1250 of 1489 questions (76 s)\n"}
+,{"stream_name":"stdout","time":15711.105058808,"data":"[23:43:01]   qdrant tenant-m0-b0 qc-exact: pass 1 of 3 (92 s)\n"}
+,{"stream_name":"stdout","time":15756.28036677,"data":"[23:43:46]   qdrant tenant-m0-b0 qc-exact: pass 2 of 3 (137 s)\n"}
+,{"stream_name":"stdout","time":15801.874595854,"data":"[23:44:32]   qdrant tenant-m0-b0 qc-exact: pass 3 of 3 (183 s)\n"}
+,{"stream_name":"stdout","time":15802.278589444,"data":"[23:44:32]    qdrant tenant-m0-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 38.3 ms, 184 s\n"}
+,{"stream_name":"stdout","time":15802.280505363,"data":"[23:44:32] == stage qdrant tenant-m0-b0: done in 1502 s\n"}
+,{"stream_name":"stdout","time":15802.398072861,"data":"[23:44:32] == stage qdrant tenant-m0-b1\n"}
+,{"stream_name":"stdout","time":15814.283032884,"data":"[23:44:44]   loaded 20,000 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":15827.996112338,"data":"[23:44:58]   loaded 40,000 of 107,540 chunks (25 s)\n"}
+,{"stream_name":"stdout","time":15844.116708693,"data":"[23:45:14]   loaded 60,000 of 107,540 chunks (41 s)\n"}
+,{"stream_name":"stdout","time":15862.604195041,"data":"[23:45:33]   loaded 80,000 of 107,540 chunks (59 s)\n"}
+,{"stream_name":"stdout","time":15879.192138886,"data":"[23:45:49]   loaded 100,000 of 107,540 chunks (76 s)\n"}
+,{"stream_name":"stdout","time":15885.097415013,"data":"[23:45:55]   loaded 107,540 of 107,540 chunks (82 s)\n"}
+,{"stream_name":"stdout","time":16680.960415484,"data":"[23:59:11]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":16681.000257206,"data":"[23:59:11] qdrant tenant-m0 build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":16681.001871964,"data":"[23:59:11] -- qdrant tenant-m0-b1 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":16685.267588269,"data":"[23:59:15]   qdrant tenant-m0-b1 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":16689.421431902,"data":"[23:59:19]   qdrant tenant-m0-b1 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":16693.524614938,"data":"[23:59:24]   qdrant tenant-m0-b1 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":16697.447334404,"data":"[23:59:27]   qdrant tenant-m0-b1 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":16701.266872819,"data":"[23:59:31]   qdrant tenant-m0-b1 q-asrun: 1250 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":16705.196379811,"data":"[23:59:35]   qdrant tenant-m0-b1 q-asrun: pass 1 of 3 (24 s)\n"}
+,{"stream_name":"stdout","time":16716.234861234,"data":"[23:59:46]   qdrant tenant-m0-b1 q-asrun: pass 2 of 3 (35 s)\n"}
+,{"stream_name":"stdout","time":16727.468195332,"data":"[23:59:58]   qdrant tenant-m0-b1 q-asrun: pass 3 of 3 (46 s)\n"}
+,{"stream_name":"stdout","time":16727.890653115,"data":"[23:59:58]    qdrant tenant-m0-b1 q-asrun: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.5 ms, 47 s\n"}
+,{"stream_name":"stdout","time":16727.891400777,"data":"[23:59:58] -- qdrant tenant-m0-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":16732.939792716,"data":"[00:00:03]   qdrant tenant-m0-b1 qa-acorn040: 250 of 1489 questions (5 s)\n"}
+,{"stream_name":"stdout","time":16737.606262171,"data":"[00:00:08]   qdrant tenant-m0-b1 qa-acorn040: 500 of 1489 questions (10 s)\n"}
+,{"stream_name":"stdout","time":16742.051701419,"data":"[00:00:12]   qdrant tenant-m0-b1 qa-acorn040: 750 of 1489 questions (14 s)\n"}
+,{"stream_name":"stdout","time":16746.195346004,"data":"[00:00:16]   qdrant tenant-m0-b1 qa-acorn040: 1000 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":16750.044135453,"data":"[00:00:20]   qdrant tenant-m0-b1 qa-acorn040: 1250 of 1489 questions (22 s)\n"}
+,{"stream_name":"stdout","time":16754.213274439,"data":"[00:00:24]   qdrant tenant-m0-b1 qa-acorn040: pass 1 of 3 (26 s)\n"}
+,{"stream_name":"stdout","time":16766.283575351,"data":"[00:00:36]   qdrant tenant-m0-b1 qa-acorn040: pass 2 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":16778.179238848,"data":"[00:00:48]   qdrant tenant-m0-b1 qa-acorn040: pass 3 of 3 (50 s)\n"}
+,{"stream_name":"stdout","time":16778.619368491,"data":"[00:00:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":16778.619534439,"data":"[00:00:49] WARNING: qdrant tenant-m0-b1 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":16778.619637936,"data":"[00:00:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":16778.646136322,"data":"[00:00:49]    qdrant tenant-m0-b1 qa-acorn040: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.9 ms, 51 s\n"}
+,{"stream_name":"stdout","time":16778.646945747,"data":"[00:00:49] -- qdrant tenant-m0-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":16782.986079787,"data":"[00:00:53]   qdrant tenant-m0-b1 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":16787.238641954,"data":"[00:00:57]   qdrant tenant-m0-b1 qa-acorn100: 500 of 1489 questions (9 s)\n"}
+,{"stream_name":"stdout","time":16791.38733917,"data":"[00:01:01]   qdrant tenant-m0-b1 qa-acorn100: 750 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":16795.397994195,"data":"[00:01:05]   qdrant tenant-m0-b1 qa-acorn100: 1000 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":16799.235420926,"data":"[00:01:09]   qdrant tenant-m0-b1 qa-acorn100: 1250 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":16803.323715047,"data":"[00:01:13]   qdrant tenant-m0-b1 qa-acorn100: pass 1 of 3 (25 s)\n"}
+,{"stream_name":"stdout","time":16815.711525447,"data":"[00:01:26]   qdrant tenant-m0-b1 qa-acorn100: pass 2 of 3 (37 s)\n"}
+,{"stream_name":"stdout","time":16827.854281952,"data":"[00:01:38]   qdrant tenant-m0-b1 qa-acorn100: pass 3 of 3 (49 s)\n"}
+,{"stream_name":"stdout","time":16828.233762421,"data":"[00:01:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":16828.233811078,"data":"[00:01:38] WARNING: qdrant tenant-m0-b1 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":16828.233943335,"data":"[00:01:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":16828.256760406,"data":"[00:01:38]    qdrant tenant-m0-b1 qa-acorn100: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.9 ms, 50 s\n"}
+,{"stream_name":"stdout","time":16828.258742993,"data":"[00:01:38] == stage qdrant tenant-m0-b1: done in 1026 s\n"}
+,{"stream_name":"stdout","time":16828.374950489,"data":"[00:01:38] == stage qdrant tenant-m0-b2\n"}
+,{"stream_name":"stdout","time":16846.235025501,"data":"[00:01:56]   loaded 20,000 of 107,540 chunks (17 s)\n"}
+,{"stream_name":"stdout","time":16866.41139551,"data":"[00:02:16]   loaded 40,000 of 107,540 chunks (37 s)\n"}
+,{"stream_name":"stdout","time":16882.633610379,"data":"[00:02:33]   loaded 60,000 of 107,540 chunks (53 s)\n"}
+,{"stream_name":"stdout","time":16901.439378905,"data":"[00:02:51]   loaded 80,000 of 107,540 chunks (72 s)\n"}
+,{"stream_name":"stdout","time":16920.076929086,"data":"[00:03:10]   loaded 100,000 of 107,540 chunks (91 s)\n"}
+,{"stream_name":"stdout","time":16926.964479822,"data":"[00:03:17]   loaded 107,540 of 107,540 chunks (98 s)\n"}
+,{"stream_name":"stdout","time":17782.913471325,"data":"[00:17:33]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":17782.948849889,"data":"[00:17:33] qdrant tenant-m0 build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":17782.950150311,"data":"[00:17:33] -- qdrant tenant-m0-b2 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":17787.319746775,"data":"[00:17:37]   qdrant tenant-m0-b2 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":17791.634636681,"data":"[00:17:42]   qdrant tenant-m0-b2 q-asrun: 500 of 1489 questions (9 s)\n"}
+,{"stream_name":"stdout","time":17795.934453452,"data":"[00:17:46]   qdrant tenant-m0-b2 q-asrun: 750 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":17800.044599021,"data":"[00:17:50]   qdrant tenant-m0-b2 q-asrun: 1000 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":17804.027494224,"data":"[00:17:54]   qdrant tenant-m0-b2 q-asrun: 1250 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":17808.13678345,"data":"[00:17:58]   qdrant tenant-m0-b2 q-asrun: pass 1 of 3 (25 s)\n"}
+,{"stream_name":"stdout","time":17819.716766659,"data":"[00:18:10]   qdrant tenant-m0-b2 q-asrun: pass 2 of 3 (37 s)\n"}
+,{"stream_name":"stdout","time":17831.32319498,"data":"[00:18:21]   qdrant tenant-m0-b2 q-asrun: pass 3 of 3 (48 s)\n"}
+,{"stream_name":"stdout","time":17831.779611165,"data":"[00:18:22]    qdrant tenant-m0-b2 q-asrun: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.8 ms, 49 s\n"}
+,{"stream_name":"stdout","time":17831.780327431,"data":"[00:18:22] -- qdrant tenant-m0-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":17835.946975667,"data":"[00:18:26]   qdrant tenant-m0-b2 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":17840.668105054,"data":"[00:18:31]   qdrant tenant-m0-b2 qa-acorn040: 500 of 1489 questions (9 s)\n"}
+,{"stream_name":"stdout","time":17844.803465298,"data":"[00:18:35]   qdrant tenant-m0-b2 qa-acorn040: 750 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":17848.732032845,"data":"[00:18:39]   qdrant tenant-m0-b2 qa-acorn040: 1000 of 1489 questions (17 s)\n"}
+,{"stream_name":"stdout","time":17852.675863208,"data":"[00:18:43]   qdrant tenant-m0-b2 qa-acorn040: 1250 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":17856.657986307,"data":"[00:18:47]   qdrant tenant-m0-b2 qa-acorn040: pass 1 of 3 (25 s)\n"}
+,{"stream_name":"stdout","time":17868.217695197,"data":"[00:18:58]   qdrant tenant-m0-b2 qa-acorn040: pass 2 of 3 (36 s)\n"}
+,{"stream_name":"stdout","time":17879.518102637,"data":"[00:19:10]   qdrant tenant-m0-b2 qa-acorn040: pass 3 of 3 (48 s)\n"}
+,{"stream_name":"stdout","time":17879.89356339,"data":"[00:19:10] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":17879.893717974,"data":"[00:19:10] WARNING: qdrant tenant-m0-b2 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":17879.893767265,"data":"[00:19:10] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":17879.923153126,"data":"[00:19:10]    qdrant tenant-m0-b2 qa-acorn040: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.6 ms, 48 s\n"}
+,{"stream_name":"stdout","time":17879.92389652,"data":"[00:19:10] -- qdrant tenant-m0-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":17884.073488492,"data":"[00:19:14]   qdrant tenant-m0-b2 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":17888.083862193,"data":"[00:19:18]   qdrant tenant-m0-b2 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":17892.156601312,"data":"[00:19:22]   qdrant tenant-m0-b2 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":17895.985834491,"data":"[00:19:26]   qdrant tenant-m0-b2 qa-acorn100: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":17899.848492548,"data":"[00:19:30]   qdrant tenant-m0-b2 qa-acorn100: 1250 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":17903.868305151,"data":"[00:19:34]   qdrant tenant-m0-b2 qa-acorn100: pass 1 of 3 (24 s)\n"}
+,{"stream_name":"stdout","time":17915.316501982,"data":"[00:19:45]   qdrant tenant-m0-b2 qa-acorn100: pass 2 of 3 (35 s)\n"}
+,{"stream_name":"stdout","time":17926.717128232,"data":"[00:19:57]   qdrant tenant-m0-b2 qa-acorn100: pass 3 of 3 (47 s)\n"}
+,{"stream_name":"stdout","time":17927.094831407,"data":"[00:19:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":17927.094910612,"data":"[00:19:57] WARNING: qdrant tenant-m0-b2 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":17927.095043065,"data":"[00:19:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":17927.118877314,"data":"[00:19:57]    qdrant tenant-m0-b2 qa-acorn100: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.6 ms, 47 s\n"}
+,{"stream_name":"stdout","time":17927.121096746,"data":"[00:19:57] == stage qdrant tenant-m0-b2: done in 1099 s\n"}
+,{"stream_name":"stdout","time":17927.249078873,"data":"[00:19:57] == stage qdrant separate-kb-b0\n"}
+,{"stream_name":"stdout","time":17940.814624245,"data":"[00:20:11]   loaded 20,000 of 49,940 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":17954.910944875,"data":"[00:20:25]   loaded 40,000 of 49,940 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":17962.267945983,"data":"[00:20:32]   loaded 49,940 of 49,940 chunks (33 s)\n"}
+,{"stream_name":"stdout","time":17978.101905634,"data":"[00:20:48]   loaded 20,000 of 57,600 chunks (16 s)\n"}
+,{"stream_name":"stdout","time":17992.565157064,"data":"[00:21:03]   loaded 40,000 of 57,600 chunks (30 s)\n"}
+,{"stream_name":"stdout","time":18006.575206756,"data":"[00:21:17]   loaded 57,600 of 57,600 chunks (44 s)\n"}
+,{"stream_name":"stdout","time":18066.679164287,"data":"[00:22:17]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}\n"}
+,{"stream_name":"stdout","time":18066.717416558,"data":"[00:22:17] qdrant separate-kb build 0: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}\n"}
+,{"stream_name":"stdout","time":18066.718413649,"data":"[00:22:17] -- qdrant separate-kb-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":18073.76649535,"data":"[00:22:24]   qdrant separate-kb-b0 q-asrun: 250 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":18080.547873896,"data":"[00:22:31]   qdrant separate-kb-b0 q-asrun: 500 of 1489 questions (14 s)\n"}
+,{"stream_name":"stdout","time":18087.388351015,"data":"[00:22:37]   qdrant separate-kb-b0 q-asrun: 750 of 1489 questions (21 s)\n"}
+,{"stream_name":"stdout","time":18093.889602272,"data":"[00:22:44]   qdrant separate-kb-b0 q-asrun: 1000 of 1489 questions (27 s)\n"}
+,{"stream_name":"stdout","time":18100.18697555,"data":"[00:22:50]   qdrant separate-kb-b0 q-asrun: 1250 of 1489 questions (33 s)\n"}
+,{"stream_name":"stdout","time":18107.13521668,"data":"[00:22:57]   qdrant separate-kb-b0 q-asrun: pass 1 of 3 (40 s)\n"}
+,{"stream_name":"stdout","time":18125.972209549,"data":"[00:23:16]   qdrant separate-kb-b0 q-asrun: pass 2 of 3 (59 s)\n"}
+,{"stream_name":"stdout","time":18143.848637562,"data":"[00:23:34]   qdrant separate-kb-b0 q-asrun: pass 3 of 3 (77 s)\n"}
+,{"stream_name":"stdout","time":18144.255561864,"data":"[00:23:34]    qdrant separate-kb-b0 q-asrun: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 13.1 ms, 78 s\n"}
+,{"stream_name":"stdout","time":18144.256337373,"data":"[00:23:34] -- qdrant separate-kb-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":18150.590846778,"data":"[00:23:41]   qdrant separate-kb-b0 qa-acorn040: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":18156.889237143,"data":"[00:23:47]   qdrant separate-kb-b0 qa-acorn040: 500 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":18163.399640221,"data":"[00:23:53]   qdrant separate-kb-b0 qa-acorn040: 750 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":18169.587425081,"data":"[00:24:00]   qdrant separate-kb-b0 qa-acorn040: 1000 of 1489 questions (25 s)\n"}
+,{"stream_name":"stdout","time":18175.772612331,"data":"[00:24:06]   qdrant separate-kb-b0 qa-acorn040: 1250 of 1489 questions (31 s)\n"}
+,{"stream_name":"stdout","time":18182.091086522,"data":"[00:24:12]   qdrant separate-kb-b0 qa-acorn040: pass 1 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":18200.277631242,"data":"[00:24:30]   qdrant separate-kb-b0 qa-acorn040: pass 2 of 3 (56 s)\n"}
+,{"stream_name":"stdout","time":18218.249455072,"data":"[00:24:48]   qdrant separate-kb-b0 qa-acorn040: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":18218.640634896,"data":"[00:24:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":18218.640747386,"data":"[00:24:49] WARNING: qdrant separate-kb-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":18218.64093256,"data":"[00:24:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":18218.664866443,"data":"[00:24:49]    qdrant separate-kb-b0 qa-acorn040: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 12.8 ms, 74 s\n"}
+,{"stream_name":"stdout","time":18218.665641786,"data":"[00:24:49] -- qdrant separate-kb-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":18225.160771851,"data":"[00:24:55]   qdrant separate-kb-b0 qa-acorn100: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":18232.237235457,"data":"[00:25:02]   qdrant separate-kb-b0 qa-acorn100: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":18238.887252321,"data":"[00:25:09]   qdrant separate-kb-b0 qa-acorn100: 750 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":18245.278186459,"data":"[00:25:15]   qdrant separate-kb-b0 qa-acorn100: 1000 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":18251.462683199,"data":"[00:25:22]   qdrant separate-kb-b0 qa-acorn100: 1250 of 1489 questions (33 s)\n"}
+,{"stream_name":"stdout","time":18258.163385832,"data":"[00:25:28]   qdrant separate-kb-b0 qa-acorn100: pass 1 of 3 (39 s)\n"}
+,{"stream_name":"stdout","time":18276.376741673,"data":"[00:25:46]   qdrant separate-kb-b0 qa-acorn100: pass 2 of 3 (58 s)\n"}
+,{"stream_name":"stdout","time":18294.614951454,"data":"[00:26:05]   qdrant separate-kb-b0 qa-acorn100: pass 3 of 3 (76 s)\n"}
+,{"stream_name":"stdout","time":18295.021695385,"data":"[00:26:05]    qdrant separate-kb-b0 qa-acorn100: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 13.0 ms, 76 s\n"}
+,{"stream_name":"stdout","time":18295.022423072,"data":"[00:26:05] -- qdrant separate-kb-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":18313.492975499,"data":"[00:26:24]   qdrant separate-kb-b0 qc-exact: 250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":18332.726009583,"data":"[00:26:43]   qdrant separate-kb-b0 qc-exact: 500 of 1489 questions (37 s)\n"}
+,{"stream_name":"stdout","time":18352.615629647,"data":"[00:27:03]   qdrant separate-kb-b0 qc-exact: 750 of 1489 questions (57 s)\n"}
+,{"stream_name":"stdout","time":18369.838696856,"data":"[00:27:20]   qdrant separate-kb-b0 qc-exact: 1000 of 1489 questions (74 s)\n"}
+,{"stream_name":"stdout","time":18386.573211917,"data":"[00:27:37]   qdrant separate-kb-b0 qc-exact: 1250 of 1489 questions (91 s)\n"}
+,{"stream_name":"stdout","time":18405.257829875,"data":"[00:27:55]   qdrant separate-kb-b0 qc-exact: pass 1 of 3 (110 s)\n"}
+,{"stream_name":"stdout","time":18459.232027268,"data":"[00:28:49]   qdrant separate-kb-b0 qc-exact: pass 2 of 3 (164 s)\n"}
+,{"stream_name":"stdout","time":18513.649610892,"data":"[00:29:44]   qdrant separate-kb-b0 qc-exact: pass 3 of 3 (218 s)\n"}
+,{"stream_name":"stdout","time":18514.27663718,"data":"[00:29:44]    qdrant separate-kb-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 45.0 ms, 219 s\n"}
+,{"stream_name":"stdout","time":18514.280045248,"data":"[00:29:44] == stage qdrant separate-kb-b0: done in 587 s\n"}
+,{"stream_name":"stdout","time":18514.461781662,"data":"[00:29:45] == stage qdrant separate-kb-b1\n"}
+,{"stream_name":"stdout","time":18528.584668591,"data":"[00:29:59]   loaded 20,000 of 49,940 chunks (12 s)\n"}
+,{"stream_name":"stdout","time":18542.111469323,"data":"[00:30:12]   loaded 40,000 of 49,940 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":18548.798435784,"data":"[00:30:19]   loaded 49,940 of 49,940 chunks (33 s)\n"}
+,{"stream_name":"stdout","time":18564.091613625,"data":"[00:30:34]   loaded 20,000 of 57,600 chunks (15 s)\n"}
+,{"stream_name":"stdout","time":18578.941880882,"data":"[00:30:49]   loaded 40,000 of 57,600 chunks (30 s)\n"}
+,{"stream_name":"stdout","time":18591.818305373,"data":"[00:31:02]   loaded 57,600 of 57,600 chunks (43 s)\n"}
+,{"stream_name":"stdout","time":18641.929105906,"data":"[00:31:52]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}\n"}
+,{"stream_name":"stdout","time":18641.962907243,"data":"[00:31:52] qdrant separate-kb build 1: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}\n"}
+,{"stream_name":"stdout","time":18641.963994115,"data":"[00:31:52] -- qdrant separate-kb-b1 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":18648.673230562,"data":"[00:31:59]   qdrant separate-kb-b1 q-asrun: 250 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":18655.477807789,"data":"[00:32:06]   qdrant separate-kb-b1 q-asrun: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":18662.318875803,"data":"[00:32:12]   qdrant separate-kb-b1 q-asrun: 750 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":18668.703647771,"data":"[00:32:19]   qdrant separate-kb-b1 q-asrun: 1000 of 1489 questions (27 s)\n"}
+,{"stream_name":"stdout","time":18674.950568186,"data":"[00:32:25]   qdrant separate-kb-b1 q-asrun: 1250 of 1489 questions (33 s)\n"}
+,{"stream_name":"stdout","time":18681.214600347,"data":"[00:32:31]   qdrant separate-kb-b1 q-asrun: pass 1 of 3 (39 s)\n"}
+,{"stream_name":"stdout","time":18699.437914905,"data":"[00:32:49]   qdrant separate-kb-b1 q-asrun: pass 2 of 3 (57 s)\n"}
+,{"stream_name":"stdout","time":18717.862879171,"data":"[00:33:08]   qdrant separate-kb-b1 q-asrun: pass 3 of 3 (76 s)\n"}
+,{"stream_name":"stdout","time":18718.269037685,"data":"[00:33:08]    qdrant separate-kb-b1 q-asrun: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 13.0 ms, 76 s\n"}
+,{"stream_name":"stdout","time":18718.269804804,"data":"[00:33:08] -- qdrant separate-kb-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":18724.828048503,"data":"[00:33:15]   qdrant separate-kb-b1 qa-acorn040: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":18731.250661856,"data":"[00:33:21]   qdrant separate-kb-b1 qa-acorn040: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":18737.694327201,"data":"[00:33:28]   qdrant separate-kb-b1 qa-acorn040: 750 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":18743.824603946,"data":"[00:33:34]   qdrant separate-kb-b1 qa-acorn040: 1000 of 1489 questions (25 s)\n"}
+,{"stream_name":"stdout","time":18749.779130279,"data":"[00:33:40]   qdrant separate-kb-b1 qa-acorn040: 1250 of 1489 questions (31 s)\n"}
+,{"stream_name":"stdout","time":18756.453268718,"data":"[00:33:46]   qdrant separate-kb-b1 qa-acorn040: pass 1 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":18774.648997575,"data":"[00:34:05]   qdrant separate-kb-b1 qa-acorn040: pass 2 of 3 (56 s)\n"}
+,{"stream_name":"stdout","time":18792.860147208,"data":"[00:34:23]   qdrant separate-kb-b1 qa-acorn040: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":18793.248995906,"data":"[00:34:23] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":18793.249129365,"data":"[00:34:23] WARNING: qdrant separate-kb-b1 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":18793.24927926,"data":"[00:34:23] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":18793.273834088,"data":"[00:34:23]    qdrant separate-kb-b1 qa-acorn040: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 12.8 ms, 75 s\n"}
+,{"stream_name":"stdout","time":18793.274584354,"data":"[00:34:23] -- qdrant separate-kb-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":18799.648496231,"data":"[00:34:30]   qdrant separate-kb-b1 qa-acorn100: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":18806.013236885,"data":"[00:34:36]   qdrant separate-kb-b1 qa-acorn100: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":18812.501155285,"data":"[00:34:43]   qdrant separate-kb-b1 qa-acorn100: 750 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":18818.554852242,"data":"[00:34:49]   qdrant separate-kb-b1 qa-acorn100: 1000 of 1489 questions (25 s)\n"}
+,{"stream_name":"stdout","time":18824.569023596,"data":"[00:34:55]   qdrant separate-kb-b1 qa-acorn100: 1250 of 1489 questions (31 s)\n"}
+,{"stream_name":"stdout","time":18830.644709177,"data":"[00:35:01]   qdrant separate-kb-b1 qa-acorn100: pass 1 of 3 (37 s)\n"}
+,{"stream_name":"stdout","time":18848.507252612,"data":"[00:35:19]   qdrant separate-kb-b1 qa-acorn100: pass 2 of 3 (55 s)\n"}
+,{"stream_name":"stdout","time":18866.918144942,"data":"[00:35:37]   qdrant separate-kb-b1 qa-acorn100: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":18867.328775829,"data":"[00:35:37]    qdrant separate-kb-b1 qa-acorn100: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 12.7 ms, 74 s\n"}
+,{"stream_name":"stdout","time":18867.332119761,"data":"[00:35:37] == stage qdrant separate-kb-b1: done in 353 s\n"}
+,{"stream_name":"stdout","time":18867.482712817,"data":"[00:35:38] == stage qdrant separate-kb-b2\n"}
+,{"stream_name":"stdout","time":18881.761801917,"data":"[00:35:52]   loaded 20,000 of 49,940 chunks (13 s)\n"}
+,{"stream_name":"stdout","time":18894.878229291,"data":"[00:36:05]   loaded 40,000 of 49,940 chunks (26 s)\n"}
+,{"stream_name":"stdout","time":18902.027788007,"data":"[00:36:12]   loaded 49,940 of 49,940 chunks (33 s)\n"}
+,{"stream_name":"stdout","time":18918.497524479,"data":"[00:36:29]   loaded 20,000 of 57,600 chunks (16 s)\n"}
+,{"stream_name":"stdout","time":18932.960469817,"data":"[00:36:43]   loaded 40,000 of 57,600 chunks (31 s)\n"}
+,{"stream_name":"stdout","time":18945.900293346,"data":"[00:36:56]   loaded 57,600 of 57,600 chunks (44 s)\n"}
+,{"stream_name":"stdout","time":19006.007333315,"data":"[00:37:56]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}\n"}
+,{"stream_name":"stdout","time":19006.041972911,"data":"[00:37:56] qdrant separate-kb build 2: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}\n"}
+,{"stream_name":"stdout","time":19006.042988542,"data":"[00:37:56] -- qdrant separate-kb-b2 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":19012.969322359,"data":"[00:38:03]   qdrant separate-kb-b2 q-asrun: 250 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":19019.348985913,"data":"[00:38:09]   qdrant separate-kb-b2 q-asrun: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":19026.070103573,"data":"[00:38:16]   qdrant separate-kb-b2 q-asrun: 750 of 1489 questions (20 s)\n"}
+,{"stream_name":"stdout","time":19032.336896996,"data":"[00:38:22]   qdrant separate-kb-b2 q-asrun: 1000 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":19038.394439826,"data":"[00:38:28]   qdrant separate-kb-b2 q-asrun: 1250 of 1489 questions (32 s)\n"}
+,{"stream_name":"stdout","time":19044.591399939,"data":"[00:38:35]   qdrant separate-kb-b2 q-asrun: pass 1 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":19062.347103453,"data":"[00:38:52]   qdrant separate-kb-b2 q-asrun: pass 2 of 3 (56 s)\n"}
+,{"stream_name":"stdout","time":19080.052089865,"data":"[00:39:10]   qdrant separate-kb-b2 q-asrun: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":19080.451073064,"data":"[00:39:10]    qdrant separate-kb-b2 q-asrun: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.6 ms, 74 s\n"}
+,{"stream_name":"stdout","time":19080.451925327,"data":"[00:39:10] -- qdrant separate-kb-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":19087.015623773,"data":"[00:39:17]   qdrant separate-kb-b2 qa-acorn040: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":19093.379554695,"data":"[00:39:23]   qdrant separate-kb-b2 qa-acorn040: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":19099.919269802,"data":"[00:39:30]   qdrant separate-kb-b2 qa-acorn040: 750 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19106.200907791,"data":"[00:39:36]   qdrant separate-kb-b2 qa-acorn040: 1000 of 1489 questions (26 s)\n"}
+,{"stream_name":"stdout","time":19112.299012446,"data":"[00:39:42]   qdrant separate-kb-b2 qa-acorn040: 1250 of 1489 questions (32 s)\n"}
+,{"stream_name":"stdout","time":19118.936429673,"data":"[00:39:49]   qdrant separate-kb-b2 qa-acorn040: pass 1 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":19136.894032203,"data":"[00:40:07]   qdrant separate-kb-b2 qa-acorn040: pass 2 of 3 (56 s)\n"}
+,{"stream_name":"stdout","time":19154.998060612,"data":"[00:40:25]   qdrant separate-kb-b2 qa-acorn040: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":19155.391112334,"data":"[00:40:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":19155.39115836,"data":"[00:40:25] WARNING: qdrant separate-kb-b2 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":19155.391329005,"data":"[00:40:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":19155.415302619,"data":"[00:40:25]    qdrant separate-kb-b2 qa-acorn040: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.7 ms, 75 s\n"}
+,{"stream_name":"stdout","time":19155.416153352,"data":"[00:40:25] -- qdrant separate-kb-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":19161.824194806,"data":"[00:40:32]   qdrant separate-kb-b2 qa-acorn100: 250 of 1489 questions (6 s)\n"}
+,{"stream_name":"stdout","time":19168.151951548,"data":"[00:40:38]   qdrant separate-kb-b2 qa-acorn100: 500 of 1489 questions (13 s)\n"}
+,{"stream_name":"stdout","time":19174.805098427,"data":"[00:40:45]   qdrant separate-kb-b2 qa-acorn100: 750 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19181.037666641,"data":"[00:40:51]   qdrant separate-kb-b2 qa-acorn100: 1000 of 1489 questions (25 s)\n"}
+,{"stream_name":"stdout","time":19187.078533566,"data":"[00:40:57]   qdrant separate-kb-b2 qa-acorn100: 1250 of 1489 questions (32 s)\n"}
+,{"stream_name":"stdout","time":19193.429253544,"data":"[00:41:03]   qdrant separate-kb-b2 qa-acorn100: pass 1 of 3 (38 s)\n"}
+,{"stream_name":"stdout","time":19211.574299533,"data":"[00:41:22]   qdrant separate-kb-b2 qa-acorn100: pass 2 of 3 (56 s)\n"}
+,{"stream_name":"stdout","time":19229.544720125,"data":"[00:41:40]   qdrant separate-kb-b2 qa-acorn100: pass 3 of 3 (74 s)\n"}
+,{"stream_name":"stdout","time":19229.940526829,"data":"[00:41:40]    qdrant separate-kb-b2 qa-acorn100: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.8 ms, 75 s\n"}
+,{"stream_name":"stdout","time":19229.942875981,"data":"[00:41:40] == stage qdrant separate-kb-b2: done in 362 s\n"}
+,{"stream_name":"stdout","time":19230.077990471,"data":"[00:41:40] == stage qdrant one-segment-b0\n"}
+,{"stream_name":"stdout","time":19241.739045794,"data":"[00:41:52]   loaded 20,000 of 107,540 chunks (11 s)\n"}
+,{"stream_name":"stdout","time":19251.570459785,"data":"[00:42:02]   loaded 40,000 of 107,540 chunks (21 s)\n"}
+,{"stream_name":"stdout","time":19262.372657721,"data":"[00:42:12]   loaded 60,000 of 107,540 chunks (32 s)\n"}
+,{"stream_name":"stdout","time":19273.445660682,"data":"[00:42:23]   loaded 80,000 of 107,540 chunks (43 s)\n"}
+,{"stream_name":"stdout","time":19283.956930092,"data":"[00:42:34]   loaded 100,000 of 107,540 chunks (53 s)\n"}
+,{"stream_name":"stdout","time":19288.315313336,"data":"[00:42:38]   loaded 107,540 of 107,540 chunks (58 s)\n"}
+,{"stream_name":"stdout","time":19288.339082116,"data":"[00:42:38]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors\n"}
+,{"stream_name":"stdout","time":19353.400199183,"data":"[00:43:43]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":19353.430394892,"data":"[00:43:43] qdrant one-segment build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":19353.431330982,"data":"[00:43:43] -- qdrant one-segment-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":19357.247036367,"data":"[00:43:47]   qdrant one-segment-b0 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19360.937282462,"data":"[00:43:51]   qdrant one-segment-b0 q-asrun: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":19364.752129019,"data":"[00:43:55]   qdrant one-segment-b0 q-asrun: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":19368.460110279,"data":"[00:43:59]   qdrant one-segment-b0 q-asrun: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19371.987154285,"data":"[00:44:02]   qdrant one-segment-b0 q-asrun: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":19375.570123054,"data":"[00:44:06]   qdrant one-segment-b0 q-asrun: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":19385.754482567,"data":"[00:44:16]   qdrant one-segment-b0 q-asrun: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":19395.924544008,"data":"[00:44:26]   qdrant one-segment-b0 q-asrun: pass 3 of 3 (42 s)\n"}
+,{"stream_name":"stdout","time":19396.349081338,"data":"[00:44:26]    qdrant one-segment-b0 q-asrun: recall@5 0.6399182561307902, recall@10 0.6382152588555858, ERR 0.0, p50 7.0 ms, 43 s\n"}
+,{"stream_name":"stdout","time":19396.349787957,"data":"[00:44:26] -- qdrant one-segment-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":19400.212394897,"data":"[00:44:30]   qdrant one-segment-b0 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19403.994176062,"data":"[00:44:34]   qdrant one-segment-b0 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":19407.79066128,"data":"[00:44:38]   qdrant one-segment-b0 qa-acorn040: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":19411.531195973,"data":"[00:44:42]   qdrant one-segment-b0 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19415.614364001,"data":"[00:44:46]   qdrant one-segment-b0 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19419.290200628,"data":"[00:44:49]   qdrant one-segment-b0 qa-acorn040: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":19429.778290572,"data":"[00:45:00]   qdrant one-segment-b0 qa-acorn040: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":19440.405605873,"data":"[00:45:10]   qdrant one-segment-b0 qa-acorn040: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":19440.79501391,"data":"[00:45:11]    qdrant one-segment-b0 qa-acorn040: recall@5 0.7833787465940054, recall@10 0.7851498637602179, ERR 0.0, p50 7.2 ms, 44 s\n"}
+,{"stream_name":"stdout","time":19440.795717793,"data":"[00:45:11] -- qdrant one-segment-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":19444.60548984,"data":"[00:45:15]   qdrant one-segment-b0 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19448.249159725,"data":"[00:45:18]   qdrant one-segment-b0 qa-acorn100: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":19452.055886451,"data":"[00:45:22]   qdrant one-segment-b0 qa-acorn100: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":19455.790114793,"data":"[00:45:26]   qdrant one-segment-b0 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19459.316291574,"data":"[00:45:29]   qdrant one-segment-b0 qa-acorn100: 1250 of 1489 questions (18 s)\n"}
+,{"stream_name":"stdout","time":19462.972427718,"data":"[00:45:33]   qdrant one-segment-b0 qa-acorn100: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":19473.375683527,"data":"[00:45:43]   qdrant one-segment-b0 qa-acorn100: pass 2 of 3 (32 s)\n"}
+,{"stream_name":"stdout","time":19483.901901831,"data":"[00:45:54]   qdrant one-segment-b0 qa-acorn100: pass 3 of 3 (43 s)\n"}
+,{"stream_name":"stdout","time":19484.301390911,"data":"[00:45:54]    qdrant one-segment-b0 qa-acorn100: recall@5 0.7833787465940054, recall@10 0.7851498637602179, ERR 0.0, p50 7.1 ms, 43 s\n"}
+,{"stream_name":"stdout","time":19484.302145305,"data":"[00:45:54] -- qdrant one-segment-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":19501.095361376,"data":"[00:46:11]   qdrant one-segment-b0 qc-exact: 250 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":19518.498290714,"data":"[00:46:29]   qdrant one-segment-b0 qc-exact: 500 of 1489 questions (34 s)\n"}
+,{"stream_name":"stdout","time":19536.726686308,"data":"[00:46:47]   qdrant one-segment-b0 qc-exact: 750 of 1489 questions (52 s)\n"}
+,{"stream_name":"stdout","time":19552.194299271,"data":"[00:47:02]   qdrant one-segment-b0 qc-exact: 1000 of 1489 questions (68 s)\n"}
+,{"stream_name":"stdout","time":19567.392973683,"data":"[00:47:17]   qdrant one-segment-b0 qc-exact: 1250 of 1489 questions (83 s)\n"}
+,{"stream_name":"stdout","time":19584.272502351,"data":"[00:47:34]   qdrant one-segment-b0 qc-exact: pass 1 of 3 (100 s)\n"}
+,{"stream_name":"stdout","time":19633.988673507,"data":"[00:48:24]   qdrant one-segment-b0 qc-exact: pass 2 of 3 (149 s)\n"}
+,{"stream_name":"stdout","time":19683.188600191,"data":"[00:49:13]   qdrant one-segment-b0 qc-exact: pass 3 of 3 (199 s)\n"}
+,{"stream_name":"stdout","time":19683.588257152,"data":"[00:49:14]    qdrant one-segment-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 41.5 ms, 199 s\n"}
+,{"stream_name":"stdout","time":19683.590651101,"data":"[00:49:14] == stage qdrant one-segment-b0: done in 454 s\n"}
+,{"stream_name":"stdout","time":19683.706844041,"data":"[00:49:14] == stage qdrant one-segment-b1\n"}
+,{"stream_name":"stdout","time":19694.082528977,"data":"[00:49:24]   loaded 20,000 of 107,540 chunks (10 s)\n"}
+,{"stream_name":"stdout","time":19704.270079964,"data":"[00:49:34]   loaded 40,000 of 107,540 chunks (20 s)\n"}
+,{"stream_name":"stdout","time":19714.461008389,"data":"[00:49:45]   loaded 60,000 of 107,540 chunks (30 s)\n"}
+,{"stream_name":"stdout","time":19725.649606577,"data":"[00:49:56]   loaded 80,000 of 107,540 chunks (41 s)\n"}
+,{"stream_name":"stdout","time":19736.670308973,"data":"[00:50:07]   loaded 100,000 of 107,540 chunks (52 s)\n"}
+,{"stream_name":"stdout","time":19740.655737498,"data":"[00:50:11]   loaded 107,540 of 107,540 chunks (56 s)\n"}
+,{"stream_name":"stdout","time":19740.704321469,"data":"[00:50:11]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors\n"}
+,{"stream_name":"stdout","time":19805.769404696,"data":"[00:51:16]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":19805.798257438,"data":"[00:51:16] qdrant one-segment build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":19805.799109054,"data":"[00:51:16] -- qdrant one-segment-b1 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":19809.612096846,"data":"[00:51:20]   qdrant one-segment-b1 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19813.282964868,"data":"[00:51:23]   qdrant one-segment-b1 q-asrun: 500 of 1489 questions (7 s)\n"}
+,{"stream_name":"stdout","time":19817.049021203,"data":"[00:51:27]   qdrant one-segment-b1 q-asrun: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":19821.358310289,"data":"[00:51:31]   qdrant one-segment-b1 q-asrun: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19824.989039663,"data":"[00:51:35]   qdrant one-segment-b1 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19828.568624364,"data":"[00:51:39]   qdrant one-segment-b1 q-asrun: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":19838.941702312,"data":"[00:51:49]   qdrant one-segment-b1 q-asrun: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":19849.296146774,"data":"[00:51:59]   qdrant one-segment-b1 q-asrun: pass 3 of 3 (43 s)\n"}
+,{"stream_name":"stdout","time":19849.711613315,"data":"[00:52:00]    qdrant one-segment-b1 q-asrun: recall@5 0.615258855585831, recall@10 0.6090599455040872, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":19849.712446779,"data":"[00:52:00] -- qdrant one-segment-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":19853.677466717,"data":"[00:52:04]   qdrant one-segment-b1 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19857.46402084,"data":"[00:52:08]   qdrant one-segment-b1 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":19861.35005756,"data":"[00:52:11]   qdrant one-segment-b1 qa-acorn040: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":19865.146189483,"data":"[00:52:15]   qdrant one-segment-b1 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19868.832374431,"data":"[00:52:19]   qdrant one-segment-b1 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19872.62359015,"data":"[00:52:23]   qdrant one-segment-b1 qa-acorn040: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":19883.348898464,"data":"[00:52:33]   qdrant one-segment-b1 qa-acorn040: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":19893.916498088,"data":"[00:52:44]   qdrant one-segment-b1 qa-acorn040: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":19894.314450212,"data":"[00:52:44]    qdrant one-segment-b1 qa-acorn040: recall@5 0.7630790190735696, recall@10 0.7598773841961853, ERR 0.0, p50 7.2 ms, 45 s\n"}
+,{"stream_name":"stdout","time":19894.315204615,"data":"[00:52:44] -- qdrant one-segment-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":19898.098362121,"data":"[00:52:48]   qdrant one-segment-b1 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":19901.896809141,"data":"[00:52:52]   qdrant one-segment-b1 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":19906.117951169,"data":"[00:52:56]   qdrant one-segment-b1 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":19909.890030003,"data":"[00:53:00]   qdrant one-segment-b1 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":19913.609096243,"data":"[00:53:04]   qdrant one-segment-b1 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":19917.291143096,"data":"[00:53:07]   qdrant one-segment-b1 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":19928.009071902,"data":"[00:53:18]   qdrant one-segment-b1 qa-acorn100: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":19938.80517663,"data":"[00:53:29]   qdrant one-segment-b1 qa-acorn100: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":19939.208174752,"data":"[00:53:29]    qdrant one-segment-b1 qa-acorn100: recall@5 0.7630790190735696, recall@10 0.7598773841961853, ERR 0.0, p50 7.3 ms, 45 s\n"}
+,{"stream_name":"stdout","time":19939.210740524,"data":"[00:53:29] == stage qdrant one-segment-b1: done in 256 s\n"}
+,{"stream_name":"stdout","time":19939.316061155,"data":"[00:53:29] == stage qdrant one-segment-b2\n"}
+,{"stream_name":"stdout","time":19949.650301749,"data":"[00:53:40]   loaded 20,000 of 107,540 chunks (10 s)\n"}
+,{"stream_name":"stdout","time":19959.876648033,"data":"[00:53:50]   loaded 40,000 of 107,540 chunks (20 s)\n"}
+,{"stream_name":"stdout","time":19970.575161532,"data":"[00:54:01]   loaded 60,000 of 107,540 chunks (31 s)\n"}
+,{"stream_name":"stdout","time":19981.745213281,"data":"[00:54:12]   loaded 80,000 of 107,540 chunks (42 s)\n"}
+,{"stream_name":"stdout","time":19992.872311859,"data":"[00:54:23]   loaded 100,000 of 107,540 chunks (53 s)\n"}
+,{"stream_name":"stdout","time":19996.779713522,"data":"[00:54:27]   loaded 107,540 of 107,540 chunks (57 s)\n"}
+,{"stream_name":"stdout","time":19996.796655378,"data":"[00:54:27]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors\n"}
+,{"stream_name":"stdout","time":20061.857365138,"data":"[00:55:32]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}\n"}
+,{"stream_name":"stdout","time":20061.886003854,"data":"[00:55:32] qdrant one-segment build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":20061.886913345,"data":"[00:55:32] -- qdrant one-segment-b2 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":20065.805108757,"data":"[00:55:36]   qdrant one-segment-b2 q-asrun: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":20070.000220323,"data":"[00:55:40]   qdrant one-segment-b2 q-asrun: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":20073.817341063,"data":"[00:55:44]   qdrant one-segment-b2 q-asrun: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":20077.664083254,"data":"[00:55:48]   qdrant one-segment-b2 q-asrun: 1000 of 1489 questions (16 s)\n"}
+,{"stream_name":"stdout","time":20081.376441676,"data":"[00:55:51]   qdrant one-segment-b2 q-asrun: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":20085.116593583,"data":"[00:55:55]   qdrant one-segment-b2 q-asrun: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":20095.516056307,"data":"[00:56:06]   qdrant one-segment-b2 q-asrun: pass 2 of 3 (34 s)\n"}
+,{"stream_name":"stdout","time":20105.902162161,"data":"[00:56:16]   qdrant one-segment-b2 q-asrun: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":20106.310608365,"data":"[00:56:16]    qdrant one-segment-b2 q-asrun: recall@5 0.6371934604904632, recall@10 0.6286103542234333, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":20106.311299569,"data":"[00:56:16] -- qdrant one-segment-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":20110.186999855,"data":"[00:56:20]   qdrant one-segment-b2 qa-acorn040: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":20113.930455987,"data":"[00:56:24]   qdrant one-segment-b2 qa-acorn040: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":20117.652672135,"data":"[00:56:28]   qdrant one-segment-b2 qa-acorn040: 750 of 1489 questions (11 s)\n"}
+,{"stream_name":"stdout","time":20121.3968907,"data":"[00:56:31]   qdrant one-segment-b2 qa-acorn040: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":20125.053203778,"data":"[00:56:35]   qdrant one-segment-b2 qa-acorn040: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":20128.791134197,"data":"[00:56:39]   qdrant one-segment-b2 qa-acorn040: pass 1 of 3 (22 s)\n"}
+,{"stream_name":"stdout","time":20139.400327781,"data":"[00:56:49]   qdrant one-segment-b2 qa-acorn040: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":20150.144150059,"data":"[00:57:00]   qdrant one-segment-b2 qa-acorn040: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":20150.545943193,"data":"[00:57:01]    qdrant one-segment-b2 qa-acorn040: recall@5 0.7938692098092643, recall@10 0.7869209809264306, ERR 0.0, p50 7.1 ms, 44 s\n"}
+,{"stream_name":"stdout","time":20150.546673307,"data":"[00:57:01] -- qdrant one-segment-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":20154.829235057,"data":"[00:57:05]   qdrant one-segment-b2 qa-acorn100: 250 of 1489 questions (4 s)\n"}
+,{"stream_name":"stdout","time":20158.488562729,"data":"[00:57:09]   qdrant one-segment-b2 qa-acorn100: 500 of 1489 questions (8 s)\n"}
+,{"stream_name":"stdout","time":20162.285075351,"data":"[00:57:12]   qdrant one-segment-b2 qa-acorn100: 750 of 1489 questions (12 s)\n"}
+,{"stream_name":"stdout","time":20166.023267071,"data":"[00:57:16]   qdrant one-segment-b2 qa-acorn100: 1000 of 1489 questions (15 s)\n"}
+,{"stream_name":"stdout","time":20169.580880752,"data":"[00:57:20]   qdrant one-segment-b2 qa-acorn100: 1250 of 1489 questions (19 s)\n"}
+,{"stream_name":"stdout","time":20173.320868805,"data":"[00:57:23]   qdrant one-segment-b2 qa-acorn100: pass 1 of 3 (23 s)\n"}
+,{"stream_name":"stdout","time":20183.957644323,"data":"[00:57:34]   qdrant one-segment-b2 qa-acorn100: pass 2 of 3 (33 s)\n"}
+,{"stream_name":"stdout","time":20194.839485764,"data":"[00:57:45]   qdrant one-segment-b2 qa-acorn100: pass 3 of 3 (44 s)\n"}
+,{"stream_name":"stdout","time":20195.239294192,"data":"[00:57:45]    qdrant one-segment-b2 qa-acorn100: recall@5 0.7938692098092643, recall@10 0.7869209809264306, ERR 0.0, p50 7.2 ms, 45 s\n"}
+,{"stream_name":"stdout","time":20195.241924007,"data":"[00:57:45] == stage qdrant one-segment-b2: done in 256 s\n"}
+,{"stream_name":"stdout","time":20195.347244872,"data":"[00:57:45] $ bash /tmp/wardowl-src/benchmarks/kaggle_stores.sh stop\n"}
+,{"stream_name":"stdout","time":20196.565451489,"data":"stopped\n"}
+,{"stream_name":"stdout","time":20196.570824491,"data":"[00:57:47] X1 finished in 5.60 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/x1run2/manifest.json)\n"}
+,{"stream_name":"stdout","time":20200.658427703,"data":"[00:57:51] exit code 0\n"}
+,{"stream_name":"stderr","time":20203.988222957,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":20203.988261604,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":20204.472869087,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":20204.472904383,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":20205.579530578,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":20207.076066485,"data":"[NbConvertApp] Writing 275132 bytes to __results__.html\n"}
+]

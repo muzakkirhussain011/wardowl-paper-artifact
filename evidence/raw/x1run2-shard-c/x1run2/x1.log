@@ -1,0 +1,939 @@
+[19:21:36] python: 3.13.15
+[19:21:36] platform: Linux-6.18.55+-x86_64-with-glibc2.39
+[19:21:36] cpus: 4
+[19:21:36] wardowl: 2.1.0
+[19:21:36] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl
+[19:21:36] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1
+[19:21:36] memory_gib: 31.3
+[19:21:36] gpus: []
+[19:21:36] torch: 2.11.0+cpu
+[19:21:36] transformers: 5.16.1
+[19:21:36] sentence-transformers: 5.7.0
+[19:21:36] datasets: 4.8.5
+[19:21:36] numpy: 2.1.3
+[19:21:36] psycopg: 3.3.6
+[19:21:36] chromadb: None
+[19:21:36] elasticsearch: None
+[19:21:36] opensearch-py: None
+[19:21:36] qdrant-client: 1.20.0
+[19:21:36] weaviate-client: None
+[19:21:36] redis: None
+[19:21:36] lancedb: None
+[19:21:36] faiss-cpu: None
+[19:21:36] pandas: 2.3.3
+[19:21:36] pyarrow: 23.0.1
+[19:21:36] scipy: 1.16.3
+[19:21:36] psycopg-pool: 3.3.3
+[19:21:36] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': [], 'cuda': None}
+[19:21:36] wardowl_installed: True
+[19:21:36] == stage corpus
+[19:21:48] 6,648 FiQA queries for the probe set
+[19:21:48] probe set: 24 people, 384 questions
+[19:21:48] == stage corpus: done in 12 s
+[19:21:48] == stage embeddings
+[19:21:51] cached embeddings copied from /kaggle/input: ['/kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/cache/chunks-BAAI_bge-base-en-v1.5-3165378041584035.npy']
+[19:21:52] adopted from /kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/x1run2: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']
+[19:23:33] query vectors pinned from /kaggle/working/x1run2/query_vectors.npy (largest difference from this encoding: 4.36e-04)
+[19:23:33] == stage embeddings: done in 104 s
+[19:23:33] == stage exact baseline
+[19:23:40] == stage exact baseline: done in 7 s
+[19:23:40] == stage alignment variables
+[19:23:57] /kaggle/working/x1run2/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)
+[19:23:57] == stage alignment variables: done in 18 s
+[19:23:57] 1,489 questions of 213 people; 50 fixed EXPLAIN questions
+[19:23:57] == stage pgvector: start and load
+[19:27:17] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}
+[19:27:17] == stage pgvector: start and load: done in 200 s
+[19:27:17] == stage pgvector hnsw-m32-efc200-b0
+[19:29:15] pgvector index hnsw-m32-efc200 build 0: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 0, 'm': 32, 'ef_construction': 200, 'seconds': 117.0, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}
+[19:29:15] == stage pgvector: vacuum
+[19:29:16] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 1146, 'n_entry_pages': 252, 'n_data_pages': 401, 'n_entries': 50109, 'version': 2}
+[19:29:16] == stage pgvector: vacuum: done in 1 s
+[19:29:16] == stage pgvector: filter estimates
+[19:29:16] == stage pgvector: filter estimates: done in 0 s
+[19:29:16] -- pgvector hnsw-m32-efc200-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[19:31:49]   pgvector hnsw-m32-efc200-b0 p-asrun: 250 of 1489 questions (152 s)
+[19:34:30]   pgvector hnsw-m32-efc200-b0 p-asrun: 500 of 1489 questions (313 s)
+[19:37:31]   pgvector hnsw-m32-efc200-b0 p-asrun: 750 of 1489 questions (494 s)
+[19:39:55]   pgvector hnsw-m32-efc200-b0 p-asrun: 1000 of 1489 questions (639 s)
+[19:42:19]   pgvector hnsw-m32-efc200-b0 p-asrun: 1250 of 1489 questions (782 s)
+[19:45:04]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 1 of 3 (947 s)
+[19:52:47]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 2 of 3 (1410 s)
+[20:00:50]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 3 of 3 (1893 s)
+[20:01:07] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:01:07] WARNING: pgvector hnsw-m32-efc200-b0 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[20:01:07] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:01:07]    pgvector hnsw-m32-efc200-b0 p-asrun: recall@5 0.9989100817438693, recall@10 1.0, ERR 0.0006811989100817438, p50 414.3 ms, 1910 s, HNSW plans 0.007 of 2978
+[20:01:07] -- pgvector hnsw-m32-efc200-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[20:01:32]   pgvector hnsw-m32-efc200-b0 pg-custom: 250 of 1489 questions (25 s)
+[20:01:55]   pgvector hnsw-m32-efc200-b0 pg-custom: 500 of 1489 questions (47 s)
+[20:02:16]   pgvector hnsw-m32-efc200-b0 pg-custom: 750 of 1489 questions (68 s)
+[20:02:42]   pgvector hnsw-m32-efc200-b0 pg-custom: 1000 of 1489 questions (94 s)
+[20:03:03]   pgvector hnsw-m32-efc200-b0 pg-custom: 1250 of 1489 questions (115 s)
+[20:03:22]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 1 of 3 (134 s)
+[20:04:24]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 2 of 3 (196 s)
+[20:05:31]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 3 of 3 (263 s)
+[20:05:34] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:05:34] WARNING: pgvector hnsw-m32-efc200-b0 pg-custom: 357 short results; EXPLAIN covers 200, empty ones first
+[20:05:34] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:06:06]    pgvector hnsw-m32-efc200-b0 pg-custom: recall@5 0.6983651226158037, recall@10 0.7253405994550408, ERR 0.10013623978201634, p50 33.9 ms, 298 s, HNSW plans 0.986 of 2978
+[20:06:06] -- pgvector hnsw-m32-efc200-b0 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[20:06:33]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 250 of 1489 questions (26 s)
+[20:06:56]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 500 of 1489 questions (50 s)
+[20:07:19]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 750 of 1489 questions (73 s)
+[20:07:47]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 1000 of 1489 questions (101 s)
+[20:08:16]   pgvector hnsw-m32-efc200-b0 pg-hnsw: 1250 of 1489 questions (129 s)
+[20:08:36]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 1 of 3 (149 s)
+[20:09:44]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 2 of 3 (218 s)
+[20:10:54]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 3 of 3 (287 s)
+[20:10:56] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:10:56] WARNING: pgvector hnsw-m32-efc200-b0 pg-hnsw: 357 short results; EXPLAIN covers 200, empty ones first
+[20:10:56] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:11:26]    pgvector hnsw-m32-efc200-b0 pg-hnsw: recall@5 0.6983651226158037, recall@10 0.7253405994550408, ERR 0.10013623978201634, p50 37.4 ms, 320 s, HNSW plans 1.000 of 2978
+[20:11:26] -- pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[20:12:15]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 250 of 1489 questions (48 s)
+[20:12:56]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 500 of 1489 questions (89 s)
+[20:13:36]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 750 of 1489 questions (129 s)
+[20:14:37]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 1000 of 1489 questions (190 s)
+[20:16:24]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: 1250 of 1489 questions (297 s)
+[20:16:50]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 1 of 3 (322 s)
+[20:19:03]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 2 of 3 (456 s)
+[20:21:13]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 3 of 3 (586 s)
+[20:21:19]    pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: recall@5 0.8346049046321524, recall@10 0.8704359673024524, ERR 0.0, p50 32.3 ms, 593 s, HNSW plans 1.000 of 2978
+[20:21:19] -- pgvector hnsw-m32-efc200-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[20:21:42]   pgvector hnsw-m32-efc200-b0 pc-ef400: 250 of 1489 questions (22 s)
+[20:22:03]   pgvector hnsw-m32-efc200-b0 pc-ef400: 500 of 1489 questions (43 s)
+[20:22:22]   pgvector hnsw-m32-efc200-b0 pc-ef400: 750 of 1489 questions (62 s)
+[20:22:48]   pgvector hnsw-m32-efc200-b0 pc-ef400: 1000 of 1489 questions (88 s)
+[20:23:14]   pgvector hnsw-m32-efc200-b0 pc-ef400: 1250 of 1489 questions (114 s)
+[20:23:32]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 1 of 3 (132 s)
+[20:24:35]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 2 of 3 (195 s)
+[20:25:39]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 3 of 3 (259 s)
+[20:25:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:25:41] WARNING: pgvector hnsw-m32-efc200-b0 pc-ef400: 352 short results; EXPLAIN covers 200, empty ones first
+[20:25:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:26:08]    pgvector hnsw-m32-efc200-b0 pc-ef400: recall@5 0.7177111716621253, recall@10 0.7463215258855587, ERR 0.09673024523160763, p50 31.7 ms, 288 s, HNSW plans 1.000 of 2978
+[20:26:08] -- pgvector hnsw-m32-efc200-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[20:26:36]   pgvector hnsw-m32-efc200-b0 pd-lim10: 250 of 1489 questions (27 s)
+[20:27:01]   pgvector hnsw-m32-efc200-b0 pd-lim10: 500 of 1489 questions (52 s)
+[20:27:26]   pgvector hnsw-m32-efc200-b0 pd-lim10: 750 of 1489 questions (77 s)
+[20:27:55]   pgvector hnsw-m32-efc200-b0 pd-lim10: 1000 of 1489 questions (106 s)
+[20:28:25]   pgvector hnsw-m32-efc200-b0 pd-lim10: 1250 of 1489 questions (137 s)
+[20:28:49]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 1 of 3 (160 s)
+[20:30:06]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 2 of 3 (237 s)
+[20:31:21]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 3 of 3 (312 s)
+[20:31:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:31:24] WARNING: pgvector hnsw-m32-efc200-b0 pd-lim10: 357 short results; EXPLAIN covers 200, empty ones first
+[20:31:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:31:50]    pgvector hnsw-m32-efc200-b0 pd-lim10: recall@5 0.7636239782016349, recall@10 0.7828337874659401, ERR 0.10013623978201634, p50 43.1 ms, 341 s, HNSW plans 1.000 of 2978
+[20:31:50] == stage pgvector hnsw-m32-efc200-b0: done in 3873 s
+[20:31:50] == stage pgvector hnsw-m32-efc200-b1
+[20:34:00] pgvector index hnsw-m32-efc200 build 1: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 1, 'm': 32, 'ef_construction': 200, 'seconds': 128.5, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}
+[20:34:00] -- pgvector hnsw-m32-efc200-b1 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[20:36:30]   pgvector hnsw-m32-efc200-b1 p-asrun: 250 of 1489 questions (150 s)
+[20:39:15]   pgvector hnsw-m32-efc200-b1 p-asrun: 500 of 1489 questions (314 s)
+[20:42:11]   pgvector hnsw-m32-efc200-b1 p-asrun: 750 of 1489 questions (490 s)
+[20:44:36]   pgvector hnsw-m32-efc200-b1 p-asrun: 1000 of 1489 questions (635 s)
+[20:46:55]   pgvector hnsw-m32-efc200-b1 p-asrun: 1250 of 1489 questions (774 s)
+[20:49:42]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 1 of 3 (942 s)
+[20:58:00]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 2 of 3 (1439 s)
+[21:05:45]   pgvector hnsw-m32-efc200-b1 p-asrun: pass 3 of 3 (1905 s)
+[21:06:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:06:01] WARNING: pgvector hnsw-m32-efc200-b1 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[21:06:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:06:01]    pgvector hnsw-m32-efc200-b1 p-asrun: recall@5 0.9990463215258855, recall@10 1.0, ERR 0.0006811989100817438, p50 416.5 ms, 1921 s, HNSW plans 0.007 of 2978
+[21:06:01] -- pgvector hnsw-m32-efc200-b1 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[21:06:24]   pgvector hnsw-m32-efc200-b1 pg-custom: 250 of 1489 questions (22 s)
+[21:06:43]   pgvector hnsw-m32-efc200-b1 pg-custom: 500 of 1489 questions (42 s)
+[21:07:02]   pgvector hnsw-m32-efc200-b1 pg-custom: 750 of 1489 questions (60 s)
+[21:07:26]   pgvector hnsw-m32-efc200-b1 pg-custom: 1000 of 1489 questions (84 s)
+[21:07:51]   pgvector hnsw-m32-efc200-b1 pg-custom: 1250 of 1489 questions (109 s)
+[21:08:12]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 1 of 3 (130 s)
+[21:09:17]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 2 of 3 (196 s)
+[21:10:24]   pgvector hnsw-m32-efc200-b1 pg-custom: pass 3 of 3 (262 s)
+[21:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:10:27] WARNING: pgvector hnsw-m32-efc200-b1 pg-custom: 355 short results; EXPLAIN covers 200, empty ones first
+[21:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:10:57]    pgvector hnsw-m32-efc200-b1 pg-custom: recall@5 0.6975476839237057, recall@10 0.7197547683923705, ERR 0.10286103542234333, p50 34.4 ms, 295 s, HNSW plans 0.986 of 2978
+[21:10:57] -- pgvector hnsw-m32-efc200-b1 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:11:24]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 250 of 1489 questions (26 s)
+[21:11:46]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 500 of 1489 questions (49 s)
+[21:12:07]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 750 of 1489 questions (70 s)
+[21:12:33]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 1000 of 1489 questions (96 s)
+[21:13:00]   pgvector hnsw-m32-efc200-b1 pg-hnsw: 1250 of 1489 questions (123 s)
+[21:13:20]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 1 of 3 (142 s)
+[21:14:30]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 2 of 3 (212 s)
+[21:15:47]   pgvector hnsw-m32-efc200-b1 pg-hnsw: pass 3 of 3 (290 s)
+[21:15:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:15:50] WARNING: pgvector hnsw-m32-efc200-b1 pg-hnsw: 355 short results; EXPLAIN covers 200, empty ones first
+[21:15:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:16:26]    pgvector hnsw-m32-efc200-b1 pg-hnsw: recall@5 0.6975476839237057, recall@10 0.7197547683923705, ERR 0.10286103542234333, p50 37.7 ms, 328 s, HNSW plans 1.000 of 2978
+[21:16:26] -- pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[21:17:25]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 250 of 1489 questions (58 s)
+[21:18:08]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 500 of 1489 questions (101 s)
+[21:18:44]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 750 of 1489 questions (137 s)
+[21:19:33]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 1000 of 1489 questions (186 s)
+[21:21:01]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: 1250 of 1489 questions (275 s)
+[21:21:25]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 1 of 3 (299 s)
+[21:23:35]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 2 of 3 (429 s)
+[21:25:48]   pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: pass 3 of 3 (561 s)
+[21:25:55]    pgvector hnsw-m32-efc200-b1 pa-t1000k-m8: recall@5 0.8331062670299729, recall@10 0.8660762942779292, ERR 0.0, p50 32.9 ms, 569 s, HNSW plans 1.000 of 2978
+[21:25:55] -- pgvector hnsw-m32-efc200-b1 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:26:19]   pgvector hnsw-m32-efc200-b1 pc-ef400: 250 of 1489 questions (23 s)
+[21:26:40]   pgvector hnsw-m32-efc200-b1 pc-ef400: 500 of 1489 questions (45 s)
+[21:27:00]   pgvector hnsw-m32-efc200-b1 pc-ef400: 750 of 1489 questions (65 s)
+[21:27:25]   pgvector hnsw-m32-efc200-b1 pc-ef400: 1000 of 1489 questions (90 s)
+[21:27:52]   pgvector hnsw-m32-efc200-b1 pc-ef400: 1250 of 1489 questions (116 s)
+[21:28:12]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 1 of 3 (137 s)
+[21:29:17]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 2 of 3 (202 s)
+[21:30:23]   pgvector hnsw-m32-efc200-b1 pc-ef400: pass 3 of 3 (267 s)
+[21:30:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:30:25] WARNING: pgvector hnsw-m32-efc200-b1 pc-ef400: 355 short results; EXPLAIN covers 200, empty ones first
+[21:30:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:30:53]    pgvector hnsw-m32-efc200-b1 pc-ef400: recall@5 0.720708446866485, recall@10 0.7410081743869211, ERR 0.1008174386920981, p50 35.6 ms, 297 s, HNSW plans 1.000 of 2978
+[21:30:53] -- pgvector hnsw-m32-efc200-b1 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[21:31:21]   pgvector hnsw-m32-efc200-b1 pd-lim10: 250 of 1489 questions (28 s)
+[21:31:47]   pgvector hnsw-m32-efc200-b1 pd-lim10: 500 of 1489 questions (54 s)
+[21:32:13]   pgvector hnsw-m32-efc200-b1 pd-lim10: 750 of 1489 questions (79 s)
+[21:32:42]   pgvector hnsw-m32-efc200-b1 pd-lim10: 1000 of 1489 questions (109 s)
+[21:33:14]   pgvector hnsw-m32-efc200-b1 pd-lim10: 1250 of 1489 questions (140 s)
+[21:33:38]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 1 of 3 (165 s)
+[21:34:56]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 2 of 3 (243 s)
+[21:36:13]   pgvector hnsw-m32-efc200-b1 pd-lim10: pass 3 of 3 (319 s)
+[21:36:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:36:15] WARNING: pgvector hnsw-m32-efc200-b1 pd-lim10: 355 short results; EXPLAIN covers 200, empty ones first
+[21:36:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:36:42]    pgvector hnsw-m32-efc200-b1 pd-lim10: recall@5 0.7677111716621253, recall@10 0.784741144414169, ERR 0.10286103542234333, p50 43.7 ms, 349 s, HNSW plans 1.000 of 2978
+[21:36:42] == stage pgvector hnsw-m32-efc200-b1: done in 3892 s
+[21:36:43] == stage pgvector hnsw-m32-efc200-b2
+[21:38:53] pgvector index hnsw-m32-efc200 build 2: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 2, 'm': 32, 'ef_construction': 200, 'seconds': 129.6, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 440475648, 'reloptions': ['m=32', 'ef_construction=200']}
+[21:38:53] -- pgvector hnsw-m32-efc200-b2 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[21:41:25]   pgvector hnsw-m32-efc200-b2 p-asrun: 250 of 1489 questions (151 s)
+[21:44:07]   pgvector hnsw-m32-efc200-b2 p-asrun: 500 of 1489 questions (314 s)
+[21:47:01]   pgvector hnsw-m32-efc200-b2 p-asrun: 750 of 1489 questions (487 s)
+[21:49:23]   pgvector hnsw-m32-efc200-b2 p-asrun: 1000 of 1489 questions (630 s)
+[21:51:43]   pgvector hnsw-m32-efc200-b2 p-asrun: 1250 of 1489 questions (769 s)
+[21:54:23]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 1 of 3 (929 s)
+[22:02:20]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 2 of 3 (1406 s)
+[22:10:11]   pgvector hnsw-m32-efc200-b2 p-asrun: pass 3 of 3 (1877 s)
+[22:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:10:27] WARNING: pgvector hnsw-m32-efc200-b2 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[22:10:27] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:10:27]    pgvector hnsw-m32-efc200-b2 p-asrun: recall@5 0.9986376021798365, recall@10 0.999591280653951, ERR 0.0006811989100817438, p50 416.3 ms, 1893 s, HNSW plans 0.007 of 2978
+[22:10:27] -- pgvector hnsw-m32-efc200-b2 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[22:10:49]   pgvector hnsw-m32-efc200-b2 pg-custom: 250 of 1489 questions (22 s)
+[22:11:10]   pgvector hnsw-m32-efc200-b2 pg-custom: 500 of 1489 questions (42 s)
+[22:11:28]   pgvector hnsw-m32-efc200-b2 pg-custom: 750 of 1489 questions (61 s)
+[22:11:53]   pgvector hnsw-m32-efc200-b2 pg-custom: 1000 of 1489 questions (86 s)
+[22:12:14]   pgvector hnsw-m32-efc200-b2 pg-custom: 1250 of 1489 questions (106 s)
+[22:12:32]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 1 of 3 (124 s)
+[22:13:30]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 2 of 3 (183 s)
+[22:14:29]   pgvector hnsw-m32-efc200-b2 pg-custom: pass 3 of 3 (241 s)
+[22:14:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:14:31] WARNING: pgvector hnsw-m32-efc200-b2 pg-custom: 335 short results; EXPLAIN covers 200, empty ones first
+[22:14:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:14:58]    pgvector hnsw-m32-efc200-b2 pg-custom: recall@5 0.6989100817438693, recall@10 0.7215258855585831, ERR 0.08651226158038147, p50 31.8 ms, 270 s, HNSW plans 0.986 of 2978
+[22:14:58] -- pgvector hnsw-m32-efc200-b2 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[22:15:20]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 250 of 1489 questions (21 s)
+[22:15:40]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 500 of 1489 questions (41 s)
+[22:15:59]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 750 of 1489 questions (60 s)
+[22:16:23]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 1000 of 1489 questions (84 s)
+[22:16:48]   pgvector hnsw-m32-efc200-b2 pg-hnsw: 1250 of 1489 questions (109 s)
+[22:17:06]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 1 of 3 (127 s)
+[22:18:07]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 2 of 3 (189 s)
+[22:19:08]   pgvector hnsw-m32-efc200-b2 pg-hnsw: pass 3 of 3 (250 s)
+[22:19:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:19:11] WARNING: pgvector hnsw-m32-efc200-b2 pg-hnsw: 335 short results; EXPLAIN covers 200, empty ones first
+[22:19:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:19:38]    pgvector hnsw-m32-efc200-b2 pg-hnsw: recall@5 0.6989100817438693, recall@10 0.7215258855585831, ERR 0.08651226158038147, p50 33.0 ms, 279 s, HNSW plans 1.000 of 2978
+[22:19:38] -- pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[22:20:22]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 250 of 1489 questions (44 s)
+[22:20:57]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 500 of 1489 questions (79 s)
+[22:21:33]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 750 of 1489 questions (114 s)
+[22:22:27]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 1000 of 1489 questions (168 s)
+[22:24:02]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: 1250 of 1489 questions (263 s)
+[22:24:27]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 1 of 3 (288 s)
+[22:26:43]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 2 of 3 (425 s)
+[22:28:59]   pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: pass 3 of 3 (560 s)
+[22:29:06]    pgvector hnsw-m32-efc200-b2 pa-t1000k-m8: recall@5 0.8310626702997275, recall@10 0.860558583106267, ERR 0.0, p50 33.2 ms, 568 s, HNSW plans 1.000 of 2978
+[22:29:06] -- pgvector hnsw-m32-efc200-b2 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[22:29:29]   pgvector hnsw-m32-efc200-b2 pc-ef400: 250 of 1489 questions (23 s)
+[22:29:51]   pgvector hnsw-m32-efc200-b2 pc-ef400: 500 of 1489 questions (45 s)
+[22:30:12]   pgvector hnsw-m32-efc200-b2 pc-ef400: 750 of 1489 questions (65 s)
+[22:30:37]   pgvector hnsw-m32-efc200-b2 pc-ef400: 1000 of 1489 questions (91 s)
+[22:31:04]   pgvector hnsw-m32-efc200-b2 pc-ef400: 1250 of 1489 questions (118 s)
+[22:31:23]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 1 of 3 (137 s)
+[22:32:30]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 2 of 3 (204 s)
+[22:33:35]   pgvector hnsw-m32-efc200-b2 pc-ef400: pass 3 of 3 (269 s)
+[22:33:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:33:38] WARNING: pgvector hnsw-m32-efc200-b2 pc-ef400: 332 short results; EXPLAIN covers 200, empty ones first
+[22:33:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:34:05]    pgvector hnsw-m32-efc200-b2 pc-ef400: recall@5 0.7224795640326975, recall@10 0.7433923705722072, ERR 0.0837874659400545, p50 34.3 ms, 299 s, HNSW plans 1.000 of 2978
+[22:34:05] -- pgvector hnsw-m32-efc200-b2 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[22:34:33]   pgvector hnsw-m32-efc200-b2 pd-lim10: 250 of 1489 questions (27 s)
+[22:34:59]   pgvector hnsw-m32-efc200-b2 pd-lim10: 500 of 1489 questions (54 s)
+[22:35:25]   pgvector hnsw-m32-efc200-b2 pd-lim10: 750 of 1489 questions (79 s)
+[22:35:55]   pgvector hnsw-m32-efc200-b2 pd-lim10: 1000 of 1489 questions (109 s)
+[22:36:26]   pgvector hnsw-m32-efc200-b2 pd-lim10: 1250 of 1489 questions (140 s)
+[22:36:51]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 1 of 3 (165 s)
+[22:38:09]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 2 of 3 (243 s)
+[22:39:28]   pgvector hnsw-m32-efc200-b2 pd-lim10: pass 3 of 3 (322 s)
+[22:39:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:39:31] WARNING: pgvector hnsw-m32-efc200-b2 pd-lim10: 335 short results; EXPLAIN covers 200, empty ones first
+[22:39:31] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:39:59]    pgvector hnsw-m32-efc200-b2 pd-lim10: recall@5 0.7737057220708448, recall@10 0.7910081743869208, ERR 0.08651226158038147, p50 44.7 ms, 353 s, HNSW plans 1.000 of 2978
+[22:39:59] == stage pgvector hnsw-m32-efc200-b2: done in 3796 s
+[22:40:02] == stage qdrant: start
+[22:40:06] Qdrant server: {'title': 'qdrant - vector search engine', 'version': '1.19.2', 'commit': '016542aa5deb6c66380bb137badf73d54f742bde'}
+[22:40:06] == stage qdrant: start: done in 4 s
+[22:40:06] == stage qdrant as-run-b0
+[22:42:33]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[22:42:33] qdrant as-run build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[22:42:33] -- qdrant as-run-b0 q-asrun: {'hnsw_ef': 128}
+[22:42:37]   qdrant as-run-b0 q-asrun: 250 of 1489 questions (4 s)
+[22:42:41]   qdrant as-run-b0 q-asrun: 500 of 1489 questions (8 s)
+[22:42:45]   qdrant as-run-b0 q-asrun: 750 of 1489 questions (12 s)
+[22:42:48]   qdrant as-run-b0 q-asrun: 1000 of 1489 questions (16 s)
+[22:42:52]   qdrant as-run-b0 q-asrun: 1250 of 1489 questions (19 s)
+[22:42:56]   qdrant as-run-b0 q-asrun: pass 1 of 3 (23 s)
+[22:43:06]   qdrant as-run-b0 q-asrun: pass 2 of 3 (33 s)
+[22:43:16]   qdrant as-run-b0 q-asrun: pass 3 of 3 (44 s)
+[22:43:17]    qdrant as-run-b0 q-asrun: recall@5 0.694550408719346, recall@10 0.6891008174386921, ERR 0.0, p50 7.0 ms, 44 s
+[22:43:17] -- qdrant as-run-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[22:43:21]   qdrant as-run-b0 qa-acorn040: 250 of 1489 questions (4 s)
+[22:43:25]   qdrant as-run-b0 qa-acorn040: 500 of 1489 questions (8 s)
+[22:43:29]   qdrant as-run-b0 qa-acorn040: 750 of 1489 questions (12 s)
+[22:43:32]   qdrant as-run-b0 qa-acorn040: 1000 of 1489 questions (16 s)
+[22:43:36]   qdrant as-run-b0 qa-acorn040: 1250 of 1489 questions (19 s)
+[22:43:41]   qdrant as-run-b0 qa-acorn040: pass 1 of 3 (24 s)
+[22:43:52]   qdrant as-run-b0 qa-acorn040: pass 2 of 3 (35 s)
+[22:44:03]   qdrant as-run-b0 qa-acorn040: pass 3 of 3 (46 s)
+[22:44:03]    qdrant as-run-b0 qa-acorn040: recall@5 0.8655313351498637, recall@10 0.8636239782016348, ERR 0.0, p50 7.4 ms, 46 s
+[22:44:03] -- qdrant as-run-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[22:44:07]   qdrant as-run-b0 qa-acorn100: 250 of 1489 questions (4 s)
+[22:44:11]   qdrant as-run-b0 qa-acorn100: 500 of 1489 questions (8 s)
+[22:44:15]   qdrant as-run-b0 qa-acorn100: 750 of 1489 questions (11 s)
+[22:44:18]   qdrant as-run-b0 qa-acorn100: 1000 of 1489 questions (15 s)
+[22:44:22]   qdrant as-run-b0 qa-acorn100: 1250 of 1489 questions (19 s)
+[22:44:26]   qdrant as-run-b0 qa-acorn100: pass 1 of 3 (23 s)
+[22:44:38]   qdrant as-run-b0 qa-acorn100: pass 2 of 3 (35 s)
+[22:44:49]   qdrant as-run-b0 qa-acorn100: pass 3 of 3 (46 s)
+[22:44:49]    qdrant as-run-b0 qa-acorn100: recall@5 0.8655313351498637, recall@10 0.8636239782016348, ERR 0.0, p50 7.3 ms, 46 s
+[22:44:49] -- qdrant as-run-b0 qb-ef64: {'hnsw_ef': 64}
+[22:44:53]   qdrant as-run-b0 qb-ef64: 250 of 1489 questions (3 s)
+[22:44:56]   qdrant as-run-b0 qb-ef64: 500 of 1489 questions (7 s)
+[22:44:59]   qdrant as-run-b0 qb-ef64: 750 of 1489 questions (10 s)
+[22:45:02]   qdrant as-run-b0 qb-ef64: 1000 of 1489 questions (13 s)
+[22:45:06]   qdrant as-run-b0 qb-ef64: 1250 of 1489 questions (16 s)
+[22:45:09]   qdrant as-run-b0 qb-ef64: pass 1 of 3 (20 s)
+[22:45:18]   qdrant as-run-b0 qb-ef64: pass 2 of 3 (29 s)
+[22:45:27]   qdrant as-run-b0 qb-ef64: pass 3 of 3 (38 s)
+[22:45:28]    qdrant as-run-b0 qb-ef64: recall@5 0.6377384196185286, recall@10 0.6294277929155313, ERR 0.0, p50 5.8 ms, 38 s
+[22:45:28] -- qdrant as-run-b0 qb-ef512: {'hnsw_ef': 512}
+[22:45:33]   qdrant as-run-b0 qb-ef512: 250 of 1489 questions (5 s)
+[22:45:38]   qdrant as-run-b0 qb-ef512: 500 of 1489 questions (11 s)
+[22:45:44]   qdrant as-run-b0 qb-ef512: 750 of 1489 questions (16 s)
+[22:45:49]   qdrant as-run-b0 qb-ef512: 1000 of 1489 questions (21 s)
+[22:45:54]   qdrant as-run-b0 qb-ef512: 1250 of 1489 questions (26 s)
+[22:46:00]   qdrant as-run-b0 qb-ef512: pass 1 of 3 (32 s)
+[22:46:15]   qdrant as-run-b0 qb-ef512: pass 2 of 3 (47 s)
+[22:46:30]   qdrant as-run-b0 qb-ef512: pass 3 of 3 (63 s)
+[22:46:31]    qdrant as-run-b0 qb-ef512: recall@5 0.8059945504087194, recall@10 0.8051089918256131, ERR 0.0, p50 11.1 ms, 63 s
+[22:46:31] -- qdrant as-run-b0 qc-exact: {'exact': True}
+[22:46:48]   qdrant as-run-b0 qc-exact: 250 of 1489 questions (17 s)
+[22:47:06]   qdrant as-run-b0 qc-exact: 500 of 1489 questions (34 s)
+[22:47:24]   qdrant as-run-b0 qc-exact: 750 of 1489 questions (53 s)
+[22:47:40]   qdrant as-run-b0 qc-exact: 1000 of 1489 questions (69 s)
+[22:47:56]   qdrant as-run-b0 qc-exact: 1250 of 1489 questions (85 s)
+[22:48:14]   qdrant as-run-b0 qc-exact: pass 1 of 3 (103 s)
+[22:49:06]   qdrant as-run-b0 qc-exact: pass 2 of 3 (155 s)
+[22:49:57]   qdrant as-run-b0 qc-exact: pass 3 of 3 (206 s)
+[22:49:58]    qdrant as-run-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 43.1 ms, 207 s
+[22:49:58] == stage qdrant as-run-b0: done in 592 s
+[22:49:58] == stage qdrant as-run-b1
+[22:52:22]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[22:52:22] qdrant as-run build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[22:52:22] -- qdrant as-run-b1 q-asrun: {'hnsw_ef': 128}
+[22:52:26]   qdrant as-run-b1 q-asrun: 250 of 1489 questions (4 s)
+[22:52:30]   qdrant as-run-b1 q-asrun: 500 of 1489 questions (8 s)
+[22:52:34]   qdrant as-run-b1 q-asrun: 750 of 1489 questions (12 s)
+[22:52:38]   qdrant as-run-b1 q-asrun: 1000 of 1489 questions (16 s)
+[22:52:42]   qdrant as-run-b1 q-asrun: 1250 of 1489 questions (19 s)
+[22:52:45]   qdrant as-run-b1 q-asrun: pass 1 of 3 (23 s)
+[22:52:56]   qdrant as-run-b1 q-asrun: pass 2 of 3 (34 s)
+[22:53:06]   qdrant as-run-b1 q-asrun: pass 3 of 3 (44 s)
+[22:53:07]    qdrant as-run-b1 q-asrun: recall@5 0.6794277929155312, recall@10 0.6746594005449592, ERR 0.0, p50 7.3 ms, 45 s
+[22:53:07] -- qdrant as-run-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[22:53:11]   qdrant as-run-b1 qa-acorn040: 250 of 1489 questions (4 s)
+[22:53:15]   qdrant as-run-b1 qa-acorn040: 500 of 1489 questions (8 s)
+[22:53:19]   qdrant as-run-b1 qa-acorn040: 750 of 1489 questions (12 s)
+[22:53:23]   qdrant as-run-b1 qa-acorn040: 1000 of 1489 questions (16 s)
+[22:53:26]   qdrant as-run-b1 qa-acorn040: 1250 of 1489 questions (19 s)
+[22:53:30]   qdrant as-run-b1 qa-acorn040: pass 1 of 3 (23 s)
+[22:53:41]   qdrant as-run-b1 qa-acorn040: pass 2 of 3 (34 s)
+[22:53:52]   qdrant as-run-b1 qa-acorn040: pass 3 of 3 (45 s)
+[22:53:52]    qdrant as-run-b1 qa-acorn040: recall@5 0.8286103542234333, recall@10 0.8240463215258854, ERR 0.0, p50 7.3 ms, 46 s
+[22:53:52] -- qdrant as-run-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[22:53:56]   qdrant as-run-b1 qa-acorn100: 250 of 1489 questions (4 s)
+[22:54:00]   qdrant as-run-b1 qa-acorn100: 500 of 1489 questions (8 s)
+[22:54:04]   qdrant as-run-b1 qa-acorn100: 750 of 1489 questions (12 s)
+[22:54:08]   qdrant as-run-b1 qa-acorn100: 1000 of 1489 questions (16 s)
+[22:54:12]   qdrant as-run-b1 qa-acorn100: 1250 of 1489 questions (19 s)
+[22:54:16]   qdrant as-run-b1 qa-acorn100: pass 1 of 3 (23 s)
+[22:54:27]   qdrant as-run-b1 qa-acorn100: pass 2 of 3 (34 s)
+[22:54:38]   qdrant as-run-b1 qa-acorn100: pass 3 of 3 (45 s)
+[22:54:38]    qdrant as-run-b1 qa-acorn100: recall@5 0.8286103542234333, recall@10 0.8240463215258854, ERR 0.0, p50 7.3 ms, 46 s
+[22:54:38] -- qdrant as-run-b1 qb-ef64: {'hnsw_ef': 64}
+[22:54:41]   qdrant as-run-b1 qb-ef64: 250 of 1489 questions (3 s)
+[22:54:44]   qdrant as-run-b1 qb-ef64: 500 of 1489 questions (6 s)
+[22:54:48]   qdrant as-run-b1 qb-ef64: 750 of 1489 questions (10 s)
+[22:54:51]   qdrant as-run-b1 qb-ef64: 1000 of 1489 questions (13 s)
+[22:54:54]   qdrant as-run-b1 qb-ef64: 1250 of 1489 questions (16 s)
+[22:54:57]   qdrant as-run-b1 qb-ef64: pass 1 of 3 (19 s)
+[22:55:07]   qdrant as-run-b1 qb-ef64: pass 2 of 3 (29 s)
+[22:55:16]   qdrant as-run-b1 qb-ef64: pass 3 of 3 (38 s)
+[22:55:16]    qdrant as-run-b1 qb-ef64: recall@5 0.6168937329700271, recall@10 0.6147138964577656, ERR 0.0, p50 6.0 ms, 38 s
+[22:55:16] -- qdrant as-run-b1 qb-ef512: {'hnsw_ef': 512}
+[22:55:22]   qdrant as-run-b1 qb-ef512: 250 of 1489 questions (5 s)
+[22:55:27]   qdrant as-run-b1 qb-ef512: 500 of 1489 questions (11 s)
+[22:55:33]   qdrant as-run-b1 qb-ef512: 750 of 1489 questions (16 s)
+[22:55:38]   qdrant as-run-b1 qb-ef512: 1000 of 1489 questions (21 s)
+[22:55:43]   qdrant as-run-b1 qb-ef512: 1250 of 1489 questions (26 s)
+[22:55:48]   qdrant as-run-b1 qb-ef512: pass 1 of 3 (31 s)
+[22:56:04]   qdrant as-run-b1 qb-ef512: pass 2 of 3 (48 s)
+[22:56:19]   qdrant as-run-b1 qb-ef512: pass 3 of 3 (63 s)
+[22:56:20]    qdrant as-run-b1 qb-ef512: recall@5 0.7869209809264306, recall@10 0.7835831062670301, ERR 0.0, p50 11.1 ms, 63 s
+[22:56:20] == stage qdrant as-run-b1: done in 382 s
+[22:56:20] == stage qdrant as-run-b2
+[22:58:41]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[22:58:41] qdrant as-run build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[22:58:41] -- qdrant as-run-b2 q-asrun: {'hnsw_ef': 128}
+[22:58:45]   qdrant as-run-b2 q-asrun: 250 of 1489 questions (4 s)
+[22:58:49]   qdrant as-run-b2 q-asrun: 500 of 1489 questions (7 s)
+[22:58:52]   qdrant as-run-b2 q-asrun: 750 of 1489 questions (11 s)
+[22:58:56]   qdrant as-run-b2 q-asrun: 1000 of 1489 questions (15 s)
+[22:58:59]   qdrant as-run-b2 q-asrun: 1250 of 1489 questions (18 s)
+[22:59:03]   qdrant as-run-b2 q-asrun: pass 1 of 3 (22 s)
+[22:59:13]   qdrant as-run-b2 q-asrun: pass 2 of 3 (32 s)
+[22:59:23]   qdrant as-run-b2 q-asrun: pass 3 of 3 (42 s)
+[22:59:24]    qdrant as-run-b2 q-asrun: recall@5 0.6095367847411444, recall@10 0.6027929155313352, ERR 0.0, p50 6.9 ms, 43 s
+[22:59:24] -- qdrant as-run-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[22:59:28]   qdrant as-run-b2 qa-acorn040: 250 of 1489 questions (4 s)
+[22:59:32]   qdrant as-run-b2 qa-acorn040: 500 of 1489 questions (8 s)
+[22:59:35]   qdrant as-run-b2 qa-acorn040: 750 of 1489 questions (11 s)
+[22:59:39]   qdrant as-run-b2 qa-acorn040: 1000 of 1489 questions (15 s)
+[22:59:43]   qdrant as-run-b2 qa-acorn040: 1250 of 1489 questions (19 s)
+[22:59:46]   qdrant as-run-b2 qa-acorn040: pass 1 of 3 (22 s)
+[22:59:57]   qdrant as-run-b2 qa-acorn040: pass 2 of 3 (33 s)
+[23:00:07]   qdrant as-run-b2 qa-acorn040: pass 3 of 3 (44 s)
+[23:00:08]    qdrant as-run-b2 qa-acorn040: recall@5 0.7400544959128066, recall@10 0.7363760217983651, ERR 0.0, p50 7.1 ms, 44 s
+[23:00:08] -- qdrant as-run-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[23:00:12]   qdrant as-run-b2 qa-acorn100: 250 of 1489 questions (4 s)
+[23:00:16]   qdrant as-run-b2 qa-acorn100: 500 of 1489 questions (8 s)
+[23:00:19]   qdrant as-run-b2 qa-acorn100: 750 of 1489 questions (11 s)
+[23:00:23]   qdrant as-run-b2 qa-acorn100: 1000 of 1489 questions (15 s)
+[23:00:26]   qdrant as-run-b2 qa-acorn100: 1250 of 1489 questions (18 s)
+[23:00:31]   qdrant as-run-b2 qa-acorn100: pass 1 of 3 (23 s)
+[23:00:41]   qdrant as-run-b2 qa-acorn100: pass 2 of 3 (33 s)
+[23:00:52]   qdrant as-run-b2 qa-acorn100: pass 3 of 3 (44 s)
+[23:00:52]    qdrant as-run-b2 qa-acorn100: recall@5 0.7400544959128066, recall@10 0.7363760217983651, ERR 0.0, p50 7.1 ms, 44 s
+[23:00:52] -- qdrant as-run-b2 qb-ef64: {'hnsw_ef': 64}
+[23:00:56]   qdrant as-run-b2 qb-ef64: 250 of 1489 questions (3 s)
+[23:00:59]   qdrant as-run-b2 qb-ef64: 500 of 1489 questions (7 s)
+[23:01:02]   qdrant as-run-b2 qb-ef64: 750 of 1489 questions (10 s)
+[23:01:06]   qdrant as-run-b2 qb-ef64: 1000 of 1489 questions (13 s)
+[23:01:09]   qdrant as-run-b2 qb-ef64: 1250 of 1489 questions (17 s)
+[23:01:12]   qdrant as-run-b2 qb-ef64: pass 1 of 3 (20 s)
+[23:01:21]   qdrant as-run-b2 qb-ef64: pass 2 of 3 (29 s)
+[23:01:31]   qdrant as-run-b2 qb-ef64: pass 3 of 3 (38 s)
+[23:01:31]    qdrant as-run-b2 qb-ef64: recall@5 0.5621253405994551, recall@10 0.5555177111716622, ERR 0.0, p50 6.0 ms, 39 s
+[23:01:31] -- qdrant as-run-b2 qb-ef512: {'hnsw_ef': 512}
+[23:01:37]   qdrant as-run-b2 qb-ef512: 250 of 1489 questions (6 s)
+[23:01:43]   qdrant as-run-b2 qb-ef512: 500 of 1489 questions (11 s)
+[23:01:48]   qdrant as-run-b2 qb-ef512: 750 of 1489 questions (17 s)
+[23:01:53]   qdrant as-run-b2 qb-ef512: 1000 of 1489 questions (22 s)
+[23:01:59]   qdrant as-run-b2 qb-ef512: 1250 of 1489 questions (27 s)
+[23:02:05]   qdrant as-run-b2 qb-ef512: pass 1 of 3 (33 s)
+[23:02:20]   qdrant as-run-b2 qb-ef512: pass 2 of 3 (49 s)
+[23:02:37]   qdrant as-run-b2 qb-ef512: pass 3 of 3 (65 s)
+[23:02:37]    qdrant as-run-b2 qb-ef512: recall@5 0.6854223433242507, recall@10 0.6854904632152589, ERR 0.0, p50 11.7 ms, 66 s
+[23:02:37] == stage qdrant as-run-b2: done in 377 s
+[23:02:37] == stage qdrant is-tenant-b0
+[23:05:10]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[23:05:10] qdrant is-tenant build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[23:05:10] -- qdrant is-tenant-b0 q-asrun: {'hnsw_ef': 128}
+[23:05:14]   qdrant is-tenant-b0 q-asrun: 250 of 1489 questions (4 s)
+[23:05:17]   qdrant is-tenant-b0 q-asrun: 500 of 1489 questions (8 s)
+[23:05:21]   qdrant is-tenant-b0 q-asrun: 750 of 1489 questions (12 s)
+[23:05:25]   qdrant is-tenant-b0 q-asrun: 1000 of 1489 questions (16 s)
+[23:05:29]   qdrant is-tenant-b0 q-asrun: 1250 of 1489 questions (19 s)
+[23:05:33]   qdrant is-tenant-b0 q-asrun: pass 1 of 3 (23 s)
+[23:05:43]   qdrant is-tenant-b0 q-asrun: pass 2 of 3 (33 s)
+[23:05:53]   qdrant is-tenant-b0 q-asrun: pass 3 of 3 (44 s)
+[23:05:54]    qdrant is-tenant-b0 q-asrun: recall@5 0.6709809264305178, recall@10 0.6657356948228883, ERR 0.0, p50 7.1 ms, 44 s
+[23:05:54] -- qdrant is-tenant-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[23:05:58]   qdrant is-tenant-b0 qa-acorn040: 250 of 1489 questions (4 s)
+[23:06:02]   qdrant is-tenant-b0 qa-acorn040: 500 of 1489 questions (8 s)
+[23:06:06]   qdrant is-tenant-b0 qa-acorn040: 750 of 1489 questions (12 s)
+[23:06:09]   qdrant is-tenant-b0 qa-acorn040: 1000 of 1489 questions (16 s)
+[23:06:13]   qdrant is-tenant-b0 qa-acorn040: 1250 of 1489 questions (19 s)
+[23:06:17]   qdrant is-tenant-b0 qa-acorn040: pass 1 of 3 (23 s)
+[23:06:27]   qdrant is-tenant-b0 qa-acorn040: pass 2 of 3 (34 s)
+[23:06:38]   qdrant is-tenant-b0 qa-acorn040: pass 3 of 3 (45 s)
+[23:06:39]    qdrant is-tenant-b0 qa-acorn040: recall@5 0.8474114441416893, recall@10 0.8454359673024523, ERR 0.0, p50 7.2 ms, 45 s
+[23:06:39] -- qdrant is-tenant-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[23:06:43]   qdrant is-tenant-b0 qa-acorn100: 250 of 1489 questions (4 s)
+[23:06:46]   qdrant is-tenant-b0 qa-acorn100: 500 of 1489 questions (8 s)
+[23:06:50]   qdrant is-tenant-b0 qa-acorn100: 750 of 1489 questions (12 s)
+[23:06:54]   qdrant is-tenant-b0 qa-acorn100: 1000 of 1489 questions (15 s)
+[23:06:58]   qdrant is-tenant-b0 qa-acorn100: 1250 of 1489 questions (19 s)
+[23:07:01]   qdrant is-tenant-b0 qa-acorn100: pass 1 of 3 (23 s)
+[23:07:13]   qdrant is-tenant-b0 qa-acorn100: pass 2 of 3 (34 s)
+[23:07:24]   qdrant is-tenant-b0 qa-acorn100: pass 3 of 3 (45 s)
+[23:07:24]    qdrant is-tenant-b0 qa-acorn100: recall@5 0.8474114441416893, recall@10 0.8454359673024523, ERR 0.0, p50 7.3 ms, 45 s
+[23:07:24] -- qdrant is-tenant-b0 qc-exact: {'exact': True}
+[23:07:40]   qdrant is-tenant-b0 qc-exact: 250 of 1489 questions (16 s)
+[23:07:57]   qdrant is-tenant-b0 qc-exact: 500 of 1489 questions (32 s)
+[23:08:14]   qdrant is-tenant-b0 qc-exact: 750 of 1489 questions (49 s)
+[23:08:28]   qdrant is-tenant-b0 qc-exact: 1000 of 1489 questions (64 s)
+[23:08:43]   qdrant is-tenant-b0 qc-exact: 1250 of 1489 questions (78 s)
+[23:08:59]   qdrant is-tenant-b0 qc-exact: pass 1 of 3 (94 s)
+[23:09:45]   qdrant is-tenant-b0 qc-exact: pass 2 of 3 (141 s)
+[23:10:32]   qdrant is-tenant-b0 qc-exact: pass 3 of 3 (187 s)
+[23:10:32]    qdrant is-tenant-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 39.2 ms, 188 s
+[23:10:32] == stage qdrant is-tenant-b0: done in 475 s
+[23:10:32] == stage qdrant is-tenant-b1
+[23:12:55]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[23:12:55] qdrant is-tenant build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[23:12:55] -- qdrant is-tenant-b1 q-asrun: {'hnsw_ef': 128}
+[23:12:59]   qdrant is-tenant-b1 q-asrun: 250 of 1489 questions (4 s)
+[23:13:03]   qdrant is-tenant-b1 q-asrun: 500 of 1489 questions (8 s)
+[23:13:07]   qdrant is-tenant-b1 q-asrun: 750 of 1489 questions (12 s)
+[23:13:11]   qdrant is-tenant-b1 q-asrun: 1000 of 1489 questions (15 s)
+[23:13:14]   qdrant is-tenant-b1 q-asrun: 1250 of 1489 questions (19 s)
+[23:13:18]   qdrant is-tenant-b1 q-asrun: pass 1 of 3 (22 s)
+[23:13:27]   qdrant is-tenant-b1 q-asrun: pass 2 of 3 (32 s)
+[23:13:37]   qdrant is-tenant-b1 q-asrun: pass 3 of 3 (42 s)
+[23:13:38]    qdrant is-tenant-b1 q-asrun: recall@5 0.6568119891008174, recall@10 0.6471389645776566, ERR 0.0, p50 6.8 ms, 42 s
+[23:13:38] -- qdrant is-tenant-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[23:13:41]   qdrant is-tenant-b1 qa-acorn040: 250 of 1489 questions (4 s)
+[23:13:45]   qdrant is-tenant-b1 qa-acorn040: 500 of 1489 questions (7 s)
+[23:13:49]   qdrant is-tenant-b1 qa-acorn040: 750 of 1489 questions (11 s)
+[23:13:52]   qdrant is-tenant-b1 qa-acorn040: 1000 of 1489 questions (15 s)
+[23:13:56]   qdrant is-tenant-b1 qa-acorn040: 1250 of 1489 questions (18 s)
+[23:14:00]   qdrant is-tenant-b1 qa-acorn040: pass 1 of 3 (22 s)
+[23:14:10]   qdrant is-tenant-b1 qa-acorn040: pass 2 of 3 (32 s)
+[23:14:21]   qdrant is-tenant-b1 qa-acorn040: pass 3 of 3 (43 s)
+[23:14:21]    qdrant is-tenant-b1 qa-acorn040: recall@5 0.7756130790190735, recall@10 0.7696866485013625, ERR 0.0, p50 7.0 ms, 43 s
+[23:14:21] -- qdrant is-tenant-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[23:14:25]   qdrant is-tenant-b1 qa-acorn100: 250 of 1489 questions (4 s)
+[23:14:29]   qdrant is-tenant-b1 qa-acorn100: 500 of 1489 questions (8 s)
+[23:14:33]   qdrant is-tenant-b1 qa-acorn100: 750 of 1489 questions (12 s)
+[23:14:36]   qdrant is-tenant-b1 qa-acorn100: 1000 of 1489 questions (15 s)
+[23:14:40]   qdrant is-tenant-b1 qa-acorn100: 1250 of 1489 questions (19 s)
+[23:14:44]   qdrant is-tenant-b1 qa-acorn100: pass 1 of 3 (22 s)
+[23:14:54]   qdrant is-tenant-b1 qa-acorn100: pass 2 of 3 (33 s)
+[23:15:04]   qdrant is-tenant-b1 qa-acorn100: pass 3 of 3 (43 s)
+[23:15:05]    qdrant is-tenant-b1 qa-acorn100: recall@5 0.7756130790190735, recall@10 0.7696866485013625, ERR 0.0, p50 7.0 ms, 44 s
+[23:15:05] == stage qdrant is-tenant-b1: done in 272 s
+[23:15:05] == stage qdrant is-tenant-b2
+[23:17:21]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[23:17:21] qdrant is-tenant build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[23:17:21] -- qdrant is-tenant-b2 q-asrun: {'hnsw_ef': 128}
+[23:17:25]   qdrant is-tenant-b2 q-asrun: 250 of 1489 questions (4 s)
+[23:17:29]   qdrant is-tenant-b2 q-asrun: 500 of 1489 questions (7 s)
+[23:17:32]   qdrant is-tenant-b2 q-asrun: 750 of 1489 questions (11 s)
+[23:17:36]   qdrant is-tenant-b2 q-asrun: 1000 of 1489 questions (15 s)
+[23:17:39]   qdrant is-tenant-b2 q-asrun: 1250 of 1489 questions (18 s)
+[23:17:43]   qdrant is-tenant-b2 q-asrun: pass 1 of 3 (22 s)
+[23:17:53]   qdrant is-tenant-b2 q-asrun: pass 2 of 3 (32 s)
+[23:18:03]   qdrant is-tenant-b2 q-asrun: pass 3 of 3 (42 s)
+[23:18:03]    qdrant is-tenant-b2 q-asrun: recall@5 0.6486376021798366, recall@10 0.6409400544959128, ERR 0.0, p50 6.8 ms, 42 s
+[23:18:03] -- qdrant is-tenant-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[23:18:07]   qdrant is-tenant-b2 qa-acorn040: 250 of 1489 questions (4 s)
+[23:18:11]   qdrant is-tenant-b2 qa-acorn040: 500 of 1489 questions (7 s)
+[23:18:15]   qdrant is-tenant-b2 qa-acorn040: 750 of 1489 questions (11 s)
+[23:18:18]   qdrant is-tenant-b2 qa-acorn040: 1000 of 1489 questions (15 s)
+[23:18:22]   qdrant is-tenant-b2 qa-acorn040: 1250 of 1489 questions (19 s)
+[23:18:26]   qdrant is-tenant-b2 qa-acorn040: pass 1 of 3 (23 s)
+[23:18:37]   qdrant is-tenant-b2 qa-acorn040: pass 2 of 3 (33 s)
+[23:18:47]   qdrant is-tenant-b2 qa-acorn040: pass 3 of 3 (44 s)
+[23:18:47]    qdrant is-tenant-b2 qa-acorn040: recall@5 0.7961852861035422, recall@10 0.7901907356948229, ERR 0.0, p50 7.0 ms, 44 s
+[23:18:47] -- qdrant is-tenant-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[23:18:51]   qdrant is-tenant-b2 qa-acorn100: 250 of 1489 questions (4 s)
+[23:18:55]   qdrant is-tenant-b2 qa-acorn100: 500 of 1489 questions (7 s)
+[23:18:59]   qdrant is-tenant-b2 qa-acorn100: 750 of 1489 questions (11 s)
+[23:19:02]   qdrant is-tenant-b2 qa-acorn100: 1000 of 1489 questions (15 s)
+[23:19:06]   qdrant is-tenant-b2 qa-acorn100: 1250 of 1489 questions (18 s)
+[23:19:09]   qdrant is-tenant-b2 qa-acorn100: pass 1 of 3 (22 s)
+[23:19:20]   qdrant is-tenant-b2 qa-acorn100: pass 2 of 3 (32 s)
+[23:19:30]   qdrant is-tenant-b2 qa-acorn100: pass 3 of 3 (43 s)
+[23:19:31]    qdrant is-tenant-b2 qa-acorn100: recall@5 0.7961852861035422, recall@10 0.7901907356948229, ERR 0.0, p50 7.0 ms, 43 s
+[23:19:31] == stage qdrant is-tenant-b2: done in 266 s
+[23:19:31] == stage qdrant tenant-m0-b0
+[23:39:10]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[23:39:10] qdrant tenant-m0 build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[23:39:10] -- qdrant tenant-m0-b0 q-asrun: {'hnsw_ef': 128}
+[23:39:14]   qdrant tenant-m0-b0 q-asrun: 250 of 1489 questions (4 s)
+[23:39:18]   qdrant tenant-m0-b0 q-asrun: 500 of 1489 questions (8 s)
+[23:39:22]   qdrant tenant-m0-b0 q-asrun: 750 of 1489 questions (12 s)
+[23:39:26]   qdrant tenant-m0-b0 q-asrun: 1000 of 1489 questions (16 s)
+[23:39:30]   qdrant tenant-m0-b0 q-asrun: 1250 of 1489 questions (20 s)
+[23:39:34]   qdrant tenant-m0-b0 q-asrun: pass 1 of 3 (24 s)
+[23:39:45]   qdrant tenant-m0-b0 q-asrun: pass 2 of 3 (35 s)
+[23:39:56]   qdrant tenant-m0-b0 q-asrun: pass 3 of 3 (46 s)
+[23:39:56]    qdrant tenant-m0-b0 q-asrun: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.5 ms, 47 s
+[23:39:56] -- qdrant tenant-m0-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[23:40:00]   qdrant tenant-m0-b0 qa-acorn040: 250 of 1489 questions (4 s)
+[23:40:04]   qdrant tenant-m0-b0 qa-acorn040: 500 of 1489 questions (8 s)
+[23:40:09]   qdrant tenant-m0-b0 qa-acorn040: 750 of 1489 questions (12 s)
+[23:40:12]   qdrant tenant-m0-b0 qa-acorn040: 1000 of 1489 questions (16 s)
+[23:40:18]   qdrant tenant-m0-b0 qa-acorn040: 1250 of 1489 questions (21 s)
+[23:40:22]   qdrant tenant-m0-b0 qa-acorn040: pass 1 of 3 (25 s)
+[23:40:33]   qdrant tenant-m0-b0 qa-acorn040: pass 2 of 3 (36 s)
+[23:40:43]   qdrant tenant-m0-b0 qa-acorn040: pass 3 of 3 (47 s)
+[23:40:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:40:44] WARNING: qdrant tenant-m0-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[23:40:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:40:44]    qdrant tenant-m0-b0 qa-acorn040: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.3 ms, 47 s
+[23:40:44] -- qdrant tenant-m0-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[23:40:48]   qdrant tenant-m0-b0 qa-acorn100: 250 of 1489 questions (4 s)
+[23:40:52]   qdrant tenant-m0-b0 qa-acorn100: 500 of 1489 questions (8 s)
+[23:40:56]   qdrant tenant-m0-b0 qa-acorn100: 750 of 1489 questions (12 s)
+[23:40:59]   qdrant tenant-m0-b0 qa-acorn100: 1000 of 1489 questions (15 s)
+[23:41:03]   qdrant tenant-m0-b0 qa-acorn100: 1250 of 1489 questions (19 s)
+[23:41:07]   qdrant tenant-m0-b0 qa-acorn100: pass 1 of 3 (23 s)
+[23:41:18]   qdrant tenant-m0-b0 qa-acorn100: pass 2 of 3 (34 s)
+[23:41:28]   qdrant tenant-m0-b0 qa-acorn100: pass 3 of 3 (44 s)
+[23:41:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:41:29] WARNING: qdrant tenant-m0-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[23:41:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:41:29]    qdrant tenant-m0-b0 qa-acorn100: recall@5 0.9502724795640327, recall@10 0.9525885558583107, ERR 0.0, p50 6.3 ms, 45 s
+[23:41:29] -- qdrant tenant-m0-b0 qc-exact: {'exact': True}
+[23:41:44]   qdrant tenant-m0-b0 qc-exact: 250 of 1489 questions (15 s)
+[23:42:00]   qdrant tenant-m0-b0 qc-exact: 500 of 1489 questions (31 s)
+[23:42:17]   qdrant tenant-m0-b0 qc-exact: 750 of 1489 questions (48 s)
+[23:42:31]   qdrant tenant-m0-b0 qc-exact: 1000 of 1489 questions (62 s)
+[23:42:45]   qdrant tenant-m0-b0 qc-exact: 1250 of 1489 questions (76 s)
+[23:43:01]   qdrant tenant-m0-b0 qc-exact: pass 1 of 3 (92 s)
+[23:43:46]   qdrant tenant-m0-b0 qc-exact: pass 2 of 3 (137 s)
+[23:44:32]   qdrant tenant-m0-b0 qc-exact: pass 3 of 3 (183 s)
+[23:44:32]    qdrant tenant-m0-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 38.3 ms, 184 s
+[23:44:32] == stage qdrant tenant-m0-b0: done in 1502 s
+[23:44:32] == stage qdrant tenant-m0-b1
+[23:59:11]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[23:59:11] qdrant tenant-m0 build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[23:59:11] -- qdrant tenant-m0-b1 q-asrun: {'hnsw_ef': 128}
+[23:59:15]   qdrant tenant-m0-b1 q-asrun: 250 of 1489 questions (4 s)
+[23:59:19]   qdrant tenant-m0-b1 q-asrun: 500 of 1489 questions (8 s)
+[23:59:24]   qdrant tenant-m0-b1 q-asrun: 750 of 1489 questions (12 s)
+[23:59:27]   qdrant tenant-m0-b1 q-asrun: 1000 of 1489 questions (16 s)
+[23:59:31]   qdrant tenant-m0-b1 q-asrun: 1250 of 1489 questions (20 s)
+[23:59:35]   qdrant tenant-m0-b1 q-asrun: pass 1 of 3 (24 s)
+[23:59:46]   qdrant tenant-m0-b1 q-asrun: pass 2 of 3 (35 s)
+[23:59:58]   qdrant tenant-m0-b1 q-asrun: pass 3 of 3 (46 s)
+[23:59:58]    qdrant tenant-m0-b1 q-asrun: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.5 ms, 47 s
+[23:59:58] -- qdrant tenant-m0-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:00:03]   qdrant tenant-m0-b1 qa-acorn040: 250 of 1489 questions (5 s)
+[00:00:08]   qdrant tenant-m0-b1 qa-acorn040: 500 of 1489 questions (10 s)
+[00:00:12]   qdrant tenant-m0-b1 qa-acorn040: 750 of 1489 questions (14 s)
+[00:00:16]   qdrant tenant-m0-b1 qa-acorn040: 1000 of 1489 questions (18 s)
+[00:00:20]   qdrant tenant-m0-b1 qa-acorn040: 1250 of 1489 questions (22 s)
+[00:00:24]   qdrant tenant-m0-b1 qa-acorn040: pass 1 of 3 (26 s)
+[00:00:36]   qdrant tenant-m0-b1 qa-acorn040: pass 2 of 3 (38 s)
+[00:00:48]   qdrant tenant-m0-b1 qa-acorn040: pass 3 of 3 (50 s)
+[00:00:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:00:49] WARNING: qdrant tenant-m0-b1 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:00:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:00:49]    qdrant tenant-m0-b1 qa-acorn040: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.9 ms, 51 s
+[00:00:49] -- qdrant tenant-m0-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:00:53]   qdrant tenant-m0-b1 qa-acorn100: 250 of 1489 questions (4 s)
+[00:00:57]   qdrant tenant-m0-b1 qa-acorn100: 500 of 1489 questions (9 s)
+[00:01:01]   qdrant tenant-m0-b1 qa-acorn100: 750 of 1489 questions (13 s)
+[00:01:05]   qdrant tenant-m0-b1 qa-acorn100: 1000 of 1489 questions (17 s)
+[00:01:09]   qdrant tenant-m0-b1 qa-acorn100: 1250 of 1489 questions (20 s)
+[00:01:13]   qdrant tenant-m0-b1 qa-acorn100: pass 1 of 3 (25 s)
+[00:01:26]   qdrant tenant-m0-b1 qa-acorn100: pass 2 of 3 (37 s)
+[00:01:38]   qdrant tenant-m0-b1 qa-acorn100: pass 3 of 3 (49 s)
+[00:01:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:01:38] WARNING: qdrant tenant-m0-b1 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:01:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:01:38]    qdrant tenant-m0-b1 qa-acorn100: recall@5 0.9498637602179837, recall@10 0.9511580381471391, ERR 0.0, p50 6.9 ms, 50 s
+[00:01:38] == stage qdrant tenant-m0-b1: done in 1026 s
+[00:01:38] == stage qdrant tenant-m0-b2
+[00:17:33]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[00:17:33] qdrant tenant-m0 build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[00:17:33] -- qdrant tenant-m0-b2 q-asrun: {'hnsw_ef': 128}
+[00:17:37]   qdrant tenant-m0-b2 q-asrun: 250 of 1489 questions (4 s)
+[00:17:42]   qdrant tenant-m0-b2 q-asrun: 500 of 1489 questions (9 s)
+[00:17:46]   qdrant tenant-m0-b2 q-asrun: 750 of 1489 questions (13 s)
+[00:17:50]   qdrant tenant-m0-b2 q-asrun: 1000 of 1489 questions (17 s)
+[00:17:54]   qdrant tenant-m0-b2 q-asrun: 1250 of 1489 questions (21 s)
+[00:17:58]   qdrant tenant-m0-b2 q-asrun: pass 1 of 3 (25 s)
+[00:18:10]   qdrant tenant-m0-b2 q-asrun: pass 2 of 3 (37 s)
+[00:18:21]   qdrant tenant-m0-b2 q-asrun: pass 3 of 3 (48 s)
+[00:18:22]    qdrant tenant-m0-b2 q-asrun: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.8 ms, 49 s
+[00:18:22] -- qdrant tenant-m0-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:18:26]   qdrant tenant-m0-b2 qa-acorn040: 250 of 1489 questions (4 s)
+[00:18:31]   qdrant tenant-m0-b2 qa-acorn040: 500 of 1489 questions (9 s)
+[00:18:35]   qdrant tenant-m0-b2 qa-acorn040: 750 of 1489 questions (13 s)
+[00:18:39]   qdrant tenant-m0-b2 qa-acorn040: 1000 of 1489 questions (17 s)
+[00:18:43]   qdrant tenant-m0-b2 qa-acorn040: 1250 of 1489 questions (21 s)
+[00:18:47]   qdrant tenant-m0-b2 qa-acorn040: pass 1 of 3 (25 s)
+[00:18:58]   qdrant tenant-m0-b2 qa-acorn040: pass 2 of 3 (36 s)
+[00:19:10]   qdrant tenant-m0-b2 qa-acorn040: pass 3 of 3 (48 s)
+[00:19:10] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:19:10] WARNING: qdrant tenant-m0-b2 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:19:10] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:19:10]    qdrant tenant-m0-b2 qa-acorn040: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.6 ms, 48 s
+[00:19:10] -- qdrant tenant-m0-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:19:14]   qdrant tenant-m0-b2 qa-acorn100: 250 of 1489 questions (4 s)
+[00:19:18]   qdrant tenant-m0-b2 qa-acorn100: 500 of 1489 questions (8 s)
+[00:19:22]   qdrant tenant-m0-b2 qa-acorn100: 750 of 1489 questions (12 s)
+[00:19:26]   qdrant tenant-m0-b2 qa-acorn100: 1000 of 1489 questions (16 s)
+[00:19:30]   qdrant tenant-m0-b2 qa-acorn100: 1250 of 1489 questions (20 s)
+[00:19:34]   qdrant tenant-m0-b2 qa-acorn100: pass 1 of 3 (24 s)
+[00:19:45]   qdrant tenant-m0-b2 qa-acorn100: pass 2 of 3 (35 s)
+[00:19:57]   qdrant tenant-m0-b2 qa-acorn100: pass 3 of 3 (47 s)
+[00:19:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:19:57] WARNING: qdrant tenant-m0-b2 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:19:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:19:57]    qdrant tenant-m0-b2 qa-acorn100: recall@5 0.9501362397820163, recall@10 0.9519073569482289, ERR 0.0, p50 6.6 ms, 47 s
+[00:19:57] == stage qdrant tenant-m0-b2: done in 1099 s
+[00:19:57] == stage qdrant separate-kb-b0
+[00:22:17]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}
+[00:22:17] qdrant separate-kb build 0: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}
+[00:22:17] -- qdrant separate-kb-b0 q-asrun: {'hnsw_ef': 128}
+[00:22:24]   qdrant separate-kb-b0 q-asrun: 250 of 1489 questions (7 s)
+[00:22:31]   qdrant separate-kb-b0 q-asrun: 500 of 1489 questions (14 s)
+[00:22:37]   qdrant separate-kb-b0 q-asrun: 750 of 1489 questions (21 s)
+[00:22:44]   qdrant separate-kb-b0 q-asrun: 1000 of 1489 questions (27 s)
+[00:22:50]   qdrant separate-kb-b0 q-asrun: 1250 of 1489 questions (33 s)
+[00:22:57]   qdrant separate-kb-b0 q-asrun: pass 1 of 3 (40 s)
+[00:23:16]   qdrant separate-kb-b0 q-asrun: pass 2 of 3 (59 s)
+[00:23:34]   qdrant separate-kb-b0 q-asrun: pass 3 of 3 (77 s)
+[00:23:34]    qdrant separate-kb-b0 q-asrun: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 13.1 ms, 78 s
+[00:23:34] -- qdrant separate-kb-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:23:41]   qdrant separate-kb-b0 qa-acorn040: 250 of 1489 questions (6 s)
+[00:23:47]   qdrant separate-kb-b0 qa-acorn040: 500 of 1489 questions (12 s)
+[00:23:53]   qdrant separate-kb-b0 qa-acorn040: 750 of 1489 questions (19 s)
+[00:24:00]   qdrant separate-kb-b0 qa-acorn040: 1000 of 1489 questions (25 s)
+[00:24:06]   qdrant separate-kb-b0 qa-acorn040: 1250 of 1489 questions (31 s)
+[00:24:12]   qdrant separate-kb-b0 qa-acorn040: pass 1 of 3 (38 s)
+[00:24:30]   qdrant separate-kb-b0 qa-acorn040: pass 2 of 3 (56 s)
+[00:24:48]   qdrant separate-kb-b0 qa-acorn040: pass 3 of 3 (74 s)
+[00:24:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:24:49] WARNING: qdrant separate-kb-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:24:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:24:49]    qdrant separate-kb-b0 qa-acorn040: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 12.8 ms, 74 s
+[00:24:49] -- qdrant separate-kb-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:24:55]   qdrant separate-kb-b0 qa-acorn100: 250 of 1489 questions (6 s)
+[00:25:02]   qdrant separate-kb-b0 qa-acorn100: 500 of 1489 questions (13 s)
+[00:25:09]   qdrant separate-kb-b0 qa-acorn100: 750 of 1489 questions (20 s)
+[00:25:15]   qdrant separate-kb-b0 qa-acorn100: 1000 of 1489 questions (26 s)
+[00:25:22]   qdrant separate-kb-b0 qa-acorn100: 1250 of 1489 questions (33 s)
+[00:25:28]   qdrant separate-kb-b0 qa-acorn100: pass 1 of 3 (39 s)
+[00:25:46]   qdrant separate-kb-b0 qa-acorn100: pass 2 of 3 (58 s)
+[00:26:05]   qdrant separate-kb-b0 qa-acorn100: pass 3 of 3 (76 s)
+[00:26:05]    qdrant separate-kb-b0 qa-acorn100: recall@5 0.9512261580381473, recall@10 0.9495231607629429, ERR 0.0, p50 13.0 ms, 76 s
+[00:26:05] -- qdrant separate-kb-b0 qc-exact: {'exact': True}
+[00:26:24]   qdrant separate-kb-b0 qc-exact: 250 of 1489 questions (18 s)
+[00:26:43]   qdrant separate-kb-b0 qc-exact: 500 of 1489 questions (37 s)
+[00:27:03]   qdrant separate-kb-b0 qc-exact: 750 of 1489 questions (57 s)
+[00:27:20]   qdrant separate-kb-b0 qc-exact: 1000 of 1489 questions (74 s)
+[00:27:37]   qdrant separate-kb-b0 qc-exact: 1250 of 1489 questions (91 s)
+[00:27:55]   qdrant separate-kb-b0 qc-exact: pass 1 of 3 (110 s)
+[00:28:49]   qdrant separate-kb-b0 qc-exact: pass 2 of 3 (164 s)
+[00:29:44]   qdrant separate-kb-b0 qc-exact: pass 3 of 3 (218 s)
+[00:29:44]    qdrant separate-kb-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 45.0 ms, 219 s
+[00:29:44] == stage qdrant separate-kb-b0: done in 587 s
+[00:29:45] == stage qdrant separate-kb-b1
+[00:31:52]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}
+[00:31:52] qdrant separate-kb build 1: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}
+[00:31:52] -- qdrant separate-kb-b1 q-asrun: {'hnsw_ef': 128}
+[00:31:59]   qdrant separate-kb-b1 q-asrun: 250 of 1489 questions (7 s)
+[00:32:06]   qdrant separate-kb-b1 q-asrun: 500 of 1489 questions (13 s)
+[00:32:12]   qdrant separate-kb-b1 q-asrun: 750 of 1489 questions (20 s)
+[00:32:19]   qdrant separate-kb-b1 q-asrun: 1000 of 1489 questions (27 s)
+[00:32:25]   qdrant separate-kb-b1 q-asrun: 1250 of 1489 questions (33 s)
+[00:32:31]   qdrant separate-kb-b1 q-asrun: pass 1 of 3 (39 s)
+[00:32:49]   qdrant separate-kb-b1 q-asrun: pass 2 of 3 (57 s)
+[00:33:08]   qdrant separate-kb-b1 q-asrun: pass 3 of 3 (76 s)
+[00:33:08]    qdrant separate-kb-b1 q-asrun: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 13.0 ms, 76 s
+[00:33:08] -- qdrant separate-kb-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:33:15]   qdrant separate-kb-b1 qa-acorn040: 250 of 1489 questions (6 s)
+[00:33:21]   qdrant separate-kb-b1 qa-acorn040: 500 of 1489 questions (13 s)
+[00:33:28]   qdrant separate-kb-b1 qa-acorn040: 750 of 1489 questions (19 s)
+[00:33:34]   qdrant separate-kb-b1 qa-acorn040: 1000 of 1489 questions (25 s)
+[00:33:40]   qdrant separate-kb-b1 qa-acorn040: 1250 of 1489 questions (31 s)
+[00:33:46]   qdrant separate-kb-b1 qa-acorn040: pass 1 of 3 (38 s)
+[00:34:05]   qdrant separate-kb-b1 qa-acorn040: pass 2 of 3 (56 s)
+[00:34:23]   qdrant separate-kb-b1 qa-acorn040: pass 3 of 3 (74 s)
+[00:34:23] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:34:23] WARNING: qdrant separate-kb-b1 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:34:23] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:34:23]    qdrant separate-kb-b1 qa-acorn040: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 12.8 ms, 75 s
+[00:34:23] -- qdrant separate-kb-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:34:30]   qdrant separate-kb-b1 qa-acorn100: 250 of 1489 questions (6 s)
+[00:34:36]   qdrant separate-kb-b1 qa-acorn100: 500 of 1489 questions (13 s)
+[00:34:43]   qdrant separate-kb-b1 qa-acorn100: 750 of 1489 questions (19 s)
+[00:34:49]   qdrant separate-kb-b1 qa-acorn100: 1000 of 1489 questions (25 s)
+[00:34:55]   qdrant separate-kb-b1 qa-acorn100: 1250 of 1489 questions (31 s)
+[00:35:01]   qdrant separate-kb-b1 qa-acorn100: pass 1 of 3 (37 s)
+[00:35:19]   qdrant separate-kb-b1 qa-acorn100: pass 2 of 3 (55 s)
+[00:35:37]   qdrant separate-kb-b1 qa-acorn100: pass 3 of 3 (74 s)
+[00:35:37]    qdrant separate-kb-b1 qa-acorn100: recall@5 0.9564032697547684, recall@10 0.9504768392370574, ERR 0.0, p50 12.7 ms, 74 s
+[00:35:37] == stage qdrant separate-kb-b1: done in 353 s
+[00:35:38] == stage qdrant separate-kb-b2
+[00:37:56]   Qdrant indexed: {'wardowl_enterprise_company': (49940, 49940, 2), 'wardowl_enterprise_kb': (57600, 57600, 2)}
+[00:37:56] qdrant separate-kb build 2: {'wardowl_enterprise_company': 49940, 'wardowl_enterprise_kb': 57600} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 1, 'wardowl_enterprise_kb': 1}
+[00:37:56] -- qdrant separate-kb-b2 q-asrun: {'hnsw_ef': 128}
+[00:38:03]   qdrant separate-kb-b2 q-asrun: 250 of 1489 questions (7 s)
+[00:38:09]   qdrant separate-kb-b2 q-asrun: 500 of 1489 questions (13 s)
+[00:38:16]   qdrant separate-kb-b2 q-asrun: 750 of 1489 questions (20 s)
+[00:38:22]   qdrant separate-kb-b2 q-asrun: 1000 of 1489 questions (26 s)
+[00:38:28]   qdrant separate-kb-b2 q-asrun: 1250 of 1489 questions (32 s)
+[00:38:35]   qdrant separate-kb-b2 q-asrun: pass 1 of 3 (38 s)
+[00:38:52]   qdrant separate-kb-b2 q-asrun: pass 2 of 3 (56 s)
+[00:39:10]   qdrant separate-kb-b2 q-asrun: pass 3 of 3 (74 s)
+[00:39:10]    qdrant separate-kb-b2 q-asrun: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.6 ms, 74 s
+[00:39:10] -- qdrant separate-kb-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:39:17]   qdrant separate-kb-b2 qa-acorn040: 250 of 1489 questions (6 s)
+[00:39:23]   qdrant separate-kb-b2 qa-acorn040: 500 of 1489 questions (13 s)
+[00:39:30]   qdrant separate-kb-b2 qa-acorn040: 750 of 1489 questions (19 s)
+[00:39:36]   qdrant separate-kb-b2 qa-acorn040: 1000 of 1489 questions (26 s)
+[00:39:42]   qdrant separate-kb-b2 qa-acorn040: 1250 of 1489 questions (32 s)
+[00:39:49]   qdrant separate-kb-b2 qa-acorn040: pass 1 of 3 (38 s)
+[00:40:07]   qdrant separate-kb-b2 qa-acorn040: pass 2 of 3 (56 s)
+[00:40:25]   qdrant separate-kb-b2 qa-acorn040: pass 3 of 3 (74 s)
+[00:40:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:40:25] WARNING: qdrant separate-kb-b2 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)
+[00:40:25] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[00:40:25]    qdrant separate-kb-b2 qa-acorn040: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.7 ms, 75 s
+[00:40:25] -- qdrant separate-kb-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:40:32]   qdrant separate-kb-b2 qa-acorn100: 250 of 1489 questions (6 s)
+[00:40:38]   qdrant separate-kb-b2 qa-acorn100: 500 of 1489 questions (13 s)
+[00:40:45]   qdrant separate-kb-b2 qa-acorn100: 750 of 1489 questions (19 s)
+[00:40:51]   qdrant separate-kb-b2 qa-acorn100: 1000 of 1489 questions (25 s)
+[00:40:57]   qdrant separate-kb-b2 qa-acorn100: 1250 of 1489 questions (32 s)
+[00:41:03]   qdrant separate-kb-b2 qa-acorn100: pass 1 of 3 (38 s)
+[00:41:22]   qdrant separate-kb-b2 qa-acorn100: pass 2 of 3 (56 s)
+[00:41:40]   qdrant separate-kb-b2 qa-acorn100: pass 3 of 3 (74 s)
+[00:41:40]    qdrant separate-kb-b2 qa-acorn100: recall@5 0.9547683923705721, recall@10 0.9475476839237057, ERR 0.0, p50 12.8 ms, 75 s
+[00:41:40] == stage qdrant separate-kb-b2: done in 362 s
+[00:41:40] == stage qdrant one-segment-b0
+[00:42:38]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors
+[00:43:43]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[00:43:43] qdrant one-segment build 0: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[00:43:43] -- qdrant one-segment-b0 q-asrun: {'hnsw_ef': 128}
+[00:43:47]   qdrant one-segment-b0 q-asrun: 250 of 1489 questions (4 s)
+[00:43:51]   qdrant one-segment-b0 q-asrun: 500 of 1489 questions (7 s)
+[00:43:55]   qdrant one-segment-b0 q-asrun: 750 of 1489 questions (11 s)
+[00:43:59]   qdrant one-segment-b0 q-asrun: 1000 of 1489 questions (15 s)
+[00:44:02]   qdrant one-segment-b0 q-asrun: 1250 of 1489 questions (18 s)
+[00:44:06]   qdrant one-segment-b0 q-asrun: pass 1 of 3 (22 s)
+[00:44:16]   qdrant one-segment-b0 q-asrun: pass 2 of 3 (32 s)
+[00:44:26]   qdrant one-segment-b0 q-asrun: pass 3 of 3 (42 s)
+[00:44:26]    qdrant one-segment-b0 q-asrun: recall@5 0.6399182561307902, recall@10 0.6382152588555858, ERR 0.0, p50 7.0 ms, 43 s
+[00:44:26] -- qdrant one-segment-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:44:30]   qdrant one-segment-b0 qa-acorn040: 250 of 1489 questions (4 s)
+[00:44:34]   qdrant one-segment-b0 qa-acorn040: 500 of 1489 questions (8 s)
+[00:44:38]   qdrant one-segment-b0 qa-acorn040: 750 of 1489 questions (11 s)
+[00:44:42]   qdrant one-segment-b0 qa-acorn040: 1000 of 1489 questions (15 s)
+[00:44:46]   qdrant one-segment-b0 qa-acorn040: 1250 of 1489 questions (19 s)
+[00:44:49]   qdrant one-segment-b0 qa-acorn040: pass 1 of 3 (23 s)
+[00:45:00]   qdrant one-segment-b0 qa-acorn040: pass 2 of 3 (33 s)
+[00:45:10]   qdrant one-segment-b0 qa-acorn040: pass 3 of 3 (44 s)
+[00:45:11]    qdrant one-segment-b0 qa-acorn040: recall@5 0.7833787465940054, recall@10 0.7851498637602179, ERR 0.0, p50 7.2 ms, 44 s
+[00:45:11] -- qdrant one-segment-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:45:15]   qdrant one-segment-b0 qa-acorn100: 250 of 1489 questions (4 s)
+[00:45:18]   qdrant one-segment-b0 qa-acorn100: 500 of 1489 questions (7 s)
+[00:45:22]   qdrant one-segment-b0 qa-acorn100: 750 of 1489 questions (11 s)
+[00:45:26]   qdrant one-segment-b0 qa-acorn100: 1000 of 1489 questions (15 s)
+[00:45:29]   qdrant one-segment-b0 qa-acorn100: 1250 of 1489 questions (18 s)
+[00:45:33]   qdrant one-segment-b0 qa-acorn100: pass 1 of 3 (22 s)
+[00:45:43]   qdrant one-segment-b0 qa-acorn100: pass 2 of 3 (32 s)
+[00:45:54]   qdrant one-segment-b0 qa-acorn100: pass 3 of 3 (43 s)
+[00:45:54]    qdrant one-segment-b0 qa-acorn100: recall@5 0.7833787465940054, recall@10 0.7851498637602179, ERR 0.0, p50 7.1 ms, 43 s
+[00:45:54] -- qdrant one-segment-b0 qc-exact: {'exact': True}
+[00:46:11]   qdrant one-segment-b0 qc-exact: 250 of 1489 questions (16 s)
+[00:46:29]   qdrant one-segment-b0 qc-exact: 500 of 1489 questions (34 s)
+[00:46:47]   qdrant one-segment-b0 qc-exact: 750 of 1489 questions (52 s)
+[00:47:02]   qdrant one-segment-b0 qc-exact: 1000 of 1489 questions (68 s)
+[00:47:17]   qdrant one-segment-b0 qc-exact: 1250 of 1489 questions (83 s)
+[00:47:34]   qdrant one-segment-b0 qc-exact: pass 1 of 3 (100 s)
+[00:48:24]   qdrant one-segment-b0 qc-exact: pass 2 of 3 (149 s)
+[00:49:13]   qdrant one-segment-b0 qc-exact: pass 3 of 3 (199 s)
+[00:49:14]    qdrant one-segment-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 41.5 ms, 199 s
+[00:49:14] == stage qdrant one-segment-b0: done in 454 s
+[00:49:14] == stage qdrant one-segment-b1
+[00:50:11]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors
+[00:51:16]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[00:51:16] qdrant one-segment build 1: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[00:51:16] -- qdrant one-segment-b1 q-asrun: {'hnsw_ef': 128}
+[00:51:20]   qdrant one-segment-b1 q-asrun: 250 of 1489 questions (4 s)
+[00:51:23]   qdrant one-segment-b1 q-asrun: 500 of 1489 questions (7 s)
+[00:51:27]   qdrant one-segment-b1 q-asrun: 750 of 1489 questions (11 s)
+[00:51:31]   qdrant one-segment-b1 q-asrun: 1000 of 1489 questions (15 s)
+[00:51:35]   qdrant one-segment-b1 q-asrun: 1250 of 1489 questions (19 s)
+[00:51:39]   qdrant one-segment-b1 q-asrun: pass 1 of 3 (23 s)
+[00:51:49]   qdrant one-segment-b1 q-asrun: pass 2 of 3 (33 s)
+[00:51:59]   qdrant one-segment-b1 q-asrun: pass 3 of 3 (43 s)
+[00:52:00]    qdrant one-segment-b1 q-asrun: recall@5 0.615258855585831, recall@10 0.6090599455040872, ERR 0.0, p50 7.1 ms, 44 s
+[00:52:00] -- qdrant one-segment-b1 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:52:04]   qdrant one-segment-b1 qa-acorn040: 250 of 1489 questions (4 s)
+[00:52:08]   qdrant one-segment-b1 qa-acorn040: 500 of 1489 questions (8 s)
+[00:52:11]   qdrant one-segment-b1 qa-acorn040: 750 of 1489 questions (12 s)
+[00:52:15]   qdrant one-segment-b1 qa-acorn040: 1000 of 1489 questions (15 s)
+[00:52:19]   qdrant one-segment-b1 qa-acorn040: 1250 of 1489 questions (19 s)
+[00:52:23]   qdrant one-segment-b1 qa-acorn040: pass 1 of 3 (23 s)
+[00:52:33]   qdrant one-segment-b1 qa-acorn040: pass 2 of 3 (34 s)
+[00:52:44]   qdrant one-segment-b1 qa-acorn040: pass 3 of 3 (44 s)
+[00:52:44]    qdrant one-segment-b1 qa-acorn040: recall@5 0.7630790190735696, recall@10 0.7598773841961853, ERR 0.0, p50 7.2 ms, 45 s
+[00:52:44] -- qdrant one-segment-b1 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:52:48]   qdrant one-segment-b1 qa-acorn100: 250 of 1489 questions (4 s)
+[00:52:52]   qdrant one-segment-b1 qa-acorn100: 500 of 1489 questions (8 s)
+[00:52:56]   qdrant one-segment-b1 qa-acorn100: 750 of 1489 questions (12 s)
+[00:53:00]   qdrant one-segment-b1 qa-acorn100: 1000 of 1489 questions (15 s)
+[00:53:04]   qdrant one-segment-b1 qa-acorn100: 1250 of 1489 questions (19 s)
+[00:53:07]   qdrant one-segment-b1 qa-acorn100: pass 1 of 3 (23 s)
+[00:53:18]   qdrant one-segment-b1 qa-acorn100: pass 2 of 3 (34 s)
+[00:53:29]   qdrant one-segment-b1 qa-acorn100: pass 3 of 3 (44 s)
+[00:53:29]    qdrant one-segment-b1 qa-acorn100: recall@5 0.7630790190735696, recall@10 0.7598773841961853, ERR 0.0, p50 7.3 ms, 45 s
+[00:53:29] == stage qdrant one-segment-b1: done in 256 s
+[00:53:29] == stage qdrant one-segment-b2
+[00:54:27]   one-segment: indexing turned on at 10,000 KB for 322,620 KB of vectors
+[00:55:32]   Qdrant indexed: {'wardowl_enterprise': (107540, 107540, 2)}
+[00:55:32] qdrant one-segment build 2: {'wardowl_enterprise': 107540} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 1}
+[00:55:32] -- qdrant one-segment-b2 q-asrun: {'hnsw_ef': 128}
+[00:55:36]   qdrant one-segment-b2 q-asrun: 250 of 1489 questions (4 s)
+[00:55:40]   qdrant one-segment-b2 q-asrun: 500 of 1489 questions (8 s)
+[00:55:44]   qdrant one-segment-b2 q-asrun: 750 of 1489 questions (12 s)
+[00:55:48]   qdrant one-segment-b2 q-asrun: 1000 of 1489 questions (16 s)
+[00:55:51]   qdrant one-segment-b2 q-asrun: 1250 of 1489 questions (19 s)
+[00:55:55]   qdrant one-segment-b2 q-asrun: pass 1 of 3 (23 s)
+[00:56:06]   qdrant one-segment-b2 q-asrun: pass 2 of 3 (34 s)
+[00:56:16]   qdrant one-segment-b2 q-asrun: pass 3 of 3 (44 s)
+[00:56:16]    qdrant one-segment-b2 q-asrun: recall@5 0.6371934604904632, recall@10 0.6286103542234333, ERR 0.0, p50 7.1 ms, 44 s
+[00:56:16] -- qdrant one-segment-b2 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}
+[00:56:20]   qdrant one-segment-b2 qa-acorn040: 250 of 1489 questions (4 s)
+[00:56:24]   qdrant one-segment-b2 qa-acorn040: 500 of 1489 questions (8 s)
+[00:56:28]   qdrant one-segment-b2 qa-acorn040: 750 of 1489 questions (11 s)
+[00:56:31]   qdrant one-segment-b2 qa-acorn040: 1000 of 1489 questions (15 s)
+[00:56:35]   qdrant one-segment-b2 qa-acorn040: 1250 of 1489 questions (19 s)
+[00:56:39]   qdrant one-segment-b2 qa-acorn040: pass 1 of 3 (22 s)
+[00:56:49]   qdrant one-segment-b2 qa-acorn040: pass 2 of 3 (33 s)
+[00:57:00]   qdrant one-segment-b2 qa-acorn040: pass 3 of 3 (44 s)
+[00:57:01]    qdrant one-segment-b2 qa-acorn040: recall@5 0.7938692098092643, recall@10 0.7869209809264306, ERR 0.0, p50 7.1 ms, 44 s
+[00:57:01] -- qdrant one-segment-b2 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}
+[00:57:05]   qdrant one-segment-b2 qa-acorn100: 250 of 1489 questions (4 s)
+[00:57:09]   qdrant one-segment-b2 qa-acorn100: 500 of 1489 questions (8 s)
+[00:57:12]   qdrant one-segment-b2 qa-acorn100: 750 of 1489 questions (12 s)
+[00:57:16]   qdrant one-segment-b2 qa-acorn100: 1000 of 1489 questions (15 s)
+[00:57:20]   qdrant one-segment-b2 qa-acorn100: 1250 of 1489 questions (19 s)
+[00:57:23]   qdrant one-segment-b2 qa-acorn100: pass 1 of 3 (23 s)
+[00:57:34]   qdrant one-segment-b2 qa-acorn100: pass 2 of 3 (33 s)
+[00:57:45]   qdrant one-segment-b2 qa-acorn100: pass 3 of 3 (44 s)
+[00:57:45]    qdrant one-segment-b2 qa-acorn100: recall@5 0.7938692098092643, recall@10 0.7869209809264306, ERR 0.0, p50 7.2 ms, 45 s
+[00:57:45] == stage qdrant one-segment-b2: done in 256 s
+[00:57:47] X1 finished in 5.60 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/x1run2/manifest.json)

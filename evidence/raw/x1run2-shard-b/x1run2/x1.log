@@ -1,0 +1,508 @@
+[19:21:28] python: 3.13.15
+[19:21:28] platform: Linux-6.18.55+-x86_64-with-glibc2.39
+[19:21:28] cpus: 4
+[19:21:28] wardowl: 2.1.0
+[19:21:28] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl
+[19:21:28] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1
+[19:21:28] memory_gib: 31.3
+[19:21:28] gpus: []
+[19:21:28] torch: 2.11.0+cpu
+[19:21:28] transformers: 5.16.1
+[19:21:28] sentence-transformers: 5.7.0
+[19:21:28] datasets: 4.8.5
+[19:21:28] numpy: 2.1.3
+[19:21:28] psycopg: 3.3.6
+[19:21:28] chromadb: None
+[19:21:28] elasticsearch: None
+[19:21:28] opensearch-py: None
+[19:21:28] qdrant-client: 1.20.0
+[19:21:28] weaviate-client: None
+[19:21:28] redis: None
+[19:21:28] lancedb: None
+[19:21:28] faiss-cpu: None
+[19:21:28] pandas: 2.3.3
+[19:21:28] pyarrow: 23.0.1
+[19:21:28] scipy: 1.16.3
+[19:21:28] psycopg-pool: 3.3.3
+[19:21:28] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': [], 'cuda': None}
+[19:21:28] wardowl_installed: True
+[19:21:28] == stage corpus
+[19:21:41] 6,648 FiQA queries for the probe set
+[19:21:41] probe set: 24 people, 384 questions
+[19:21:41] == stage corpus: done in 12 s
+[19:21:41] == stage embeddings
+[19:21:43] cached embeddings copied from /kaggle/input: ['/kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/cache/chunks-BAAI_bge-base-en-v1.5-3165378041584035.npy']
+[19:21:43] adopted from /kaggle/input/notebooks/muzakkirhussain1/x1run2-prep-gpu/x1run2: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']
+[19:23:22] query vectors pinned from /kaggle/working/x1run2/query_vectors.npy (largest difference from this encoding: 4.36e-04)
+[19:23:22] == stage embeddings: done in 102 s
+[19:23:22] == stage exact baseline
+[19:23:30] == stage exact baseline: done in 8 s
+[19:23:30] == stage alignment variables
+[19:23:50] /kaggle/working/x1run2/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)
+[19:23:50] == stage alignment variables: done in 20 s
+[19:23:50] 1,489 questions of 213 people; 50 fixed EXPLAIN questions
+[19:23:50] == stage pgvector: start and load
+[19:27:37] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}
+[19:27:37] == stage pgvector: start and load: done in 227 s
+[19:27:37] == stage pgvector hnsw-m16-efc64-b1
+[19:28:16] pgvector index hnsw-m16-efc64 build 1: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 1, 'm': 16, 'ef_construction': 64, 'seconds': 37.6, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 440475648, 'reloptions': ['m=16', 'ef_construction=64']}
+[19:28:16] == stage pgvector: vacuum
+[19:28:17] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 1131, 'n_entry_pages': 257, 'n_data_pages': 407, 'n_entries': 50109, 'version': 2}
+[19:28:17] == stage pgvector: vacuum: done in 1 s
+[19:28:17] == stage pgvector: filter estimates
+[19:28:17] == stage pgvector: filter estimates: done in 0 s
+[19:28:17] -- pgvector hnsw-m16-efc64-b1 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[19:31:02]   pgvector hnsw-m16-efc64-b1 p-asrun: 250 of 1489 questions (164 s)
+[19:33:55]   pgvector hnsw-m16-efc64-b1 p-asrun: 500 of 1489 questions (337 s)
+[19:37:07]   pgvector hnsw-m16-efc64-b1 p-asrun: 750 of 1489 questions (530 s)
+[19:40:06]   pgvector hnsw-m16-efc64-b1 p-asrun: 1000 of 1489 questions (708 s)
+[19:42:58]   pgvector hnsw-m16-efc64-b1 p-asrun: 1250 of 1489 questions (880 s)
+[19:46:10]   pgvector hnsw-m16-efc64-b1 p-asrun: pass 1 of 3 (1072 s)
+[19:54:54]   pgvector hnsw-m16-efc64-b1 p-asrun: pass 2 of 3 (1596 s)
+[20:03:56]   pgvector hnsw-m16-efc64-b1 p-asrun: pass 3 of 3 (2139 s)
+[20:04:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:04:12] WARNING: pgvector hnsw-m16-efc64-b1 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[20:04:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:04:12]    pgvector hnsw-m16-efc64-b1 p-asrun: recall@5 0.9979564032697548, recall@10 0.9990463215258855, ERR 0.0006811989100817438, p50 441.8 ms, 2155 s, HNSW plans 0.007 of 2978
+[20:04:12] -- pgvector hnsw-m16-efc64-b1 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[20:04:33]   pgvector hnsw-m16-efc64-b1 pg-custom: 250 of 1489 questions (21 s)
+[20:04:52]   pgvector hnsw-m16-efc64-b1 pg-custom: 500 of 1489 questions (40 s)
+[20:05:09]   pgvector hnsw-m16-efc64-b1 pg-custom: 750 of 1489 questions (57 s)
+[20:05:32]   pgvector hnsw-m16-efc64-b1 pg-custom: 1000 of 1489 questions (79 s)
+[20:05:53]   pgvector hnsw-m16-efc64-b1 pg-custom: 1250 of 1489 questions (100 s)
+[20:06:09]   pgvector hnsw-m16-efc64-b1 pg-custom: pass 1 of 3 (116 s)
+[20:07:03]   pgvector hnsw-m16-efc64-b1 pg-custom: pass 2 of 3 (170 s)
+[20:07:55]   pgvector hnsw-m16-efc64-b1 pg-custom: pass 3 of 3 (223 s)
+[20:07:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:07:57] WARNING: pgvector hnsw-m16-efc64-b1 pg-custom: 328 short results; EXPLAIN covers 200, empty ones first
+[20:07:57] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:08:24]    pgvector hnsw-m16-efc64-b1 pg-custom: recall@5 0.6245231607629428, recall@10 0.6559264305177113, ERR 0.08719346049046321, p50 24.6 ms, 251 s, HNSW plans 0.986 of 2978
+[20:08:24] -- pgvector hnsw-m16-efc64-b1 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[20:08:45]   pgvector hnsw-m16-efc64-b1 pg-hnsw: 250 of 1489 questions (20 s)
+[20:09:03]   pgvector hnsw-m16-efc64-b1 pg-hnsw: 500 of 1489 questions (38 s)
+[20:09:20]   pgvector hnsw-m16-efc64-b1 pg-hnsw: 750 of 1489 questions (55 s)
+[20:09:43]   pgvector hnsw-m16-efc64-b1 pg-hnsw: 1000 of 1489 questions (78 s)
+[20:10:06]   pgvector hnsw-m16-efc64-b1 pg-hnsw: 1250 of 1489 questions (102 s)
+[20:10:23]   pgvector hnsw-m16-efc64-b1 pg-hnsw: pass 1 of 3 (118 s)
+[20:11:18]   pgvector hnsw-m16-efc64-b1 pg-hnsw: pass 2 of 3 (174 s)
+[20:12:13]   pgvector hnsw-m16-efc64-b1 pg-hnsw: pass 3 of 3 (229 s)
+[20:12:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:12:15] WARNING: pgvector hnsw-m16-efc64-b1 pg-hnsw: 328 short results; EXPLAIN covers 200, empty ones first
+[20:12:15] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:12:42]    pgvector hnsw-m16-efc64-b1 pg-hnsw: recall@5 0.6245231607629428, recall@10 0.6559264305177113, ERR 0.08719346049046321, p50 25.9 ms, 257 s, HNSW plans 1.000 of 2978
+[20:12:42] -- pgvector hnsw-m16-efc64-b1 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}
+[20:13:03]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 250 of 1489 questions (20 s)
+[20:13:21]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 500 of 1489 questions (39 s)
+[20:13:39]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 750 of 1489 questions (56 s)
+[20:14:01]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 1000 of 1489 questions (78 s)
+[20:14:26]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 1250 of 1489 questions (103 s)
+[20:14:43]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: pass 1 of 3 (120 s)
+[20:15:40]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: pass 2 of 3 (177 s)
+[20:16:36]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: pass 3 of 3 (233 s)
+[20:16:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:16:38] WARNING: pgvector hnsw-m16-efc64-b1 pa-t20k-m8: 328 short results; EXPLAIN covers 200, empty ones first
+[20:16:38] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:17:06]    pgvector hnsw-m16-efc64-b1 pa-t20k-m8: recall@5 0.6245231607629428, recall@10 0.6559264305177113, ERR 0.08719346049046321, p50 26.7 ms, 263 s, HNSW plans 1.000 of 2978
+[20:17:06] -- pgvector hnsw-m16-efc64-b1 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}
+[20:17:31]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 250 of 1489 questions (24 s)
+[20:17:52]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 500 of 1489 questions (45 s)
+[20:18:11]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 750 of 1489 questions (65 s)
+[20:18:40]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 1000 of 1489 questions (93 s)
+[20:19:08]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 1250 of 1489 questions (122 s)
+[20:19:29]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: pass 1 of 3 (142 s)
+[20:20:40]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: pass 2 of 3 (214 s)
+[20:21:48]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: pass 3 of 3 (282 s)
+[20:21:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:21:51] WARNING: pgvector hnsw-m16-efc64-b1 pa-t100k-m1: 261 short results; EXPLAIN covers 200, empty ones first
+[20:21:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:22:26]    pgvector hnsw-m16-efc64-b1 pa-t100k-m1: recall@5 0.6452316076294278, recall@10 0.6799727520435968, ERR 0.07016348773841961, p50 28.9 ms, 319 s, HNSW plans 1.000 of 2978
+[20:22:26] -- pgvector hnsw-m16-efc64-b1 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}
+[20:23:02]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: 250 of 1489 questions (36 s)
+[20:23:31]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: 500 of 1489 questions (64 s)
+[20:23:58]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: 750 of 1489 questions (91 s)
+[20:24:41]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: 1000 of 1489 questions (135 s)
+[20:25:43]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: 1250 of 1489 questions (196 s)
+[20:26:03]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: pass 1 of 3 (216 s)
+[20:27:45]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: pass 2 of 3 (318 s)
+[20:29:27]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: pass 3 of 3 (420 s)
+[20:29:33]    pgvector hnsw-m16-efc64-b1 pa-t100k-m8: recall@5 0.7363760217983651, recall@10 0.7760217983651228, ERR 0.0, p50 25.0 ms, 427 s, HNSW plans 1.000 of 2978
+[20:29:33] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}
+[20:29:57]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 250 of 1489 questions (23 s)
+[20:30:16]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 500 of 1489 questions (43 s)
+[20:30:36]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 750 of 1489 questions (63 s)
+[20:31:10]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 1000 of 1489 questions (97 s)
+[20:32:00]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 1250 of 1489 questions (147 s)
+[20:32:32]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: pass 1 of 3 (178 s)
+[20:34:08]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: pass 2 of 3 (274 s)
+[20:35:18]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: pass 3 of 3 (344 s)
+[20:35:20] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:35:20] WARNING: pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: 261 short results; EXPLAIN covers 200, empty ones first
+[20:35:20] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:35:56]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: recall@5 0.6452316076294278, recall@10 0.6799727520435968, ERR 0.07016348773841961, p50 30.7 ms, 382 s, HNSW plans 1.000 of 2978
+[20:35:56] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[20:36:33]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: 250 of 1489 questions (37 s)
+[20:37:03]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: 500 of 1489 questions (66 s)
+[20:37:32]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: 750 of 1489 questions (95 s)
+[20:38:17]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: 1000 of 1489 questions (140 s)
+[20:39:32]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: 1250 of 1489 questions (216 s)
+[20:39:53]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: pass 1 of 3 (236 s)
+[20:41:42]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: pass 2 of 3 (345 s)
+[20:43:30]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: pass 3 of 3 (454 s)
+[20:43:36]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: recall@5 0.7370572207084468, recall@10 0.7767029972752044, ERR 0.0, p50 25.5 ms, 460 s, HNSW plans 1.000 of 2978
+[20:43:36] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}
+[20:44:12]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: 250 of 1489 questions (35 s)
+[20:44:42]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: 500 of 1489 questions (65 s)
+[20:45:11]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: 750 of 1489 questions (94 s)
+[20:45:55]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: 1000 of 1489 questions (138 s)
+[20:47:08]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: 1250 of 1489 questions (211 s)
+[20:47:28]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: pass 1 of 3 (231 s)
+[20:49:16]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: pass 2 of 3 (339 s)
+[20:51:04]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: pass 3 of 3 (447 s)
+[20:51:10]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: recall@5 0.7370572207084468, recall@10 0.7767029972752044, ERR 0.0, p50 25.1 ms, 453 s, HNSW plans 1.000 of 2978
+[20:51:10] -- pgvector hnsw-m16-efc64-b1 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'work_mem': '64MB'}
+[20:51:30]   pgvector hnsw-m16-efc64-b1 pb-wm64: 250 of 1489 questions (19 s)
+[20:51:47]   pgvector hnsw-m16-efc64-b1 pb-wm64: 500 of 1489 questions (37 s)
+[20:52:03]   pgvector hnsw-m16-efc64-b1 pb-wm64: 750 of 1489 questions (53 s)
+[20:52:25]   pgvector hnsw-m16-efc64-b1 pb-wm64: 1000 of 1489 questions (75 s)
+[20:52:49]   pgvector hnsw-m16-efc64-b1 pb-wm64: 1250 of 1489 questions (98 s)
+[20:53:05]   pgvector hnsw-m16-efc64-b1 pb-wm64: pass 1 of 3 (115 s)
+[20:54:08]   pgvector hnsw-m16-efc64-b1 pb-wm64: pass 2 of 3 (178 s)
+[20:55:07]   pgvector hnsw-m16-efc64-b1 pb-wm64: pass 3 of 3 (237 s)
+[20:55:09] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:55:09] WARNING: pgvector hnsw-m16-efc64-b1 pb-wm64: 328 short results; EXPLAIN covers 200, empty ones first
+[20:55:09] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:55:37]    pgvector hnsw-m16-efc64-b1 pb-wm64: recall@5 0.6245231607629428, recall@10 0.6559264305177113, ERR 0.08719346049046321, p50 27.2 ms, 266 s, HNSW plans 1.000 of 2978
+[20:55:37] -- pgvector hnsw-m16-efc64-b1 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[20:55:58]   pgvector hnsw-m16-efc64-b1 pc-ef40: 250 of 1489 questions (20 s)
+[20:56:15]   pgvector hnsw-m16-efc64-b1 pc-ef40: 500 of 1489 questions (37 s)
+[20:56:32]   pgvector hnsw-m16-efc64-b1 pc-ef40: 750 of 1489 questions (54 s)
+[20:56:54]   pgvector hnsw-m16-efc64-b1 pc-ef40: 1000 of 1489 questions (77 s)
+[20:57:18]   pgvector hnsw-m16-efc64-b1 pc-ef40: 1250 of 1489 questions (100 s)
+[20:57:34]   pgvector hnsw-m16-efc64-b1 pc-ef40: pass 1 of 3 (116 s)
+[20:58:29]   pgvector hnsw-m16-efc64-b1 pc-ef40: pass 2 of 3 (172 s)
+[20:59:27]   pgvector hnsw-m16-efc64-b1 pc-ef40: pass 3 of 3 (229 s)
+[20:59:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:59:29] WARNING: pgvector hnsw-m16-efc64-b1 pc-ef40: 330 short results; EXPLAIN covers 200, empty ones first
+[20:59:29] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[20:59:56]    pgvector hnsw-m16-efc64-b1 pc-ef40: recall@5 0.6053133514986375, recall@10 0.6413487738419618, ERR 0.08719346049046321, p50 26.0 ms, 258 s, HNSW plans 1.000 of 2978
+[20:59:56] -- pgvector hnsw-m16-efc64-b1 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:00:17]   pgvector hnsw-m16-efc64-b1 pc-ef200: 250 of 1489 questions (20 s)
+[21:00:35]   pgvector hnsw-m16-efc64-b1 pc-ef200: 500 of 1489 questions (38 s)
+[21:00:52]   pgvector hnsw-m16-efc64-b1 pc-ef200: 750 of 1489 questions (55 s)
+[21:01:14]   pgvector hnsw-m16-efc64-b1 pc-ef200: 1000 of 1489 questions (77 s)
+[21:01:37]   pgvector hnsw-m16-efc64-b1 pc-ef200: 1250 of 1489 questions (101 s)
+[21:01:54]   pgvector hnsw-m16-efc64-b1 pc-ef200: pass 1 of 3 (117 s)
+[21:02:49]   pgvector hnsw-m16-efc64-b1 pc-ef200: pass 2 of 3 (172 s)
+[21:03:49]   pgvector hnsw-m16-efc64-b1 pc-ef200: pass 3 of 3 (232 s)
+[21:03:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:03:51] WARNING: pgvector hnsw-m16-efc64-b1 pc-ef200: 328 short results; EXPLAIN covers 200, empty ones first
+[21:03:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:04:23]    pgvector hnsw-m16-efc64-b1 pc-ef200: recall@5 0.6361035422343324, recall@10 0.6656675749318801, ERR 0.08719346049046321, p50 26.5 ms, 265 s, HNSW plans 1.000 of 2978
+[21:04:23] -- pgvector hnsw-m16-efc64-b1 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:04:53]   pgvector hnsw-m16-efc64-b1 pc-ef400: 250 of 1489 questions (30 s)
+[21:05:15]   pgvector hnsw-m16-efc64-b1 pc-ef400: 500 of 1489 questions (51 s)
+[21:05:34]   pgvector hnsw-m16-efc64-b1 pc-ef400: 750 of 1489 questions (70 s)
+[21:05:58]   pgvector hnsw-m16-efc64-b1 pc-ef400: 1000 of 1489 questions (95 s)
+[21:06:22]   pgvector hnsw-m16-efc64-b1 pc-ef400: 1250 of 1489 questions (119 s)
+[21:06:40]   pgvector hnsw-m16-efc64-b1 pc-ef400: pass 1 of 3 (137 s)
+[21:07:39]   pgvector hnsw-m16-efc64-b1 pc-ef400: pass 2 of 3 (196 s)
+[21:08:40]   pgvector hnsw-m16-efc64-b1 pc-ef400: pass 3 of 3 (256 s)
+[21:08:42] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:08:42] WARNING: pgvector hnsw-m16-efc64-b1 pc-ef400: 326 short results; EXPLAIN covers 200, empty ones first
+[21:08:42] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:09:10]    pgvector hnsw-m16-efc64-b1 pc-ef400: recall@5 0.6625340599455041, recall@10 0.6872615803814714, ERR 0.08719346049046321, p50 27.6 ms, 286 s, HNSW plans 1.000 of 2978
+[21:09:10] -- pgvector hnsw-m16-efc64-b1 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:09:33]   pgvector hnsw-m16-efc64-b1 pc-ef1000: 250 of 1489 questions (23 s)
+[21:09:55]   pgvector hnsw-m16-efc64-b1 pc-ef1000: 500 of 1489 questions (44 s)
+[21:10:14]   pgvector hnsw-m16-efc64-b1 pc-ef1000: 750 of 1489 questions (64 s)
+[21:10:40]   pgvector hnsw-m16-efc64-b1 pc-ef1000: 1000 of 1489 questions (90 s)
+[21:11:08]   pgvector hnsw-m16-efc64-b1 pc-ef1000: 1250 of 1489 questions (117 s)
+[21:11:27]   pgvector hnsw-m16-efc64-b1 pc-ef1000: pass 1 of 3 (137 s)
+[21:12:34]   pgvector hnsw-m16-efc64-b1 pc-ef1000: pass 2 of 3 (203 s)
+[21:13:48]   pgvector hnsw-m16-efc64-b1 pc-ef1000: pass 3 of 3 (278 s)
+[21:13:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:13:51] WARNING: pgvector hnsw-m16-efc64-b1 pc-ef1000: 320 short results; EXPLAIN covers 200, empty ones first
+[21:13:51] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:14:21]    pgvector hnsw-m16-efc64-b1 pc-ef1000: recall@5 0.6960490463215259, recall@10 0.7188010899182562, ERR 0.08446866485013624, p50 32.6 ms, 311 s, HNSW plans 1.000 of 2978
+[21:14:21] -- pgvector hnsw-m16-efc64-b1 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 4}
+[21:14:46]   pgvector hnsw-m16-efc64-b1 pd-lim4: 250 of 1489 questions (24 s)
+[21:15:07]   pgvector hnsw-m16-efc64-b1 pd-lim4: 500 of 1489 questions (45 s)
+[21:15:27]   pgvector hnsw-m16-efc64-b1 pd-lim4: 750 of 1489 questions (65 s)
+[21:15:52]   pgvector hnsw-m16-efc64-b1 pd-lim4: 1000 of 1489 questions (90 s)
+[21:16:18]   pgvector hnsw-m16-efc64-b1 pd-lim4: 1250 of 1489 questions (117 s)
+[21:16:39]   pgvector hnsw-m16-efc64-b1 pd-lim4: pass 1 of 3 (137 s)
+[21:17:43]   pgvector hnsw-m16-efc64-b1 pd-lim4: pass 2 of 3 (201 s)
+[21:18:48]   pgvector hnsw-m16-efc64-b1 pd-lim4: pass 3 of 3 (266 s)
+[21:18:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:18:50] WARNING: pgvector hnsw-m16-efc64-b1 pd-lim4: 328 short results; EXPLAIN covers 200, empty ones first
+[21:18:50] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:19:17]    pgvector hnsw-m16-efc64-b1 pd-lim4: recall@5 0.6885558583106267, recall@10 0.7161444141689375, ERR 0.08719346049046321, p50 29.9 ms, 295 s, HNSW plans 1.000 of 2978
+[21:19:17] -- pgvector hnsw-m16-efc64-b1 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[21:19:43]   pgvector hnsw-m16-efc64-b1 pd-lim10: 250 of 1489 questions (25 s)
+[21:20:07]   pgvector hnsw-m16-efc64-b1 pd-lim10: 500 of 1489 questions (50 s)
+[21:20:31]   pgvector hnsw-m16-efc64-b1 pd-lim10: 750 of 1489 questions (73 s)
+[21:20:58]   pgvector hnsw-m16-efc64-b1 pd-lim10: 1000 of 1489 questions (100 s)
+[21:21:27]   pgvector hnsw-m16-efc64-b1 pd-lim10: 1250 of 1489 questions (129 s)
+[21:21:49]   pgvector hnsw-m16-efc64-b1 pd-lim10: pass 1 of 3 (151 s)
+[21:22:59]   pgvector hnsw-m16-efc64-b1 pd-lim10: pass 2 of 3 (221 s)
+[21:24:09]   pgvector hnsw-m16-efc64-b1 pd-lim10: pass 3 of 3 (291 s)
+[21:24:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:24:12] WARNING: pgvector hnsw-m16-efc64-b1 pd-lim10: 328 short results; EXPLAIN covers 200, empty ones first
+[21:24:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:24:39]    pgvector hnsw-m16-efc64-b1 pd-lim10: recall@5 0.7239782016348774, recall@10 0.7485694822888284, ERR 0.08719346049046321, p50 32.6 ms, 321 s, HNSW plans 1.000 of 2978
+[21:24:39] -- pgvector hnsw-m16-efc64-b1 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[21:25:00]   pgvector hnsw-m16-efc64-b1 pe-strict: 250 of 1489 questions (20 s)
+[21:25:18]   pgvector hnsw-m16-efc64-b1 pe-strict: 500 of 1489 questions (38 s)
+[21:25:35]   pgvector hnsw-m16-efc64-b1 pe-strict: 750 of 1489 questions (55 s)
+[21:25:58]   pgvector hnsw-m16-efc64-b1 pe-strict: 1000 of 1489 questions (78 s)
+[21:26:22]   pgvector hnsw-m16-efc64-b1 pe-strict: 1250 of 1489 questions (102 s)
+[21:26:38]   pgvector hnsw-m16-efc64-b1 pe-strict: pass 1 of 3 (119 s)
+[21:27:35]   pgvector hnsw-m16-efc64-b1 pe-strict: pass 2 of 3 (175 s)
+[21:28:32]   pgvector hnsw-m16-efc64-b1 pe-strict: pass 3 of 3 (233 s)
+[21:28:35] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:28:35] WARNING: pgvector hnsw-m16-efc64-b1 pe-strict: 328 short results; EXPLAIN covers 200, empty ones first
+[21:28:35] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:29:03]    pgvector hnsw-m16-efc64-b1 pe-strict: recall@5 0.47179836512261575, recall@10 0.49332425068119895, ERR 0.08719346049046321, p50 27.4 ms, 263 s, HNSW plans 1.000 of 2978
+[21:29:03] -- pgvector hnsw-m16-efc64-b1 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}
+[21:29:24]   pgvector hnsw-m16-efc64-b1 pg-noprepare: 250 of 1489 questions (20 s)
+[21:29:42]   pgvector hnsw-m16-efc64-b1 pg-noprepare: 500 of 1489 questions (38 s)
+[21:29:58]   pgvector hnsw-m16-efc64-b1 pg-noprepare: 750 of 1489 questions (55 s)
+[21:30:20]   pgvector hnsw-m16-efc64-b1 pg-noprepare: 1000 of 1489 questions (77 s)
+[21:30:40]   pgvector hnsw-m16-efc64-b1 pg-noprepare: 1250 of 1489 questions (97 s)
+[21:30:57]   pgvector hnsw-m16-efc64-b1 pg-noprepare: pass 1 of 3 (113 s)
+[21:31:49]   pgvector hnsw-m16-efc64-b1 pg-noprepare: pass 2 of 3 (166 s)
+[21:32:42]   pgvector hnsw-m16-efc64-b1 pg-noprepare: pass 3 of 3 (219 s)
+[21:32:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:32:44] WARNING: pgvector hnsw-m16-efc64-b1 pg-noprepare: 328 short results; EXPLAIN covers 200, empty ones first
+[21:32:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[21:33:11]    pgvector hnsw-m16-efc64-b1 pg-noprepare: recall@5 0.6245231607629428, recall@10 0.6559264305177113, ERR 0.08719346049046321, p50 24.3 ms, 248 s, HNSW plans 0.986 of 2978
+[21:33:11] == stage pgvector hnsw-m16-efc64-b1: done in 7534 s
+[21:33:11] == stage pgvector hnsw-m16-efc64-b2
+[21:33:50] pgvector index hnsw-m16-efc64 build 2: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 2, 'm': 16, 'ef_construction': 64, 'seconds': 37.8, 'builder': "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)", 'index_bytes': 440475648, 'reloptions': ['m=16', 'ef_construction=64']}
+[21:33:50] -- pgvector hnsw-m16-efc64-b2 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[21:36:29]   pgvector hnsw-m16-efc64-b2 p-asrun: 250 of 1489 questions (158 s)
+[21:39:18]   pgvector hnsw-m16-efc64-b2 p-asrun: 500 of 1489 questions (327 s)
+[21:42:18]   pgvector hnsw-m16-efc64-b2 p-asrun: 750 of 1489 questions (507 s)
+[21:45:01]   pgvector hnsw-m16-efc64-b2 p-asrun: 1000 of 1489 questions (670 s)
+[21:47:32]   pgvector hnsw-m16-efc64-b2 p-asrun: 1250 of 1489 questions (821 s)
+[21:50:21]   pgvector hnsw-m16-efc64-b2 p-asrun: pass 1 of 3 (990 s)
+[21:58:36]   pgvector hnsw-m16-efc64-b2 p-asrun: pass 2 of 3 (1485 s)
+[22:07:29]   pgvector hnsw-m16-efc64-b2 p-asrun: pass 3 of 3 (2018 s)
+[22:07:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:07:44] WARNING: pgvector hnsw-m16-efc64-b2 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.007 of its 2978 captured plans did ({'gin': 2958, 'hnsw': 20}, 2916 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[22:07:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:07:44]    pgvector hnsw-m16-efc64-b2 p-asrun: recall@5 0.9967302452316075, recall@10 0.9982288828337875, ERR 0.0, p50 435.6 ms, 2034 s, HNSW plans 0.007 of 2978
+[22:07:44] -- pgvector hnsw-m16-efc64-b2 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[22:08:05]   pgvector hnsw-m16-efc64-b2 pg-custom: 250 of 1489 questions (20 s)
+[22:08:24]   pgvector hnsw-m16-efc64-b2 pg-custom: 500 of 1489 questions (38 s)
+[22:08:41]   pgvector hnsw-m16-efc64-b2 pg-custom: 750 of 1489 questions (56 s)
+[22:09:03]   pgvector hnsw-m16-efc64-b2 pg-custom: 1000 of 1489 questions (78 s)
+[22:09:22]   pgvector hnsw-m16-efc64-b2 pg-custom: 1250 of 1489 questions (97 s)
+[22:09:38]   pgvector hnsw-m16-efc64-b2 pg-custom: pass 1 of 3 (113 s)
+[22:10:30]   pgvector hnsw-m16-efc64-b2 pg-custom: pass 2 of 3 (165 s)
+[22:11:22]   pgvector hnsw-m16-efc64-b2 pg-custom: pass 3 of 3 (217 s)
+[22:11:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:11:24] WARNING: pgvector hnsw-m16-efc64-b2 pg-custom: 356 short results; EXPLAIN covers 200, empty ones first
+[22:11:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:11:51]    pgvector hnsw-m16-efc64-b2 pg-custom: recall@5 0.6057220708446867, recall@10 0.6501362397820164, ERR 0.09604904632152589, p50 22.3 ms, 245 s, HNSW plans 0.986 of 2978
+[22:11:51] -- pgvector hnsw-m16-efc64-b2 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[22:12:13]   pgvector hnsw-m16-efc64-b2 pg-hnsw: 250 of 1489 questions (22 s)
+[22:12:30]   pgvector hnsw-m16-efc64-b2 pg-hnsw: 500 of 1489 questions (39 s)
+[22:12:48]   pgvector hnsw-m16-efc64-b2 pg-hnsw: 750 of 1489 questions (57 s)
+[22:13:09]   pgvector hnsw-m16-efc64-b2 pg-hnsw: 1000 of 1489 questions (78 s)
+[22:13:32]   pgvector hnsw-m16-efc64-b2 pg-hnsw: 1250 of 1489 questions (101 s)
+[22:13:49]   pgvector hnsw-m16-efc64-b2 pg-hnsw: pass 1 of 3 (118 s)
+[22:14:43]   pgvector hnsw-m16-efc64-b2 pg-hnsw: pass 2 of 3 (172 s)
+[22:15:37]   pgvector hnsw-m16-efc64-b2 pg-hnsw: pass 3 of 3 (226 s)
+[22:15:39] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:15:39] WARNING: pgvector hnsw-m16-efc64-b2 pg-hnsw: 356 short results; EXPLAIN covers 200, empty ones first
+[22:15:39] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:16:06]    pgvector hnsw-m16-efc64-b2 pg-hnsw: recall@5 0.6057220708446867, recall@10 0.6501362397820164, ERR 0.09604904632152589, p50 23.2 ms, 254 s, HNSW plans 1.000 of 2978
+[22:16:06] -- pgvector hnsw-m16-efc64-b2 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}
+[22:16:27]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 250 of 1489 questions (21 s)
+[22:16:46]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 500 of 1489 questions (40 s)
+[22:17:04]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 750 of 1489 questions (57 s)
+[22:17:26]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 1000 of 1489 questions (80 s)
+[22:17:53]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 1250 of 1489 questions (107 s)
+[22:18:12]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: pass 1 of 3 (125 s)
+[22:19:17]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: pass 2 of 3 (191 s)
+[22:20:19]   pgvector hnsw-m16-efc64-b2 pa-t20k-m8: pass 3 of 3 (252 s)
+[22:20:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:20:21] WARNING: pgvector hnsw-m16-efc64-b2 pa-t20k-m8: 356 short results; EXPLAIN covers 200, empty ones first
+[22:20:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:20:52]    pgvector hnsw-m16-efc64-b2 pa-t20k-m8: recall@5 0.6057220708446867, recall@10 0.6501362397820164, ERR 0.09604904632152589, p50 26.0 ms, 285 s, HNSW plans 1.000 of 2978
+[22:20:52] -- pgvector hnsw-m16-efc64-b2 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}
+[22:21:18]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 250 of 1489 questions (25 s)
+[22:21:38]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 500 of 1489 questions (46 s)
+[22:21:58]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 750 of 1489 questions (65 s)
+[22:22:24]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 1000 of 1489 questions (91 s)
+[22:22:54]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 1250 of 1489 questions (121 s)
+[22:23:12]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: pass 1 of 3 (140 s)
+[22:24:16]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: pass 2 of 3 (204 s)
+[22:25:19]   pgvector hnsw-m16-efc64-b2 pa-t100k-m1: pass 3 of 3 (267 s)
+[22:25:22] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:25:22] WARNING: pgvector hnsw-m16-efc64-b2 pa-t100k-m1: 273 short results; EXPLAIN covers 200, empty ones first
+[22:25:22] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:25:56]    pgvector hnsw-m16-efc64-b2 pa-t100k-m1: recall@5 0.6350136239782017, recall@10 0.6826294277929156, ERR 0.0776566757493188, p50 24.0 ms, 303 s, HNSW plans 1.000 of 2978
+[22:25:56] -- pgvector hnsw-m16-efc64-b2 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}
+[22:26:31]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: 250 of 1489 questions (35 s)
+[22:27:00]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: 500 of 1489 questions (63 s)
+[22:27:27]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: 750 of 1489 questions (91 s)
+[22:28:10]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: 1000 of 1489 questions (133 s)
+[22:29:12]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: 1250 of 1489 questions (196 s)
+[22:29:34]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: pass 1 of 3 (217 s)
+[22:31:25]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: pass 2 of 3 (328 s)
+[22:33:23]   pgvector hnsw-m16-efc64-b2 pa-t100k-m8: pass 3 of 3 (447 s)
+[22:33:31]    pgvector hnsw-m16-efc64-b2 pa-t100k-m8: recall@5 0.728474114441417, recall@10 0.7816076294277929, ERR 0.0, p50 24.3 ms, 455 s, HNSW plans 1.000 of 2978
+[22:33:31] -- pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}
+[22:33:57]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 250 of 1489 questions (25 s)
+[22:34:16]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 500 of 1489 questions (45 s)
+[22:34:35]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 750 of 1489 questions (63 s)
+[22:35:00]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 1000 of 1489 questions (89 s)
+[22:35:29]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 1250 of 1489 questions (117 s)
+[22:35:48]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: pass 1 of 3 (136 s)
+[22:36:55]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: pass 2 of 3 (203 s)
+[22:37:58]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: pass 3 of 3 (267 s)
+[22:38:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:38:01] WARNING: pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: 273 short results; EXPLAIN covers 200, empty ones first
+[22:38:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:38:36]    pgvector hnsw-m16-efc64-b2 pa-t1000k-m1: recall@5 0.6350136239782017, recall@10 0.6826294277929156, ERR 0.0776566757493188, p50 24.1 ms, 304 s, HNSW plans 1.000 of 2978
+[22:38:36] -- pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[22:39:14]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: 250 of 1489 questions (37 s)
+[22:39:45]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: 500 of 1489 questions (67 s)
+[22:40:13]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: 750 of 1489 questions (96 s)
+[22:41:00]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: 1000 of 1489 questions (143 s)
+[22:42:17]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: 1250 of 1489 questions (220 s)
+[22:42:39]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: pass 1 of 3 (242 s)
+[22:44:34]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: pass 2 of 3 (357 s)
+[22:46:28]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: pass 3 of 3 (471 s)
+[22:46:35]    pgvector hnsw-m16-efc64-b2 pa-t1000k-m8: recall@5 0.7291553133514987, recall@10 0.782425068119891, ERR 0.0, p50 24.0 ms, 478 s, HNSW plans 1.000 of 2978
+[22:46:35] -- pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}
+[22:47:13]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: 250 of 1489 questions (37 s)
+[22:47:43]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: 500 of 1489 questions (67 s)
+[22:48:11]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: 750 of 1489 questions (96 s)
+[22:48:56]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: 1000 of 1489 questions (141 s)
+[22:50:13]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: 1250 of 1489 questions (217 s)
+[22:50:34]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: pass 1 of 3 (238 s)
+[22:52:27]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: pass 2 of 3 (351 s)
+[22:54:58]   pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: pass 3 of 3 (503 s)
+[22:55:05]    pgvector hnsw-m16-efc64-b2 pa-t1000k-m16: recall@5 0.7291553133514987, recall@10 0.782425068119891, ERR 0.0, p50 24.8 ms, 510 s, HNSW plans 1.000 of 2978
+[22:55:05] -- pgvector hnsw-m16-efc64-b2 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'work_mem': '64MB'}
+[22:55:26]   pgvector hnsw-m16-efc64-b2 pb-wm64: 250 of 1489 questions (20 s)
+[22:55:44]   pgvector hnsw-m16-efc64-b2 pb-wm64: 500 of 1489 questions (39 s)
+[22:56:03]   pgvector hnsw-m16-efc64-b2 pb-wm64: 750 of 1489 questions (57 s)
+[22:56:25]   pgvector hnsw-m16-efc64-b2 pb-wm64: 1000 of 1489 questions (80 s)
+[22:56:51]   pgvector hnsw-m16-efc64-b2 pb-wm64: 1250 of 1489 questions (106 s)
+[22:57:08]   pgvector hnsw-m16-efc64-b2 pb-wm64: pass 1 of 3 (123 s)
+[22:58:04]   pgvector hnsw-m16-efc64-b2 pb-wm64: pass 2 of 3 (179 s)
+[22:59:03]   pgvector hnsw-m16-efc64-b2 pb-wm64: pass 3 of 3 (238 s)
+[22:59:05] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:59:05] WARNING: pgvector hnsw-m16-efc64-b2 pb-wm64: 356 short results; EXPLAIN covers 200, empty ones first
+[22:59:05] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[22:59:34]    pgvector hnsw-m16-efc64-b2 pb-wm64: recall@5 0.6057220708446867, recall@10 0.6501362397820164, ERR 0.09604904632152589, p50 24.5 ms, 268 s, HNSW plans 1.000 of 2978
+[22:59:34] -- pgvector hnsw-m16-efc64-b2 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[22:59:54]   pgvector hnsw-m16-efc64-b2 pc-ef40: 250 of 1489 questions (20 s)
+[23:00:12]   pgvector hnsw-m16-efc64-b2 pc-ef40: 500 of 1489 questions (38 s)
+[23:00:33]   pgvector hnsw-m16-efc64-b2 pc-ef40: 750 of 1489 questions (58 s)
+[23:00:56]   pgvector hnsw-m16-efc64-b2 pc-ef40: 1000 of 1489 questions (81 s)
+[23:01:20]   pgvector hnsw-m16-efc64-b2 pc-ef40: 1250 of 1489 questions (105 s)
+[23:01:39]   pgvector hnsw-m16-efc64-b2 pc-ef40: pass 1 of 3 (125 s)
+[23:02:41]   pgvector hnsw-m16-efc64-b2 pc-ef40: pass 2 of 3 (186 s)
+[23:03:38]   pgvector hnsw-m16-efc64-b2 pc-ef40: pass 3 of 3 (244 s)
+[23:03:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:03:41] WARNING: pgvector hnsw-m16-efc64-b2 pc-ef40: 358 short results; EXPLAIN covers 200, empty ones first
+[23:03:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:04:09]    pgvector hnsw-m16-efc64-b2 pc-ef40: recall@5 0.5806539509536786, recall@10 0.6274523160762943, ERR 0.09604904632152589, p50 24.8 ms, 274 s, HNSW plans 1.000 of 2978
+[23:04:09] -- pgvector hnsw-m16-efc64-b2 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[23:04:29]   pgvector hnsw-m16-efc64-b2 pc-ef200: 250 of 1489 questions (20 s)
+[23:04:49]   pgvector hnsw-m16-efc64-b2 pc-ef200: 500 of 1489 questions (40 s)
+[23:05:07]   pgvector hnsw-m16-efc64-b2 pc-ef200: 750 of 1489 questions (58 s)
+[23:05:28]   pgvector hnsw-m16-efc64-b2 pc-ef200: 1000 of 1489 questions (79 s)
+[23:05:53]   pgvector hnsw-m16-efc64-b2 pc-ef200: 1250 of 1489 questions (104 s)
+[23:06:10]   pgvector hnsw-m16-efc64-b2 pc-ef200: pass 1 of 3 (121 s)
+[23:07:07]   pgvector hnsw-m16-efc64-b2 pc-ef200: pass 2 of 3 (178 s)
+[23:08:04]   pgvector hnsw-m16-efc64-b2 pc-ef200: pass 3 of 3 (235 s)
+[23:08:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:08:06] WARNING: pgvector hnsw-m16-efc64-b2 pc-ef200: 351 short results; EXPLAIN covers 200, empty ones first
+[23:08:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:08:33]    pgvector hnsw-m16-efc64-b2 pc-ef200: recall@5 0.6178474114441417, recall@10 0.6587193460490464, ERR 0.0946866485013624, p50 23.4 ms, 264 s, HNSW plans 1.000 of 2978
+[23:08:33] -- pgvector hnsw-m16-efc64-b2 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[23:08:56]   pgvector hnsw-m16-efc64-b2 pc-ef400: 250 of 1489 questions (22 s)
+[23:09:16]   pgvector hnsw-m16-efc64-b2 pc-ef400: 500 of 1489 questions (42 s)
+[23:09:36]   pgvector hnsw-m16-efc64-b2 pc-ef400: 750 of 1489 questions (62 s)
+[23:10:00]   pgvector hnsw-m16-efc64-b2 pc-ef400: 1000 of 1489 questions (86 s)
+[23:10:28]   pgvector hnsw-m16-efc64-b2 pc-ef400: 1250 of 1489 questions (114 s)
+[23:10:50]   pgvector hnsw-m16-efc64-b2 pc-ef400: pass 1 of 3 (136 s)
+[23:11:55]   pgvector hnsw-m16-efc64-b2 pc-ef400: pass 2 of 3 (201 s)
+[23:12:58]   pgvector hnsw-m16-efc64-b2 pc-ef400: pass 3 of 3 (264 s)
+[23:13:00] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:13:00] WARNING: pgvector hnsw-m16-efc64-b2 pc-ef400: 349 short results; EXPLAIN covers 200, empty ones first
+[23:13:00] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:13:30]    pgvector hnsw-m16-efc64-b2 pc-ef400: recall@5 0.6720708446866485, recall@10 0.6976158038147139, ERR 0.09332425068119891, p50 28.7 ms, 295 s, HNSW plans 1.000 of 2978
+[23:13:30] -- pgvector hnsw-m16-efc64-b2 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[23:13:59]   pgvector hnsw-m16-efc64-b2 pc-ef1000: 250 of 1489 questions (29 s)
+[23:14:23]   pgvector hnsw-m16-efc64-b2 pc-ef1000: 500 of 1489 questions (52 s)
+[23:14:44]   pgvector hnsw-m16-efc64-b2 pc-ef1000: 750 of 1489 questions (74 s)
+[23:15:12]   pgvector hnsw-m16-efc64-b2 pc-ef1000: 1000 of 1489 questions (102 s)
+[23:15:42]   pgvector hnsw-m16-efc64-b2 pc-ef1000: 1250 of 1489 questions (132 s)
+[23:16:03]   pgvector hnsw-m16-efc64-b2 pc-ef1000: pass 1 of 3 (153 s)
+[23:17:12]   pgvector hnsw-m16-efc64-b2 pc-ef1000: pass 2 of 3 (222 s)
+[23:18:19]   pgvector hnsw-m16-efc64-b2 pc-ef1000: pass 3 of 3 (289 s)
+[23:18:22] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:18:22] WARNING: pgvector hnsw-m16-efc64-b2 pc-ef1000: 344 short results; EXPLAIN covers 200, empty ones first
+[23:18:22] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:18:51]    pgvector hnsw-m16-efc64-b2 pc-ef1000: recall@5 0.7106267029972753, recall@10 0.7317438692098093, ERR 0.09332425068119891, p50 35.7 ms, 321 s, HNSW plans 1.000 of 2978
+[23:18:51] -- pgvector hnsw-m16-efc64-b2 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 4}
+[23:19:16]   pgvector hnsw-m16-efc64-b2 pd-lim4: 250 of 1489 questions (24 s)
+[23:19:38]   pgvector hnsw-m16-efc64-b2 pd-lim4: 500 of 1489 questions (46 s)
+[23:19:58]   pgvector hnsw-m16-efc64-b2 pd-lim4: 750 of 1489 questions (66 s)
+[23:20:24]   pgvector hnsw-m16-efc64-b2 pd-lim4: 1000 of 1489 questions (92 s)
+[23:20:52]   pgvector hnsw-m16-efc64-b2 pd-lim4: 1250 of 1489 questions (120 s)
+[23:21:11]   pgvector hnsw-m16-efc64-b2 pd-lim4: pass 1 of 3 (139 s)
+[23:22:16]   pgvector hnsw-m16-efc64-b2 pd-lim4: pass 2 of 3 (204 s)
+[23:23:19]   pgvector hnsw-m16-efc64-b2 pd-lim4: pass 3 of 3 (267 s)
+[23:23:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:23:21] WARNING: pgvector hnsw-m16-efc64-b2 pd-lim4: 356 short results; EXPLAIN covers 200, empty ones first
+[23:23:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:23:48]    pgvector hnsw-m16-efc64-b2 pd-lim4: recall@5 0.7029972752043597, recall@10 0.7322888283378747, ERR 0.09604904632152589, p50 27.6 ms, 296 s, HNSW plans 1.000 of 2978
+[23:23:48] -- pgvector hnsw-m16-efc64-b2 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[23:24:15]   pgvector hnsw-m16-efc64-b2 pd-lim10: 250 of 1489 questions (26 s)
+[23:24:39]   pgvector hnsw-m16-efc64-b2 pd-lim10: 500 of 1489 questions (50 s)
+[23:25:02]   pgvector hnsw-m16-efc64-b2 pd-lim10: 750 of 1489 questions (73 s)
+[23:25:29]   pgvector hnsw-m16-efc64-b2 pd-lim10: 1000 of 1489 questions (100 s)
+[23:25:59]   pgvector hnsw-m16-efc64-b2 pd-lim10: 1250 of 1489 questions (129 s)
+[23:26:20]   pgvector hnsw-m16-efc64-b2 pd-lim10: pass 1 of 3 (151 s)
+[23:27:32]   pgvector hnsw-m16-efc64-b2 pd-lim10: pass 2 of 3 (223 s)
+[23:28:42]   pgvector hnsw-m16-efc64-b2 pd-lim10: pass 3 of 3 (293 s)
+[23:28:45] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:28:45] WARNING: pgvector hnsw-m16-efc64-b2 pd-lim10: 356 short results; EXPLAIN covers 200, empty ones first
+[23:28:45] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:29:12]    pgvector hnsw-m16-efc64-b2 pd-lim10: recall@5 0.7374659400544958, recall@10 0.7532016348773842, ERR 0.09604904632152589, p50 30.8 ms, 323 s, HNSW plans 1.000 of 2978
+[23:29:12] -- pgvector hnsw-m16-efc64-b2 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[23:29:33]   pgvector hnsw-m16-efc64-b2 pe-strict: 250 of 1489 questions (21 s)
+[23:29:52]   pgvector hnsw-m16-efc64-b2 pe-strict: 500 of 1489 questions (39 s)
+[23:30:10]   pgvector hnsw-m16-efc64-b2 pe-strict: 750 of 1489 questions (57 s)
+[23:30:32]   pgvector hnsw-m16-efc64-b2 pe-strict: 1000 of 1489 questions (79 s)
+[23:30:57]   pgvector hnsw-m16-efc64-b2 pe-strict: 1250 of 1489 questions (104 s)
+[23:31:15]   pgvector hnsw-m16-efc64-b2 pe-strict: pass 1 of 3 (122 s)
+[23:32:13]   pgvector hnsw-m16-efc64-b2 pe-strict: pass 2 of 3 (180 s)
+[23:33:11]   pgvector hnsw-m16-efc64-b2 pe-strict: pass 3 of 3 (238 s)
+[23:33:13] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:33:13] WARNING: pgvector hnsw-m16-efc64-b2 pe-strict: 357 short results; EXPLAIN covers 200, empty ones first
+[23:33:13] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:33:39]    pgvector hnsw-m16-efc64-b2 pe-strict: recall@5 0.47711171662125346, recall@10 0.4950953678474114, ERR 0.09604904632152589, p50 24.8 ms, 266 s, HNSW plans 1.000 of 2978
+[23:33:39] -- pgvector hnsw-m16-efc64-b2 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}
+[23:33:59]   pgvector hnsw-m16-efc64-b2 pg-noprepare: 250 of 1489 questions (19 s)
+[23:34:16]   pgvector hnsw-m16-efc64-b2 pg-noprepare: 500 of 1489 questions (36 s)
+[23:34:32]   pgvector hnsw-m16-efc64-b2 pg-noprepare: 750 of 1489 questions (52 s)
+[23:34:54]   pgvector hnsw-m16-efc64-b2 pg-noprepare: 1000 of 1489 questions (74 s)
+[23:35:13]   pgvector hnsw-m16-efc64-b2 pg-noprepare: 1250 of 1489 questions (93 s)
+[23:35:30]   pgvector hnsw-m16-efc64-b2 pg-noprepare: pass 1 of 3 (110 s)
+[23:36:22]   pgvector hnsw-m16-efc64-b2 pg-noprepare: pass 2 of 3 (162 s)
+[23:37:14]   pgvector hnsw-m16-efc64-b2 pg-noprepare: pass 3 of 3 (214 s)
+[23:37:16] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:37:16] WARNING: pgvector hnsw-m16-efc64-b2 pg-noprepare: 356 short results; EXPLAIN covers 200, empty ones first
+[23:37:16] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[23:37:43]    pgvector hnsw-m16-efc64-b2 pg-noprepare: recall@5 0.6057220708446867, recall@10 0.6501362397820164, ERR 0.09604904632152589, p50 22.1 ms, 243 s, HNSW plans 0.986 of 2978
+[23:37:43] == stage pgvector hnsw-m16-efc64-b2: done in 7471 s
+[23:37:44] X1 finished in 4.27 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/x1run2/manifest.json)

@@ -1,0 +1,141 @@
+[17:26:43] python: 3.13.15
+[17:26:43] platform: Linux-6.18.55+-x86_64-with-glibc2.39
+[17:26:43] cpus: 4
+[17:26:43] wardowl: 2.1.0
+[17:26:43] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl
+[17:26:43] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1
+[17:26:43] memory_gib: 31.3
+[17:26:43] gpus: []
+[17:26:43] torch: 2.11.0+cpu
+[17:26:43] transformers: 5.16.1
+[17:26:43] sentence-transformers: 5.7.0
+[17:26:43] datasets: 4.8.5
+[17:26:43] numpy: 2.1.3
+[17:26:43] psycopg: 3.3.6
+[17:26:43] chromadb: None
+[17:26:43] elasticsearch: None
+[17:26:43] opensearch-py: None
+[17:26:43] qdrant-client: 1.20.0
+[17:26:43] weaviate-client: None
+[17:26:43] redis: None
+[17:26:43] lancedb: None
+[17:26:43] faiss-cpu: None
+[17:26:43] pandas: 2.3.3
+[17:26:43] pyarrow: 23.0.1
+[17:26:43] scipy: 1.16.3
+[17:26:43] psycopg-pool: 3.3.3
+[17:26:43] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.2, 'gpus': [], 'cuda': None}
+[17:26:43] wardowl_installed: True
+[17:26:43] == stage corpus
+[17:26:46] 6,648 FiQA queries for the probe set
+[17:26:46] probe set: 24 people, 384 questions
+[17:26:46] == stage corpus: done in 3 s
+[17:26:46] == stage embeddings
+[17:26:46] cached embeddings copied from /kaggle/input: none
+[17:26:46] adopted from /kaggle/working/smoke/prep: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']
+[17:27:29] query vectors pinned from /kaggle/working/smoke/a/query_vectors.npy (largest difference from this encoding: 0.00e+00)
+[17:27:29] == stage embeddings: done in 43 s
+[17:27:29] == stage exact baseline
+[17:27:29] == stage exact baseline: done in 0 s
+[17:27:29] == stage alignment variables
+[17:27:30] /kaggle/working/smoke/a/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)
+[17:27:30] == stage alignment variables: done in 1 s
+[17:27:30] 169 questions of 11 people; 10 fixed EXPLAIN questions
+[17:27:30] == stage pgvector: start and load
+[17:29:36] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}
+[17:29:36] == stage pgvector: start and load: done in 125 s
+[17:29:36] == stage pgvector hnsw-m16-efc64-b0
+[17:29:36] pgvector index hnsw-m16-efc64 build 0: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 0, 'm': 16, 'ef_construction': 64, 'builder': "enterprise_rag.PgVectorStore.load: wardowl's create_schema(hnsw=True) after the bulk load, as the original run (pgvector's defaults m 16, ef_construction 64)", 'seconds': 1.6, 'index_bytes': 12214272, 'reloptions': None}
+[17:29:36] -- pgvector hnsw-m16-efc64-b0 p-x0: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'replay': 'x0'}
+[17:29:37]    pgvector hnsw-m16-efc64-b0 p-x0: recall@5 0.9547619047619048, recall@10 0.9595238095238094, ERR 0.0, p50 5.7 ms, 2 s, HNSW plans 0.657 of 105
+[17:29:37] -- pgvector hnsw-m16-efc64-b0 p-x0v: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'replay': 'x0', 'vacuum': True}
+[17:29:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[17:29:41] WARNING: pgvector hnsw-m16-efc64-b0 p-x0v RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.038 of its 210 captured plans did ({'gin': 202, 'hnsw': 8}, 156 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[17:29:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[17:29:41]    pgvector hnsw-m16-efc64-b0 p-x0v: recall@5 0.9976190476190476, recall@10 0.9988095238095239, ERR 0.0, p50 19.4 ms, 4 s, HNSW plans 0.038 of 210
+[17:29:41] == stage pgvector: vacuum
+[17:29:41] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 174, 'n_entry_pages': 21, 'n_data_pages': 0, 'n_entries': 1150, 'version': 2}
+[17:29:41] == stage pgvector: vacuum: done in 0 s
+[17:29:41] == stage pgvector: filter estimates
+[17:29:41] == stage pgvector: filter estimates: done in 0 s
+[17:29:41] -- pgvector hnsw-m16-efc64-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}
+[17:29:46]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 1 of 2 (5 s)
+[17:29:48]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 2 of 2 (7 s)
+[17:29:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[17:29:49] WARNING: pgvector hnsw-m16-efc64-b0 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.030 of its 338 captured plans did ({'gin': 328, 'hnsw': 10}, 286 generic plans); P1 and P2 do not use such a setting (amendment 2)
+[17:29:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+[17:29:49]    pgvector hnsw-m16-efc64-b0 p-asrun: recall@5 0.9986486486486488, recall@10 0.9979729729729729, ERR 0.0, p50 19.3 ms, 7 s, HNSW plans 0.030 of 338
+[17:29:49] -- pgvector hnsw-m16-efc64-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}
+[17:29:51]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 1 of 2 (2 s)
+[17:29:52]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 2 of 2 (3 s)
+[17:29:52]    pgvector hnsw-m16-efc64-b0 pg-custom: recall@5 0.9554054054054053, recall@10 0.9614864864864864, ERR 0.0, p50 5.5 ms, 3 s, HNSW plans 0.598 of 338
+[17:29:52] -- pgvector hnsw-m16-efc64-b0 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:29:57]   pgvector hnsw-m16-efc64-b0 pg-hnsw: pass 1 of 2 (4 s)
+[17:29:58]   pgvector hnsw-m16-efc64-b0 pg-hnsw: pass 2 of 2 (6 s)
+[17:29:59]    pgvector hnsw-m16-efc64-b0 pg-hnsw: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 7.6 ms, 6 s, HNSW plans 1.000 of 338
+[17:29:59] -- pgvector hnsw-m16-efc64-b0 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}
+[17:30:03]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 1 of 2 (5 s)
+[17:30:06]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 2 of 2 (7 s)
+[17:30:07]    pgvector hnsw-m16-efc64-b0 pa-t20k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.8 ms, 8 s, HNSW plans 1.000 of 338
+[17:30:07] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}
+[17:30:13]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 1 of 2 (6 s)
+[17:30:15]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 2 of 2 (8 s)
+[17:30:16]    pgvector hnsw-m16-efc64-b0 pa-t100k-m1: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 10.7 ms, 9 s, HNSW plans 1.000 of 338
+[17:30:16] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}
+[17:30:22]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 1 of 2 (6 s)
+[17:30:24]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 2 of 2 (8 s)
+[17:30:24]    pgvector hnsw-m16-efc64-b0 pa-t100k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 10.7 ms, 9 s, HNSW plans 1.000 of 338
+[17:30:24] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}
+[17:30:30]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 1 of 2 (6 s)
+[17:30:33]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 2 of 2 (8 s)
+[17:30:33]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 11.0 ms, 9 s, HNSW plans 1.000 of 338
+[17:30:33] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}
+[17:30:39]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 1 of 2 (5 s)
+[17:30:41]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 2 of 2 (8 s)
+[17:30:42]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.9 ms, 8 s, HNSW plans 1.000 of 338
+[17:30:42] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}
+[17:30:47]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 1 of 2 (5 s)
+[17:30:49]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 2 of 2 (8 s)
+[17:30:50]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.8 ms, 8 s, HNSW plans 1.000 of 338
+[17:30:50] -- pgvector hnsw-m16-efc64-b0 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'work_mem': '64MB'}
+[17:30:55]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 1 of 2 (5 s)
+[17:30:57]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 2 of 2 (7 s)
+[17:30:58]    pgvector hnsw-m16-efc64-b0 pb-wm64: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.4 ms, 8 s, HNSW plans 1.000 of 338
+[17:30:58] -- pgvector hnsw-m16-efc64-b0 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:31:02]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 1 of 2 (4 s)
+[17:31:04]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 2 of 2 (6 s)
+[17:31:04]    pgvector hnsw-m16-efc64-b0 pc-ef40: recall@5 0.9135135135135134, recall@10 0.9337837837837837, ERR 0.0, p50 8.0 ms, 7 s, HNSW plans 1.000 of 338
+[17:31:04] -- pgvector hnsw-m16-efc64-b0 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:31:10]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 1 of 2 (6 s)
+[17:31:13]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 2 of 2 (8 s)
+[17:31:13]    pgvector hnsw-m16-efc64-b0 pc-ef200: recall@5 0.972972972972973, recall@10 0.9695945945945946, ERR 0.0, p50 11.4 ms, 9 s, HNSW plans 1.000 of 338
+[17:31:13] -- pgvector hnsw-m16-efc64-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:31:19]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 1 of 2 (5 s)
+[17:31:21]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 2 of 2 (7 s)
+[17:31:22]    pgvector hnsw-m16-efc64-b0 pc-ef400: recall@5 0.9945945945945945, recall@10 0.9891891891891891, ERR 0.0, p50 10.8 ms, 8 s, HNSW plans 1.000 of 338
+[17:31:22] -- pgvector hnsw-m16-efc64-b0 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:31:28]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 1 of 2 (7 s)
+[17:31:31]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 2 of 2 (10 s)
+[17:31:32]    pgvector hnsw-m16-efc64-b0 pc-ef1000: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 15.9 ms, 11 s, HNSW plans 1.000 of 338
+[17:31:32] -- pgvector hnsw-m16-efc64-b0 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 4}
+[17:31:39]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 1 of 2 (6 s)
+[17:31:41]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 2 of 2 (9 s)
+[17:31:42]    pgvector hnsw-m16-efc64-b0 pd-lim4: recall@5 0.983783783783784, recall@10 0.9885135135135136, ERR 0.0, p50 10.0 ms, 10 s, HNSW plans 1.000 of 338
+[17:31:42] -- pgvector hnsw-m16-efc64-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}
+[17:31:48]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 1 of 2 (6 s)
+[17:31:51]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 2 of 2 (9 s)
+[17:31:52]    pgvector hnsw-m16-efc64-b0 pd-lim10: recall@5 0.9932432432432432, recall@10 0.9966216216216216, ERR 0.0, p50 12.1 ms, 10 s, HNSW plans 1.000 of 338
+[17:31:52] -- pgvector hnsw-m16-efc64-b0 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}
+[17:31:57]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 1 of 2 (5 s)
+[17:31:59]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 2 of 2 (7 s)
+[17:31:59]    pgvector hnsw-m16-efc64-b0 pe-strict: recall@5 0.8716216216216216, recall@10 0.8633445945945944, ERR 0.0, p50 9.2 ms, 8 s, HNSW plans 1.000 of 338
+[17:32:00] -- pgvector hnsw-m16-efc64-b0 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}
+[17:32:02]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 1 of 2 (3 s)
+[17:32:04]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 2 of 2 (4 s)
+[17:32:04]    pgvector hnsw-m16-efc64-b0 pg-noprepare: recall@5 0.9554054054054053, recall@10 0.9614864864864864, ERR 0.0, p50 7.1 ms, 4 s, HNSW plans 0.598 of 338
+[17:32:04] -- pgvector hnsw-m16-efc64-b0 ph-exact: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'enable_indexscan': 'off'}
+[17:32:11]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 1 of 2 (7 s)
+[17:32:14]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 2 of 2 (10 s)
+[17:32:15]    pgvector hnsw-m16-efc64-b0 ph-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 24.0 ms, 11 s, HNSW plans 0.000 of 338
+[17:32:15] == stage pgvector hnsw-m16-efc64-b0: done in 159 s
+[17:32:18] X1 finished in 0.09 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/a/manifest.json)

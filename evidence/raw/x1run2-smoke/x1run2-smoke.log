@@ -1,0 +1,847 @@
+[{"stream_name":"stdout","time":4.667909957,"data":"[16:58:43] role smoke; no setting starts after 8.5 h of this session\n"}
+,{"stream_name":"stdout","time":4.675959876,"data":"[16:58:43] wardowl and the paper's scripts at a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":4.676005813,"data":"[16:58:43] $ /usr/bin/python3 -m pip install -q wardowl[pgvector,qdrant] @ git+https://github.com/muzakkirhussain011/wardowl.git@a95642429d508340946ee3679b65db2eedd36dc1 qdrant-client\u003e=1.16 sentence-transformers\u003e=3 datasets\u003e=2.19 psutil pyarrow scipy\n"}
+,{"stream_name":"stdout","time":27.517459637,"data":"[16:59:06] exit code 0\n"}
+,{"stream_name":"stdout","time":27.51751436,"data":"[16:59:06] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --smoke --prepare-only --out /kaggle/working/smoke/prep --cache /tmp/x1-cache\n"}
+,{"stream_name":"stdout","time":37.22285705,"data":"[16:59:16] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":37.223244901,"data":"[16:59:16] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":37.223285655,"data":"[16:59:16] cpus: 4\n"}
+,{"stream_name":"stdout","time":37.223363225,"data":"[16:59:16] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":37.223479437,"data":"[16:59:16] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":37.223495062,"data":"[16:59:16] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":37.223575792,"data":"[16:59:16] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":37.223879916,"data":"[16:59:16] gpus: []\n"}
+,{"stream_name":"stdout","time":37.223898411,"data":"[16:59:16] torch: 2.11.0+cpu\n"}
+,{"stream_name":"stdout","time":37.223904226,"data":"[16:59:16] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":37.223909458,"data":"[16:59:16] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":37.223967936,"data":"[16:59:16] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":37.224051167,"data":"[16:59:16] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":37.224123672,"data":"[16:59:16] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":37.224167296,"data":"[16:59:16] chromadb: None\n"}
+,{"stream_name":"stdout","time":37.224237688,"data":"[16:59:16] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":37.224324026,"data":"[16:59:16] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":37.224378386,"data":"[16:59:16] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":37.224475187,"data":"[16:59:16] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":37.224525563,"data":"[16:59:16] redis: None\n"}
+,{"stream_name":"stdout","time":37.22462298,"data":"[16:59:16] lancedb: None\n"}
+,{"stream_name":"stdout","time":37.224737329,"data":"[16:59:16] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":37.224820463,"data":"[16:59:16] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":37.224880663,"data":"[16:59:16] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":37.22495673,"data":"[16:59:16] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":37.225036726,"data":"[16:59:16] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":37.225115734,"data":"[16:59:16] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': [], 'cuda': None}\n"}
+,{"stream_name":"stdout","time":37.225458941,"data":"[16:59:16] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":37.227459975,"data":"[16:59:16] == stage corpus\n"}
+,{"stream_name":"stdout","time":37.227795902,"data":"\n"}
+,{"stream_name":"stdout","time":37.227810164,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":37.23095286,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":37.241375721,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":37.288137081,"data":"[16:59:16] 960 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":43.181935863,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":46.813980229,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 122795.80 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 119904.12 examples/s]\n"}
+,{"stream_name":"stdout","time":46.978214956,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":46.979109603,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":46.979478253,"data":"  note: corpus: 2,980 chunks (960 company documents in 20 tenants, 20 injected notices, 2,000 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stderr","time":48.223691136,"data":"\rGenerating queries split:   0%|          | 0/6648 [00:00\u003c?, ? examples/s]\rGenerating queries split: 100%|██████████| 6648/6648 [00:00\u003c00:00, 483203.36 examples/s]\n"}
+,{"stream_name":"stdout","time":48.388733088,"data":"[16:59:27] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":48.403654092,"data":"[16:59:27] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":48.407005992,"data":"[16:59:27] == stage corpus: done in 11 s\n"}
+,{"stream_name":"stdout","time":48.407695097,"data":"[16:59:27] == stage embeddings\n"}
+,{"stream_name":"stdout","time":48.408567505,"data":"[16:59:27] cached embeddings copied from /kaggle/input: none\n"}
+,{"stream_name":"stdout","time":48.409008194,"data":"\n"}
+,{"stream_name":"stdout","time":48.409027828,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":119.575269098,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights:  59%|█████▉    | 118/199 [00:00\u003c00:00, 1175.68it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 1226.77it/s]\n"}
+,{"stream_name":"stdout","time":1645.125875099,"data":"[17:26:04]   embedded 2,980 of 2,980 chunks\n"}
+,{"stream_name":"stdout","time":1645.134880277,"data":"[17:26:04] embedded 2,980 chunks in 1524 s on cpu\n"}
+,{"stream_name":"stdout","time":1678.039875,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":1678.045406187,"data":"[17:26:37] == stage embeddings: done in 1630 s\n"}
+,{"stream_name":"stdout","time":1678.046018438,"data":"[17:26:37] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":1678.046127852,"data":"\n"}
+,{"stream_name":"stdout","time":1678.046155695,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":1678.447140429,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":1678.448528751,"data":"  note: readable chunks per person: min 0, median 2,017, max 2,033 of 2,980\n"}
+,{"stream_name":"stdout","time":1678.449458186,"data":"[17:26:37] == stage exact baseline: done in 0 s\n"}
+,{"stream_name":"stdout","time":1678.450491072,"data":"[17:26:37] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":1679.285537062,"data":"[17:26:38] == stage alignment variables: done in 1 s\n"}
+,{"stream_name":"stdout","time":1679.296294325,"data":"[17:26:38] 169 questions of 11 people; 10 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":1679.297351797,"data":"[17:26:38] X1 finished in 0.46 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/prep/manifest.json)\n"}
+,{"stream_name":"stdout","time":1682.024180298,"data":"[17:26:41] exit code 0\n"}
+,{"stream_name":"stdout","time":1682.025133682,"data":"[17:26:41] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --smoke --stores pgvector --families hnsw-m16-efc64 --reps 0 --out /kaggle/working/smoke/a --pin-from /kaggle/working/smoke/prep --cache /tmp/x1-cache\n"}
+,{"stream_name":"stdout","time":1684.765687016,"data":"[17:26:43] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":1684.765843249,"data":"[17:26:43] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":1684.766035766,"data":"[17:26:43] cpus: 4\n"}
+,{"stream_name":"stdout","time":1684.766060566,"data":"[17:26:43] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":1684.766112013,"data":"[17:26:43] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":1684.766239285,"data":"[17:26:43] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":1684.766390405,"data":"[17:26:43] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":1684.766404647,"data":"[17:26:43] gpus: []\n"}
+,{"stream_name":"stdout","time":1684.766470629,"data":"[17:26:43] torch: 2.11.0+cpu\n"}
+,{"stream_name":"stdout","time":1684.766540923,"data":"[17:26:43] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":1684.766679752,"data":"[17:26:43] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":1684.766787491,"data":"[17:26:43] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":1684.76684675,"data":"[17:26:43] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":1684.766947165,"data":"[17:26:43] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":1684.767012519,"data":"[17:26:43] chromadb: None\n"}
+,{"stream_name":"stdout","time":1684.767105719,"data":"[17:26:43] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":1684.767157956,"data":"[17:26:43] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":1684.767237998,"data":"[17:26:43] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":1684.767314237,"data":"[17:26:43] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":1684.767380722,"data":"[17:26:43] redis: None\n"}
+,{"stream_name":"stdout","time":1684.767462079,"data":"[17:26:43] lancedb: None\n"}
+,{"stream_name":"stdout","time":1684.76754203,"data":"[17:26:43] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":1684.767612523,"data":"[17:26:43] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":1684.767785461,"data":"[17:26:43] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":1684.767904955,"data":"[17:26:43] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":1684.767992036,"data":"[17:26:43] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":1684.768059755,"data":"[17:26:43] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.2, 'gpus': [], 'cuda': None}\n"}
+,{"stream_name":"stdout","time":1684.768139086,"data":"[17:26:43] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":1684.769731698,"data":"[17:26:43] == stage corpus\n"}
+,{"stream_name":"stdout","time":1684.770137023,"data":"\n"}
+,{"stream_name":"stdout","time":1684.77014843,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":1684.773010346,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":1684.781361808,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":1684.81436109,"data":"[17:26:43] 960 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":1686.064587096,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":1687.263934681,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":1687.264793635,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":1687.265139821,"data":"  note: corpus: 2,980 chunks (960 company documents in 20 tenants, 20 injected notices, 2,000 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":1687.99671355,"data":"[17:26:46] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":1688.000342718,"data":"[17:26:46] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":1688.002034518,"data":"[17:26:46] == stage corpus: done in 3 s\n"}
+,{"stream_name":"stdout","time":1688.0025216,"data":"[17:26:46] == stage embeddings\n"}
+,{"stream_name":"stdout","time":1688.0030779,"data":"[17:26:46] cached embeddings copied from /kaggle/input: none\n"}
+,{"stream_name":"stdout","time":1688.006496994,"data":"[17:26:46] adopted from /kaggle/working/smoke/prep: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']\n"}
+,{"stream_name":"stdout","time":1688.006605933,"data":"\n"}
+,{"stream_name":"stdout","time":1688.006614473,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":1697.762123129,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights:  94%|█████████▍| 188/199 [00:00\u003c00:00, 1867.76it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 1892.29it/s]\n"}
+,{"stream_name":"stdout","time":1698.946964952,"data":"[17:26:57] embeddings from /tmp/x1-cache/chunks-BAAI_bge-base-en-v1.5-f32faeb63856e9ce.npy\n"}
+,{"stream_name":"stdout","time":1730.353537364,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":1730.359619035,"data":"[17:27:29] query vectors pinned from /kaggle/working/smoke/a/query_vectors.npy (largest difference from this encoding: 0.00e+00)\n"}
+,{"stream_name":"stdout","time":1730.606980494,"data":"[17:27:29] == stage embeddings: done in 43 s\n"}
+,{"stream_name":"stdout","time":1730.607630822,"data":"[17:27:29] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":1730.607720414,"data":"\n"}
+,{"stream_name":"stdout","time":1730.60789035,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":1730.947232496,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":1730.948873675,"data":"  note: readable chunks per person: min 0, median 2,017, max 2,033 of 2,980\n"}
+,{"stream_name":"stdout","time":1730.949741733,"data":"[17:27:29] == stage exact baseline: done in 0 s\n"}
+,{"stream_name":"stdout","time":1730.950391174,"data":"[17:27:29] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":1731.816676844,"data":"[17:27:30] /kaggle/working/smoke/a/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)\n"}
+,{"stream_name":"stdout","time":1731.817907947,"data":"[17:27:30] == stage alignment variables: done in 1 s\n"}
+,{"stream_name":"stdout","time":1731.827014591,"data":"[17:27:30] 169 questions of 11 people; 10 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":1731.828081387,"data":"[17:27:30] == stage pgvector: start and load\n"}
+,{"stream_name":"stdout","time":1731.935473762,"data":"[17:27:30] $ bash /tmp/wardowl-src/benchmarks/kaggle_setup.sh\n"}
+,{"stream_name":"stderr","time":1738.121960993,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stderr","time":1820.848839251,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\n"}
+,{"stream_name":"stderr","time":1820.848873179,"data":"\n"}
+,{"stream_name":"stderr","time":1820.848880464,"data":"You are in 'detached HEAD' state. You can look around, make experimental\n"}
+,{"stream_name":"stderr","time":1820.84888702,"data":"changes and commit them, and you can discard any commits you make in this\n"}
+,{"stream_name":"stderr","time":1820.84889374,"data":"state without impacting any branches by switching back to a branch.\n"}
+,{"stream_name":"stderr","time":1820.848901042,"data":"\n"}
+,{"stream_name":"stderr","time":1820.848918399,"data":"If you want to create a new branch to retain commits you create, you may\n"}
+,{"stream_name":"stderr","time":1820.848925991,"data":"do so (now or later) by using -c with the switch command. Example:\n"}
+,{"stream_name":"stderr","time":1820.84893237,"data":"\n"}
+,{"stream_name":"stderr","time":1820.848938637,"data":"  git switch -c \u003cnew-branch-name\u003e\n"}
+,{"stream_name":"stderr","time":1820.848945597,"data":"\n"}
+,{"stream_name":"stderr","time":1820.84895356,"data":"Or undo this operation with:\n"}
+,{"stream_name":"stderr","time":1820.84896019,"data":"\n"}
+,{"stream_name":"stderr","time":1820.848965695,"data":"  git switch -\n"}
+,{"stream_name":"stderr","time":1820.848971447,"data":"\n"}
+,{"stream_name":"stderr","time":1820.84897705,"data":"Turn off this advice by setting config variable advice.detachedHead to false\n"}
+,{"stream_name":"stderr","time":1820.848982931,"data":"\n"}
+,{"stream_name":"stdout","time":1847.386855621,"data":" * Starting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":1849.717329498,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":1850.038796082,"data":" * Restarting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":1852.476680511,"data":"   ...done.\n"}
+,{"stream_name":"stderr","time":1852.540224386,"data":"NOTICE:  database \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stderr","time":1852.60203698,"data":"NOTICE:  role \"bench\" does not exist, skipping\n"}
+,{"stream_name":"stdout","time":1852.848869437,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\n"}
+,{"stream_name":"stdout","time":1855.374917416,"data":"[17:29:34]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":1857.08825982,"data":"[17:29:36] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}\n"}
+,{"stream_name":"stdout","time":1857.12961965,"data":"[17:29:36] == stage pgvector: start and load: done in 125 s\n"}
+,{"stream_name":"stdout","time":1857.131843192,"data":"[17:29:36] == stage pgvector hnsw-m16-efc64-b0\n"}
+,{"stream_name":"stdout","time":1857.153725443,"data":"[17:29:36] pgvector index hnsw-m16-efc64 build 0: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 0, 'm': 16, 'ef_construction': 64, 'builder': \"enterprise_rag.PgVectorStore.load: wardowl's create_schema(hnsw=True) after the bulk load, as the original run (pgvector's defaults m 16, ef_construction 64)\", 'seconds': 1.6, 'index_bytes': 12214272, 'reloptions': None}\n"}
+,{"stream_name":"stdout","time":1857.154230615,"data":"[17:29:36] -- pgvector hnsw-m16-efc64-b0 p-x0: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'replay': 'x0'}\n"}
+,{"stream_name":"stdout","time":1858.920891864,"data":"[17:29:37]    pgvector hnsw-m16-efc64-b0 p-x0: recall@5 0.9547619047619048, recall@10 0.9595238095238094, ERR 0.0, p50 5.7 ms, 2 s, HNSW plans 0.657 of 105\n"}
+,{"stream_name":"stdout","time":1858.921482862,"data":"[17:29:37] -- pgvector hnsw-m16-efc64-b0 p-x0v: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'replay': 'x0', 'vacuum': True}\n"}
+,{"stream_name":"stdout","time":1862.449665767,"data":"[17:29:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":1862.450337262,"data":"[17:29:41] WARNING: pgvector hnsw-m16-efc64-b0 p-x0v RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.038 of its 210 captured plans did ({'gin': 202, 'hnsw': 8}, 156 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":1862.450362095,"data":"[17:29:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":1862.484427102,"data":"[17:29:41]    pgvector hnsw-m16-efc64-b0 p-x0v: recall@5 0.9976190476190476, recall@10 0.9988095238095239, ERR 0.0, p50 19.4 ms, 4 s, HNSW plans 0.038 of 210\n"}
+,{"stream_name":"stdout","time":1862.485735105,"data":"[17:29:41] == stage pgvector: vacuum\n"}
+,{"stream_name":"stdout","time":1862.644313289,"data":"[17:29:41] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 174, 'n_entry_pages': 21, 'n_data_pages': 0, 'n_entries': 1150, 'version': 2}\n"}
+,{"stream_name":"stdout","time":1862.645556407,"data":"[17:29:41] == stage pgvector: vacuum: done in 0 s\n"}
+,{"stream_name":"stdout","time":1862.646848539,"data":"[17:29:41] == stage pgvector: filter estimates\n"}
+,{"stream_name":"stdout","time":1862.703878389,"data":"[17:29:41] == stage pgvector: filter estimates: done in 0 s\n"}
+,{"stream_name":"stdout","time":1862.703978474,"data":"[17:29:41] -- pgvector hnsw-m16-efc64-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":1867.624010391,"data":"[17:29:46]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1869.876537992,"data":"[17:29:48]   pgvector hnsw-m16-efc64-b0 p-asrun: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":1870.195203888,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1870.195246907,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1870.195999821,"data":"[17:29:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":1870.196047992,"data":"[17:29:49] WARNING: pgvector hnsw-m16-efc64-b0 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.030 of its 338 captured plans did ({'gin': 328, 'hnsw': 10}, 286 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":1870.196272841,"data":"[17:29:49] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":1870.237947827,"data":"[17:29:49]    pgvector hnsw-m16-efc64-b0 p-asrun: recall@5 0.9986486486486488, recall@10 0.9979729729729729, ERR 0.0, p50 19.3 ms, 7 s, HNSW plans 0.030 of 338\n"}
+,{"stream_name":"stdout","time":1870.238689743,"data":"[17:29:49] -- pgvector hnsw-m16-efc64-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":1872.503573267,"data":"[17:29:51]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":1873.379527443,"data":"[17:29:52]   pgvector hnsw-m16-efc64-b0 pg-custom: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stderr","time":1873.627108672,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1873.627148152,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1873.688674981,"data":"[17:29:52]    pgvector hnsw-m16-efc64-b0 pg-custom: recall@5 0.9554054054054053, recall@10 0.9614864864864864, ERR 0.0, p50 5.5 ms, 3 s, HNSW plans 0.598 of 338\n"}
+,{"stream_name":"stdout","time":1873.689222645,"data":"[17:29:52] -- pgvector hnsw-m16-efc64-b0 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1878.054324033,"data":"[17:29:57]   pgvector hnsw-m16-efc64-b0 pg-hnsw: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":1879.812670548,"data":"[17:29:58]   pgvector hnsw-m16-efc64-b0 pg-hnsw: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":1880.104793762,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1880.104831765,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1880.171278421,"data":"[17:29:59]    pgvector hnsw-m16-efc64-b0 pg-hnsw: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 7.6 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1880.171974151,"data":"[17:29:59] -- pgvector hnsw-m16-efc64-b0 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":1884.928060183,"data":"[17:30:03]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1887.669187975,"data":"[17:30:06]   pgvector hnsw-m16-efc64-b0 pa-t20k-m8: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":1888.206444935,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1888.206490222,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1888.28827833,"data":"[17:30:07]    pgvector hnsw-m16-efc64-b0 pa-t20k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.8 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1888.28932164,"data":"[17:30:07] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}\n"}
+,{"stream_name":"stdout","time":1894.147845971,"data":"[17:30:13]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1896.615390732,"data":"[17:30:15]   pgvector hnsw-m16-efc64-b0 pa-t100k-m1: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1897.037963952,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1897.03800564,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1897.155013462,"data":"[17:30:16]    pgvector hnsw-m16-efc64-b0 pa-t100k-m1: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 10.7 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1897.156316056,"data":"[17:30:16] -- pgvector hnsw-m16-efc64-b0 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":1903.281559112,"data":"[17:30:22]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1905.434307648,"data":"[17:30:24]   pgvector hnsw-m16-efc64-b0 pa-t100k-m8: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1905.770582167,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1905.770630948,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1905.854194653,"data":"[17:30:24]    pgvector hnsw-m16-efc64-b0 pa-t100k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 10.7 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1905.854853465,"data":"[17:30:24] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}\n"}
+,{"stream_name":"stdout","time":1911.662704475,"data":"[17:30:30]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1914.165982125,"data":"[17:30:33]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1914.681726907,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1914.68198514,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1914.772173337,"data":"[17:30:33]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m1: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 11.0 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1914.773155018,"data":"[17:30:33] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":1920.360615709,"data":"[17:30:39]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1922.683813961,"data":"[17:30:41]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1923.118441677,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1923.118485537,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1923.195531066,"data":"[17:30:42]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m8: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.9 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1923.1964993,"data":"[17:30:42] -- pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}\n"}
+,{"stream_name":"stdout","time":1928.625270164,"data":"[17:30:47]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1930.973237153,"data":"[17:30:49]   pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1931.365945576,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1931.366012522,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1931.438725662,"data":"[17:30:50]    pgvector hnsw-m16-efc64-b0 pa-t1000k-m16: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.8 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1931.439426309,"data":"[17:30:50] -- pgvector hnsw-m16-efc64-b0 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'work_mem': '64MB'}\n"}
+,{"stream_name":"stdout","time":1936.556850717,"data":"[17:30:55]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1938.658287505,"data":"[17:30:57]   pgvector hnsw-m16-efc64-b0 pb-wm64: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":1939.01463905,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1939.014685133,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1939.084534474,"data":"[17:30:58]    pgvector hnsw-m16-efc64-b0 pb-wm64: recall@5 0.954054054054054, recall@10 0.9614864864864864, ERR 0.0, p50 9.4 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1939.085118554,"data":"[17:30:58] -- pgvector hnsw-m16-efc64-b0 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1943.64069703,"data":"[17:31:02]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":1945.476856197,"data":"[17:31:04]   pgvector hnsw-m16-efc64-b0 pc-ef40: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":1945.777370928,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1945.777495876,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1945.854596181,"data":"[17:31:04]    pgvector hnsw-m16-efc64-b0 pc-ef40: recall@5 0.9135135135135134, recall@10 0.9337837837837837, ERR 0.0, p50 8.0 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1945.855437685,"data":"[17:31:04] -- pgvector hnsw-m16-efc64-b0 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1951.938992133,"data":"[17:31:10]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1954.453550394,"data":"[17:31:13]   pgvector hnsw-m16-efc64-b0 pc-ef200: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":1954.884104104,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1954.884147636,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1954.981687952,"data":"[17:31:13]    pgvector hnsw-m16-efc64-b0 pc-ef200: recall@5 0.972972972972973, recall@10 0.9695945945945946, ERR 0.0, p50 11.4 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1954.982639002,"data":"[17:31:13] -- pgvector hnsw-m16-efc64-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1960.132701445,"data":"[17:31:19]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":1962.550515886,"data":"[17:31:21]   pgvector hnsw-m16-efc64-b0 pc-ef400: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":1962.951231415,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1962.951270745,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1963.031375199,"data":"[17:31:22]    pgvector hnsw-m16-efc64-b0 pc-ef400: recall@5 0.9945945945945945, recall@10 0.9891891891891891, ERR 0.0, p50 10.8 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1963.031983611,"data":"[17:31:22] -- pgvector hnsw-m16-efc64-b0 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1969.769938498,"data":"[17:31:28]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 1 of 2 (7 s)\n"}
+,{"stream_name":"stdout","time":1972.922653292,"data":"[17:31:31]   pgvector hnsw-m16-efc64-b0 pc-ef1000: pass 2 of 2 (10 s)\n"}
+,{"stream_name":"stderr","time":1973.559621367,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1973.559663287,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1973.675353989,"data":"[17:31:32]    pgvector hnsw-m16-efc64-b0 pc-ef1000: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 15.9 ms, 11 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1973.681587791,"data":"[17:31:32] -- pgvector hnsw-m16-efc64-b0 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 4}\n"}
+,{"stream_name":"stdout","time":1980.098309854,"data":"[17:31:39]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1982.734312311,"data":"[17:31:41]   pgvector hnsw-m16-efc64-b0 pd-lim4: pass 2 of 2 (9 s)\n"}
+,{"stream_name":"stderr","time":1983.225454357,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1983.225510942,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1983.30268567,"data":"[17:31:42]    pgvector hnsw-m16-efc64-b0 pd-lim4: recall@5 0.983783783783784, recall@10 0.9885135135135136, ERR 0.0, p50 10.0 ms, 10 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1983.303596535,"data":"[17:31:42] -- pgvector hnsw-m16-efc64-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":1989.625192159,"data":"[17:31:48]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":1992.471645019,"data":"[17:31:51]   pgvector hnsw-m16-efc64-b0 pd-lim10: pass 2 of 2 (9 s)\n"}
+,{"stream_name":"stderr","time":1992.998022847,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":1992.998064437,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":1993.072621089,"data":"[17:31:52]    pgvector hnsw-m16-efc64-b0 pd-lim10: recall@5 0.9932432432432432, recall@10 0.9966216216216216, ERR 0.0, p50 12.1 ms, 10 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":1993.073351608,"data":"[17:31:52] -- pgvector hnsw-m16-efc64-b0 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":1998.350767382,"data":"[17:31:57]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2000.464519909,"data":"[17:31:59]   pgvector hnsw-m16-efc64-b0 pe-strict: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2000.91584235,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2000.91588726,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2001.024321498,"data":"[17:31:59]    pgvector hnsw-m16-efc64-b0 pe-strict: recall@5 0.8716216216216216, recall@10 0.8633445945945944, ERR 0.0, p50 9.2 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2001.02560358,"data":"[17:32:00] -- pgvector hnsw-m16-efc64-b0 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}\n"}
+,{"stream_name":"stdout","time":2003.937541889,"data":"[17:32:02]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 1 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2005.091040711,"data":"[17:32:04]   pgvector hnsw-m16-efc64-b0 pg-noprepare: pass 2 of 2 (4 s)\n"}
+,{"stream_name":"stderr","time":2005.39169218,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2005.391945837,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2005.467275134,"data":"[17:32:04]    pgvector hnsw-m16-efc64-b0 pg-noprepare: recall@5 0.9554054054054053, recall@10 0.9614864864864864, ERR 0.0, p50 7.1 ms, 4 s, HNSW plans 0.598 of 338\n"}
+,{"stream_name":"stdout","time":2005.468618201,"data":"[17:32:04] -- pgvector hnsw-m16-efc64-b0 ph-exact: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'enable_indexscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2012.408579411,"data":"[17:32:11]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 1 of 2 (7 s)\n"}
+,{"stream_name":"stdout","time":2015.548469252,"data":"[17:32:14]   pgvector hnsw-m16-efc64-b0 ph-exact: pass 2 of 2 (10 s)\n"}
+,{"stream_name":"stderr","time":2016.034110474,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2016.034156331,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2016.08137242,"data":"[17:32:15]    pgvector hnsw-m16-efc64-b0 ph-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 24.0 ms, 11 s, HNSW plans 0.000 of 338\n"}
+,{"stream_name":"stdout","time":2016.082865889,"data":"[17:32:15] == stage pgvector hnsw-m16-efc64-b0: done in 159 s\n"}
+,{"stream_name":"stdout","time":2016.108802521,"data":"[17:32:15] $ service postgresql stop\n"}
+,{"stream_name":"stdout","time":2016.176528852,"data":" * Stopping PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2019.152528123,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2019.15504941,"data":"[17:32:18] X1 finished in 0.09 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/a/manifest.json)\n"}
+,{"stream_name":"stdout","time":2021.84219176,"data":"[17:32:20] exit code 0\n"}
+,{"stream_name":"stdout","time":2021.842672026,"data":"[17:32:20] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --smoke --stores pgvector --families hnsw-m16-efc64 --reps 1 --out /kaggle/working/smoke/b --pin-from /kaggle/working/smoke/prep --cache /tmp/x1-cache\n"}
+,{"stream_name":"stdout","time":2025.28265678,"data":"[17:32:24] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":2025.282865842,"data":"[17:32:24] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":2025.283018708,"data":"[17:32:24] cpus: 4\n"}
+,{"stream_name":"stdout","time":2025.283064305,"data":"[17:32:24] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":2025.283153109,"data":"[17:32:24] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":2025.283285944,"data":"[17:32:24] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":2025.283415571,"data":"[17:32:24] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":2025.28350339,"data":"[17:32:24] gpus: []\n"}
+,{"stream_name":"stdout","time":2025.283528718,"data":"[17:32:24] torch: 2.11.0+cpu\n"}
+,{"stream_name":"stdout","time":2025.28357046,"data":"[17:32:24] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":2025.283682892,"data":"[17:32:24] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":2025.283723571,"data":"[17:32:24] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":2025.283829009,"data":"[17:32:24] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":2025.283894177,"data":"[17:32:24] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":2025.283963077,"data":"[17:32:24] chromadb: None\n"}
+,{"stream_name":"stdout","time":2025.284008127,"data":"[17:32:24] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":2025.284083524,"data":"[17:32:24] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":2025.284146674,"data":"[17:32:24] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":2025.284304219,"data":"[17:32:24] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":2025.284358273,"data":"[17:32:24] redis: None\n"}
+,{"stream_name":"stdout","time":2025.284436612,"data":"[17:32:24] lancedb: None\n"}
+,{"stream_name":"stdout","time":2025.284491213,"data":"[17:32:24] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":2025.28462404,"data":"[17:32:24] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":2025.284814311,"data":"[17:32:24] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":2025.284829773,"data":"[17:32:24] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":2025.284864436,"data":"[17:32:24] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":2025.284948267,"data":"[17:32:24] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1047.4, 'gpus': [], 'cuda': None}\n"}
+,{"stream_name":"stdout","time":2025.285096072,"data":"[17:32:24] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":2025.287429235,"data":"[17:32:24] == stage corpus\n"}
+,{"stream_name":"stdout","time":2025.287877044,"data":"\n"}
+,{"stream_name":"stdout","time":2025.287897537,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":2025.291520577,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":2025.300653932,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":2025.334018526,"data":"[17:32:24] 960 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":2026.60698699,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":2027.819078196,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":2027.81979427,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":2027.820193365,"data":"  note: corpus: 2,980 chunks (960 company documents in 20 tenants, 20 injected notices, 2,000 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":2028.569027209,"data":"[17:32:27] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":2028.572522135,"data":"[17:32:27] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":2028.574306396,"data":"[17:32:27] == stage corpus: done in 3 s\n"}
+,{"stream_name":"stdout","time":2028.575166455,"data":"[17:32:27] == stage embeddings\n"}
+,{"stream_name":"stdout","time":2028.576287093,"data":"[17:32:27] cached embeddings copied from /kaggle/input: none\n"}
+,{"stream_name":"stdout","time":2028.580333105,"data":"[17:32:27] adopted from /kaggle/working/smoke/prep: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']\n"}
+,{"stream_name":"stdout","time":2028.580608591,"data":"\n"}
+,{"stream_name":"stdout","time":2028.580624713,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":2040.77641038,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights:  51%|█████▏    | 102/199 [00:00\u003c00:00, 1019.79it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 925.61it/s] \n"}
+,{"stream_name":"stdout","time":2042.036974964,"data":"[17:32:41] embeddings from /tmp/x1-cache/chunks-BAAI_bge-base-en-v1.5-f32faeb63856e9ce.npy\n"}
+,{"stream_name":"stdout","time":2083.602743899,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":2083.612805227,"data":"[17:33:22] query vectors pinned from /kaggle/working/smoke/b/query_vectors.npy (largest difference from this encoding: 0.00e+00)\n"}
+,{"stream_name":"stdout","time":2083.941694623,"data":"[17:33:22] == stage embeddings: done in 55 s\n"}
+,{"stream_name":"stdout","time":2083.942446882,"data":"[17:33:22] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":2083.942485428,"data":"\n"}
+,{"stream_name":"stdout","time":2083.942489713,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":2084.326297599,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":2084.327808127,"data":"  note: readable chunks per person: min 0, median 2,017, max 2,033 of 2,980\n"}
+,{"stream_name":"stdout","time":2084.328724646,"data":"[17:33:23] == stage exact baseline: done in 0 s\n"}
+,{"stream_name":"stdout","time":2084.329494716,"data":"[17:33:23] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":2085.361452325,"data":"[17:33:24] /kaggle/working/smoke/b/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)\n"}
+,{"stream_name":"stdout","time":2085.362667901,"data":"[17:33:24] == stage alignment variables: done in 1 s\n"}
+,{"stream_name":"stdout","time":2085.372870839,"data":"[17:33:24] 169 questions of 11 people; 10 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":2085.37437594,"data":"[17:33:24] == stage pgvector: start and load\n"}
+,{"stream_name":"stdout","time":2085.476742094,"data":"[17:33:24] $ bash /tmp/wardowl-src/benchmarks/kaggle_setup.sh\n"}
+,{"stream_name":"stderr","time":2088.696312055,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stderr","time":2097.372538336,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\n"}
+,{"stream_name":"stderr","time":2097.372570325,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372576346,"data":"You are in 'detached HEAD' state. You can look around, make experimental\n"}
+,{"stream_name":"stderr","time":2097.372581463,"data":"changes and commit them, and you can discard any commits you make in this\n"}
+,{"stream_name":"stderr","time":2097.372586315,"data":"state without impacting any branches by switching back to a branch.\n"}
+,{"stream_name":"stderr","time":2097.372591136,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372595482,"data":"If you want to create a new branch to retain commits you create, you may\n"}
+,{"stream_name":"stderr","time":2097.372600309,"data":"do so (now or later) by using -c with the switch command. Example:\n"}
+,{"stream_name":"stderr","time":2097.372605522,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372610407,"data":"  git switch -c \u003cnew-branch-name\u003e\n"}
+,{"stream_name":"stderr","time":2097.372616089,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372620515,"data":"Or undo this operation with:\n"}
+,{"stream_name":"stderr","time":2097.372625834,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372630245,"data":"  git switch -\n"}
+,{"stream_name":"stderr","time":2097.372634735,"data":"\n"}
+,{"stream_name":"stderr","time":2097.372639228,"data":"Turn off this advice by setting config variable advice.detachedHead to false\n"}
+,{"stream_name":"stderr","time":2097.372643887,"data":"\n"}
+,{"stream_name":"stdout","time":2124.945974919,"data":" * Starting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2127.399879536,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2127.762162823,"data":" * Restarting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2130.413989934,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2131.144542609,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\n"}
+,{"stream_name":"stdout","time":2134.200851471,"data":"[17:34:13]   loaded 2,980 of 2,980 chunks (3 s)\n"}
+,{"stream_name":"stdout","time":2136.079819074,"data":"[17:34:15] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}\n"}
+,{"stream_name":"stdout","time":2136.12581864,"data":"[17:34:15] == stage pgvector: start and load: done in 51 s\n"}
+,{"stream_name":"stdout","time":2136.128023284,"data":"[17:34:15] == stage pgvector hnsw-m16-efc64-b1\n"}
+,{"stream_name":"stdout","time":2138.065433267,"data":"[17:34:17] pgvector index hnsw-m16-efc64 build 1: {'store': 'pgvector', 'layout': 'hnsw-m16-efc64', 'rep': 1, 'm': 16, 'ef_construction': 64, 'seconds': 1.8, 'builder': \"harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)\", 'index_bytes': 12214272, 'reloptions': ['m=16', 'ef_construction=64']}\n"}
+,{"stream_name":"stdout","time":2138.067192439,"data":"[17:34:17] == stage pgvector: vacuum\n"}
+,{"stream_name":"stdout","time":2138.286033211,"data":"[17:34:17] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 174, 'n_entry_pages': 21, 'n_data_pages': 0, 'n_entries': 1150, 'version': 2}\n"}
+,{"stream_name":"stdout","time":2138.287417671,"data":"[17:34:17] == stage pgvector: vacuum: done in 0 s\n"}
+,{"stream_name":"stdout","time":2138.288845113,"data":"[17:34:17] == stage pgvector: filter estimates\n"}
+,{"stream_name":"stdout","time":2138.354794315,"data":"[17:34:17] == stage pgvector: filter estimates: done in 0 s\n"}
+,{"stream_name":"stdout","time":2138.355436738,"data":"[17:34:17] -- pgvector hnsw-m16-efc64-b1 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":2144.158949161,"data":"[17:34:23]   pgvector hnsw-m16-efc64-b1 p-asrun: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":2147.138670527,"data":"[17:34:26]   pgvector hnsw-m16-efc64-b1 p-asrun: pass 2 of 2 (9 s)\n"}
+,{"stream_name":"stderr","time":2147.589800272,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2147.589843316,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2147.590193527,"data":"[17:34:26] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2147.590413009,"data":"[17:34:26] WARNING: pgvector hnsw-m16-efc64-b1 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.030 of its 338 captured plans did ({'gin': 328, 'hnsw': 10}, 286 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":2147.590598472,"data":"[17:34:26] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2147.636973938,"data":"[17:34:26]    pgvector hnsw-m16-efc64-b1 p-asrun: recall@5 0.9986486486486488, recall@10 0.9979729729729729, ERR 0.0, p50 22.7 ms, 9 s, HNSW plans 0.030 of 338\n"}
+,{"stream_name":"stdout","time":2147.637719546,"data":"[17:34:26] -- pgvector hnsw-m16-efc64-b1 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":2150.656146133,"data":"[17:34:29]   pgvector hnsw-m16-efc64-b1 pg-custom: pass 1 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2152.184389851,"data":"[17:34:31]   pgvector hnsw-m16-efc64-b1 pg-custom: pass 2 of 2 (4 s)\n"}
+,{"stream_name":"stderr","time":2152.557900546,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2152.557945058,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2152.647492308,"data":"[17:34:31]    pgvector hnsw-m16-efc64-b1 pg-custom: recall@5 0.9513513513513512, recall@10 0.962162162162162, ERR 0.0, p50 8.2 ms, 5 s, HNSW plans 0.598 of 338\n"}
+,{"stream_name":"stdout","time":2152.649366211,"data":"[17:34:31] -- pgvector hnsw-m16-efc64-b1 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2157.98294056,"data":"[17:34:36]   pgvector hnsw-m16-efc64-b1 pg-hnsw: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2159.801989,"data":"[17:34:38]   pgvector hnsw-m16-efc64-b1 pg-hnsw: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2160.167135595,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2160.1671801,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2160.241057203,"data":"[17:34:39]    pgvector hnsw-m16-efc64-b1 pg-hnsw: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 9.2 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2160.241555423,"data":"[17:34:39] -- pgvector hnsw-m16-efc64-b1 pa-t20k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 20000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":2165.457925011,"data":"[17:34:44]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2167.518805535,"data":"[17:34:46]   pgvector hnsw-m16-efc64-b1 pa-t20k-m8: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2167.8720042,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2167.872044452,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2167.953331901,"data":"[17:34:46]    pgvector hnsw-m16-efc64-b1 pa-t20k-m8: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 8.9 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2167.954165595,"data":"[17:34:46] -- pgvector hnsw-m16-efc64-b1 pa-t100k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 1.0}\n"}
+,{"stream_name":"stdout","time":2172.787228083,"data":"[17:34:51]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2174.619269354,"data":"[17:34:53]   pgvector hnsw-m16-efc64-b1 pa-t100k-m1: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2174.952302254,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2174.952341988,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2175.024737823,"data":"[17:34:54]    pgvector hnsw-m16-efc64-b1 pa-t100k-m1: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 8.8 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2175.025383795,"data":"[17:34:54] -- pgvector hnsw-m16-efc64-b1 pa-t100k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 100000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":2179.583199276,"data":"[17:34:58]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2181.411619838,"data":"[17:35:00]   pgvector hnsw-m16-efc64-b1 pa-t100k-m8: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2181.779769029,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2181.779808165,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2181.844960882,"data":"[17:35:00]    pgvector hnsw-m16-efc64-b1 pa-t100k-m8: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 7.9 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2181.845570372,"data":"[17:35:00] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 1.0}\n"}
+,{"stream_name":"stdout","time":2186.455239632,"data":"[17:35:05]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2188.365135112,"data":"[17:35:07]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2188.677004633,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2188.6770439,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2188.748098948,"data":"[17:35:07]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m1: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 8.2 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2188.748741207,"data":"[17:35:07] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":2193.210653467,"data":"[17:35:12]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2195.048778564,"data":"[17:35:14]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2195.353842265,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2195.353893232,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2195.419431412,"data":"[17:35:14]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m8: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 7.9 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2195.420076547,"data":"[17:35:14] -- pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 16.0}\n"}
+,{"stream_name":"stdout","time":2199.748565543,"data":"[17:35:18]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2201.522474488,"data":"[17:35:20]   pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2201.872932636,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2201.872997986,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2201.952655151,"data":"[17:35:20]    pgvector hnsw-m16-efc64-b1 pa-t1000k-m16: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 7.7 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2201.953765374,"data":"[17:35:20] -- pgvector hnsw-m16-efc64-b1 pb-wm64: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'work_mem': '64MB'}\n"}
+,{"stream_name":"stdout","time":2206.016542404,"data":"[17:35:24]   pgvector hnsw-m16-efc64-b1 pb-wm64: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2207.713442723,"data":"[17:35:26]   pgvector hnsw-m16-efc64-b1 pb-wm64: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2208.017562892,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2208.017712304,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2208.088851712,"data":"[17:35:27]    pgvector hnsw-m16-efc64-b1 pb-wm64: recall@5 0.95, recall@10 0.962162162162162, ERR 0.0, p50 7.3 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2208.089384398,"data":"[17:35:27] -- pgvector hnsw-m16-efc64-b1 pc-ef40: {'ef_search': 40, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2212.29959838,"data":"[17:35:31]   pgvector hnsw-m16-efc64-b1 pc-ef40: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2213.924202638,"data":"[17:35:32]   pgvector hnsw-m16-efc64-b1 pc-ef40: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2214.210225163,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2214.210266176,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2214.279804597,"data":"[17:35:33]    pgvector hnsw-m16-efc64-b1 pc-ef40: recall@5 0.9243243243243244, recall@10 0.9378378378378379, ERR 0.0, p50 6.8 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2214.280472824,"data":"[17:35:33] -- pgvector hnsw-m16-efc64-b1 pc-ef200: {'ef_search': 200, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2218.313282271,"data":"[17:35:37]   pgvector hnsw-m16-efc64-b1 pc-ef200: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2219.925277583,"data":"[17:35:38]   pgvector hnsw-m16-efc64-b1 pc-ef200: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2220.212377949,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2220.212419435,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2220.276873139,"data":"[17:35:39]    pgvector hnsw-m16-efc64-b1 pc-ef200: recall@5 0.972972972972973, recall@10 0.9695945945945946, ERR 0.0, p50 7.4 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2220.277440888,"data":"[17:35:39] -- pgvector hnsw-m16-efc64-b1 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2224.692737127,"data":"[17:35:43]   pgvector hnsw-m16-efc64-b1 pc-ef400: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2226.540086809,"data":"[17:35:45]   pgvector hnsw-m16-efc64-b1 pc-ef400: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2226.852190174,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2226.85223027,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2226.918262138,"data":"[17:35:45]    pgvector hnsw-m16-efc64-b1 pc-ef400: recall@5 0.9945945945945945, recall@10 0.9891891891891891, ERR 0.0, p50 8.9 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2226.918958295,"data":"[17:35:45] -- pgvector hnsw-m16-efc64-b1 pc-ef1000: {'ef_search': 1000, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2232.399508437,"data":"[17:35:51]   pgvector hnsw-m16-efc64-b1 pc-ef1000: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2234.815188322,"data":"[17:35:53]   pgvector hnsw-m16-efc64-b1 pc-ef1000: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":2235.213944001,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2235.213983796,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2235.281541681,"data":"[17:35:54]    pgvector hnsw-m16-efc64-b1 pc-ef1000: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 12.4 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2235.282174747,"data":"[17:35:54] -- pgvector hnsw-m16-efc64-b1 pd-lim4: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 4}\n"}
+,{"stream_name":"stdout","time":2240.64773089,"data":"[17:35:59]   pgvector hnsw-m16-efc64-b1 pd-lim4: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2243.094123184,"data":"[17:36:02]   pgvector hnsw-m16-efc64-b1 pd-lim4: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":2243.498016321,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2243.498055333,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2243.563316032,"data":"[17:36:02]    pgvector hnsw-m16-efc64-b1 pd-lim4: recall@5 0.983783783783784, recall@10 0.9885135135135136, ERR 0.0, p50 8.7 ms, 8 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2243.563861007,"data":"[17:36:02] -- pgvector hnsw-m16-efc64-b1 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":2249.743586195,"data":"[17:36:08]   pgvector hnsw-m16-efc64-b1 pd-lim10: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":2252.464810558,"data":"[17:36:11]   pgvector hnsw-m16-efc64-b1 pd-lim10: pass 2 of 2 (9 s)\n"}
+,{"stream_name":"stderr","time":2252.935381085,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2252.935418769,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2253.007349479,"data":"[17:36:11]    pgvector hnsw-m16-efc64-b1 pd-lim10: recall@5 0.9932432432432432, recall@10 0.9966216216216216, ERR 0.0, p50 11.9 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2253.008161339,"data":"[17:36:11] -- pgvector hnsw-m16-efc64-b1 pe-strict: {'ef_search': 100, 'iterative_scan': 'strict_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2257.28731461,"data":"[17:36:16]   pgvector hnsw-m16-efc64-b1 pe-strict: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2259.042326455,"data":"[17:36:18]   pgvector hnsw-m16-efc64-b1 pe-strict: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2259.399944622,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2259.399986837,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2259.473141262,"data":"[17:36:18]    pgvector hnsw-m16-efc64-b1 pe-strict: recall@5 0.8675675675675674, recall@10 0.8565878378378379, ERR 0.0, p50 7.7 ms, 6 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2259.473791427,"data":"[17:36:18] -- pgvector hnsw-m16-efc64-b1 pg-noprepare: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'prepare_threshold': 'none'}\n"}
+,{"stream_name":"stdout","time":2261.772895472,"data":"[17:36:20]   pgvector hnsw-m16-efc64-b1 pg-noprepare: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2262.7219344,"data":"[17:36:21]   pgvector hnsw-m16-efc64-b1 pg-noprepare: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stderr","time":2263.005822329,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2263.005860525,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2263.066877767,"data":"[17:36:22]    pgvector hnsw-m16-efc64-b1 pg-noprepare: recall@5 0.9513513513513512, recall@10 0.962162162162162, ERR 0.0, p50 5.8 ms, 4 s, HNSW plans 0.598 of 338\n"}
+,{"stream_name":"stdout","time":2263.068496421,"data":"[17:36:22] == stage pgvector hnsw-m16-efc64-b1: done in 127 s\n"}
+,{"stream_name":"stdout","time":2263.093325217,"data":"[17:36:22] $ service postgresql stop\n"}
+,{"stream_name":"stdout","time":2263.158826225,"data":" * Stopping PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2265.234927984,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2265.238037607,"data":"[17:36:24] X1 finished in 0.07 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/b/manifest.json)\n"}
+,{"stream_name":"stdout","time":2267.435130372,"data":"[17:36:26] exit code 0\n"}
+,{"stream_name":"stdout","time":2267.435288105,"data":"[17:36:26] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --smoke --stores pgvector,qdrant --families hnsw-m32-efc200 --out /kaggle/working/smoke/c --pin-from /kaggle/working/smoke/prep --cache /tmp/x1-cache\n"}
+,{"stream_name":"stdout","time":2270.253913269,"data":"[17:36:29] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":2270.253975618,"data":"[17:36:29] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":2270.254174472,"data":"[17:36:29] cpus: 4\n"}
+,{"stream_name":"stdout","time":2270.256804823,"data":"[17:36:29] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":2270.256833168,"data":"[17:36:29] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":2270.256899664,"data":"[17:36:29] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":2270.256903461,"data":"[17:36:29] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":2270.256906301,"data":"[17:36:29] gpus: []\n"}
+,{"stream_name":"stdout","time":2270.256909018,"data":"[17:36:29] torch: 2.11.0+cpu\n"}
+,{"stream_name":"stdout","time":2270.256911673,"data":"[17:36:29] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":2270.256914636,"data":"[17:36:29] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":2270.256917579,"data":"[17:36:29] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":2270.256920211,"data":"[17:36:29] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":2270.256922914,"data":"[17:36:29] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":2270.256925535,"data":"[17:36:29] chromadb: None\n"}
+,{"stream_name":"stdout","time":2270.256928221,"data":"[17:36:29] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":2270.256930868,"data":"[17:36:29] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":2270.256933543,"data":"[17:36:29] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":2270.256936242,"data":"[17:36:29] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":2270.256938883,"data":"[17:36:29] redis: None\n"}
+,{"stream_name":"stdout","time":2270.256941545,"data":"[17:36:29] lancedb: None\n"}
+,{"stream_name":"stdout","time":2270.25694418,"data":"[17:36:29] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":2270.256946811,"data":"[17:36:29] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":2270.256949443,"data":"[17:36:29] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":2270.256952061,"data":"[17:36:29] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":2270.256954679,"data":"[17:36:29] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":2270.256957414,"data":"[17:36:29] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1047.4, 'gpus': [], 'cuda': None}\n"}
+,{"stream_name":"stdout","time":2270.256960283,"data":"[17:36:29] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":2270.257897176,"data":"[17:36:29] == stage corpus\n"}
+,{"stream_name":"stdout","time":2270.258347608,"data":"\n"}
+,{"stream_name":"stdout","time":2270.258359612,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":2270.261474383,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":2270.26994514,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":2270.299342126,"data":"[17:36:29] 960 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":2271.614475848,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stdout","time":2272.766676217,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":2272.767650773,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":2272.768217215,"data":"  note: corpus: 2,980 chunks (960 company documents in 20 tenants, 20 injected notices, 2,000 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stdout","time":2273.511756732,"data":"[17:36:32] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":2273.515504567,"data":"[17:36:32] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":2273.51730065,"data":"[17:36:32] == stage corpus: done in 3 s\n"}
+,{"stream_name":"stdout","time":2273.5176629,"data":"[17:36:32] == stage embeddings\n"}
+,{"stream_name":"stdout","time":2273.518367111,"data":"[17:36:32] cached embeddings copied from /kaggle/input: none\n"}
+,{"stream_name":"stdout","time":2273.52145719,"data":"[17:36:32] adopted from /kaggle/working/smoke/prep: ['query_vectors.npy', 'query_vectors.json', 'questions.parquet', 'people.csv']\n"}
+,{"stream_name":"stdout","time":2273.521628631,"data":"\n"}
+,{"stream_name":"stdout","time":2273.521640232,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":2282.983476073,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights:  94%|█████████▍| 187/199 [00:00\u003c00:00, 1860.71it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 1882.36it/s]\n"}
+,{"stream_name":"stdout","time":2284.141160354,"data":"[17:36:43] embeddings from /tmp/x1-cache/chunks-BAAI_bge-base-en-v1.5-f32faeb63856e9ce.npy\n"}
+,{"stream_name":"stdout","time":2315.167900514,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":2315.173506497,"data":"[17:37:14] query vectors pinned from /kaggle/working/smoke/c/query_vectors.npy (largest difference from this encoding: 0.00e+00)\n"}
+,{"stream_name":"stdout","time":2315.421762737,"data":"[17:37:14] == stage embeddings: done in 42 s\n"}
+,{"stream_name":"stdout","time":2315.422409435,"data":"[17:37:14] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":2315.42256404,"data":"\n"}
+,{"stream_name":"stdout","time":2315.422583707,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":2315.72580996,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":2315.727155374,"data":"  note: readable chunks per person: min 0, median 2,017, max 2,033 of 2,980\n"}
+,{"stream_name":"stdout","time":2315.727985756,"data":"[17:37:14] == stage exact baseline: done in 0 s\n"}
+,{"stream_name":"stdout","time":2315.728684959,"data":"[17:37:14] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":2316.44719045,"data":"[17:37:15] /kaggle/working/smoke/c/questions: the same questions and exact baseline as the earlier invocation or prep (0 questions with tied exact hits in another order)\n"}
+,{"stream_name":"stdout","time":2316.448421862,"data":"[17:37:15] == stage alignment variables: done in 1 s\n"}
+,{"stream_name":"stdout","time":2316.457140936,"data":"[17:37:15] 169 questions of 11 people; 10 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":2316.458310667,"data":"[17:37:15] == stage pgvector: start and load\n"}
+,{"stream_name":"stdout","time":2316.547144838,"data":"[17:37:15] $ bash /tmp/wardowl-src/benchmarks/kaggle_setup.sh\n"}
+,{"stream_name":"stderr","time":2319.297906563,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\n"}
+,{"stream_name":"stderr","time":2325.750907637,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\n"}
+,{"stream_name":"stderr","time":2325.750935215,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750950644,"data":"You are in 'detached HEAD' state. You can look around, make experimental\n"}
+,{"stream_name":"stderr","time":2325.750954242,"data":"changes and commit them, and you can discard any commits you make in this\n"}
+,{"stream_name":"stderr","time":2325.750957382,"data":"state without impacting any branches by switching back to a branch.\n"}
+,{"stream_name":"stderr","time":2325.750960476,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750963479,"data":"If you want to create a new branch to retain commits you create, you may\n"}
+,{"stream_name":"stderr","time":2325.750966545,"data":"do so (now or later) by using -c with the switch command. Example:\n"}
+,{"stream_name":"stderr","time":2325.750969592,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750972437,"data":"  git switch -c \u003cnew-branch-name\u003e\n"}
+,{"stream_name":"stderr","time":2325.750976066,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750978972,"data":"Or undo this operation with:\n"}
+,{"stream_name":"stderr","time":2325.750981973,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750984837,"data":"  git switch -\n"}
+,{"stream_name":"stderr","time":2325.750987912,"data":"\n"}
+,{"stream_name":"stderr","time":2325.750990848,"data":"Turn off this advice by setting config variable advice.detachedHead to false\n"}
+,{"stream_name":"stderr","time":2325.750994085,"data":"\n"}
+,{"stream_name":"stdout","time":2349.014263736,"data":" * Starting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2351.441521993,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2351.792188667,"data":" * Restarting PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2354.429326868,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2355.004270198,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\n"}
+,{"stream_name":"stdout","time":2357.444437097,"data":"[17:37:56]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":2359.036241884,"data":"[17:37:58] PostgreSQL settings: {'shared_buffers': '4GB', 'work_mem': '4MB', 'maintenance_work_mem': '2GB', 'effective_cache_size': '16GB', 'max_parallel_workers_per_gather': '2', 'max_parallel_maintenance_workers': '3', 'jit': 'on', 'random_page_cost': '4', 'plan_cache_mode': 'auto', 'enable_indexscan': 'on', 'hnsw.ef_search': '40', 'hnsw.iterative_scan': 'off', 'hnsw.max_scan_tuples': '20000', 'hnsw.scan_mem_multiplier': '1', 'server_version': '16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)', 'pgvector': '0.8.7'}\n"}
+,{"stream_name":"stdout","time":2359.076348936,"data":"[17:37:58] == stage pgvector: start and load: done in 43 s\n"}
+,{"stream_name":"stdout","time":2359.079305663,"data":"[17:37:58] == stage pgvector hnsw-m32-efc200-b0\n"}
+,{"stream_name":"stdout","time":2364.499048861,"data":"[17:38:03] pgvector index hnsw-m32-efc200 build 0: {'store': 'pgvector', 'layout': 'hnsw-m32-efc200', 'rep': 0, 'm': 32, 'ef_construction': 200, 'seconds': 5.3, 'builder': \"harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)\", 'index_bytes': 12214272, 'reloptions': ['m=32', 'ef_construction=200']}\n"}
+,{"stream_name":"stdout","time":2364.501666725,"data":"[17:38:03] == stage pgvector: vacuum\n"}
+,{"stream_name":"stdout","time":2364.702247351,"data":"[17:38:03] pgvector: VACUUM (ANALYZE); GIN metapage after it: {'pending_head': 4294967295, 'pending_tail': 4294967295, 'tail_free_size': 0, 'n_pending_pages': 0, 'n_pending_tuples': 0, 'n_total_pages': 174, 'n_entry_pages': 21, 'n_data_pages': 0, 'n_entries': 1150, 'version': 2}\n"}
+,{"stream_name":"stdout","time":2364.703394121,"data":"[17:38:03] == stage pgvector: vacuum: done in 0 s\n"}
+,{"stream_name":"stdout","time":2364.704255307,"data":"[17:38:03] == stage pgvector: filter estimates\n"}
+,{"stream_name":"stdout","time":2364.760959642,"data":"[17:38:03] == stage pgvector: filter estimates: done in 0 s\n"}
+,{"stream_name":"stdout","time":2364.761231288,"data":"[17:38:03] -- pgvector hnsw-m32-efc200-b0 p-asrun: {'ef_search': 100, 'iterative_scan': 'relaxed_order'}\n"}
+,{"stream_name":"stdout","time":2370.211979841,"data":"[17:38:09]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2372.5260401,"data":"[17:38:11]   pgvector hnsw-m32-efc200-b0 p-asrun: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2372.934993236,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2372.935041561,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2372.935508246,"data":"[17:38:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2372.935846337,"data":"[17:38:11] WARNING: pgvector hnsw-m32-efc200-b0 p-asrun RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.000 of its 338 captured plans did ({'gin': 328, 'seq': 10}, 286 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":2372.93601982,"data":"[17:38:11] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2372.980482811,"data":"[17:38:11]    pgvector hnsw-m32-efc200-b0 p-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 19.7 ms, 8 s, HNSW plans 0.000 of 338\n"}
+,{"stream_name":"stdout","time":2372.981308129,"data":"[17:38:11] -- pgvector hnsw-m32-efc200-b0 pg-custom: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan'}\n"}
+,{"stream_name":"stdout","time":2378.136196105,"data":"[17:38:17]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2380.423304878,"data":"[17:38:19]   pgvector hnsw-m32-efc200-b0 pg-custom: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2380.860121499,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2380.860163262,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2380.86066604,"data":"[17:38:19] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2380.861894772,"data":"[17:38:19] WARNING: pgvector hnsw-m32-efc200-b0 pg-custom RAN MOSTLY EXACT: it is meant to search the HNSW graph, but only 0.000 of its 338 captured plans did ({'seq': 202, 'gin': 136}, 0 generic plans); P1 and P2 do not use such a setting (amendment 2)\n"}
+,{"stream_name":"stdout","time":2380.861917209,"data":"[17:38:19] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2380.920813498,"data":"[17:38:19]    pgvector hnsw-m32-efc200-b0 pg-custom: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 19.6 ms, 8 s, HNSW plans 0.000 of 338\n"}
+,{"stream_name":"stdout","time":2380.921882905,"data":"[17:38:19] -- pgvector hnsw-m32-efc200-b0 pg-hnsw: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2385.422841939,"data":"[17:38:24]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2387.290851225,"data":"[17:38:26]   pgvector hnsw-m32-efc200-b0 pg-hnsw: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2387.584798502,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2387.584837262,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2387.649946075,"data":"[17:38:26]    pgvector hnsw-m32-efc200-b0 pg-hnsw: recall@5 0.9797297297297297, recall@10 0.9851351351351352, ERR 0.0, p50 7.9 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2387.650521606,"data":"[17:38:26] -- pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'max_scan_tuples': 1000000, 'scan_mem_multiplier': 8.0}\n"}
+,{"stream_name":"stdout","time":2392.313683641,"data":"[17:38:31]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2394.244964418,"data":"[17:38:33]   pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stderr","time":2394.577807693,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2394.577842258,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2394.643685052,"data":"[17:38:33]    pgvector hnsw-m32-efc200-b0 pa-t1000k-m8: recall@5 0.9797297297297297, recall@10 0.9851351351351352, ERR 0.0, p50 8.4 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2394.644438736,"data":"[17:38:33] -- pgvector hnsw-m32-efc200-b0 pc-ef400: {'ef_search': 400, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off'}\n"}
+,{"stream_name":"stdout","time":2399.571133989,"data":"[17:38:38]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 1 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2401.660438357,"data":"[17:38:40]   pgvector hnsw-m32-efc200-b0 pc-ef400: pass 2 of 2 (7 s)\n"}
+,{"stream_name":"stderr","time":2402.010251715,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2402.010320889,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2402.074286003,"data":"[17:38:41]    pgvector hnsw-m32-efc200-b0 pc-ef400: recall@5 1.0, recall@10 0.9986486486486488, ERR 0.0, p50 10.1 ms, 7 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2402.07490913,"data":"[17:38:41] -- pgvector hnsw-m32-efc200-b0 pd-lim10: {'ef_search': 100, 'iterative_scan': 'relaxed_order', 'plan_cache_mode': 'force_custom_plan', 'enable_seqscan': 'off', 'enable_bitmapscan': 'off', 'limit_factor': 10}\n"}
+,{"stream_name":"stdout","time":2407.906253156,"data":"[17:38:46]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 1 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":2410.579530887,"data":"[17:38:49]   pgvector hnsw-m32-efc200-b0 pd-lim10: pass 2 of 2 (8 s)\n"}
+,{"stream_name":"stderr","time":2411.044531688,"data":"/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py:1775: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2411.044573653,"data":"  explain = pd.concat([executed, explain], ignore_index=True) if len(executed) else explain\n"}
+,{"stream_name":"stdout","time":2411.107852049,"data":"[17:38:50]    pgvector hnsw-m32-efc200-b0 pd-lim10: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 10.7 ms, 9 s, HNSW plans 1.000 of 338\n"}
+,{"stream_name":"stdout","time":2411.109011923,"data":"[17:38:50] == stage pgvector hnsw-m32-efc200-b0: done in 52 s\n"}
+,{"stream_name":"stdout","time":2411.13133788,"data":"[17:38:50] $ service postgresql stop\n"}
+,{"stream_name":"stdout","time":2411.191072067,"data":" * Stopping PostgreSQL 16 database server\n"}
+,{"stream_name":"stdout","time":2413.259656999,"data":"   ...done.\n"}
+,{"stream_name":"stdout","time":2414.460098979,"data":"[17:38:53] == stage qdrant: start\n"}
+,{"stream_name":"stdout","time":2414.460310973,"data":"[17:38:53] $ bash /tmp/wardowl-src/benchmarks/kaggle_stores.sh qdrant\n"}
+,{"stream_name":"stdout","time":2417.994782742,"data":"qdrant is up\n"}
+,{"stream_name":"stdout","time":2418.111903608,"data":"[17:38:57] Qdrant server: {'title': 'qdrant - vector search engine', 'version': '1.19.2', 'commit': '016542aa5deb6c66380bb137badf73d54f742bde'}\n"}
+,{"stream_name":"stdout","time":2418.113935697,"data":"[17:38:57] == stage qdrant: start: done in 4 s\n"}
+,{"stream_name":"stdout","time":2418.121808608,"data":"[17:38:57] == stage qdrant as-run-b0\n"}
+,{"stream_name":"stdout","time":2421.315995366,"data":"[17:39:00]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":2436.338433784,"data":"[17:39:15]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}\n"}
+,{"stream_name":"stdout","time":2436.352145732,"data":"[17:39:15] qdrant as-run build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 2}\n"}
+,{"stream_name":"stdout","time":2436.352830153,"data":"[17:39:15] -- qdrant as-run-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":2438.414878923,"data":"[17:39:17]   qdrant as-run-b0 q-asrun: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2439.296480767,"data":"[17:39:18]   qdrant as-run-b0 q-asrun: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2439.357275363,"data":"[17:39:18]    qdrant as-run-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.4 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2439.357617222,"data":"[17:39:18] -- qdrant as-run-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":2441.330528222,"data":"[17:39:20]   qdrant as-run-b0 qa-acorn040: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2442.316091525,"data":"[17:39:21]   qdrant as-run-b0 qa-acorn040: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2442.369006646,"data":"[17:39:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2442.369274085,"data":"[17:39:21] WARNING: qdrant as-run-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2442.369431808,"data":"[17:39:21] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2442.385254455,"data":"[17:39:21]    qdrant as-run-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.6 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2442.385607729,"data":"[17:39:21] -- qdrant as-run-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":2444.309019566,"data":"[17:39:23]   qdrant as-run-b0 qa-acorn100: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2445.227432418,"data":"[17:39:24]   qdrant as-run-b0 qa-acorn100: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2445.279017535,"data":"[17:39:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2445.279261671,"data":"[17:39:24] WARNING: qdrant as-run-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2445.279295321,"data":"[17:39:24] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2445.293128028,"data":"[17:39:24]    qdrant as-run-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.4 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2445.2934962,"data":"[17:39:24] -- qdrant as-run-b0 qb-ef64: {'hnsw_ef': 64}\n"}
+,{"stream_name":"stdout","time":2447.439837268,"data":"[17:39:26]   qdrant as-run-b0 qb-ef64: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2448.85960062,"data":"[17:39:27]   qdrant as-run-b0 qb-ef64: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2448.928780807,"data":"[17:39:27]    qdrant as-run-b0 qb-ef64: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.8 ms, 4 s\n"}
+,{"stream_name":"stdout","time":2448.929222059,"data":"[17:39:27] -- qdrant as-run-b0 qb-ef512: {'hnsw_ef': 512}\n"}
+,{"stream_name":"stdout","time":2450.914274337,"data":"[17:39:29]   qdrant as-run-b0 qb-ef512: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2451.937210643,"data":"[17:39:30]   qdrant as-run-b0 qb-ef512: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2452.013265863,"data":"[17:39:30]    qdrant as-run-b0 qb-ef512: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.7 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2452.013661008,"data":"[17:39:30] -- qdrant as-run-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":2454.11695131,"data":"[17:39:33]   qdrant as-run-b0 qc-exact: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2455.069359534,"data":"[17:39:34]   qdrant as-run-b0 qc-exact: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2455.140648401,"data":"[17:39:34]    qdrant as-run-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.7 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2455.141801753,"data":"[17:39:34] == stage qdrant as-run-b0: done in 37 s\n"}
+,{"stream_name":"stdout","time":2455.172620442,"data":"[17:39:34] == stage qdrant is-tenant-b0\n"}
+,{"stream_name":"stdout","time":2458.435165234,"data":"[17:39:37]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":2473.448244778,"data":"[17:39:52]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}\n"}
+,{"stream_name":"stdout","time":2473.459818157,"data":"[17:39:52] qdrant is-tenant build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 2}\n"}
+,{"stream_name":"stdout","time":2473.46049619,"data":"[17:39:52] -- qdrant is-tenant-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":2475.545300622,"data":"[17:39:54]   qdrant is-tenant-b0 q-asrun: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2476.453306132,"data":"[17:39:55]   qdrant is-tenant-b0 q-asrun: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2476.51613961,"data":"[17:39:55]    qdrant is-tenant-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.6 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2476.516563085,"data":"[17:39:55] -- qdrant is-tenant-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":2478.599573941,"data":"[17:39:57]   qdrant is-tenant-b0 qa-acorn040: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2479.561693231,"data":"[17:39:58]   qdrant is-tenant-b0 qa-acorn040: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2479.611087444,"data":"[17:39:58] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2479.61128318,"data":"[17:39:58] WARNING: qdrant is-tenant-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2479.611415255,"data":"[17:39:58] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2479.626782634,"data":"[17:39:58]    qdrant is-tenant-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.7 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2479.62703287,"data":"[17:39:58] -- qdrant is-tenant-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":2481.848074174,"data":"[17:40:00]   qdrant is-tenant-b0 qa-acorn100: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2482.841825769,"data":"[17:40:01]   qdrant is-tenant-b0 qa-acorn100: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2482.895053478,"data":"[17:40:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2482.89508424,"data":"[17:40:01] WARNING: qdrant is-tenant-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2482.895403084,"data":"[17:40:01] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2482.912926257,"data":"[17:40:01]    qdrant is-tenant-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 6.0 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2482.913229066,"data":"[17:40:01] -- qdrant is-tenant-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":2484.987641937,"data":"[17:40:03]   qdrant is-tenant-b0 qc-exact: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2485.938852659,"data":"[17:40:04]   qdrant is-tenant-b0 qc-exact: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2486.013106066,"data":"[17:40:04]    qdrant is-tenant-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.7 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2486.014711605,"data":"[17:40:04] == stage qdrant is-tenant-b0: done in 31 s\n"}
+,{"stream_name":"stdout","time":2486.055478065,"data":"[17:40:05] == stage qdrant tenant-m0-b0\n"}
+,{"stream_name":"stdout","time":2490.431484237,"data":"[17:40:09]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":2505.446058131,"data":"[17:40:24]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 2)}\n"}
+,{"stream_name":"stdout","time":2505.457818494,"data":"[17:40:24] qdrant tenant-m0 build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 2}, segments holding points {'wardowl_enterprise': 2}\n"}
+,{"stream_name":"stdout","time":2505.458493647,"data":"[17:40:24] -- qdrant tenant-m0-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":2507.42144144,"data":"[17:40:26]   qdrant tenant-m0-b0 q-asrun: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2508.327472766,"data":"[17:40:27]   qdrant tenant-m0-b0 q-asrun: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2508.394541306,"data":"[17:40:27]    qdrant tenant-m0-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.4 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2508.39504647,"data":"[17:40:27] -- qdrant tenant-m0-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":2510.301133772,"data":"[17:40:29]   qdrant tenant-m0-b0 qa-acorn040: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2511.197095695,"data":"[17:40:30]   qdrant tenant-m0-b0 qa-acorn040: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2511.250828533,"data":"[17:40:30] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2511.251093147,"data":"[17:40:30] WARNING: qdrant tenant-m0-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2511.251206024,"data":"[17:40:30] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2511.269062519,"data":"[17:40:30]    qdrant tenant-m0-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.4 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2511.269451289,"data":"[17:40:30] -- qdrant tenant-m0-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":2513.24697174,"data":"[17:40:32]   qdrant tenant-m0-b0 qa-acorn100: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2514.208903106,"data":"[17:40:33]   qdrant tenant-m0-b0 qa-acorn100: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2514.26251244,"data":"[17:40:33] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2514.262557089,"data":"[17:40:33] WARNING: qdrant tenant-m0-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2514.262734658,"data":"[17:40:33] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2514.277053346,"data":"[17:40:33]    qdrant tenant-m0-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.5 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2514.277528412,"data":"[17:40:33] -- qdrant tenant-m0-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":2516.294550008,"data":"[17:40:35]   qdrant tenant-m0-b0 qc-exact: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2517.352360128,"data":"[17:40:36]   qdrant tenant-m0-b0 qc-exact: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2517.420061142,"data":"[17:40:36]    qdrant tenant-m0-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.7 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2517.421428591,"data":"[17:40:36] == stage qdrant tenant-m0-b0: done in 31 s\n"}
+,{"stream_name":"stdout","time":2517.454677511,"data":"[17:40:36] == stage qdrant separate-kb-b0\n"}
+,{"stream_name":"stdout","time":2520.704354793,"data":"[17:40:39]   loaded 980 of 980 chunks (1 s)\n"}
+,{"stream_name":"stdout","time":2521.893708094,"data":"[17:40:40]   loaded 2,000 of 2,000 chunks (1 s)\n"}
+,{"stream_name":"stdout","time":2536.918206279,"data":"[17:40:55]   Qdrant indexed: {'wardowl_enterprise_company': (980, 0, 2), 'wardowl_enterprise_kb': (2000, 0, 2)}\n"}
+,{"stream_name":"stdout","time":2536.93872796,"data":"[17:40:55] qdrant separate-kb build 0: {'wardowl_enterprise_company': 980, 'wardowl_enterprise_kb': 2000} points, segments {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}, segments holding points {'wardowl_enterprise_company': 2, 'wardowl_enterprise_kb': 2}\n"}
+,{"stream_name":"stdout","time":2536.939570679,"data":"[17:40:55] -- qdrant separate-kb-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":2540.902947482,"data":"[17:40:59]   qdrant separate-kb-b0 q-asrun: pass 1 of 2 (4 s)\n"}
+,{"stream_name":"stdout","time":2542.653517305,"data":"[17:41:01]   qdrant separate-kb-b0 q-asrun: pass 2 of 2 (6 s)\n"}
+,{"stream_name":"stdout","time":2542.715893428,"data":"[17:41:01]    qdrant separate-kb-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 10.0 ms, 6 s\n"}
+,{"stream_name":"stdout","time":2542.716346124,"data":"[17:41:01] -- qdrant separate-kb-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":2546.173552133,"data":"[17:41:05]   qdrant separate-kb-b0 qa-acorn040: pass 1 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2547.892231129,"data":"[17:41:06]   qdrant separate-kb-b0 qa-acorn040: pass 2 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2547.948610631,"data":"[17:41:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2547.948714828,"data":"[17:41:06] WARNING: qdrant separate-kb-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2547.948911553,"data":"[17:41:06] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2547.964164794,"data":"[17:41:06]    qdrant separate-kb-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 9.9 ms, 5 s\n"}
+,{"stream_name":"stdout","time":2547.96448376,"data":"[17:41:06] -- qdrant separate-kb-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":2551.414851119,"data":"[17:41:10]   qdrant separate-kb-b0 qa-acorn100: pass 1 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2553.106051767,"data":"[17:41:12]   qdrant separate-kb-b0 qa-acorn100: pass 2 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2553.157059057,"data":"[17:41:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2553.157161058,"data":"[17:41:12] WARNING: qdrant separate-kb-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2553.157294216,"data":"[17:41:12] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2553.172906984,"data":"[17:41:12]    qdrant separate-kb-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 9.8 ms, 5 s\n"}
+,{"stream_name":"stdout","time":2553.173253321,"data":"[17:41:12] -- qdrant separate-kb-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":2556.649258692,"data":"[17:41:15]   qdrant separate-kb-b0 qc-exact: pass 1 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2558.335621232,"data":"[17:41:17]   qdrant separate-kb-b0 qc-exact: pass 2 of 2 (5 s)\n"}
+,{"stream_name":"stdout","time":2558.405408432,"data":"[17:41:17]    qdrant separate-kb-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 9.9 ms, 5 s\n"}
+,{"stream_name":"stdout","time":2558.406833996,"data":"[17:41:17] == stage qdrant separate-kb-b0: done in 41 s\n"}
+,{"stream_name":"stdout","time":2558.460251474,"data":"[17:41:17] == stage qdrant one-segment-b0\n"}
+,{"stream_name":"stdout","time":2561.019995405,"data":"[17:41:19]   loaded 2,980 of 2,980 chunks (2 s)\n"}
+,{"stream_name":"stdout","time":2561.053032881,"data":"[17:41:20]   one-segment: indexing turned on at 10,000 KB for 8,940 KB of vectors\n"}
+,{"stream_name":"stdout","time":2576.065541312,"data":"[17:41:35]   Qdrant indexed: {'wardowl_enterprise': (2980, 0, 1)}\n"}
+,{"stream_name":"stdout","time":2576.077404876,"data":"[17:41:35] qdrant one-segment build 0: {'wardowl_enterprise': 2980} points, segments {'wardowl_enterprise': 1}, segments holding points {'wardowl_enterprise': 1}\n"}
+,{"stream_name":"stdout","time":2576.078191019,"data":"[17:41:35] -- qdrant one-segment-b0 q-asrun: {'hnsw_ef': 128}\n"}
+,{"stream_name":"stdout","time":2578.09131475,"data":"[17:41:37]   qdrant one-segment-b0 q-asrun: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2579.022853429,"data":"[17:41:37]   qdrant one-segment-b0 q-asrun: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2579.084822554,"data":"[17:41:38]    qdrant one-segment-b0 q-asrun: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.8 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2579.085161733,"data":"[17:41:38] -- qdrant one-segment-b0 qa-acorn040: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 0.4}\n"}
+,{"stream_name":"stdout","time":2581.114682722,"data":"[17:41:40]   qdrant one-segment-b0 qa-acorn040: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2582.098989572,"data":"[17:41:41]   qdrant one-segment-b0 qa-acorn040: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2582.164416807,"data":"[17:41:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2582.164475485,"data":"[17:41:41] WARNING: qdrant one-segment-b0 qa-acorn040: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2582.164578348,"data":"[17:41:41] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2582.182981292,"data":"[17:41:41]    qdrant one-segment-b0 qa-acorn040: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 6.0 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2582.183411076,"data":"[17:41:41] -- qdrant one-segment-b0 qa-acorn100: {'hnsw_ef': 128, 'acorn': True, 'max_selectivity': 1.0}\n"}
+,{"stream_name":"stdout","time":2584.232324209,"data":"[17:41:43]   qdrant one-segment-b0 qa-acorn100: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2585.144218911,"data":"[17:41:44]   qdrant one-segment-b0 qa-acorn100: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2585.192282437,"data":"[17:41:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2585.192326651,"data":"[17:41:44] WARNING: qdrant one-segment-b0 qa-acorn100: ACORN was asked for, but Qdrant's telemetry counted no ACORN search (its gate never opened, or this version does not count them)\n"}
+,{"stream_name":"stdout","time":2585.192501829,"data":"[17:41:44] !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n"}
+,{"stream_name":"stdout","time":2585.207714886,"data":"[17:41:44]    qdrant one-segment-b0 qa-acorn100: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.8 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2585.208040926,"data":"[17:41:44] -- qdrant one-segment-b0 qc-exact: {'exact': True}\n"}
+,{"stream_name":"stdout","time":2587.230694254,"data":"[17:41:46]   qdrant one-segment-b0 qc-exact: pass 1 of 2 (2 s)\n"}
+,{"stream_name":"stdout","time":2588.147838416,"data":"[17:41:47]   qdrant one-segment-b0 qc-exact: pass 2 of 2 (3 s)\n"}
+,{"stream_name":"stdout","time":2588.210398289,"data":"[17:41:47]    qdrant one-segment-b0 qc-exact: recall@5 1.0, recall@10 1.0, ERR 0.0, p50 5.8 ms, 3 s\n"}
+,{"stream_name":"stdout","time":2588.21193211,"data":"[17:41:47] == stage qdrant one-segment-b0: done in 30 s\n"}
+,{"stream_name":"stdout","time":2588.247060701,"data":"[17:41:47] $ bash /tmp/wardowl-src/benchmarks/kaggle_stores.sh stop\n"}
+,{"stream_name":"stdout","time":2589.308324737,"data":"stopped\n"}
+,{"stream_name":"stdout","time":2589.310807059,"data":"[17:41:48] X1 finished in 0.09 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/smoke/c/manifest.json)\n"}
+,{"stream_name":"stdout","time":2591.596642399,"data":"[17:41:50] exit code 0\n"}
+,{"stream_name":"stdout","time":2591.596808105,"data":"[17:41:50] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_stats.py --in /kaggle/working/smoke/a /kaggle/working/smoke/b /kaggle/working/smoke/c --out /kaggle/working/smoke/stats --resamples 200\n"}
+,{"stream_name":"stderr","time":2592.968134701,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2592.9681782,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stderr","time":2593.056634208,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2593.056674696,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stderr","time":2593.087084193,"data":"/tmp/wardowl-src/benchmarks/paper/paper_common.py:175: FutureWarning: The behavior of DataFrame concatenation with empty or all-NA entries is deprecated. In a future version, this will no longer exclude empty or all-NA columns when determining the result dtypes. To retain the old behavior, exclude the relevant entries before the concat operation.\n"}
+,{"stream_name":"stderr","time":2593.087129839,"data":"  return pd.concat(frames, ignore_index=True) if frames else pd.DataFrame()\n"}
+,{"stream_name":"stdout","time":2593.358280756,"data":"[17:41:52] 11,195 result rows of 49 settings from 3 folders; 67 setting records; grid run2; P1 and P2 reference pgvector/hnsw-m16-efc64/pg-hnsw\n"}
+,{"stream_name":"stdout","time":2593.57125192,"data":"[17:41:52] intervals\n"}
+,{"stream_name":"stdout","time":2596.094063698,"data":"[17:41:55] paired comparisons\n"}
+,{"stream_name":"stdout","time":2614.523869614,"data":"[17:42:13] pre-registered verdicts\n"}
+,{"stream_name":"stdout","time":2614.844674518,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/summary_by_build.csv (67 rows)\n"}
+,{"stream_name":"stdout","time":2614.846653909,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/summary_by_setting.csv (49 rows)\n"}
+,{"stream_name":"stdout","time":2614.884107831,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/intervals.csv (4,648 rows)\n"}
+,{"stream_name":"stdout","time":2614.897428492,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/paired.csv (720 rows)\n"}
+,{"stream_name":"stdout","time":2614.899427828,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/explain_summary.csv (53 rows)\n"}
+,{"stream_name":"stdout","time":2614.90111292,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/qdrant_paths.csv (154 rows)\n"}
+,{"stream_name":"stdout","time":2614.902131188,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/acorn_engagement.csv (11 rows)\n"}
+,{"stream_name":"stdout","time":2614.903847208,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/plans.csv (72 rows)\n"}
+,{"stream_name":"stdout","time":2614.904832193,"data":"[17:42:13] wrote /kaggle/working/smoke/stats/predictions.csv (9 rows)\n"}
+,{"stream_name":"stdout","time":2614.943781562,"data":"[17:42:13] Q1: falsified\n"}
+,{"stream_name":"stdout","time":2614.943817228,"data":"[17:42:13] Q2: falsified\n"}
+,{"stream_name":"stdout","time":2614.94382286,"data":"[17:42:13] Q3: inconclusive\n"}
+,{"stream_name":"stdout","time":2614.943867865,"data":"[17:42:13] Q4: confirmed\n"}
+,{"stream_name":"stdout","time":2614.944141667,"data":"[17:42:13] P1: inconclusive\n"}
+,{"stream_name":"stdout","time":2614.944290423,"data":"[17:42:13] P2: confirmed\n"}
+,{"stream_name":"stdout","time":2614.9443114,"data":"[17:42:13] P3: confirmed\n"}
+,{"stream_name":"stdout","time":2614.944630658,"data":"[17:42:13] P4: falsified\n"}
+,{"stream_name":"stdout","time":2614.94464642,"data":"[17:42:13] P5: inconclusive\n"}
+,{"stream_name":"stdout","time":2614.944651124,"data":"[17:42:13] X1 statistics done in 23 s: /kaggle/working/smoke/stats/report.md\n"}
+,{"stream_name":"stdout","time":2615.226615977,"data":"[17:42:14] exit code 0\n"}
+,{"stream_name":"stdout","time":2615.22668366,"data":"[17:42:14] smoke exit codes (shard a, b, c, statistics): [0, 0, 0, 0]\n"}
+,{"stream_name":"stderr","time":2618.127273561,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":2618.127318907,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":2618.539803877,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":2618.539838107,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":2619.591849901,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":2621.083438147,"data":"[NbConvertApp] Writing 275128 bytes to __results__.html\n"}
+]

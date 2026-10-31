@@ -1,0 +1,16 @@
+{
+  "status": "running",
+  "started": "21:36:43",
+  "store": "pgvector",
+  "layout": "hnsw-m32-efc200",
+  "rep": 2,
+  "m": 32,
+  "ef_construction": 200,
+  "seconds": 129.6,
+  "builder": "harness: DROP INDEX, CREATE INDEX ... USING hnsw WITH (m, ef_construction), ANALYZE (wardowl's create_schema takes neither m nor ef_construction)",
+  "index_bytes": 440475648,
+  "reloptions": [
+    "m=32",
+    "ef_construction=200"
+  ]
+}

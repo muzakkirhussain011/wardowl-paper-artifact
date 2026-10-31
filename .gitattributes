@@ -1,0 +1,2 @@
+# Raw outputs stay byte for byte as the runs wrote them.
+evidence/raw/** -text

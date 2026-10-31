@@ -1,0 +1,156 @@
+{
+  "store": "pgvector",
+  "layout": "hnsw-m16-efc64",
+  "build": "hnsw-m16-efc64-b0",
+  "rep": 0,
+  "setting": "p-x0v",
+  "experiments": [
+    "X0 replay",
+    "P5"
+  ],
+  "params": {
+    "ef_search": 100,
+    "iterative_scan": "relaxed_order",
+    "replay": "x0",
+    "vacuum": true
+  },
+  "harness_level": [
+    "replay",
+    "vacuum"
+  ],
+  "first_build_only": true,
+  "passes": 1,
+  "started": "2026-10-29T19:26:59+0000",
+  "status": "done",
+  "seconds": 677.1,
+  "summary": {
+    "recall5": 0.9977859778597785,
+    "recall10": 0.9982472324723246,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 335.3293229999963
+  },
+  "files": {
+    "runs": "/kaggle/working/x1run2/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__p-x0v.parquet",
+    "explain": "/kaggle/working/x1run2/explain/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__p-x0v.parquet",
+    "explain_raw": "/kaggle/working/x1run2/explain_raw/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__p-x0v.jsonl.gz"
+  },
+  "questions": 1105,
+  "order": "enterprise_rag.Run.evaluate: random.Random(seed 7).shuffle of the original questions",
+  "retrievals": 2210,
+  "errors": 0,
+  "error_examples": [],
+  "sweep_seconds": 675.2,
+  "plans": {
+    "captured": 2210,
+    "hnsw": 20,
+    "hnsw_share": 0.00904977375565611,
+    "generic": 2148,
+    "kinds": {
+      "gin": 2190,
+      "hnsw": 20
+    },
+    "supported": true,
+    "reason": "",
+    "unparsed_notices": 0
+  },
+  "prepared_statements": {
+    "statements": 6,
+    "search_statements": 4,
+    "search_generic_plans": 2148,
+    "search_custom_plans": 52,
+    "per_search_statement": [
+      {
+        "name": "_pg3_4",
+        "generic_plans": 671,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_5",
+        "generic_plans": 0,
+        "custom_plans": 37
+      },
+      {
+        "name": "_pg3_3",
+        "generic_plans": 398,
+        "custom_plans": 5
+      },
+      {
+        "name": "_pg3_2",
+        "generic_plans": 1079,
+        "custom_plans": 5
+      }
+    ]
+  },
+  "pool": "a fresh pool with the original's arguments (min 1, max 4, psycopg defaults), after VACUUM",
+  "vacuum_seconds": 0.8,
+  "table_state_before": {
+    "at": "2026-10-29T19:26:59+0000",
+    "table": {
+      "n_live_tup": 107540,
+      "n_ins_since_vacuum": 0,
+      "last_vacuum": "2026-10-29 19:26:59.113203+00:00",
+      "last_autovacuum": "2026-10-29 19:26:22.099037+00:00",
+      "last_analyze": "2026-10-29 19:26:59.840764+00:00",
+      "last_autoanalyze": "2026-10-29 19:25:21.116850+00:00",
+      "vacuum_count": 1,
+      "autovacuum_count": 2,
+      "analyze_count": 2,
+      "autoanalyze_count": 1
+    },
+    "gin_metapage": {
+      "pending_head": 4294967295,
+      "pending_tail": 4294967295,
+      "tail_free_size": 0,
+      "n_pending_pages": 0,
+      "n_pending_tuples": 0,
+      "n_total_pages": 1117,
+      "n_entry_pages": 248,
+      "n_data_pages": 407,
+      "n_entries": 50109,
+      "version": 2
+    },
+    "gin_pg_class": {
+      "relpages": 1117,
+      "reltuples": 107540.0,
+      "pages": 1117
+    }
+  },
+  "table_state_after": {
+    "at": "2026-10-29T19:38:16+0000",
+    "table": {
+      "n_live_tup": 107540,
+      "n_ins_since_vacuum": 0,
+      "last_vacuum": "2026-10-29 19:26:59.113203+00:00",
+      "last_autovacuum": "2026-10-29 19:26:22.099037+00:00",
+      "last_analyze": "2026-10-29 19:26:59.840764+00:00",
+      "last_autoanalyze": "2026-10-29 19:25:21.116850+00:00",
+      "vacuum_count": 1,
+      "autovacuum_count": 2,
+      "analyze_count": 2,
+      "autoanalyze_count": 1
+    },
+    "gin_metapage": {
+      "pending_head": 4294967295,
+      "pending_tail": 4294967295,
+      "tail_free_size": 0,
+      "n_pending_pages": 0,
+      "n_pending_tuples": 0,
+      "n_total_pages": 1117,
+      "n_entry_pages": 248,
+      "n_data_pages": 407,
+      "n_entries": 50109,
+      "version": 2
+    },
+    "gin_pg_class": {
+      "relpages": 1117,
+      "reltuples": 107540.0,
+      "pages": 1117
+    }
+  },
+  "effective_settings": {
+    "hnsw.ef_search": 100,
+    "hnsw.iterative_scan": "relaxed_order"
+  },
+  "ran_mostly_exact": true
+}

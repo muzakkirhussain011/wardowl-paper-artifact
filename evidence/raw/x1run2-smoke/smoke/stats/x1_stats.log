@@ -1,0 +1,23 @@
+[17:41:52] 11,195 result rows of 49 settings from 3 folders; 67 setting records; grid run2; P1 and P2 reference pgvector/hnsw-m16-efc64/pg-hnsw
+[17:41:52] intervals
+[17:41:55] paired comparisons
+[17:42:13] pre-registered verdicts
+[17:42:13] wrote /kaggle/working/smoke/stats/summary_by_build.csv (67 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/summary_by_setting.csv (49 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/intervals.csv (4,648 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/paired.csv (720 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/explain_summary.csv (53 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/qdrant_paths.csv (154 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/acorn_engagement.csv (11 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/plans.csv (72 rows)
+[17:42:13] wrote /kaggle/working/smoke/stats/predictions.csv (9 rows)
+[17:42:13] Q1: falsified
+[17:42:13] Q2: falsified
+[17:42:13] Q3: inconclusive
+[17:42:13] Q4: confirmed
+[17:42:13] P1: inconclusive
+[17:42:13] P2: confirmed
+[17:42:13] P3: confirmed
+[17:42:13] P4: falsified
+[17:42:13] P5: inconclusive
+[17:42:13] X1 statistics done in 23 s: /kaggle/working/smoke/stats/report.md

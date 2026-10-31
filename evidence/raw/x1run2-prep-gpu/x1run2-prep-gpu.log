@@ -1,0 +1,80 @@
+[{"stream_name":"stdout","time":3.759592047,"data":"[19:12:02] role prep; no setting starts after 8.5 h of this session\n"}
+,{"stream_name":"stdout","time":3.766181918,"data":"[19:12:02] wardowl and the paper's scripts at a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":3.766202807,"data":"[19:12:02] $ /usr/bin/python3 -m pip install -q wardowl[pgvector,qdrant] @ git+https://github.com/muzakkirhussain011/wardowl.git@a95642429d508340946ee3679b65db2eedd36dc1 qdrant-client\u003e=1.16 sentence-transformers\u003e=3 datasets\u003e=2.19 psutil pyarrow scipy\n"}
+,{"stream_name":"stdout","time":17.390792056,"data":"[19:12:16] exit code 0\n"}
+,{"stream_name":"stdout","time":17.390828956,"data":"[19:12:16] $ /usr/bin/python3 /tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py --prepare-only --allow-cpu-embedding --out /kaggle/working/x1run2\n"}
+,{"stream_name":"stdout","time":31.538387239,"data":"[19:12:30] python: 3.13.15\n"}
+,{"stream_name":"stdout","time":31.538420901,"data":"[19:12:30] platform: Linux-6.18.55+-x86_64-with-glibc2.39\n"}
+,{"stream_name":"stdout","time":31.538437552,"data":"[19:12:30] cpus: 4\n"}
+,{"stream_name":"stdout","time":31.538486163,"data":"[19:12:30] wardowl: 2.1.0\n"}
+,{"stream_name":"stdout","time":31.538579479,"data":"[19:12:30] wardowl_path: /usr/local/lib/python3.13/dist-packages/wardowl\n"}
+,{"stream_name":"stdout","time":31.538589453,"data":"[19:12:30] acceptance_commit: a95642429d508340946ee3679b65db2eedd36dc1\n"}
+,{"stream_name":"stdout","time":31.538645262,"data":"[19:12:30] memory_gib: 31.3\n"}
+,{"stream_name":"stdout","time":31.538705034,"data":"[19:12:30] gpus: ['Tesla T4', 'Tesla T4']\n"}
+,{"stream_name":"stdout","time":31.538746021,"data":"[19:12:30] torch: 2.11.0+cu128\n"}
+,{"stream_name":"stdout","time":31.538807852,"data":"[19:12:30] transformers: 5.16.1\n"}
+,{"stream_name":"stdout","time":31.538892476,"data":"[19:12:30] sentence-transformers: 5.7.0\n"}
+,{"stream_name":"stdout","time":31.539459777,"data":"[19:12:30] datasets: 4.8.5\n"}
+,{"stream_name":"stdout","time":31.539470038,"data":"[19:12:30] numpy: 2.1.3\n"}
+,{"stream_name":"stdout","time":31.539474039,"data":"[19:12:30] psycopg: 3.3.6\n"}
+,{"stream_name":"stdout","time":31.53947737,"data":"[19:12:30] chromadb: None\n"}
+,{"stream_name":"stdout","time":31.539480553,"data":"[19:12:30] elasticsearch: None\n"}
+,{"stream_name":"stdout","time":31.539483733,"data":"[19:12:30] opensearch-py: None\n"}
+,{"stream_name":"stdout","time":31.539487221,"data":"[19:12:30] qdrant-client: 1.20.0\n"}
+,{"stream_name":"stdout","time":31.539490463,"data":"[19:12:30] weaviate-client: None\n"}
+,{"stream_name":"stdout","time":31.539493731,"data":"[19:12:30] redis: None\n"}
+,{"stream_name":"stdout","time":31.53949861,"data":"[19:12:30] lancedb: None\n"}
+,{"stream_name":"stdout","time":31.539501816,"data":"[19:12:30] faiss-cpu: None\n"}
+,{"stream_name":"stdout","time":31.539505062,"data":"[19:12:30] pandas: 2.3.3\n"}
+,{"stream_name":"stdout","time":31.539510021,"data":"[19:12:30] pyarrow: 23.0.1\n"}
+,{"stream_name":"stdout","time":31.539513821,"data":"[19:12:30] scipy: 1.16.3\n"}
+,{"stream_name":"stdout","time":31.539517774,"data":"[19:12:30] psycopg-pool: 3.3.3\n"}
+,{"stream_name":"stdout","time":31.540481521,"data":"[19:12:30] hardware: {'cpus': 4, 'memory_gib': 31.3, 'disk_free_gib': 1048.7, 'gpus': ['Tesla T4', 'Tesla T4'], 'cuda': '12.8'}\n"}
+,{"stream_name":"stdout","time":31.540494225,"data":"[19:12:30] wardowl_installed: True\n"}
+,{"stream_name":"stdout","time":31.540756887,"data":"[19:12:30] == stage corpus\n"}
+,{"stream_name":"stdout","time":31.541029373,"data":"\n"}
+,{"stream_name":"stdout","time":31.541037138,"data":"== corpus, people and questions\n"}
+,{"stream_name":"stdout","time":31.543187236,"data":"  [PASS] the oracle agrees with enterprise.can_read on enterprise.py's corpus\n"}
+,{"stream_name":"stdout","time":31.548920274,"data":"  [PASS] the leak detector finds exactly the canaries Report.no_leaks does, in any case or spacing\n"}
+,{"stream_name":"stdout","time":32.790682655,"data":"[19:12:31] 49,920 company documents; reading the shared knowledge base (BEIR FiQA)\n"}
+,{"stream_name":"stderr","time":36.962069787,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\n"}
+,{"stream_name":"stderr","time":40.234680052,"data":"\rGenerating corpus split:   0%|          | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 159382.55 examples/s]\rGenerating corpus split: 100%|██████████| 57638/57638 [00:00\u003c00:00, 155546.29 examples/s]\n"}
+,{"stream_name":"stdout","time":42.746682522,"data":"  [PASS] every chunk id is unique\n"}
+,{"stream_name":"stdout","time":42.765930371,"data":"  [PASS] every non-public document carries its own canary once, and public ones none\n"}
+,{"stream_name":"stdout","time":42.766181674,"data":"  note: corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})\n"}
+,{"stream_name":"stderr","time":44.457670318,"data":"\rGenerating queries split:   0%|          | 0/6648 [00:00\u003c?, ? examples/s]\rGenerating queries split: 100%|██████████| 6648/6648 [00:00\u003c00:00, 741214.09 examples/s]\n"}
+,{"stream_name":"stdout","time":44.5512759,"data":"[19:12:43] 6,648 FiQA queries for the probe set\n"}
+,{"stream_name":"stdout","time":44.557802241,"data":"[19:12:43] probe set: 24 people, 384 questions\n"}
+,{"stream_name":"stdout","time":44.559720503,"data":"[19:12:43] == stage corpus: done in 13 s\n"}
+,{"stream_name":"stdout","time":44.560145298,"data":"[19:12:43] == stage embeddings\n"}
+,{"stream_name":"stdout","time":44.560693449,"data":"[19:12:43] cached embeddings copied from /kaggle/input: none\n"}
+,{"stream_name":"stdout","time":44.560869754,"data":"\n"}
+,{"stream_name":"stdout","time":44.560879252,"data":"== embeddings\n"}
+,{"stream_name":"stderr","time":88.529999028,"data":"\rLoading weights:   0%|          | 0/199 [00:00\u003c?, ?it/s]\rLoading weights: 100%|██████████| 199/199 [00:00\u003c00:00, 2563.04it/s]\n"}
+,{"stream_name":"stdout","time":119.408474009,"data":"[19:13:58]   embedded 20,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":146.260901007,"data":"[19:14:25]   embedded 40,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":205.34372697,"data":"[19:15:24]   embedded 60,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":288.742013973,"data":"[19:16:47]   embedded 80,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":370.804395621,"data":"[19:18:09]   embedded 100,000 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":400.861850866,"data":"[19:18:39]   embedded 107,540 of 107,540 chunks\n"}
+,{"stream_name":"stdout","time":401.065320408,"data":"[19:18:40] embedded 107,540 chunks in 309 s on cuda:1\n"}
+,{"stream_name":"stdout","time":402.285273443,"data":"  [PASS] one unit-length embedding per chunk\n"}
+,{"stream_name":"stdout","time":402.292713593,"data":"[19:18:41] == stage embeddings: done in 358 s\n"}
+,{"stream_name":"stdout","time":402.293275483,"data":"[19:18:41] == stage exact baseline\n"}
+,{"stream_name":"stdout","time":402.293494798,"data":"\n"}
+,{"stream_name":"stdout","time":402.293511746,"data":"== exact search baseline\n"}
+,{"stream_name":"stdout","time":403.786567514,"data":"  [PASS] exact search over each person's readable chunks returns only those\n"}
+,{"stream_name":"stdout","time":403.799426204,"data":"  note: readable chunks per person: min 0, median 58,433, max 59,265 of 107,540\n"}
+,{"stream_name":"stdout","time":403.799939383,"data":"[19:18:42] == stage exact baseline: done in 2 s\n"}
+,{"stream_name":"stdout","time":403.800431867,"data":"[19:18:42] == stage alignment variables\n"}
+,{"stream_name":"stdout","time":405.440356425,"data":"[19:18:44] == stage alignment variables: done in 2 s\n"}
+,{"stream_name":"stdout","time":405.464580159,"data":"[19:18:44] 1,489 questions of 213 people; 50 fixed EXPLAIN questions\n"}
+,{"stream_name":"stdout","time":405.465566455,"data":"[19:18:44] X1 finished in 0.11 h: 0 failures, 0 unsupported, 0 skipped (see /kaggle/working/x1run2/manifest.json)\n"}
+,{"stream_name":"stdout","time":412.166741732,"data":"[19:18:51] exit code 0\n"}
+,{"stream_name":"stderr","time":414.359089404,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":414.359139033,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":414.713268865,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":414.713311908,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":415.521202725,"data":"[NbConvertApp] Converting notebook __script__.ipynb to html\n"}
+,{"stream_name":"stderr","time":416.722883039,"data":"[NbConvertApp] Writing 275126 bytes to __results__.html\n"}
+]

@@ -1,0 +1,131 @@
+{
+  "status": "running",
+  "started": "17:38:57",
+  "store": "qdrant",
+  "layout": "as-run",
+  "rep": 0,
+  "builder": "enterprise_rag.QdrantStore.load, as the original run: wardowl's create_collection with keyword indexes on allowed_users, allowed_groups, tenant and wardowl_id, default HNSW (m 16, ef_construct 100) and optimizer, every chunk through QdrantBackend.add",
+  "loaded": {
+    "load_s": 1.7,
+    "index_s": 0.0,
+    "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions"
+  },
+  "seconds": 18.2,
+  "points": {
+    "wardowl_enterprise": 2980
+  },
+  "segments": {
+    "wardowl_enterprise": 2
+  },
+  "data_segments": {
+    "wardowl_enterprise": 2
+  },
+  "segment_list": {
+    "wardowl_enterprise": [
+      {
+        "segment_type": "plain",
+        "is_appendable": true,
+        "num_points": 1488,
+        "num_vectors": 1488,
+        "num_indexed_vectors": 0
+      },
+      {
+        "segment_type": "plain",
+        "is_appendable": true,
+        "num_points": 1492,
+        "num_vectors": 1492,
+        "num_indexed_vectors": 0
+      }
+    ]
+  },
+  "collections": {
+    "wardowl_enterprise": {
+      "status": "green",
+      "optimizer_status": "ok",
+      "warnings": null,
+      "indexed_vectors_count": 0,
+      "points_count": 2980,
+      "segments_count": 2,
+      "config": {
+        "params": {
+          "vectors": {
+            "size": 768,
+            "distance": "Cosine",
+            "hnsw_config": null,
+            "quantization_config": null,
+            "on_disk": null,
+            "memory": null,
+            "datatype": null,
+            "multivector_config": null
+          },
+          "shard_number": 1,
+          "sharding_method": null,
+          "replication_factor": 1,
+          "write_consistency_factor": 1,
+          "read_fan_out_factor": null,
+          "read_fan_out_delay_ms": null,
+          "on_disk_payload": true,
+          "payload": null,
+          "id_tracker": null,
+          "sparse_vectors": null
+        },
+        "hnsw_config": {
+          "m": 16,
+          "ef_construct": 100,
+          "full_scan_threshold": 10000,
+          "max_indexing_threads": 0,
+          "on_disk": false,
+          "memory": null,
+          "payload_m": null,
+          "inline_storage": null
+        },
+        "optimizer_config": {
+          "deleted_threshold": 0.2,
+          "vacuum_min_vector_number": 1000,
+          "default_segment_number": 0,
+          "max_segment_size": null,
+          "memmap_threshold": null,
+          "indexing_threshold": 10000,
+          "flush_interval_sec": 5,
+          "max_optimization_threads": null,
+          "prevent_unoptimized": null
+        },
+        "wal_config": {
+          "wal_capacity_mb": 32,
+          "wal_segments_ahead": 0,
+          "wal_retain_closed": 1
+        },
+        "quantization_config": null,
+        "strict_mode_config": null,
+        "metadata": null
+      },
+      "payload_schema": {
+        "metadata.allowed_groups": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 2900
+        },
+        "metadata.tenant": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 2980
+        },
+        "wardowl_id": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 2980
+        },
+        "metadata.allowed_users": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 240
+        }
+      },
+      "update_queue": {
+        "length": 0,
+        "deferred_points": null
+      },
+      "created_at": null
+    }
+  }
+}

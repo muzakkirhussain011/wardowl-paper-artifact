@@ -1,0 +1,126 @@
+{
+  "store": "pgvector",
+  "layout": "hnsw-m16-efc64",
+  "build": "hnsw-m16-efc64-b0",
+  "rep": 0,
+  "setting": "pe-strict",
+  "experiments": [
+    "P-e",
+    "P2"
+  ],
+  "params": {
+    "ef_search": 100,
+    "iterative_scan": "strict_order",
+    "plan_cache_mode": "force_custom_plan",
+    "enable_seqscan": "off",
+    "enable_bitmapscan": "off"
+  },
+  "harness_level": [
+    "plan_cache_mode",
+    "enable_seqscan",
+    "enable_bitmapscan"
+  ],
+  "first_build_only": false,
+  "passes": 2,
+  "started": "2026-10-29T17:31:52+0000",
+  "status": "done",
+  "seconds": 7.8,
+  "summary": {
+    "recall5": 0.8716216216216216,
+    "recall10": 0.8633445945945944,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 9.211397499939267
+  },
+  "files": {
+    "runs": "/kaggle/working/smoke/a/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pe-strict.parquet",
+    "explain": "/kaggle/working/smoke/a/explain/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pe-strict.parquet",
+    "explain_raw": "/kaggle/working/smoke/a/explain_raw/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pe-strict.jsonl.gz"
+  },
+  "questions": 169,
+  "retrievals": 507,
+  "errors": 0,
+  "error_examples": [],
+  "unstable_k5": 0,
+  "sweep_seconds": 7.3,
+  "plans": {
+    "captured": 338,
+    "hnsw": 338,
+    "hnsw_share": 1.0,
+    "generic": 0,
+    "kinds": {
+      "hnsw": 338
+    },
+    "supported": true,
+    "reason": "",
+    "unparsed_notices": 0
+  },
+  "prepared_statements": {
+    "statements": 10,
+    "search_statements": 3,
+    "search_generic_plans": 0,
+    "search_custom_plans": 502,
+    "per_search_statement": [
+      {
+        "name": "_pg3_9",
+        "generic_plans": 0,
+        "custom_plans": 58
+      },
+      {
+        "name": "_pg3_8",
+        "generic_plans": 0,
+        "custom_plans": 133
+      },
+      {
+        "name": "_pg3_6",
+        "generic_plans": 0,
+        "custom_plans": 311
+      }
+    ]
+  },
+  "table_state": {
+    "at": "2026-10-29T17:31:52+0000",
+    "table": {
+      "n_live_tup": 2980,
+      "n_ins_since_vacuum": 0,
+      "last_vacuum": "2026-10-29 17:29:41.513629+00:00",
+      "last_autovacuum": null,
+      "last_analyze": "2026-10-29 17:29:41.589267+00:00",
+      "last_autoanalyze": null,
+      "vacuum_count": 2,
+      "autovacuum_count": 0,
+      "analyze_count": 3,
+      "autoanalyze_count": 0
+    },
+    "gin_metapage": {
+      "pending_head": 4294967295,
+      "pending_tail": 4294967295,
+      "tail_free_size": 0,
+      "n_pending_pages": 0,
+      "n_pending_tuples": 0,
+      "n_total_pages": 174,
+      "n_entry_pages": 21,
+      "n_data_pages": 0,
+      "n_entries": 1150,
+      "version": 2
+    },
+    "gin_pg_class": {
+      "relpages": 174,
+      "reltuples": 2980.0,
+      "pages": 174
+    }
+  },
+  "effective_settings": {
+    "hnsw.ef_search": "100",
+    "hnsw.iterative_scan": "strict_order",
+    "hnsw.max_scan_tuples": "20000",
+    "hnsw.scan_mem_multiplier": "1",
+    "work_mem": "4MB",
+    "enable_indexscan": "on",
+    "enable_seqscan": "off",
+    "enable_bitmapscan": "off",
+    "plan_cache_mode": "force_custom_plan",
+    "prepare_threshold": "5"
+  },
+  "ran_mostly_exact": false
+}
