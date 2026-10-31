@@ -85,7 +85,8 @@ are the trustworthy times.
 
 The Kaggle runs' outputs and logs, without embedding matrices, are also in the public dataset
 [muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence). Its
-description says which account ran what.
+description says which account ran what. Kaggle unpacks gzip files on upload, so the 195 `.gz` files under `evidence/raw/`
+appear there without that suffix, at their unpacked sizes.
 
 ## 3. How to rerun
 
