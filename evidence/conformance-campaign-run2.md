@@ -84,4 +84,4 @@ limit wardowl now enforces is not stricter than OpenFGA's in the generated data 
 - The Cerbos disagreement is now attributed per hit: in all 280 disagreeing hits the pushed-down
   filter agrees with the reference semantics and Cerbos's check denies, so the filter over-approximates
   the policy as written (CEL), never the reverse; every such hit fails the re-check.
-- Remaining errors are documented engine limits that fail closed.
+- Remaining errors are store limits that fail closed, some documented and some not.

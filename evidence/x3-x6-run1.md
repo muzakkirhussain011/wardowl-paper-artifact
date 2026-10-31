@@ -183,7 +183,7 @@ consistent with a difference between the two index objects; not proven.**
 - Offsets of both signs that do not depend on m exist in other configurations whose answers are
   identical in both worlds: FAISS `pre` (W1 faster) 0.25 [0.20, 0.30], 0.30, 0.25, 0.35 at m = 1, 10,
   100, 1,000 (means 128.062 against 128.354 ms at m = 1); pgvector `pre-exact` (W0^g slower)
-  0.17, 0.14, 0.13, 0.12, with W0^g 1.5 to 3.5 times slower at every m (p = 1: 2.604 against 9.072
+  0.17, 0.14, 0.13, 0.12, with W0^g 1.5 to 3.5 times slower at every m pooled over each p, 1.5 to 3.7 per (m, p) cell (p = 1: 2.604 against 9.072
   ms; p = 10: 19.695 against 42.766; p = 50: 84.880 against 131.512, pooled over m).
 - G1 compares one index with itself and cannot detect a difference between builds.
 

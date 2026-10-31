@@ -43,7 +43,7 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
 - **X1 is better placed.** GitHub's public activity record for the library's branch `paper/x1-underretrieval`, copied to
   `evidence/raw/x1-branch-activity.json`, shows the branch created at `947fb8f` on 2026-10-26 at 09:50:53 UTC and pushed to
   `a956424` on 2026-10-29 at 16:55:40 UTC. The registration commits are its ancestors, and each kernel clones its commit from
-  there, so a kernel cannot have run before the push. Run 1's public notebook log prints `947fb8f`; run 2's log is the author's
+  there, so a kernel cannot have run before the push. Amendment 2 and its revisions come after `947fb8f` and before `a956424`. Run 1's public notebook log prints `947fb8f`; run 2's log is the author's
   copy, because its kernels are private. No Actions run bounds them.
 - **The GitHub experiments do not have this weakness:** their run times and head commits are in GitHub's own records, and
   the ancestry the paper claims can be checked with `git merge-base --is-ancestor` on the public library.
@@ -86,7 +86,7 @@ hashes. Later commits did not, so the run records on branch `results/reproducers
 The run ids 41007436602, 41007779363 and 41008151303 are of the paper's private development repository, so a stranger can't open
 them; only the outputs on branch `results/reproducers` are public, and those are self-reported copies. Later runs on that branch
 name head commits of the same repository, and `38f4ae7` (run 41114474172) is not on any public branch. Run 41249047470 of
-`.github/workflows/reproducers.yml`, on this public repository on 2026-10-31, gave the same verdicts, and its page is public.
+`.github/workflows/reproducers.yml`, on this public repository on 2026-10-31, gave the same verdicts. Its summary page is public, GitHub asks for a sign-in to read its job logs, and its outputs are on `results/reproducers`.
 
 ## Archive and licenses
 

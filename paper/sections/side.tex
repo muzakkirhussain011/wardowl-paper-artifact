@@ -18,8 +18,8 @@ much can a subject learn from these departures about whether unreadable chunks e
 \subsection{A distinguishing game}\label{sec:side-game}
 
 Two worlds of equal size differ in the 1,233 unreadable chunks of one group of nine probes. In $W_1$ each probe's $m$ secrets are its $m$ most
-similar passages, for $m$ from 1 to 1,000; in $W_0$ each secret is replaced by a passage of another domain, far from every probe and cut to
-the same length, at the same position in the index. So a probe labeled $m$ has $m$ secrets near it, and the other $1{,}233 - m$ lie beyond the depth the layer explores for it, though not outside the index; each world is a separate build. The attacker's readable set is identical in both worlds. It
+similar non-hub passages, for $m$ from 1 to 1,000; in $W_0$ each secret is replaced by a passage of another domain, far from every probe and cut to
+the same length, at the same position in the index. So a probe labeled $m$ has $m$ secrets near it, and the other $1{,}233 - m$ lie beyond the post-filter's cap of 1,000 candidates for it, though not outside the index; each world is a separate build. The attacker's readable set is identical in both worlds. It
 issues the probe and sees what a caller of the layer saw in the version we measured: the latency, the number of hits,
 the completeness flag, the mean score of the hits, and the hits themselves, from which it can compute recall@10
 against the exact top ten of its own readable set. The detection fields of Section~\ref{sec:repair} are also visible
@@ -115,8 +115,8 @@ values.}
 Every pre-registered cell ran: 520,320 retrievals without an error, none returning a chunk outside the attacker's readable set.
 Figure~\ref{fig:side-auc} shows the channels by $m$. Three cautions come first. Two builds of identical content gave paired latency AUCs
 of 0.342 to 0.608 for FAISS's post-filter, and, per $m$, $|\mathrm{AUC} - 0.5|$ up to 0.38 for its pre-filter, 0.33 for pgvector's exact search and
-0.08 for Qdrant's exact search (0.24, 0.31 and under 0.01 pooled over $m$); the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC between about 0.6 and 0.8 is
-therefore not by itself evidence about the secrets. We read growth with $m$ as the sign of a channel and a flat curve as an offset, a criterion we adopted after seeing these results. Second, every $W_0^g$ is built later in its seed than
+0.08 for Qdrant's exact search (0.24, 0.31 and under 0.01 pooled over $m$); the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC up to about 0.9, or down to about 0.1, is
+therefore not by itself evidence about the secrets. We read growth with $m$ as the sign of a channel and a flat curve as an offset, a criterion we adopted after seeing these results; same-content differences can themselves rise at $m = 1{,}000$, the cell with the fewest pairs, so a rise there alone does not establish a channel. Second, every $W_0^g$ is built later in its seed than
 $W_1$, so build age is aligned with world in every latency cell. Third, intervals resample (seed, probe) pairs while the demonstrated noise is per build, so latency intervals are too narrow. We apply no correction for multiple
 comparisons; the verdicts rest on the cells the hypotheses name.
 
@@ -151,6 +151,6 @@ No padder ran. Padded latency was computed afterwards from the recorded latencie
 outside the rule. What the computation does give is the cost: padding raised mean latency 5.2 to 6.7 times in those configurations. Exact search cost 1.53, 2.01 and 8.10 times the
 mean latency of the approximate pre-filter on Qdrant, Elasticsearch and pgvector.
 
-In sum, pooled over attackers, the largest channels at $m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48, part of it the build offset above), and
+In sum, pooled over attackers, the largest channels at $m = 1{,}000$ were keyword scores ($|\mathrm{AUC} - 0.5|$ of 0.49 and 0.50), constant work on pgvector, in reverse (0.48; how much of it is build offset was not measured), and
 pgvector's approximate pre-filter (0.38); per attacker, the post-filter's latency and pgvector's pre-filter reached 0.50 at $p = 10\%$ and 50\%, and the count 0.50 at $p = 1\%$. On the shared index, only searches that ran exactly, whether requested or chosen by the planner (Qdrant's small filters), returned the same answer in both worlds; a separated index does so by construction. Appendix~\ref{app:side-results} gives the full
 results, costs and the build-offset forensics.

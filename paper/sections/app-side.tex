@@ -218,10 +218,10 @@ Table~\ref{tab:side-auc} must be read. Two builds of identical content gave pair
 ($|\mathrm{AUC} - 0.5|$ up to 0.16). Pooled over $m$ they were 0.257 and 0.426 for its
 pre-filter (per $m$, up to 0.38, at $m = 1{,}000$), 0.186 and 0.789 for pgvector's exact search (per $m$, up to 0.33; from the tables'
 vacuum state, below), and 0.494 and 0.505 for Qdrant's exact search (per $m$, up to 0.08, at $m = 1{,}000$, where its cell reads 0.42); we have no such
-measurement for the other configurations, and Elasticsearch's was lost. A latency AUC between about
-0.6 and 0.8 is therefore not by itself evidence about the secrets. To separate a channel from an
+measurement for the other configurations, and Elasticsearch's was lost. A latency AUC up to about
+0.9, or down to about 0.1, is therefore not by itself evidence about the secrets. To separate a channel from an
 offset we use a criterion adopted after seeing these results: a channel grows with $m$, as in the widening loop and pgvector's iterative scan, while
-an offset stays the same at every $m$, as in the configurations whose answers are identical.
+an offset stays the same at every $m$, as in the configurations whose answers are identical. Same-content differences were themselves largest at $m = 1{,}000$ for FAISS's pre-filter and Qdrant's exact search, in the cell with the fewest pairs, so a rise at that $m$ alone does not establish a channel.
 
 \paragraph{Constant work (H2, falsified).}
 Fetching the cap in one round removed the widening channel from latency pooled over $m$ and $p$ on
@@ -231,8 +231,8 @@ are secrets, $W_1$ answered \emph{faster}: on pgvector the paired AUC fell from 
 (0.000 to 0.050) at $m = 1{,}000$, where $W_1$ took 23.5 against 26.4\,ms; FAISS fell to 0.133 (0.075
 to 0.200) and Qdrant to 0.350 (0.225 to 0.483), while Elasticsearch drifted the other way (0.573
 pooled, 0.625 at $m = 1{,}000$; inconclusive). This reverse channel grows with $m$ on pgvector (size 0.21 to 0.48), which suggests a dependence
-on the secrets, but pgvector's exact search shows an offset of the same sign (0.12 to 0.17, flat), no same-content comparison exists for constant work and the mechanism is not established, so the 98\% of pgvector's probes at
-$m = 1{,}000$ that an attacker who knows the sign would identify is an upper bound on this harness. The script reads the rule's ``upper end at most 0.65'' at $m = 1{,}000$ as the window
+on the secrets, but pgvector's exact search shows an offset of the same sign (size 0.33 to 0.38, flat), no same-content comparison exists for constant work and the mechanism is not established, so the 98\% (95\% to 100\%) of pgvector's probes at
+$m = 1{,}000$ that an attacker who knows the sign would identify may include an offset of unknown size. The script reads the rule's ``upper end at most 0.65'' at $m = 1{,}000$ as the window
 $[0.40, 0.65]$ and prints these parts inconclusive; read one-sidedly, as worded, they would pass,
 which would hide the channel.
 

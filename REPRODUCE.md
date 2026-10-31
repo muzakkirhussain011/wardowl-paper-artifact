@@ -145,8 +145,8 @@ corpora are not here. A rebuild can be compared with the digests of the original
   `qdrant-client>=1.16`, `sentence-transformers>=3`, `datasets>=2.19`, `psutil`, `pyarrow` and `scipy`, not pinned. Each
   folder's `manifest.json` records what ran. Statistics: 10,000 bootstrap resamples, seed 20261026.
 - X1 run 1 ran 7.3 hours in one session with the notebook in `kaggle/x1-run1/`. The notebook sets
-  `BRANCH = "paper/x1-underretrieval"`, whose head has since moved to `a956424` (run 2). To rerun run 1, use `947fb8f` in its
-  clone and its install line.
+  `BRANCH = "paper/x1-underretrieval"`, whose head has since moved to `a956424` (run 2). To rerun run 1, check out `947fb8f` after its
+  clone and use that commit in its install line.
 
 ### GitHub-hosted experiments (X2 to X7, conformance)
 
@@ -181,8 +181,8 @@ Not done:
 - No independent rerun exists, and the author did not rerun any experiment to write this file. Rebuilding the prepared
   corpora from the seeds has not been tried.
 - Nobody has confirmed that the Kaggle kernels still run on today's images, or that a fork can run the GitHub workflows.
-- Separate AI-agent audits recomputed a sample of numbers from the raw records. They are not independent parties. Most numbers
-  elsewhere were read from what the scripts printed.
+- Nobody independent has recomputed the numbers. Separate AI-agent audits recomputed a sample from the raw records and are not
+  independent parties; the rest were read from what the scripts printed.
 
 Done on 2026-10-31, by re-reading stored outputs only:
 

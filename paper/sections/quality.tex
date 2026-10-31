@@ -123,7 +123,7 @@ company documents among everyone else, and 97.5\% of the top-five hits that did 
 neighbors of filtered-out neighbors~\cite{patel2024acorn}, lifted recall@10 over all questions from 0.656 to 0.808 at a 3\% latency
 cost; per-tenant graphs~\cite{qdrant2026multitenancy} lifted it to 0.952, faster than the as-run layout, and a separate collection for the
 shared passages reached 0.949. These means have ranges of 0.086 and 0.127 over three builds of the same data, as run and with ACORN, wider than any interval over people. Raising \texttt{hnsw\_ef} from 128 to 512 added 0.103 (0.090 to 0.116) at 1.6 times the latency (Q4
-inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified). At \texttt{hnsw\_ef} 128 ACORN did not reach the layout change; in the frontier experiment, with its gate at 1.0 and \texttt{hnsw\_ef} 512, it reached 0.953 against 0.941 for per-tenant graphs at \texttt{hnsw\_ef} 128, with about 60\% of their throughput on the one build timed. Q3, on segment layout, stayed inconclusive, since both layouts ended with one segment
+inconclusive). We expected ACORN's default gate to engage for some people and not others; it engaged for everyone (Q2 falsified). At \texttt{hnsw\_ef} 128 ACORN did not reach the layout change; in the frontier experiment, with its gate at 1.0 and \texttt{hnsw\_ef} 512, it reached 0.953 against 0.941 for per-tenant graphs at \texttt{hnsw\_ef} 128, with about 60\% of their throughput (0.61 to 0.63 on each of the three builds). Q3, on segment layout, stayed inconclusive, since both layouts ended with one segment
 holding points. For layouts like this one, changing the layout cost less than reaching the same recall through search-time effort: when
 permission groups or tenants cover large, semantically interleaved parts of a collection, give each tenant its own graph, or keep
 widely shared content apart.
@@ -271,6 +271,6 @@ recall@10 at those four levels, from the smallest up, was 1.000, 1.000, 0.460 an
 stores.
 
 \paragraph{Filter size.}
-Varying only a disjunction's length from 1 to 40,000 groups, with the same 10\% of a 100,000-chunk corpus readable at every level, recall did not depend on length in
-any of the ten approximate stores that accepted every level (X3-H4 confirmed for the eight it names), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other
+Varying only a disjunction's length from 1 to 40,000 groups, with the same 10\% of a 100,000-chunk corpus readable at every level, recall moved by at most 0.012 with length in
+any of the ten approximate stores that accepted every level (X3-H4 confirmed for eight of the nine stores it names, inconclusive for Chroma; pgvector and Cassandra were exploratory), while median latency grew 272-fold on pgvector and 11 to 99 times on eight other
 servers. Chroma alone refused, from 1,000 groups, and at about 16,500 groups, with a 16\,MiB stack, its local client process crashed (Appendix~\ref{sec:qual-size}).

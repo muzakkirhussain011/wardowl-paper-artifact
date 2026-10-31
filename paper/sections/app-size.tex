@@ -99,8 +99,8 @@ query with 1,000. The other eight servers slowed 11 to 99 times, mostly beyond 1
 cost of a long filter lies in building and shipping it. LanceDB, which scans exactly, slowed 7.94
 times.
 
-Recall did not depend on the filter's length in the ten approximate stores that accepted every level
-(X3-H4 confirmed for each of the eight it names; pgvector's paired difference was 0.000, and Cassandra's is below). The paired difference between 40,000 groups and one was 0.000,
+Recall moved by at most 0.012 with the filter's length in the ten approximate stores that accepted every level
+(X3-H4 confirmed for eight of the nine stores it names, inconclusive for Chroma; pgvector's paired difference was 0.000, and Cassandra's is below). The paired difference between 40,000 groups and one was 0.000,
 with an interval of 0.000 to 0.000, for Qdrant, Elasticsearch, OpenSearch, Weaviate, MongoDB and
 Vespa, 0.000 ($-0.0007$ to 0.0007) for Redis, and 0.012 (0.006 to 0.019) for Milvus, whose recall rose
 from 0.987 to 0.999 with the longer filter, within the pre-registered band; Cassandra's fallback,
