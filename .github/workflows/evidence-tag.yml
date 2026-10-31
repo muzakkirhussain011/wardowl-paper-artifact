@@ -100,6 +100,7 @@ jobs:
           x7-amendment2-library-3c6559f|3c6559f3ecfd850bcd59416f14237d85887ba498|X7 amendment 2 library (fix/revocation-faults, PR 186)
           conformance-run1-5d0f414|5d0f414a346511ad48a6c1c8b411259e6d908b84|Conformance campaign run 1, run 40313285885
           conformance-run2-182bcbc|182bcbc53b9135c1c9bca4f0652a0f94ff2b9938|Conformance campaign run 2, run 40905549149
+          rls-side-run-42fcca6|42fcca6acc720155e77508b2a54dcf8b401b949a|The library's row-level security benchmark of 2026-10-22, before the paper's experiments; the package is still called needtoknow at this commit
           COMMITS
           git update-index --add --cacheinfo "100644,$(git hash-object -w "$commits"),harness/COMMITS.tsv"
           git read-tree --prefix=evidence/raw/results-cerbos-extra/ refs/evidence/cerbos-extra

@@ -18,6 +18,10 @@ records what is still missing or weak, so that nobody has to find it out. `REPRO
 | X4, X7 | One record per subject, trial or episode, in `raw/*.jsonl.gz` of each results folder | Not applicable | |
 | Conformance runs | Findings per target in `findings/` in the zips `conformance-*` of runs 40313285885 and 40905549149 | Not applicable | |
 
+**The row-level security side run of 2026-10-22 has no raw output here.** The table `tab:limits-rls` comes from the library's
+summary, `benchmarks/results/fiqa-row-level-security.md`, written from a Kaggle notebook at library commit 42fcca6 that this
+artifact does not hold the outputs of. It was not pre-registered and came before the paper's experiments.
+
 **The k=10 hit lists of X0, X8 and X8-FGA do not exist.** `_write_answers` in `enterprise_rag.py` writes the k=5 hits and
 the answer; the k=10 retrieval is scored and dropped. So recall@10 of those eight runs, which Figure `fig:qual-audit` and
 the abstract's recall range rest on, is a printed number that can't be recomputed from stored outputs. Recall@5 can be
