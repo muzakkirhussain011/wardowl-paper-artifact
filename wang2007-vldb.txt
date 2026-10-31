@@ -1,0 +1,45 @@
+          On the Correctness Criteria of Fine-Grained Access
+                   Control in Relational Databases
+
+               Qihua Wang∗                     Ting Yu†               Ninghui Li∗           Jorge Lobo‡               Elisa Bertino∗
+
+                                               Keith Irwin†                              Ji-Won Byun∗
+
+
+ABSTRACT                                                                          sistency between various applications. By placing access control at
+Databases are increasingly being used to store information covered                the database level, one can ensure that access control policies are
+by heterogeneous policies, which require support for access control               consistently applied to every user and every application.
+with great flexibility. This has led to increasing interest in using                 Existing approaches to specify and enforce fine-grained access
+fine-grained access control, where different cells in a relation may              control include, for example, query modification in INGRES [15],
+be governed by different access control rules. Although several                   Virtual Private Database (VPD) in Oracle [13, 12], label-based
+proposals have been made to support fine-grained access control,                  access control in DB2 [3], and the recent Hippocratic databases
+there currently does not exist a formal notion of correctness regard-             work [1, 10]. Existing works describe how a policy is specified,
+ing the query answering procedure. In this paper, we propose such                 and how to answer a query while enforcing the policy. However,
+a formal notion of correctness in fine-grained database access con-               a clear specification of the correctness criteria of the enforcement
+trol, and discuss why existing approaches fall short in some circum-              scheme is lacking.
+stances. We then propose a labeling approach for masking unau-                       In this paper, we pose and answer the following question “how
+thorized information and a query evaluation algorithm which better                to correctly enforce a fine-grained access control policy”. We limit
+supports fine-grained access control. Finally, we implement our                   ourselves to “read” access control only and do not consider “write”
+algorithm using query modification and evaluate its performance.                  access control. One justification is that “read” access control is
+                                                                                  much more likely to be fine-grained than other types of access.
+                                                                                  Fine-grained access control for update and deletion will be investi-
+1.    INTRODUCTION                                                                gated in our future work.
+   In recent years, there is growing interest in fine-grained access                 We identify three criteria for enforcing fine-grained access con-
+control in relational databases. While traditional access control fo-             trol policies in databases. Ideally, an algorithm that enforces fine-
+cuses on limiting data access at the table level, fine-grained access             grained access control policies should be sound, secure, and maxi-
+control, also known as low-level access control, provides a way to                mum. Intuitively, the algorithm is sound if the answer returned by it
+restrict data access at the row level or even at the cell level. Fine-            is consistent with the answer when there is no fine-grained access
+grained access control is also referred to as content-based access                control. The algorithm is secure if the returned answer does not
+control, as the accessibility of a data item is often specified and de-           leak information not allowed by the policy. The algorithm is maxi-
+termined based on the content of the row where the data is located.               mum if it returns as much information as possible, while satisfying
+   One strong driving force for fine-grained access control is pri-               the first two properties. We formalize these properties in Section 2.
+vacy protection. As privacy protection requires data access to re-                As we discuss there, achieving the maximum property may be dif-
+spect individual preferences and comply with many enacted pri-                    ficult in practice. However, we argue that any algorithm must be
+vacy laws, the control of data access must have a fine granular-                  sound and secure, and should strive to be maximum.
+ity. Another motivation is to move access control from applications                  We argue that our list of the three properties is intuitive and nat-
+to databases. Although fine-grained access control can be imple-                  ural. In particular, it is declarative in that it does not define any
+mented at the application level, this approach has many drawbacks;                procedure for answering queries. Although our requirements seem
+such control may be bypassed, and it is hard to maintain the con-                 reasonably simple and necessary, to the best of our knowledge,
+∗                                                                                 there is no existing access control algorithm that is both “sound”
+  CERIAS & Department of Computer Science, Purdue University,
+{wangq,ninghui,bertino,byunj}@cs.purdue.edu                                       and “secure”. This rather disappointing current state of art is due

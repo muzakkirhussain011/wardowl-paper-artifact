@@ -1,0 +1,194 @@
+n	key	source	result	score	entry_title	found_title
+1	agarwal2021deep	url	ok	1.00	Deep Reinforcement Learning at the Edge of the Statistical Precipice	Deep Reinforcement Learning at the Edge of the Statistical Precipice
+2	amanbayev2026filtered	arxiv	ok	1.00	Filtered Approximate Nearest Neighbor Search in Vector Databases: System Design and Performance Analysis	Filtered Approximate Nearest Neighbor Search in Vector Databases: System Design and Performance Anal
+3	aws2026access	url	ok	1.00	Access Control Lists awareness enablement	Access Control Lists awareness enablement - Amazon Bedrock
+4	aquino2024filtering	url	ok	1.00	Filtering in Vector Search: When to Use What	Filtering in Vector Search: When to Use What - Qdrant
+5	arceo2026securing	crossref	ok	1.00	Securing the Agent: Vendor-Neutral, Multitenant Enterprise Retrieval and Tool Use	Securing the Agent: Vendor-Neutral, Multitenant Enterprise Retrieval and Tool Use
+6	askarov2010predictive	crossref	ok	1.00	Predictive Black-Box Mitigation of Timing Channels	Predictive black-box mitigation of timing channels
+7	aumuller2020annbenchmarks	crossref	ok	1.00	{ANN-Benchmarks}: A Benchmarking Tool for Approximate Nearest Neighbor Algorithms	ANN-Benchmarks: A benchmarking tool for approximate nearest neighbor algorithms
+8	auth02026authorization	url	ok	1.00	Authorization for {RAG}	Authorization for RAG - Auth0 Docs
+9	authzed2026consistency	url	ok	1.00	Consistency	Consistency - Authzed Docs
+10	authzed2026coreproto	url	page reached; title words not found: read by hand	0.67	core.proto (authzed.api.v1)	
+11	authzed2026langchainspicedb	url	ok	1.00	langchain-spicedb: Authorization library for {RAG} (Retrieval-Augmented Generation) pipelines using {SpiceDB}	GitHub - authzed/langchain-spicedb: Authorization library for RAG (Retrieval-Augmented Generation) p
+12	authzed2026permissionserviceproto	url	page reached; title words not found: read by hand	0.67	permission\_service.proto (authzed.api.v1)	
+13	authzed2026protecting	url	ok	1.00	Protecting a List Endpoint	Protecting a List Endpoint - Authzed Docs
+14	authzed2026reference	url	ok	1.00	Reference: \texttt{spicedb}	Page - Authzed Docs
+15	ba2023testing	crossref	ok	1.00	Testing Database Engines via Query Plan Guidance	Testing Database Engines via Query Plan Guidance
+16	ba2024keep	crossref	ok	1.00	Keep It Simple: Testing Databases via Differential Query Plans	Keep It Simple: Testing Databases via Differential Query Plans
+17	backes2018semanticbased	crossref	ok	1.00	Semantic-based Automated Reasoning for {AWS} Access Policies using {SMT}	Semantic-based Automated Reasoning for AWS Access Policies using SMT
+18	bailey2006secure	crossref	ok	1.00	Secure Search in Enterprise Webs: Tradeoffs in Efficient Implementation for Document Level Security	Secure search in enterprise webs tradeoffs in efficient implementation for document level security
+19	bajaj2016ms	arxiv	ok	1.00	{MS} {MARCO}: A Human Generated {MAchine} Reading {COmprehension} Dataset	MS MARCO: A Human Generated MAchine Reading COmprehension Dataset
+20	bhatt2025enterprise	arxiv	ok	1.00	Enterprise {AI} Must Enforce Participant-Aware Access Control	Enterprise AI Must Enforce Participant-Aware Access Control
+21	bouthillier2021accounting	arxiv	ok	1.00	Accounting for Variance in Machine Learning Benchmarks	Accounting for Variance in Machine Learning Benchmarks
+22	budigi2026beyond	arxiv	ok	1.00	Beyond Similarity Search: A Unified Data Layer for Production {RAG} Systems	Beyond Similarity Search: A Unified Data Layer for Production RAG Systems
+23	buttcher2005security	url	ok	1.00	A Security Model for Full-Text File System Search in Multi-User Environments	FAST '05 Abstract
+24	cai2024navigating	crossref	ok	1.00	Navigating Labels and Vectors: A Unified Approach to Filtered Approximate Nearest Neighbor Search	Navigating Labels and Vectors: A Unified Approach to Filtered Approximate Nearest Neighbor Search
+25	carlini2019secret	url	ok	1.00	The Secret Sharer: Evaluating and Testing Unintended Memorization in Neural Networks	The Secret Sharer: Evaluating and Testing Unintended Memorization in Neural Networks | USENIX
+26	cedar2026cedarpolicy	url	ok	1.00	cedar\_policy crate documentation, version 4.14.0	cedar_policy - Rust
+27	cedar2026cedarspec	url	ok	0.89	{cedar-lean/Cedar/Thm/TPE.lean}: type-aware partial evaluation soundness	cedar-spec/cedar-lean/Cedar/Thm/TPE.lean at main · cedar-policy/cedar-spec · GitHub
+28	cerbos2026cerbos	url	ok	1.00	The {Cerbos} {API}	The Cerbos API :: Cerbos Authorization Management Platform // Documentation
+29	cerbos2026implementing	url	ok	1.00	Implementing authorization in {RAG}-based {AI} systems	Implementing authorization in RAG-based AI systems :: Cerbos Authorization Management Platform // Do
+30	chen2018metamorphic	crossref	year 2019 in the record	1.00	Metamorphic Testing: A Review of Challenges and Opportunities	Metamorphic Testing A Review of Challenges and Opportunities
+31	chronis2025filtered	crossref	ok	1.00	Filtered Vector Search: State-of-the-Art and Research Opportunities	Filtered Vector Search: State-of-the-Art and Research Opportunities
+32	claessen2000quickcheck	crossref	ok	1.00	{QuickCheck}: A Lightweight Tool for Random Testing of {Haskell} Programs	QuickCheck a lightweight tool for random testing of Haskell programs
+33	costa2025securing	arxiv	ok	1.00	Securing {AI} Agents with Information-Flow Control	Securing AI Agents with Information-Flow Control
+34	couzon2026filtered	url	ok	1.00	Filtered Vector Search: What {ACORN} Fixes, and What Fixes {ACORN}	Filtered Vector Search: What ACORN Fixes, and What Fixes ACORN - Qdrant
+35	coveo2026coveo	url	ok	1.00	Coveo, {Microsoft} {Dynamics} 365, and Security	Coveo, Microsoft Dynamics 365, and Security | Coveo Platform
+36	curtmola2006searchable	crossref	ok	1.00	Searchable Symmetric Encryption: Improved Definitions and Efficient Constructions	Searchable symmetric encryption improved definitions and efficient constructions
+37	cutler2024cedar	crossref	ok	1.00	Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization	Cedar: A New Language for Expressive, Fast, Safe, and Analyzable Authorization
+38	dar2023rls	crossref	ok	1.00	{RLS} Side Channels: Investigating Leakage of Row-Level Security Protected Data Through Query Execution Time	RLS Side Channels: Investigating Leakage of Row-Level Security Protected Data Through Query Executio
+39	das2026recallbounded	arxiv	ok	1.00	Recall-Bounded Staleness for Filtered Multi-Tenant {ANN} Graph Indexes under Concurrent Updates	Recall-Bounded Staleness for Filtered Multi-Tenant ANN Graph Indexes under Concurrent Updates
+40	datastax2026query	url	ok	1.00	Query timestamps in {Cassandra} drivers	Query timestamps in Cassandra drivers | Hyper-Converged Database | DataStax Docs
+41	debenedetti2025defeating	arxiv	ok	1.00	Defeating Prompt Injections by Design	Defeating Prompt Injections by Design
+42	disselkoen2024how	crossref	ok	1.00	How We Built {Cedar}: A Verification-Guided Approach	How We Built Cedar: A Verification-Guided Approach
+43	douze2024faiss	arxiv	ok	1.00	The {Faiss} library	The Faiss library
+44	elastic2026controlling	url	ok	1.00	Controlling access at the document and field level	Controlling access at the document and field level | Elastic Docs
+45	elastic2026ignore	url	page reached; title words not found: read by hand	0.00	ignore\_above	ignore_above | Elasticsearch Reference
+46	elastic2026keyword	url	ok	1.00	Keyword type family	Keyword type family | Elasticsearch Reference
+47	elastic2026run	url	ok	1.00	Run a search	Run a search | Elasticsearch API documentation
+48	engels2024approximate	arxiv	ok	1.00	Approximate Nearest Neighbor Search with Window Filters	Approximate Nearest Neighbor Search with Window Filters
+49	espiritu2026plaintext	arxiv	ok	1.00	Plaintext Recovery Against Post-Filtering Access Control	Plaintext Recovery Against Post-Filtering Access Control
+50	fagin2003searching	crossref	ok	1.00	Searching the Workplace Web	Searching the workplace web
+51	felten2000timing	crossref	ok	1.00	Timing Attacks on {Web} Privacy	Timing attacks on Web privacy
+52	fisler2005verification	crossref	ok	1.00	Verification and Change-Impact Analysis of Access-Control Policies	Verification and change-impact analysis of access-control policies
+53	fong2011relationshipbaseda	crossref	ok	1.00	Relationship-Based Access Control: Protection Model and Policy Language	Relationship-based access control protection model and policy language
+54	gelernter2015crosssite	crossref	ok	1.00	Cross-Site Search Attacks	Cross-Site Search Attacks
+55	gelevanog2026permissionaware	url	ok	1.00	permission-aware-rag (``Clearance''): private company {RAG} that answers each employee only from documents they may read	GitHub - gelevanog/permission-aware-rag: Private company RAG that answers each employee only from do
+56	goguen1982security	crossref	ok	1.00	Security Policies and Security Models	Security Policies and Security Models
+57	gollapudi2023filtereddiskann	crossref	ok	1.00	{Filtered-DiskANN}: Graph Algorithms for Approximate Nearest Neighbor Search with Filters	Filtered-DiskANN: Graph Algorithms for Approximate Nearest Neighbor Search with Filters
+58	google2026atheris	url	ok	1.00	Atheris	GitHub - google/atheris · GitHub
+59	greshake2023not	crossref	ok	1.00	Not What You've Signed Up For: Compromising Real-World {LLM}-Integrated Applications with Indirect Prompt Injection	Not What You've Signed Up For: Compromising Real-World LLM-Integrated Applications with Indirect Pro
+60	griffiths1976authorization	crossref	ok	1.00	An Authorization Mechanism for a Relational Database System	An authorization mechanism for a relational database system
+61	guarnieri2014optimal	crossref	ok	1.00	Optimal Security-Aware Query Processing	Optimal security-aware query processing
+62	gupta2023caps	arxiv	ok	1.00	{CAPS}: A Practical Partition Index for Filtered Similarity Search	CAPS: A Practical Partition Index for Filtered Similarity Search
+63	han2026dont	arxiv	ok	1.00	Don't Stir the Pot! {Authorized} Vector Data Retrieval via Access-Aware Indexing	Don't Stir the Pot! Authorized Vector Data Retrieval via Access-Aware Indexing
+64	hanley1983if	crossref	ok	1.00	If Nothing Goes Wrong, Is Everything All Right? {Interpreting} Zero Numerators	If Nothing Goes Wrong, Is Everything All Right? Interpreting Zero Numerators
+65	hardy1988confused	crossref	ok	1.00	The Confused Deputy: (or why capabilities might have been invented)	The Confused Deputy (or why capabilities might have been invented)
+66	iff2026benchmarking	crossref	ok	1.00	Benchmarking Filtered Approximate Nearest Neighbor Search Algorithms on Transformer-based Embedding Vectors	Benchmarking Filtered Approximate Nearest Neighbor Search Algorithms on Transformer-based Embedding 
+67	ioannidis1997parametric	crossref	ok	1.00	Parametric Query Optimization	Parametric query optimization
+68	jayaraman2025permissioned	crossref	ok	1.00	Permissioned {LLMs}: Enforcing Access Control in Large Language Models	Permissioned LLMs: Enforcing Access Control in Large Language Models
+69	jin2024curator	arxiv	ok	1.00	Curator: Efficient Indexing for Multi-Tenant Vector Databases	Curator: Efficient Indexing for Multi-Tenant Vector Databases
+70	jones2020oauth	crossref	ok	1.00	{OAuth} 2.0 Token Exchange	OAuth 2.0 Token Exchange
+71	kabra2006redundancy	crossref	ok	1.00	Redundancy and Information Leakage in Fine-Grained Access Control	Redundancy and information leakage in fine-grained access control
+72	kamm2023testing	crossref	ok	1.00	Testing Graph Database Engines via Query Partitioning	Testing Graph Database Engines via Query Partitioning
+73	kim2026racorn1	arxiv	ok	1.00	{RACORN-1}: Adaptive Recall-Preserving Speedup for Low-Selectivity Filtered Vector Search	RACORN-1: Adaptive Recall-Preserving Speedup for Low-Selectivity Filtered Vector Search
+74	klees2018evaluating	crossref	ok	1.00	Evaluating Fuzz Testing	Evaluating Fuzz Testing
+75	langchain2026pebbloretrieval	url	page reached; title words not found: read by hand	0.50	pebblo\_retrieval (langchain\_community)	pebblo_retrieval | langchain_community | LangChain Reference
+76	lefevre2004limiting	crossref	ok	1.00	Limiting Disclosure in {Hippocratic} Databases	Limiting Disclosure in Hippocratic Databases
+77	lewis2020retrievalaugmented	arxiv	ok	1.00	Retrieval-Augmented Generation for Knowledge-Intensive {NLP} Tasks	Retrieval-Augmented Generation for Knowledge-Intensive NLP Tasks
+78	li2023sentence	crossref	ok	1.00	Sentence Embedding Leaks More Information than You Expect: Generative Embedding Inversion Attack to Recover the Whole Sentence	Sentence Embedding Leaks More Information than You Expect: Generative Embedding Inversion Attack to 
+79	li2025attribute	crossref	ok	1.00	Attribute Filtering in Approximate Nearest Neighbor Search: An In-depth Experimental Study	Attribute Filtering in Approximate Nearest Neighbor Search: An In-depth Experimental Study
+80	li2025sieve	crossref	ok	1.00	{SIEVE}: Effective Filtered Vector Search with Collection of Indexes	SIEVE: Effective Filtered Vector Search with Collection of Indexes
+81	lim2026revisiting	arxiv	ok	1.00	Revisiting Filtered {ANN} Benchmarks: A Hardness-Controlled Benchmark Generator for Realistic Evaluation	Revisiting Filtered ANN Benchmarks: A Hardness-Controlled Benchmark Generator for Realistic Evaluati
+82	liu2026protection	arxiv	ok	1.00	Protection Is Not One Event: A Survey of {RAG} Protection Research by Measured Endpoint	Protection Is Not One Event: A Survey of RAG Protection Research by Measured Endpoint
+83	lu2026indepth	crossref	ok	0.98	An In-Depth Study of Filter-Agnostic Vector Search on a {PostgreSQL} Database System: [Experiments \& Analysis]	An In-Depth Study of Filter-Agnostic Vector Search on a PostgreSQL Database System: [Experiments &am
+84	maciver2019hypothesis	crossref	ok	1.00	Hypothesis: A New Approach to Property-Based Testing	Hypothesis: A new approach to property-based testing
+85	maia2018www18	crossref	ok	1.00	{WWW'18} Open Challenge: Financial Opinion Mining and Question Answering	WWW'18 Open Challenge Financial Opinion Mining and Question Answering
+86	malkov2020efficient	crossref	ok	1.00	Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Graphs	Efficient and Robust Approximate Nearest Neighbor Search Using Hierarchical Navigable Small World Gr
+87	mangtani2006documentlevel	url	blocked (429): read by hand		Document-level security with Enterprise Search	
+88	martin2007fault	crossref	ok	1.00	A Fault Model and Mutation Testing of Access Control Policies	A fault model and mutation testing of access control policies
+89	mckeeman1998differential	-	no DOI, arXiv identifier or link: read by hand		Differential Testing for Software	
+90	microsoft2026data	url	ok	1.00	Data, Privacy, and Security for {Microsoft} {Copilot}	Data, Privacy, and Security for Microsoft Copilot | Microsoft Learn
+91	microsoft2026querytime	url	ok	1.00	Query-Time {ACL} and {RBAC} Enforcement -- {Azure AI Search}	Query-Time ACL and RBAC Enforcement - Azure AI Search | Microsoft Learn
+92	milvus2026implement	url	page reached; title words not found: read by hand	0.00	Implement Multi-tenancy	
+93	milvus2026json	url	page reached; title words not found: read by hand	0.00	{JSON} Field	
+94	mitre2026atlas	url	ok	1.00	{ATLAS}: Adversarial Threat Landscape for {AI} Systems, data release 2026.09	
+95	mcp2026model	url	ok	1.00	Model Context Protocol Specification, Version 2026-07-28: Authorization	Authorization - Model Context Protocol
+96	mongodb2026configure	url	ok	1.00	Configure \texttt{mongot}	Configure mongot - Self-Managed MongoDB Search and Vector Search - MongoDB Docs
+97	mongodb2026run	url	ok	1.00	Run Vector Search {ANN} and {ENN} Queries	Run Vector Search ANN and ENN Queries - MongoDB Vector Search - MongoDB Docs
+98	morris2023text	crossref	ok	1.00	Text Embeddings Reveal (Almost) As Much As Text	Text Embeddings Reveal (Almost) As Much As Text
+99	motro1989access	crossref	ok	1.00	An Access Authorization Model for Relational Databases Based on Algebraic Manipulation of View Definitions	An access authorization model for relational databases based on algebraic manipulation of view defin
+100	naseh2025riddle	crossref	ok	1.00	Riddle Me This! {Stealthy} Membership Inference for Retrieval-Augmented Generation	Riddle Me This! Stealthy Membership Inference for Retrieval-Augmented Generation
+101	nvd2025cve202532711	url	page reached; title words not found: read by hand	0.00	{CVE-2025-32711}	NVD - Home
+102	nvd2025cve202565111	url	page reached; title words not found: read by hand	0.00	{CVE-2025-65111}: {SpiceDB} {LookupResources} results	NVD - Home
+103	oasis2013extensible	url	ok	1.00	{eXtensible Access Control Markup Language (XACML)} Version 3.0	eXtensible Access Control Markup Language (XACML) Version 3.0
+104	opa2026evaluating	url	ok	1.00	Evaluating a Data Filter Policy	Evaluating a Data Filter Policy | Open Policy Agent
+105	opa2026writing	url	ok	1.00	Writing valid Data Filtering Policies	Writing valid Data Filtering Policies | Open Policy Agent
+106	openfga2026openfga	url	ok	1.00	{OpenFGA} Configuration Options	OpenFGA Configuration Options - OpenFGA
+107	openfga2026openfgaproto	url	ok	1.00	openfga.proto (openfga.v1)	
+108	openfga2026perform	url	ok	1.00	Perform a list objects call	Perform a list objects call - OpenFGA
+109	openfga2026rag	url	ok	1.00	{RAG} Authorization	RAG Authorization - OpenFGA
+110	openfga2026search	url	ok	1.00	Search With Permissions	Search With Permissions - OpenFGA
+111	opensearch2026documentlevel	url	ok	1.00	Document-level security	Document-level security | OpenSearch Documentation
+112	opensearch2026efficient	url	ok	1.00	Efficient k-{NN} filtering	Efficient k-NN filtering | OpenSearch Documentation
+113	opensearch2026keyword	url	ok	1.00	Keyword field type	Keyword field type | OpenSearch Documentation
+114	opensearch2026search	url	ok	1.00	Search {API}	Search API | OpenSearch Documentation
+115	oracle2026using	url	ok	1.00	Using {Oracle} Virtual Private Database to Control Data Access	Using Oracle Virtual Private Database to Control Data Access
+116	owasp2025llm082025	url	ok	1.00	{LLM08:2025} Vector and Embedding Weaknesses	OWASP LLM08: 2025 Vector and Embedding Weaknesses
+117	raghuram2026onewayglass	url	page reached; title words not found: read by hand	0.00	onewayglass 0.3.0	Client Challenge
+118	pang2019zanzibar	url	ok	1.00	Zanzibar: {Google's} Consistent, Global Authorization System	Zanzibar: Google’s Consistent, Global Authorization System | USENIX
+119	pappachan2020sieve	crossref	ok	1.00	Sieve: A Middleware Approach to Scalable Access Control for Database Management Systems	Sieve a middleware approach to scalable access control for database management systems
+120	patel2024acorn	crossref	ok	1.00	{ACORN}: Performant and Predicate-Agnostic Search Over Vector Embeddings and Structured Data	ACORN: Performant and Predicate-Agnostic Search Over Vector Embeddings and Structured Data
+121	pgvector2026pgvector	url	ok	1.00	pgvector: Open-source vector similarity search for {Postgres}	GitHub - pgvector/pgvector: Open-source vector similarity search for Postgres · GitHub
+122	pinecone2026check	url	ok	1.00	Check data freshness	Check data freshness - Pinecone Docs
+123	pinecone2026search	url	ok	1.00	Search with a vector	Search with a vector - Pinecone Docs
+124	qdrant2025release	url	ok	1.00	Release v1.16.0	Release v1.16.0 · qdrant/qdrant · GitHub
+125	qdrant2026filtering	url	ok	1.00	Filtering	Filtering - Qdrant
+126	qdrant2026multitenancy	url	ok	1.00	Multitenancy	Multitenancy - Qdrant
+127	qdrant2026search	url	ok	1.00	Search	Search - Qdrant
+128	qi2024follow	arxiv	ok	1.00	Follow My Instruction and Spill the Beans: Scalable Data Extraction from Retrieval-Augmented Generation Systems	Follow My Instruction and Spill the Beans: Scalable Data Extraction from Retrieval-Augmented Generat
+129	rasin2024vulnerability	crossref	ok	1.00	On Vulnerability of Access Control Restrictions to Timing Attacks in a Database Management System	On Vulnerability of Access Control Restrictions to Timing Attacks in a Database Management System
+130	redis2026configuration	url	ok	1.00	Configuration parameters	Configuration parameters | Docs
+131	redis2026tag	url	ok	1.00	Tag fields	Tag fields | Docs
+132	redis2026vectors	url	ok	1.00	Vector search concepts	Vector search concepts | Docs
+133	reimers2019sentencebert	crossref	ok	1.00	{Sentence-BERT}: Sentence Embeddings using {Siamese} {BERT}-Networks	Sentence-BERT: Sentence Embeddings using Siamese BERT-Networks
+134	rigger2020detecting	crossref	ok	1.00	Detecting Optimization Bugs in Database Engines via Non-Optimizing Reference Engine Construction	Detecting optimization bugs in database engines via non-optimizing reference engine construction
+135	rigger2020finding	crossref	ok	1.00	Finding Bugs in Database Systems via Query Partitioning	Finding bugs in database systems via query partitioning
+136	rigger2020testing	url	ok	1.00	Testing Database Engines via Pivoted Query Synthesis	Testing Database Engines via Pivoted Query Synthesis | USENIX
+137	rizvi2004extending	crossref	ok	1.00	Extending Query Rewriting Techniques for Fine-Grained Access Control	Extending query rewriting techniques for fine-grained access control
+138	rodriguez2024how	url	ok	1.00	How we speed up filtered vector search with {ACORN}	How we speed up filtered vector search with ACORN | Weaviate
+139	roychowdhury2024confusedpilot	arxiv	ok	1.00	{ConfusedPilot}: Confused Deputy Risks in {RAG}-based {LLMs}	ConfusedPilot: Confused Deputy Risks in RAG-based LLMs
+140	sandall2018write	url	ok	1.00	Write Policy in {OPA}. Enforce Policy in {SQL}.	Write Policy in OPA. Enforce Policy in SQL. | Open Policy Agent
+141	sanyal2025orgaccess	arxiv	ok	1.00	{OrgAccess}: A Benchmark for Role Based Access Control in Organization Scale {LLMs}	OrgAccess: A Benchmark for Role Based Access Control in Organization Scale LLMs
+142	schloegel2024sok	crossref	ok	1.00	{SoK}: Prudent Evaluation Practices for Fuzzing	SoK: Prudent Evaluation Practices for Fuzzing
+143	segura2016survey	crossref	ok	1.00	A Survey on Metamorphic Testing	A Survey on Metamorphic Testing
+144	shi2025filtered	arxiv	ok	1.00	Filtered Approximate Nearest Neighbor Search: A Unified Benchmark and Systematic Experimental Study [Experiment, Analysis \& Benchmark]	Filtered Approximate Nearest Neighbor Search: A Unified Benchmark and Systematic Experimental Study 
+145	simhadri2025results	crossref	ok	1.00	Results of the Big {ANN}: {NeurIPS'23} Competition	Results of the Big ANN: NeurIPS’23 competition
+146	sjmurdoch2026bug	url	ok	0.92	[Bug]: \texttt{delete\_collection} leaves list-valued metadata behind, which reappears on records written to the next collection	[Bug]: `delete_collection` leaves list-valued metadata behind, which reappears on records written to
+147	smucker2007comparison	crossref	ok	1.00	A Comparison of Statistical Significance Tests for Information Retrieval Evaluation	A comparison of statistical significance tests for information retrieval evaluation
+148	song2020information	crossref	ok	1.00	Information Leakage in Embedding Models	Information Leakage in Embedding Models
+149	song2000practical	crossref	first author Dawn Xiaoding Song not in the entry	1.00	Practical Techniques for Searches on Encrypted Data	Practical techniques for searches on encrypted data
+150	stonebraker1974access	crossref	ok	1.00	Access Control in a Relational Data Base Management System by Query Modification	Access control in a relational data base management system by query modification
+151	subramanya2019diskann	url	ok	1.00	{DiskANN}: Fast Accurate Billion-point Nearest Neighbor Search on a Single Node	DiskANN: Fast Accurate Billion-point Nearest Neighbor Search on a Single Node
+152	sun2026agentassisted	arxiv	ok	1.00	Agent-Assisted Side-Channel Attacks on Non-Prefix {KV} Cache in {RAG}	Agent-Assisted Side-Channel Attacks on Non-Prefix KV Cache in RAG
+153	sungbin10152026fix	url	ok	1.00	fix: escape {VARCHAR} primary keys in {MilvusClient} get/query/delete by ids	fix: escape VARCHAR primary keys in MilvusClient get/query/delete by ids by sungbin1015 · Pull Reque
+154	thakur2021beir	arxiv	ok	0.99	{BEIR}: A Heterogeneous Benchmark for Zero-shot Evaluation of Information Retrieval Models	BEIR: A Heterogenous Benchmark for Zero-shot Evaluation of Information Retrieval Models
+155	postgresql2026json	url	ok	1.00	{JSON} Types	PostgreSQL: Documentation: 18: 8.14. JSON Types
+156	postgresql2026prepare	url	ok	1.00	{PREPARE}	PostgreSQL: Documentation: 16: PREPARE
+157	postgresql2026row	url	ok	1.00	Row Security Policies	PostgreSQL: Documentation: 18: 5.9. Row Security Policies
+158	postgresql2026selfuncs	url	ok	1.00	selfuncs.c: gincostestimate	postgres/src/backend/utils/adt/selfuncs.c at REL_16_STABLE · postgres/postgres · GitHub
+159	psycopg2026prepared	url	ok	1.00	Prepared statements	Prepared statements - psycopg 3.3.7.dev1 documentation
+160	thornton2026retrieval	arxiv	ok	1.00	Retrieval Pivot Attacks in Hybrid {RAG}: Measuring and Mitigating Amplified Leakage from Vector Seeds to Graph Expansion	Retrieval Pivot Attacks in Hybrid RAG: Measuring and Mitigating Amplified Leakage from Vector Seeds 
+161	trent2025filtered	url	ok	1.00	Filtered {HNSW} \& {kNN} search in {Lucene} and {Elasticsearch}	Filtered HNSW &amp; kNN search in Lucene and Elasticsearch | Elasticsearch Labs
+162	urbano2019statistical	crossref	ok	1.00	Statistical Significance Testing in Information Retrieval: An Empirical Analysis of Type {I}, Type {II} and Type {III} Errors	Statistical Significance Testing in Information Retrieval An Empirical Analysis of Type I, Type II a
+163	vespa2026graceful	url	ok	1.00	Graceful Query Coverage Degradation	Graceful Query Coverage Degradation | Vespa Documentation
+164	wang2021milvus	crossref	ok	1.00	Milvus: A Purpose-Built Vector Data Management System	Milvus A Purpose-Built Vector Data Management System
+165	wang2017sidechannel	crossref	ok	1.00	Side-Channel Attacks on Shared Search Indexes	Side-Channel Attacks on Shared Search Indexes
+166	wang2023efficient	crossref	ok	1.00	An Efficient and Robust Framework for Approximate Nearest Neighbor Search with Attribute Constraint	An Efficient and Robust Framework for Approximate Nearest Neighbor Search with Attribute Constraint
+167	wang2007correctness	url	page reached; title words not found: read by hand	0.00	On the Correctness Criteria of Fine-Grained Access Control in Relational Databases	
+168	wang2025towards	arxiv	ok	1.00	Towards Reliable Vector Database Management Systems: A Software Testing Roadmap for 2030	Towards Reliable Vector Database Management Systems: A Software Testing Roadmap for 2030
+169	wang2020minilm	url	ok	1.00	{MiniLM}: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers	MiniLM: Deep Self-Attention Distillation for Task-Agnostic Compression of Pre-Trained Transformers
+170	weaviate2026inverted	url	ok	1.00	Inverted indexes	Inverted indexes | Weaviate Documentation
+171	weaviate2026tokenizergo	url	ok	1.00	tokenizer.go	
+172	weaviate2026vectorindex	url	ok	1.00	Vector index	Vector index | Weaviate Documentation
+173	wei2020analyticdbv	crossref	ok	1.00	{AnalyticDB-V}: A Hybrid Analytical Engine Towards Query Fusion for Structured and Unstructured Data	AnalyticDB-V a hybrid analytical engine towards query fusion for structured and unstructured data
+174	wong2009secure	crossref	ok	1.00	Secure {kNN} Computation on Encrypted Databases	Secure kNN computation on encrypted databases
+175	wu2024systemlevel	arxiv	ok	1.00	System-Level Defense against Indirect Prompt Injection Attacks: An Information Flow Control Perspective	System-Level Defense against Indirect Prompt Injection Attacks: An Information Flow Control Perspect
+176	wu2022hqann	crossref	ok	1.00	{HQANN}: Efficient and Robust Similarity Search for Hybrid Queries with Structured and Unstructured Constraints	HQANN: Efficient and Robust Similarity Search for Hybrid Queries with Structured and Unstructured Co
+177	xiao2024cpack	crossref	ok	1.00	{C-Pack}: Packed Resources For General {Chinese} Embeddings	C-Pack: Packed Resources For General Chinese Embeddings
+178	xie2025toward	arxiv	ok	1.00	Toward Understanding Bugs in Vector Database Management Systems	Toward Understanding Bugs in Vector Database Management Systems
+179	xu2024irangegraph	crossref	ok	1.00	{iRangeGraph}: Improvising Range-dedicated Graphs for Range-filtering Nearest Neighbor Search	iRangeGraph: Improvising Range-dedicated Graphs for Range-filtering Nearest Neighbor Search
+180	yalamarthi2026policyaware	arxiv	ok	1.00	Policy-aware Vector Search: A Vision for Fine Grained Access Control in Vector Databases	Policy-aware Vector Search: A Vision for Fine Grained Access Control in Vector Databases
+181	yang2024qwen25	arxiv	first author Qwen not in the entry	1.00	{Qwen2.5} Technical Report	Qwen2.5 Technical Report
+182	zeng2024good	crossref	ok	1.00	The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation ({RAG})	The Good and The Bad: Exploring Privacy Issues in Retrieval-Augmented Generation (RAG)
+183	zerr2008zerber	crossref	ok	1.00	Zerber: r-Confidential Indexing for Distributed Documents	Zerber r-confidential indexing for distributed documents
+184	zerr2009zerberr	crossref	ok	0.93	Zerber+{R}: Top-k Retrieval from a Confidential Index	Zerber
+            <sup>+R</sup> top-k retrieval from a confidential index
+185	zhang2025universal	arxiv	ok	1.00	Universal Zero-shot Embedding Inversion	Universal Zero-shot Embedding Inversion
+186	zhang2012languagebased	crossref	ok	1.00	Language-Based Control and Mitigation of Timing Channels	Language-based control and mitigation of timing channels
+187	zhang2023vbase	url	ok	1.00	{VBASE}: Unifying Online Vector Similarity Search and Relational Queries via Relaxed Monotonicity	VBASE: Unifying Online Vector Similarity Search and Relational Queries via Relaxed Monotonicity | US
+188	zhang2026vecbench	crossref	ok	0.98	{VecBench}: A Controllable Benchmark for Filtered Vector Search: [Experiments \& Analysis]	VecBench: A Controllable Benchmark for Filtered Vector Search: [Experiments &amp; Analysis]
+189	zhong2026honeybee	crossref	ok	1.00	{HONEYBEE}: Efficient Role-based Access Control for Vector Databases via Dynamic Partitioning	HONEYBEE: Efficient Role-based Access Control for Vector Databases via Dynamic Partitioning
+190	zhou2026first	arxiv	ok	1.00	A First Measurement Study on Authentication Security in Real-World Remote {MCP} Servers	A First Measurement Study on Authentication Security in Real-World Remote MCP Servers
+191	zou2025poisonedrag	arxiv	year 2024 in the record	1.00	{PoisonedRAG}: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models	PoisonedRAG: Knowledge Corruption Attacks to Retrieval-Augmented Generation of Large Language Models
+192	zuo2024serf	crossref	ok	1.00	{SeRF}: Segment Graph for Range-Filtering Approximate Nearest Neighbor Search	SeRF: Segment Graph for Range-Filtering Approximate Nearest Neighbor Search

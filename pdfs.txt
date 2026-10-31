@@ -1,0 +1,4 @@
+wang2007-purdue: HTTP 200, application/pdf, 184604 bytes, https://www.cs.purdue.edu/homes/ninghui/papers/fgdb_vldb07.pdf
+wang2007-vldb: HTTP 200, application/pdf, 205254 bytes, https://www.vldb.org/conf/2007/papers/research/p555-wang.pdf
+mckeeman1998-hp: HTTP 000, , 0 bytes, https://www.hpl.hp.com/hpjournal/dtj/vol10num1/vol10num1art9.pdf
+mckeeman1998-swarthmore: HTTP 404, text/html; charset=iso-8859-1, 324 bytes, https://www.cs.swarthmore.edu/~bylvisa1/cs97/f13/Papers/DifferentialTestingForSoftware.pdf
