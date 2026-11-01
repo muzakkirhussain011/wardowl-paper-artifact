@@ -105,6 +105,8 @@ name head commits of the same repository, and `38f4ae7` (run 41114474172) is not
   log was removed on 2026-10-31 because it was an operational diary and pointed to a file that no longer exists; `evidence/` and
   the git log hold the same events.
 - The secret scan looks for token shapes and has no rules for personal data; personal strings were checked separately.
+- The `README.md` file inside version 2 of the Kaggle dataset still gives the paper's earlier title. The dataset's description
+  gives the current one. A new version would upload all 566 MB again for one line.
 - Run 40909137062 (`paper-x3-x6`, commit `2af1dd8`, "at smoke size first") has no folder here: it was a smoke run of the
   workflow, before the registered runs.
 - Kaggle's public API gives `lastRunTime` 2026-10-28T21:35:06Z and 21:35:31Z for the two public notebooks, later than the runs
