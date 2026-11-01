@@ -1,0 +1,13 @@
+zip files opened: 348
+files scanned: 10790
+3.3G	/tmp/tmp.n6zs7bhGwj
+
+    ○
+    │╲
+    │ ○
+    ○ ░
+    ░    gitleaks
+
+[90m12:46AM[0m [32mINF[0m [1mscanned ~2984221104 bytes (2.98 GB) in 2m46s[0m
+[90m12:46AM[0m [33mWRN[0m [1mleaks found: 414[0m
+exit 1

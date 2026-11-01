@@ -1,0 +1,6 @@
+    111 Syed Muzakkir Hussain <muzakkirhussain011@gmail.com>
+      1 cerbos extra <extra@localhost>
+      8 github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>
+      1 pdf build <pdf@localhost>
+      1 reference check <refcheck@localhost>
+      1 secret scan <scan@localhost>

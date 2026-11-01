@@ -1,0 +1,9 @@
+evidence/raw/ci-artifacts/40921769714/x2x5-log-x2-m-lancedb-b0/run.log
+evidence/raw/ci-artifacts/40921769714/x2x5-log-x2-m-lancedb-b1/run.log
+evidence/raw/ci-artifacts/40921769714/x2x5-log-x2-m-lancedb-b2/run.log
+evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-qdrant/x6-qdrant.jsonl
+evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-elasticsearch/x6-elasticsearch.jsonl
+evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-faiss/x6-faiss.jsonl
+evidence/raw/ci-artifacts/40940385704/x3x6-results-x6-pgvector/x6-pgvector.jsonl
+evidence/raw/x1run2-shard-c/qdrant.log
+evidence/raw/x1-run1/qdrant.log
