@@ -115,7 +115,7 @@ values.}
 Every pre-registered cell ran: 520,320 retrievals without an error, none returning a chunk outside the attacker's readable set.
 Figure~\ref{fig:side-auc} shows the channels by $m$. Three cautions come first. Two builds of identical content gave paired latency AUCs
 of 0.342 to 0.608 for FAISS's post-filter, and, per $m$, $|\mathrm{AUC} - 0.5|$ up to 0.38 for its pre-filter, 0.33 for pgvector's exact search and
-0.08 for Qdrant's exact search (0.24, 0.31 and under 0.01 pooled over $m$); the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC up to about 0.9, or down to about 0.1, is
+0.08 for Qdrant's exact search (0.24, 0.31 and under 0.01 pooled over $m$); the other configurations were not measured that way, and Elasticsearch's run was lost. A latency AUC anywhere from about 0.12 to 0.82, the range these builds of identical content reached, is
 therefore not by itself evidence about the secrets. We read growth with $m$ as the sign of a channel and a flat curve as an offset, a criterion we adopted after seeing these results; same-content differences can themselves rise at $m = 1{,}000$, the cell with the fewest pairs, so a rise there alone does not establish a channel. Second, every $W_0^g$ is built later in its seed than
 $W_1$, so build age is aligned with world in every latency cell. Third, intervals resample (seed, probe) pairs while the demonstrated noise is per build, so latency intervals are too narrow. We apply no correction for multiple
 comparisons; the verdicts rest on the cells the hypotheses name.

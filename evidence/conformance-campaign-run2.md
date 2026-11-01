@@ -69,7 +69,7 @@ errors. Stores: 2,520 runs, 2,380 pass, 140 errors. Engines: 1,960 runs, 1,442 p
 | SpiceDB, SpiceDB-tenant | 124 + 117 errors (HTTP 400) | 124 + 117 refused, 0 errors | yes (16 and 23 pass as before) |
 | Keto, Casbin | 72 and 43 of 140 runs (time budget) | 140 and 140, all pass | yes |
 | Cerbos, Cerbos-tenant | 20 + 19 disagreements | 20 + 19; 280 disagreeing hits, the filter on the reference's side for all 280 | yes |
-| Engine limits (ES, OS, Qdrant, Milvus, Chroma) | 140 errors | 140 errors, unchanged | yes (no change made) |
+| Store limits (ES, OS, Qdrant, Milvus, Chroma), some documented and some not | 140 errors | 140 errors, unchanged | yes (no change made) |
 | Controls | pass | pass | |
 | Leaks or altered metadata | none | none | |
 

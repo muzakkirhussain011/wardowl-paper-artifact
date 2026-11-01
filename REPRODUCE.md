@@ -104,7 +104,7 @@ have read, but only all-MiniLM-L6-v2's revision is recorded in a run's output. T
 |---|---|---|---|
 | Dataset `BeIR/fiqa`, configs `corpus` and `queries` | E2E, X1, X2-E, X5-E, X3, X6 | `979c07a7cb5ccc6ca009792241fa1250b98055dd` | 2026-04-09 |
 | Dataset `BeIR/msmarco`, configs `corpus` (streamed, first 1,000,000) and `queries` | X2-M, X5-M | `a918e0d11a77ed33f42f29d98340b655593b96ad` | 2026-04-09 |
-| Dataset `BeIR/scidocs` | X3, X6 | `acebceec772628c6679d76d6cff30ad517d17f4e` | 2026-04-09 |
+| Dataset `BeIR/scidocs` | X6 | `acebceec772628c6679d76d6cff30ad517d17f4e` | 2026-04-09 |
 | Model `BAAI/bge-base-en-v1.5` | E2E, X1, X2-E, X5-E | `a5beb1e3e68b9ab74eb54cfd186867f64f240e1a` | 2024-02-21 |
 | Model `BAAI/bge-small-en-v1.5` | X2-M, X5-M | `5c38ec7c405ec4b44b94cc5a9bb96e735b38267a` | 2024-02-22 |
 | Model `sentence-transformers/all-MiniLM-L6-v2` | X3, X6 | `1110a243fdf4706b3f48f1d95db1a4f5529b4d41`, recorded in `x6-faiss.jsonl` | 2026-06-01 |

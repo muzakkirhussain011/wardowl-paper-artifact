@@ -28,7 +28,7 @@ zone a group mate can explore, its nearest passages up to 1,000 beyond its own s
 post-filter's cap. One index $W_1$ holds every group's secrets; for each group $g$, an index $W_0^g$
 replaces only group $g$'s 1,233 secrets by far chunks. A probe of group $g$ thus compares two worlds
 that differ in its own secrets and in those of its eight group mates, which the zone rule places
-beyond the depth the layer explores for it; collection statistics, however, count them all.
+beyond the post-filter's cap of 1,000 candidates for it; collection statistics, however, count them all.
 Background passages fall into 100 permission buckets, and three
 attackers read 1\%, 10\% and 50\% of them; secrets carry an ACL none of them holds. Every seed
 builds every index afresh, $W_1$ first, so every $W_0^g$ is built later in its seed than $W_1$ and build age is aligned with world in every latency cell.
@@ -218,10 +218,10 @@ Table~\ref{tab:side-auc} must be read. Two builds of identical content gave pair
 ($|\mathrm{AUC} - 0.5|$ up to 0.16). Pooled over $m$ they were 0.257 and 0.426 for its
 pre-filter (per $m$, up to 0.38, at $m = 1{,}000$), 0.186 and 0.789 for pgvector's exact search (per $m$, up to 0.33; from the tables'
 vacuum state, below), and 0.494 and 0.505 for Qdrant's exact search (per $m$, up to 0.08, at $m = 1{,}000$, where its cell reads 0.42); we have no such
-measurement for the other configurations, and Elasticsearch's was lost. A latency AUC up to about
-0.9, or down to about 0.1, is therefore not by itself evidence about the secrets. To separate a channel from an
+measurement for the other configurations, and Elasticsearch's was lost. A latency AUC anywhere from about
+0.12 to 0.82, the range these builds of identical content reached, is therefore not by itself evidence about the secrets. To separate a channel from an
 offset we use a criterion adopted after seeing these results: a channel grows with $m$, as in the widening loop and pgvector's iterative scan, while
-an offset stays the same at every $m$, as in the configurations whose answers are identical. Same-content differences were themselves largest at $m = 1{,}000$ for FAISS's pre-filter and Qdrant's exact search, in the cell with the fewest pairs, so a rise at that $m$ alone does not establish a channel.
+an offset stays the same at every $m$, as in the configurations whose answers are identical. Same-content differences were themselves largest at $m = 1{,}000$ for FAISS's post-filter and pre-filter and Qdrant's exact search, in the cell with the fewest pairs, so a rise at that $m$ alone does not establish a channel.
 
 \paragraph{Constant work (H2, falsified).}
 Fetching the cap in one round removed the widening channel from latency pooled over $m$ and $p$ on

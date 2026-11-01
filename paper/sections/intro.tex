@@ -71,7 +71,7 @@ layouts retrieval quality ranged from near perfect to missing most of the exact 
         pgvector's two modes to PostgreSQL's plan cache. A count flagged all 2,657 truly short answers
         without a false alarm, which on unchanging data follows from what a count is, but no count sees a full answer of the wrong chunks.
   \item \emph{Side channels of filtered retrieval} (Section~\ref{sec:side}). In a pre-registered forced-choice game, shown one
-        query's observation in two worlds and told that in one the query's $m$ nearest passages are unreadable chunks (the worlds differ in 1,233 such chunks, the others beyond the post-filter's cap of 1,000 candidates for that query), a subject picked
+        query's observation in two worlds and told that in one the query's $m$ nearest non-hub passages are unreadable chunks (the worlds differ in 1,233 such chunks, the others beyond the post-filter's cap of 1,000 candidates for that query), a subject picked
         that world from the widening post-filter's latency with paired AUC 0.66 to 0.98 at $m = 100$ and 1.000 at $m = 1{,}000$ when
         it could read 10\% or 50\% of the background; reading 1\%, it had no forward latency channel (0.03 to 0.59) but a
         count channel at $m = 1{,}000$ (1.000). BM25 and IDF scores gave 0.98 to 1.00 at those $m$, in worlds that differ by 1,233 chunks whatever $m$, a known channel that prior work takes to term and text

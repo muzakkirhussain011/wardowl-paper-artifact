@@ -149,7 +149,7 @@ schedule, and the variation across the end-to-end runs would fit it, but we did 
 its timing there and cannot say what decided their modes: the same configuration ran fast by its median in three of eight runs, one of them a
 mixture of fast and exact searches, and exact in five (Section~\ref{sec:e2e-safety}). A measurement
 of pgvector through prepared statements can therefore
-report one of two systems, 16 to 64 times apart in latency (16 on the grid, 23 to 64 across the eight end-to-end runs) and about 0.3 apart in recall, with no benchmark setting naming which.
+report one of two systems, 16 to 64 times apart in latency (16 on the grid; across the eight end-to-end runs, 47 to 64 between exact and fast runs, and 23 against the one mixture run) and about 0.3 apart in recall, with no benchmark setting naming which.
 The harness of Section~\ref{sec:qual-frontiers} plans
 every search with its own values, and so can a deployment, with
 \texttt{plan\_cache\_mode = force\_custom\_plan} or by not preparing the search statement.
