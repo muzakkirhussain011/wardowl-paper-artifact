@@ -1,0 +1,60 @@
+# Demo principals for the fictional company "Najm Logistics".
+# API keys are never stored, only their scrypt hashes: a stolen copy of this file costs an attacker
+# one scrypt per guess. The demo keys are listed in the README so anyone can try the gateway
+# locally; replace this file (or point RAMPART_PRINCIPALS_FILE elsewhere) in a real deployment,
+# with a new salt and random keys:  rampart new-key  (or  rampart hash-key <key>  for a key you have).
+key_hashing:
+  scheme: scrypt
+  n: 16384
+  r: 8
+  p: 1
+  salt: 643fe817fe3d6a294768499076ad48a3
+
+principals:
+  - user_id: alice
+    name: Alice (HR business partner)
+    team: people-ops
+    department: hr
+    clearance: confidential
+    roles: [employee, pii_reader]
+    key_scrypt: efa929e8c6711b60468e4d4f02919ef5ae4a8763ba73235374b9a633b39819c9  # demo-key-alice
+
+  - user_id: bob
+    name: Bob (platform engineer)
+    team: platform
+    department: engineering
+    clearance: internal
+    roles: [employee]
+    key_scrypt: b1dbea7418fcbb7bd5350be77f71a3af6ab9c361433a6ccebc766eaed72ed743  # demo-key-bob
+
+  - user_id: carol
+    name: Carol (treasury lead)
+    team: treasury
+    department: finance
+    clearance: restricted
+    roles: [employee]
+    key_scrypt: bffaba3e366d53114de4fec96018ffede41fd0962c4437c22a36bbee946c8d93  # demo-key-carol
+
+  - user_id: dave
+    name: Dave (security auditor)
+    team: security
+    department: security
+    clearance: internal
+    roles: [auditor]
+    key_scrypt: 928ce7e24bafa6a3c0a5ab33dea889552f7f0321581ed2bd5454caf68e64a3f2  # demo-key-dave
+
+  - user_id: admin
+    name: Platform admin
+    team: it-admin
+    department: it
+    clearance: restricted
+    roles: [admin]
+    key_scrypt: 00b5e09c3453c0648b02ae2648edee0bfeae010aa3159b69672bab0f5b469a70  # demo-key-admin
+
+  - user_id: intern
+    name: Summer intern
+    team: interns
+    department: engineering
+    clearance: public
+    roles: [employee]
+    key_scrypt: 200655c1db4ec62a198dea266b1489dc4861392c43b0208e733d8b40b3a744e5  # demo-key-intern

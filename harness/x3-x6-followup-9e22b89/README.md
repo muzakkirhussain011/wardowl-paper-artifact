@@ -1,0 +1,630 @@
+<p align="center">
+  <img src="https://raw.githubusercontent.com/muzakkirhussain011/wardowl/main/docs/_static/brand/wardowl-logo.png" alt="The wardowl logo: a midnight and gold owl guarding a document" width="180">
+</p>
+
+<h1 align="center">wardowl</h1>
+
+<p align="center">
+  <strong>Permission-aware retrieval for RAG.</strong><br>
+  Every user gets only the chunks they are allowed to read,<br>
+  whatever vector store, permission system or framework you use.
+</p>
+
+<p align="center">
+  <a href="https://pypi.org/project/wardowl/"><img src="https://img.shields.io/pypi/v/wardowl?color=1e2a5a" alt="PyPI version"></a>
+  <a href="https://pypi.org/project/wardowl/"><img src="https://img.shields.io/pypi/pyversions/wardowl" alt="Python versions"></a>
+  <a href="https://github.com/muzakkirhussain011/wardowl/actions/workflows/ci.yml"><img src="https://github.com/muzakkirhussain011/wardowl/actions/workflows/ci.yml/badge.svg?branch=main&amp;event=push" alt="CI"></a>
+  <a href="https://muzakkirhussain011.github.io/wardowl/"><img src="https://github.com/muzakkirhussain011/wardowl/actions/workflows/docs.yml/badge.svg?branch=main&amp;event=push" alt="Docs"></a>
+  <a href="https://scorecard.dev/viewer/?uri=github.com/muzakkirhussain011/wardowl"><img src="https://api.securityscorecards.dev/projects/github.com/muzakkirhussain011/wardowl/badge" alt="OpenSSF Scorecard"></a>
+  <a href="https://www.bestpractices.dev/projects/15794"><img src="https://www.bestpractices.dev/projects/15794/badge" alt="OpenSSF Best Practices"></a>
+  <a href="https://github.com/muzakkirhussain011/wardowl/blob/main/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License: MIT"></a>
+</p>
+
+<p align="center">
+  <a href="https://muzakkirhussain011.github.io/wardowl/"><b>Documentation</b></a> ·
+  <a href="https://muzakkirhussain011.github.io/wardowl/quickstart.html">Quickstart</a> ·
+  <a href="https://muzakkirhussain011.github.io/wardowl/integrations/index.html">Integrations</a> ·
+  <a href="https://muzakkirhussain011.github.io/wardowl/benchmarks.html">Benchmarks</a> ·
+  <a href="https://muzakkirhussain011.github.io/wardowl/security.html">Security model</a> ·
+  <a href="https://muzakkirhussain011.github.io/wardowl/faq.html">FAQ</a> ·
+  <a href="https://github.com/muzakkirhussain011/wardowl/blob/main/CHANGELOG.md">Changelog</a>
+</p>
+
+<p align="center">
+  <a href="https://muzakkirhussain011.github.io/wardowl/#see-it-in-47-seconds"><img src="https://raw.githubusercontent.com/muzakkirhussain011/wardowl/main/docs/_static/brand/wardowl-film-thumbnail.webp" alt="Watch the 47-second wardowl film: your information stays yours" width="720"></a>
+</p>
+
+**wardowl** is an open-source Python library for permission-aware retrieval in RAG
+(retrieval-augmented generation). It applies your permission system (OpenFGA, SpiceDB, OPA, Cerbos,
+Cedar, access lists or your own rules) inside your vector store's search (pgvector, Pinecone,
+Qdrant, Elasticsearch, Milvus and more), checks every hit again and fails closed, so each user's
+LLM prompt holds only the documents that user is allowed to read. It was called needtoknow before
+version 2.0.
+
+```python
+from wardowl import PermissionedRetriever, MetadataACLAuthorizer, Subject
+
+retriever = PermissionedRetriever(backend, MetadataACLAuthorizer())
+result = retriever.retrieve("What are this year's salary bands?", Subject("bob", groups=["engineering"]), k=5)
+# result.hits holds only chunks Bob may read. HR documents never reach the prompt.
+```
+
+## Why
+
+A RAG assistant over company documents is only as safe as its retrieval step. If the vector search
+ignores who is asking, an engineer can ask the assistant about salaries and get HR documents
+summarised back. Every team building internal RAG has to solve this, and most solve it by hand,
+differently each time.
+
+`wardowl` is that layer as a small, tested library:
+
+- **Works with what you have.** Wrap any search backend and any permission system. The core has
+  no dependencies.
+- **Filters in the right place.** When the permission system can describe "everything Bob may
+  read" as a filter, the filter goes *inside* the vector search, so results are the true top-k of
+  what Bob may read. When it cannot, candidates are checked after the search and the search widens
+  until enough permitted results are found.
+- **Fails closed.** If the permission service errors, times out or returns malformed answers, the
+  user gets an error, never unfiltered results.
+- **Defence in depth.** Pre-filtered results are checked again, so a backend bug that ignores the
+  filter cannot leak. Each result reports how many such violations it caught.
+
+## Install
+
+```bash
+pip install wardowl
+```
+
+Python 3.11 or newer: every Python version CPython still supports, each dropped in the first minor
+release after its end of life. Adapters for external systems install as optional extras.
+
+## Quickstart
+
+```python
+from wardowl import Document, InMemoryBackend, MetadataACLAuthorizer, PermissionedRetriever, Subject
+
+backend = InMemoryBackend(
+    [
+        Document("handbook", "Annual leave is 25 days.", {"allowed_groups": ["*"]}),
+        Document("salaries", "Salary bands for 2026 ...", {"allowed_groups": ["hr"]}),
+        Document("runbook", "Roll back a failed deploy ...", {"allowed_groups": ["engineering"]}),
+    ]
+)
+retriever = PermissionedRetriever(backend, MetadataACLAuthorizer())
+
+result = retriever.retrieve("leave salary bands", Subject("bob", groups=["engineering"]), k=3)
+print([hit.id for hit in result.hits])  # ['handbook']
+print(result.strategy, result.complete)  # prefilter True
+```
+
+`aretrieve` is the async equivalent, with the same arguments and guarantees.
+
+## How it works
+
+<p align="center">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://raw.githubusercontent.com/muzakkirhussain011/wardowl/main/docs/_static/brand/how-it-works-dark.svg">
+    <img src="https://raw.githubusercontent.com/muzakkirhussain011/wardowl/main/docs/_static/brand/how-it-works-light.svg" alt="Your app sends the query and the user to wardowl, which asks the permission system for a filter, runs it inside the vector store's search, checks every hit again and passes only permitted chunks to the LLM prompt" width="820">
+  </picture>
+</p>
+
+| Strategy | When | Cost | Result |
+|---|---|---|---|
+| `prefilter` | The authorizer can return a filter and the backend supports filters | One search | The exact top-k of what the subject may read |
+| `postfilter` | Any authorizer | Searches `k × overfetch` candidates, widening up to `max_candidates` | Exact when enough permitted candidates exist; `complete=False` otherwise |
+| `auto` (default) | Picks `prefilter` when both sides support it | | |
+
+Every call returns a `RetrievalResult` with the hits plus `strategy`, `examined`, `denied`,
+`violations` (pre-filtered hits the re-check rejected, which should always be 0) and `complete`.
+
+## Integrations
+
+Each integration is an optional extra, so the core stays dependency-free.
+
+| Integration | Kind | Install | Where permissions apply |
+|---|---|---|---|
+| [PostgreSQL + pgvector](https://muzakkirhussain011.github.io/wardowl/integrations/pgvector.html) | Vector store | `wardowl[pgvector]` | Inside the SQL query |
+| [Qdrant](https://muzakkirhussain011.github.io/wardowl/integrations/qdrant.html) | Vector store | `wardowl[qdrant]` | Qdrant's `query_filter` |
+| [Milvus](https://muzakkirhussain011.github.io/wardowl/integrations/milvus.html) | Vector store | `wardowl[milvus]` | Inside the vector search, with parameterized filters |
+| [MongoDB Atlas Vector Search](https://muzakkirhussain011.github.io/wardowl/integrations/mongodb.html) | Vector store | `wardowl[mongodb]` | The `$vectorSearch` pre-filter |
+| [Weaviate](https://muzakkirhussain011.github.io/wardowl/integrations/weaviate.html) | Vector store | `wardowl[weaviate]` | Inside the vector search |
+| [Redis](https://muzakkirhussain011.github.io/wardowl/integrations/redis.html) | Vector store | `wardowl[redis]` | In the same KNN query, on hex-encoded terms |
+| [LanceDB](https://muzakkirhussain011.github.io/wardowl/integrations/lancedb.html) | Vector store, embedded | `wardowl[lancedb]` | Before the vector search ranks, on hex-encoded terms |
+| [FAISS](https://muzakkirhussain011.github.io/wardowl/integrations/faiss.html) | Vector search library, in process | `wardowl[faiss]` | Before the search ranks, as an ID selector |
+| [Vespa](https://muzakkirhussain011.github.io/wardowl/integrations/vespa.html) | Search engine | `wardowl[vespa]` | In the YQL query, inside the nearest-neighbor search |
+| [Apache Cassandra](https://muzakkirhussain011.github.io/wardowl/integrations/cassandra.html) | Database with vector search | `wardowl[cassandra]` | In each ANN query's `WHERE`, as bound parameters |
+| [Pinecone](https://muzakkirhussain011.github.io/wardowl/integrations/pinecone.html) | Managed vector database | `wardowl[pinecone]` | The query's metadata filter, on hex-encoded terms |
+| [Elasticsearch, OpenSearch](https://muzakkirhussain011.github.io/wardowl/integrations/elasticsearch.html) | Vector store | `wardowl[elasticsearch]`, `[opensearch]` | Inside the kNN search |
+| [Chroma](https://muzakkirhussain011.github.io/wardowl/integrations/chroma.html) | Vector store | `wardowl[chroma]` | Chroma's `where` clause |
+| [OpenFGA](https://muzakkirhussain011.github.io/wardowl/integrations/openfga.html) | Permission system | none | ListObjects pre-filter, batched checks |
+| [SpiceDB](https://muzakkirhussain011.github.io/wardowl/integrations/spicedb.html) | Permission system | none | LookupResources pre-filter, bulk checks |
+| [Cerbos](https://muzakkirhussain011.github.io/wardowl/integrations/cerbos.html) | Permission system | none | Pre-filter from query plans |
+| [Cedar](https://muzakkirhussain011.github.io/wardowl/integrations/cedar.html) | Permission system, in process | `wardowl[cedar]` | Post-filter |
+| [Casbin](https://muzakkirhussain011.github.io/wardowl/integrations/casbin.html) | Permission system, in process | `wardowl[casbin]` | Post-filter |
+| [Ory Keto](https://muzakkirhussain011.github.io/wardowl/integrations/keto.html) | Permission system | none | Post-filter |
+| [Open Policy Agent](https://muzakkirhussain011.github.io/wardowl/integrations/opa.html) | Permission system | none | Pre-filter when the policy returns one |
+| [Google Drive](https://muzakkirhussain011.github.io/wardowl/integrations/google-drive.html) | Permission sync | none (bring Google's client) | Copies Drive sharing onto the chunks |
+| [LangChain](https://muzakkirhussain011.github.io/wardowl/integrations/langchain.html) | Framework | `wardowl[langchain]` | Retriever and agent tools; any store |
+| [LlamaIndex](https://muzakkirhussain011.github.io/wardowl/integrations/llamaindex.html) | Framework | `wardowl[llamaindex]` | Retriever and postprocessor; any index |
+| [Haystack](https://muzakkirhussain011.github.io/wardowl/integrations/haystack.html) | Framework | `wardowl[haystack]` | Retriever component; any wardowl backend |
+| [MCP](https://muzakkirhussain011.github.io/wardowl/integrations/mcp.html) | Agent tool server | `wardowl[mcp]` | Search tool; the user comes from the verified token |
+| [HTTP service](https://muzakkirhussain011.github.io/wardowl/integrations/http.html) | Service for any language | `wardowl[server]` | `POST /v1/retrieve`; the user comes from the verified OIDC token |
+
+Setup for each, with code:
+
+<details>
+<summary><b>PostgreSQL + pgvector</b></summary>
+
+**PostgreSQL + pgvector** (`pip install "wardowl[pgvector]"`, pgvector 0.8+). The permission
+filter runs inside the SQL query as JSON containment tests, served by a GIN index, and iterative
+index scans keep HNSW returning rows under selective filters, up to pgvector's scan limits; a
+result they cut short says `complete=False`.
+
+```python
+from psycopg_pool import ConnectionPool
+
+from wardowl.backends.pgvector import PgVectorBackend, create_schema
+
+pool = ConnectionPool("postgresql://localhost/app")
+create_schema(pool, dim=768)
+backend = PgVectorBackend(pool, embed=my_embedding_model)  # embed: str -> list[float]
+backend.add(documents)
+```
+
+</details>
+
+<details>
+<summary><b>Chroma</b></summary>
+
+**Chroma** (`pip install "wardowl[chroma]"`). The filter becomes Chroma's `where` clause. Each
+value in a permission list is stored as its own field rather than as a Chroma array, and an exact
+copy of the metadata is kept for the re-check: in chromadb 1.5.x, deleting a collection leaves its
+array metadata behind for new records in other collections to pick up
+([chroma-core/chroma#7594](https://github.com/chroma-core/chroma/issues/7594)), which for
+permissions would be a leak.
+
+```python
+import chromadb
+
+from wardowl.backends.chroma import ChromaBackend
+
+collection = chromadb.PersistentClient(path="./chroma").get_or_create_collection("docs")
+backend = ChromaBackend(collection)  # uses the collection's embedding function
+```
+
+</details>
+
+<details>
+<summary><b>Qdrant</b></summary>
+
+**Qdrant** (`pip install "wardowl[qdrant]"`). The filter becomes Qdrant's `query_filter`, served
+by payload indexes on the permission fields. Points use the layout of LangChain's Qdrant
+integration, so a collection built with LangChain can be searched with permissions as it is.
+
+```python
+from qdrant_client import QdrantClient
+
+from wardowl.backends.qdrant import QdrantBackend, create_collection
+
+client = QdrantClient(url="http://localhost:6333")
+create_collection(client, "docs", dim=768)
+backend = QdrantBackend(client, "docs", embed=my_embedding_model)
+```
+
+`create_collection(..., text_search=True)` adds a BM25 sparse vector, and
+`QdrantBackend(client, "docs", mode="keyword")` then ranks by BM25 under the same filter, for hybrid
+search with `RankFusion`.
+
+</details>
+
+<details>
+<summary><b>Milvus</b></summary>
+
+**Milvus** (`pip install "wardowl[milvus]"`). The filter runs inside Milvus's vector search.
+Permissions are matched on a type-tagged array field, and the values are passed as filter
+parameters, never written into the expression, so a group name cannot change what a filter
+selects.
+
+```python
+from pymilvus import MilvusClient
+
+from wardowl.backends.milvus import MilvusBackend, create_collection
+
+client = MilvusClient(uri="http://localhost:19530")
+create_collection(client, "docs", dim=768)
+backend = MilvusBackend(client, "docs", embed=my_embedding_model)
+```
+
+`create_collection(..., text_search=True)` also derives a BM25 sparse vector from the text, and
+`MilvusBackend(client, "docs", mode="keyword")` then searches it under the same filter, for hybrid
+search with `RankFusion`.
+
+</details>
+
+<details>
+<summary><b>MongoDB Atlas Vector Search</b></summary>
+
+**MongoDB Atlas Vector Search** (`pip install "wardowl[mongodb]"`). The filter is the
+`$vectorSearch` pre-filter, on a type-tagged array field. Atlas indexes writes a moment after they
+happen, so `add` and `delete` wait until the index shows them, including a chunk's new
+permissions.
+
+```python
+from pymongo import MongoClient
+
+from wardowl.backends.mongodb import MongoDBBackend, create_search_index
+
+collection = MongoClient(MONGODB_URI)["rag"]["chunks"]
+create_search_index(collection, dim=768)
+backend = MongoDBBackend(collection, embed=my_embedding_model)
+```
+
+`create_text_index(collection)` adds an Atlas Search index on the text, and
+`MongoDBBackend(collection, mode="keyword")` then runs BM25 under the same filter, for hybrid search
+with `RankFusion`.
+
+</details>
+
+<details>
+<summary><b>Weaviate</b></summary>
+
+**Weaviate** (`pip install "wardowl[weaviate]"`). The filter runs inside Weaviate's vector
+search, on a type-tagged `text[]` property with `field` tokenization, so terms match exactly, case
+and whitespace included. The metadata is stored as JSON and returned as written.
+
+```python
+import weaviate
+
+from wardowl.backends.weaviate import WeaviateBackend, create_collection
+
+client = weaviate.connect_to_local()
+create_collection(client, "Chunks")
+backend = WeaviateBackend(client, "Chunks", embed=my_embedding_model)
+```
+
+</details>
+
+<details>
+<summary><b>Redis</b></summary>
+
+**Redis** (`pip install "wardowl[redis]"`). A KNN query on the Redis Query Engine (Redis 8 or
+later, or Redis Stack) with the permission filter in the same query. Permission terms are stored
+hex-encoded, so no group name can add query syntax and case never merges two values.
+
+```python
+import redis
+
+from wardowl.backends.redis import RedisBackend, create_index
+
+# Timeouts, so a Redis that stops answering fails the search instead of holding it forever.
+client = redis.Redis.from_url(REDIS_URL, socket_timeout=2, socket_connect_timeout=2)
+create_index(client, "chunks", dim=768)
+backend = RedisBackend(client, "chunks", embed=my_embedding_model)
+```
+
+`create_index(..., content_field="content")` also indexes the text, and
+`RedisBackend(client, "chunks", mode="keyword")` then runs BM25 under the same filter, for hybrid
+search with `RankFusion`.
+
+</details>
+
+<details>
+<summary><b>LanceDB</b></summary>
+
+**LanceDB** (`pip install "wardowl[lancedb]"`). An embedded vector database, on a local directory
+or object storage, with no server to run. The permission filter is applied before the vector
+search ranks, on hex-encoded terms, so no group name or user id is ever part of the SQL.
+
+```python
+import lancedb
+
+from wardowl.backends.lancedb import LanceDBBackend, create_table
+
+table = create_table(lancedb.connect("data/chunks"), "chunks", dim=768)
+backend = LanceDBBackend(table, embed=my_embedding_model)
+```
+
+`create_indexes(table, content_field="content")` builds a full-text index, and
+`LanceDBBackend(table, mode="keyword")` then runs BM25 under the same filter, for hybrid search with
+`RankFusion`.
+
+</details>
+
+<details>
+<summary><b>Elasticsearch and OpenSearch</b></summary>
+
+**Elasticsearch and OpenSearch** (`pip install "wardowl[elasticsearch]"` or `[opensearch]`).
+The filter runs inside the kNN search. Permissions are matched on a type-tagged keyword field, so
+the integer `1` and the string `"1"` stay different values, as the reference semantics require.
+
+```python
+from elasticsearch import Elasticsearch
+
+from wardowl.backends.elasticsearch import ElasticsearchBackend, create_index
+
+client = Elasticsearch("http://localhost:9200")
+create_index(client, "docs", dim=768)
+backend = ElasticsearchBackend(client, "docs", embed=my_embedding_model)
+```
+
+`mode="keyword"` runs BM25 on the same index under the same filter. `RankFusion(vector, keyword)`
+fuses the two into hybrid search, and fuses any other backends the same way
+([hybrid search](https://muzakkirhussain011.github.io/wardowl/hybrid.html)).
+
+</details>
+
+<details>
+<summary><b>Open Policy Agent</b></summary>
+
+**Open Policy Agent** (no extra dependency). Your Rego policy returns one decision per chunk, and
+can optionally return a filter so the vector store does the filtering. A complete policy is in
+[`examples/opa/wardowl.rego`](https://github.com/muzakkirhussain011/wardowl/blob/main/examples/opa/wardowl.rego).
+
+```python
+from wardowl.authorizers.opa import OPAAuthorizer
+
+authorizer = OPAAuthorizer("http://localhost:8181", filter_path="wardowl/filter")
+```
+
+</details>
+
+<details>
+<summary><b>OpenFGA</b></summary>
+
+**OpenFGA** (no extra dependency). Relationship-based access control in the Google Zanzibar style.
+Checks run in batches; for pre-filtering, ListObjects returns every document the user may view,
+and if that list may have been truncated the retriever post-filters instead. The subject's groups
+can be sent as contextual tuples, so memberships from your identity provider need no syncing.
+
+```python
+from wardowl.authorizers.openfga import OpenFGAAuthorizer
+
+authorizer = OpenFGAAuthorizer("http://localhost:8080", store_id, resource_field="doc_id")
+```
+
+</details>
+
+<details>
+<summary><b>SpiceDB</b></summary>
+
+**SpiceDB** (no extra dependency). Zanzibar-style permissions through SpiceDB's HTTP API.
+CheckBulkPermissions decides each chunk, LookupResources gives the pre-filter, and SpiceDB follows
+the group memberships it stores. For memberships that live only in your identity provider,
+`group_subjects=True` checks the subject's groups as subject sets (`group:<name>#member`), but not
+with permissions that exclude or intersect (`viewer - banned`).
+
+```python
+from wardowl.authorizers.spicedb import SpiceDBAuthorizer
+
+authorizer = SpiceDBAuthorizer("http://localhost:8443", token=spicedb_key, resource_field="doc_id")
+```
+
+</details>
+
+<details>
+<summary><b>Cerbos</b></summary>
+
+**Cerbos** (no extra dependency). Each chunk is a Cerbos resource whose attributes are its
+metadata. Pre-filters come from Cerbos query plans: the conditions a vector store can apply
+exactly are translated into a filter, and anything else is post-filtered with Cerbos deciding each
+chunk. An example policy is in
+[`examples/cerbos`](https://github.com/muzakkirhussain011/wardowl/tree/main/examples/cerbos).
+
+```python
+from wardowl.authorizers.cerbos import CerbosAuthorizer
+
+authorizer = CerbosAuthorizer("http://localhost:3592")
+```
+
+</details>
+
+<details>
+<summary><b>Google Drive</b></summary>
+
+**Google Drive** (bring `google-api-python-client`). `GoogleDriveACL` reads who may read a Drive
+file, in My Drive or a shared drive, and `with_access` writes it onto the file's chunks for
+`MetadataACLAuthorizer`. Grants that do not open the content fail closed: link-only sharing,
+deleted accounts, expired grants, limited-access folders' metadata views and grants a shared drive
+shuts out grant nothing.
+
+```python
+from wardowl.sync import with_access
+from wardowl.sync.google_drive import GoogleDriveACL
+
+access = GoogleDriveACL(drive_service, domains=["example.com"]).access(file_id)
+backend.set_metadata({cid: with_access(metadata, access) for cid, metadata in chunks.items()})
+```
+
+</details>
+
+<details>
+<summary><b>LangChain</b></summary>
+
+**LangChain** (`pip install "wardowl[langchain]"`). `WardowlRetriever` is a LangChain
+retriever, so it works in chains, agents and LangGraph tools; `LangChainVectorStoreBackend` turns
+any LangChain vector store into a wardowl backend (post-filtered).
+
+```python
+from wardowl.langchain import WardowlRetriever
+
+retriever = WardowlRetriever(retriever=PermissionedRetriever(backend, authorizer))
+docs = retriever.invoke("What are this year's salary bands?", subject=Subject("bob", ["sales"]))
+```
+
+</details>
+
+<details>
+<summary><b>LlamaIndex</b></summary>
+
+**LlamaIndex** (`pip install "wardowl[llamaindex]"`). `WardowlRetriever` for query and chat
+engines, `PermissionNodePostprocessor` for existing pipelines, and `LlamaIndexBackend` to wrap an
+existing index. Runnable examples for both frameworks are in [`examples/`](https://github.com/muzakkirhussain011/wardowl/tree/main/examples).
+
+</details>
+
+<details>
+<summary><b>Haystack</b></summary>
+
+**Haystack** (`pip install "wardowl[haystack]"`). `WardowlRetriever` is a pipeline component
+over any wardowl backend and authorizer. The authenticated user is a run input, so one pipeline
+serves every user; it outputs `documents` and `complete`, and has `run_async`.
+
+```python
+from haystack import Pipeline
+
+from wardowl.haystack import WardowlRetriever
+
+pipeline = Pipeline()
+pipeline.add_component("retriever", WardowlRetriever(PermissionedRetriever(backend, authorizer)))
+result = pipeline.run({"retriever": {"query": question, "subject": subject}})
+```
+
+</details>
+
+<details>
+<summary><b>MCP</b></summary>
+
+**MCP** (`pip install "wardowl[mcp]"`). `add_search_tool` gives an MCP server a search tool for
+AI assistants and agents. Whose permissions apply comes from the access token the server verified,
+never from the tool's arguments, and a call without a verified token is refused.
+
+```python
+from wardowl.mcp import add_search_tool
+
+
+def subject_for(token):  # the verified token's user, with their groups
+    return Subject(token.subject, groups_of(token.subject))
+
+
+add_search_tool(server, PermissionedRetriever(backend, authorizer), subject_for)
+server.run(transport="streamable-http")
+```
+
+</details>
+
+Filter values are strings or integers, the types permission identifiers use. That keeps every
+backend's answer identical to the reference semantics, which the test suite checks for each one.
+
+## Caching, audit, tracing and metrics
+
+```python
+from wardowl import CachingAuthorizer, JsonLinesAudit
+from wardowl.otel import OpenTelemetryMetrics, OpenTelemetryObserver  # pip install "wardowl[otel]"
+
+retriever = PermissionedRetriever(
+    backend,
+    CachingAuthorizer(authorizer, ttl=30),  # a revoked permission stops granting access within 30 s
+    observers=[JsonLinesAudit(audit_file), OpenTelemetryObserver(), OpenTelemetryMetrics()],
+    audit_key=b"...",  # optional: an HMAC of each query, so repeats can be matched without storing them
+)
+```
+
+`CachingAuthorizer` caches pre-filters and per-chunk decisions per subject for `ttl` seconds and
+never caches an error; `invalidate()` drops decisions after a change you know about. Every
+retrieval, including failed ones, produces one `RetrievalEvent` (who asked, strategy, returned ids,
+denied and violation counts, time spent in the backend and the authorizer, error type).
+`JsonLinesAudit` writes each one to `audit_file`, an open text file; `OpenTelemetryObserver` turns
+it into a span and `OpenTelemetryMetrics` into counters and latency histograms. Events never
+contain query or chunk text, and an observer that fails is logged without affecting retrieval.
+
+## Bring your own backend or permission system
+
+A backend is any object with a `search` method:
+
+```python
+class MyBackend:
+    supports_filters = True  # set False if search() ignores `filter`
+
+    def search(self, query: str, k: int, filter=None) -> list[Hit]:
+        """Return hits best first. Translate `filter` (In / And / Or) into your store's filter."""
+```
+
+An authorizer answers two questions:
+
+```python
+class MyAuthorizer:
+    def check(self, subject, hits, action="read") -> list[bool]:
+        """One decision per hit, in order. Raise on any doubt: the retriever fails closed."""
+
+    def filter_for(self, subject, action="read"):
+        """A Filter selecting everything the subject may read, or None if you cannot express one."""
+```
+
+Either can add `async` versions (`asearch`, `acheck`, `afilter_for`); otherwise the sync methods
+run in a thread under `aretrieve`. `FunctionAuthorizer` wraps a plain function.
+
+## Testing approach
+
+The guarantees are tested as properties with [Hypothesis](https://hypothesis.readthedocs.io):
+for randomly generated corpora, permissions, users and queries, every strategy must
+
+1. never return a chunk the user may not read,
+2. return exactly the top-k of what the user may read (checked against an independent oracle),
+3. stay safe when the backend ignores the filter, and
+4. give identical results through `retrieve` and `aretrieve`.
+
+## Benchmarks
+
+On 57,600 real chunks (BEIR FiQA, Qwen3-Embedding-0.6B), across 33,000 retrievals, no wardowl
+strategy returned a single forbidden chunk. Filtering inside the search kept recall@10 at 0.949 or
+better on pgvector for users who may read anywhere from 0.06% to 100% of the corpus, including when
+what they may read is far from what they ask about. Filtering after a top-10 search found almost
+nothing for selective permissions. Method, tables and caveats: [Benchmarks](https://muzakkirhussain011.github.io/wardowl/benchmarks.html).
+
+| Readable (far from the query) | Naive top-k, then filter | wardowl postfilter | wardowl prefilter (pgvector) |
+|---|---|---|---|
+| 0.9% | 0.000 | 0.048 | 0.995 |
+| 4.8% | 0.000 | 0.314 | 0.950 |
+| 20% | 0.041 | 0.974 | 0.949 |
+
+At a million chunks (MS MARCO in PostgreSQL + pgvector, on 4 CPUs), pre-filtering kept recall@10
+between 0.88 and 0.97 for users who may read 0.1% to 100% of the corpus, at a median of 3 to 21 ms
+one query at a time; the machine served up to 126 requests a second. Open Policy Agent as the
+permission service cost 8 to 9% of throughput, and `CachingAuthorizer` recovered nearly all of it. No
+retrieval leaked: none of the 185,040 chunks returned under concurrent load, each checked against its
+user's permissions, and none one at a time, there or on Qdrant, Elasticsearch, OpenSearch and
+Weaviate measured the same way on the same million chunks ([benchmarks](https://muzakkirhussain011.github.io/wardowl/benchmarks.html#every-store-on-the-same-million-chunks)).
+
+## Stability and roadmap
+
+1.0 is the stable base: the core, the pgvector and Chroma backends, the OPA and OpenFGA authorizers,
+the LangChain and LlamaIndex integrations, caching, audit events and tracing. The public API in the
+[API reference](https://muzakkirhussain011.github.io/wardowl/api.html) follows semantic
+versioning: no breaking change without a major version and a deprecation period first.
+
+Since 1.0, 1.1 added resilient connections to remote permission services and signed, verifiable
+releases. 1.2 added the Qdrant, Milvus, Elasticsearch and OpenSearch backends, the SpiceDB and
+Cerbos authorizers, combined and multi-tenant authorizers, a permission cache shared across
+replicas, OpenTelemetry metrics and a conformance kit. 1.3 added hybrid search, reranking after the
+permission check, searches with your own vectors, permission changes without re-embedding, an MCP
+search tool for AI agents, a Haystack component, and the MongoDB Atlas, Weaviate, Redis and LanceDB
+backends. 1.4 added keyword search on every store but Chroma, the Cedar authorizer and permission sync from
+Google Drive. 1.5 added an HTTP service for any language, redaction, the Ory Keto and Casbin
+authorizers and the FAISS backend. 1.6 added the Vespa and Cassandra backends. 2.0, the first release
+named wardowl, added the Pinecone backend and the fixes from the project's own security audit, some
+of which change behaviour; [Upgrading](https://muzakkirhussain011.github.io/wardowl/upgrading.html)
+lists them. Next, in rough order: permission sync from SharePoint and Confluence, and an Azure AI
+Search backend. Contributions are welcome; see
+[CONTRIBUTING.md](https://github.com/muzakkirhussain011/wardowl/blob/main/CONTRIBUTING.md).
+
+## Example deployment
+
+[`examples/gateway`](https://github.com/muzakkirhussain011/wardowl/tree/main/examples/gateway) is a complete, self-hosted, OpenAI-compatible gateway built
+on the same ideas: OPA policies, pgvector hybrid search with the ACL inside the query, PII
+pseudonymisation, prompt-injection quarantine and a hash-chained audit log. It is being ported onto
+this library.
+
+## Community and support
+
+- **Questions and bugs:** [GitHub issues](https://github.com/muzakkirhussain011/wardowl/issues).
+- **Security reports:** privately, as [SECURITY.md](https://github.com/muzakkirhussain011/wardowl/blob/main/SECURITY.md)
+  describes; it also shows how to verify a release's signatures.
+- **Contributing:** [CONTRIBUTING.md](https://github.com/muzakkirhussain011/wardowl/blob/main/CONTRIBUTING.md),
+  [GOVERNANCE.md](https://github.com/muzakkirhussain011/wardowl/blob/main/GOVERNANCE.md) and the
+  [code of conduct](https://github.com/muzakkirhussain011/wardowl/blob/main/CODE_OF_CONDUCT.md).
+- **Citing:** [CITATION.cff](https://github.com/muzakkirhussain011/wardowl/blob/main/CITATION.cff),
+  or "Cite this repository" on GitHub.
+
+## License
+
+[MIT](https://github.com/muzakkirhussain011/wardowl/blob/main/LICENSE)

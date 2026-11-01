@@ -1,0 +1,1 @@
+"expression":"hasIntersection(request.resource.attr.allowed_groups, request.principal.attr.groups)","error":"no such overload: hasIntersection(string, list)"}

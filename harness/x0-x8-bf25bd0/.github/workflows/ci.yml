@@ -1,0 +1,427 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  # By hand, and by the Lock workflow on the commit it pushes, which no push event announces.
+  workflow_dispatch:
+    inputs:
+      pinecone:
+        description: Also run the Pinecone tests against the service, with the PINECONE_API_KEY secret
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+jobs:
+  # The four job names lint / policy / test / docker are required checks on main. Keep them.
+
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: The locks match the pyproject.toml files
+        run: |
+          uv lock --check
+          uv lock --check --directory examples/gateway
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra dev -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+      - run: ruff check .
+      - run: ruff format --diff .
+      - name: Every pip install is pinned by hash
+        run: python .github/scripts/check_pinned_installs.py
+
+  typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      # Every extra, so the adapters are checked against the real libraries' types.
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --all-extras -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - name: mypy --strict
+        run: mypy
+
+  test:
+    name: test
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env: { POSTGRES_USER: test, POSTGRES_PASSWORD: test, POSTGRES_DB: test }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U test" --health-interval 3s --health-retries 30
+      redis:
+        image: redis:8.10.2-alpine
+        ports: ["6379:6379"]
+        options: >-
+          --health-cmd "redis-cli ping" --health-interval 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - name: Start Elasticsearch and OpenSearch (they boot while the rest is installed)
+        run: |
+          docker run -d --name elasticsearch -p 9200:9200 -e discovery.type=single-node \
+            -e xpack.security.enabled=false -e ES_JAVA_OPTS="-Xms512m -Xmx512m" \
+            docker.elastic.co/elasticsearch/elasticsearch:9.5.5
+          docker run -d --name opensearch -p 9201:9200 -e discovery.type=single-node \
+            -e DISABLE_SECURITY_PLUGIN=true -e DISABLE_INSTALL_DEMO_CONFIG=true \
+            -e OPENSEARCH_JAVA_OPTS="-Xms512m -Xmx512m" opensearchproject/opensearch:3.9.0
+      - name: Start Milvus (standalone, embedded etcd, local storage; it boots while the rest is installed)
+        run: |
+          mkdir -p "$RUNNER_TEMP/milvus"
+          printf '%s\n' 'listen-client-urls: http://0.0.0.0:2379' 'advertise-client-urls: http://0.0.0.0:2379' \
+            'quota-backend-bytes: 4294967296' 'auto-compaction-mode: revision' "auto-compaction-retention: '1000'" \
+            > "$RUNNER_TEMP/milvus/embedEtcd.yaml"
+          touch "$RUNNER_TEMP/milvus/user.yaml"
+          docker run -d --name milvus --security-opt seccomp:unconfined -p 19530:19530 -p 9091:9091 \
+            -e ETCD_USE_EMBED=true -e ETCD_DATA_DIR=/var/lib/milvus/etcd \
+            -e ETCD_CONFIG_PATH=/milvus/configs/embedEtcd.yaml -e COMMON_STORAGETYPE=local -e DEPLOY_MODE=STANDALONE \
+            -v "$RUNNER_TEMP/milvus/embedEtcd.yaml:/milvus/configs/embedEtcd.yaml" \
+            -v "$RUNNER_TEMP/milvus/user.yaml:/milvus/configs/user.yaml" \
+            milvusdb/milvus:v3.0.2 milvus run standalone
+      - name: Start MongoDB with Atlas Vector Search (local Atlas deployment; it boots while the rest is installed)
+        run: docker run -d --name mongodb -p 27017:27017 mongodb/mongodb-atlas-local:8.0.30
+      - name: Start Weaviate (vectors provided by the client)
+        run: |
+          docker run -d --name weaviate -p 8079:8080 -p 50051:50051 -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+            -e PERSISTENCE_DATA_PATH=/var/lib/weaviate -e DEFAULT_VECTORIZER_MODULE=none -e CLUSTER_HOSTNAME=node1 \
+            cr.weaviate.io/semitechnologies/weaviate:1.39.12
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:8079/v1/.well-known/ready && break; sleep 1; done
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
+        with: { version: 1.21.2 }
+      - name: Start OPA with the example policy
+        run: |
+          opa run --server --addr=127.0.0.1:8181 examples/opa &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8181/health && break; sleep 1; done
+      - name: Start OpenFGA
+        run: |
+          docker run -d --name openfga -p 8080:8080 openfga/openfga:v1.22.0 run
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8080/healthz && break; sleep 1; done
+      - name: Start SpiceDB (HTTP API, in-memory datastore)
+        run: |
+          docker run -d --name spicedb -p 8443:8443 authzed/spicedb:v1.56.2 serve \
+            --grpc-preshared-key wo-test --http-enabled --datastore-engine memory
+          for i in $(seq 1 30); do curl -s -o /dev/null http://127.0.0.1:8443/ && break; sleep 1; done
+      - name: Start Cerbos with the example policy
+        run: |
+          docker run -d --name cerbos -p 3592:3592 -v "$PWD/examples/cerbos/policies:/policies" \
+            ghcr.io/cerbos/cerbos:0.56.0
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:3592/_cerbos/health && break; sleep 1; done
+      - name: Start Ory Keto
+        run: |
+          docker run -d --name keto -p 4466:4466 -p 4467:4467 -v "$PWD/examples/keto:/config" \
+            oryd/keto:v26.2.0 serve -c /config/keto.yml
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:4466/health/ready && break; sleep 1; done
+          curl -sf http://127.0.0.1:4466/health/ready || { docker logs keto; exit 1; }
+      - name: Start Qdrant
+        run: |
+          docker run -d --name qdrant -p 6333:6333 qdrant/qdrant:v1.19.2
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:6333/readyz && break; sleep 1; done
+      - name: Start Cassandra
+        run: docker run -d --name cassandra -p 9042:9042 -e MAX_HEAP_SIZE=1G -e HEAP_NEWSIZE=200M cassandra:5.0.9
+      - name: Start Vespa and deploy the example application
+        run: |
+          docker run -d --name vespa --hostname vespa-container -p 8090:8080 -p 19071:19071 vespaengine/vespa:8.763.13
+          for i in $(seq 1 60); do curl -sf http://127.0.0.1:19071/state/v1/health | grep -q '"up"' && break; sleep 2; done
+          (cd examples/vespa/app && zip -qr - .) | curl -sf --header Content-Type:application/zip --data-binary @- \
+            http://127.0.0.1:19071/application/v2/tenant/default/prepareandactivate || { docker logs --tail 80 vespa; exit 1; }
+          probe=http://127.0.0.1:8090/document/v1/wardowl/wardowl/docid/ready
+          for i in $(seq 1 90); do curl -sf -X POST -H 'Content-Type: application/json' -d '{"fields":{}}' "$probe" && break; sleep 2; done
+          curl -sf -X DELETE "$probe" || { docker logs --tail 80 vespa; exit 1; }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --all-extras --group integration --group examples -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - name: Wait for Elasticsearch, OpenSearch, Milvus, MongoDB and Cassandra
+        run: |
+          for i in $(seq 1 90); do docker exec cassandra cqlsh -e 'SELECT release_version FROM system.local' > /dev/null 2>&1 && break; sleep 2; done
+          docker exec cassandra cqlsh -e 'SELECT release_version FROM system.local' || { docker logs --tail 50 cassandra; exit 1; }
+          for url in http://127.0.0.1:9200 http://127.0.0.1:9201; do
+            for i in $(seq 1 90); do
+              curl -sf "$url/_cluster/health?wait_for_status=yellow&timeout=2s" > /dev/null && break
+              sleep 2
+            done
+            curl -sf "$url" | grep -m1 '"number"'
+          done
+          for i in $(seq 1 90); do curl -sf http://127.0.0.1:9091/healthz && break; sleep 2; done
+          curl -sf http://127.0.0.1:9091/healthz || { docker logs --tail 50 milvus; exit 1; }
+          for i in $(seq 1 120); do [ "$(docker inspect -f '{{.State.Health.Status}}' mongodb)" = healthy ] && break; sleep 2; done
+          [ "$(docker inspect -f '{{.State.Health.Status}}' mongodb)" = healthy ] || { docker logs --tail 50 mongodb; exit 1; }
+      - name: Library and adapter tests (property-based, against real PostgreSQL, Chroma, Qdrant, Milvus, MongoDB, Weaviate, Elasticsearch, OpenSearch, Vespa, Cassandra, OPA, OpenFGA, SpiceDB, Cerbos and Redis)
+        env:
+          WARDOWL_TEST_DATABASE_URL: postgresql://test:test@localhost:5432/test
+          WARDOWL_TEST_OPA_URL: http://127.0.0.1:8181
+          WARDOWL_TEST_OPENFGA_URL: http://127.0.0.1:8080
+          WARDOWL_TEST_SPICEDB_URL: http://127.0.0.1:8443
+          WARDOWL_TEST_SPICEDB_TOKEN: wo-test
+          WARDOWL_TEST_CERBOS_URL: http://127.0.0.1:3592
+          WARDOWL_TEST_KETO_URL: http://127.0.0.1:4466
+          WARDOWL_TEST_KETO_WRITE_URL: http://127.0.0.1:4467
+          WARDOWL_TEST_REDIS_URL: redis://127.0.0.1:6379/0
+          WARDOWL_TEST_QDRANT_URL: http://127.0.0.1:6333
+          WARDOWL_TEST_VESPA_URL: http://127.0.0.1:8090
+          WARDOWL_TEST_CASSANDRA_HOST: 127.0.0.1
+          WARDOWL_TEST_MILVUS_URL: http://127.0.0.1:19530
+          WARDOWL_TEST_MONGODB_URL: mongodb://127.0.0.1:27017/?directConnection=true
+          WARDOWL_TEST_WEAVIATE_URL: http://127.0.0.1:8079
+          WARDOWL_TEST_WEAVIATE_GRPC_PORT: "50051"
+          WARDOWL_TEST_ELASTICSEARCH_URL: http://127.0.0.1:9200
+          WARDOWL_TEST_OPENSEARCH_URL: http://127.0.0.1:9201
+        run: |
+          pytest -q -ra --cov --cov-report=
+          coverage report --format=markdown >> "$GITHUB_STEP_SUMMARY"
+          coverage report --fail-under=90
+          # The code that decides who reads what is held to a higher bar: the retriever, the filter
+          # language, composition, caching and the permission-service clients, together.
+          coverage report --fail-under=95 --include="wardowl/retriever.py,wardowl/filters.py,wardowl/authz.py,wardowl/caching.py,wardowl/authorizers/*.py"
+      - name: Cassandra and Vespa server errors, when a step failed
+        if: failure()
+        run: |
+          docker logs cassandra 2>&1 | grep -A30 -E "^ERROR" | tail -150 || true
+          docker logs vespa 2>&1 | grep -iE "error|fatal" | tail -40 || true
+      - name: Runnable examples
+        run: |
+          python examples/langchain_quickstart.py
+          python examples/llamaindex_quickstart.py
+          python -m pytest -q examples/fastapi_rag
+      - name: Benchmark harness (synthetic smoke run against real Chroma and PostgreSQL)
+        env:
+          WARDOWL_BENCH_DATABASE_URL: postgresql://test:test@localhost:5432/test
+        run: |
+          python benchmarks/permissions_bench.py --teams 100 --docs 3000 --queries 15 \
+            --selectivity 0.01,0.1,1 --backends exact,chroma,pgvector,pgvector-rls --check \
+            --out bench.json --markdown bench.md
+          cat bench.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Load benchmark harness (synthetic smoke run against real PostgreSQL and OPA)
+        env:
+          WARDOWL_BENCH_DATABASE_URL: postgresql://test:test@localhost:5432/test
+        run: |
+          python benchmarks/load_bench.py --docs 3000 --queries 20 --selectivity 0.01,1 --users 1,4 \
+            --seconds 1 --repeat 2 --ef-search 100 --opa-url http://127.0.0.1:8181 --check --out load.json \
+            --markdown load.md
+          python benchmarks/load_bench.py --render load.json --markdown rendered.md && cmp load.md rendered.md
+          cat load.md >> "$GITHUB_STEP_SUMMARY"
+      - name: Load benchmark harness on the other stores (synthetic smoke runs)
+        run: |
+          run() {
+            python benchmarks/load_bench.py --backend "$1" --url "$2" --docs 2000 --queries 10 --selectivity 0.01,1 \
+              --users 1,2 --seconds 1 --check --out "load-$1.json" --markdown "load-$1.md" "${@:3}"
+            cat "load-$1.md" >> "$GITHUB_STEP_SUMMARY"
+          }
+          run qdrant http://127.0.0.1:6333
+          run milvus http://127.0.0.1:19530
+          run elasticsearch http://127.0.0.1:9200
+          run opensearch http://127.0.0.1:9201
+          run weaviate http://127.0.0.1:8079
+          run redis redis://127.0.0.1:6379/0
+          run lancedb "$RUNNER_TEMP/lancedb" --refine-factor 5  # embedded: the URL is a directory
+
+  # The only job that receives the Pinecone key. It runs on main, or by hand with `pinecone` ticked,
+  # never for a pull request; on a fresh runner with only the Pinecone extra and the test tools
+  # installed, from uv.lock by hash, and with pytest's plugin autoloading off.
+  pinecone:
+    name: pinecone (the service)
+    if: github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && inputs.pinecone)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra pinecone --extra dev -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - name: Pinecone, the service (skipped without the secret)
+        env:
+          WARDOWL_TEST_PINECONE_API_KEY: ${{ secrets.PINECONE_API_KEY }}
+          PYTEST_DISABLE_PLUGIN_AUTOLOAD: "1"
+        run: pytest -q -p no:cacheprovider tests/test_pinecone.py
+
+  library:
+    name: library (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.13", "3.14"]
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "${{ matrix.python }}", cache: pip }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra dev -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - run: pytest -q
+
+  # The same library tests on macOS and Windows: wardowl is pure Python, and this checks it.
+  platform:
+    name: platform (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra dev -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - run: pytest -q
+
+  package:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      # Built exactly as the release builds it, from the hash-pinned toolchain.
+      - run: pip install --require-hashes --no-deps -r .github/requirements/build.txt
+      - run: python -m build --no-isolation
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --only-group release -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+      - run: twine check --strict dist/*
+      - name: The SBOM the release attaches can be generated
+        run: |
+          python -m venv "$RUNNER_TEMP/sbom"
+          "$RUNNER_TEMP/sbom/bin/pip" install --no-deps dist/*.whl
+          cyclonedx-py environment "$RUNNER_TEMP/sbom" --output-format JSON --output-file sbom.cdx.json
+          python -c "import json; names = [c['name'] for c in json.load(open('sbom.cdx.json'))['components']]; assert 'wardowl' in names, names"
+      - name: The sdist must not ship the example deployments
+        run: |
+          tar -tzf dist/*.tar.gz > sdist-files.txt
+          if grep -q '/examples/' sdist-files.txt; then echo "examples/ leaked into the sdist"; exit 1; fi
+
+  docs:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra docs --extra langchain --extra llamaindex --extra haystack --extra mcp --extra otel --extra server -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+      - name: Build the documentation (warnings are errors)
+        run: sphinx-build -W --keep-going -b html docs docs/_build/html
+
+  # ---- example deployment: examples/gateway -----------------------------------------------------
+
+  policy:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/gateway
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
+        with: { version: 1.21.2 }
+      - run: opa check --strict policies
+      - run: opa fmt --list --fail policies
+      - name: Policy unit tests with coverage gate
+        run: |
+          opa test policies -v
+          cov=$(opa test policies --coverage --format=json | jq '.coverage')
+          echo "policy coverage: $cov%"
+          awk -v c="$cov" 'BEGIN { exit (c < 90) }'
+
+  gateway:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: examples/gateway
+    services:
+      postgres:
+        image: pgvector/pgvector:pg17
+        env: { POSTGRES_USER: test, POSTGRES_PASSWORD: test, POSTGRES_DB: test }
+        ports: ["5432:5432"]
+        options: >-
+          --health-cmd "pg_isready -U test" --health-interval 3s --health-retries 30
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: open-policy-agent/setup-opa@b2b258e089860efaadaaf71bf6e3aecb4a3eeff1 # v2.4.0
+        with: { version: 1.21.2 }
+      - name: Start OPA with the example policies
+        run: |
+          opa run --server --addr=127.0.0.1:8181 --ignore='*_test.rego' policies &
+          for i in $(seq 1 30); do curl -sf http://127.0.0.1:8181/health && break; sleep 1; done
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra dev --group build -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --no-deps --no-build-isolation -e .
+      - name: Unit and integration tests
+        env:
+          RAMPART_TEST_DATABASE_URL: postgresql://test:test@localhost:5432/test
+          RAMPART_TEST_OPA_URL: http://127.0.0.1:8181
+        run: pytest -q -ra
+
+  docker:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - name: Build the example gateway image
+        run: docker build --target runtime -t wardowl-gateway:ci examples/gateway

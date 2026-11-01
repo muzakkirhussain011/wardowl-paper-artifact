@@ -1,0 +1,23 @@
+{
+  "reproducer": "chroma-depth",
+  "version": "latest",
+  "target": "chromadb==1.5.9",
+  "command": "python disclosure/reproducers/chroma_depth.py",
+  "exit_status": 1,
+  "seconds": 1,
+  "run_id": "41007436602",
+  "commit": "8babaf354d91430bce3d4cb96419dc3b13517f95",
+  "versions": [
+    "reproducer: chroma-depth",
+    "version label: latest",
+    "target: chromadb==1.5.9",
+    "commit: 8babaf354d91430bce3d4cb96419dc3b13517f95",
+    "run: 41007436602 attempt 1",
+    "runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64",
+    "started: 2026-10-30T05:16:23Z",
+    "python: Python 3.12.15",
+    "chromadb: Version: 1.5.9",
+    "stack limit (ulimit -s): 16384"
+  ],
+  "results": []
+}

@@ -1,0 +1,35 @@
+{
+  "reproducer": "redis",
+  "version": "tested",
+  "target": "redis:8.10.2-alpine",
+  "command": "sh disclosure/reproducers/redis.sh",
+  "exit_status": 0,
+  "seconds": 0,
+  "run_id": "41114474172",
+  "commit": "38f4ae7d8ebbdea4c41afaccca42ecec69bb24a3",
+  "versions": [
+    "reproducer: redis",
+    "version label: tested",
+    "target: redis:8.10.2-alpine",
+    "commit: 38f4ae7d8ebbdea4c41afaccca42ecec69bb24a3",
+    "run: 41114474172 attempt 1",
+    "runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64",
+    "started: 2026-10-30T19:20:49Z",
+    "image digest: redis@sha256:9f8d2d789b9a1d1e3f283f979aa9cbf393373806472e1ccd460e2f9c869b833b",
+    "image id: sha256:6cfed4c686145bcd5807ef3ac1d2bf3384503cb3da30b0d308b4f25eb50dc373",
+    "image labels: null",
+    "redis-cli: redis-cli 8.10.2",
+    "redis_version:8.10.2",
+    "redis_git_sha1:00000000",
+    "redis_build_id:8d909ac7aa12fd40",
+    "modules:",
+    "name bf ver 81001 path /usr/local/lib/redis/modules//redisbloom.so args  name vectorset ver 1 path  args  name timeseries ver 81001 path /usr/local/lib/redis/modules//redistimeseries.so args  name search ver 81001 path /usr/local/lib/redis/modules//redisearch.so args  name ReJSON ver 81000 path /usr/local/lib/redis/modules//rejson.so args  "
+  ],
+  "results": [
+    "search for the 5,000-byte value: 0",
+    "search for its first 4,096 bytes: 2 doc:long doc:prefix",
+    "search for a 4,096-byte value (part 2): 1 doc:b4096",
+    "search for a 4,097-byte value (part 2): 0",
+    "verdict: reproduced (the whole value finds nothing; its first 4,096 bytes find both keys)"
+  ]
+}

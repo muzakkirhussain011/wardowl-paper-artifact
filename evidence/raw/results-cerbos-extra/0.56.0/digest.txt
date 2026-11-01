@@ -1,0 +1,1 @@
+ghcr.io/cerbos/cerbos@sha256:540643bc67ba628011a150ad1d3370f285daa38995be5cd7a4be181da902bec1

@@ -1,0 +1,13 @@
+reproducer: mongodb
+version label: tested
+target: mongodb/mongodb-atlas-local:8.0.30
+commit: 74e897803dc1c36e9baad9e1afcebefbc9464557
+run: 41007779363 attempt 1
+runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64
+started: 2026-10-30T05:20:19Z
+image digest: mongodb/mongodb-atlas-local@sha256:6d36b4421491ab115291361385c37484a3750ae46c9e35fdfe4123841979b044
+image id: sha256:f2432378f9951befd3e0e3bffe51384204ecdd1ce614d53a249662a23fdd959a
+image labels: {"architecture":"x86_64","build-date":"2026-10-29T05:53:50Z","com.redhat.component":"ubi9-minimal-container","com.redhat.license_terms":"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI","cpe":"cpe:/a:redhat:enterprise_linux:9::appstream","description":"Container configured with a single node replicaset instance of MongoDB and Atlas Search","distribution-scope":"public","io.buildah.version":"1.45.0","io.k8s.description":"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.","io.k8s.display-name":"Red Hat Universal Base Image 9 Minimal","io.openshift.expose-services":"","io.openshift.tags":"minimal rhel9","maintainer":"support@mongodb.com","mongodb-atlas-local":"container","mongodb-type":"community","mongot-edition":"localDev","mongot-version":"1.70.5-2-g607e7c6d48","name":"MongoDB Atlas Local","org.opencontainers.image.created":"2026-10-29T05:53:50Z","org.opencontainers.image.revision":"9eac53daf60c61895dd274c7017f0605f411e146","release":"1793253163","summary":"MongoDB Atlas Local Container","url":"https://catalog.redhat.com/en/search?searchType=containers","vcs-ref":"9eac53daf60c61895dd274c7017f0605f411e146","vcs-type":"git","vendor":"MongoDB","version":"8.0.30"}
+mongosh: 2.14.1
+server: 8.0.30
+image env: ["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/mongot","container=oci","TOOL=CONTAINER"]

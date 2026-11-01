@@ -1,0 +1,13 @@
+reproducer: mongodb
+version label: latest
+target: mongodb/mongodb-atlas-local:8.3.13
+commit: a62ac5285ea40e7cdc936bca7b2c69c28ba2ed96
+run: 41249047470 attempt 1
+runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64
+started: 2026-10-31T22:38:39Z
+image digest: mongodb/mongodb-atlas-local@sha256:ca394bdaedef5d802a07f8e00e7734f181ee9b6cc1aacbf09a50fb776657edbf
+image id: sha256:4e53c8600686cc2057b6c1043788670a3053e01461236a18f3d2cf704d54b56c
+image labels: {"architecture":"x86_64","build-date":"2026-10-29T05:53:50Z","com.redhat.component":"ubi9-minimal-container","com.redhat.license_terms":"https://www.redhat.com/en/about/red-hat-end-user-license-agreements#UBI","cpe":"cpe:/a:redhat:enterprise_linux:9::appstream","description":"Container configured with a single node replicaset instance of MongoDB and Atlas Search","distribution-scope":"public","io.buildah.version":"1.45.0","io.k8s.description":"The Universal Base Image Minimal is a stripped down image that uses microdnf as a package manager. This base image is freely redistributable, but Red Hat only supports Red Hat technologies through subscriptions for Red Hat products. This image is maintained by Red Hat and updated regularly.","io.k8s.display-name":"Red Hat Universal Base Image 9 Minimal","io.openshift.expose-services":"","io.openshift.tags":"minimal rhel9","maintainer":"support@mongodb.com","mongodb-atlas-local":"container","mongodb-type":"community","mongot-edition":"localDev","mongot-version":"1.70.6","name":"MongoDB Atlas Local","org.opencontainers.image.created":"2026-10-29T05:53:50Z","org.opencontainers.image.revision":"9eac53daf60c61895dd274c7017f0605f411e146","release":"1793253163","summary":"MongoDB Atlas Local Container","url":"https://catalog.redhat.com/en/search?searchType=containers","vcs-ref":"9eac53daf60c61895dd274c7017f0605f411e146","vcs-type":"git","vendor":"MongoDB","version":"8.3.13"}
+mongosh: 2.14.1
+server: 8.3.13
+image env: ["PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/opt/mongot","container=oci","TOOL=CONTAINER"]

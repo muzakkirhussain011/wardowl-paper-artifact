@@ -1,0 +1,1 @@
+{"requestId":"r","results":[{"resource":{"id":"scalar","kind":"groups"},"actions":{"read":"EFFECT_DENY"}},{"resource":{"id":"list","kind":"groups"},"actions":{"read":"EFFECT_ALLOW"}}],"cerbosCallId":"01M6A1STDK7XB6J4KSMR8BHQCD"}

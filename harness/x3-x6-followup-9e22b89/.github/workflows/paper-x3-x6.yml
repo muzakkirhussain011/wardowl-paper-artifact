@@ -1,0 +1,660 @@
+name: paper-x3-x6
+
+# The research paper's experiments X3 (filter-size scaling) and X6 (side channels of permission-aware
+# retrieval). Design, predictions and rules: benchmarks/paper/PREREG_X3_X6.md; how to read the
+# results: benchmarks/paper/README_X3_X6.md.
+#
+# A push to paper/x3-x6 runs it at the size X3X6_MODE names below: smoke (small corpus, one seed, one
+# repetition: minutes, to find faults in the harness; its numbers are never analysed) or full (the
+# pre-registered design). The data job downloads FiQA and SciDocs, embeds them on the CPU and computes
+# X6's plans once, so every store plays the identical game. Then one job per store family and
+# experiment runs in parallel, each well under the 6-hour limit, each target in its own process with
+# its own time budget, and every job uploads what it has, whatever happened. The summary job runs the
+# statistics and writes the reports to its job summary. The publish job commits the reports, the
+# tables and the end of every job's log to the branch results/x3-x6, under <run id>-<attempt>/, so
+# they can be read with git alone.
+#
+# Two configurations. `full` is the design above (data, run, summary), as run in 40940385704; it now
+# runs only when dispatched with configuration full. `followup` (amendment 4 of the pre-registration)
+# is what a push runs: Chroma's X3 seeds 3 and 4, a cross-build A/A on four stores and a bisection of
+# Chroma's crash, then exploratory readings of these and of run 40940385704's raw records, which it
+# downloads from that run's artifacts.
+
+on:
+  push:
+    branches: [paper/x3-x6]
+  workflow_dispatch:
+    inputs:
+      configuration:
+        description: followup (amendment 4) or full (the pre-registered design)
+        type: choice
+        options: [followup, full]
+        default: followup
+      mode:
+        description: smoke (minutes) or full size
+        type: choice
+        options: [full, smoke]
+        default: full
+      seeds:
+        description: Seeds (0 to N-1); the design uses 5
+        type: number
+        default: 5
+
+permissions:
+  contents: read
+
+concurrency:
+  group: paper-x3-x6-runs-${{ github.ref }}-${{ inputs.configuration || 'followup' }}
+  cancel-in-progress: false
+
+env:
+  X3X6_CONFIGURATION: ${{ inputs.configuration || 'followup' }}
+  # The size of a full-configuration run: the pre-registered design.
+  X3X6_MODE: ${{ inputs.mode || 'full' }}
+  # The size of a push-triggered follow-up: full, since its smoke run (40974904217) ran every job
+  # without an error.
+  FOLLOWUP_MODE: ${{ inputs.mode || 'full' }}
+  SEEDS: ${{ inputs.seeds || 5 }}
+  # The full run whose artifacts the follow-up reads.
+  RUN1: "40940385704"
+
+jobs:
+  data:
+    name: data (FiQA, SciDocs, embeddings, plans)
+    if: ${{ (inputs.configuration || 'followup') == 'full' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 300
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      # The texts and embeddings of the full corpus, kept between runs: about 50 minutes of CPU time.
+      # The key names the model and corpus; x6_data.py checks it again before using the cache.
+      - uses: actions/cache/restore@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        id: embeddings
+        with:
+          path: x6cache
+          key: x3x6-embeddings-minilm-l6-v2-seq256-fiqa-all-scidocs12000-v1
+      # Not in uv.lock (the library does not use them): pinned by version, the CPU build of torch.
+      - name: Install the embedding stack
+        run: |
+          mkdir -p logs
+          exec > >(tee -a logs/data.log) 2>&1
+          pip install --index-url https://download.pytorch.org/whl/cpu torch==2.8.0
+          pip install sentence-transformers==5.0.0 pyarrow==21.0.0
+          python -c "import torch, sentence_transformers as st; print('torch', torch.__version__, 'sentence-transformers', st.__version__)"
+      - name: Download, embed and plan
+        run: |
+          exec > >(tee -a logs/data.log) 2>&1
+          python benchmarks/paper/x6_data.py --mode "$X3X6_MODE" --seeds "$SEEDS" --out x6data --cache x6cache
+      # Saved as soon as the embeddings exist, even if planning failed after them.
+      - uses: actions/cache/save@caa296126883cff596d87d8935842f9db880ef25 # v5.1.0
+        if: always() && steps.embeddings.outputs.cache-hit != 'true' && hashFiles('x6cache/embeddings.json') != ''
+        with:
+          path: x6cache
+          key: x3x6-embeddings-minilm-l6-v2-seq256-fiqa-all-scidocs12000-v1
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        with:
+          name: x3x6-data
+          path: x6data/
+          if-no-files-found: error
+          retention-days: 30
+      - name: Keep the log and the manifest
+        if: always()
+        run: if [ -f x6data/manifest.json ]; then cp x6data/manifest.json logs/data-manifest.json; fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: x3x6-log-data
+          path: logs/
+          if-no-files-found: warn
+          retention-days: 90
+
+  run:
+    name: ${{ matrix.group }}
+    needs: data
+    # X3 falls back to synthetic vectors when the data job failed, and says so; X6 records that it
+    # cannot run.
+    if: ${{ !cancelled() && (inputs.configuration || 'followup') == 'full' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - { group: x6-pgvector, script: x6_side_channels.py, targets: pgvector, services: postgres }
+          - { group: x6-qdrant, script: x6_side_channels.py, targets: qdrant, services: qdrant }
+          - { group: x6-elasticsearch, script: x6_side_channels.py, targets: elasticsearch, services: elasticsearch }
+          - { group: x6-faiss, script: x6_side_channels.py, targets: faiss, services: none }
+          - { group: x6-memory, script: x6_side_channels.py, targets: memory, services: none }
+          - { group: x3-pgvector-redis, script: x3_filter_scaling.py, targets: "pgvector,redis", services: "postgres redis" }
+          - { group: x3-cassandra, script: x3_filter_scaling.py, targets: cassandra, services: cassandra }
+          - { group: x3-search, script: x3_filter_scaling.py, targets: "elasticsearch,opensearch", services: "elasticsearch opensearch" }
+          - { group: x3-vespa-qdrant, script: x3_filter_scaling.py, targets: "vespa,qdrant", services: "vespa qdrant" }
+          - { group: x3-milvus-weaviate, script: x3_filter_scaling.py, targets: "milvus,weaviate", services: "milvus weaviate" }
+          - { group: x3-mongodb, script: x3_filter_scaling.py, targets: mongodb, services: mongodb }
+          - { group: x3-embedded, script: x3_filter_scaling.py, targets: "chroma,lancedb,faiss,memory", services: none }
+    env:
+      GROUP: ${{ matrix.group }}
+      WARDOWL_TEST_DATABASE_URL: postgresql://test:test@localhost:5432/test
+      WARDOWL_TEST_REDIS_URL: redis://127.0.0.1:6379/0
+      WARDOWL_TEST_CASSANDRA_HOST: 127.0.0.1
+      WARDOWL_TEST_ELASTICSEARCH_URL: http://127.0.0.1:9200
+      WARDOWL_TEST_OPENSEARCH_URL: http://127.0.0.1:9201
+      WARDOWL_TEST_VESPA_URL: http://127.0.0.1:8090
+      WARDOWL_TEST_QDRANT_URL: http://127.0.0.1:6333
+      WARDOWL_TEST_MILVUS_URL: http://127.0.0.1:19530
+      WARDOWL_TEST_WEAVIATE_URL: http://127.0.0.1:8079
+      WARDOWL_TEST_WEAVIATE_GRPC_PORT: "50051"
+      WARDOWL_TEST_MONGODB_URL: mongodb://127.0.0.1:27017/?directConnection=true
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+
+      # ---- the servers: the conformance campaign's images and versions; they boot while the rest installs
+
+      - name: Start the servers
+        if: matrix.services != 'none'
+        env:
+          SERVICES: ${{ matrix.services }}
+        run: |
+          mkdir -p results/logs
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          for service in $SERVICES; do
+            case "$service" in
+              postgres)
+                docker run -d --name postgres --shm-size=1g -p 5432:5432 -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test \
+                  -e POSTGRES_DB=test pgvector/pgvector:pg17 \
+                  -c shared_buffers=2GB -c maintenance_work_mem=1GB -c max_parallel_maintenance_workers=3 ;;
+              redis) docker run -d --name redis -p 6379:6379 redis:8.10.2-alpine ;;
+              cassandra)
+                docker run -d --name cassandra -p 9042:9042 -e MAX_HEAP_SIZE=2G -e HEAP_NEWSIZE=400M cassandra:5.0.9 ;;
+              elasticsearch)
+                docker run -d --name elasticsearch -p 9200:9200 -e discovery.type=single-node \
+                  -e xpack.security.enabled=false -e ES_JAVA_OPTS="-Xms2g -Xmx2g" \
+                  docker.elastic.co/elasticsearch/elasticsearch:9.5.5 ;;
+              opensearch)
+                docker run -d --name opensearch -p 9201:9200 -e discovery.type=single-node \
+                  -e DISABLE_SECURITY_PLUGIN=true -e DISABLE_INSTALL_DEMO_CONFIG=true \
+                  -e OPENSEARCH_JAVA_OPTS="-Xms2g -Xmx2g" opensearchproject/opensearch:3.9.0 ;;
+              vespa)
+                docker run -d --name vespa --hostname vespa-container -p 8090:8080 -p 19071:19071 \
+                  vespaengine/vespa:8.763.13 ;;
+              qdrant) docker run -d --name qdrant -p 6333:6333 qdrant/qdrant:v1.19.2 ;;
+              milvus)
+                # Standalone, with embedded etcd and local storage, as the conformance campaign runs it.
+                mkdir -p "$RUNNER_TEMP/milvus"
+                printf '%s\n' 'listen-client-urls: http://0.0.0.0:2379' 'advertise-client-urls: http://0.0.0.0:2379' \
+                  'quota-backend-bytes: 4294967296' 'auto-compaction-mode: revision' "auto-compaction-retention: '1000'" \
+                  > "$RUNNER_TEMP/milvus/embedEtcd.yaml"
+                touch "$RUNNER_TEMP/milvus/user.yaml"
+                docker run -d --name milvus --security-opt seccomp:unconfined -p 19530:19530 -p 9091:9091 \
+                  -e ETCD_USE_EMBED=true -e ETCD_DATA_DIR=/var/lib/milvus/etcd \
+                  -e ETCD_CONFIG_PATH=/milvus/configs/embedEtcd.yaml -e COMMON_STORAGETYPE=local -e DEPLOY_MODE=STANDALONE \
+                  -v "$RUNNER_TEMP/milvus/embedEtcd.yaml:/milvus/configs/embedEtcd.yaml" \
+                  -v "$RUNNER_TEMP/milvus/user.yaml:/milvus/configs/user.yaml" \
+                  milvusdb/milvus:v3.0.2 milvus run standalone ;;
+              weaviate)
+                docker run -d --name weaviate -p 8079:8080 -p 50051:50051 -e AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=true \
+                  -e PERSISTENCE_DATA_PATH=/var/lib/weaviate -e DEFAULT_VECTORIZER_MODULE=none -e CLUSTER_HOSTNAME=node1 \
+                  cr.weaviate.io/semitechnologies/weaviate:1.39.12 ;;
+              mongodb) docker run -d --name mongodb -p 27017:27017 mongodb/mongodb-atlas-local:8.0.30 ;;
+              *) echo "::error::unknown service $service" ;;
+            esac
+          done
+
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          mkdir -p results/logs
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          uv export --frozen --no-emit-project --all-extras --group integration --group examples -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+          python -c "import wardowl; print('wardowl', wardowl.__version__)"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          name: x3x6-data
+          path: x6data
+
+      # A server that never answers is not fatal here: its target records a setup error and the
+      # others run.
+      - name: Wait for the servers
+        if: matrix.services != 'none'
+        env:
+          SERVICES: ${{ matrix.services }}
+        run: |
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          ready() {
+            local name=$1 tries=$2; shift 2
+            for _ in $(seq 1 "$tries"); do "$@" > /dev/null 2>&1 && { echo "$name is ready"; return 0; }; sleep 2; done
+            echo "::warning::$name did not answer; its target will record a setup error"; docker logs --tail 50 "$name" || true
+            return 1
+          }
+          mongodb_healthy() { [ "$(docker inspect -f '{{.State.Health.Status}}' mongodb)" = healthy ]; }
+          vespa_up() { curl -sf http://127.0.0.1:19071/state/v1/health | grep -q '"up"'; }
+          probe=http://127.0.0.1:8090/document/v1/wardowl/wardowl/docid/ready
+          vespa_feeds() { curl -sf -X POST -H 'Content-Type: application/json' -d '{"fields":{}}' "$probe"; }
+          for service in $SERVICES; do
+            case "$service" in
+              postgres) ready postgres 60 docker exec postgres pg_isready -U test || true ;;
+              redis) ready redis 60 docker exec redis redis-cli ping || true ;;
+              cassandra) ready cassandra 150 docker exec cassandra cqlsh -e 'SELECT release_version FROM system.local' || true ;;
+              elasticsearch) ready elasticsearch 90 curl -sf "$WARDOWL_TEST_ELASTICSEARCH_URL/_cluster/health?wait_for_status=yellow&timeout=2s" || true ;;
+              opensearch) ready opensearch 90 curl -sf "$WARDOWL_TEST_OPENSEARCH_URL/_cluster/health?wait_for_status=yellow&timeout=2s" || true ;;
+              qdrant) ready qdrant 60 curl -sf "$WARDOWL_TEST_QDRANT_URL/readyz" || true ;;
+              milvus) ready milvus 120 curl -sf http://127.0.0.1:9091/healthz || true ;;
+              weaviate) ready weaviate 60 curl -sf "$WARDOWL_TEST_WEAVIATE_URL/v1/.well-known/ready" || true ;;
+              mongodb) ready mongodb 120 mongodb_healthy || true ;;
+              vespa)
+                # The example application, with vectors of 384 dimensions instead of 16.
+                if ready vespa 90 vespa_up; then
+                  app="$RUNNER_TEMP/vespa-app"
+                  rm -rf "$app" && cp -r examples/vespa/app "$app"
+                  sed -i 's/x\[16\]/x[384]/g' "$app/schemas/wardowl.sd"
+                  grep -c 'x\[384\]' "$app/schemas/wardowl.sd" || echo "::warning::the schema has no 384-dimension tensor"
+                  (cd "$app" && zip -qr - .) | curl -sf --header Content-Type:application/zip --data-binary @- \
+                    http://127.0.0.1:19071/application/v2/tenant/default/prepareandactivate \
+                    || echo "::warning::Vespa did not take the application"
+                  if ready vespa 120 vespa_feeds; then curl -sf -X DELETE "$probe" || true; fi
+                fi ;;
+            esac
+          done
+
+      - name: Run the experiment, one process per target
+        env:
+          SCRIPT: benchmarks/paper/${{ matrix.script }}
+          TARGETS: ${{ matrix.targets }}
+          # A slow store's seeds can be shared between jobs (empty: every seed).
+          SEED_LIST: ${{ matrix.seed_list }}
+        run: |
+          set +e
+          mkdir -p results/logs
+          # Each target gets the smaller of its budget and a fair share of what is left of 320 minutes,
+          # so the job ends inside its timeout; targets that finish early leave time to the rest.
+          deadline=$(( $(date +%s) + 320 * 60 ))
+          IFS=, read -r -a targets <<< "$TARGETS"
+          count=${#targets[@]}
+          for i in "${!targets[@]}"; do
+            target=${targets[$i]}
+            echo "::group::$target"
+            python "$SCRIPT" --store "$target" --data x6data --out results --mode "$X3X6_MODE" --seeds "$SEEDS" \
+              --seed-list "$SEED_LIST" --group-deadline "$deadline" --remaining "$((count - i))" 2>&1 \
+              | tee "results/logs/$GROUP-$target.log"
+            status=${PIPESTATUS[0]}
+            echo "::endgroup::"
+            if [ "$status" -ne 0 ]; then
+              echo "::error title=$GROUP $target::the driver stopped with exit status $status"
+              printf '{"schema": 1, "type": "crash", "store": "%s", "group": "%s", "exit_status": %d}\n' \
+                "$target" "$GROUP" "$status" >> results/crashes.jsonl
+            fi
+          done
+          ls -la results
+      - name: Keep the servers' logs with the results
+        if: always()
+        run: |
+          mkdir -p results/logs
+          for name in $(docker ps -a --format '{{.Names}}'); do
+            docker logs --tail 300 "$name" > "results/logs/$GROUP-server-$name.log" 2>&1 || true
+          done
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: x3x6-results-${{ matrix.group }}
+          path: results/
+          if-no-files-found: warn
+          retention-days: 90
+
+  summary:
+    name: summary
+    needs: [data, run]
+    if: ${{ !cancelled() && (inputs.configuration || 'followup') == 'full' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install numpy from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra faiss -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: x3x6-results-*
+          path: parts
+      - name: X3 statistics
+        run: |
+          mkdir -p reports
+          exec > >(tee -a reports/stats-x3.log) 2>&1
+          resamples=10000
+          if [ "$X3X6_MODE" = smoke ]; then resamples=200; fi
+          python benchmarks/paper/x3_stats.py --in parts --out reports --resamples "$resamples" --annotate
+          if [ -f reports/x3_report.md ]; then cat reports/x3_report.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: X6 statistics
+        if: ${{ !cancelled() }}
+        run: |
+          mkdir -p reports
+          exec > >(tee -a reports/stats-x6.log) 2>&1
+          resamples=10000
+          if [ "$X3X6_MODE" = smoke ]; then resamples=200; fi
+          python benchmarks/paper/x6_stats.py --in parts --out reports --resamples "$resamples" --annotate
+          if [ -f reports/x6_report.md ]; then cat reports/x6_report.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: x3x6-reports
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 90
+
+  # ---- the follow-up (amendment 4): its own jobs, on the data and records of run $RUN1 -------------
+
+  followup:
+    name: ${{ matrix.group }}
+    if: ${{ (inputs.configuration || 'followup') == 'followup' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 350
+    permissions:
+      contents: read
+      actions: read # the data artifact of run $RUN1
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          # Part A: Chroma's X3 seeds 3 and 4, as written, with the whole job's time.
+          - { group: fu-x3-chroma, kind: x3, target: chroma, services: none }
+          # Part B: exploratory.
+          - { group: fu-chroma-bisect, kind: bisect, target: chroma, services: none }
+          - { group: fu-cb-faiss, kind: crossbuild, target: faiss, services: none }
+          - { group: fu-cb-pgvector, kind: crossbuild, target: pgvector, services: postgres }
+          - { group: fu-cb-qdrant, kind: crossbuild, target: qdrant, services: qdrant }
+          - { group: fu-cb-elasticsearch, kind: crossbuild, target: elasticsearch, services: elasticsearch }
+    env:
+      GROUP: ${{ matrix.group }}
+      WARDOWL_TEST_DATABASE_URL: postgresql://test:test@localhost:5432/test
+      WARDOWL_TEST_ELASTICSEARCH_URL: http://127.0.0.1:9200
+      WARDOWL_TEST_QDRANT_URL: http://127.0.0.1:6333
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      # The images and settings of the main run.
+      - name: Start the server
+        if: matrix.services != 'none'
+        env:
+          SERVICE: ${{ matrix.services }}
+        run: |
+          mkdir -p results/logs
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          case "$SERVICE" in
+            postgres)
+              # /dev/shm of 4 GB, not the main run's 1 GB: with five tables live (W1, SEP, W1r, W0a, W0b)
+              # a parallel HNSW build could not get its 1.07 GB segment in run 40978589778. The server's
+              # settings are the main run's.
+              docker run -d --name postgres --shm-size=4g -p 5432:5432 -e POSTGRES_USER=test -e POSTGRES_PASSWORD=test \
+                -e POSTGRES_DB=test pgvector/pgvector:pg17 \
+                -c shared_buffers=2GB -c maintenance_work_mem=1GB -c max_parallel_maintenance_workers=3 ;;
+            elasticsearch)
+              docker run -d --name elasticsearch -p 9200:9200 -e discovery.type=single-node \
+                -e xpack.security.enabled=false -e ES_JAVA_OPTS="-Xms2g -Xmx2g" \
+                docker.elastic.co/elasticsearch/elasticsearch:9.5.5 ;;
+            qdrant) docker run -d --name qdrant -p 6333:6333 qdrant/qdrant:v1.19.2 ;;
+            *) echo "::error::unknown service $SERVICE" ;;
+          esac
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12", cache: pip }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install from uv.lock, by hash
+        run: |
+          mkdir -p results/logs
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          uv export --frozen --no-emit-project --all-extras --group integration --group examples -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r .github/requirements/build.txt
+          pip install --no-deps --no-build-isolation -e .
+          python -c "import wardowl; print('wardowl', wardowl.__version__)"
+      # The data (FiQA and SciDocs embeddings, X6's plans) of run $RUN1, so the game is the same one.
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: x3x6-data
+          path: x6data
+          run-id: ${{ env.RUN1 }}
+          github-token: ${{ github.token }}
+      - name: Wait for the server
+        if: matrix.services != 'none'
+        env:
+          SERVICE: ${{ matrix.services }}
+        run: |
+          exec > >(tee -a "results/logs/$GROUP-setup.log") 2>&1
+          ready() {
+            local name=$1 tries=$2; shift 2
+            for _ in $(seq 1 "$tries"); do "$@" > /dev/null 2>&1 && { echo "$name is ready"; return 0; }; sleep 2; done
+            echo "::warning::$name did not answer"; docker logs --tail 50 "$name" || true
+            return 1
+          }
+          case "$SERVICE" in
+            postgres) ready postgres 60 docker exec postgres pg_isready -U test || true ;;
+            elasticsearch) ready elasticsearch 90 curl -sf "$WARDOWL_TEST_ELASTICSEARCH_URL/_cluster/health?wait_for_status=yellow&timeout=2s" || true ;;
+            qdrant) ready qdrant 60 curl -sf "$WARDOWL_TEST_QDRANT_URL/readyz" || true ;;
+          esac
+      - name: Install gdb
+        if: matrix.kind == 'bisect'
+        run: command -v gdb || { sudo apt-get update -q && sudo apt-get install -y -q gdb; }
+      - name: Run the follow-up part
+        env:
+          KIND: ${{ matrix.kind }}
+          TARGET: ${{ matrix.target }}
+        run: |
+          set +e
+          mkdir -p results/logs
+          deadline=$(( $(date +%s) + 320 * 60 ))
+          status=99
+          case "$KIND" in
+            x3)
+              # The pre-registered harness, unchanged; the whole job's time (one target); the fault handler on.
+              PYTHONFAULTHANDLER=1 python benchmarks/paper/x3_filter_scaling.py --store "$TARGET" --data x6data \
+                --out results --mode "$FOLLOWUP_MODE" --seeds 5 --seed-list 3-4 --group-deadline "$deadline" \
+                --remaining 1 2>&1 | tee "results/logs/$GROUP-$TARGET.log"
+              status=${PIPESTATUS[0]} ;;
+            bisect)
+              python benchmarks/paper/x3_chroma_bisect.py --data x6data --out results --mode "$FOLLOWUP_MODE" --gdb \
+                2>&1 | tee "results/logs/$GROUP-$TARGET.log"
+              status=${PIPESTATUS[0]} ;;
+            crossbuild)
+              python benchmarks/paper/x6_crossbuild.py --store "$TARGET" --data x6data --out results \
+                --mode "$FOLLOWUP_MODE" --seeds 5 --group-deadline "$deadline" --remaining 1 2>&1 \
+                | tee "results/logs/$GROUP-$TARGET.log"
+              status=${PIPESTATUS[0]} ;;
+          esac
+          if [ "$status" -ne 0 ]; then
+            echo "::error title=$GROUP::the driver stopped with exit status $status"
+            printf '{"schema": 1, "type": "crash", "store": "%s", "group": "%s", "exit_status": %d}\n' \
+              "$TARGET" "$GROUP" "$status" >> results/crashes.jsonl
+          fi
+          ls -la results
+      - name: Keep the server's log with the results
+        if: always()
+        run: |
+          mkdir -p results/logs
+          for name in $(docker ps -a --format '{{.Names}}'); do
+            docker logs --tail 300 "$name" > "results/logs/$GROUP-server-$name.log" 2>&1 || true
+          done
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: always()
+        with:
+          name: x3x6-results-${{ matrix.group }}
+          path: results/
+          if-no-files-found: warn
+          retention-days: 90
+
+  followup-analysis:
+    name: follow-up readings
+    needs: followup
+    if: ${{ !cancelled() && (inputs.configuration || 'followup') == 'followup' }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 150
+    permissions:
+      contents: read
+      actions: read # the artifacts of run $RUN1
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { persist-credentials: false }
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "3.12" }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Install numpy from uv.lock, by hash
+        run: |
+          uv export --frozen --no-emit-project --extra faiss -o "$RUNNER_TEMP/requirements.txt"
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt"
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          name: x3x6-data
+          path: run1/data
+          run-id: ${{ env.RUN1 }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: x3x6-results-x*
+          path: run1
+          run-id: ${{ env.RUN1 }}
+          github-token: ${{ github.token }}
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        with:
+          pattern: x3x6-results-fu-*
+          path: parts
+      - name: X3 statistics with Chroma's seeds 3 and 4 (part A)
+        run: |
+          mkdir -p reports combined
+          exec > >(tee -a reports/stats-x3.log) 2>&1
+          for folder in run1/x3x6-results-x3-*; do cp -r "$folder" combined/; done
+          mkdir -p combined/followup-chroma
+          cp parts/x3x6-results-fu-x3-chroma/x3-chroma.jsonl combined/followup-chroma/ || echo "::warning::no follow-up Chroma records"
+          find combined -name 'x3-*.jsonl' -exec wc -l {} +
+          resamples=10000
+          if [ "$FOLLOWUP_MODE" = smoke ]; then resamples=200; fi
+          python benchmarks/paper/x3_stats.py --in combined --out reports --resamples "$resamples" --annotate
+          if [ -f reports/x3_report.md ]; then cat reports/x3_report.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - name: Exploratory readings (part B)
+        if: ${{ !cancelled() }}
+        run: |
+          mkdir -p reports
+          exec > >(tee -a reports/stats-followup.log) 2>&1
+          du -sh run1/* parts/* || true
+          resamples=10000
+          if [ "$FOLLOWUP_MODE" = smoke ]; then resamples=200; fi
+          python benchmarks/paper/x3x6_followup.py --run1 run1 --followup parts --out reports --resamples "$resamples"
+          if [ -f reports/fu_report.md ]; then cat reports/fu_report.md >> "$GITHUB_STEP_SUMMARY"; fi
+      - uses: actions/upload-artifact@cf430e030ddbb5b0abf93d22962f4752f3646cd9 # v7.0.2
+        if: ${{ !cancelled() }}
+        with:
+          name: x3x6-reports
+          path: reports/
+          if-no-files-found: warn
+          retention-days: 90
+
+  # Commits what a reader needs to the branch results/x3-x6, under <run id>-<attempt>/: the reports
+  # and tables, the data job's manifest, the result of every job, and the last 200 lines of every log.
+  # The raw JSON lines stay in the artifacts (x3x6-results-*), which are too large for git.
+  publish:
+    name: publish to results/x3-x6
+    needs: [data, run, summary, followup, followup-analysis]
+    if: ${{ always() }}
+    runs-on: ubuntu-24.04
+    timeout-minutes: 30
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          pattern: x3x6-results-*
+          path: ${{ runner.temp }}/artifacts
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          pattern: x3x6-log-*
+          path: ${{ runner.temp }}/artifacts
+      - uses: actions/download-artifact@9000827ccba6bdab643e8b6fd33ac0654aef8333 # v8.0.2
+        continue-on-error: true
+        with:
+          name: x3x6-reports
+          path: ${{ runner.temp }}/artifacts/x3x6-reports
+      - name: Gather the reports, tables and log ends
+        env:
+          NEEDS: ${{ toJSON(needs) }}
+          RUN_URL: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+        run: |
+          art="$RUNNER_TEMP/artifacts"
+          dest="$RUNNER_TEMP/publish/${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          mkdir -p "$art" "$dest/reports" "$dest/logs"
+          if [ -d "$art/x3x6-reports" ]; then
+            find "$art/x3x6-reports" -maxdepth 1 -type f \( -name '*.md' -o -name '*.csv' \) -exec cp {} "$dest/reports/" \;
+          fi
+          find "$art" -type f -name '*.log' | sort | while read -r file; do
+            relative=${file#"$art"/}
+            tail -n 200 "$file" > "$dest/logs/${relative//\//__}"
+          done
+          find "$art" -type f -name '*.json' -size -2M | sort | while read -r file; do
+            relative=${file#"$art"/}
+            cp "$file" "$dest/logs/${relative//\//__}"
+          done
+          find "$art" -type f -name 'crashes.jsonl' -exec cat {} + > "$dest/crashes.jsonl" 2>/dev/null || true
+          printf '%s\n' "$NEEDS" > "$dest/jobs.json"
+          {
+            echo "run: $RUN_URL"
+            echo "commit: $GITHUB_SHA"
+            echo "configuration: $X3X6_CONFIGURATION"
+            if [ "$X3X6_CONFIGURATION" = followup ]; then
+              echo "mode: $FOLLOWUP_MODE"
+              echo "reads the artifacts of run: $RUN1"
+            else
+              echo "mode: $X3X6_MODE"
+            fi
+            echo "seeds: $SEEDS"
+            echo "published: $(date -u +%Y-%m-%dT%H:%M:%SZ)"
+            echo
+            echo "raw result files (in the artifacts x3x6-results-*):"
+            find "$art" -type f -name '*.jsonl' -printf '%s bytes  %P\n' | sort -k3
+          } > "$dest/index.txt"
+          for file in "$art"/*/*.jsonl; do
+            [ -f "$file" ] || continue
+            printf '%s %s\n' "$(wc -l < "$file")" "${file#"$art"/}" >> "$dest/index.txt"
+          done
+          ls -laR "$RUNNER_TEMP/publish" | head -100
+      - name: Commit to results/x3-x6
+        run: |
+          branch=results/x3-x6
+          folder="${GITHUB_RUN_ID}-${GITHUB_RUN_ATTEMPT}"
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git ls-remote --exit-code --heads origin "$branch" > /dev/null; then
+            git fetch --quiet origin "$branch"
+            git checkout --quiet -B "$branch" FETCH_HEAD
+          else
+            git checkout --quiet --orphan "$branch"
+            git rm -r -f --quiet .
+          fi
+          rm -rf "$folder"
+          cp -r "$RUNNER_TEMP/publish/$folder" "$folder"
+          git add -A "$folder"
+          if [ "$X3X6_CONFIGURATION" = followup ]; then label="followup, $FOLLOWUP_MODE"; else label="$X3X6_MODE"; fi
+          git commit --quiet -m "results: paper-x3-x6 run $GITHUB_RUN_ID, attempt $GITHUB_RUN_ATTEMPT ($label)"
+          for attempt in 1 2 3 4 5; do
+            if git push --quiet origin "HEAD:$branch"; then echo "pushed to $branch/$folder"; exit 0; fi
+            sleep $((attempt * 5))
+            { git fetch --quiet origin "$branch" && git rebase --quiet FETCH_HEAD; } || { git rebase --abort || true; }
+          done
+          echo "::error::could not push to $branch"
+          exit 1

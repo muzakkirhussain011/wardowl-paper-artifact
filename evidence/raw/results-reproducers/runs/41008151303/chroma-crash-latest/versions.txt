@@ -1,0 +1,10 @@
+reproducer: chroma-crash
+version label: latest
+target: chromadb==1.5.9
+commit: 593d3743b8e4398884a4d31b5aa2ef760a25df58
+run: 41008151303 attempt 1
+runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64
+started: 2026-10-30T05:23:48Z
+python: Python 3.12.15
+chromadb: Version: 1.5.9
+stack limit (ulimit -s): 16384

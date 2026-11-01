@@ -1,0 +1,13 @@
+folder	commit	used by
+x0-x8-bf25bd0	bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839	X0, X8, X8-FGA and X8 amendment 2: wardowl 2.1.0 (this commit is tag v2.1.0) and the acceptance scripts
+x1-run1-947fb8f	947fb8f11efa917ec86402d381c1983d143df7df	X1 run 1: scripts and package installed from this commit, whose wardowl/ tree equals tag v2.1.0
+x1-run2-a956424	a95642429d508340946ee3679b65db2eedd36dc1	X1 run 2 (branch paper/x1-underretrieval)
+x2-x5-884ce18	884ce18397966859ebb803427cc23a5023431739	X2 and X5, run 40921769714 (branch paper/x2-x5)
+x3-x6-a191626	a1916263f118f92a3446e6b98ec812549e82261a	X3 and X6, run 40940385704 (branch paper/x3-x6)
+x3-x6-followup-9e22b89	9e22b895c6323e9d5198ce150c415757680994aa	X3 and X6 follow-up (amendment 4), run 40982986417
+x4-x7-e66dffc	e66dffc2a24b89b3ae60cd10db02e0363ff4387a	X4 and X7, run 40919304635; its wardowl/ is that of fix/engine-limits at e7776f0
+x7-amendment2-harness-41292bd	41292bd2aa21814b025fbac31a1be94cf8744855	X7 amendment 2 harness, run 40969846593
+x7-amendment2-library-3c6559f	3c6559f3ecfd850bcd59416f14237d85887ba498	X7 amendment 2 library (fix/revocation-faults, PR 186)
+conformance-run1-5d0f414	5d0f414a346511ad48a6c1c8b411259e6d908b84	Conformance campaign run 1, run 40313285885
+conformance-run2-182bcbc	182bcbc53b9135c1c9bca4f0652a0f94ff2b9938	Conformance campaign run 2, run 40905549149
+rls-side-run-42fcca6	42fcca6acc720155e77508b2a54dcf8b401b949a	The library's row-level security benchmark of 2026-10-22, before the paper's experiments; the package is still called needtoknow at this commit

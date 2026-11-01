@@ -1,0 +1,60 @@
+# FAISS
+
+[FAISS](https://github.com/facebookresearch/faiss) is a library for vector search in your process,
+with no server. FAISS stores vectors only, so `FaissBackend` keeps each chunk's text and metadata
+beside the index and hands the permission filter to FAISS as a set of allowed ids: the search
+considers only chunks the subject may read, so pre-filtering is exact.
+
+```bash
+pip install "wardowl[faiss]"
+```
+
+```python
+from wardowl import MetadataACLAuthorizer, PermissionedRetriever
+from wardowl.backends.faiss import FaissBackend
+
+backend = FaissBackend(embed, dim=768)
+backend.add(chunks)  # or backend.add(chunks, embeddings) with vectors you computed
+retriever = PermissionedRetriever(backend, MetadataACLAuthorizer())
+
+backend.save("data/faiss")  # the index and the chunks, in one directory
+backend = FaissBackend.load("data/faiss", embed)
+```
+
+## How filtering works
+
+A filter is matched against every chunk's metadata with `matches`, the reference semantics, and the
+matching chunks become an `IDSelectorBatch` in the search parameters. Matching scans the metadata in
+Python, which is fast enough for the collections FAISS serves in one process (hundreds of thousands
+of chunks); for many millions, use a vector database with its own filtering.
+
+## Index types
+
+The default is exact search (`IndexFlatIP` over normalized vectors, so scores are cosine
+similarities). For approximate search, pass a trained index that supports `add_with_ids`,
+`remove_ids` and search parameters with an ID selector, such as an HNSW index inside an
+`IndexIDMap2`:
+
+```python
+import faiss
+
+index = faiss.IndexIDMap2(faiss.IndexHNSWFlat(768, 32, faiss.METRIC_INNER_PRODUCT))
+backend = FaissBackend(embed, dim=768, index=index)
+```
+
+`backend.exact_search` is True for a flat index (`IndexFlat`, `IndexFlatIP`, `IndexFlatL2`), or an
+`IndexIDMap` or `IndexIDMap2` around one, the default included. A pre-filtered result with fewer
+than k hits then means the user may read no other matching chunk, and it says `complete=True`.
+For any other index, HNSW and IVF included, it is False: a short result may be an index that
+stopped early, and says `complete=False` ([Concepts](../concepts.md#what-a-result-tells-you)).
+
+## Changes
+
+`add` replaces chunks with the same id, and keeps only the last of an id repeated in one call, as
+if they were added in turn. `delete` removes chunks by id, and `set_metadata` changes a chunk's
+permissions without embedding it again. A lock serializes changes and searches, so one
+backend can serve several threads.
+
+The backend keeps its own copy of each chunk's metadata and returns copies in search results, so
+changing a hit's metadata, or a dict after passing it to `add` or `set_metadata`, changes no stored
+permission.
