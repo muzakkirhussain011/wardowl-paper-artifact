@@ -22,7 +22,8 @@ and seven authorization engines. **The author develops wardowl**, so this is not
 The branch `main` holds what was registered, what came out, and the text. The tag `evidence-v1` is the archive version:
 it adds the CI artifacts and results branches of the paper's runs and the library at the commits those runs used.
 Build it with `.github/workflows/evidence-tag.yml`. The workflow refuses to replace the tag once a release or `evidence/ARCHIVE_DOI` exists, and without an explicit answer.
-An archive DOI does not exist yet; a later commit of this file, and the paper, will name it.
+The archive is at https://doi.org/10.5281/zenodo.23874614, the tag as released on 2026-11-02. The commit that adds the DOI, and any
+later commit of `main`, are not in it.
 
 | Path | What it holds |
 |---|---|

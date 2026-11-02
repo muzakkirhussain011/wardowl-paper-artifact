@@ -1,7 +1,6 @@
 % Limitations, Ethics and Reproducibility: body of Section~\ref{sec:limits} (the \section heading
 % and its label stay in main.tex). Labels defined here: sec:limits-ethics, sec:limits-ai, sec:limits-repro.
-% The full limitations (sec:limits-limits) and the licenses are in Appendix~\ref{sec:limits-limits}. Items
-% marked \tbd{} must be settled before the preprint.
+% The full limitations (sec:limits-limits) and the licenses are in Appendix~\ref{sec:limits-limits}.
 
 \paragraph{Limitations.}
 Appendix~\ref{sec:limits-limits} states these in full. This is a measurement of one layer, developed by the author and created in October 2026, with no comparator layer and no adaptive adversary run, on synthetic permission layouts. That no returned chunk leaked means that none lay outside the
@@ -26,7 +25,7 @@ Redis (\url{https://github.com/RediSearch/RediSearch/issues/12106}, 15:54), Chro
 \url{https://github.com/chroma-core/chroma/issues/7970}, 15:56), Cerbos (\url{https://github.com/cerbos/cerbos/issues/3456}, 19:15) and MongoDB (documentation
 feedback, no public link). So these vendors heard after the public could have, including of a crash that users can reach and of a filter that can admit too much, filed as ordinary public issues. We found no security policy file in Chroma's repository. RediSearch's policy routes serious vulnerabilities privately; we filed publicly because the over-admission needs a value longer than 4,096 bytes and our pull request had already described it, which was our judgment, and maintainers may disagree. Our first reports to Redis, Chroma and MongoDB said the maintainers were hearing of this first, which was wrong; we corrected the three public issues on 2026-11-01, and MongoDB's form cannot be edited.
 Table~\ref{tab:conf-faults} in Appendix~\ref{sec:conf-results} gives each report's status. One unexplained SpiceDB trial past its documented bound, OPA's residual negation and pgvector's plan
-choice have no report. No maintainer had replied on the four public issues by 2026-11-01; on 2026-10-31 someone outside the project opened a pull request against the first Chroma issue (chroma-core/chroma\#7974).
+choice have no report. No maintainer had replied on the four public issues by 2026-11-02, though the Redis issue was reassigned on 2026-11-01. On 2026-10-31 someone outside the project opened a pull request against the first Chroma issue (chroma-core/chroma\#7974), and on 2026-11-01 another offered to work on the second.
 
 \paragraph{Use of AI assistance.}\label{sec:limits-ai}
 Under the author's direction, an AI coding agent produced most of the library's code, the conformance kit, the oracles, the harnesses and the analysis
@@ -35,7 +34,7 @@ critical review cited here were run by separate instances of it. The author chos
 pre-registrations and reviews, and takes full responsibility for the content.
 
 \paragraph{Reproducibility.}\label{sec:limits-repro}
-The artifact is at \url{https://github.com/muzakkirhussain011/wardowl-paper-artifact}, tag \texttt{evidence-v1} \tbd{archive DOI}. It holds the source of this text as of the tag, the
+The artifact is at \url{https://github.com/muzakkirhussain011/wardowl-paper-artifact}, tag \texttt{evidence-v1}, archived at \url{https://doi.org/10.5281/zenodo.23874614}. It holds the source of this text as of the tag, the
 pre-registrations with their dated amendments, the raw outputs with seeds and versions and, for most GitHub jobs, container image digests (X2 and X5 record image tags and server versions instead), the vendor reproducers, the Kaggle runners, and the library at the commits the runs used; \texttt{REPRODUCE.md} maps each table to its data and \texttt{evidence/ARTIFACT\_GAPS.md} lists what is missing. The main gaps: the end-to-end runs stored answers and hits at $k = 5$ only, so their recall@10, and the check of the other hits against the oracle, are printed counters; the Kaggle runs did not pin their Python dependencies; and no rebuild of the prepared corpora has been shown. Compute: about 38 hours of Kaggle sessions (two T4 GPUs or four CPUs each) and more than 140 hours of GitHub-hosted runner jobs,
 listed per experiment in Appendix~\ref{app:compute}; no experiment reported here ran on a local machine. Data and model licenses are in
 Appendix~\ref{app:licenses}.

@@ -90,7 +90,8 @@ name head commits of the same repository, and `38f4ae7` (run 41114474172) is not
 
 ## Archive and licenses
 
-- **No DOI exists yet,** and the paper's release sentence depends on it. Minting one needs the author's Zenodo account.
+- **The archive's DOI is 10.5281/zenodo.23874614,** the tag `evidence-v1` as released on 2026-11-02. The commit that adds the DOI,
+  which also dates the paper's sentence on vendor replies to 2026-11-02, and any later commit of `main`, are not in that record.
   `.github/workflows/evidence-tag.yml` then refuses to move the tag.
 - **GitHub reports this repository's license as "other" (NOASSERTION).** That stands: the repository holds material under several
   terms by design (`LICENSE.md`).
