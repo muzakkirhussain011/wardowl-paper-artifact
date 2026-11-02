@@ -8,7 +8,7 @@ and 0.57.0 (the latest release that day), in workflow runs 41007436602, 41007779
 Where: https://github.com/cerbos/cerbos/issues (documentation), for
 https://docs.cerbos.dev/cerbos/latest/policies/conditions and the query plan pages.
 
-State on 2026-10-31: open, no comments (GitHub API). The three run ids belong to the paper's private development
+State on 2026-11-02: open. Charith Ellawala of Cerbos replied that day that he was not sure what the question was, and that the plan's expression is valid if `allowed_users` is a list (GitHub API). State on 2026-10-31: open, no comments. The three run ids belong to the paper's private development
 repository, so their pages are not public. Every job's output is public: `runs/<run id>/` on branch
 `results/reproducers` of the artifact repository, and `evidence/raw/results-reproducers/runs/<run id>/` in the tag
 `evidence-v1`. `REPRODUCE.md` says how to rerun them.
