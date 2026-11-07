@@ -19,15 +19,15 @@
     "scan_mem_multiplier"
   ],
   "first_build_only": false,
-  "started": "2026-10-26T10:40:59+0000",
+  "started": "2026-11-07T04:03:03+0000",
   "status": "done",
-  "seconds": 1756.8,
+  "seconds": 1743.8,
   "summary": {
-    "recall5": 0.9978201634877385,
-    "recall10": 0.9987738419618527,
-    "err5": 0.0006811989100817438,
-    "short5": 0.0006811989100817438,
-    "latency_p50_ms": 390.99271899976884
+    "recall5": 0.9983651226158038,
+    "recall10": 0.9991144414168938,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 388.9044450002075
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pa-t20k-m8.parquet",
@@ -38,9 +38,9 @@
   "retrievals": 5956,
   "errors": 0,
   "error_examples": [],
-  "unstable_k5": 6,
+  "unstable_k5": 5,
   "passes": 3,
-  "sweep_seconds": 1755.2,
+  "sweep_seconds": 1742.4,
   "prepared_statements": {
     "statements": 9,
     "search_statements": 4,

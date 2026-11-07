@@ -1,14 +1,14 @@
 {
   "status": "running",
-  "started": "17:10:49",
+  "started": "10:20:29",
   "store": "qdrant",
   "layout": "one-segment",
   "rep": 2,
   "builder": "as-run, with optimizers_config default_segment_number=1 and max_segment_size 1,000,000 KB so the optimizer can merge everything into one segment (harness-level)",
   "loaded": {
-    "load_s": 69.3
+    "load_s": 69.2
   },
-  "seconds": 114.7,
+  "seconds": 109.7,
   "points": {
     "wardowl_enterprise": 107540
   },
@@ -77,10 +77,10 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.tenant": {
+        "metadata.allowed_groups": {
           "data_type": "keyword",
           "params": null,
-          "points": 107540
+          "points": 103380
         },
         "wardowl_id": {
           "data_type": "keyword",
@@ -92,10 +92,10 @@
           "params": null,
           "points": 12480
         },
-        "metadata.allowed_groups": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
-          "points": 103380
+          "points": 107540
         }
       },
       "update_queue": {

@@ -3,11 +3,11 @@ faiss,kb-reader,0.0,340,0.0,340
 faiss,judy,0.0,36,0.0,36
 chroma,kb-reader,0.0,340,0.0,340
 chroma,judy,0.0,36,0.0,36
-pgvector,kb-reader,0.0023529411764705885,340,0.0,340
+pgvector,kb-reader,0.003529411764705883,340,0.0,340
 pgvector,judy,0.0,36,0.0,36
-pgvector + OPA,kb-reader,0.0023529411764705885,340,0.0,340
+pgvector + OPA,kb-reader,0.003529411764705883,340,0.0,340
 pgvector + OPA,judy,0.0,36,0.0,36
-qdrant,kb-reader,0.6588235294117647,340,0.0,340
+qdrant,kb-reader,0.7205882352941176,340,0.0,340
 qdrant,judy,0.0,36,0.0,36
 elasticsearch,kb-reader,0.0,340,0.0,340
 elasticsearch,judy,0.0,36,0.0,36

@@ -65,7 +65,7 @@ qdrant,as-run,qc-exact,probe-finance,0,96,0,0,0.0,1.0,0.0,0.0
 qdrant,as-run,qc-exact,probe-hr,0,96,0,0,0.0,1.0,0.0,0.0
 qdrant,as-run,qc-exact,probe-legal,0,96,0,0,0.0,1.0,0.0,0.0
 qdrant,as-run,qc-exact,probe-sre,0,96,0,0,0.0,1.0,0.0,0.0
-qdrant,is-tenant,q-asrun,judy,0,0,30,510,0.0,0.0,0.05555555555555555,0.9444444444444444
+qdrant,is-tenant,q-asrun,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,is-tenant,q-asrun,kb-reader,0,0,5964,0,0.0,0.0,1.0,0.0
 qdrant,is-tenant,q-asrun,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,is-tenant,q-asrun,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -75,8 +75,8 @@ qdrant,is-tenant,q-asrun,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,q-asrun,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,q-asrun,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,q-asrun,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,is-tenant,q-asrun,probe-sre,0,0,96,192,0.0,0.0,0.3333333333333333,0.6666666666666666
-qdrant,is-tenant,qa-acorn040,judy,30,0,0,510,0.05555555555555555,0.0,0.0,0.9444444444444444
+qdrant,is-tenant,q-asrun,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
+qdrant,is-tenant,qa-acorn040,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn040,kb-reader,5964,0,0,0,1.0,0.0,0.0,0.0
 qdrant,is-tenant,qa-acorn040,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn040,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -86,8 +86,8 @@ qdrant,is-tenant,qa-acorn040,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn040,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn040,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn040,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,is-tenant,qa-acorn040,probe-sre,96,0,0,192,0.3333333333333333,0.0,0.0,0.6666666666666666
-qdrant,is-tenant,qa-acorn100,judy,30,0,0,510,0.05555555555555555,0.0,0.0,0.9444444444444444
+qdrant,is-tenant,qa-acorn040,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
+qdrant,is-tenant,qa-acorn100,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn100,kb-reader,5964,0,0,0,1.0,0.0,0.0,0.0
 qdrant,is-tenant,qa-acorn100,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn100,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -97,7 +97,7 @@ qdrant,is-tenant,qa-acorn100,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn100,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn100,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qa-acorn100,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,is-tenant,qa-acorn100,probe-sre,96,0,0,192,0.3333333333333333,0.0,0.0,0.6666666666666666
+qdrant,is-tenant,qa-acorn100,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,is-tenant,qc-exact,judy,0,180,0,0,0.0,1.0,0.0,0.0
 qdrant,is-tenant,qc-exact,kb-reader,0,1988,0,0,0.0,1.0,0.0,0.0
 qdrant,is-tenant,qc-exact,no-groups,0,42,0,0,0.0,1.0,0.0,0.0
@@ -197,7 +197,7 @@ qdrant,separate-kb,qc-exact,probe-finance,0,192,0,0,0.0,1.0,0.0,0.0
 qdrant,separate-kb,qc-exact,probe-hr,0,192,0,0,0.0,1.0,0.0,0.0
 qdrant,separate-kb,qc-exact,probe-legal,0,192,0,0,0.0,1.0,0.0,0.0
 qdrant,separate-kb,qc-exact,probe-sre,0,192,0,0,0.0,1.0,0.0,0.0
-qdrant,tenant-m0,q-asrun,judy,0,0,30,510,0.0,0.0,0.05555555555555555,0.9444444444444444
+qdrant,tenant-m0,q-asrun,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,q-asrun,kb-reader,0,0,5964,0,0.0,0.0,1.0,0.0
 qdrant,tenant-m0,q-asrun,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,q-asrun,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -207,8 +207,8 @@ qdrant,tenant-m0,q-asrun,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,q-asrun,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,q-asrun,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,q-asrun,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,tenant-m0,q-asrun,probe-sre,0,0,96,192,0.0,0.0,0.3333333333333333,0.6666666666666666
-qdrant,tenant-m0,qa-acorn040,judy,0,0,30,510,0.0,0.0,0.05555555555555555,0.9444444444444444
+qdrant,tenant-m0,q-asrun,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
+qdrant,tenant-m0,qa-acorn040,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn040,kb-reader,0,0,5964,0,0.0,0.0,1.0,0.0
 qdrant,tenant-m0,qa-acorn040,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn040,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -218,8 +218,8 @@ qdrant,tenant-m0,qa-acorn040,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn040,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn040,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn040,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,tenant-m0,qa-acorn040,probe-sre,0,0,96,192,0.0,0.0,0.3333333333333333,0.6666666666666666
-qdrant,tenant-m0,qa-acorn100,judy,0,0,30,510,0.0,0.0,0.05555555555555555,0.9444444444444444
+qdrant,tenant-m0,qa-acorn040,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
+qdrant,tenant-m0,qa-acorn100,judy,0,0,0,540,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn100,kb-reader,0,0,5964,0,0.0,0.0,1.0,0.0
 qdrant,tenant-m0,qa-acorn100,no-groups,0,0,0,126,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn100,probe-board,0,0,0,288,0.0,0.0,0.0,1.0
@@ -229,7 +229,7 @@ qdrant,tenant-m0,qa-acorn100,probe-engineering,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn100,probe-finance,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn100,probe-hr,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qa-acorn100,probe-legal,0,0,0,288,0.0,0.0,0.0,1.0
-qdrant,tenant-m0,qa-acorn100,probe-sre,0,0,96,192,0.0,0.0,0.3333333333333333,0.6666666666666666
+qdrant,tenant-m0,qa-acorn100,probe-sre,0,0,0,288,0.0,0.0,0.0,1.0
 qdrant,tenant-m0,qc-exact,judy,0,180,0,0,0.0,1.0,0.0,0.0
 qdrant,tenant-m0,qc-exact,kb-reader,0,1988,0,0,0.0,1.0,0.0,0.0
 qdrant,tenant-m0,qc-exact,no-groups,0,42,0,0,0.0,1.0,0.0,0.0

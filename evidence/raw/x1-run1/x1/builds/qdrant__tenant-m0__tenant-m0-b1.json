@@ -1,14 +1,14 @@
 {
   "status": "running",
-  "started": "16:19:40",
+  "started": "09:31:41",
   "store": "qdrant",
   "layout": "tenant-m0",
   "rep": 1,
   "builder": "is-tenant, with hnsw_config m=0 and payload_m=16: one graph per tenant value and no global graph (harness-level)",
   "loaded": {
-    "load_s": 68.7
+    "load_s": 70.4
   },
-  "seconds": 649.9,
+  "seconds": 631.5,
   "points": {
     "wardowl_enterprise": 107540
   },
@@ -77,11 +77,6 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.allowed_users": {
-          "data_type": "keyword",
-          "params": null,
-          "points": 12480
-        },
         "metadata.tenant": {
           "data_type": "keyword",
           "params": {
@@ -94,6 +89,11 @@
             "nested": null
           },
           "points": 107540
+        },
+        "metadata.allowed_users": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 12480
         },
         "wardowl_id": {
           "data_type": "keyword",

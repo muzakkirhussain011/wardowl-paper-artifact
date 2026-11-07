@@ -43,7 +43,7 @@
     "Q2": "falsified",
     "Q3": "inconclusive",
     "Q4": "inconclusive",
-    "P1": "confirmed",
+    "P1": "inconclusive",
     "P2": "inconclusive",
     "P3": "inconclusive",
     "P4": "falsified"
@@ -54,5 +54,5 @@
     "scipy": "1.16.3",
     "pyarrow": "23.0.1"
   },
-  "seconds": 380.1
+  "seconds": 366.2
 }

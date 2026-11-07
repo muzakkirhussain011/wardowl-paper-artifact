@@ -43,8 +43,8 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
 - **X1 is better placed.** GitHub's public activity record for the library's branch `paper/x1-underretrieval`, copied to
   `evidence/raw/x1-branch-activity.json`, shows the branch created at `947fb8f` on 2026-10-26 at 09:50:53 UTC and pushed to
   `a956424` on 2026-10-29 at 16:55:40 UTC. The registration commits are its ancestors, and each kernel clones its commit from
-  there, so a kernel cannot have run before the push. Amendment 2 and its revisions come after `947fb8f` and before `a956424`. Run 1's public notebook log prints `947fb8f`; run 2's log is the author's
-  copy, because its kernels are private. No Actions run bounds them.
+  there, so a kernel cannot have run before the push. Amendment 2 and its revisions come after `947fb8f` and before `a956424`. Run 1's kernel log prints `947fb8f`; the kernel logs are the author's
+  copies, because the kernels are private. No Actions run bounds them.
 - **The GitHub experiments do not have this weakness:** their run times and head commits are in GitHub's own records, and
   the ancestry the paper claims can be checked with `git merge-base --is-ancestor` on the public library.
 
@@ -54,8 +54,8 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
   public dataset `wardowl-paper-evidence`, but their version history is not public. Any sentence in the paper that rests on that
   history can't be checked by a stranger until they are public or the sentence changes.
 - X0 was executed again on 2026-11-07 with the same notebook, seed and session type, and the artifact holds that execution
-  (`evidence/raw/KAGGLE_KERNELS.tsv`, `evidence/x0-scale-run.md`); X1 run 1 is being executed again the same way (started
-  2026-11-07 03:33 UTC). The first executions (2026-10-24 and 2026-10-26) are not in the artifact. The pre-registrations of X1,
+  (`evidence/raw/KAGGLE_KERNELS.tsv`, `evidence/x0-scale-run.md`); X1 run 1 was executed again the same way on 2026-11-07
+  (`evidence/x1-underretrieval-run1.md`), and the artifact holds that execution too. The first executions (2026-10-24 and 2026-10-26) are not in the artifact. The pre-registrations of X1,
   X2 to X5 and X8 quote the printed aggregates of X0's first execution, and the notes that judge a prediction against an X0
   number say which execution it comes from.
 - The kernels `x1run2-prep`, an abandoned CPU attempt, and `x1run2-prep-tpu` hold no output files. Their last version is a stub
@@ -112,10 +112,9 @@ name head commits of the same repository, and `38f4ae7` (run 41114474172) is not
   gives the current one. A new version would upload all 566 MB again for one line.
 - Run 40909137062 (`paper-x3-x6`, commit `2af1dd8`, "at smoke size first") has no folder here: it was a smoke run of the
   workflow, before the registered runs.
-- Kaggle's public API gives `lastRunTime` 2026-10-28T21:35:06Z and 21:35:31Z for the two public notebooks, later than the runs
-  that `evidence/raw/KAGGLE_KERNELS.tsv` dates to 2026-10-24 19:05:06 and 2026-10-26 10:02:06. Two long runs 25 seconds apart do
-  not fit, and the cause is not established. Bounds that anyone can check: PyPI's upload of wardowl 2.1.0 at 2026-10-24T18:57:58Z,
-  which X0 installs, and the start time in X1 run 1's `manifest.json`, 2026-10-26T10:09:12.
+- The executions of X0 and X1 run 1 in the artifact started at 2026-11-07 00:39:30 and 03:33:47 UTC by Kaggle's API
+  (`evidence/raw/KAGGLE_KERNELS.tsv`, not checkable by others); X1 run 1's `x1/manifest.json` records its grid's start,
+  2026-11-07T03:41:26, and the store logs of X0 carry dates of the same day.
 - X2 and X5 hold no container image digests: `benchmarks/paper/x2x5_services.sh` starts images by tag, and each job's `job.json`
   records the server's version and commit. Conformance, X3, X4 and X7 hold digests.
 - `plan/x8-prereg.md` still counts "people" in its prediction X8-3, because a pre-registration is not rewritten. The unit is

@@ -12,15 +12,15 @@
   },
   "harness_level": [],
   "first_build_only": true,
-  "started": "2026-10-26T15:37:19+0000",
+  "started": "2026-11-07T08:52:35+0000",
   "status": "done",
-  "seconds": 166.9,
+  "seconds": 161.5,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 35.36806699776207
+    "latency_p50_ms": 34.134492998418864
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/qdrant__as-run__as-run-b0__qc-exact.parquet",
@@ -32,6 +32,6 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 3,
-  "sweep_seconds": 166.6,
+  "sweep_seconds": 161.2,
   "telemetry": true
 }

@@ -92,8 +92,9 @@ reached a threshold through Chroma's absence, see below).
 
   Chroma's miss: its budget allowed only 381 to 407 of the 1,468 scorable pairs per setting, the
   head of the round-robin order, which takes each person's first questions. For the 180 generated
-  people these are targeted questions, and for the scenario's nine personas generic ones; X0
-  measured Chroma's overlap@5 at 0.989 on targeted questions and 0.82 to 0.84 on the others
+  people these are targeted questions, and for the scenario's nine personas generic ones; X0's first execution
+  measured Chroma's overlap@5 at 0.989 on targeted questions and 0.82 to 0.84 on the others (the second: 0.972 and 0.817 to
+  0.847, `evidence/raw/x1-run1/x0/summary.md`)
   [inference: the run did not print Chroma's recall by category for this prefix]. pgvector's match
   (0.7297 against 0.732) is the audit reproduced with every search planned with its own values.
 - **V3 (no leak, unreadable hit, canary or violation): holds.** 0 jobs stopped by a leak; every hit

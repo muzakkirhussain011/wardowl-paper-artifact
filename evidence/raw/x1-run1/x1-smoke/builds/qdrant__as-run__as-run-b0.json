@@ -1,6 +1,6 @@
 {
   "status": "running",
-  "started": "10:06:47",
+  "started": "03:38:57",
   "store": "qdrant",
   "layout": "as-run",
   "rep": 0,
@@ -84,11 +84,6 @@
           "params": null,
           "points": 2980
         },
-        "metadata.tenant": {
-          "data_type": "keyword",
-          "params": null,
-          "points": 2980
-        },
         "metadata.allowed_groups": {
           "data_type": "keyword",
           "params": null,
@@ -98,6 +93,11 @@
           "data_type": "keyword",
           "params": null,
           "points": 240
+        },
+        "metadata.tenant": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 2980
         }
       },
       "update_queue": {

@@ -1,6 +1,6 @@
 {
   "status": "running",
-  "started": "10:08:33",
+  "started": "03:40:45",
   "store": "qdrant",
   "layout": "one-segment",
   "rep": 0,
@@ -77,12 +77,12 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.tenant": {
+        "metadata.allowed_users": {
           "data_type": "keyword",
           "params": null,
-          "points": 2980
+          "points": 240
         },
-        "wardowl_id": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
           "points": 2980
@@ -92,10 +92,10 @@
           "params": null,
           "points": 2900
         },
-        "metadata.allowed_users": {
+        "wardowl_id": {
           "data_type": "keyword",
           "params": null,
-          "points": 240
+          "points": 2980
         }
       },
       "update_queue": {

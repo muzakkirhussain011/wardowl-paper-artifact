@@ -102,7 +102,7 @@ each could read 624 chunks: seven empty answers in the seed-17 run, on seven peo
 seed-11 run. The evaluated release called these empty
 answers complete. In the seed-11 and seed-13 runs the same configuration searched exactly, at fifty times the latency; in the seed-7 run it
 searched fast, like seed 17, and left no answer empty. Qdrant never
-returned a short answer in these runs, yet for ordinary employees it returned only about half of the exact top five (0.52 in the first
+returned a short answer in these runs, yet for ordinary employees it returned only about half of the exact top five (0.49 in the seed-7
 run), while for the least-privileged people it was perfect. pgvector thus \emph{under-retrieves}, which a count can detect,
 and also returns wrong chunks; Qdrant only \emph{mis-retrieves}, which only an exact baseline reveals. We pre-registered
 hypotheses for both before running a diagnosis grid of 1,489 questions and three index builds per layout
@@ -178,7 +178,7 @@ passages of MS MARCO~\cite{bajaj2016ms}, in a hierarchy of teams assigned at ran
 (\emph{clustered}), with 6,200 question--subject pairs and selectivities from 0.06\% to 100\%. \emph{Negatively
 correlated} questions have nothing readable among their 1,000 nearest passages. Ten approximate
 stores run against FAISS over a flat index, each at its default, at five levels of search effort and with its own options, in three fresh builds; Chroma
-was too slow to reach a timed pass. Eight of the audit's nine stores reproduced the recall@10 of its first run within 0.03. Appendix~\ref{app:frontier} gives
+was too slow to reach a timed pass. Eight of the audit's nine stores reproduced the recall@10 of the first execution of its seed-7 run within 0.03, and seven that of the execution the artifact holds. Appendix~\ref{app:frontier} gives
 the design.
 
 \begin{figure}[tbp]

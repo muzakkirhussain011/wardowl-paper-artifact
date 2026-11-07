@@ -90,7 +90,7 @@ Readings:
 - Both scan limits bind. Raising the tuple limit alone (to 100,000 or 1,000,000) lowered the
   empty-result rate only from 0.089 to 0.073, because the memory bound (`scan_mem_multiplier` x
   `work_mem`, 4 MB) then stops the scan; raising memory alone changed nothing; raising both removed
-  every empty answer. This corrects run 1's reading ("every setting that raised the tuple limit to
+  every empty answer. This corrects the reading of run 1's first execution ("every setting that raised the tuple limit to
   100,000 or more removed the empty answers"), which came from searches that mostly ran generic,
   exact plans.
 - Removing the empties did not remove the loss: with both limits raised recall@10 stayed at 0.78
@@ -114,8 +114,8 @@ Readings:
 | per-tenant graphs (is_tenant, m = 0) | as run | 0.952 | 0.001 | 6.58 |
 | shared passages in a separate collection | as run | 0.949 | 0.003 | 12.9 |
 
-Run 1 (`x1-underretrieval-run1.md`) agrees within 0.05: as run 0.619, ACORN 0.761, per-tenant 0.943,
-separate 0.948, hnsw_ef 512 0.709 (corrected 2026-10-30: this line said "within the build-to-build
+Run 1 (`x1-underretrieval-run1.md`) agrees within 0.05: in its first execution as run 0.619, ACORN 0.761, per-tenant 0.943,
+separate 0.948, hnsw_ef 512 0.709; in the execution the artifact holds 0.641, 0.814, 0.937, 0.948 and 0.738 (corrected 2026-10-30: this line said "within the build-to-build
 range", which per-tenant, 0.009 from run 2 against a range of 0.001, is not). Q3's segment manipulation did not
 differ in the end: both the as-run and the one-segment layouts ended with one segment holding
 points (`data_segments`), so the -0.030 difference is a difference between builds, not layouts.
@@ -126,7 +126,7 @@ points (`data_segments`), so the -0.030 difference is a difference between build
   replays and `gincostestimate`), then the HNSW scan's own loss (both limits bind; mis-retrieval
   remains), and P3. Correct run 1's tuple-limit sentence.
 - `quality.tex`, sec:qual-qdrant and Table tab:qual-qdrant: run 2's numbers, Q3 and Q4 as printed;
-  company-document recall 0.369 (run 1: 0.273).
+  company-document recall 0.369 (run 1: 0.273 in its first execution, 0.314 in the second).
 - Introduction: "recall@10 of 0.27 on company documents, 0.94 with a tenant-aware layout" becomes
   run 2's 0.37 and 0.95; pgvector's empty answers are attributed to both scan limits and the mode to
   the plan cache.

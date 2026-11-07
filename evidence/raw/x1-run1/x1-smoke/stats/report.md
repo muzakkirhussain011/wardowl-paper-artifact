@@ -39,10 +39,10 @@ Input: `/kaggle/working/x1-smoke`; 7,436 result rows of 44 settings; 500 bootstr
 
 ### P2: confirmed (mis-retrieval from shallow, relaxed scans)
 
-- confirm: (a) ef_search 1000 minus 100 0.0372 [0.0182, 0.0515] >= 0.02, above 0: **True**
-- confirm: (b) inner LIMIT 10x minus 1x 0.0372 [0.0188, 0.0527] above 0: **True**
-- confirm: (c) m32/efc200 minus m16/efc64 0.0372 [0.0203, 0.0536] above 0: **True**
-- confirm: (d) loss at rho_100 < 0.1 0.045 at least twice the rest 0.009: **True**
+- confirm: (a) ef_search 1000 minus 100 0.0385 [0.0189, 0.0529] >= 0.02, above 0: **True**
+- confirm: (b) inner LIMIT 10x minus 1x 0.0385 [0.0187, 0.0540] above 0: **True**
+- confirm: (c) m32/efc200 minus m16/efc64 0.0385 [0.0211, 0.0554] above 0: **True**
+- confirm: (d) loss at rho_100 < 0.1 0.046 at least twice the rest 0.012: **True**
 - confirm: (e) mean similarity gap of missed questions 0.002 <= 0.02: **True**
 - falsify: |ef_search 1000 minus 100| < 0.01 with an interval containing 0: **False**
 
@@ -70,49 +70,49 @@ Input: `/kaggle/working/x1-smoke`; 7,436 result rows of 44 settings; 500 bootstr
 
 | store | layout | setting | builds | recall5 | recall10 | recall10_range | empty5 | short5 | gross_miss10 | sim_gap10 | latency_p50 |
 |---|---|---|---|---|---|---|---|---|---|---|---|
-| pgvector | hnsw-m16-efc64 | p-asrun | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 3.426 |
-| pgvector | hnsw-m16-efc64 | pa-t1000k-m1 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 3.763 |
-| pgvector | hnsw-m16-efc64 | pa-t1000k-m16 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 3.535 |
-| pgvector | hnsw-m16-efc64 | pa-t1000k-m8 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 4.061 |
-| pgvector | hnsw-m16-efc64 | pa-t100k-m1 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 3.863 |
-| pgvector | hnsw-m16-efc64 | pa-t100k-m8 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 4.311 |
-| pgvector | hnsw-m16-efc64 | pa-t20k-m8 | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 4.043 |
-| pgvector | hnsw-m16-efc64 | pb-wm64 | 1 | 0.999 | 0.999 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.0 |
-| pgvector | hnsw-m16-efc64 | pc-ef1000 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.1 |
-| pgvector | hnsw-m16-efc64 | pc-ef200 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.1 |
-| pgvector | hnsw-m16-efc64 | pc-ef40 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.2 |
-| pgvector | hnsw-m16-efc64 | pc-ef400 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.0 |
-| pgvector | hnsw-m16-efc64 | pd-lim10 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.5 |
-| pgvector | hnsw-m16-efc64 | pd-lim4 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.5 |
-| pgvector | hnsw-m16-efc64 | pe-strict | 1 | 0.997 | 0.995 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 12.9 |
-| pgvector | hnsw-m16-efc64 | pg-custom | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 3.242 |
-| pgvector | hnsw-m16-efc64 | pg-noprepare | 1 | 0.955 | 0.963 | n/a | 0.000 | 0.000 | 0.014 | 0.001 | 2.983 |
-| pgvector | hnsw-m16-efc64 | ph-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.1 |
-| pgvector | hnsw-m32-efc200 | p-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.2 |
-| pgvector | hnsw-m32-efc200 | pa-t1000k-m8 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.7 |
-| pgvector | hnsw-m32-efc200 | pc-ef400 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.2 |
-| pgvector | hnsw-m32-efc200 | pd-lim10 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.4 |
-| qdrant | as-run | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.064 |
-| qdrant | as-run | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.084 |
-| qdrant | as-run | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.130 |
-| qdrant | as-run | qb-ef512 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 2.952 |
-| qdrant | as-run | qb-ef64 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.194 |
-| qdrant | as-run | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.096 |
-| qdrant | is-tenant | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.095 |
-| qdrant | is-tenant | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.056 |
-| qdrant | is-tenant | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.121 |
-| qdrant | is-tenant | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.166 |
-| qdrant | one-segment | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.394 |
-| qdrant | one-segment | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.260 |
-| qdrant | one-segment | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.295 |
-| qdrant | one-segment | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.198 |
-| qdrant | separate-kb | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.591 |
-| qdrant | separate-kb | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.427 |
-| qdrant | separate-kb | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.512 |
-| qdrant | separate-kb | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.615 |
-| qdrant | tenant-m0 | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.145 |
-| qdrant | tenant-m0 | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.018 |
-| qdrant | tenant-m0 | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.048 |
-| qdrant | tenant-m0 | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 2.968 |
+| pgvector | hnsw-m16-efc64 | p-asrun | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 3.785 |
+| pgvector | hnsw-m16-efc64 | pa-t1000k-m1 | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 4.055 |
+| pgvector | hnsw-m16-efc64 | pa-t1000k-m16 | 1 | 0.966 | 0.974 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 3.374 |
+| pgvector | hnsw-m16-efc64 | pa-t1000k-m8 | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 4.673 |
+| pgvector | hnsw-m16-efc64 | pa-t100k-m1 | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 4.118 |
+| pgvector | hnsw-m16-efc64 | pa-t100k-m8 | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 4.223 |
+| pgvector | hnsw-m16-efc64 | pa-t20k-m8 | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 4.114 |
+| pgvector | hnsw-m16-efc64 | pb-wm64 | 1 | 0.999 | 0.998 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.3 |
+| pgvector | hnsw-m16-efc64 | pc-ef1000 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.5 |
+| pgvector | hnsw-m16-efc64 | pc-ef200 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.6 |
+| pgvector | hnsw-m16-efc64 | pc-ef40 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.7 |
+| pgvector | hnsw-m16-efc64 | pc-ef400 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.7 |
+| pgvector | hnsw-m16-efc64 | pd-lim10 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.8 |
+| pgvector | hnsw-m16-efc64 | pd-lim4 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.2 |
+| pgvector | hnsw-m16-efc64 | pe-strict | 1 | 0.997 | 0.994 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.3 |
+| pgvector | hnsw-m16-efc64 | pg-custom | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 2.897 |
+| pgvector | hnsw-m16-efc64 | pg-noprepare | 1 | 0.949 | 0.961 | n/a | 0.000 | 0.000 | 0.007 | 0.000 | 2.943 |
+| pgvector | hnsw-m16-efc64 | ph-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.5 |
+| pgvector | hnsw-m32-efc200 | p-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.7 |
+| pgvector | hnsw-m32-efc200 | pa-t1000k-m8 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.9 |
+| pgvector | hnsw-m32-efc200 | pc-ef400 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 13.8 |
+| pgvector | hnsw-m32-efc200 | pd-lim10 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 14.4 |
+| qdrant | as-run | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.067 |
+| qdrant | as-run | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 2.998 |
+| qdrant | as-run | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.053 |
+| qdrant | as-run | qb-ef512 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.328 |
+| qdrant | as-run | qb-ef64 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.260 |
+| qdrant | as-run | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.400 |
+| qdrant | is-tenant | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.187 |
+| qdrant | is-tenant | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.237 |
+| qdrant | is-tenant | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.113 |
+| qdrant | is-tenant | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.187 |
+| qdrant | one-segment | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.377 |
+| qdrant | one-segment | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.549 |
+| qdrant | one-segment | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.483 |
+| qdrant | one-segment | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.235 |
+| qdrant | separate-kb | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.846 |
+| qdrant | separate-kb | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.793 |
+| qdrant | separate-kb | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.699 |
+| qdrant | separate-kb | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 5.980 |
+| qdrant | tenant-m0 | q-asrun | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.067 |
+| qdrant | tenant-m0 | qa-acorn040 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.123 |
+| qdrant | tenant-m0 | qa-acorn100 | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.166 |
+| qdrant | tenant-m0 | qc-exact | 1 | 1.000 | 1.000 | n/a | 0.000 | 0.000 | 0.000 | 0.000 | 3.159 |
 
 Qdrant search paths were read from the telemetry path `result/collections/collections/shards/local/segments/vector_index_searches`.

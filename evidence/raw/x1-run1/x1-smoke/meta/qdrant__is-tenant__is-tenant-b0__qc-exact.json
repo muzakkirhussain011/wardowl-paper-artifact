@@ -12,15 +12,15 @@
   },
   "harness_level": [],
   "first_build_only": true,
-  "started": "2026-10-26T10:07:37+0000",
+  "started": "2026-11-07T03:39:48+0000",
   "status": "done",
-  "seconds": 1.7,
+  "seconds": 1.8,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 3.165922999983195
+    "latency_p50_ms": 3.1867525000279784
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/qdrant__is-tenant__is-tenant-b0__qc-exact.parquet",

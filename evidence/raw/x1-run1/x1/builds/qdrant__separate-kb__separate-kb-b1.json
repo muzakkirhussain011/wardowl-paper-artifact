@@ -1,15 +1,15 @@
 {
   "status": "running",
-  "started": "16:52:24",
+  "started": "10:02:36",
   "store": "qdrant",
   "layout": "separate-kb",
   "rep": 1,
   "builder": "company documents and notices in one collection, the FiQA base in another, both created as as-run; each search queries both under the same filter and merges the hits by cosine score (harness-level)",
   "loaded": {
-    "company_s": 28.2,
-    "kb_s": 39.9
+    "company_s": 26.9,
+    "kb_s": 40.1
   },
-  "seconds": 110.0,
+  "seconds": 103.2,
   "points": {
     "wardowl_enterprise_company": 49940,
     "wardowl_enterprise_kb": 57600
@@ -80,25 +80,25 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.tenant": {
+        "metadata.allowed_users": {
           "data_type": "keyword",
           "params": null,
-          "points": 49940
+          "points": 12480
         },
         "metadata.allowed_groups": {
           "data_type": "keyword",
           "params": null,
           "points": 45780
         },
-        "wardowl_id": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
           "points": 49940
         },
-        "metadata.allowed_users": {
+        "wardowl_id": {
           "data_type": "keyword",
           "params": null,
-          "points": 12480
+          "points": 49940
         }
       },
       "update_queue": {
@@ -168,6 +168,16 @@
         "metadata": null
       },
       "payload_schema": {
+        "metadata.allowed_users": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 0
+        },
+        "metadata.allowed_groups": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 57600
+        },
         "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
@@ -177,16 +187,6 @@
           "data_type": "keyword",
           "params": null,
           "points": 57600
-        },
-        "metadata.allowed_groups": {
-          "data_type": "keyword",
-          "params": null,
-          "points": 57600
-        },
-        "metadata.allowed_users": {
-          "data_type": "keyword",
-          "params": null,
-          "points": 0
         }
       },
       "update_queue": {

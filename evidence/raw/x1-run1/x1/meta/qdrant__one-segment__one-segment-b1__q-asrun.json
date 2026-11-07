@@ -16,15 +16,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T17:09:23+0000",
+  "started": "2026-11-07T10:19:05+0000",
   "status": "done",
-  "seconds": 27.5,
+  "seconds": 27.1,
   "summary": {
-    "recall5": 0.6903269754768392,
-    "recall10": 0.6868528610354223,
+    "recall5": 0.6498637602179836,
+    "recall10": 0.6443460490463215,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 4.366572997241747
+    "latency_p50_ms": 4.190306000964483
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/qdrant__one-segment__one-segment-b1__q-asrun.parquet",
@@ -36,6 +36,6 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 3,
-  "sweep_seconds": 27.4,
+  "sweep_seconds": 27.0,
   "telemetry": true
 }

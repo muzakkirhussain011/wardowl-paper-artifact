@@ -3,7 +3,10 @@
 > Note added 2026-11-07: the X0 numbers in this note are the printed aggregates of X0's first execution (2026-10-24), then
 > described in `evidence/kaggle-scale-run-2026-10-24.md`. The artifact now holds X0's second execution
 > (`evidence/x0-scale-run.md`), in which pgvector also ran in its fast mode (recall@5 0.703, recall@10 0.725, p50 7.8 ms) but
-> returned no empty answer, and Qdrant reached recall@5 0.537 and recall@10 0.530. The reasoning below is unchanged.
+> returned no empty answer, and Qdrant reached recall@5 0.537 and recall@10 0.530. Likewise its X1 run 1 numbers are
+> from that run's first execution (2026-10-26); in the second (`evidence/x1-underretrieval-run1.md`), p-asrun ran 4,308
+> of 5,946 searches with a generic plan and 1,638 with a custom plan (first: 5,852 and 94), at recall@5 0.907, with no
+> empty answer. The reasoning below is unchanged.
 
 Written 2026-10-29. Analysis of code and of published results. Inputs: `evidence/kaggle-scale-run-2026-10-24.md`
 (X0), `evidence/x1-underretrieval-run1.md` (X1 run 1), `investigations/filtered-recall-gaps.md` (the

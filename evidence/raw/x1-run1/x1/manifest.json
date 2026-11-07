@@ -2,14 +2,14 @@
   "experiment": "X1: under-retrieval under permission filters",
   "invocations": [
     {
-      "started": "2026-10-26T10:09:12+0000",
+      "started": "2026-11-07T03:41:26+0000",
       "argv": [
         "/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py",
         "--stores",
         "pgvector",
         "--resume",
         "--deadline",
-        "1793049437.502152",
+        "1794062950.287042",
         "--max-hours",
         "5.5"
       ],
@@ -33,7 +33,7 @@
         "resume": true,
         "retry_failed": false,
         "max_hours": 5.5,
-        "deadline": 1793049437.502152,
+        "deadline": 1794062950.287042,
         "explain_fixed": 50,
         "explain_short_cap": 200,
         "repo": "/tmp/wardowl-src"
@@ -42,7 +42,7 @@
       "stages": {
         "corpus": {
           "status": "done",
-          "started": "10:09:14",
+          "started": "03:41:28",
           "chunks": 107540,
           "people": 213,
           "questions": 1489,
@@ -82,32 +82,32 @@
             "opa_version": "v1.21.2",
             "openfga_version": "1.22.0"
           },
-          "seconds": 5.9
+          "seconds": 6.9
         },
         "embeddings": {
           "status": "done",
-          "started": "10:09:20",
+          "started": "03:41:35",
           "copied_from_input": [],
           "computed": [],
-          "seconds": 10.9
+          "seconds": 12.0
         },
         "exact baseline": {
           "status": "done",
-          "started": "10:09:31",
+          "started": "03:41:47",
           "seconds": 1.3
         },
         "alignment variables": {
           "status": "done",
-          "started": "10:09:32",
+          "started": "03:41:48",
           "questions": 1489,
           "seconds": 1.4
         },
         "pgvector: start and load": {
           "status": "done",
-          "started": "10:09:34",
+          "started": "03:41:50",
           "load": {
-            "load_s": 64.2,
-            "index_s": 28.7,
+            "load_s": 68.9,
+            "index_s": 30.1,
             "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 963 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order"
           },
           "server": {
@@ -128,23 +128,23 @@
             "server_version": "16.15 (Ubuntu 16.15-0ubuntu0.24.04.1)",
             "pgvector": "0.8.7"
           },
-          "seconds": 122.4
+          "seconds": 130.2
         },
         "pgvector: filter estimates": {
           "status": "done",
-          "started": "10:11:36",
+          "started": "03:44:00",
           "seconds": 0.3
         },
         "pgvector hnsw-m16-efc64-b0": {
           "status": "done",
-          "started": "10:11:36",
+          "started": "03:44:00",
           "store": "pgvector",
           "layout": "hnsw-m16-efc64",
           "rep": 0,
           "m": 16,
           "ef_construction": 64,
           "builder": "enterprise_rag.PgVectorStore.load: wardowl's create_schema(hnsw=True) after the bulk load, as the original run (pgvector's defaults m 16, ef_construction 64)",
-          "seconds": 19242.8,
+          "seconds": 18224.4,
           "index_bytes": 440475648,
           "reloptions": null
         }
@@ -494,51 +494,51 @@
       "skipped": [
         {
           "what": "pgvector hnsw-m16-efc64-b0 pc-ef1000",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pc-ef1000: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pc-ef1000: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 pd-lim4",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pd-lim4: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pd-lim4: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 pd-lim10",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pd-lim10: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pd-lim10: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 pe-strict",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pe-strict: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pe-strict: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 pg-custom",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pg-custom: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pg-custom: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 pg-noprepare",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 pg-noprepare: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 pg-noprepare: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b0 ph-exact",
-          "reason": "skipped pgvector hnsw-m16-efc64-b0 ph-exact: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b0 ph-exact: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b1",
-          "reason": "skipped pgvector hnsw-m16-efc64-b1: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b1: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m16-efc64-b2",
-          "reason": "skipped pgvector hnsw-m16-efc64-b2: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m16-efc64-b2: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m32-efc200-b0",
-          "reason": "skipped pgvector hnsw-m32-efc200-b0: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m32-efc200-b0: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m32-efc200-b1",
-          "reason": "skipped pgvector hnsw-m32-efc200-b1: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m32-efc200-b1: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         },
         {
           "what": "pgvector hnsw-m32-efc200-b2",
-          "reason": "skipped pgvector hnsw-m32-efc200-b2: 7 min left before the deadline, and a pgvector setting took up to 30 min"
+          "reason": "skipped pgvector hnsw-m32-efc200-b2: 24 min left before the deadline, and a pgvector setting took up to 29 min"
         }
       ],
       "warnings": [],
@@ -559,7 +559,7 @@
         "sentence-transformers": "5.7.0",
         "datasets": "4.8.5",
         "numpy": "2.1.3",
-        "psycopg": "3.3.6",
+        "psycopg": "3.3.8",
         "chromadb": null,
         "elasticsearch": null,
         "opensearch-py": null,
@@ -575,7 +575,7 @@
         "hardware": {
           "cpus": 4,
           "memory_gib": 31.3,
-          "disk_free_gib": 1047.2,
+          "disk_free_gib": 965.1,
           "gpus": [
             "Tesla T4",
             "Tesla T4"
@@ -695,17 +695,17 @@
           1456
         ]
       },
-      "finished": "2026-10-26T15:32:20+0000"
+      "finished": "2026-11-07T08:47:45+0000"
     },
     {
-      "started": "2026-10-26T15:32:22+0000",
+      "started": "2026-11-07T08:47:48+0000",
       "argv": [
         "/tmp/wardowl-src/benchmarks/paper/x1_underretrieval.py",
         "--stores",
         "qdrant",
         "--resume",
         "--deadline",
-        "1793049437.502152"
+        "1794062950.287042"
       ],
       "options": {
         "out": "/kaggle/working/x1",
@@ -727,7 +727,7 @@
         "resume": true,
         "retry_failed": false,
         "max_hours": 10.0,
-        "deadline": 1793049437.502152,
+        "deadline": 1794062950.287042,
         "explain_fixed": 50,
         "explain_short_cap": 200,
         "repo": "/tmp/wardowl-src"
@@ -736,7 +736,7 @@
       "stages": {
         "corpus": {
           "status": "done",
-          "started": "15:32:24",
+          "started": "08:47:50",
           "chunks": 107540,
           "people": 213,
           "questions": 1489,
@@ -776,29 +776,29 @@
             "opa_version": "v1.21.2",
             "openfga_version": "1.22.0"
           },
-          "seconds": 6.1
+          "seconds": 6.6
         },
         "embeddings": {
           "status": "done",
-          "started": "15:32:30",
+          "started": "08:47:56",
           "copied_from_input": [],
           "computed": [],
-          "seconds": 11.1
+          "seconds": 11.6
         },
         "exact baseline": {
           "status": "done",
-          "started": "15:32:41",
+          "started": "08:48:08",
           "seconds": 1.3
         },
         "alignment variables": {
           "status": "done",
-          "started": "15:32:43",
+          "started": "08:48:09",
           "questions": 1489,
           "seconds": 1.4
         },
         "qdrant: start": {
           "status": "done",
-          "started": "15:32:45",
+          "started": "08:48:11",
           "server": {
             "title": "qdrant - vector search engine",
             "version": "1.19.2",
@@ -809,17 +809,17 @@
         },
         "qdrant as-run-b0": {
           "status": "done",
-          "started": "15:32:47",
+          "started": "08:48:13",
           "store": "qdrant",
           "layout": "as-run",
           "rep": 0,
           "builder": "enterprise_rag.QdrantStore.load, as the original run: wardowl's create_collection with keyword indexes on allowed_users, allowed_groups, tenant and wardowl_id, default HNSW (m 16, ef_construct 100) and optimizer, every chunk through QdrantBackend.add",
           "loaded": {
-            "load_s": 71.7,
-            "index_s": 34.1,
+            "load_s": 69.1,
+            "index_s": 30.7,
             "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions"
           },
-          "seconds": 439.4,
+          "seconds": 423.2,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -888,25 +888,25 @@
                 "metadata": null
               },
               "payload_schema": {
-                "wardowl_id": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 107540
-                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 107540
                 },
-                "metadata.allowed_users": {
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 12480
+                  "points": 107540
                 },
                 "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 103380
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
                 }
               },
               "update_queue": {
@@ -919,17 +919,17 @@
         },
         "qdrant as-run-b1": {
           "status": "done",
-          "started": "15:40:06",
+          "started": "08:55:17",
           "store": "qdrant",
           "layout": "as-run",
           "rep": 1,
           "builder": "enterprise_rag.QdrantStore.load, as the original run: wardowl's create_collection with keyword indexes on allowed_users, allowed_groups, tenant and wardowl_id, default HNSW (m 16, ef_construct 100) and optimizer, every chunk through QdrantBackend.add",
           "loaded": {
-            "load_s": 72.7,
-            "index_s": 26.8,
+            "load_s": 70.5,
+            "index_s": 28.1,
             "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions"
           },
-          "seconds": 280.0,
+          "seconds": 262.2,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -998,7 +998,12 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.tenant": {
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
+                },
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 107540
@@ -1008,15 +1013,10 @@
                   "params": null,
                   "points": 103380
                 },
-                "wardowl_id": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 107540
-                },
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
                 }
               },
               "update_queue": {
@@ -1029,17 +1029,17 @@
         },
         "qdrant as-run-b2": {
           "status": "done",
-          "started": "15:44:47",
+          "started": "08:59:39",
           "store": "qdrant",
           "layout": "as-run",
           "rep": 2,
           "builder": "enterprise_rag.QdrantStore.load, as the original run: wardowl's create_collection with keyword indexes on allowed_users, allowed_groups, tenant and wardowl_id, default HNSW (m 16, ef_construct 100) and optimizer, every chunk through QdrantBackend.add",
           "loaded": {
-            "load_s": 72.1,
-            "index_s": 33.1,
+            "load_s": 69.8,
+            "index_s": 30.1,
             "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions"
           },
-          "seconds": 282.1,
+          "seconds": 263.1,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1108,11 +1108,6 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
-                },
                 "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
@@ -1122,6 +1117,11 @@
                   "data_type": "keyword",
                   "params": null,
                   "points": 103380
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
                 },
                 "metadata.tenant": {
                   "data_type": "keyword",
@@ -1139,15 +1139,15 @@
         },
         "qdrant is-tenant-b0": {
           "status": "done",
-          "started": "15:49:29",
+          "started": "09:04:02",
           "store": "qdrant",
           "layout": "is-tenant",
           "rep": 0,
           "builder": "as-run, but the tenant index is created with is_tenant=true (harness-level)",
           "loaded": {
-            "load_s": 74.2
+            "load_s": 69.3
           },
-          "seconds": 367.1,
+          "seconds": 357.7,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1216,11 +1216,6 @@
                 "metadata": null
               },
               "payload_schema": {
-                "wardowl_id": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 107540
-                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": {
@@ -1234,15 +1229,20 @@
                   },
                   "points": 107540
                 },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
+                },
                 "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 103380
                 },
-                "metadata.allowed_users": {
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 12480
+                  "points": 107540
                 }
               },
               "update_queue": {
@@ -1255,15 +1255,15 @@
         },
         "qdrant is-tenant-b1": {
           "status": "done",
-          "started": "15:55:36",
+          "started": "09:10:00",
           "store": "qdrant",
           "layout": "is-tenant",
           "rep": 1,
           "builder": "as-run, but the tenant index is created with is_tenant=true (harness-level)",
           "loaded": {
-            "load_s": 74.6
+            "load_s": 69.0
           },
-          "seconds": 204.0,
+          "seconds": 201.2,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1332,21 +1332,6 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.allowed_groups": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 103380
-                },
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
-                },
-                "wardowl_id": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 107540
-                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": {
@@ -1359,6 +1344,21 @@
                     "nested": null
                   },
                   "points": 107540
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
+                },
+                "wardowl_id": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 107540
+                },
+                "metadata.allowed_groups": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 103380
                 }
               },
               "update_queue": {
@@ -1371,15 +1371,15 @@
         },
         "qdrant is-tenant-b2": {
           "status": "done",
-          "started": "15:59:00",
+          "started": "09:13:21",
           "store": "qdrant",
           "layout": "is-tenant",
           "rep": 2,
           "builder": "as-run, but the tenant index is created with is_tenant=true (harness-level)",
           "loaded": {
-            "load_s": 71.3
+            "load_s": 69.0
           },
-          "seconds": 206.1,
+          "seconds": 195.7,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1453,16 +1453,6 @@
                   "params": null,
                   "points": 103380
                 },
-                "wardowl_id": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 107540
-                },
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
-                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": {
@@ -1475,6 +1465,16 @@
                     "nested": null
                   },
                   "points": 107540
+                },
+                "wardowl_id": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 107540
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
                 }
               },
               "update_queue": {
@@ -1487,15 +1487,15 @@
         },
         "qdrant tenant-m0-b0": {
           "status": "done",
-          "started": "16:02:26",
+          "started": "09:16:37",
           "store": "qdrant",
           "layout": "tenant-m0",
           "rep": 0,
           "builder": "is-tenant, with hnsw_config m=0 and payload_m=16: one graph per tenant value and no global graph (harness-level)",
           "loaded": {
-            "load_s": 74.0
+            "load_s": 70.1
           },
-          "seconds": 1033.9,
+          "seconds": 904.4,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1577,6 +1577,11 @@
                   },
                   "points": 107540
                 },
+                "wardowl_id": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 107540
+                },
                 "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
@@ -1586,11 +1591,6 @@
                   "data_type": "keyword",
                   "params": null,
                   "points": 12480
-                },
-                "wardowl_id": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 107540
                 }
               },
               "update_queue": {
@@ -1603,15 +1603,15 @@
         },
         "qdrant tenant-m0-b1": {
           "status": "done",
-          "started": "16:19:40",
+          "started": "09:31:41",
           "store": "qdrant",
           "layout": "tenant-m0",
           "rep": 1,
           "builder": "is-tenant, with hnsw_config m=0 and payload_m=16: one graph per tenant value and no global graph (harness-level)",
           "loaded": {
-            "load_s": 68.7
+            "load_s": 70.4
           },
-          "seconds": 736.2,
+          "seconds": 719.1,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1680,11 +1680,6 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
-                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": {
@@ -1697,6 +1692,11 @@
                     "nested": null
                   },
                   "points": 107540
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
                 },
                 "wardowl_id": {
                   "data_type": "keyword",
@@ -1719,15 +1719,15 @@
         },
         "qdrant tenant-m0-b2": {
           "status": "done",
-          "started": "16:31:57",
+          "started": "09:43:41",
           "store": "qdrant",
           "layout": "tenant-m0",
           "rep": 2,
           "builder": "is-tenant, with hnsw_config m=0 and payload_m=16: one graph per tenant value and no global graph (harness-level)",
           "loaded": {
-            "load_s": 73.2
+            "load_s": 70.0
           },
-          "seconds": 786.8,
+          "seconds": 730.4,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -1796,20 +1796,10 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.allowed_groups": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 103380
-                },
                 "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 107540
-                },
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 12480
                 },
                 "metadata.tenant": {
                   "data_type": "keyword",
@@ -1823,6 +1813,16 @@
                     "nested": null
                   },
                   "points": 107540
+                },
+                "metadata.allowed_groups": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 103380
+                },
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 12480
                 }
               },
               "update_queue": {
@@ -1835,16 +1835,16 @@
         },
         "qdrant separate-kb-b0": {
           "status": "done",
-          "started": "16:45:04",
+          "started": "09:55:51",
           "store": "qdrant",
           "layout": "separate-kb",
           "rep": 0,
           "builder": "company documents and notices in one collection, the FiQA base in another, both created as as-run; each search queries both under the same filter and merges the hits by cosine score (harness-level)",
           "loaded": {
-            "company_s": 29.8,
-            "kb_s": 41.3
+            "company_s": 27.0,
+            "kb_s": 39.2
           },
-          "seconds": 440.0,
+          "seconds": 404.2,
           "points": {
             "wardowl_enterprise_company": 49940,
             "wardowl_enterprise_kb": 57600
@@ -1915,12 +1915,17 @@
                 "metadata": null
               },
               "payload_schema": {
+                "wardowl_id": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 49940
+                },
                 "metadata.allowed_users": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 12480
                 },
-                "wardowl_id": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 49940
@@ -1929,11 +1934,6 @@
                   "data_type": "keyword",
                   "params": null,
                   "points": 45780
-                },
-                "metadata.tenant": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 49940
                 }
               },
               "update_queue": {
@@ -2008,20 +2008,20 @@
                   "params": null,
                   "points": 57600
                 },
-                "metadata.allowed_users": {
+                "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 0
+                  "points": 57600
                 },
                 "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 57600
                 },
-                "metadata.allowed_groups": {
+                "metadata.allowed_users": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 57600
+                  "points": 0
                 }
               },
               "update_queue": {
@@ -2034,16 +2034,16 @@
         },
         "qdrant separate-kb-b1": {
           "status": "done",
-          "started": "16:52:24",
+          "started": "10:02:36",
           "store": "qdrant",
           "layout": "separate-kb",
           "rep": 1,
           "builder": "company documents and notices in one collection, the FiQA base in another, both created as as-run; each search queries both under the same filter and merges the hits by cosine score (harness-level)",
           "loaded": {
-            "company_s": 28.2,
-            "kb_s": 39.9
+            "company_s": 26.9,
+            "kb_s": 40.1
           },
-          "seconds": 253.7,
+          "seconds": 240.6,
           "points": {
             "wardowl_enterprise_company": 49940,
             "wardowl_enterprise_kb": 57600
@@ -2114,25 +2114,25 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.tenant": {
+                "metadata.allowed_users": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 49940
+                  "points": 12480
                 },
                 "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 45780
                 },
-                "wardowl_id": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 49940
                 },
-                "metadata.allowed_users": {
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 12480
+                  "points": 49940
                 }
               },
               "update_queue": {
@@ -2202,6 +2202,16 @@
                 "metadata": null
               },
               "payload_schema": {
+                "metadata.allowed_users": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 0
+                },
+                "metadata.allowed_groups": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 57600
+                },
                 "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
@@ -2211,16 +2221,6 @@
                   "data_type": "keyword",
                   "params": null,
                   "points": 57600
-                },
-                "metadata.allowed_groups": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 57600
-                },
-                "metadata.allowed_users": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 0
                 }
               },
               "update_queue": {
@@ -2233,16 +2233,16 @@
         },
         "qdrant separate-kb-b2": {
           "status": "done",
-          "started": "16:56:38",
+          "started": "10:06:36",
           "store": "qdrant",
           "layout": "separate-kb",
           "rep": 2,
           "builder": "company documents and notices in one collection, the FiQA base in another, both created as as-run; each search queries both under the same filter and merges the hits by cosine score (harness-level)",
           "loaded": {
-            "company_s": 29.7,
-            "kb_s": 39.0
+            "company_s": 28.2,
+            "kb_s": 39.4
           },
-          "seconds": 255.1,
+          "seconds": 253.3,
           "points": {
             "wardowl_enterprise_company": 49940,
             "wardowl_enterprise_kb": 57600
@@ -2313,7 +2313,7 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.tenant": {
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 49940
@@ -2328,7 +2328,7 @@
                   "params": null,
                   "points": 12480
                 },
-                "wardowl_id": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 49940
@@ -2401,7 +2401,7 @@
                 "metadata": null
               },
               "payload_schema": {
-                "wardowl_id": {
+                "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 57600
@@ -2411,12 +2411,12 @@
                   "params": null,
                   "points": 0
                 },
-                "metadata.allowed_groups": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 57600
                 },
-                "metadata.tenant": {
+                "wardowl_id": {
                   "data_type": "keyword",
                   "params": null,
                   "points": 57600
@@ -2432,15 +2432,15 @@
         },
         "qdrant one-segment-b0": {
           "status": "done",
-          "started": "17:00:53",
+          "started": "10:10:50",
           "store": "qdrant",
           "layout": "one-segment",
           "rep": 0,
           "builder": "as-run, with optimizers_config default_segment_number=1 and max_segment_size 1,000,000 KB so the optimizer can merge everything into one segment (harness-level)",
           "loaded": {
-            "load_s": 72.5
+            "load_s": 71.3
           },
-          "seconds": 381.8,
+          "seconds": 382.2,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -2540,15 +2540,15 @@
         },
         "qdrant one-segment-b1": {
           "status": "done",
-          "started": "17:07:15",
+          "started": "10:17:12",
           "store": "qdrant",
           "layout": "one-segment",
           "rep": 1,
           "builder": "as-run, with optimizers_config default_segment_number=1 and max_segment_size 1,000,000 KB so the optimizer can merge everything into one segment (harness-level)",
           "loaded": {
-            "load_s": 73.2
+            "load_s": 72.3
           },
-          "seconds": 214.4,
+          "seconds": 196.7,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -2617,6 +2617,11 @@
                 "metadata": null
               },
               "payload_schema": {
+                "metadata.allowed_groups": {
+                  "data_type": "keyword",
+                  "params": null,
+                  "points": 103380
+                },
                 "metadata.allowed_users": {
                   "data_type": "keyword",
                   "params": null,
@@ -2631,11 +2636,6 @@
                   "data_type": "keyword",
                   "params": null,
                   "points": 107540
-                },
-                "metadata.allowed_groups": {
-                  "data_type": "keyword",
-                  "params": null,
-                  "points": 103380
                 }
               },
               "update_queue": {
@@ -2648,15 +2648,15 @@
         },
         "qdrant one-segment-b2": {
           "status": "done",
-          "started": "17:10:49",
+          "started": "10:20:29",
           "store": "qdrant",
           "layout": "one-segment",
           "rep": 2,
           "builder": "as-run, with optimizers_config default_segment_number=1 and max_segment_size 1,000,000 KB so the optimizer can merge everything into one segment (harness-level)",
           "loaded": {
-            "load_s": 69.3
+            "load_s": 69.2
           },
-          "seconds": 200.2,
+          "seconds": 194.4,
           "points": {
             "wardowl_enterprise": 107540
           },
@@ -2725,10 +2725,10 @@
                 "metadata": null
               },
               "payload_schema": {
-                "metadata.tenant": {
+                "metadata.allowed_groups": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 107540
+                  "points": 103380
                 },
                 "wardowl_id": {
                   "data_type": "keyword",
@@ -2740,10 +2740,10 @@
                   "params": null,
                   "points": 12480
                 },
-                "metadata.allowed_groups": {
+                "metadata.tenant": {
                   "data_type": "keyword",
                   "params": null,
-                  "points": 103380
+                  "points": 107540
                 }
               },
               "update_queue": {
@@ -3074,7 +3074,7 @@
         "sentence-transformers": "5.7.0",
         "datasets": "4.8.5",
         "numpy": "2.1.3",
-        "psycopg": "3.3.6",
+        "psycopg": "3.3.8",
         "chromadb": null,
         "elasticsearch": null,
         "opensearch-py": null,
@@ -3090,7 +3090,7 @@
         "hardware": {
           "cpus": 4,
           "memory_gib": 31.3,
-          "disk_free_gib": 1046.4,
+          "disk_free_gib": 964.3,
           "gpus": [
             "Tesla T4",
             "Tesla T4"
@@ -3210,7 +3210,7 @@
           1456
         ]
       },
-      "finished": "2026-10-26T17:14:10+0000"
+      "finished": "2026-11-07T10:23:44+0000"
     }
   ]
 }

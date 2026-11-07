@@ -14,15 +14,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T10:06:31+0000",
+  "started": "2026-11-07T03:38:41+0000",
   "status": "done",
-  "seconds": 5.0,
+  "seconds": 5.2,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 13.165939000003846
+    "latency_p50_ms": 13.759200000009741
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/pgvector__hnsw-m32-efc200__hnsw-m32-efc200-b0__pc-ef400.parquet",
@@ -35,7 +35,7 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 2,
-  "sweep_seconds": 4.7,
+  "sweep_seconds": 4.9,
   "prepared_statements": {
     "statements": 6,
     "search_statements": 3,

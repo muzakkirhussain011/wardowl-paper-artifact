@@ -69,7 +69,7 @@ are the trustworthy times.
 | Code | Where it ran | Commit folder | Run ids | How it ended |
 |---|---|---|---|---|
 | X0 | Kaggle, one session with 2x T4 GPUs and 4 CPUs (code in `kaggle/x0/`) | `harness/x0-x8-bf25bd0/` | Kaggle script version 361900948 | 87 checks passed, 3 failed: the failures are findings |
-| X1 run 1 | Kaggle, one session with 2x T4 GPUs and 4 CPUs (code in `kaggle/x1-run1/`) | `harness/x1-run1-947fb8f/` | Kaggle script version 362442153 | Completed; 12 pgvector items skipped at the deadline |
+| X1 run 1 | Kaggle, one session with 2x T4 GPUs and 4 CPUs (code in `kaggle/x1-run1/`) | `harness/x1-run1-947fb8f/` | Kernel `wardowl-under-retrieval-diagnosis-run-1`, executed 2026-11-07 | Completed; 12 pgvector items skipped at the deadline |
 | X1 run 2 | Kaggle, kernels `x1run2-prep-gpu`, `-shard-a`, `-shard-b`, `-shard-c`, `-stats` (code in `kaggle/x1run2/`) | `harness/x1-run2-a956424/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
 | X2, X5 | GitHub-hosted | `harness/x2-x5-884ce18/` | 40921769714 | `cancelled`: job `x2-m-chroma-b2` ended at the runner's job timeout, and the workflow published the rest (`evidence/compute.md`, `evidence/x2-x5-run1.md`) |
 | X3, X6 | GitHub-hosted | `harness/x3-x6-a191626/` | 40940385704 | `success`; Chroma's X3 job crashed on seeds 0 to 2 at 40,000 groups and skipped seeds 3 and 4, a finding; the follow-up ran those seeds |
@@ -144,7 +144,7 @@ corpora are not here. A rebuild can be compared with the digests of the original
 - `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py` installs wardowl from that commit with
   `qdrant-client>=1.16`, `sentence-transformers>=3`, `datasets>=2.19`, `psutil`, `pyarrow` and `scipy`, not pinned. Each
   folder's `manifest.json` records what ran. Statistics: 10,000 bootstrap resamples, seed 20261026.
-- X1 run 1 ran 7.3 hours in one session with the notebook in `kaggle/x1-run1/`. The notebook sets
+- X1 run 1 ran 6.9 hours in one session with the notebook in `kaggle/x1-run1/`. The notebook sets
   `BRANCH = "paper/x1-underretrieval"`, whose head has since moved to `a956424` (run 2). To rerun run 1, check out `947fb8f` after its
   clone and use that commit in its install line.
 
@@ -187,16 +187,16 @@ Not done:
 Done on 2026-10-31, by re-reading stored outputs only:
 
 - Outputs downloaded again from the X1 run 2, X8, X8-FGA and X8 amendment 2 kernels match the files archived earlier byte for
-  byte where both exist. The outputs on the public notebooks of X0 and X1 run 1 match `evidence/raw/x0-seed7/` and
-  `evidence/raw/x1-run1/`, apart from the kernel log's name and the gzipped `qdrant.log`.
+  byte where both exist. On 2026-11-07, X0 and X1 run 1 were executed again and their outputs, fetched with `kernels output`,
+  replaced `evidence/raw/x0-seed7/` and `evidence/raw/x1-run1/`, without embeddings and with `qdrant.log` gzipped.
 - Empty answers counted from `answers.jsonl` for all eight end-to-end runs (`evidence/x8-run.md`).
-- Notices retrieved and obeyed summed from `results.md` over the eight runs: 3,085 of 3,085.
+- Notices retrieved and obeyed summed from `results.md` over the eight runs: 3,239 of 3,239 (`evidence/aggregate_e2e.py`).
 
 ## 5. What is left out, and why
 
 - **Embedding matrices and query vectors** (`*.npy`): large, reproducible only with the models above, and derived from
-  corpora whose terms limit redistribution. On Kaggle they remain in the kernels' own output, which is public for the two public
-  notebooks; the same terms apply there (`LICENSE.md`).
+  corpora whose terms limit redistribution. On Kaggle they remain in the kernels' own output, which is private; the same terms apply there
+  (`LICENSE.md`).
 - **CI artifacts `x2x5-data-*`, `x2x5-emb-*`, `x3x6-data`** (27 rows of `evidence/raw/ci-artifacts/MANIFEST.tsv`, the largest
   1.6 GB): prepared corpora and embeddings, for the same reasons. **They expire on GitHub:** the `x3x6-data` artifacts on
   2026-11-28, all the others on 2027-01-27, by the `expires_at` column of `MANIFEST.tsv`. After that, rebuilding is the only

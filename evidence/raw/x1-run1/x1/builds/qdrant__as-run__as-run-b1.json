@@ -1,16 +1,16 @@
 {
   "status": "running",
-  "started": "15:40:06",
+  "started": "08:55:17",
   "store": "qdrant",
   "layout": "as-run",
   "rep": 1,
   "builder": "enterprise_rag.QdrantStore.load, as the original run: wardowl's create_collection with keyword indexes on allowed_users, allowed_groups, tenant and wardowl_id, default HNSW (m 16, ef_construct 100) and optimizer, every chunk through QdrantBackend.add",
   "loaded": {
-    "load_s": 72.7,
-    "index_s": 26.8,
+    "load_s": 70.5,
+    "index_s": 28.1,
     "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions"
   },
-  "seconds": 115.4,
+  "seconds": 114.5,
   "points": {
     "wardowl_enterprise": 107540
   },
@@ -79,7 +79,12 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.tenant": {
+        "metadata.allowed_users": {
+          "data_type": "keyword",
+          "params": null,
+          "points": 12480
+        },
+        "wardowl_id": {
           "data_type": "keyword",
           "params": null,
           "points": 107540
@@ -89,15 +94,10 @@
           "params": null,
           "points": 103380
         },
-        "wardowl_id": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
           "points": 107540
-        },
-        "metadata.allowed_users": {
-          "data_type": "keyword",
-          "params": null,
-          "points": 12480
         }
       },
       "update_queue": {

@@ -17,15 +17,15 @@
     "limit_factor"
   ],
   "first_build_only": false,
-  "started": "2026-10-26T10:05:59+0000",
+  "started": "2026-11-07T03:38:07+0000",
   "status": "done",
-  "seconds": 5.2,
+  "seconds": 5.3,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 13.53502550000485
+    "latency_p50_ms": 13.767736500028604
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pd-lim10.parquet",

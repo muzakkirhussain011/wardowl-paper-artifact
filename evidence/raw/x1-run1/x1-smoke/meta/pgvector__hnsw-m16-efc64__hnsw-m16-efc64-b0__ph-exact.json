@@ -17,15 +17,15 @@
     "enable_indexscan"
   ],
   "first_build_only": true,
-  "started": "2026-10-26T10:06:12+0000",
+  "started": "2026-11-07T03:38:21+0000",
   "status": "done",
-  "seconds": 4.9,
+  "seconds": 5.2,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 13.095817500015983
+    "latency_p50_ms": 13.476926500004538
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__ph-exact.parquet",
@@ -38,7 +38,7 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 2,
-  "sweep_seconds": 4.6,
+  "sweep_seconds": 4.9,
   "prepared_statements": {
     "statements": 7,
     "search_statements": 3,

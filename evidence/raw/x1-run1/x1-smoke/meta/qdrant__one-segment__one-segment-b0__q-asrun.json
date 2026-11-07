@@ -16,7 +16,7 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T10:08:49+0000",
+  "started": "2026-11-07T03:41:02+0000",
   "status": "done",
   "seconds": 1.8,
   "summary": {
@@ -24,7 +24,7 @@
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 3.394128500019633
+    "latency_p50_ms": 3.376888499985853
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/qdrant__one-segment__one-segment-b0__q-asrun.parquet",

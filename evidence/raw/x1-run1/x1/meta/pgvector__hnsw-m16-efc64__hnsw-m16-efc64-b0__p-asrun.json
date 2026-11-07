@@ -21,15 +21,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T10:11:36+0000",
+  "started": "2026-11-07T03:44:00+0000",
   "status": "done",
-  "seconds": 1762.1,
+  "seconds": 1142.7,
   "summary": {
-    "recall5": 0.9978201634877385,
-    "recall10": 0.9987738419618527,
-    "err5": 0.0006811989100817438,
-    "short5": 0.0006811989100817438,
-    "latency_p50_ms": 391.0748480000166
+    "recall5": 0.9068119891008173,
+    "recall10": 0.9196866485013623,
+    "err5": 0.0,
+    "short5": 0.0,
+    "latency_p50_ms": 352.2043359998861
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__p-asrun.parquet",
@@ -40,14 +40,14 @@
   "retrievals": 5956,
   "errors": 0,
   "error_examples": [],
-  "unstable_k5": 6,
+  "unstable_k5": 57,
   "passes": 3,
-  "sweep_seconds": 1760.5,
+  "sweep_seconds": 1141.2,
   "prepared_statements": {
     "statements": 7,
     "search_statements": 4,
-    "search_generic_plans": 5852,
-    "search_custom_plans": 94,
+    "search_generic_plans": 4308,
+    "search_custom_plans": 1638,
     "per_search_statement": [
       {
         "name": "_pg3_4",
@@ -56,13 +56,13 @@
       },
       {
         "name": "_pg3_5",
-        "generic_plans": 2158,
-        "custom_plans": 5
+        "generic_plans": 1965,
+        "custom_plans": 198
       },
       {
         "name": "_pg3_3",
-        "generic_plans": 1351,
-        "custom_plans": 5
+        "generic_plans": 0,
+        "custom_plans": 1356
       },
       {
         "name": "_pg3_6",

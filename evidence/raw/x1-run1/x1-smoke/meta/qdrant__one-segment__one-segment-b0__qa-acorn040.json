@@ -15,15 +15,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T10:08:51+0000",
+  "started": "2026-11-07T03:41:03+0000",
   "status": "done",
-  "seconds": 1.7,
+  "seconds": 1.9,
   "summary": {
     "recall5": 1.0,
     "recall10": 1.0,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 3.2598154999732287
+    "latency_p50_ms": 3.548675500042009
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/qdrant__one-segment__one-segment-b0__qa-acorn040.parquet",
@@ -35,7 +35,7 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 2,
-  "sweep_seconds": 1.7,
+  "sweep_seconds": 1.8,
   "acorn_searches_counted": 0,
   "acorn_counter_seen": false,
   "telemetry": true

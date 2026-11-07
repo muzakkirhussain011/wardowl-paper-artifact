@@ -1,14 +1,14 @@
 {
   "status": "running",
-  "started": "17:00:53",
+  "started": "10:10:50",
   "store": "qdrant",
   "layout": "one-segment",
   "rep": 0,
   "builder": "as-run, with optimizers_config default_segment_number=1 and max_segment_size 1,000,000 KB so the optimizer can merge everything into one segment (harness-level)",
   "loaded": {
-    "load_s": 72.5
+    "load_s": 71.3
   },
-  "seconds": 128.4,
+  "seconds": 121.9,
   "points": {
     "wardowl_enterprise": 107540
   },

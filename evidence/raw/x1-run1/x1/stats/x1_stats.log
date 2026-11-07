@@ -1,21 +1,21 @@
-[17:14:14] 99,763 result rows of 33 settings; 67 setting records
-[17:14:14] intervals
-[17:19:01] paired comparisons
-[17:20:30] pre-registered verdicts
-[17:20:33] wrote /kaggle/working/x1/stats/summary_by_build.csv (67 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/summary_by_setting.csv (33 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/intervals.csv (3,696 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/paired.csv (352 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/explain_summary.csv (19 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/qdrant_paths.csv (242 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/acorn_engagement.csv (176 rows)
-[17:20:33] wrote /kaggle/working/x1/stats/predictions.csv (8 rows)
-[17:20:33] Q1: confirmed
-[17:20:33] Q2: falsified
-[17:20:33] Q3: inconclusive
-[17:20:33] Q4: inconclusive
-[17:20:33] P1: confirmed
-[17:20:33] P2: inconclusive
-[17:20:33] P3: inconclusive
-[17:20:33] P4: falsified
-[17:20:33] X1 statistics done in 380 s: /kaggle/working/x1/stats/report.md
+[10:23:48] 99,763 result rows of 33 settings; 67 setting records
+[10:23:48] intervals
+[10:28:29] paired comparisons
+[10:29:51] pre-registered verdicts
+[10:29:53] wrote /kaggle/working/x1/stats/summary_by_build.csv (67 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/summary_by_setting.csv (33 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/intervals.csv (3,696 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/paired.csv (352 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/explain_summary.csv (11 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/qdrant_paths.csv (242 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/acorn_engagement.csv (176 rows)
+[10:29:53] wrote /kaggle/working/x1/stats/predictions.csv (8 rows)
+[10:29:53] Q1: confirmed
+[10:29:53] Q2: falsified
+[10:29:53] Q3: inconclusive
+[10:29:53] Q4: inconclusive
+[10:29:53] P1: inconclusive
+[10:29:53] P2: inconclusive
+[10:29:53] P3: inconclusive
+[10:29:53] P4: falsified
+[10:29:53] X1 statistics done in 366 s: /kaggle/working/x1/stats/report.md

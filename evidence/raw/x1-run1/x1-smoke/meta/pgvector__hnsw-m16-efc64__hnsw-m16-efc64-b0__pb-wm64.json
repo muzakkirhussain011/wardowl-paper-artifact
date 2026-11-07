@@ -17,15 +17,15 @@
     "work_mem"
   ],
   "first_build_only": false,
-  "started": "2026-10-26T10:05:29+0000",
+  "started": "2026-11-07T03:37:36+0000",
   "status": "done",
-  "seconds": 4.7,
+  "seconds": 4.8,
   "summary": {
     "recall5": 0.9986486486486488,
-    "recall10": 0.9986486486486488,
+    "recall10": 0.9979729729729729,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 12.993884999957572
+    "latency_p50_ms": 13.26885299999958
   },
   "files": {
     "runs": "/kaggle/working/x1-smoke/runs/pgvector__hnsw-m16-efc64__hnsw-m16-efc64-b0__pb-wm64.parquet",
@@ -38,7 +38,7 @@
   "error_examples": [],
   "unstable_k5": 1,
   "passes": 2,
-  "sweep_seconds": 4.6,
+  "sweep_seconds": 4.7,
   "prepared_statements": {
     "statements": 7,
     "search_statements": 3,

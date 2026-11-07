@@ -1,15 +1,15 @@
 {
   "status": "running",
-  "started": "16:56:38",
+  "started": "10:06:36",
   "store": "qdrant",
   "layout": "separate-kb",
   "rep": 2,
   "builder": "company documents and notices in one collection, the FiQA base in another, both created as as-run; each search queries both under the same filter and merges the hits by cosine score (harness-level)",
   "loaded": {
-    "company_s": 29.7,
-    "kb_s": 39.0
+    "company_s": 28.2,
+    "kb_s": 39.4
   },
-  "seconds": 110.0,
+  "seconds": 114.0,
   "points": {
     "wardowl_enterprise_company": 49940,
     "wardowl_enterprise_kb": 57600
@@ -80,7 +80,7 @@
         "metadata": null
       },
       "payload_schema": {
-        "metadata.tenant": {
+        "wardowl_id": {
           "data_type": "keyword",
           "params": null,
           "points": 49940
@@ -95,7 +95,7 @@
           "params": null,
           "points": 12480
         },
-        "wardowl_id": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
           "points": 49940
@@ -168,7 +168,7 @@
         "metadata": null
       },
       "payload_schema": {
-        "wardowl_id": {
+        "metadata.allowed_groups": {
           "data_type": "keyword",
           "params": null,
           "points": 57600
@@ -178,12 +178,12 @@
           "params": null,
           "points": 0
         },
-        "metadata.allowed_groups": {
+        "metadata.tenant": {
           "data_type": "keyword",
           "params": null,
           "points": 57600
         },
-        "metadata.tenant": {
+        "wardowl_id": {
           "data_type": "keyword",
           "params": null,
           "points": 57600

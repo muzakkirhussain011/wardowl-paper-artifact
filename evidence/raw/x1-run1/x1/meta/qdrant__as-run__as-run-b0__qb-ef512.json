@@ -13,15 +13,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T15:36:38+0000",
+  "started": "2026-11-07T08:51:54+0000",
   "status": "done",
-  "seconds": 41.3,
+  "seconds": 40.6,
   "summary": {
-    "recall5": 0.7423705722070845,
-    "recall10": 0.7358991825613078,
+    "recall5": 0.7362397820163488,
+    "recall10": 0.734400544959128,
     "err5": 0.0,
-    "short5": 0.018392370572207085,
-    "latency_p50_ms": 7.306588999199448
+    "short5": 0.004087193460490463,
+    "latency_p50_ms": 7.123045998014277
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/qdrant__as-run__as-run-b0__qb-ef512.parquet",
@@ -33,6 +33,6 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 3,
-  "sweep_seconds": 41.2,
+  "sweep_seconds": 40.5,
   "telemetry": true
 }

@@ -1,14 +1,14 @@
 {
   "experiment": "X0: re-analysis of the 2026-10-24 Kaggle run (section 6.0)",
-  "input": "/kaggle/input/notebooks/muzakkirhussainsyed/notebookd8377caca8",
+  "input": "/kaggle/input/notebooks/muzakkirhussain1/wardowl-end-to-end-scale-run-seed-7",
   "inputs": {
     "answers.jsonl": {
-      "bytes": 6205489,
-      "sha256": "8d39a801f4ef4b55b6d6007422c9ecf16c29aa0f1f16bd5c52eae8e0bd4ff48e"
+      "bytes": 6253958,
+      "sha256": "1bca130c731677e9081b3e34a0d387b99008bcbab67f05707fa45eca0e45b1b5"
     },
     "results.json": {
-      "bytes": 32664,
-      "sha256": "990072a5071fdc987550b2cc827ee8656e5a91995b7c89d6a9eef3772ba5ab79"
+      "bytes": 32088,
+      "sha256": "55a2c5f45a9fbbdfc4285926a599064032d84bc6f104564fbcd76f6d88b38210"
     }
   },
   "lines": 11050,
@@ -46,5 +46,5 @@
     "pandas": "2.3.3",
     "numpy": "2.1.3"
   },
-  "seconds": 0.8
+  "seconds": 0.7
 }

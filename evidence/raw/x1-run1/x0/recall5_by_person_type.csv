@@ -2,30 +2,30 @@ store,persona_type,overlap5,n
 faiss,kb-reader,1.0,994
 faiss,no-groups,,0
 faiss,judy,1.0,90
-chroma,kb-reader,0.876056338028169,994
+chroma,kb-reader,0.86841046277666,994
 chroma,no-groups,,0
-chroma,judy,0.9866666666666666,90
-pgvector,kb-reader,0.686317907444668,994
+chroma,judy,0.9644444444444444,90
+pgvector,kb-reader,0.7020120724346076,994
 pgvector,no-groups,,0
-pgvector,judy,0.7244444444444444,90
-pgvector + OPA,kb-reader,0.686317907444668,994
+pgvector,judy,0.7044444444444444,90
+pgvector + OPA,kb-reader,0.7020120724346076,994
 pgvector + OPA,no-groups,,0
-pgvector + OPA,judy,0.7244444444444444,90
-qdrant,kb-reader,0.5231388329979879,994
+pgvector + OPA,judy,0.7044444444444444,90
+qdrant,kb-reader,0.4937625754527163,994
 qdrant,no-groups,,0
 qdrant,judy,1.0,90
-elasticsearch,kb-reader,0.9414486921529175,994
+elasticsearch,kb-reader,0.954728370221328,994
 elasticsearch,no-groups,,0
-elasticsearch,judy,0.9866666666666666,90
-opensearch,kb-reader,0.9410462776659959,994
+elasticsearch,judy,0.98,90
+opensearch,kb-reader,0.9416498993963782,994
 opensearch,no-groups,,0
-opensearch,judy,0.9977777777777778,90
-weaviate,kb-reader,0.8762575452716298,994
+opensearch,judy,1.0,90
+weaviate,kb-reader,0.8792756539235412,994
 weaviate,no-groups,,0
 weaviate,judy,1.0,90
-redis,kb-reader,0.982092555331992,994
+redis,kb-reader,0.991348088531187,994
 redis,no-groups,,0
-redis,judy,0.9977777777777778,90
-lancedb,kb-reader,0.821327967806841,994
+redis,judy,1.0,90
+lancedb,kb-reader,0.8364185110663984,994
 lancedb,no-groups,,0
-lancedb,judy,0.948888888888889,90
+lancedb,judy,0.9933333333333334,90

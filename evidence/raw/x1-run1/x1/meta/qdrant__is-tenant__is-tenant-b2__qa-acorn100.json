@@ -16,15 +16,15 @@
   },
   "harness_level": [],
   "first_build_only": false,
-  "started": "2026-10-26T16:01:57+0000",
+  "started": "2026-11-07T09:16:10+0000",
   "status": "done",
-  "seconds": 29.2,
+  "seconds": 27.1,
   "summary": {
-    "recall5": 0.8059945504087193,
-    "recall10": 0.8041553133514986,
+    "recall5": 0.8384196185286104,
+    "recall10": 0.830108991825613,
     "err5": 0.0,
     "short5": 0.0,
-    "latency_p50_ms": 4.6731429974897765
+    "latency_p50_ms": 4.353494001406943
   },
   "files": {
     "runs": "/kaggle/working/x1/runs/qdrant__is-tenant__is-tenant-b2__qa-acorn100.parquet",
@@ -36,8 +36,8 @@
   "error_examples": [],
   "unstable_k5": 0,
   "passes": 3,
-  "sweep_seconds": 29.1,
-  "acorn_searches_counted": 2222,
+  "sweep_seconds": 27.0,
+  "acorn_searches_counted": 2180,
   "acorn_counter_seen": true,
   "telemetry": true
 }
