@@ -16,7 +16,7 @@ Run 1 is `evidence/x1-underretrieval-run1.md`; the diagnosis that led to amendme
 
 ## What ran
 
-Kaggle, account muzakkirhussain1. One GPU session: `x1run2-prep-gpu` on a T4 (corpus, embeddings,
+Kaggle. One GPU session: `x1run2-prep-gpu` on a T4 (corpus, embeddings,
 exact baseline, question table; corrected 2026-10-30, this line first named the abandoned CPU attempt
 `x1run2-prep`, see `investigations/x0-x1-pgvector-gap.md`). Four CPU sessions: shards
 `x1run2-shard-a` (hnsw-m16-efc64 build 0, with the two replays first),

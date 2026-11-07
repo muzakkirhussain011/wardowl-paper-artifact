@@ -3,7 +3,7 @@
 Written 2026-10-29. Analysis of code and of published results. Inputs: `evidence/kaggle-scale-run-2026-10-24.md`
 (X0), `evidence/x1-underretrieval-run1.md` (X1 run 1), `investigations/filtered-recall-gaps.md` (the
 diagnosis written before X1), `evidence/raw/x8-seed13/` (X8 seed 13: X0's exact configuration rerun,
-seed 13, Kaggle T4 x2, on another account), `evidence/raw/x8-seed11/` (the same with seed 11), and the run-2 smoke kernel's records (section 3, H2a).
+seed 13, Kaggle T4 x2), `evidence/raw/x8-seed11/` (the same with seed 11), and the run-2 smoke kernel's records (section 3, H2a).
 
 Conventions:
 
@@ -185,7 +185,7 @@ sticky and depends on the GIN index's state when it is first taken.**
   [unverified]: autovacuum runs (and when one falls during the 63-second load) shift the 4 MB flush
   cycle, so the pending list left at the end of the load can be anywhere from empty to 4 MB.
 - **First support (smoke run, 2026-10-29, small corpus only).** The run-2 smoke kernel
-  (`muzakkirhussain1/x1run2-smoke`, version 1; about 3,000 chunks, so its numbers are not
+  (`x1run2-smoke`, version 1; about 3,000 chunks, so its numbers are not
   results) recorded the switch on both sides of a VACUUM:
 
   | Replay | GIN state before | Generic / custom executions | HNSW share of plans |
@@ -300,7 +300,7 @@ commits `63e92f1` and `354e789` (harness), `7f35b91` and `8b08712` (statistics),
 6. **The full design**, all questions, three passes, three builds, run as parallel Kaggle sessions
    (prep, then shards A, B, C, then statistics). Latency is compared only within a session.
 
-**Run 2's sessions (Kaggle account `muzakkirhussain1`, code at `a956424`).**
+**Run 2's sessions (Kaggle, code at `a956424`).**
 
 - Smoke: `x1run2-smoke` version 1 (at `2646517`) passed; version 2 (at `a956424`, after the
   revision) passed, with exit codes 0, 0, 0, 0.

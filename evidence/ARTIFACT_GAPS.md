@@ -50,12 +50,11 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
 
 ## Kaggle kernels
 
-- The kernels of X1 run 2, X8, X8-FGA and X8 amendment 2 are private on `muzakkirhussain1`. Their code is in `kaggle/`, and their
-  outputs and logs are in `evidence/raw/` and in the public dataset `muzakkirhussain1/wardowl-paper-evidence`, but their
-  version history is not public. Any sentence in the paper that rests on that history can't be checked by a stranger until they
-  are public or the sentence changes.
-- The first two runs, X0 and X1 run 1, ran under another account of the author, `muzakkirhussainsyed`, as public notebooks. Two
-  accounts for one person are named here because that is what happened.
+- The Kaggle kernels are private. Their code is in `kaggle/`, and their outputs and logs are in `evidence/raw/` and in the
+  public dataset `wardowl-paper-evidence`, but their version history is not public. Any sentence in the paper that rests on that
+  history can't be checked by a stranger until they are public or the sentence changes.
+- X0 and X1 run 1 are being run again (November 2026) with the same code and session type; their outputs here will be replaced
+  by the new runs' outputs.
 - The kernels `x1run2-prep`, an abandoned CPU attempt, and `x1run2-prep-tpu` hold no output files. Their last version is a stub
   that prints "superseded" (`kaggle/x1run2/prep-stop/`, `kaggle/x1run2/tpu-stop/`), pushed to stop them, so nothing from those
   attempts survives. No number in the paper comes from them: `x1run2-prep-gpu` did the preparation.

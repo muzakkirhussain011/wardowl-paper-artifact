@@ -7,8 +7,8 @@ exist in all, everything else identical: wardowl 2.1.0 from PyPI, acceptance scr
 `bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839` (unchanged in `acceptance/kaggle/` and the Kaggle setup
 scripts up to main 438a176 apart from the notebook's version cell), the notebook's default
 configuration (nine stores, OPA and OpenFGA on pgvector, 208 variants, the full FiQA corpus,
-bge-base-en-v1.5, Qwen2.5-3B-Instruct, k = 5 and 10), Kaggle GPU T4 x2 sessions on the account
-muzakkirhussain1 (X0 ran on muzakkirhussainsyed; same session type), one seed per session. Each
+bge-base-en-v1.5, Qwen2.5-3B-Instruct, k = 5 and 10), Kaggle GPU T4 x2 sessions
+(the session type X0 ran on), one seed per session. Each
 session runs a script kernel that performs the notebook's cells in order and continues past a failed
 store, as the notebook does. The seed changes the generated document text, the question
 sample and the order in which people ask; the permission templates and personas are fixed by the
@@ -50,7 +50,7 @@ in the environment before the store cell, which the harness passes to the server
 pgvector store runs, with `remote_authorizers=("openfga",)`, so each run has two configurations:
 pgvector with the in-process policy (a fifth and later sixth repeat of that configuration) and
 pgvector + OpenFGA behind the caching authorizer. Seeds 7 (X0's), 11, 13 and 17, one per GPU T4 x2
-session on muzakkirhussain1. Nothing else changes; no result of these runs replaces a result of
+session. Nothing else changes; no result of these runs replaces a result of
 X0 or X8.
 
 **Predictions.**
@@ -87,7 +87,7 @@ enforcement is broken on purpose. Measurement 1 answers (i), measurement 2 answe
 
 **What runs.** The pinned scripts (`bf25bd0`), wardowl 2.1.0 from PyPI, the same corpus parameters
 (208 variants, all of FiQA), bge-base-en-v1.5, Qwen2.5-3B-Instruct, k = 5 and 10, Kaggle GPU T4 x2
-sessions on muzakkirhussain1. Only FAISS runs (the backend's `IndexFlatIP`, exact, in process), so
+sessions. Only FAISS runs (the backend's `IndexFlatIP`, exact, in process), so
 no store server is started and the PostgreSQL setup script is not run. Everything added is in the
 runner `kaggle/x8/x8b_run.py`, which imports the harness and changes nothing in it: a subclass of
 `PermissionedRetriever` sets `recheck` and records each retrieval's result, and a wrapper around

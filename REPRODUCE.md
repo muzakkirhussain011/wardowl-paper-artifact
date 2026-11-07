@@ -68,24 +68,24 @@ are the trustworthy times.
 
 | Code | Where it ran | Commit folder | Run ids | How it ended |
 |---|---|---|---|---|
-| X0 | Kaggle, public notebook `muzakkirhussainsyed/wardowl-end-to-end-scale-run-seed-7` (code in `kaggle/x0/`) | `harness/x0-x8-bf25bd0/` | Kaggle script version 361900948 | 87 checks passed, 3 failed: the failures are findings |
-| X1 run 1 | Kaggle, public notebook `muzakkirhussainsyed/wardowl-under-retrieval-diagnosis-run-1` (code in `kaggle/x1-run1/`) | `harness/x1-run1-947fb8f/` | Kaggle script version 362442153 | Completed; 12 pgvector items skipped at the deadline |
-| X1 run 2 | Kaggle, private kernels `muzakkirhussain1/x1run2-prep-gpu`, `-shard-a`, `-shard-b`, `-shard-c`, `-stats` (code in `kaggle/x1run2/`) | `harness/x1-run2-a956424/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
+| X0 | Kaggle, one session with 2x T4 GPUs and 4 CPUs (code in `kaggle/x0/`) | `harness/x0-x8-bf25bd0/` | Kaggle script version 361900948 | 87 checks passed, 3 failed: the failures are findings |
+| X1 run 1 | Kaggle, one session with 2x T4 GPUs and 4 CPUs (code in `kaggle/x1-run1/`) | `harness/x1-run1-947fb8f/` | Kaggle script version 362442153 | Completed; 12 pgvector items skipped at the deadline |
+| X1 run 2 | Kaggle, kernels `x1run2-prep-gpu`, `-shard-a`, `-shard-b`, `-shard-c`, `-stats` (code in `kaggle/x1run2/`) | `harness/x1-run2-a956424/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
 | X2, X5 | GitHub-hosted | `harness/x2-x5-884ce18/` | 40921769714 | `cancelled`: job `x2-m-chroma-b2` ended at the runner's job timeout, and the workflow published the rest (`evidence/compute.md`, `evidence/x2-x5-run1.md`) |
 | X3, X6 | GitHub-hosted | `harness/x3-x6-a191626/` | 40940385704 | `success`; Chroma's X3 job crashed on seeds 0 to 2 at 40,000 groups and skipped seeds 3 and 4, a finding; the follow-up ran those seeds |
 | Follow-up to X3, X6 | GitHub-hosted | `harness/x3-x6-followup-9e22b89/` | 40982986417 | `failure`: job `fu-cb-elasticsearch` lost its runner, so Elasticsearch's part is missing (`evidence/compute.md`) |
 | X4, X7 | GitHub-hosted | `harness/x4-x7-e66dffc/` (its `wardowl/` is identical to `fix/engine-limits` at e7776f0) | 40919304635 | `success` |
 | X7 amendment 2 | GitHub-hosted | Harness `harness/x7-amendment2-harness-41292bd/`, library `harness/x7-amendment2-library-3c6559f/` | 40969846593 | `success` |
-| X8 | Kaggle, private kernels `muzakkirhussain1/wardowl-x8-seed11`, `-seed13`, `-seed17` (code in `kaggle/x8/`) | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed; the OpenFGA configuration did not start |
-| X8-FGA | Kaggle, private kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
-| X8 amendment 2 | Kaggle, private kernels `muzakkirhussain1/wardowl-x8b-seed7`, `-seed11`, `-seed13`, `-seed17`, `-control-seed7`, `-pool`; smoke `-smoke`; recount `-verify` | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
+| X8 | Kaggle, kernels `wardowl-x8-seed11`, `-seed13`, `-seed17` (code in `kaggle/x8/`) | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed; the OpenFGA configuration did not start |
+| X8-FGA | Kaggle, kernels `wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
+| X8 amendment 2 | Kaggle, kernels `wardowl-x8b-seed7`, `-seed11`, `-seed13`, `-seed17`, `-control-seed7`, `-pool`; smoke `-smoke`; recount `-verify` | `harness/x0-x8-bf25bd0/` | See `evidence/raw/KAGGLE_KERNELS.tsv` | Completed |
 | Conformance run 1 | GitHub-hosted | `harness/conformance-run1-5d0f414/` | 40313285885 | `success` |
 | Conformance run 2 | GitHub-hosted | `harness/conformance-run2-182bcbc/` | 40905549149 | `success` |
 | Vendor reproducers | GitHub-hosted, in the paper's private development repository | None: `disclosure/reproducers/` uses the vendors' clients only | 41007436602, 41007779363, 41008151303, and 41249047470, a public rerun on 2026-10-31 with the same verdicts. The first three pages are not public; the outputs are in `evidence/raw/results-reproducers/runs/` | `success` |
 
 The Kaggle runs' outputs and logs, without embedding matrices, are also in the public dataset
-[muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence). Its
-description says which account ran what. Kaggle unpacks gzip files on upload, so the 195 `.gz` files in the Kaggle folders of `evidence/raw/`
+[muzakkirhussain1/wardowl-paper-evidence](https://www.kaggle.com/datasets/muzakkirhussain1/wardowl-paper-evidence).
+Kaggle unpacks gzip files on upload, so the 195 `.gz` files in the Kaggle folders of `evidence/raw/`
 appear there without that suffix, at their unpacked sizes. 18 `.log` files also differ in size from the tag; the one compared,
 `x8b-verify/wardowl-x8b-verify.log`, has carriage returns added and is otherwise identical.
 
@@ -122,8 +122,8 @@ corpora are not here. A rebuild can be compared with the digests of the original
   exposure and 2.2 for the control (`evidence/compute.md`).
 - Each kernel in `kaggle/x8/` is a script that clones the library at bf25bd0, installs wardowl 2.1.0 from PyPI, runs
   `benchmarks/kaggle_setup.sh` and calls `acceptance/kaggle/enterprise_rag.py`. To run one, change `id` in its
-  `kernel-metadata.json` to your account and run `kaggle kernels push -p kaggle/x8/seed11`. X0 and X1 run 1 are public
-  notebooks that can be copied on Kaggle; their code is also in `kaggle/x0/` and `kaggle/x1-run1/`.
+  `kernel-metadata.json` to your account and run `kaggle kernels push -p kaggle/x8/seed11`. The code of X0 and X1 run 1
+  is in `kaggle/x0/` and `kaggle/x1-run1/`.
 - Pinned by the code: wardowl 2.1.0 and the acceptance scripts; pgvector v0.8.7, Qdrant 1.19.2, Elasticsearch 9.5.5,
   OpenSearch 3.9.0, Weaviate 1.39.12 (`benchmarks/kaggle_setup.sh`, `benchmarks/kaggle_stores.sh`), OPA v1.21.2, OpenFGA
   1.22.0 (`enterprise_rag.py`).
@@ -139,7 +139,7 @@ corpora are not here. A rebuild can be compared with the digests of the original
 
 - X1 run 2: push, in order, `kaggle/x1run2/x1run2-prep-gpu/`, then `kaggle/x1run2/x1run2-shard-a/`,
   `kaggle/x1run2/x1run2-shard-b/` and `kaggle/x1run2/x1run2-shard-c/` side by side, then `kaggle/x1run2/x1run2-stats/`. Their
-  `kernel_sources` name the private account, so change them, and `id`, to your own account (`kaggle/x1run2/make.sh` writes
+  `kernel_sources` name the kernels that ran them, so change them, and `id`, to your own account (`kaggle/x1run2/make.sh` writes
   these folders). Wall clock 6.1 hours; 12.5 session hours.
 - `harness/x1-run2-a956424/benchmarks/paper/x1_run2_kaggle.py` installs wardowl from that commit with
   `qdrant-client>=1.16`, `sentence-transformers>=3`, `datasets>=2.19`, `psutil`, `pyarrow` and `scipy`, not pinned. Each

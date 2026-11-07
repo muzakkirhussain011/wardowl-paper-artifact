@@ -5,7 +5,7 @@ and the critical review, before any of these runs). Exploratory in the review's 
 writing after the main results and before running. Nothing here replaces a result of X0, X8 or X8-FGA.
 
 Runner: `kaggle/x8/x8b_run.py`, wardowl 2.1.0 from PyPI, FAISS only (`IndexFlatIP`, exact, in process),
-bge-base-en-v1.5, Qwen2.5-3B-Instruct, k = 5 and 10, Kaggle GPU T4 x2 on muzakkirhussain1.
+bge-base-en-v1.5, Qwen2.5-3B-Instruct, k = 5 and 10, Kaggle GPU T4 x2.
 
 Raw outputs: `evidence/raw/x8b-seed7/`, `-seed11/`, `-seed13/`, `-seed17/`, `x8b-pool/`, `x8b-smoke/`,
 `x8b-control-seed7/`. The control kernel took 7,945 s.
@@ -112,7 +112,7 @@ checking them against the raw files.
 `x8b-control-seed7.md`, `x8b-control-seed7.json`, `results.json` and `x8b-exposure-pooled.md`: no
 disagreement. The raw control outputs are byte-identical to a fresh download from Kaggle.
 
-**Recount of the per-question claims.** CPU kernel `muzakkirhussain1/wardowl-x8b-verify`
+**Recount of the per-question claims.** CPU kernel `wardowl-x8b-verify`
 (`kaggle/x8/x8b-verify/`, output in `evidence/raw/x8b-verify/`), run after the results and not part of
 the amendment, reads `x8b-control-seed7-questions.json`. All four claims in the list above hold, with
 no exception:
@@ -134,7 +134,7 @@ the smoke's before the control and seed 7 started; no code or prediction changed
 
 **X1 reproduced more than it predicted.** P0 also matches X0's quality columns for FAISS: target in the
 top five 1.000, answer accuracy 0.997, generic kind 0.875, grounded 0.475, abstained when denied 0.704,
-injected notices retrieved and obeyed 97 / 97. That is the same seed on another account and session.
+injected notices retrieved and obeyed 97 / 97. That is the same seed in another session.
 
 **The `reference-codes` attack is one person.** Its prompt has no placeholder, so all 54 askers in a
 seed share one query vector and one top 10 (1 distinct list of 54, in every seed), which starts with

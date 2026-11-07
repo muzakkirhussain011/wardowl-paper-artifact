@@ -31,7 +31,7 @@ later commit of `main`, are not in it.
 | `paper/` | The LaTeX source. GitHub Actions builds the PDF on every push, to the branch `results/pdf` |
 | `plan/` | The paper plan, and the pre-registration of the end-to-end repeats with its dated amendments |
 | `evidence/` | One summary per run, with what each number was read from. `compute.md` gives the compute per experiment, and `ARTIFACT_GAPS.md` what is missing |
-| `evidence/raw/` | Raw outputs and logs of the Kaggle runs: X0, X1 runs 1 and 2, X8, X8-FGA, X8 amendment 2 and the recount. `KAGGLE_KERNELS.tsv` lists each kernel, its account and its server times |
+| `evidence/raw/` | Raw outputs and logs of the Kaggle runs: X0, X1 runs 1 and 2, X8, X8-FGA, X8 amendment 2 and the recount. `KAGGLE_KERNELS.tsv` lists each kernel and its server times |
 | `disclosure/` | The vendor reports with their minimal reproducers, which do not need wardowl. `reproducers.yml` runs them |
 | `reviews/` | The numbers audit and the critical review the paper answers, with the decisions taken |
 | `investigations/` | Diagnoses that turned into experiments |

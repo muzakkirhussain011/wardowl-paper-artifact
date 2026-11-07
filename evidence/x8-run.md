@@ -30,7 +30,7 @@ the people. The verdict on prediction 3 does not change: seeds 11 and 13 fall ou
 
 ## What ran
 
-Script kernels `muzakkirhussain1/wardowl-x8-seed11`, `-seed13` and `-seed17`, one seed per Kaggle
+Script kernels `wardowl-x8-seed11`, `-seed13` and `-seed17`, one seed per Kaggle
 GPU T4 x2 session (4 CPUs, 31.3 GiB), 2.9 to 3.3 hours each (the last `time` field of each kernel log: 11,773, 11,144 and
 10,356 s). wardowl 2.1.0 from PyPI, acceptance scripts at
 `bf25bd0f4c3f7b757ab02b7cda830d0e05c1f839`, PostgreSQL 16.15 with pgvector 0.8.7, the notebook's
@@ -159,7 +159,7 @@ runs.
 
 ## X8-FGA (amendment 1)
 
-Kernels `muzakkirhussain1/wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` (2026-10-29 and 30,
+Kernels `wardowl-x8fga-seed7`, `-seed11`, `-seed13`, `-seed17` (2026-10-29 and 30,
 GPU T4 x2, 0.6 to 0.9 hours each by the last `time` field of each kernel log: 3,418, 2,116, 3,269 and 3,219 s), pushed after the amendment's commits (ba64c23, 1a25086). Raw outputs:
 `evidence/raw/x8fga-seedNN/` (`results.md`, `results.json`, `answers.jsonl`, the model-answer cache, kernel log,
 `openfga.log`).

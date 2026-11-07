@@ -1,9 +1,9 @@
 # Evidence: X1 under-retrieval experiment, Kaggle run 1 (and the X0 re-analysis)
 
-Public since 2026-10-30 and renamed that day to `muzakkirhussainsyed/wardowl-under-retrieval-diagnosis-run-1`; its
-outputs, without the embeddings and query vectors, are in `evidence/raw/x1-run1/`.
+Its outputs, without the embeddings and query vectors, are in `evidence/raw/x1-run1/`. This run is being
+repeated (November 2026) with the same code and session type, and these outputs will be replaced.
 
-Source: Kaggle notebook `muzakkirhussainsyed/notebook11401c38ff` (private then), "Version 1 of 1"
+Source: a Kaggle notebook (2x T4 GPUs, 4 CPUs), "Version 1 of 1"
 (kernel version id 362442153), run on 2026-10-26, read on 2026-10-28 from the read-only Output
 and Logs pages. Files read in the output previewer: `x0/summary.md` (5.45 kB) and
 `x1/stats/report.md` (8.04 kB). `x1/manifest.json` is 107.04 kB and the previewer truncates it

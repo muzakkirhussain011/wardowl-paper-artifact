@@ -1,9 +1,9 @@
 # Evidence: Kaggle enterprise RAG acceptance run (wardowl 2.1.0)
 
-Public since 2026-10-30 and renamed that day to `muzakkirhussainsyed/wardowl-end-to-end-scale-run-seed-7`; its
-outputs, without the embeddings, are in `evidence/raw/x0-seed7/`.
+Its outputs, without the embeddings, are in `evidence/raw/x0-seed7/`. This run is being repeated (November
+2026) with the same code and session type, and these outputs will be replaced.
 
-Source: Kaggle notebook `muzakkirhussainsyed/notebookd8377caca8` (private then), output `results.md` and
+Source: a Kaggle notebook (2x T4 GPUs, 4 CPUs), output `results.md` and
 `results.json`, run on or about 2026-10-24, read on 2026-10-26. Raw outputs (`results.json`,
 `answers.jsonl` 6.21 MB, per-store logs) are in `evidence/raw/x0-seed7/`.
 
