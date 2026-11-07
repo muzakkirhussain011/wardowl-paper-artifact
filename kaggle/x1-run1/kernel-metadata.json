@@ -1,11 +1,10 @@
 {
-  "id": "muzakkirhussainsyed/wardowl-under-retrieval-diagnosis-run-1",
-  "id_no": 140951763,
+  "id": "muzakkirhussain1/wardowl-under-retrieval-diagnosis-run-1",
   "title": "wardowl under-retrieval diagnosis, run 1",
   "code_file": "wardowl-under-retrieval-diagnosis-run-1.ipynb",
   "language": "python",
   "kernel_type": "notebook",
-  "is_private": false,
+  "is_private": true,
   "enable_gpu": true,
   "enable_tpu": false,
   "enable_internet": true,
@@ -14,7 +13,7 @@
   ],
   "dataset_sources": [],
   "kernel_sources": [
-    "muzakkirhussainsyed/wardowl-end-to-end-scale-run-seed-7"
+    "muzakkirhussain1/wardowl-end-to-end-scale-run-seed-7"
   ],
   "competition_sources": [],
   "model_sources": [],
