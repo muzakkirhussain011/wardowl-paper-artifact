@@ -45,7 +45,7 @@ and psycopg defaults; `p-x0` replays the original pass right after the load, `p-
 | P2 mis-retrieval from shallow, relaxed scans | inconclusive | ef_search 1000 minus 100 +0.0693 [0.0607, 0.0777]; inner LIMIT 10x minus 1x +0.0952 [0.0833, 0.1073]; m32/efc200 minus m16/efc64 +0.0663 [0.0550, 0.0778]; (d) loss at rho_100 < 0.1 is 0.368 against 0.188 elsewhere, not twice: False; similarity gap of missed questions 0.015 |
 | P3 the planner overestimates a judy filter | confirmed | median planner estimate over R for judys 11.1; ph-exact ERR 0.000 |
 | P4 generic plans make no difference | falsified | pg-custom minus p-asrun recall@10 -0.3428 [-0.3742, -0.3121], ERR +0.0890 [0.0552, 0.1253], McNemar p < 0.05; 17,556 generic executions under p-asrun; 150 of 150 fixed questions had another generic plan |
-| P5 the plan cache decides whether pgvector searches the graph | confirmed | HNSW share 0.981 under pg-custom, 0.009 under p-asrun; pg-custom recall@5 0.680 [0.663, 0.697] (within 0.08 of X0's 0.691); p-asrun recall@5 0.996 [0.991, 1.000] at p50 361.6 ms against pg-custom's 22.4 ms |
+| P5 the plan cache decides whether pgvector searches the graph | confirmed | HNSW share 0.981 under pg-custom, 0.009 under p-asrun; pg-custom recall@5 0.680 [0.663, 0.697] (within 0.08 of X0's 0.691, the first execution's value; the execution the artifact holds gives 0.703); p-asrun recall@5 0.996 [0.991, 1.000] at p50 361.6 ms against pg-custom's 22.4 ms |
 
 ## The replays (amendment 2 item 4; predictions of the revised amendment)
 
@@ -54,7 +54,7 @@ and psycopg defaults; `p-x0` replays the original pass right after the load, `p-
 | p-x0 (right after the load) | 388 | 0 | 0.981 | 0.697 [0.677, 0.717] | 0.729 | 0.006 | 7.0 |
 | p-x0v (after VACUUM (ANALYZE)) | 0 | 2,148 | 0.009 | 0.998 [0.996, 1.000] | 0.998 | 0.000 | 335.3 |
 
-The predicted pattern held: `p-x0` kept custom HNSW plans and reproduced X0 (recall@5 0.691, p50
+The predicted pattern held: `p-x0` kept custom HNSW plans and reproduced X0's first execution (recall@5 0.691, p50
 6.5 ms), and `p-x0v` switched to generic exact plans after its first executions. Mechanism, from
 PostgreSQL 16's `gincostestimate` (`src/backend/utils/adt/selfuncs.c`, REL_16_STABLE, read
 2026-10-30): the GIN cost estimate charges every pending-list page as an entry page fetched at the

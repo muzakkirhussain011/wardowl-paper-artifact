@@ -36,7 +36,7 @@ later commit of `main`, are not in it.
 | `reviews/` | The numbers audit and the critical review the paper answers, with the decisions taken |
 | `investigations/` | Diagnoses that turned into experiments |
 | `literature/`, `bib/` | The literature review, the bibliography and its verification status |
-| `kaggle/` | The Kaggle runners and kernels. The kernels of the first two runs are public notebooks; those of the later runs are private, and their outputs are in the dataset above |
+| `kaggle/` | The Kaggle runners and kernels. The kernels are private; their outputs and logs are in `evidence/raw/` and in the dataset above |
 
 The tag `evidence-v1` adds to this tree:
 

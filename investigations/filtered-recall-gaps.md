@@ -1,5 +1,10 @@
 # Investigation: Qdrant's 0.56 recall and pgvector's empty results in the 2026-10-24 Kaggle run
 
+> Note added 2026-11-07: the X0 numbers in this note are the printed aggregates of X0's first execution (2026-10-24), then
+> described in `evidence/kaggle-scale-run-2026-10-24.md`. The artifact now holds X0's second execution
+> (`evidence/x0-scale-run.md`), in which pgvector also ran in its fast mode (recall@5 0.703, recall@10 0.725, p50 7.8 ms) but
+> returned no empty answer, and Qdrant reached recall@5 0.537 and recall@10 0.530. The reasoning below is unchanged.
+
 Written 2026-10-26. Read-only investigation: no code in the wardowl repository was changed and nothing
 was run against a store. Input: `evidence/kaggle-scale-run-2026-10-24.md`.
 

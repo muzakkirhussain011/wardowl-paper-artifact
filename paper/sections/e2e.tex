@@ -1,7 +1,7 @@
 % End-to-End Evaluation With Canaries: body of Section~\ref{sec:e2e} (the \section heading and its
 % label stay in main.tex). Label defined here: sec:e2e-safety. The setup, the safety table
 % (tab:e2e-safety) and the model's behaviour (sec:e2e-model) are in Appendix~\ref{app:e2e}, with their
-% labels. Sources: evidence/kaggle-scale-run-2026-10-24.md (X0, seed 7, wardowl 2.1.0, before the
+% labels. Sources: evidence/x0-scale-run.md (X0, seed 7, wardowl 2.1.0, before the
 % honest-completeness change), evidence/x8-run.md (X8, seeds 11, 13 and 17, pre-registered in
 % plan/x8-prereg.md), and the OpenFGA configuration's four runs (X8-FGA, amendment 1 of the same
 % pre-registration, in evidence/x8-run.md). Amendment 2 (exposure and the mutation control,
@@ -21,8 +21,11 @@ They ask 1,105 questions: 108 generic, 376 targeted at a document they may read,
 prompts. The policy, a tenant boundary and per-document ACLs, runs in ten configurations (FAISS over a flat index, the eight approximate
 stores of Figure~\ref{fig:qual-audit}, and pgvector with the policy written in OPA) and in an eleventh, with the ACLs as 74,960 OpenFGA
 tuples, which ran in four further runs after a harness fault of ours stopped it from starting. The scenario ran four times, with seeds
-7, 11, 13 and 17, on release 2.1.0; Redis, LanceDB and the Weaviate client moved one version after the first run, against the pre-registration's ``everything else identical''
-(Appendix~\ref{sec:e2e-setup}). The repeats and their predictions were pre-registered after the first run and before any repeat.
+7, 11, 13 and 17, on release 2.1.0, with the same recorded software in every run but one client library (Appendix~\ref{sec:e2e-setup}).
+The seed-7 run was executed twice with the same notebook, on 2026-10-24 and on 2026-11-07; the artifact holds the second execution,
+every seed-7 number here comes from it, and the pre-registrations of the repeats and of the diagnosis runs quote the first
+execution's printed aggregates (Appendix~\ref{sec:e2e-setup}). The repeats and their predictions were pre-registered after the first
+execution and before any repeat.
 Permissions did not change during a run, so the revision a check read makes no difference here: these runs test containment, not freshness.
 
 \paragraph{Safety.}\label{sec:e2e-safety}
@@ -31,11 +34,11 @@ Appendix~\ref{app:e2e-safety}). How far that generalizes depends on what counts 
 108 generic questions, which are 12 strings asked by nine people, and the 108 prompts of the two attacks that have no placeholder. The others are drawn per seed from document templates and attacks, with 208 entity names per template, and 26 of them recur by chance in a second seed. The runs' stored questions thus hold 3,746 distinct pairs, not 4,420, the same for every configuration, with 2,381 distinct question strings, and 21 questions per run come from the one person who may read nothing; taking those as independent, $1 - 0.05^{1/3746} \approx 8.0 \times 10^{-4}$ per question (one-sided 95\%), separately for each of the eleven
 configurations. Per
 person the bound stays at a single run's $1 - 0.05^{1/189} \approx 1.6 \times 10^{-2}$, because the same people recur in every run with
-the same permissions. A fault tied to a permission shape would recur too, and the 189 people have 13 shapes, for which the same formula gives 0.21. As a secondary count the runs checked 783,888 hits, which are not independent trials. All of these bounds are over this
+the same permissions. A fault tied to a permission shape would recur too, and the 189 people have 13 shapes, for which the same formula gives 0.21. As a secondary count the runs checked 784,028 hits, which are not independent trials. All of these bounds are over this
 question generator and say nothing about an adversary who adapts its queries; none was run, and for such an adversary we rely only on
 Observation~\ref{prop:reduction} and its trusted computing base.
 
-No violation occurred either, so in 783,888 hits the re-check dropped nothing, and these runs would look the same with it off. What they test is that stores round-trip metadata and that implementations of
+No violation occurred either, so in 784,028 hits the re-check dropped nothing, and these runs would look the same with it off. What they test is that stores round-trip metadata and that implementations of
 one predicate agree: in the in-process configurations filter and re-check evaluate the same ACL metadata, with OPA and OpenFGA they come from the engine's separate APIs, and the oracle that judges a leak is a separate plain implementation from the same source as the layer.
 
 These numbers have power only if the questions came near content the asking person may not read, and if the pipeline's checks fire when
@@ -50,8 +53,8 @@ This is the only end-to-end evidence that the re-check does anything, and it is 
 computing base was mutated, no wrong filter met an approximate index, and the red-team prompts change only the query text.
 
 \paragraph{Containment held while quality did not.}
-pgvector gave empty answers to 10, 1, 0 and 7 questions from people who could read something in the four runs, on 9, 1, 0 and 7 people, all least-privileged and each able to read 624 chunks. Each of them asked five questions, and none got more than two empty answers, so nobody who could read something received no results at all. The release reported those empty answers as complete. Our prediction that 3 to 25 people would receive no results in every repeat, scored by the harness on this count of answers, was falsified,
-because it assumed that the first run's mode was a property of the configuration; the other four predictions held. Over its eight runs the
-configuration ran exact in five and, by its median, fast in three, with at least one empty answer in five of the eight (10, 1, 0, 7, 1, 1, 0, 0); the one empty answer in each of two exact runs we have not explained. With OpenFGA, pgvector's recall@10 was between 0.693 and 0.758 in every run, and Qdrant's between 0.535 and 0.561.
-The 3B model's answer carried the marker the injected notice asks for in all 3,085 retrievals of it, which is outside our threat model and marks where a retrieval
+pgvector gave empty answers to 0, 1, 0 and 7 questions from people who could read something in the four runs, on 0, 1, 0 and 7 people, all least-privileged and each able to read 624 chunks. Each of them asked five questions and got one empty answer, so nobody who could read something received no results at all. The release reported those empty answers as complete. Our prediction that 3 to 25 people would receive no results in every repeat, scored by the harness on this count of answers, was falsified,
+because it took the ten empty answers of the seed-7 run's first execution for a property of the configuration; the other four predictions held. Over its eight runs the
+configuration ran exact in five and, by its median, fast in three, with at least one empty answer in four of the eight (0, 1, 0, 7, 1, 1, 0, 0); the one empty answer in each of two exact runs we have not explained. With OpenFGA, pgvector's recall@10 was between 0.693 and 0.758 in every run, and Qdrant's between 0.530 and 0.561.
+The 3B model's answer carried the marker the injected notice asks for in all 3,239 retrievals of it, which is outside our threat model and marks where a retrieval
 guarantee ends (Appendix~\ref{sec:e2e-model}).

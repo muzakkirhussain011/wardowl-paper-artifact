@@ -46,7 +46,7 @@ The two runs that did not conclude `success`: the follow-up's `fu-cb-elasticsear
 
 | Experiment | Hours | Source |
 |---|---|---|
-| End-to-end, first run (seed 7) | 2.8 | The last `time` field of the kernel log in `evidence/raw/x0-seed7/`: 10,234 s |
+| End-to-end, seed 7 | 2.8 | The last `time` field of the kernel log in `evidence/raw/x0-seed7/`: 10,243 s |
 | End-to-end, three repeats (X8) | 2.9 to 3.3 each, 9.2 | The last `time` field of each kernel log in `evidence/raw/x8-seed*/`: 11,773, 11,144 and 10,356 s |
 | End-to-end, OpenFGA, four runs | 0.6 to 0.9 each, 3.3 | The last `time` field of each kernel log in `evidence/raw/x8fga-seed*/`: 3,418, 2,116, 3,269 and 3,219 s |
 | End-to-end, exposure, four seeds (X8 amendment 2) | 0.5 | The last `time` field of each kernel log in `evidence/raw/x8b-seed*/`: 443, 429, 385 and 414 s. The pool kernel took 9 s and is not listed |

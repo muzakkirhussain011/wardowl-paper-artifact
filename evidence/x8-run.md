@@ -5,7 +5,9 @@ Raw outputs: `evidence/raw/x8-seed11/`, `evidence/raw/x8-seed13/`, `evidence/raw
 (`results.md`, `results.json`, `answers.jsonl` with the k=5 hits and the answer per question, the model-answer
 cache, the kernel log and the servers' logs, fetched with `kernels output`; `answers.jsonl` and the cache were added on
 2026-10-31). The k=10 hit lists were not written by the harness, so recall@10 is a printed number
-(`evidence/ARTIFACT_GAPS.md`). X0, the run being repeated, is `evidence/kaggle-scale-run-2026-10-24.md` (seed 7).
+(`evidence/ARTIFACT_GAPS.md`). X0, the run being repeated, is `evidence/x0-scale-run.md` (seed 7). X0 was run a second time on 2026-11-07 with the same
+notebook, seed and session type; the X0 rows below are that run's (`evidence/x0-scale-run.md` says why the plans quote the
+first). Every multi-run number here is printed by `evidence/aggregate_e2e.py` (`evidence/e2e-aggregates.md`).
 
 **Corrected 2026-10-31: the "people with no results" are empty answers.** The check "everyone who may read something got
 results" (`enterprise_rag.py:2011-2016` at `bf25bd0`) counts one entry per question, not per person, and the wording in
@@ -15,7 +17,7 @@ leaving out mallory, the one person who may read nothing, whose 21 questions are
 
 | Run | pgvector: empty answers / people | pgvector + OPA | pgvector + OpenFGA |
 |---|---|---|---|
-| X0, seed 7 | 10 / 9 | 10 / 9 | did not start |
+| X0, seed 7 | 0 / 0 | 0 / 0 | did not start |
 | X8, seed 11 | 1 / 1 | 0 / 0 | did not start |
 | X8, seed 13 | 0 / 0 | 0 / 0 | did not start |
 | X8, seed 17 | 7 / 7 | 7 / 7 | did not start |
@@ -44,13 +46,13 @@ permission templates and personas are fixed by the scenario.
 
 | Run | Checks passed / failed | Failed checks |
 |---|---|---|
-| X0, seed 7 | 87 / 3 | pgvector empty results (10 answers, 9 people); pgvector + OPA the same 10; OpenFGA did not start |
+| X0, seed 7 | 89 / 1 | OpenFGA did not start |
 | seed 11 | 88 / 2 | pgvector empty results (1 answer: tailspin-judy); OpenFGA did not start |
 | seed 13 | 89 / 1 | OpenFGA did not start |
 | seed 17 | 87 / 3 | pgvector empty results (7 answers, 7 people, all "judy" personas); pgvector + OPA the same 7; OpenFGA did not start |
 
 "OpenFGA did not start": `http://127.0.0.1:18080/healthz did not answer within 180 s`, in all four
-runs. The cause is the harness: each X8 run's `openfga.log` ends in `panic: configured request
+runs. The cause is the harness: each run's `openfga.log`, X0's included, ends in `panic: configured request
 timeout (6s) cannot be lower than 'listObjectsDeadline' config (20s)`. The acceptance script sets
 the ListObjects deadline to 20 s and leaves OpenFGA's request timeout at its default, which OpenFGA
 1.22.0 rejects at start-up. The configuration is excluded from these runs and rerun with the timeout
@@ -60,15 +62,15 @@ raised (X8-FGA, `plan/x8-prereg.md`, amendment 1, pre-registered 2026-10-30 befo
 
 | Run | Configurations | Questions | Hits checked | Unreadable hits | Canaries (chunk/prompt/answer) | Violations | Errors |
 |---|---|---|---|---|---|---|---|
-| X0, seed 7 | 10 | 11,050 | 163,236 | 0 | 0/0/0 | 0 | 0 |
+| X0, seed 7 | 10 | 11,050 | 163,376 | 0 | 0/0/0 | 0 | 0 |
 | seed 11 | 10 | 11,050 | 163,585 | 0 | 0/0/0 | 0 | 0 |
 | seed 13 | 10 | 11,050 | 163,591 | 0 | 0/0/0 | 0 | 0 |
 | seed 17 | 10 | 11,050 | 163,226 | 0 | 0/0/0 | 0 | 0 |
-| **All four** | 10 | **44,200** | **653,638** | **0** | **0/0/0** | **0** | **0** |
+| **All four** | 10 | **44,200** | **653,778** | **0** | **0/0/0** | **0** | **0** |
 
 Hits checked per configuration over the four runs: FAISS, Chroma, Qdrant, Elasticsearch, OpenSearch,
-Weaviate, Redis and LanceDB 65,440 each (16,360 per run); pgvector 65,047 (16,178 + 16,345 + 16,351
-+ 16,173); pgvector + OPA 65,071 (16,178 + 16,360 + 16,360 + 16,173).
+Weaviate, Redis and LanceDB 65,440 each (16,360 per run); pgvector 65,117 (16,248 + 16,345 + 16,351
++ 16,173); pgvector + OPA 65,141 (16,248 + 16,360 + 16,360 + 16,173).
 
 **Leak bound (pre-registered analysis).** Zero leaks in n = 4 x 1,105 = 4,420 questions per
 configuration; the pre-registered analysis treats them as independent. One-sided 95% bound:
@@ -95,28 +97,27 @@ Recall against exact search over each person's readable set, ties within 1e-4 cr
 
 | Store | R@5 X0 / 11 / 13 / 17 | mean | R@10 X0 / 11 / 13 / 17 | mean | p50 ms X0 / 11 / 13 / 17 |
 |---|---|---|---|---|---|
-| FAISS (exact) | 1.000 / 1.000 / 1.000 / 1.000 | 1.000 | 1.000 / 1.000 / 1.000 / 1.000 | 1.000 | 346 / 355 / 368 / 356 |
-| Chroma | 0.887 / 0.879 / 0.864 / 0.879 | 0.877 | 0.883 / 0.880 / 0.873 / 0.880 | 0.879 | 1442 / 1481 / 1444 / 1432 |
-| pgvector | 0.691 / 0.992 / 0.994 / 0.700 | bimodal | 0.732 / 0.992 / 0.994 / 0.732 | bimodal | 6.5 / 398.7 / 386.0 / 8.1 |
-| pgvector + OPA | 0.691 / 1.000 / 1.000 / 0.700 | bimodal | 0.732 / 1.000 / 1.000 / 0.732 | bimodal | 7.3 / 407.6 / 389.5 / 8.5 |
-| Qdrant | 0.564 / 0.534 / 0.569 / 0.560 | 0.557 | 0.561 / 0.535 / 0.561 / 0.549 | 0.552 | 4.3 / 4.7 / 4.7 / 4.6 |
-| Elasticsearch | 0.948 / 0.929 / 0.952 / 0.938 | 0.942 | 0.948 / 0.940 / 0.959 / 0.948 | 0.949 | 8.1 / 8.6 / 8.8 / 8.4 |
-| OpenSearch | 0.947 / 0.942 / 0.942 / 0.939 | 0.942 | 0.938 / 0.936 / 0.933 / 0.934 | 0.935 | 6.8 / 7.0 / 7.1 / 6.9 |
-| Weaviate | 0.888 / 0.902 / 0.908 / 0.899 | 0.899 | 0.892 / 0.902 / 0.913 / 0.902 | 0.902 | 7.1 / 8.0 / 8.0 / 7.8 |
-| Redis | 0.985 / 0.980 / 0.995 / 0.971 | 0.983 | 0.980 / 0.982 / 0.988 / 0.976 | 0.981 | 28.3 / 30.4 / 30.4 / 29.6 |
-| LanceDB | 0.833 / 0.832 / 0.861 / 0.835 | 0.840 | 0.860 / 0.866 / 0.899 / 0.871 | 0.874 | 22.4 / 24.7 / 24.8 / 24.9 |
+| FAISS (exact) | 1.000 / 1.000 / 1.000 / 1.000 | 1.000 | 1.000 / 1.000 / 1.000 / 1.000 | 1.000 | 343 / 355 / 368 / 356 |
+| Chroma | 0.879 / 0.879 / 0.864 / 0.879 | 0.875 | 0.878 / 0.880 / 0.873 / 0.880 | 0.878 | 1435 / 1481 / 1444 / 1432 |
+| pgvector | 0.703 / 0.992 / 0.994 / 0.700 | bimodal | 0.725 / 0.992 / 0.994 / 0.732 | bimodal | 7.8 / 398.7 / 386.0 / 8.1 |
+| pgvector + OPA | 0.703 / 1.000 / 1.000 / 0.700 | bimodal | 0.725 / 1.000 / 1.000 / 0.732 | bimodal | 8.1 / 407.6 / 389.5 / 8.5 |
+| Qdrant | 0.537 / 0.534 / 0.569 / 0.560 | 0.550 | 0.530 / 0.535 / 0.561 / 0.549 | 0.544 | 4.5 / 4.7 / 4.7 / 4.6 |
+| Elasticsearch | 0.960 / 0.929 / 0.952 / 0.938 | 0.945 | 0.961 / 0.940 / 0.959 / 0.948 | 0.952 | 8.6 / 8.6 / 8.8 / 8.4 |
+| OpenSearch | 0.948 / 0.942 / 0.942 / 0.939 | 0.942 | 0.939 / 0.936 / 0.933 / 0.934 | 0.936 | 7.0 / 7.0 / 7.1 / 6.9 |
+| Weaviate | 0.891 / 0.902 / 0.908 / 0.899 | 0.900 | 0.897 / 0.902 / 0.913 / 0.902 | 0.903 | 7.4 / 8.0 / 8.0 / 7.8 |
+| Redis | 0.992 / 0.980 / 0.995 / 0.971 | 0.984 | 0.993 / 0.982 / 0.988 / 0.976 | 0.985 | 30.1 / 30.4 / 30.4 / 29.6 |
+| LanceDB | 0.850 / 0.832 / 0.861 / 0.835 | 0.845 | 0.900 / 0.866 / 0.899 / 0.871 | 0.884 | 23.8 / 24.7 / 24.8 / 24.9 |
 
 Every store except pgvector repeats within a narrow band: the largest range of recall@10 is
-LanceDB's 0.039 (0.860 to 0.899), Qdrant's is 0.026.
+LanceDB's 0.034 (0.866 to 0.900), Qdrant's is 0.030 (0.530 to 0.561).
 
 **pgvector is bimodal across runs, with the same configuration.** Two runs (X0 and seed 17) ran
-fast and lossy: recall@10 0.732, p50 6.5 and 8.1 ms, 10 and 7 least-privileged people with no
-results. Two runs (seeds 11 and 13) ran exact and slow: recall@10 0.992 and 0.994, p50 399 and
-386 ms, 1 and 0 people with no results. The mode was fixed from the first questions: seed 17
-retrieved 250 questions in 8 s, seeds 11 and 13 in 172 s and 162 s (kernel logs). The load and
-index times were alike in all four runs (62.8 to 65.6 s and 26.9 to 28.9 s), and in the three X8
-runs the questions began between 92 and 96 s after the pgvector load started (X0's log timings were
-not kept). This matches the plan-cache mechanism of
+fast and lossy: recall@10 0.725 and 0.732, p50 7.8 and 8.1 ms, 0 and 7 least-privileged people with an
+empty answer, so the fast mode does not always leave someone without hits. Two runs (seeds 11 and 13) ran exact and slow: recall@10 0.992 and 0.994, p50 399 and
+386 ms, 1 and 0 people with no results. The mode was fixed from the first questions: X0 and seed 17
+each retrieved 250 questions in 8 s, seeds 11 and 13 in 172 s and 162 s (kernel logs). The load and
+index times were alike in all four runs (62.8 to 65.6 s and 27.0 to 28.9 s), and in all four runs the
+questions began between 92 and 96 s after the pgvector load started (X0: 91.7 s). This matches the plan-cache mechanism of
 `investigations/x0-x1-pgvector-gap.md`: through psycopg's prepared statements PostgreSQL either keeps
 custom plans, which use the HNSW index with the iterative-scan budget, or switches to a generic plan
 that reads the GIN index and sorts, which is exact. Within a run, pgvector + OPA ran on the same
@@ -128,19 +129,19 @@ plans and the index state to settle what decides the switch.
 
 | Run | Configurations reporting | Injected notices retrieved | Obeyed | Per configuration |
 |---|---|---|---|---|
-| X0, seed 7 | 10 | 498 | 498 | 7 to 106 |
+| X0, seed 7 | 10 | 652 | 652 | 3 to 102 |
 | seed 11 | 10 | 741 | 741 | 11 to 117 |
 | seed 13 | 10 | 768 | 768 | 3 to 112 |
 | seed 17 | 10 | 652 | 652 | 1 to 108 |
-| **All four** | | **2,659** | **2,659** | 1 to 117 |
+| **All four** | | **2,813** | **2,813** | 1 to 117 |
 
-(Corrected 2026-10-31: the X0 row left out pgvector + OPA, 16 of 16, and read 9 configurations, 482; X0's `results.md`
-has 10 rows and 498. With the 426 of X8-FGA, whose four runs give 137, 62, 110 and 117 over both configurations, the eight
-runs sum to 3,085 of 3,085.)
+(The X0 row is the second execution's, 652. The first execution's row was corrected on 2026-10-31 from 482, which had left
+out pgvector + OPA, to 498. With the 426 of X8-FGA, whose four runs give 137, 62, 110 and 117 over both configurations, the
+eight runs sum to 3,239 of 3,239.)
 
 FAISS: target document in the top five for every targeted question in all four runs; answer
-accuracy 0.984 to 0.997. Qdrant: target in the top five for 0.338 to 0.399 of targeted questions.
-Abstained when a person asked about a document they may not read: 0.681 to 0.805 over all stores and
+accuracy 0.984 to 0.997. Qdrant: target in the top five for 0.338 to 0.396 of targeted questions.
+Abstained when a person asked about a document they may not read: 0.681 to 0.821 over all stores and
 runs.
 
 ## Verdicts on the pre-registered predictions
@@ -150,12 +151,12 @@ runs.
 2. **Qdrant recall@10 between 0.45 and 0.70 in every run, holds.** 0.535, 0.561 and 0.549.
 3. **pgvector returns no results to between 3 and 25 people in every run, falsified.** Seed 17: 7
    (inside). Seed 11: 1 and seed 13: 0 (outside). The prediction assumed X0's mode was a property of
-   the configuration; the runs show two modes, and the count falls inside the range only in the fast
-   mode.
+   the configuration; the runs show two modes, and of the X8 runs the count falls inside the range only in the fast
+   one (seed 17); X0's second run, also fast, had none.
 4. **Redis, Elasticsearch and OpenSearch at or above 0.90 recall@10 in every run, holds.** Lowest:
    OpenSearch 0.933 (seed 13).
 5. **The model obeys every retrieved injected notice, holds.** 2,161 of 2,161 in the three X8 runs
-   (2,659 of 2,659 with X0).
+   (2,813 of 2,813 with X0).
 
 ## X8-FGA (amendment 1)
 
@@ -214,7 +215,7 @@ Answer quality held up better than recall (target in the top five 0.94 to 0.98).
 
 ## Consequences for the paper
 
-- Section 9 (`e2e.tex`): four runs, 653,638 checked hits, no leak; bound 8.0 x 10^-4 per question
+- Section 9 (`e2e.tex`): four runs, 653,778 checked hits, no leak; bound 8.0 x 10^-4 per question
   per configuration (corrected from 6.8 x 10^-4, see above); the run-to-run table; the matcher description replaces the paraphrase
   placeholder; injection totals.
 - Section 6 (`quality.tex`): X0's single-run pgvector number must not be reported as a property of

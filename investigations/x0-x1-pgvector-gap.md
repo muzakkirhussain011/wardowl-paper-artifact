@@ -1,5 +1,10 @@
 # Investigation: why X1 did not reproduce X0's pgvector numbers
 
+> Note added 2026-11-07: the X0 numbers in this note are the printed aggregates of X0's first execution (2026-10-24), then
+> described in `evidence/kaggle-scale-run-2026-10-24.md`. The artifact now holds X0's second execution
+> (`evidence/x0-scale-run.md`), in which pgvector also ran in its fast mode (recall@5 0.703, recall@10 0.725, p50 7.8 ms) but
+> returned no empty answer, and Qdrant reached recall@5 0.537 and recall@10 0.530. The reasoning below is unchanged.
+
 Written 2026-10-29. Analysis of code and of published results. Inputs: `evidence/kaggle-scale-run-2026-10-24.md`
 (X0), `evidence/x1-underretrieval-run1.md` (X1 run 1), `investigations/filtered-recall-gaps.md` (the
 diagnosis written before X1), `evidence/raw/x8-seed13/` (X8 seed 13: X0's exact configuration rerun,

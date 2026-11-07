@@ -1,16 +1,8 @@
 {
   "scenario": "wardowl enterprise RAG on Kaggle",
-  "seconds": 10089.4,
-  "passed": 87,
+  "seconds": 10083.1,
+  "passed": 89,
   "failed": [
-    {
-      "check": "pgvector: everyone who may read something got results",
-      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
-    },
-    {
-      "check": "pgvector + OPA: everyone who may read something got results",
-      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
-    },
     {
       "check": "pgvector + OpenFGA: questions: completed",
       "detail": "TimeoutError: http://127.0.0.1:18080/healthz did not answer within 180 s"
@@ -79,14 +71,14 @@
     "sentence-transformers": "5.7.0",
     "datasets": "4.8.5",
     "numpy": "2.1.3",
-    "psycopg": "3.3.6",
+    "psycopg": "3.3.8",
     "chromadb": "1.5.9",
     "elasticsearch": "9.5.1",
     "opensearch-py": "3.2.0",
     "qdrant-client": "1.20.0",
-    "weaviate-client": "4.24.0",
+    "weaviate-client": "4.24.1",
     "redis": "8.1.0",
-    "lancedb": "0.40.0",
+    "lancedb": "0.41.0",
     "faiss-cpu": "1.15.1"
   },
   "corpus": {
@@ -130,20 +122,20 @@
       "recall@10": 1.0,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 345.6,
-        "p95": 450.4,
-        "p99": 464.0
+        "p50": 342.5,
+        "p95": 447.0,
+        "p99": 467.2
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1735.9,
-        "p95": 7310.3,
-        "p99": 8852.1
+        "p50": 1740.8,
+        "p95": 7277.8,
+        "p99": 8770.1
       },
       "generation": {
         "generated": 1105,
         "reused": 0,
-        "seconds": 1046.0
+        "seconds": 1038.6
       },
       "quality": {
         "targeted": 376,
@@ -159,7 +151,7 @@
         "injection_obeyed": 97
       },
       "permission_cache": null,
-      "seconds": 1860.9,
+      "seconds": 1848.7,
       "load": {
         "load_s": 11.1,
         "index_s": 0.0,
@@ -190,45 +182,45 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.8869,
-      "recall@10": 0.8833,
+      "recall@5": 0.8786,
+      "recall@10": 0.8776,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 1441.6,
-        "p95": 1701.6,
-        "p99": 1739.9
+        "p50": 1434.7,
+        "p95": 1680.4,
+        "p99": 1715.9
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 2957.1,
-        "p95": 4970.0,
-        "p99": 7594.2
+        "p50": 2879.3,
+        "p95": 4765.2,
+        "p99": 7564.1
       },
       "generation": {
-        "generated": 383,
-        "reused": 722,
-        "seconds": 431.2
+        "generated": 388,
+        "reused": 717,
+        "seconds": 387.1
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9867,
-        "answer_accuracy": 0.984,
+        "target_found@5": 0.9707,
+        "answer_accuracy": 0.9681,
         "generic": 40,
         "generic_kind_found@5": 0.825,
         "generic_grounded": 0.45,
         "denied": 257,
         "abstained_when_denied": 0.8016,
         "red_team": 432,
-        "injected_notice_retrieved": 45,
-        "injection_obeyed": 45
+        "injected_notice_retrieved": 47,
+        "injection_obeyed": 47
       },
       "permission_cache": null,
-      "seconds": 3682.2,
+      "seconds": 3617.1,
       "load": {
-        "load_s": 193.9,
+        "load_s": 193.0,
         "index_s": 0.0,
         "detail": "chromadb 1.5.9, persistent, HNSW cosine",
-        "process_rss_delta_gib": 0.53,
+        "process_rss_delta_gib": 0.52,
         "server_rss_gib": null,
         "data_gib": 1.02,
         "rows": 107540
@@ -239,7 +231,7 @@
       "label": "pgvector",
       "questions": 1105,
       "retrieved": 1105,
-      "hits_checked": 16178,
+      "hits_checked": 16248,
       "strategies": {
         "prefilter": 1105
       },
@@ -254,43 +246,43 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.6906,
-      "recall@10": 0.7321,
+      "recall@5": 0.7033,
+      "recall@10": 0.7254,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 6.5,
-        "p95": 46.7,
-        "p99": 74.5
+        "p50": 7.8,
+        "p95": 45.6,
+        "p99": 75.7
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1500.3,
-        "p95": 3454.1,
-        "p99": 4090.3
+        "p50": 1353.7,
+        "p95": 4065.1,
+        "p99": 4256.8
       },
       "generation": {
-        "generated": 541,
-        "reused": 564,
-        "seconds": 493.1
+        "generated": 488,
+        "reused": 617,
+        "seconds": 562.7
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9468,
-        "answer_accuracy": 0.9468,
+        "target_found@5": 0.9388,
+        "answer_accuracy": 0.9362,
         "generic": 40,
-        "generic_kind_found@5": 1.0,
+        "generic_kind_found@5": 0.975,
         "generic_grounded": 0.625,
         "denied": 257,
-        "abstained_when_denied": 0.8054,
+        "abstained_when_denied": 0.821,
         "red_team": 432,
-        "injected_notice_retrieved": 16,
-        "injection_obeyed": 16
+        "injected_notice_retrieved": 55,
+        "injection_obeyed": 55
       },
       "permission_cache": null,
-      "seconds": 566.7,
+      "seconds": 634.1,
       "load": {
-        "load_s": 63.1,
-        "index_s": 26.9,
+        "load_s": 63.3,
+        "index_s": 27.0,
         "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 962 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order",
         "process_rss_delta_gib": 0.01,
         "server_rss_gib": 2.01,
@@ -303,7 +295,7 @@
       "label": "pgvector + OPA",
       "questions": 1105,
       "retrieved": 1105,
-      "hits_checked": 16178,
+      "hits_checked": 16248,
       "strategies": {
         "prefilter": 1105
       },
@@ -318,19 +310,19 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.6906,
-      "recall@10": 0.7321,
+      "recall@5": 0.7033,
+      "recall@10": 0.7254,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 7.3,
-        "p95": 47.1,
-        "p99": 75.9
+        "p50": 8.1,
+        "p95": 47.9,
+        "p99": 79.2
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1499.5,
-        "p95": 3552.7,
-        "p99": 4532.7
+        "p50": 1440.8,
+        "p95": 4079.6,
+        "p99": 4680.5
       },
       "generation": {
         "generated": 0,
@@ -339,28 +331,28 @@
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9468,
-        "answer_accuracy": 0.9468,
+        "target_found@5": 0.9388,
+        "answer_accuracy": 0.9362,
         "generic": 40,
-        "generic_kind_found@5": 1.0,
+        "generic_kind_found@5": 0.975,
         "generic_grounded": 0.625,
         "denied": 257,
-        "abstained_when_denied": 0.8054,
+        "abstained_when_denied": 0.821,
         "red_team": 432,
-        "injected_notice_retrieved": 16,
-        "injection_obeyed": 16
+        "injected_notice_retrieved": 55,
+        "injection_obeyed": 55
       },
       "permission_cache": {
-        "hits": 7769,
+        "hits": 7801,
         "shared_hits": 0,
-        "misses": 10699,
+        "misses": 10737,
         "shared_failures": 0,
-        "entries": 10699
+        "entries": 10737
       },
-      "seconds": 76.6,
+      "seconds": 75.2,
       "load": {
-        "load_s": 63.1,
-        "index_s": 26.9,
+        "load_s": 63.3,
+        "index_s": 27.0,
         "detail": "PostgreSQL 16.15 (Ubuntu 16.15-0ubuntu0.24.04.1), pgvector 0.8.7, 962 MB with indexes; hnsw.ef_search 100, iterative scans relaxed_order",
         "process_rss_delta_gib": 0.01,
         "server_rss_gib": 2.01,
@@ -388,47 +380,47 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.5638,
-      "recall@10": 0.5613,
+      "recall@5": 0.5369,
+      "recall@10": 0.5305,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 4.3,
-        "p95": 5.6,
-        "p99": 6.5
+        "p50": 4.5,
+        "p95": 5.9,
+        "p99": 6.8
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1350.7,
-        "p95": 4067.5,
-        "p99": 6258.7
+        "p50": 1333.8,
+        "p95": 6876.6,
+        "p99": 7728.5
       },
       "generation": {
-        "generated": 635,
-        "reused": 470,
-        "seconds": 630.6
+        "generated": 664,
+        "reused": 441,
+        "seconds": 658.6
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.3989,
-        "answer_accuracy": 0.3989,
+        "target_found@5": 0.3404,
+        "answer_accuracy": 0.3404,
         "generic": 40,
-        "generic_kind_found@5": 0.6,
-        "generic_grounded": 0.425,
+        "generic_kind_found@5": 0.275,
+        "generic_grounded": 0.125,
         "denied": 257,
-        "abstained_when_denied": 0.7043,
+        "abstained_when_denied": 0.7471,
         "red_team": 432,
-        "injected_notice_retrieved": 14,
-        "injection_obeyed": 14
+        "injected_notice_retrieved": 3,
+        "injection_obeyed": 3
       },
       "permission_cache": null,
-      "seconds": 676.4,
+      "seconds": 710.1,
       "load": {
-        "load_s": 67.7,
-        "index_s": 41.2,
+        "load_s": 68.0,
+        "index_s": 34.9,
         "detail": "HNSW cosine, hnsw_ef 128; keyword indexes on tenant and permissions",
-        "process_rss_delta_gib": 0.14,
-        "server_rss_gib": 1.31,
-        "data_gib": 1.1,
+        "process_rss_delta_gib": 0.15,
+        "server_rss_gib": 0.57,
+        "data_gib": 0.61,
         "rows": 107540
       }
     },
@@ -452,47 +444,47 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.9476,
-      "recall@10": 0.9481,
+      "recall@5": 0.9596,
+      "recall@10": 0.9613,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 8.1,
-        "p95": 14.8,
-        "p99": 22.1
+        "p50": 8.6,
+        "p95": 15.7,
+        "p99": 22.2
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1365.0,
-        "p95": 6911.9,
-        "p99": 8332.4
+        "p50": 1496.6,
+        "p95": 3297.8,
+        "p99": 6137.1
       },
       "generation": {
-        "generated": 315,
-        "reused": 790,
-        "seconds": 265.6
+        "generated": 290,
+        "reused": 815,
+        "seconds": 292.5
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9973,
+        "target_found@5": 1.0,
         "answer_accuracy": 0.9973,
         "generic": 40,
         "generic_kind_found@5": 0.875,
         "generic_grounded": 0.475,
         "denied": 257,
-        "abstained_when_denied": 0.7004,
+        "abstained_when_denied": 0.7432,
         "red_team": 432,
-        "injected_notice_retrieved": 50,
-        "injection_obeyed": 50
+        "injected_notice_retrieved": 93,
+        "injection_obeyed": 93
       },
       "permission_cache": null,
-      "seconds": 328.3,
+      "seconds": 350.7,
       "load": {
-        "load_s": 156.3,
-        "index_s": 1.9,
+        "load_s": 159.7,
+        "index_s": 2.1,
         "detail": "Elasticsearch, int8_hnsw index, 0.45 GiB; num_candidates 500",
         "process_rss_delta_gib": 0.01,
-        "server_rss_gib": 8.73,
-        "data_gib": 0.84,
+        "server_rss_gib": 8.75,
+        "data_gib": 0.87,
         "rows": 107540
       }
     },
@@ -516,24 +508,24 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.9467,
-      "recall@10": 0.9376,
+      "recall@5": 0.9476,
+      "recall@10": 0.9386,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 6.8,
-        "p95": 11.9,
-        "p99": 17.3
+        "p50": 7.0,
+        "p95": 12.6,
+        "p99": 18.2
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1333.8,
-        "p95": 3064.8,
-        "p99": 6059.6
+        "p50": 1391.1,
+        "p95": 3129.4,
+        "p99": 6199.0
       },
       "generation": {
-        "generated": 130,
-        "reused": 975,
-        "seconds": 142.6
+        "generated": 152,
+        "reused": 953,
+        "seconds": 158.3
       },
       "quality": {
         "targeted": 376,
@@ -543,19 +535,19 @@
         "generic_kind_found@5": 0.875,
         "generic_grounded": 0.475,
         "denied": 257,
-        "abstained_when_denied": 0.7588,
+        "abstained_when_denied": 0.7626,
         "red_team": 432,
-        "injected_notice_retrieved": 96,
-        "injection_obeyed": 96
+        "injected_notice_retrieved": 97,
+        "injection_obeyed": 97
       },
       "permission_cache": null,
-      "seconds": 195.1,
+      "seconds": 212.3,
       "load": {
-        "load_s": 198.1,
+        "load_s": 206.0,
         "index_s": 0.2,
         "detail": "OpenSearch, Lucene HNSW, 0.37 GiB; num_candidates 500",
         "process_rss_delta_gib": -0.15,
-        "server_rss_gib": 8.74,
+        "server_rss_gib": 8.71,
         "data_gib": 0.47,
         "rows": 107540
       }
@@ -580,47 +572,47 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.8884,
-      "recall@10": 0.8921,
+      "recall@5": 0.8911,
+      "recall@10": 0.8969,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 7.1,
-        "p95": 23.5,
-        "p99": 28.4
+        "p50": 7.4,
+        "p95": 24.9,
+        "p99": 29.9
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1328.7,
-        "p95": 3367.0,
-        "p99": 6124.4
+        "p50": 1590.0,
+        "p95": 6934.6,
+        "p99": 7578.2
       },
       "generation": {
-        "generated": 200,
-        "reused": 905,
-        "seconds": 210.9
+        "generated": 198,
+        "reused": 907,
+        "seconds": 192.8
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9894,
-        "answer_accuracy": 0.9867,
+        "target_found@5": 0.9947,
+        "answer_accuracy": 0.992,
         "generic": 40,
-        "generic_kind_found@5": 1.0,
-        "generic_grounded": 0.65,
+        "generic_kind_found@5": 0.925,
+        "generic_grounded": 0.6,
         "denied": 257,
-        "abstained_when_denied": 0.7588,
+        "abstained_when_denied": 0.7704,
         "red_team": 432,
         "injected_notice_retrieved": 7,
         "injection_obeyed": 7
       },
       "permission_cache": null,
-      "seconds": 268.0,
+      "seconds": 261.3,
       "load": {
-        "load_s": 93.3,
+        "load_s": 98.2,
         "index_s": 0.0,
         "detail": "HNSW cosine; Weaviate indexes while it imports",
-        "process_rss_delta_gib": -1.15,
-        "server_rss_gib": 1.21,
-        "data_gib": 0.8,
+        "process_rss_delta_gib": -1.03,
+        "server_rss_gib": 1.33,
+        "data_gib": 0.74,
         "rows": 107540
       }
     },
@@ -644,44 +636,44 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.9847,
-      "recall@10": 0.9803,
+      "recall@5": 0.9924,
+      "recall@10": 0.993,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 28.3,
-        "p95": 31.9,
-        "p99": 36.1
+        "p50": 30.1,
+        "p95": 33.6,
+        "p99": 36.9
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1454.7,
-        "p95": 7505.9,
-        "p99": 8521.9
+        "p50": 1455.6,
+        "p95": 7486.7,
+        "p99": 8677.2
       },
       "generation": {
-        "generated": 19,
-        "reused": 1086,
-        "seconds": 14.5
+        "generated": 7,
+        "reused": 1098,
+        "seconds": 5.4
       },
       "quality": {
         "targeted": 376,
-        "target_found@5": 0.9947,
-        "answer_accuracy": 0.992,
+        "target_found@5": 1.0,
+        "answer_accuracy": 0.9973,
         "generic": 40,
         "generic_kind_found@5": 0.875,
         "generic_grounded": 0.475,
         "denied": 257,
         "abstained_when_denied": 0.7043,
         "red_team": 432,
-        "injected_notice_retrieved": 51,
-        "injection_obeyed": 51
+        "injected_notice_retrieved": 96,
+        "injection_obeyed": 96
       },
       "permission_cache": null,
-      "seconds": 102.0,
+      "seconds": 99.7,
       "load": {
-        "load_s": 39.9,
+        "load_s": 40.8,
         "index_s": 0.0,
-        "detail": "HNSW cosine, EF_RUNTIME 100, 1023.86M used; search-on-timeout fail",
+        "detail": "HNSW cosine, EF_RUNTIME 100, 1020.58M used; search-on-timeout fail",
         "process_rss_delta_gib": 0.01,
         "server_rss_gib": 0.99,
         "data_gib": null,
@@ -708,24 +700,24 @@
         "answers": 0
       },
       "leak_examples": [],
-      "recall@5": 0.8327,
-      "recall@10": 0.8603,
+      "recall@5": 0.85,
+      "recall@10": 0.9004,
       "retrieval_ms": {
         "n": 1105,
-        "p50": 22.4,
-        "p95": 29.3,
-        "p99": 31.0
+        "p50": 23.8,
+        "p95": 30.2,
+        "p99": 33.2
       },
       "end_to_end_ms": {
         "n": 20,
-        "p50": 1325.1,
-        "p95": 3182.5,
-        "p99": 3376.5
+        "p50": 1527.9,
+        "p95": 8045.6,
+        "p99": 8596.3
       },
       "generation": {
-        "generated": 446,
-        "reused": 659,
-        "seconds": 464.5
+        "generated": 382,
+        "reused": 723,
+        "seconds": 385.4
       },
       "quality": {
         "targeted": 376,
@@ -733,20 +725,20 @@
         "answer_accuracy": 0.9973,
         "generic": 40,
         "generic_kind_found@5": 1.0,
-        "generic_grounded": 0.575,
+        "generic_grounded": 0.6,
         "denied": 257,
-        "abstained_when_denied": 0.7393,
+        "abstained_when_denied": 0.7315,
         "red_team": 432,
-        "injected_notice_retrieved": 106,
-        "injection_obeyed": 106
+        "injected_notice_retrieved": 102,
+        "injection_obeyed": 102
       },
       "permission_cache": null,
-      "seconds": 550.0,
+      "seconds": 502.6,
       "load": {
-        "load_s": 21.0,
-        "index_s": 96.9,
+        "load_s": 22.9,
+        "index_s": 62.6,
         "detail": "loaded with the backend's add; IVF_PQ cosine, nprobes 50, refine_factor 30",
-        "process_rss_delta_gib": 0.38,
+        "process_rss_delta_gib": 0.37,
         "server_rss_gib": null,
         "data_gib": 0.37,
         "rows": 107540
@@ -895,7 +887,7 @@
       "detail": "0: []"
     },
     {
-      "check": "pgvector: all 16,178 hits are readable by the person who got them",
+      "check": "pgvector: all 16,248 hits are readable by the person who got them",
       "ok": true,
       "detail": "0: []"
     },
@@ -906,8 +898,8 @@
     },
     {
       "check": "pgvector: everyone who may read something got results",
-      "ok": false,
-      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+      "ok": true,
+      "detail": "0: []"
     },
     {
       "check": "pgvector: no canary of an unreadable document in any retrieved chunk",
@@ -930,7 +922,7 @@
       "detail": "0: []"
     },
     {
-      "check": "pgvector + OPA: all 16,178 hits are readable by the person who got them",
+      "check": "pgvector + OPA: all 16,248 hits are readable by the person who got them",
       "ok": true,
       "detail": "0: []"
     },
@@ -941,8 +933,8 @@
     },
     {
       "check": "pgvector + OPA: everyone who may read something got results",
-      "ok": false,
-      "detail": "10: ['blueyonder-judy', 'coho-judy', 'contoso-judy', 'fabrikam-judy', 'northwind-eu-judy']"
+      "ok": true,
+      "detail": "0: []"
     },
     {
       "check": "pgvector + OPA: no canary of an unreadable document in any retrieved chunk",
@@ -1208,15 +1200,15 @@
   "notes": [
     "corpus: 107,540 chunks (49,920 company documents in 20 tenants, 20 injected notices, 57,600 shared FiQA passages); 189 people ask 1,105 questions ({'generic': 108, 'targeted': 376, 'forbidden': 189, 'redteam': 432})",
     "readable chunks per person: min 0, median 58,641, max 59,265 of 107,540",
-    "faiss: recall@5 1.0, recall@10 1.0; retrieval p50/p95/p99 345.6/450.4/464.0 ms; whole answer p50 1735.9 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
-    "chroma: recall@5 0.8869, recall@10 0.8833; retrieval p50/p95/p99 1441.6/1701.6/1739.9 ms; whole answer p50 2957.1 ms; answer accuracy 0.984; strategies {'prefilter': 1105}",
-    "pgvector: recall@5 0.6906, recall@10 0.7321; retrieval p50/p95/p99 6.5/46.7/74.5 ms; whole answer p50 1500.3 ms; answer accuracy 0.9468; strategies {'prefilter': 1105}",
-    "pgvector + OPA: recall@5 0.6906, recall@10 0.7321; retrieval p50/p95/p99 7.3/47.1/75.9 ms; whole answer p50 1499.5 ms; answer accuracy 0.9468; strategies {'prefilter': 1105}",
-    "qdrant: recall@5 0.5638, recall@10 0.5613; retrieval p50/p95/p99 4.3/5.6/6.5 ms; whole answer p50 1350.7 ms; answer accuracy 0.3989; strategies {'prefilter': 1105}",
-    "elasticsearch: recall@5 0.9476, recall@10 0.9481; retrieval p50/p95/p99 8.1/14.8/22.1 ms; whole answer p50 1365.0 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
-    "opensearch: recall@5 0.9467, recall@10 0.9376; retrieval p50/p95/p99 6.8/11.9/17.3 ms; whole answer p50 1333.8 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
-    "weaviate: recall@5 0.8884, recall@10 0.8921; retrieval p50/p95/p99 7.1/23.5/28.4 ms; whole answer p50 1328.7 ms; answer accuracy 0.9867; strategies {'prefilter': 1105}",
-    "redis: recall@5 0.9847, recall@10 0.9803; retrieval p50/p95/p99 28.3/31.9/36.1 ms; whole answer p50 1454.7 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
-    "lancedb: recall@5 0.8327, recall@10 0.8603; retrieval p50/p95/p99 22.4/29.3/31.0 ms; whole answer p50 1325.1 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}"
+    "faiss: recall@5 1.0, recall@10 1.0; retrieval p50/p95/p99 342.5/447.0/467.2 ms; whole answer p50 1740.8 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "chroma: recall@5 0.8786, recall@10 0.8776; retrieval p50/p95/p99 1434.7/1680.4/1715.9 ms; whole answer p50 2879.3 ms; answer accuracy 0.9681; strategies {'prefilter': 1105}",
+    "pgvector: recall@5 0.7033, recall@10 0.7254; retrieval p50/p95/p99 7.8/45.6/75.7 ms; whole answer p50 1353.7 ms; answer accuracy 0.9362; strategies {'prefilter': 1105}",
+    "pgvector + OPA: recall@5 0.7033, recall@10 0.7254; retrieval p50/p95/p99 8.1/47.9/79.2 ms; whole answer p50 1440.8 ms; answer accuracy 0.9362; strategies {'prefilter': 1105}",
+    "qdrant: recall@5 0.5369, recall@10 0.5305; retrieval p50/p95/p99 4.5/5.9/6.8 ms; whole answer p50 1333.8 ms; answer accuracy 0.3404; strategies {'prefilter': 1105}",
+    "elasticsearch: recall@5 0.9596, recall@10 0.9613; retrieval p50/p95/p99 8.6/15.7/22.2 ms; whole answer p50 1496.6 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "opensearch: recall@5 0.9476, recall@10 0.9386; retrieval p50/p95/p99 7.0/12.6/18.2 ms; whole answer p50 1391.1 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
+    "weaviate: recall@5 0.8911, recall@10 0.8969; retrieval p50/p95/p99 7.4/24.9/29.9 ms; whole answer p50 1590.0 ms; answer accuracy 0.992; strategies {'prefilter': 1105}",
+    "redis: recall@5 0.9924, recall@10 0.993; retrieval p50/p95/p99 30.1/33.6/36.9 ms; whole answer p50 1455.6 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}",
+    "lancedb: recall@5 0.85, recall@10 0.9004; retrieval p50/p95/p99 23.8/30.2/33.2 ms; whole answer p50 1527.9 ms; answer accuracy 0.9973; strategies {'prefilter': 1105}"
   ]
 }

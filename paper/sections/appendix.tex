@@ -1,5 +1,5 @@
 % Appendices: store settings and compute. Labels defined here: app:settings, tab:app-x0-settings, app:compute, tab:app-compute.
-% Sources: evidence/kaggle-scale-run-2026-10-24.md, investigations/filtered-recall-gaps.md (sections
+% Sources: evidence/x0-scale-run.md, investigations/filtered-recall-gaps.md (sections
 % 1.3, 1.4 with file:line references), evidence/conformance-campaign-run1.md,
 % benchmarks/paper/PREREGISTRATION.md on the X1 branch, evidence/compute.md (the compute table).
 
@@ -25,8 +25,8 @@ Qdrant & 1.19.2 & HNSW cosine, $m = 16$, \texttt{ef\_construct} 100, full-scan t
 Elasticsearch & 9.5.5 & \texttt{int8\_hnsw}, \texttt{num\_candidates} 500 \\
 OpenSearch & 3.9.0 & Lucene HNSW, \texttt{num\_candidates} 500 \\
 Weaviate & 1.39.12 & HNSW (defaults), indexed while importing \\
-Redis & 8.10.2 (first run), 8.10.3 (repeats) & HNSW, \texttt{EF\_RUNTIME} 100 \\
-LanceDB & lancedb 0.40.0 (first run), 0.41.0 (repeats) & \texttt{IVF\_PQ}, \texttt{nprobes} 50, \texttt{refine\_factor} 30 \\
+Redis & 8.10.3 & HNSW, \texttt{EF\_RUNTIME} 100 \\
+LanceDB & lancedb 0.41.0 & \texttt{IVF\_PQ}, \texttt{nprobes} 50, \texttt{refine\_factor} 30 \\
 Chroma & 1.5.9 & HNSW cosine (defaults) \\
 \bottomrule
 \end{tabular}
@@ -34,7 +34,8 @@ Chroma & 1.5.9 & HNSW cosine (defaults) \\
 one Kaggle session, two T4 GPUs, four CPUs, 31.3\,GiB of memory; embeddings bge-base-en-v1.5, 768
 dimensions, unit length. The setup scripts pin the server versions of Qdrant, Elasticsearch,
 OpenSearch, Weaviate, PostgreSQL's pgvector, OPA and OpenFGA; Redis comes from its package repository
-and the embedded stores from PyPI, so their versions moved between the first run and the three repeats, as the logs record.}
+and the embedded stores from PyPI; the logs record the same versions in all four runs, except psycopg (3.3.8 in the seed-7 run,
+3.3.6 in the repeats).}
 \label{tab:app-x0-settings}
 \end{table}
 
@@ -55,7 +56,7 @@ excluded.
 \toprule
 Experiment & Platform & Wall clock & Hours \\
 \midrule
-End-to-end, first run (seed 7) & Kaggle, $2\times$T4, 4 CPUs & 2.8\,h & 2.8 \\
+End-to-end, seed 7 & Kaggle, $2\times$T4, 4 CPUs & 2.8\,h & 2.8 \\
 End-to-end, three repeats (X8) & Kaggle, $2\times$T4, 4 CPUs, one session each & 2.9 to 3.3\,h each & 9.2 \\
 End-to-end, OpenFGA, four runs & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.6 to 0.9\,h each & 3.3 \\
 End-to-end, exposure, four seeds & Kaggle, $2\times$T4, 4 CPUs, one session each & 0.1\,h each & 0.5 \\

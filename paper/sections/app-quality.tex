@@ -1,5 +1,5 @@
 % Appendix: the audit and its diagnosis in detail. Moved from Section~\ref{sec:quality}. Sources:
-% evidence/kaggle-scale-run-2026-10-24.md (X0), evidence/x8-run.md (X8 repeats),
+% evidence/x0-scale-run.md (X0), evidence/x8-run.md (X8 repeats),
 % evidence/x1-underretrieval-run1.md and evidence/x1-underretrieval-run2.md (X1; run 2 is the
 % reference for every X1 number), investigations/x0-x1-pgvector-gap.md and
 % investigations/filtered-recall-gaps.md (mechanisms).
@@ -20,16 +20,16 @@ which Section~\ref{sec:quality} summarizes. Appendix~\ref{app:ledger} lists the 
 \cmidrule(lr){2-4}\cmidrule(lr){5-6}
 Store, under this layer's schema & Recall@5 & Recall@10 & Range@10 & judy & others & p50 (ms) \\
 \midrule
-FAISS (flat, exact) & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 346--368 \\
-Redis & 0.982 & 0.981 & 0.012 & 0.998 & 0.982 & 28--30 \\
-Elasticsearch & 0.942 & 0.949 & 0.019 & 0.987 & 0.941 & 8--9 \\
-OpenSearch & 0.942 & 0.935 & 0.004 & 0.998 & 0.941 & 7 \\
-Weaviate & 0.899 & 0.902 & 0.021 & 1.000 & 0.876 & 7--8 \\
-Chroma & 0.877 & 0.879 & 0.010 & 0.987 & 0.876 & 1432--1481 \\
-LanceDB & 0.840 & 0.874 & 0.039 & 0.949 & 0.821 & 22--25 \\
-pgvector, fast mode (2 runs) & 0.695 & 0.732 & 0.000 & 0.724 & 0.686 & 6.5--8.1 \\
+FAISS (flat, exact) & 1.000 & 1.000 & 0.000 & 1.000 & 1.000 & 343--368 \\
+Redis & 0.984 & 0.985 & 0.017 & 0.998 & 0.982 & 30 \\
+Elasticsearch & 0.945 & 0.952 & 0.021 & 0.987 & 0.941 & 8--9 \\
+OpenSearch & 0.942 & 0.936 & 0.005 & 0.998 & 0.941 & 7 \\
+Weaviate & 0.900 & 0.903 & 0.016 & 1.000 & 0.876 & 7--8 \\
+Chroma & 0.875 & 0.878 & 0.007 & 0.987 & 0.876 & 1432--1481 \\
+LanceDB & 0.845 & 0.884 & 0.034 & 0.949 & 0.821 & 24--25 \\
+pgvector, fast mode (2 runs) & 0.701 & 0.729 & 0.006 & 0.724 & 0.686 & 7.8--8.1 \\
 pgvector, exact mode (2 runs) & 0.993 & 0.993 & 0.002 & & & 386--399 \\
-Qdrant & 0.557 & 0.552 & 0.026 & 1.000 & 0.523 & 4.3--4.7 \\
+Qdrant & 0.550 & 0.544 & 0.030 & 1.000 & 0.523 & 4.5--4.7 \\
 \bottomrule
 \end{tabular}
 \caption{Retrieval quality in the enterprise scenario (Section~\ref{sec:e2e}), four runs of 1,105
@@ -46,14 +46,14 @@ Table~\ref{tab:qual-x0} shows the spread that Section~\ref{sec:qual-audit} summa
 Appendix~\ref{app:settings}. The rows compare configurations, not stores, and the corpus, in which only one of
 twenty near-identical tenant copies of a document passes a person's filter, is a hard case for graph
 indexes. Every store's loss is concentrated where the
-readable set is far from the question. Of pgvector's first-run empty answers, eight were on red-team prompts and two on
-questions about documents the person could not read. In the other two runs the
-same configuration searched exactly, at fifty times the latency, and one of them still gave one
+readable set is far from the question. pgvector's empty answers in these runs, seven in the seed-17 run and one in the seed-11
+run, were all on red-team prompts. In the seed-11 and seed-13 runs the
+same configuration searched exactly, at fifty times the latency, and the seed-11 run still gave one
 person one empty answer, as did another exact run of Section~\ref{sec:e2e}; we have not explained
 these two. On targeted
-questions in the first run, 59.6\% of Qdrant's top five were shared FiQA passages where exact search
-returned none, and the model found the target document for only 39.9\% of targeted questions
-(33.8\% to 39.9\% over the four runs).
+questions in the first execution of the seed-7 run, 59.6\% of Qdrant's top five were shared FiQA passages where exact search
+returned none, and in the execution the artifact holds the model found the target document for only 34.0\% of targeted questions
+(33.8\% to 39.6\% over the four runs).
 
 \subsection{Qdrant}\label{app:qdrant}
 
@@ -134,7 +134,7 @@ before the first run; P5 is exploratory, specified in writing after the first ru
 before the second ran.
 Under the default configuration, after a vacuum, only 0.9\% of the searches on the scenario's questions used the HNSW
 index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values, 98.1\% used
-the HNSW index, with recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5
+the HNSW index, with recall@5 of 0.680 at 22\,ms, against 0.691 in the first execution of the audit's seed-7 run and 0.703 in the execution the artifact holds (P5
 confirmed; P4, which had predicted that generic plans make no difference, falsified,
 with recall@10 lower by 0.343 under custom plans).
 

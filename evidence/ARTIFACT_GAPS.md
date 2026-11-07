@@ -53,8 +53,11 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
 - The Kaggle kernels are private. Their code is in `kaggle/`, and their outputs and logs are in `evidence/raw/` and in the
   public dataset `wardowl-paper-evidence`, but their version history is not public. Any sentence in the paper that rests on that
   history can't be checked by a stranger until they are public or the sentence changes.
-- X0 and X1 run 1 are being run again (November 2026) with the same code and session type; their outputs here will be replaced
-  by the new runs' outputs.
+- X0 was executed again on 2026-11-07 with the same notebook, seed and session type, and the artifact holds that execution
+  (`evidence/raw/KAGGLE_KERNELS.tsv`, `evidence/x0-scale-run.md`); X1 run 1 is being executed again the same way (started
+  2026-11-07 03:33 UTC). The first executions (2026-10-24 and 2026-10-26) are not in the artifact. The pre-registrations of X1,
+  X2 to X5 and X8 quote the printed aggregates of X0's first execution, and the notes that judge a prediction against an X0
+  number say which execution it comes from.
 - The kernels `x1run2-prep`, an abandoned CPU attempt, and `x1run2-prep-tpu` hold no output files. Their last version is a stub
   that prints "superseded" (`kaggle/x1run2/prep-stop/`, `kaggle/x1run2/tpu-stop/`), pushed to stop them, so nothing from those
   attempts survives. No number in the paper comes from them: `x1run2-prep-gpu` did the preparation.
@@ -62,8 +65,8 @@ oracle ran inside the kernel and was not recorded hit by hit. A later rerun woul
 ## Pinning and rebuilding
 
 - **The Kaggle runs do not pin their Python dependencies.** They install `sentence-transformers>=3`, `datasets>=2.19` and so on,
-  and record the versions afterwards in `results.json`. X0 and the later runs differ in weaviate-client and lancedb, and in Redis's
-  server version.
+  and record the versions afterwards in `results.json`. The executions in the artifact record the same versions, except psycopg
+  (3.3.8 in X0, 3.3.6 in X8 and X8-FGA).
 - **Corpora and models carry no revision in the code** (`load_dataset("BeIR/fiqa", ...)`, `load_dataset("BeIR/msmarco", ...)`, and
   the model names). `REPRODUCE.md` gives the revisions read on 2026-10-31 and the digests a rebuild can be compared with.
 - **Rebuilding has not been tested.** The left-out CI artifacts expire on 2026-11-28 (`x3x6-data`) and on 2027-01-27 (the rest),

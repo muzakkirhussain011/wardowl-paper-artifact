@@ -1,83 +1,83 @@
-6767:C 24 Oct 2026 21:41:54.500 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
-6767:C 24 Oct 2026 21:41:54.500 * Redis version=8.10.2, bits=64, commit=00000000, modified=1, pid=6767, just started
-6767:C 24 Oct 2026 21:41:54.500 * Configuration loaded
-6767:M 24 Oct 2026 21:41:54.501 * monotonic clock: POSIX clock_gettime
-6767:M 24 Oct 2026 21:41:54.502 * Running mode=standalone, port=6379.
-6767:M 24 Oct 2026 21:41:54.502 * <bf> RedisBloom version 8.10.1 (Git=unknown)
-6767:M 24 Oct 2026 21:41:54.502 * <bf> Registering configuration options: [
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ bf-error-rate       :      0.01 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ bf-initial-size     :       100 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ bf-expansion-factor :         2 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ cf-bucket-size      :         2 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ cf-initial-size     :      1024 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ cf-max-iterations   :        20 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ cf-expansion-factor :         1 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> 	{ cf-max-expansions   :        32 }
-6767:M 24 Oct 2026 21:41:54.502 * <bf> ]
-6767:M 24 Oct 2026 21:41:54.503 * Module 'bf' loaded from /usr/lib/redis/modules/redisbloom.so
-6767:M 24 Oct 2026 21:41:54.507 * <search> search-workers default: 4 (min of MAX_WORKER_THREADS=16 and CPU cores)
-6767:M 24 Oct 2026 21:41:54.507 * <search> Redis version found by RedisSearch : 8.10.2 - oss
-6767:M 24 Oct 2026 21:41:54.507 * <search> RediSearch version 8.10.1 (Git=)
-6767:M 24 Oct 2026 21:41:54.507 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, oom policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, 
-6767:M 24 Oct 2026 21:41:54.507 * <search> Initialized thread pools!
-6767:M 24 Oct 2026 21:41:54.507 * <search> Enabled workers threadpool of size 4
-6767:M 24 Oct 2026 21:41:54.507 * <search> Subscribe to config changes
-6767:M 24 Oct 2026 21:41:54.507 * <search> Subscribe to cluster slot migration events
-6767:M 24 Oct 2026 21:41:54.507 * <search> Subscribe to cluster topology change events
-6767:M 24 Oct 2026 21:41:54.507 * <search> Enabled role change notification
-6767:M 24 Oct 2026 21:41:54.507 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
-6767:M 24 Oct 2026 21:41:54.508 * Module 'search' loaded from /usr/lib/redis/modules/redisearch.so
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Created new data type 'ReJSON-RL'
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> version: 81000 git sha: unknown branch: unknown
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V1 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V2 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V3 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V4 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V5 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V6 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V7 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Exported RedisJSON_V8 API
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Enabled diskless replication
-6767:M 24 Oct 2026 21:41:54.508 * <ReJSON> Initialized shared string cache, thread safe: true.
-6767:M 24 Oct 2026 21:41:54.508 * Module 'ReJSON' loaded from /usr/lib/redis/modules/rejson.so
-6767:M 24 Oct 2026 21:41:54.508 * <search> Acquired RedisJSON_V8 API
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> RedisTimeSeries version 81001, git_sha=
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Redis version found by RedisTimeSeries : 8.10.2 - oss
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Registering configuration options: [
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-compaction-policy   :              }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-num-threads         :            3 }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-libmr-protocol      :     INTERNAL }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-retention-policy    :            0 }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-duplicate-policy    :        block }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-chunk-size-bytes    :         4096 }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-encoding            :   compressed }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-ignore-max-time-diff:            0 }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-ignore-max-val-diff :     0.000000 }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> 	{ ts-topology-events     :         true }
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> ]
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Detected redis oss (cluster-enabled=no)
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Subscribe to ASM events
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Subscribe to topology changes events
-6767:M 24 Oct 2026 21:41:54.509 * <timeseries> Enabled diskless replication
-6767:M 24 Oct 2026 21:41:54.509 * Module 'timeseries' loaded from /usr/lib/redis/modules/redistimeseries.so
-6767:M 24 Oct 2026 21:41:54.510 * Server initialized
-6767:M 24 Oct 2026 21:41:54.510 * Ready to accept connections tcp
-6767:M 24 Oct 2026 21:41:54.510 # WARNING: Redis does not require authentication. Redis will accept connections from any IP address on the configured network interface.
-6767:M 24 Oct 2026 21:41:55.613 * <search> Creating vector index of type HNSW. Required memory for a block of 1024 vectors: 3331008B
-6767:M 24 Oct 2026 21:41:55.613 * <search> Successfully created index wardowl_enterprise
-6767:M 24 Oct 2026 21:41:55.835 * <search> DocTable capacity increase from 1000 to 1501
-6767:M 24 Oct 2026 21:41:55.986 * <search> DocTable capacity increase from 1501 to 2252
-6767:M 24 Oct 2026 21:41:56.163 * <search> DocTable capacity increase from 2252 to 3379
-6767:M 24 Oct 2026 21:41:56.366 * <search> DocTable capacity increase from 3379 to 5069
-6767:M 24 Oct 2026 21:41:56.799 * <search> DocTable capacity increase from 5069 to 7604
-6767:M 24 Oct 2026 21:41:57.376 * <search> DocTable capacity increase from 7604 to 11407
-6767:M 24 Oct 2026 21:41:58.244 * <search> DocTable capacity increase from 11407 to 17111
-6767:M 24 Oct 2026 21:41:59.749 * <search> DocTable capacity increase from 17111 to 25667
-6767:M 24 Oct 2026 21:42:01.888 * <search> DocTable capacity increase from 25667 to 38501
-6767:M 24 Oct 2026 21:42:05.851 * <search> DocTable capacity increase from 38501 to 57752
-6767:M 24 Oct 2026 21:42:11.680 * <search> DocTable capacity increase from 57752 to 86629
-6767:M 24 Oct 2026 21:42:24.513 * <search> DocTable capacity increase from 86629 to 129944
-6767:signal-handler (1792878257) Received SIGTERM scheduling shutdown...
-6767:signal-handler (1792878257) Received SIGTERM scheduling shutdown...
-6767:M 24 Oct 2026 21:44:17.853 * User requested shutdown...
-6767:M 24 Oct 2026 21:44:17.853 # Redis is now ready to exit, bye bye...
+6792:C 07 Nov 2026 03:17:50.090 * oO0OoO0OoO0Oo Redis is starting oO0OoO0OoO0Oo
+6792:C 07 Nov 2026 03:17:50.090 * Redis version=8.10.3, bits=64, commit=00000000, modified=1, pid=6792, just started
+6792:C 07 Nov 2026 03:17:50.090 * Configuration loaded
+6792:M 07 Nov 2026 03:17:50.090 * monotonic clock: POSIX clock_gettime
+6792:M 07 Nov 2026 03:17:50.091 * Running mode=standalone, port=6379.
+6792:M 07 Nov 2026 03:17:50.092 * <bf> RedisBloom version 8.10.1 (Git=unknown)
+6792:M 07 Nov 2026 03:17:50.092 * <bf> Registering configuration options: [
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ bf-error-rate       :      0.01 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ bf-initial-size     :       100 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ bf-expansion-factor :         2 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ cf-bucket-size      :         2 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ cf-initial-size     :      1024 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ cf-max-iterations   :        20 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ cf-expansion-factor :         1 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> 	{ cf-max-expansions   :        32 }
+6792:M 07 Nov 2026 03:17:50.092 * <bf> ]
+6792:M 07 Nov 2026 03:17:50.092 * Module 'bf' loaded from /usr/lib/redis/modules/redisbloom.so
+6792:M 07 Nov 2026 03:17:50.096 * <search> search-workers default: 4 (min of MAX_WORKER_THREADS=16 and CPU cores)
+6792:M 07 Nov 2026 03:17:50.096 * <search> Redis version found by RedisSearch : 8.10.3 - oss
+6792:M 07 Nov 2026 03:17:50.096 * <search> RediSearch version 8.10.1 (Git=)
+6792:M 07 Nov 2026 03:17:50.097 * <search> gc: ON, prefix min length: 2, min word length to stem: 4, prefix max expansions: 200, query timeout (ms): 500, timeout policy: return, oom policy: return, cursor read size: 1000, cursor max idle (ms): 300000, max doctable size: 1000000, max number of search results:  1000000, default scorer: BM25STD, 
+6792:M 07 Nov 2026 03:17:50.097 * <search> Initialized thread pools!
+6792:M 07 Nov 2026 03:17:50.097 * <search> Enabled workers threadpool of size 4
+6792:M 07 Nov 2026 03:17:50.097 * <search> Subscribe to config changes
+6792:M 07 Nov 2026 03:17:50.097 * <search> Subscribe to cluster slot migration events
+6792:M 07 Nov 2026 03:17:50.097 * <search> Subscribe to cluster topology change events
+6792:M 07 Nov 2026 03:17:50.097 * <search> Enabled role change notification
+6792:M 07 Nov 2026 03:17:50.097 * <search> Cluster configuration: AUTO partitions, type: 0, coordinator timeout: 0ms
+6792:M 07 Nov 2026 03:17:50.097 * Module 'search' loaded from /usr/lib/redis/modules/redisearch.so
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Created new data type 'ReJSON-RL'
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> version: 81000 git sha: unknown branch: unknown
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V1 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V2 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V3 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V4 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V5 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V6 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V7 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Exported RedisJSON_V8 API
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Enabled diskless replication
+6792:M 07 Nov 2026 03:17:50.098 * <ReJSON> Initialized shared string cache, thread safe: true.
+6792:M 07 Nov 2026 03:17:50.098 * Module 'ReJSON' loaded from /usr/lib/redis/modules/rejson.so
+6792:M 07 Nov 2026 03:17:50.098 * <search> Acquired RedisJSON_V8 API
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> RedisTimeSeries version 81001, git_sha=
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Redis version found by RedisTimeSeries : 8.10.3 - oss
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Registering configuration options: [
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-compaction-policy   :              }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-num-threads         :            3 }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-libmr-protocol      :     INTERNAL }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-retention-policy    :            0 }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-duplicate-policy    :        block }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-chunk-size-bytes    :         4096 }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-encoding            :   compressed }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-ignore-max-time-diff:            0 }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-ignore-max-val-diff :     0.000000 }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> 	{ ts-topology-events     :         true }
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> ]
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Detected redis oss (cluster-enabled=no)
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Subscribe to ASM events
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Subscribe to topology changes events
+6792:M 07 Nov 2026 03:17:50.099 * <timeseries> Enabled diskless replication
+6792:M 07 Nov 2026 03:17:50.099 * Module 'timeseries' loaded from /usr/lib/redis/modules/redistimeseries.so
+6792:M 07 Nov 2026 03:17:50.099 * Server initialized
+6792:M 07 Nov 2026 03:17:50.099 * Ready to accept connections tcp
+6792:M 07 Nov 2026 03:17:50.099 # WARNING: Redis does not require authentication. Redis will accept connections from any IP address on the configured network interface.
+6792:M 07 Nov 2026 03:17:51.209 * <search> Creating vector index of type HNSW. Required memory for a block of 1024 vectors: 3331008B
+6792:M 07 Nov 2026 03:17:51.210 * <search> Successfully created index wardowl_enterprise
+6792:M 07 Nov 2026 03:17:51.438 * <search> DocTable capacity increase from 1000 to 1501
+6792:M 07 Nov 2026 03:17:51.586 * <search> DocTable capacity increase from 1501 to 2252
+6792:M 07 Nov 2026 03:17:51.759 * <search> DocTable capacity increase from 2252 to 3379
+6792:M 07 Nov 2026 03:17:51.986 * <search> DocTable capacity increase from 3379 to 5069
+6792:M 07 Nov 2026 03:17:52.413 * <search> DocTable capacity increase from 5069 to 7604
+6792:M 07 Nov 2026 03:17:52.981 * <search> DocTable capacity increase from 7604 to 11407
+6792:M 07 Nov 2026 03:17:53.891 * <search> DocTable capacity increase from 11407 to 17111
+6792:M 07 Nov 2026 03:17:55.344 * <search> DocTable capacity increase from 17111 to 25667
+6792:M 07 Nov 2026 03:17:57.530 * <search> DocTable capacity increase from 25667 to 38501
+6792:M 07 Nov 2026 03:18:00.994 * <search> DocTable capacity increase from 38501 to 57752
+6792:M 07 Nov 2026 03:18:06.814 * <search> DocTable capacity increase from 57752 to 86629
+6792:M 07 Nov 2026 03:18:20.627 * <search> DocTable capacity increase from 86629 to 129944
+6792:signal-handler (1794021612) Received SIGTERM scheduling shutdown...
+6792:signal-handler (1794021612) Received SIGTERM scheduling shutdown...
+6792:M 07 Nov 2026 03:20:12.152 * User requested shutdown...
+6792:M 07 Nov 2026 03:20:12.152 # Redis is now ready to exit, bye bye...

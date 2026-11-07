@@ -3,7 +3,7 @@
 % sec:qual-qdrant, sec:qual-pgvector, sec:qual-frontiers, fig:qual-frontiers. The full text is in
 % Appendices~\ref{app:quality} (audit, diagnosis, tab:qual-x0, tab:qual-qdrant), \ref{app:frontier}
 % (frontier, tab:qual-frontiers, tab:qual-x2tests) and \ref{sec:qual-size} (filter size, tab:qual-size).
-% Sources: evidence/kaggle-scale-run-2026-10-24.md, evidence/x8-run.md (per-run recall@10 of
+% Sources: evidence/x0-scale-run.md, evidence/x8-run.md (per-run recall@10 of
 % fig:qual-audit), evidence/x1-underretrieval-run2.md, evidence/x2-x5-run1.md (section "Frontier data":
 % fig:qual-frontiers; recall is the three-build mean, QPS the build-0 job's), evidence/x3-x6-run1.md.
 
@@ -33,55 +33,55 @@ where the range over builds is larger, as for Qdrant, we say so.
   clip=false,
 ]
 % range over the four runs
-\addplot[gray!70, line width=1.6pt] coordinates {(0.976,8)(0.988,8)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.940,7)(0.959,7)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.933,6)(0.938,6)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.892,5)(0.913,5)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.873,4)(0.883,4)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.860,3)(0.899,3)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.976,8)(0.993,8)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.940,7)(0.961,7)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.933,6)(0.939,6)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.897,5)(0.913,5)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.873,4)(0.880,4)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.866,3)(0.900,3)};
 \addplot[gray!70, line width=1.6pt] coordinates {(0.992,2)(0.994,2)};
-\addplot[gray!70, line width=1.6pt] coordinates {(0.535,1)(0.561,1)};
+\addplot[gray!70, line width=1.6pt] coordinates {(0.530,1)(0.561,1)};
 % one circle per run: seeds 7, 11, 13, 17
 \addplot[only marks, mark=o, mark size=1.5pt, black] coordinates {
   (1.000,9)(1.000,9)(1.000,9)(1.000,9)
-  (0.980,8)(0.982,8)(0.988,8)(0.976,8)
-  (0.948,7)(0.940,7)(0.959,7)(0.948,7)
-  (0.938,6)(0.936,6)(0.933,6)(0.934,6)
-  (0.892,5)(0.902,5)(0.913,5)(0.902,5)
-  (0.883,4)(0.880,4)(0.873,4)(0.880,4)
-  (0.860,3)(0.866,3)(0.899,3)(0.871,3)
-  (0.732,2)(0.992,2)(0.994,2)(0.732,2)
-  (0.561,1)(0.535,1)(0.561,1)(0.549,1)
+  (0.993,8)(0.982,8)(0.988,8)(0.976,8)
+  (0.961,7)(0.940,7)(0.959,7)(0.948,7)
+  (0.939,6)(0.936,6)(0.933,6)(0.934,6)
+  (0.897,5)(0.902,5)(0.913,5)(0.902,5)
+  (0.878,4)(0.880,4)(0.873,4)(0.880,4)
+  (0.900,3)(0.866,3)(0.899,3)(0.871,3)
+  (0.725,2)(0.992,2)(0.994,2)(0.732,2)
+  (0.530,1)(0.535,1)(0.561,1)(0.549,1)
 };
-\node[font=\scriptsize, anchor=north] at (axis cs:0.732,1.8) {fast mode (2 runs)};
+\node[font=\scriptsize, anchor=north] at (axis cs:0.729,1.8) {fast mode (2 runs)};
 \node[font=\scriptsize, anchor=north east] at (axis cs:0.998,1.8) {exact mode (2 runs)};
 % the columns to the right: mean over runs and range of per-run p50
 \node[font=\scriptsize\bfseries, anchor=west] at (axis cs:1.015,9.95) {Mean};
 \node[font=\scriptsize\bfseries, anchor=west] at (axis cs:1.125,9.95) {p50 (ms)};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.015,9) {1.000};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.125,9) {346--368};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,8) {0.981};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.125,8) {28--30};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,7) {0.949};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,9) {343--368};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,8) {0.985};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,8) {30};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,7) {0.952};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,7) {8--9};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,6) {0.935};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,6) {0.936};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,6) {7};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,5) {0.902};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,5) {0.903};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,5) {7--8};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,4) {0.879};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,4) {0.878};
 \node[font=\scriptsize, anchor=west] at (axis cs:1.125,4) {1432--1481};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,3) {0.874};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.125,3) {22--25};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,2) {0.732; 0.993};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.125,2) {6.5--8.1; 386--399};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.015,1) {0.552};
-\node[font=\scriptsize, anchor=west] at (axis cs:1.125,1) {4.3--4.7};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,3) {0.884};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,3) {24--25};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,2) {0.729; 0.993};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,2) {7.8--8.1; 386--399};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.015,1) {0.544};
+\node[font=\scriptsize, anchor=west] at (axis cs:1.125,1) {4.5--4.7};
 \end{axis}
 \end{tikzpicture}
 \caption{Recall@10 in the enterprise scenario at the settings of Appendix~\ref{app:settings}, some tuned and some default,
 four runs (seeds 7, 11, 13, 17). Each circle is one run and each bar the range over runs, except pgvector's, which spans only its
 two exact-mode runs; pgvector ran in one of two modes per run (Section~\ref{sec:qual-pgvector}), and its right-hand values are per
-mode, fast then exact. Redis and LanceDB changed version after the first run (Appendix~\ref{sec:e2e-setup}). p50 is the range of
+mode, fast then exact. p50 is the range of
 per-run median retrieval latency. Table~\ref{tab:qual-x0} in Appendix~\ref{app:audit} adds recall@5 and overlap by
 person type.}
 \label{fig:qual-audit}
@@ -90,7 +90,7 @@ person type.}
 The enterprise scenario (Section~\ref{sec:e2e}) holds 107,540 chunks in 20 tenants. Figure~\ref{fig:qual-audit} shows
 the spread at the settings of Appendix~\ref{app:settings}, some tuned (pgvector's iterative scans, LanceDB's re-ranking) and some defaults.
 Mean recall@10 over the four runs
-ranged from 0.55 for Qdrant (0.535 in its worst run) to 0.98 for Redis across the eight approximate stores, with
+ranged from 0.54 for Qdrant (0.530 in its worst run) to 0.98 for Redis across the eight approximate stores, with
 pgvector in its fast mode; the exact control, FAISS, scored 1.000 and pgvector in its exact mode 0.993. At the stores' own defaults the same
 corpus gave pgvector 0.112 and LanceDB 0.439 (Table~\ref{tab:qual-frontiers}). The figure
 compares configurations, not stores, and its numbers hold for this corpus and question mix. In this corpus only one of twenty near-identical tenant copies of a document
@@ -98,9 +98,10 @@ passes a person's filter, and Section~\ref{sec:qual-qdrant} shows that Qdrant's 
 frontier experiment, Qdrant's as-run setting scored 0.576 on these 1,105 questions and 0.663 on all 1,468 scorable pairs (0.656 on the diagnosis grid below), and pgvector's custom plans 0.730 and 0.661. No store other than pgvector moved its recall@10 by more than 0.04 across the runs.
 
 Two failures stand out. pgvector gave empty answers to questions from some of the least-privileged people of the scenario, although
-each could read 624 chunks: ten empty answers in the first run, on nine people who each got hits on three or four of their five questions, and seven in another
-run, on seven people. The evaluated release called these empty
-answers complete. In the other two runs the same configuration searched exactly, at fifty times the latency. Qdrant never
+each could read 624 chunks: seven empty answers in the seed-17 run, on seven people who each got hits on their other four questions, and one in the
+seed-11 run. The evaluated release called these empty
+answers complete. In the seed-11 and seed-13 runs the same configuration searched exactly, at fifty times the latency; in the seed-7 run it
+searched fast, like seed 17, and left no answer empty. Qdrant never
 returned a short answer in these runs, yet for ordinary employees it returned only about half of the exact top five (0.52 in the first
 run), while for the least-privileged people it was perfect. pgvector thus \emph{under-retrieves}, which a count can detect,
 and also returns wrong chunks; Qdrant only \emph{mis-retrieves}, which only an exact baseline reveals. We pre-registered
@@ -140,7 +141,7 @@ The layer binds the filter's values and $k$ as parameters. psycopg prepares a st
 connection~\cite{psycopg2026prepared}; PostgreSQL then uses a generic plan when its estimated cost is not much higher than the custom
 plans' average~\cite{postgresql2026prepare}, and that plan reads the rows the GIN index returns and sorts them: an exact search. Under the default configuration, after a vacuum, only 0.9\% of the searches on
 the scenario's questions used the HNSW index, and recall@5 was 0.996 at a median of 362\,ms; planned with their own values, 98.1\% used it, with
-recall@5 of 0.680 at 22\,ms, against 0.691 in the audit's first run (P5 confirmed, an exploratory hypothesis specified in writing after the grid's
+recall@5 of 0.680 at 22\,ms, against 0.691 in the first execution of the audit's seed-7 run and 0.703 in the execution the artifact holds (P5 confirmed, an exploratory hypothesis specified in writing after the grid's
 first run and before its second; P4, which had predicted that generic plans make no difference, falsified, with recall@10 lower by 0.343 under custom
 plans).
 

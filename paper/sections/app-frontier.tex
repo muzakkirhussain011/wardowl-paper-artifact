@@ -54,10 +54,13 @@ with pgvector 0.8.7 (the audit ran PostgreSQL 16.15), Qdrant 1.19.2, Elasticsear
 validity checks held. Every exact setting, and FAISS, returned the exact answer to every question it
 ran (recall@10 1.000); no hit was unreadable and no canary appeared; and every subject granted 0.5\%
 or more could read within 25\% of its target share. Eight of the nine stores of the audit reproduced
-the recall@10 of its first run (not the four-run means of Table~\ref{tab:qual-x0}) within 0.03 at its
+the recall@10 of the first execution of its seed-7 run, the values recorded beside the X2 verdicts in \path{evidence/x2-x5-run1.md}
+(not the four-run means of Table~\ref{tab:qual-x0}), within 0.03 at its
 settings, pgvector among
-them at 0.730 against 0.732, with every search planned with its own values. Chroma reached 0.990
-against 0.883: at about 1\,s a retrieval its share of the job's time covered only 381 to 407 of the
+them at 0.730 against 0.732, with every search planned with its own values; against the execution the artifact holds
+(Appendix~\ref{sec:e2e-setup}) seven of the nine are within 0.03, Qdrant's 0.576 against 0.530 being the other exception, which
+still meets the pre-registered rule of at least seven. Chroma reached 0.990
+against 0.883 (0.878 in the artifact's execution): at about 1\,s a retrieval its share of the job's time covered only 381 to 407 of the
 1,468 questions, the first questions of each person, which for most people ask about a document they
 may read, the kind it answered best in the audit (overlap@5 of 0.989, against 0.82 to 0.84 for the
 other kinds), a reading consistent with the gap though the run did not print recall by kind. On
