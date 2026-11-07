@@ -1,0 +1,862 @@
+\relax 
+\providecommand\hyper@newdestlabel[2]{}
+\providecommand\HyField@AuxAddToFields[1]{}
+\providecommand\HyField@AuxAddToCoFields[2]{}
+\citation{lewis2020retrievalaugmented}
+\citation{owasp2025llm082025}
+\citation{roychowdhury2024confusedpilot}
+\citation{stonebraker1974access}
+\citation{buttcher2005security}
+\citation{wang2017sidechannel,espiritu2026plaintext}
+\citation{bailey2006secure}
+\citation{pang2019zanzibar}
+\citation{aws2026access}
+\citation{zhong2026honeybee,han2026dont}
+\citation{nvd2025cve202565111}
+\citation{patel2024acorn,lim2026revisiting}
+\citation{rizvi2004extending}
+\@writefile{toc}{\contentsline {section}{\numberline {1}Introduction}{1}{section.1}\protected@file@percent }
+\newlabel{sec:intro}{{1}{1}{Introduction}{section.1}{}}
+\citation{wang2007correctness}
+\@writefile{toc}{\contentsline {paragraph}{Contributions.}{2}{section*.1}\protected@file@percent }
+\citation{wang2017sidechannel,espiritu2026plaintext}
+\citation{malkov2020efficient}
+\citation{subramanya2019diskann}
+\citation{douze2024faiss}
+\citation{patel2024acorn,chronis2025filtered}
+\citation{jones2020oauth}
+\citation{pang2019zanzibar}
+\citation{openfga2026perform,authzed2026protecting,opa2026evaluating,cerbos2026cerbos}
+\@writefile{toc}{\contentsline {section}{\numberline {2}Problem Statement and Threat Model}{3}{section.2}\protected@file@percent }
+\newlabel{sec:problem}{{2}{3}{Problem Statement and Threat Model}{section.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.1}Permission-aware top-$k$ retrieval}{3}{subsection.2.1}\protected@file@percent }
+\newlabel{sec:prob-setup}{{2.1}{3}{\texorpdfstring {Permission-aware top-$k$ retrieval}{Permission-aware top-k retrieval}}{subsection.2.1}{}}
+\citation{wang2007correctness}
+\citation{rizvi2004extending}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.2}Correctness criteria}{4}{subsection.2.2}\protected@file@percent }
+\newlabel{sec:prob-criteria}{{2.2}{4}{Correctness criteria}{subsection.2.2}{}}
+\newlabel{def:criteria}{{1}{4}{Criteria for permission-aware top-$k$ retrieval}{definition.1}{}}
+\citation{hardy1988confused}
+\citation{zou2025poisonedrag}
+\citation{zeng2024good}
+\newlabel{prop:reduction}{{1}{5}{Security does not depend on the filter or the index}{observation.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Trusted computing base.}{5}{section*.2}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Staleness and count certificates.}{5}{section*.3}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.3}Threat model}{5}{subsection.2.3}\protected@file@percent }
+\newlabel{sec:prob-threat}{{2.3}{5}{Threat model}{subsection.2.3}{}}
+\citation{carlini2019secret}
+\citation{hanley1983if}
+\citation{cedar2026cedarpolicy}
+\@writefile{toc}{\contentsline {subsection}{\numberline {2.4}Metrics}{6}{subsection.2.4}\protected@file@percent }
+\newlabel{sec:prob-metrics}{{2.4}{6}{Metrics}{subsection.2.4}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {3}The Enforcement Layer Under Test}{6}{section.3}\protected@file@percent }
+\newlabel{sec:system}{{3}{6}{The Enforcement Layer Under Test}{section.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Filter semantics.}{6}{section*.4}\protected@file@percent }
+\newlabel{eq:sys-in}{{1}{6}{Filter semantics}{equation.1}{}}
+\citation{rigger2020testing}
+\citation{maciver2019hypothesis}
+\citation{xie2025toward,wang2025towards}
+\@writefile{toc}{\contentsline {paragraph}{Retrieval.}{7}{section*.5}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Completeness.}{7}{section*.6}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {4}Differential Conformance Testing of Filter Semantics}{7}{section.4}\protected@file@percent }
+\newlabel{sec:conformance}{{4}{7}{Differential Conformance Testing of Filter Semantics}{section.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{The kit.}{7}{section*.7}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The campaign.}{7}{section*.8}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {1}{\ignorespaces This paper's findings on stores and engines. No row has been confirmed by the maintainers of the store or engine. Table~\ref {tab:conf-faults} in Appendix~\ref {sec:conf-results} gives all 31 rows, among them 18 that record the project's development before this paper.}}{8}{table.caption.9}\protected@file@percent }
+\providecommand*\caption@xref[2]{\@setref\relax\@undefined{#1}}
+\newlabel{tab:conf-findings}{{1}{8}{This paper's findings on stores and engines. No row has been confirmed by the maintainers of the store or engine. Table~\ref {tab:conf-faults} in Appendix~\ref {sec:conf-results} gives all 31 rows, among them 18 that record the project's development before this paper}{table.caption.9}{}}
+\citation{nvd2025cve202565111}
+\@writefile{toc}{\contentsline {section}{\numberline {5}Do Authorization Engines' Filters Agree With Their Checks?}{9}{section.5}\protected@file@percent }
+\newlabel{sec:engines}{{5}{9}{Do Authorization Engines' Filters Agree With Their Checks?}{section.5}{}}
+\@writefile{toc}{\contentsline {paragraph}{Agreement at one revision.}{9}{section*.10}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Revision skew and truncation.}{9}{section*.11}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {5.1}Revocation and faults}{9}{subsection.5.1}\protected@file@percent }
+\newlabel{sec:eng-revoke}{{5.1}{9}{Revocation and faults}{subsection.5.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {2}{\ignorespaces Median seconds from a revocation to the first of three consecutive retrievals without the revoked chunk; 40 trials per cell, the cache warmed just before. ``Shared'' polls a second replica sharing the cache through Redis. $\dagger $: at least one trial exceeded the stated bound, the ttl (none after invalidation, 1\,s for the replica) plus the engine's stated staleness, by more than the 1\,s we allowed for polling; Cerbos states no staleness.}}{10}{table.caption.12}\protected@file@percent }
+\newlabel{tab:eng-revoke}{{2}{10}{Median seconds from a revocation to the first of three consecutive retrievals without the revoked chunk; 40 trials per cell, the cache warmed just before. ``Shared'' polls a second replica sharing the cache through Redis. $\dagger $: at least one trial exceeded the stated bound, the ttl (none after invalidation, 1\,s for the replica) plus the engine's stated staleness, by more than the 1\,s we allowed for polling; Cerbos states no staleness}{table.caption.12}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {6}Retrieval Quality Under Permission-Shaped Filters}{10}{section.6}\protected@file@percent }
+\newlabel{sec:quality}{{6}{10}{Retrieval Quality Under Permission-Shaped Filters}{section.6}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {1}{\ignorespaces Recall@10 in the enterprise scenario at the settings of Appendix~\ref {app:settings}, some tuned and some default, four runs (seeds 7, 11, 13, 17). Each circle is one run and each bar the range over runs, except pgvector's, which spans only its two exact-mode runs; pgvector ran in one of two modes per run (Section~\ref {sec:qual-pgvector}), and its right-hand values are per mode, fast then exact. p50 is the range of per-run median retrieval latency. Table~\ref {tab:qual-x0} in Appendix~\ref {app:audit} adds recall@5 and overlap by person type.}}{11}{figure.caption.13}\protected@file@percent }
+\newlabel{fig:qual-audit}{{1}{11}{Recall@10 in the enterprise scenario at the settings of Appendix~\ref {app:settings}, some tuned and some default, four runs (seeds 7, 11, 13, 17). Each circle is one run and each bar the range over runs, except pgvector's, which spans only its two exact-mode runs; pgvector ran in one of two modes per run (Section~\ref {sec:qual-pgvector}), and its right-hand values are per mode, fast then exact. p50 is the range of per-run median retrieval latency. Table~\ref {tab:qual-x0} in Appendix~\ref {app:audit} adds recall@5 and overlap by person type}{figure.caption.13}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.1}An audit at the harness's settings}{11}{subsection.6.1}\protected@file@percent }
+\newlabel{sec:qual-audit}{{6.1}{11}{An audit at the harness's settings}{subsection.6.1}{}}
+\citation{qdrant2026search}
+\citation{couzon2026filtered}
+\citation{patel2024acorn}
+\citation{qdrant2026multitenancy}
+\citation{pgvector2026pgvector}
+\citation{psycopg2026prepared}
+\citation{postgresql2026prepare}
+\citation{postgresql2026selfuncs}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.2}Qdrant: a loss consistent with an islanded permitted subgraph}{12}{subsection.6.2}\protected@file@percent }
+\newlabel{sec:qual-qdrant}{{6.2}{12}{Qdrant: a loss consistent with an islanded permitted subgraph}{subsection.6.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.3}pgvector: a plan cache, then a scan budget}{12}{subsection.6.3}\protected@file@percent }
+\newlabel{sec:qual-pgvector}{{6.3}{12}{pgvector: a plan cache, then a scan budget}{subsection.6.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{The plan cache.}{12}{section*.14}\protected@file@percent }
+\citation{bajaj2016ms}
+\@writefile{toc}{\contentsline {paragraph}{The scan's budget.}{13}{section*.15}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.4}A native baseline, in a side run}{13}{subsection.6.4}\protected@file@percent }
+\newlabel{sec:qual-native}{{6.4}{13}{A native baseline, in a side run}{subsection.6.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {6.5}Recall against throughput}{13}{subsection.6.5}\protected@file@percent }
+\newlabel{sec:qual-frontiers}{{6.5}{13}{Recall against throughput}{subsection.6.5}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {2}{\ignorespaces Recall@10 against throughput on MS MARCO, one panel per store: square, the default; line, the five-level effort sweep; circles, store options; cross, the store's exact search. Recall is the mean over three builds and throughput that of the store's first build, in its own job on its own runner, so compare within a panel, not across panels. LanceDB's post-filter (0.175) lies below its panel. Table~\ref {tab:qual-frontiers} in Appendix~\ref {app:frontier} has these values and the stores not drawn.}}{14}{figure.caption.16}\protected@file@percent }
+\newlabel{fig:qual-frontiers}{{2}{14}{Recall@10 against throughput on MS MARCO, one panel per store: square, the default; line, the five-level effort sweep; circles, store options; cross, the store's exact search. Recall is the mean over three builds and throughput that of the store's first build, in its own job on its own runner, so compare within a panel, not across panels. LanceDB's post-filter (0.175) lies below its panel. Table~\ref {tab:qual-frontiers} in Appendix~\ref {app:frontier} has these values and the stores not drawn}{figure.caption.16}{}}
+\@writefile{toc}{\contentsline {paragraph}{Defaults and effort.}{14}{section*.17}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Correlation and selectivity.}{14}{section*.18}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Filter size.}{14}{section*.19}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {3}{\ignorespaces Repair: \emph  {report} adds no query; \emph  {exact} repairs without a bound; $B$ 10,000 is the default bound. Means over retrievals with $k = 10$. Short: fewer than $\min (k, R)$ hits, where $R$ is what the subject may read. False complete: the share of results marked complete that are not maximal. Triggered: time spent on the short result (count and repair) with exact repair without a bound; Qdrant on the enterprise corpus triggered only for the one person who may read nothing, and repaired nothing.}}{15}{table.caption.22}\protected@file@percent }
+\newlabel{tab:rep-summary}{{3}{15}{Repair: \emph {report} adds no query; \emph {exact} repairs without a bound; $B$ 10,000 is the default bound. Means over retrievals with $k = 10$. Short: fewer than $\min (k, R)$ hits, where $R$ is what the subject may read. False complete: the share of results marked complete that are not maximal. Triggered: time spent on the short result (count and repair) with exact repair without a bound; Qdrant on the enterprise corpus triggered only for the one person who may read nothing, and repaired nothing}{table.caption.22}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {7}Detecting and Repairing Under-Retrieval}{15}{section.7}\protected@file@percent }
+\newlabel{sec:repair}{{7}{15}{Detecting and Repairing Under-Retrieval}{section.7}{}}
+\@writefile{toc}{\contentsline {paragraph}{Design.}{15}{section*.20}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Evaluation.}{15}{section*.21}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Results.}{15}{section*.23}\protected@file@percent }
+\citation{buttcher2005security}
+\citation{maia2018www18}
+\@writefile{toc}{\contentsline {section}{\numberline {8}Side Channels in Filtered Retrieval}{16}{section.8}\protected@file@percent }
+\newlabel{sec:side}{{8}{16}{Side Channels in Filtered Retrieval}{section.8}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.1}A distinguishing game}{16}{subsection.8.1}\protected@file@percent }
+\newlabel{sec:side-game}{{8.1}{16}{A distinguishing game}{subsection.8.1}{}}
+\@writefile{lof}{\contentsline {figure}{\numberline {3}{\ignorespaces Paired AUC of the differencing attacker against $m$, pooled over the three attackers (120, 120, 80 and 40 probes at $m = 1$, 10, 100 and 1,000). Above the dashed line the observable moves as predicted for $W_1$ (latency up; count, recall and score down), below it the other way. Gray bands: the range of paired AUCs between builds of identical content, for FAISS's post-filter (first panel) and pgvector's exact search (fifth). Pooled curves mix attackers, so FAISS's first-panel fall at $m = 1{,}000$ comes from the attacker reading 1\%. Keyword panel: the worlds differ in all 1,233 secrets at every $m$; open squares are \texttt  {ts\_rank\_cd}'s score, filled squares its latency. Table~\ref {tab:side-auc} in Appendix~\ref {app:side-results} has the values.}}{17}{figure.caption.24}\protected@file@percent }
+\newlabel{fig:side-auc}{{3}{17}{Paired AUC of the differencing attacker against $m$, pooled over the three attackers (120, 120, 80 and 40 probes at $m = 1$, 10, 100 and 1,000). Above the dashed line the observable moves as predicted for $W_1$ (latency up; count, recall and score down), below it the other way. Gray bands: the range of paired AUCs between builds of identical content, for FAISS's post-filter (first panel) and pgvector's exact search (fifth). Pooled curves mix attackers, so FAISS's first-panel fall at $m = 1{,}000$ comes from the attacker reading 1\%. Keyword panel: the worlds differ in all 1,233 secrets at every $m$; open squares are \texttt {ts\_rank\_cd}'s score, filled squares its latency. Table~\ref {tab:side-auc} in Appendix~\ref {app:side-results} has the values}{figure.caption.24}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {8.2}Results}{17}{subsection.8.2}\protected@file@percent }
+\newlabel{sec:side-results}{{8.2}{17}{Results}{subsection.8.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Widening (H1 falsified).}{17}{section*.25}\protected@file@percent }
+\citation{wang2017sidechannel}
+\citation{espiritu2026plaintext}
+\citation{dar2023rls,rasin2024vulnerability}
+\citation{espiritu2026plaintext}
+\citation{raghuram2026onewayglass}
+\@writefile{toc}{\contentsline {paragraph}{Constant work (H2 falsified).}{18}{section*.26}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Pre-filtering.}{18}{section*.27}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Collection statistics (H5).}{18}{section*.28}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Padding (H6) and costs.}{18}{section*.29}\protected@file@percent }
+\citation{maia2018www18}
+\@writefile{toc}{\contentsline {section}{\numberline {9}End-to-End Evaluation With Canaries}{19}{section.9}\protected@file@percent }
+\newlabel{sec:e2e}{{9}{19}{End-to-End Evaluation With Canaries}{section.9}{}}
+\@writefile{toc}{\contentsline {paragraph}{Setup.}{19}{section*.30}\protected@file@percent }
+\newlabel{sec:e2e-safety}{{9}{19}{Safety}{section*.31}{}}
+\@writefile{toc}{\contentsline {paragraph}{Safety.}{19}{section*.31}\protected@file@percent }
+\citation{aws2026access}
+\citation{buttcher2005security}
+\citation{bailey2006secure}
+\citation{stonebraker1974access}
+\citation{rizvi2004extending}
+\citation{wang2007correctness}
+\citation{zerr2008zerber}
+\citation{song2000practical}
+\@writefile{toc}{\contentsline {paragraph}{Containment held while quality did not.}{20}{section*.32}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {10}Related Work}{20}{section.10}\protected@file@percent }
+\newlabel{sec:related}{{10}{20}{Related Work}{section.10}{}}
+\@writefile{toc}{\contentsline {paragraph}{Enterprise search and databases.}{20}{section*.33}\protected@file@percent }
+\citation{pang2019zanzibar}
+\citation{openfga2026search,authzed2026protecting}
+\citation{opa2026evaluating,cerbos2026cerbos}
+\citation{fisler2005verification}
+\citation{backes2018semanticbased}
+\citation{disselkoen2024how}
+\citation{cedar2026cedarspec}
+\citation{patel2024acorn,li2025attribute,kim2026racorn1}
+\citation{wang2023efficient,gollapudi2023filtereddiskann,cai2024navigating}
+\citation{zhang2026vecbench,amanbayev2026filtered}
+\citation{lim2026revisiting}
+\citation{zhong2026honeybee,han2026dont}
+\citation{yalamarthi2026policyaware}
+\citation{zeng2024good,qi2024follow}
+\citation{bhatt2025enterprise}
+\citation{arceo2026securing}
+\citation{budigi2026beyond}
+\citation{zou2025poisonedrag}
+\citation{costa2025securing}
+\citation{goguen1982security}
+\citation{felten2000timing,gelernter2015crosssite}
+\citation{askarov2010predictive}
+\citation{wang2017sidechannel,dar2023rls,rasin2024vulnerability,espiritu2026plaintext}
+\citation{rigger2020testing,rigger2020detecting}
+\citation{wang2025towards}
+\citation{xie2025toward}
+\citation{mckeeman1998differential}
+\@writefile{toc}{\contentsline {paragraph}{Authorization.}{21}{section*.34}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Filtered search and permission-aware indexes.}{21}{section*.35}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{RAG privacy and agents.}{21}{section*.36}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Side channels and testing.}{21}{section*.37}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {11}Limitations, Ethics and Reproducibility}{21}{section.11}\protected@file@percent }
+\newlabel{sec:limits}{{11}{21}{Limitations, Ethics and Reproducibility}{section.11}{}}
+\@writefile{toc}{\contentsline {paragraph}{Limitations.}{21}{section*.38}\protected@file@percent }
+\newlabel{sec:limits-ethics}{{11}{22}{Ethics and disclosure}{section*.39}{}}
+\@writefile{toc}{\contentsline {paragraph}{Ethics and disclosure.}{22}{section*.39}\protected@file@percent }
+\newlabel{sec:limits-ai}{{11}{23}{Use of AI assistance}{section*.40}{}}
+\@writefile{toc}{\contentsline {paragraph}{Use of AI assistance.}{23}{section*.40}\protected@file@percent }
+\newlabel{sec:limits-repro}{{11}{23}{Reproducibility}{section*.41}{}}
+\@writefile{toc}{\contentsline {paragraph}{Reproducibility.}{23}{section*.41}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {12}Conclusion}{23}{section.12}\protected@file@percent }
+\newlabel{sec:conclusion}{{12}{23}{Conclusion}{section.12}{}}
+\bibstyle{plainnat}
+\bibdata{../bib/references,../bib/web}
+\bibcite{agarwal2021deep}{{1}{2021}{{Agarwal et~al.}}{{Agarwal, Schwarzer, Castro, Courville, and Bellemare}}}
+\bibcite{amanbayev2026filtered}{{2}{2026}{{Amanbayev et~al.}}{{Amanbayev, Tsan, Dang, and Rusu}}}
+\bibcite{aws2026access}{{3}{2026}{{Amazon Web Services}}{{}}}
+\bibcite{aquino2024filtering}{{4}{2024}{{Aquino and Myriel}}{{}}}
+\bibcite{arceo2026securing}{{5}{2026}{{Arceo and Narsing}}{{}}}
+\bibcite{askarov2010predictive}{{6}{2010}{{Askarov et~al.}}{{Askarov, Zhang, and Myers}}}
+\bibcite{aumuller2020annbenchmarks}{{7}{2020}{{Aum{\"u}ller et~al.}}{{Aum{\"u}ller, Bernhardsson, and Faithfull}}}
+\bibcite{auth02026authorization}{{8}{2026}{{Auth0}}{{}}}
+\bibcite{authzed2026consistency}{{9}{2026{}}{{AuthZed}}{{}}}
+\bibcite{authzed2026coreproto}{{10}{2026{}}{{AuthZed}}{{}}}
+\bibcite{authzed2026langchainspicedb}{{11}{2026{}}{{AuthZed}}{{}}}
+\bibcite{authzed2026permissionserviceproto}{{12}{2026{}}{{AuthZed}}{{}}}
+\bibcite{authzed2026protecting}{{13}{2026{}}{{AuthZed}}{{}}}
+\bibcite{authzed2026reference}{{14}{2026{}}{{AuthZed}}{{}}}
+\bibcite{ba2023testing}{{15}{2023}{{Ba and Rigger}}{{}}}
+\bibcite{ba2024keep}{{16}{2024}{{Ba and Rigger}}{{}}}
+\bibcite{backes2018semanticbased}{{17}{2018}{{Backes et~al.}}{{Backes, Bolignano, Cook, Dodge, Gacek, Luckow, Rungta, Tkachuk, and Varming}}}
+\bibcite{bailey2006secure}{{18}{2006}{{Bailey et~al.}}{{Bailey, Hawking, and Matson}}}
+\bibcite{bajaj2016ms}{{19}{2016}{{Bajaj et~al.}}{{Bajaj, Campos, Craswell, Deng, Gao, Liu, Majumder, McNamara, Mitra, Nguyen, Rosenberg, Song, Stoica, Tiwary, and Wang}}}
+\bibcite{bhatt2025enterprise}{{20}{2025}{{Bhatt et~al.}}{{Bhatt, Rajore, Aggarwal, Ananthanarayanan, Chandra, Chandran, Choudhury, Gupta, Kiciman, Pandey, Setty, Sharma, and Zhao}}}
+\bibcite{bouthillier2021accounting}{{21}{2021}{{Bouthillier et~al.}}{{Bouthillier, Delaunay, Bronzi, Trofimov, Nichyporuk, Szeto, Mohammadi~Sepahvand, Raff, Madan, Voleti, Ebrahimi~Kahou, Michalski, Arbel, Pal, Varoquaux, and Vincent}}}
+\bibcite{budigi2026beyond}{{22}{2026}{{Budigi and Sirigiri}}{{}}}
+\bibcite{buttcher2005security}{{23}{2005}{{B{\"u}ttcher and Clarke}}{{}}}
+\bibcite{cai2024navigating}{{24}{2024}{{Cai et~al.}}{{Cai, Shi, Chen, and Zheng}}}
+\bibcite{carlini2019secret}{{25}{2019}{{Carlini et~al.}}{{Carlini, Liu, Erlingsson, Kos, and Song}}}
+\bibcite{cedar2026cedarpolicy}{{26}{2026{}}{{Cedar Contributors}}{{}}}
+\bibcite{cedar2026cedarspec}{{27}{2026{}}{{Cedar Contributors}}{{}}}
+\bibcite{cerbos2026cerbos}{{28}{2026{}}{{Cerbos}}{{}}}
+\bibcite{cerbos2026implementing}{{29}{2026{}}{{Cerbos}}{{}}}
+\bibcite{chen2018metamorphic}{{30}{2018}{{Chen et~al.}}{{Chen, Kuo, Liu, Poon, Towey, Tse, and Zhou}}}
+\bibcite{chronis2025filtered}{{31}{2025}{{Chronis et~al.}}{{Chronis, Caminal, Papakonstantinou, {\"O}zcan, and Ailamaki}}}
+\bibcite{claessen2000quickcheck}{{32}{2000}{{Claessen and Hughes}}{{}}}
+\bibcite{costa2025securing}{{33}{2025}{{Costa et~al.}}{{Costa, K{\"o}pf, Kolluri, Paverd, Russinovich, Salem, Tople, Wutschitz, and Zanella-B{\'e}guelin}}}
+\bibcite{couzon2026filtered}{{34}{2026}{{Couzon and Ghafouri}}{{}}}
+\bibcite{coveo2026coveo}{{35}{2026}{{Coveo}}{{}}}
+\bibcite{curtmola2006searchable}{{36}{2006}{{Curtmola et~al.}}{{Curtmola, Garay, Kamara, and Ostrovsky}}}
+\bibcite{cutler2024cedar}{{37}{2024}{{Cutler et~al.}}{{Cutler, Disselkoen, Eline, He, Headley, Hicks, Hietala, Ioannidis, Kastner, Mamat, McAdams, McCutchen, Rungta, Torlak, and Wells}}}
+\bibcite{dar2023rls}{{38}{2023}{{Dar et~al.}}{{Dar, Hershcovitch, and Morrison}}}
+\bibcite{das2026recallbounded}{{39}{2026}{{Das et~al.}}{{Das, Devadkar, and Godbole}}}
+\bibcite{datastax2026query}{{40}{2026}{{DataStax}}{{}}}
+\bibcite{debenedetti2025defeating}{{41}{2025}{{Debenedetti et~al.}}{{Debenedetti, Shumailov, Fan, Hayes, Carlini, Fabian, Kern, Shi, Terzis, and Tram{\`e}r}}}
+\bibcite{disselkoen2024how}{{42}{2024}{{Disselkoen et~al.}}{{Disselkoen, Eline, He, Headley, Hicks, Hietala, Kastner, Mamat, McCutchen, Rungta, Shah, Torlak, and Wells}}}
+\bibcite{douze2024faiss}{{43}{2024}{{Douze et~al.}}{{Douze, Guzhva, Deng, Johnson, Szilvasy, Mazar{\'e}, Lomeli, Hosseini, and J{\'e}gou}}}
+\bibcite{elastic2026controlling}{{44}{2026{}}{{Elastic}}{{}}}
+\bibcite{elastic2026ignore}{{45}{2026{}}{{Elastic}}{{}}}
+\bibcite{elastic2026keyword}{{46}{2026{}}{{Elastic}}{{}}}
+\bibcite{elastic2026run}{{47}{2026{}}{{Elastic}}{{}}}
+\bibcite{engels2024approximate}{{48}{2024}{{Engels et~al.}}{{Engels, Landrum, Yu, Dhulipala, and Shun}}}
+\bibcite{espiritu2026plaintext}{{49}{2026}{{Espiritu and Cash}}{{}}}
+\bibcite{fagin2003searching}{{50}{2003}{{Fagin et~al.}}{{Fagin, Kumar, McCurley, Novak, Sivakumar, Tomlin, and Williamson}}}
+\bibcite{felten2000timing}{{51}{2000}{{Felten and Schneider}}{{}}}
+\bibcite{fisler2005verification}{{52}{2005}{{Fisler et~al.}}{{Fisler, Krishnamurthi, Meyerovich, and Tschantz}}}
+\bibcite{fong2011relationshipbaseda}{{53}{2011}{{Fong}}{{}}}
+\bibcite{gelernter2015crosssite}{{54}{2015}{{Gelernter and Herzberg}}{{}}}
+\bibcite{gelevanog2026permissionaware}{{55}{2026}{{gelevanog}}{{}}}
+\bibcite{goguen1982security}{{56}{1982}{{Goguen and Meseguer}}{{}}}
+\bibcite{gollapudi2023filtereddiskann}{{57}{2023}{{Gollapudi et~al.}}{{Gollapudi, Karia, Sivashankar, Krishnaswamy, Begwani, Raz, Lin, Zhang, Mahapatro, Srinivasan, Singh, and Simhadri}}}
+\bibcite{google2026atheris}{{58}{2026}{{Google}}{{}}}
+\bibcite{greshake2023not}{{59}{2023}{{Greshake et~al.}}{{Greshake, Abdelnabi, Mishra, Endres, Holz, and Fritz}}}
+\bibcite{griffiths1976authorization}{{60}{1976}{{Griffiths and Wade}}{{}}}
+\bibcite{guarnieri2014optimal}{{61}{2014}{{Guarnieri and Basin}}{{}}}
+\bibcite{gupta2023caps}{{62}{2023}{{Gupta et~al.}}{{Gupta, Yi, Coleman, Luo, Lakshman, and Shrivastava}}}
+\bibcite{han2026dont}{{63}{2026}{{Han et~al.}}{{Han, Chakraborty, and Mehrotra}}}
+\bibcite{hanley1983if}{{64}{1983}{{Hanley and Lippman-Hand}}{{}}}
+\bibcite{hardy1988confused}{{65}{1988}{{Hardy}}{{}}}
+\bibcite{iff2026benchmarking}{{66}{2026}{{Iff et~al.}}{{Iff, Br{\"u}gger, Chrapek, Kochergin, Besta, and Hoefler}}}
+\bibcite{ioannidis1997parametric}{{67}{1997}{{Ioannidis et~al.}}{{Ioannidis, Ng, Shim, and Sellis}}}
+\bibcite{jayaraman2025permissioned}{{68}{2025}{{Jayaraman et~al.}}{{Jayaraman, Marathe, Mozaffari, Shen, and Kenthapadi}}}
+\bibcite{jin2024curator}{{69}{2024}{{Jin et~al.}}{{Jin, Wu, Hu, Maggs, Zhang, and Zhuo}}}
+\bibcite{jones2020oauth}{{70}{2020}{{Jones et~al.}}{{Jones, Nadalin, Campbell, Bradley, and Mortimore}}}
+\bibcite{kabra2006redundancy}{{71}{2006}{{Kabra et~al.}}{{Kabra, Ramamurthy, and Sudarshan}}}
+\bibcite{kamm2023testing}{{72}{2023}{{Kamm et~al.}}{{Kamm, Rigger, Zhang, and Su}}}
+\bibcite{kim2026racorn1}{{73}{2026}{{Kim and Choe}}{{}}}
+\bibcite{klees2018evaluating}{{74}{2018}{{Klees et~al.}}{{Klees, Ruef, Cooper, Wei, and Hicks}}}
+\bibcite{langchain2026pebbloretrieval}{{75}{2026}{{LangChain}}{{}}}
+\bibcite{lefevre2004limiting}{{76}{2004}{{LeFevre et~al.}}{{LeFevre, Agrawal, Ercegovac, Ramakrishnan, Xu, and DeWitt}}}
+\bibcite{lewis2020retrievalaugmented}{{77}{2020}{{Lewis et~al.}}{{Lewis, Perez, Piktus, Petroni, Karpukhin, Goyal, K{\"u}ttler, Lewis, Yih, Rockt{\"a}schel, Riedel, and Kiela}}}
+\bibcite{li2023sentence}{{78}{2023}{{Li et~al.}}{{Li, Xu, and Song}}}
+\bibcite{li2025attribute}{{79}{2025{}}{{Li et~al.}}{{Li, Yan, Lu, Zhang, Cheng, and Ma}}}
+\bibcite{li2025sieve}{{80}{2025{}}{{Li et~al.}}{{Li, Huang, Ding, Park, and Chen}}}
+\bibcite{lim2026revisiting}{{81}{2026}{{Lim et~al.}}{{Lim, Kim, Kim, and Do}}}
+\bibcite{liu2026protection}{{82}{2026}{{Liu et~al.}}{{Liu, Wang, Liang, Li, Cai, and Ye}}}
+\bibcite{lu2026indepth}{{83}{2026}{{Lu et~al.}}{{Lu, Caminal, Chatzakis, Papakonstantinou, Chronis, Jain, and {\"O}zcan}}}
+\bibcite{maciver2019hypothesis}{{84}{2019}{{MacIver et~al.}}{{MacIver, Hatfield-Dodds, and {Many Contributors}}}}
+\bibcite{maia2018www18}{{85}{2018}{{Maia et~al.}}{{Maia, Handschuh, Freitas, Davis, McDermott, Zarrouk, and Balahur}}}
+\bibcite{malkov2020efficient}{{86}{2020}{{Malkov and Yashunin}}{{}}}
+\bibcite{mangtani2006documentlevel}{{87}{2006}{{Mangtani}}{{}}}
+\bibcite{martin2007fault}{{88}{2007}{{Martin and Xie}}{{}}}
+\bibcite{mckeeman1998differential}{{89}{1998}{{McKeeman}}{{}}}
+\bibcite{microsoft2026data}{{90}{2026{}}{{Microsoft}}{{}}}
+\bibcite{microsoft2026querytime}{{91}{2026{}}{{Microsoft}}{{}}}
+\bibcite{milvus2026implement}{{92}{2026{}}{{Milvus}}{{}}}
+\bibcite{milvus2026json}{{93}{2026{}}{{Milvus}}{{}}}
+\bibcite{mitre2026atlas}{{94}{2026}{{MITRE}}{{}}}
+\bibcite{mcp2026model}{{95}{2026}{{Model Context Protocol}}{{}}}
+\bibcite{mongodb2026configure}{{96}{2026{}}{{MongoDB}}{{}}}
+\bibcite{mongodb2026run}{{97}{2026{}}{{MongoDB}}{{}}}
+\bibcite{morris2023text}{{98}{2023}{{Morris et~al.}}{{Morris, Kuleshov, Shmatikov, and Rush}}}
+\bibcite{motro1989access}{{99}{1989}{{Motro}}{{}}}
+\bibcite{naseh2025riddle}{{100}{2025}{{Naseh et~al.}}{{Naseh, Peng, Suri, Chaudhari, Oprea, and Houmansadr}}}
+\bibcite{nvd2025cve202532711}{{101}{2025{}}{{National Vulnerability Database}}{{}}}
+\bibcite{nvd2025cve202565111}{{102}{2025{}}{{National Vulnerability Database}}{{}}}
+\bibcite{oasis2013extensible}{{103}{2013}{{OASIS}}{{}}}
+\bibcite{opa2026evaluating}{{104}{2026{}}{{Open Policy Agent}}{{}}}
+\bibcite{opa2026writing}{{105}{2026{}}{{Open Policy Agent}}{{}}}
+\bibcite{openfga2026openfga}{{106}{2026{}}{{OpenFGA}}{{}}}
+\bibcite{openfga2026openfgaproto}{{107}{2026{}}{{OpenFGA}}{{}}}
+\bibcite{openfga2026perform}{{108}{2026{}}{{OpenFGA}}{{}}}
+\bibcite{openfga2026rag}{{109}{2026{}}{{OpenFGA}}{{}}}
+\bibcite{openfga2026search}{{110}{2026{}}{{OpenFGA}}{{}}}
+\bibcite{opensearch2026documentlevel}{{111}{2026{}}{{OpenSearch Project}}{{}}}
+\bibcite{opensearch2026efficient}{{112}{2026{}}{{OpenSearch Project}}{{}}}
+\bibcite{opensearch2026keyword}{{113}{2026{}}{{OpenSearch Project}}{{}}}
+\bibcite{opensearch2026search}{{114}{2026{}}{{OpenSearch Project}}{{}}}
+\bibcite{oracle2026using}{{115}{2026}{{Oracle}}{{}}}
+\bibcite{owasp2025llm082025}{{116}{2025}{{OWASP Foundation}}{{}}}
+\bibcite{raghuram2026onewayglass}{{117}{2026}{{P}}{{}}}
+\bibcite{pang2019zanzibar}{{118}{2019}{{Pang et~al.}}{{Pang, Caceres, Burrows, Chen, Dave, Germer, Golynski, Graney, Kang, Kissner, Korn, Parmar, Richards, and Wang}}}
+\bibcite{pappachan2020sieve}{{119}{2020}{{Pappachan et~al.}}{{Pappachan, Yus, Mehrotra, and Freytag}}}
+\bibcite{patel2024acorn}{{120}{2024}{{Patel et~al.}}{{Patel, Kraft, Guestrin, and Zaharia}}}
+\bibcite{pgvector2026pgvector}{{121}{2026}{{pgvector contributors}}{{}}}
+\bibcite{pinecone2026check}{{122}{2026{}}{{Pinecone}}{{}}}
+\bibcite{pinecone2026search}{{123}{2026{}}{{Pinecone}}{{}}}
+\bibcite{qdrant2025release}{{124}{2025}{{Qdrant}}{{}}}
+\bibcite{qdrant2026filtering}{{125}{2026{}}{{Qdrant}}{{}}}
+\bibcite{qdrant2026multitenancy}{{126}{2026{}}{{Qdrant}}{{}}}
+\bibcite{qdrant2026search}{{127}{2026{}}{{Qdrant}}{{}}}
+\bibcite{qi2024follow}{{128}{2024}{{Qi et~al.}}{{Qi, Zhang, Xing, Kakade, and Lakkaraju}}}
+\bibcite{rasin2024vulnerability}{{129}{2024}{{Rasin et~al.}}{{Rasin, Herbick, Lenard, Scope, and Wagner}}}
+\bibcite{redis2026configuration}{{130}{2026{}}{{Redis}}{{}}}
+\bibcite{redis2026tag}{{131}{2026{}}{{Redis}}{{}}}
+\bibcite{redis2026vectors}{{132}{2026{}}{{Redis}}{{}}}
+\bibcite{reimers2019sentencebert}{{133}{2019}{{Reimers and Gurevych}}{{}}}
+\bibcite{rigger2020detecting}{{134}{2020{}}{{Rigger and Su}}{{}}}
+\bibcite{rigger2020finding}{{135}{2020{}}{{Rigger and Su}}{{}}}
+\bibcite{rigger2020testing}{{136}{2020{}}{{Rigger and Su}}{{}}}
+\bibcite{rizvi2004extending}{{137}{2004}{{Rizvi et~al.}}{{Rizvi, Mendelzon, Sudarshan, and Roy}}}
+\bibcite{rodriguez2024how}{{138}{2024}{{Rodriguez et~al.}}{{Rodriguez, Trengrove, and Hwang}}}
+\bibcite{roychowdhury2024confusedpilot}{{139}{2024}{{RoyChowdhury et~al.}}{{RoyChowdhury, Luo, Sahu, Banerjee, and Tiwari}}}
+\bibcite{sandall2018write}{{140}{2018}{{Sandall}}{{}}}
+\bibcite{sanyal2025orgaccess}{{141}{2025}{{Sanyal et~al.}}{{Sanyal, Maharana, Sinha, Tan, Karande, Kankanhalli, and Mandal}}}
+\bibcite{schloegel2024sok}{{142}{2024}{{Schloegel et~al.}}{{Schloegel, Bars, Schiller, Bernhard, Scharnowski, Crump, Ale-Ebrahim, Bissantz, Muench, and Holz}}}
+\bibcite{segura2016survey}{{143}{2016}{{Segura et~al.}}{{Segura, Fraser, Sanchez, and Ruiz-Cort{\'e}s}}}
+\bibcite{shi2025filtered}{{144}{2025}{{Shi et~al.}}{{Shi, Cai, and Zheng}}}
+\bibcite{simhadri2025results}{{145}{2025}{{Simhadri et~al.}}{{Simhadri, Aum{\"u}ller, Douze, Baranchuk, Ingber, Liberty, Williams, Landrum, Manohar, Karjikar, Dhulipala, Chen, Chen, Ma, Zhang, Cai, Shi, Zheng, Chen, Yin, and Huang}}}
+\bibcite{sjmurdoch2026bug}{{146}{2026}{{sjmurdoch}}{{}}}
+\bibcite{smucker2007comparison}{{147}{2007}{{Smucker et~al.}}{{Smucker, Allan, and Carterette}}}
+\bibcite{song2020information}{{148}{2020}{{Song and Raghunathan}}{{}}}
+\bibcite{song2000practical}{{149}{2000}{{Song et~al.}}{{Song, Wagner, and Perrig}}}
+\bibcite{stonebraker1974access}{{150}{1974}{{Stonebraker and Wong}}{{}}}
+\bibcite{subramanya2019diskann}{{151}{2019}{{Subramanya et~al.}}{{Subramanya, Devvrit, Simhadri, Krishnaswamy, and Kadekodi}}}
+\bibcite{sun2026agentassisted}{{152}{2026}{{Sun et~al.}}{{Sun, Liu, Ma, Li, Xiao, and Jiang}}}
+\bibcite{sungbin10152026fix}{{153}{2026}{{sungbin1015}}{{}}}
+\bibcite{thakur2021beir}{{154}{2021}{{Thakur et~al.}}{{Thakur, Reimers, R{\"u}ckl{\'e}, Srivastava, and Gurevych}}}
+\bibcite{postgresql2026json}{{155}{2026{}}{{The PostgreSQL Global Development Group}}{{}}}
+\bibcite{postgresql2026prepare}{{156}{2026{}}{{The PostgreSQL Global Development Group}}{{}}}
+\bibcite{postgresql2026row}{{157}{2026{}}{{The PostgreSQL Global Development Group}}{{}}}
+\bibcite{postgresql2026selfuncs}{{158}{2026{}}{{The PostgreSQL Global Development Group}}{{}}}
+\bibcite{psycopg2026prepared}{{159}{2026}{{The Psycopg Team}}{{}}}
+\bibcite{thornton2026retrieval}{{160}{2026}{{Thornton}}{{}}}
+\bibcite{trent2025filtered}{{161}{2025}{{Trent}}{{}}}
+\bibcite{urbano2019statistical}{{162}{2019}{{Urbano et~al.}}{{Urbano, Lima, and Hanjalic}}}
+\bibcite{vespa2026graceful}{{163}{2026}{{Vespa}}{{}}}
+\bibcite{wang2021milvus}{{164}{2021}{{Wang et~al.}}{{Wang, Yi, Guo, Jin, Xu, Li, Wang, Guo, Li, Xu, Yu, Yuan, Zou, Long, Cai, Li, Zhang, Mo, Gu, Jiang, Wei, and Xie}}}
+\bibcite{wang2017sidechannel}{{165}{2017}{{Wang et~al.}}{{Wang, Grubbs, Lu, Bindschaedler, Cash, and Ristenpart}}}
+\bibcite{wang2023efficient}{{166}{2023}{{Wang et~al.}}{{Wang, Lv, Xu, Wang, Yue, and Ni}}}
+\bibcite{wang2007correctness}{{167}{2007}{{Wang et~al.}}{{Wang, Yu, Li, Lobo, Bertino, Irwin, and Byun}}}
+\bibcite{wang2025towards}{{168}{2025}{{Wang et~al.}}{{Wang, Zhao, Xie, Liu, Hou, Zou, and Wang}}}
+\bibcite{wang2020minilm}{{169}{2020}{{Wang et~al.}}{{Wang, Wei, Dong, Bao, Yang, and Zhou}}}
+\bibcite{weaviate2026inverted}{{170}{2026{}}{{Weaviate}}{{}}}
+\bibcite{weaviate2026tokenizergo}{{171}{2026{}}{{Weaviate}}{{}}}
+\bibcite{weaviate2026vectorindex}{{172}{2026{}}{{Weaviate}}{{}}}
+\bibcite{wei2020analyticdbv}{{173}{2020}{{Wei et~al.}}{{Wei, Wu, Wang, Lou, Zhan, Li, and Cai}}}
+\bibcite{wong2009secure}{{174}{2009}{{Wong et~al.}}{{Wong, Cheung, Kao, and Mamoulis}}}
+\bibcite{wu2024systemlevel}{{175}{2024}{{Wu et~al.}}{{Wu, Cecchetti, and Xiao}}}
+\bibcite{wu2022hqann}{{176}{2022}{{Wu et~al.}}{{Wu, He, Qiao, Fu, Liu, and Yu}}}
+\bibcite{xiao2024cpack}{{177}{2024}{{Xiao et~al.}}{{Xiao, Liu, Zhang, Muennighoff, Lian, and Nie}}}
+\bibcite{xie2025toward}{{178}{2025}{{Xie et~al.}}{{Xie, Hou, Zhao, Wang, Chen, and Wang}}}
+\bibcite{xu2024irangegraph}{{179}{2024}{{Xu et~al.}}{{Xu, Gao, Gou, Long, and Jensen}}}
+\bibcite{yalamarthi2026policyaware}{{180}{2026}{{Yalamarthi and Pappachan}}{{}}}
+\bibcite{yang2024qwen25}{{181}{2024}{{Yang et~al.}}{{Yang, Yang, Zhang, Hui, Zheng, Yu, et~al.}}}
+\bibcite{zeng2024good}{{182}{2024}{{Zeng et~al.}}{{Zeng, Zhang, He, Xing, Liu, Xu, Ren, Wang, Yin, Chang, and Tang}}}
+\bibcite{zerr2008zerber}{{183}{2008}{{Zerr et~al.}}{{Zerr, Demidova, Olmedilla, Nejdl, Winslett, and Mitra}}}
+\bibcite{zerr2009zerberr}{{184}{2009}{{Zerr et~al.}}{{Zerr, Olmedilla, Nejdl, and Siberski}}}
+\bibcite{zhang2025universal}{{185}{2025}{{Zhang et~al.}}{{Zhang, Morris, and Shmatikov}}}
+\bibcite{zhang2012languagebased}{{186}{2012}{{Zhang et~al.}}{{Zhang, Askarov, and Myers}}}
+\bibcite{zhang2023vbase}{{187}{2023}{{Zhang et~al.}}{{Zhang, Xu, Chen, Sui, Xie, Cai, Chen, He, Yang, Yang, Yang, and Zhou}}}
+\bibcite{zhang2026vecbench}{{188}{2026}{{Zhang et~al.}}{{Zhang, Zhang, Fan, Li, and Du}}}
+\bibcite{zhong2026honeybee}{{189}{2026}{{Zhong et~al.}}{{Zhong, Lentz, Narodytska, Szekeres, and Rong}}}
+\bibcite{zhou2026first}{{190}{2026}{{Zhou et~al.}}{{Zhou, Zhang, Zhang, Zhang, Zhang, and Yang}}}
+\bibcite{zou2025poisonedrag}{{191}{2025}{{Zou et~al.}}{{Zou, Geng, Wang, and Jia}}}
+\bibcite{zuo2024serf}{{192}{2024}{{Zuo et~al.}}{{Zuo, Qiao, Zhou, Li, and Deng}}}
+\@writefile{toc}{\contentsline {section}{\numberline {A}Experiment map}{40}{appendix.A}\protected@file@percent }
+\newlabel{app:map}{{A}{40}{Experiment map}{appendix.A}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {4}{\ignorespaces The experiments: code, where reported, what each tests, platform with seeds and builds, library commit, store and engine versions, and run identifiers.}}{40}{table.4}\protected@file@percent }
+\newlabel{tab:app-map}{{4}{40}{The experiments: code, where reported, what each tests, platform with seeds and builds, library commit, store and engine versions, and run identifiers}{table.4}{}}
+\gdef \LT@i {\LT@entry 
+    {1}{42.43233pt}\LT@entry 
+    {1}{37.88629pt}\LT@entry 
+    {1}{87.20856pt}\LT@entry 
+    {1}{80.16252pt}\LT@entry 
+    {1}{63.71938pt}\LT@entry 
+    {1}{87.20856pt}\LT@entry 
+    {1}{65.91434pt}}
+\@writefile{toc}{\contentsline {section}{\numberline {B}Pre-registration ledger}{42}{appendix.B}\protected@file@percent }
+\newlabel{app:ledger}{{B}{42}{Pre-registration ledger}{appendix.B}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {5}{\ignorespaces Every hypothesis and prediction, with its registration, ordering, run, verdict as printed and class.}}{43}{table.5}\protected@file@percent }
+\newlabel{tab:app-ledger}{{5}{43}{Every hypothesis and prediction, with its registration, ordering, run, verdict as printed and class}{table.5}{}}
+\gdef \LT@ii {\LT@entry 
+    {1}{33.03522pt}\LT@entry 
+    {1}{115.39272pt}\LT@entry 
+    {1}{40.23018pt}\LT@entry 
+    {1}{68.41434pt}\LT@entry 
+    {1}{56.67332pt}\LT@entry 
+    {1}{115.39272pt}\LT@entry 
+    {5}{40.61653pt}}
+\citation{pgvector2026pgvector}
+\citation{buttcher2005security}
+\citation{goguen1982security}
+\@writefile{toc}{\contentsline {section}{\numberline {C}The problem statement in detail}{46}{appendix.C}\protected@file@percent }
+\newlabel{app:problem}{{C}{46}{The problem statement in detail}{appendix.C}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.1}Reading the criteria}{46}{subsection.C.1}\protected@file@percent }
+\newlabel{app:criteria}{{C.1}{46}{Reading the criteria}{subsection.C.1}{}}
+\citation{openfga2026openfga}
+\citation{pang2019zanzibar,authzed2026protecting}
+\@writefile{toc}{\contentsline {paragraph}{The trusted computing base in full.}{47}{section*.43}\protected@file@percent }
+\citation{opensearch2026efficient}
+\citation{hardy1988confused}
+\citation{jones2020oauth,mcp2026model}
+\citation{thornton2026retrieval}
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.2}Caches, staleness and count certificates}{48}{subsection.C.2}\protected@file@percent }
+\newlabel{app:certificates}{{C.2}{48}{Caches, staleness and count certificates}{subsection.C.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Caches and staleness.}{48}{section*.44}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Count certificates.}{48}{section*.45}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.3}The threat model in full}{48}{subsection.C.3}\protected@file@percent }
+\newlabel{app:threat}{{C.3}{48}{The threat model in full}{subsection.C.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{Adversary.}{48}{section*.46}\protected@file@percent }
+\citation{zou2025poisonedrag}
+\citation{nvd2025cve202532711}
+\citation{microsoft2026data}
+\citation{zeng2024good,naseh2025riddle}
+\citation{morris2023text,zhang2025universal}
+\citation{bhatt2025enterprise}
+\citation{buttcher2005security}
+\citation{patel2024acorn}
+\citation{wang2021milvus}
+\citation{carlini2019secret}
+\citation{hanley1983if}
+\@writefile{toc}{\contentsline {paragraph}{In scope.}{49}{section*.47}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Out of scope.}{49}{section*.48}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Side channels.}{49}{section*.49}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {C.4}Metrics in full}{49}{subsection.C.4}\protected@file@percent }
+\newlabel{app:metrics}{{C.4}{49}{Metrics in full}{subsection.C.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Leaks, and bounds per question and per subject.}{49}{section*.50}\protected@file@percent }
+\citation{patel2024acorn,zhang2026vecbench,amanbayev2026filtered,lim2026revisiting}
+\citation{patel2024acorn}
+\citation{amanbayev2026filtered}
+\citation{lim2026revisiting}
+\citation{lim2026revisiting}
+\citation{stonebraker1974access}
+\citation{buttcher2005security}
+\citation{cerbos2026implementing,authzed2026langchainspicedb}
+\citation{bailey2006secure,mangtani2006documentlevel}
+\citation{openfga2026rag}
+\citation{pang2019zanzibar}
+\citation{aws2026access}
+\citation{aws2026access}
+\citation{microsoft2026querytime}
+\citation{rizvi2004extending}
+\citation{opensearch2026efficient}
+\citation{oasis2013extensible}
+\citation{aws2026access}
+\citation{pang2019zanzibar}
+\citation{roychowdhury2024confusedpilot}
+\citation{jones2020oauth}
+\citation{mcp2026model}
+\citation{openfga2026perform,authzed2026protecting,cerbos2026cerbos}
+\citation{cedar2026cedarpolicy}
+\@writefile{toc}{\contentsline {paragraph}{Permission-recall@$k$.}{50}{section*.51}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Under-retrieval and false completeness.}{50}{section*.52}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Latency.}{50}{section*.53}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A measured correlation axis.}{50}{section*.54}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {D}The enforcement layer in detail}{50}{appendix.D}\protected@file@percent }
+\newlabel{app:system}{{D}{50}{The enforcement layer in detail}{appendix.D}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.1}Contracts and filter semantics}{50}{subsection.D.1}\protected@file@percent }
+\newlabel{sec:sys-contracts}{{D.1}{50}{Contracts and filter semantics}{subsection.D.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {6}{\ignorespaces Components of the enforcement layer, their precedents, and their role in this paper.}}{51}{table.caption.55}\protected@file@percent }
+\newlabel{tab:sys-precedents}{{6}{51}{Components of the enforcement layer, their precedents, and their role in this paper}{table.caption.55}{}}
+\citation{opensearch2026efficient}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.2}Retrieval}{52}{subsection.D.2}\protected@file@percent }
+\newlabel{sec:sys-retrieval}{{D.2}{52}{Retrieval}{subsection.D.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Pre-filter and re-check.}{52}{section*.56}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Widening post-filter.}{52}{section*.57}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Failing closed.}{52}{section*.58}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.3}Count-honest completeness}{52}{subsection.D.3}\protected@file@percent }
+\newlabel{sec:sys-complete}{{D.3}{52}{Count-honest completeness}{subsection.D.3}{}}
+\citation{authzed2026consistency}
+\citation{mcp2026model}
+\citation{jones2020oauth}
+\citation{mitre2026atlas}
+\citation{hardy1988confused}
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.4}Composition, tenants and caching}{53}{subsection.D.4}\protected@file@percent }
+\newlabel{sec:sys-compose}{{D.4}{53}{Composition, tenants and caching}{subsection.D.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{Composition.}{53}{section*.59}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Caching.}{53}{section*.60}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {D.5}Identity and audit}{53}{subsection.D.5}\protected@file@percent }
+\newlabel{sec:sys-identity}{{D.5}{53}{Identity and audit}{subsection.D.5}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {E}The conformance kit and campaign in detail}{53}{appendix.E}\protected@file@percent }
+\newlabel{app:conformance}{{E}{53}{The conformance kit and campaign in detail}{appendix.E}{}}
+\citation{google2026atheris}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.1}Method}{54}{subsection.E.1}\protected@file@percent }
+\newlabel{sec:conf-method}{{E.1}{54}{Method}{subsection.E.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Two oracles.}{54}{section*.61}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{An adversarial generator.}{54}{section*.62}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What the kit checks.}{54}{section*.63}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Translations without injection.}{55}{section*.64}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Testing the tester.}{55}{section*.65}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.2}A controlled campaign}{55}{subsection.E.2}\protected@file@percent }
+\newlabel{sec:conf-campaign}{{E.2}{55}{A controlled campaign}{subsection.E.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Setup.}{55}{section*.66}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Run 1.}{56}{section*.67}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Fixes and run 2.}{56}{section*.68}\protected@file@percent }
+\citation{elastic2026keyword,opensearch2026keyword}
+\citation{postgresql2026json}
+\citation{postgresql2026json}
+\citation{pgvector2026pgvector}
+\citation{postgresql2026prepare,psycopg2026prepared}
+\citation{sjmurdoch2026bug}
+\citation{redis2026tag}
+\citation{weaviate2026tokenizergo}
+\citation{weaviate2026inverted}
+\@writefile{toc}{\contentsline {subsection}{\numberline {E.3}The kit's data variants}{57}{subsection.E.3}\protected@file@percent }
+\newlabel{app:kit}{{E.3}{57}{The kit's data variants}{subsection.E.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {F}Faults and semantic gaps: the full table}{57}{appendix.F}\protected@file@percent }
+\newlabel{sec:conf-results}{{F}{57}{Faults and semantic gaps: the full table}{appendix.F}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {7}{\ignorespaces Faults and semantic gaps in vector stores (top) and authorization engines (bottom), collected from the project's release notes, code comments and documentation and from this paper's experiments; the legend is above. No row has been confirmed by the maintainers of the store or engine.}}{57}{table.7}\protected@file@percent }
+\newlabel{tab:conf-faults}{{7}{57}{Faults and semantic gaps in vector stores (top) and authorization engines (bottom), collected from the project's release notes, code comments and documentation and from this paper's experiments; the legend is above. No row has been confirmed by the maintainers of the store or engine}{table.7}{}}
+\citation{elastic2026ignore}
+\citation{milvus2026json}
+\citation{qdrant2026filtering}
+\citation{pinecone2026search,mongodb2026run}
+\citation{elastic2026run,opensearch2026search,redis2026configuration,vespa2026graceful}
+\citation{pinecone2026check,mongodb2026configure}
+\citation{datastax2026query}
+\citation{sungbin10152026fix}
+\citation{openfga2026openfga}
+\citation{openfga2026openfga}
+\citation{authzed2026permissionserviceproto}
+\citation{authzed2026consistency,authzed2026reference}
+\citation{opa2026evaluating,opa2026writing}
+\citation{openfga2026openfgaproto,authzed2026coreproto}
+\gdef \LT@iii {\LT@entry 
+    {1}{57.0244pt}\LT@entry 
+    {1}{139.8819pt}\LT@entry 
+    {1}{41.23018pt}\LT@entry 
+    {1}{38.88629pt}\LT@entry 
+    {1}{111.69774pt}\LT@entry 
+    {1}{68.76541pt}}
+\citation{opa2026evaluating,opa2026writing}
+\citation{cerbos2026cerbos}
+\citation{pang2019zanzibar,authzed2026consistency}
+\@writefile{toc}{\contentsline {section}{\numberline {G}The engine study in detail (X4 and X7)}{60}{appendix.G}\protected@file@percent }
+\newlabel{app:engines}{{G}{60}{The engine study in detail (X4 and X7)}{appendix.G}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.1}Method}{60}{subsection.G.1}\protected@file@percent }
+\newlabel{sec:eng-method}{{G.1}{60}{Method}{subsection.G.1}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {8}{\ignorespaces Filter against check at one revision: five seeds of 120 users and 1,500 documents, 900,000 (user, document) pairs in each profile that gave filters. Above the rule, each engine's check also agreed with the oracle on every pair. Below it, stress profiles.}}{61}{table.caption.69}\protected@file@percent }
+\newlabel{tab:eng-agree}{{8}{61}{Filter against check at one revision: five seeds of 120 users and 1,500 documents, 900,000 (user, document) pairs in each profile that gave filters. Above the rule, each engine's check also agreed with the oracle on every pair. Below it, stress profiles}{table.caption.69}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.2}At one revision, filters agree with checks}{61}{subsection.G.2}\protected@file@percent }
+\newlabel{sec:eng-agree}{{G.2}{61}{At one revision, filters agree with checks}{subsection.G.2}{}}
+\citation{openfga2026openfga}
+\citation{authzed2026permissionserviceproto}
+\citation{authzed2026consistency,authzed2026reference}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.3}In practice, disagreement is revision skew}{62}{subsection.G.3}\protected@file@percent }
+\newlabel{sec:eng-skew}{{G.3}{62}{In practice, disagreement is revision skew}{subsection.G.3}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.4}Truncated lists are detected, at a cost in recall}{62}{subsection.G.4}\protected@file@percent }
+\newlabel{sec:eng-trunc}{{G.4}{62}{Truncated lists are detected, at a cost in recall}{subsection.G.4}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.5}Latency and caching}{62}{subsection.G.5}\protected@file@percent }
+\newlabel{sec:eng-latency}{{G.5}{62}{Latency and caching}{subsection.G.5}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {G.6}Revocation and faults in detail}{62}{subsection.G.6}\protected@file@percent }
+\newlabel{app:eng-revoke}{{G.6}{62}{Revocation and faults in detail}{subsection.G.6}{}}
+\@writefile{toc}{\contentsline {paragraph}{Revocation.}{62}{section*.70}\protected@file@percent }
+\citation{authzed2026reference}
+\@writefile{toc}{\contentsline {paragraph}{Faults.}{63}{section*.71}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The fixes, tested.}{63}{section*.72}\protected@file@percent }
+\citation{qdrant2026search}
+\citation{couzon2026filtered}
+\@writefile{lot}{\contentsline {table}{\numberline {9}{\ignorespaces Retrieval quality in the enterprise scenario (Section~\ref {sec:e2e}), four runs of 1,105 questions (seeds 7, 11, 13, 17). Recall is the mean over runs; Range@10 is the largest minus the smallest recall@10; p50 is the range of per-run medians. pgvector ran in one of two modes per run (Section~\ref {sec:qual-pgvector}); each row averages the two runs in that mode. Overlap@5 is the share of the exact top five that a store returned, by person type, from a re-analysis of the first run (a fast-mode run for pgvector); ``judy'' are the least-privileged people (624 readable chunks). pgvector with OPA follows pgvector's mode in each run. Settings: Appendix~\ref {app:settings}.}}{64}{table.caption.73}\protected@file@percent }
+\newlabel{tab:qual-x0}{{9}{64}{Retrieval quality in the enterprise scenario (Section~\ref {sec:e2e}), four runs of 1,105 questions (seeds 7, 11, 13, 17). Recall is the mean over runs; Range@10 is the largest minus the smallest recall@10; p50 is the range of per-run medians. pgvector ran in one of two modes per run (Section~\ref {sec:qual-pgvector}); each row averages the two runs in that mode. Overlap@5 is the share of the exact top five that a store returned, by person type, from a re-analysis of the first run (a fast-mode run for pgvector); ``judy'' are the least-privileged people (624 readable chunks). pgvector with OPA follows pgvector's mode in each run. Settings: Appendix~\ref {app:settings}}{table.caption.73}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {H}The audit and its diagnosis in detail (X0 and X1)}{64}{appendix.H}\protected@file@percent }
+\newlabel{app:quality}{{H}{64}{The audit and its diagnosis in detail (X0 and X1)}{appendix.H}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.1}The audit}{64}{subsection.H.1}\protected@file@percent }
+\newlabel{app:audit}{{H.1}{64}{The audit}{subsection.H.1}{}}
+\citation{pgvector2026pgvector}
+\@writefile{lot}{\contentsline {table}{\numberline {10}{\ignorespaces Qdrant 1.19.2 under the enterprise scenario's permission filters (X1 run 2, 1,489 questions, three index builds per layout, means over builds; Range is the range over builds; latency from one CPU session). ACORN at the default gate (0.4) and at 1.0 gave identical results. Run 1 agreed within 0.05 (as run 0.619, ACORN 0.761, per-tenant graphs 0.943).}}{65}{table.caption.74}\protected@file@percent }
+\newlabel{tab:qual-qdrant}{{10}{65}{Qdrant 1.19.2 under the enterprise scenario's permission filters (X1 run 2, 1,489 questions, three index builds per layout, means over builds; Range is the range over builds; latency from one CPU session). ACORN at the default gate (0.4) and at 1.0 gave identical results. Run 1 agreed within 0.05 (as run 0.619, ACORN 0.761, per-tenant graphs 0.943)}{table.caption.74}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.2}Qdrant}{65}{subsection.H.2}\protected@file@percent }
+\newlabel{app:qdrant}{{H.2}{65}{Qdrant}{subsection.H.2}{}}
+\citation{psycopg2026prepared}
+\citation{postgresql2026prepare}
+\citation{ioannidis1997parametric}
+\citation{postgresql2026selfuncs}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.3}pgvector}{66}{subsection.H.3}\protected@file@percent }
+\newlabel{app:pgvector}{{H.3}{66}{pgvector}{subsection.H.3}{}}
+\@writefile{toc}{\contentsline {paragraph}{The plan cache.}{66}{section*.75}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The scan's budget.}{66}{section*.76}\protected@file@percent }
+\citation{bajaj2016ms}
+\citation{patel2024acorn}
+\citation{amanbayev2026filtered}
+\citation{lim2026revisiting}
+\@writefile{toc}{\contentsline {subsection}{\numberline {H.4}The diagnosis grid}{67}{subsection.H.4}\protected@file@percent }
+\newlabel{app:x1grid}{{H.4}{67}{The diagnosis grid}{subsection.H.4}{}}
+\@writefile{toc}{\contentsline {paragraph}{pgvector.}{67}{section*.77}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Qdrant.}{67}{section*.78}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Statistics.}{67}{section*.79}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {I}The frontier experiment in detail (X2)}{67}{appendix.I}\protected@file@percent }
+\newlabel{app:frontier}{{I}{67}{The frontier experiment in detail (X2)}{appendix.I}{}}
+\@writefile{toc}{\contentsline {paragraph}{What ran.}{68}{section*.80}\protected@file@percent }
+\citation{weaviate2026vectorindex}
+\@writefile{lot}{\contentsline {table}{\numberline {11}{\ignorespaces X2 on MS MARCO (1,000,000 passages; 6,200 question--subject pairs over every layout, correlation regime and selectivity). R@10: recall@10, the mean over three builds (exact settings: one). 100\%: recall@10 at the default on the uncorrelated subjects granted the whole corpus, whose filter lists every division and so passes every passage (200 pairs per build, the mean over three builds), the nearest the data come to an unfiltered baseline. QPS: one client thread through the layer, the median of three passes in the store's build-0 job, so comparable only within a row. Most search effort: the top of the store's five-level sweep. pgvector's default has iterative scans off; ``both scan limits'' raises \texttt  {hnsw.max\_scan\_tuples} to 1,000,000 and \texttt  {hnsw.scan\_mem\_multiplier} to 16 at \texttt  {ef\_search} 100; its exact search answered 998 pairs in its time. Qdrant's ACORN option has \texttt  {max\_selectivity} 1.0 and \texttt  {hnsw\_ef} 512. Ent.: recall@10 at the default on the enterprise corpus (1,468 questions; Elasticsearch's \texttt  {bbq\_hnsw}, 0.888 with \texttt  {int8\_hnsw}; Chroma on 407).}}{69}{table.caption.81}\protected@file@percent }
+\newlabel{tab:qual-frontiers}{{11}{69}{X2 on MS MARCO (1,000,000 passages; 6,200 question--subject pairs over every layout, correlation regime and selectivity). R@10: recall@10, the mean over three builds (exact settings: one). 100\%: recall@10 at the default on the uncorrelated subjects granted the whole corpus, whose filter lists every division and so passes every passage (200 pairs per build, the mean over three builds), the nearest the data come to an unfiltered baseline. QPS: one client thread through the layer, the median of three passes in the store's build-0 job, so comparable only within a row. Most search effort: the top of the store's five-level sweep. pgvector's default has iterative scans off; ``both scan limits'' raises \texttt {hnsw.max\_scan\_tuples} to 1,000,000 and \texttt {hnsw.scan\_mem\_multiplier} to 16 at \texttt {ef\_search} 100; its exact search answered 998 pairs in its time. Qdrant's ACORN option has \texttt {max\_selectivity} 1.0 and \texttt {hnsw\_ef} 512. Ent.: recall@10 at the default on the enterprise corpus (1,468 questions; Elasticsearch's \texttt {bbq\_hnsw}, 0.888 with \texttt {int8\_hnsw}; Chroma on 407)}{table.caption.81}{}}
+\@writefile{toc}{\contentsline {paragraph}{Defaults.}{69}{section*.82}\protected@file@percent }
+\citation{redis2026vectors}
+\@writefile{lot}{\contentsline {table}{\numberline {12}{\ignorespaces X2's pre-registered statistics on MS MARCO at the stores' defaults, with 95\% intervals from a cluster bootstrap over subjects (10,000 resamples). $G$: recall@10 of uncorrelated minus negatively correlated questions at selectivities 2\% to 30\% (``gap'' needs $G \ge 0.05$, an interval above 0 and the same sign in at least four of five seeds; ``none'' $|G| < 0.02$ with the interval inside $\pm 0.03$). $D$: $|\rho _S(\text  {recall@10}, \rho _{1000})| - |\rho _S(\text  {recall@10}, \sigma _g)|$, Spearman over the 6,200 pairs (``local'' $D \ge 0.05$ with the interval above 0, ``global'' $D < 0$ with it below; n.a.: fewer than 100 pairs with recall below 1). $V$: recall@10 at 0.06\% minus the lowest at 0.5\%, 2\% and 10\%, clustered layouts, negatively correlated questions, one disjunction (``harder'', intermediate filters harder than the smallest, needs $V \ge 0.05$, an interval above 0 and four seeds; ``not harder'' $V \le 0$; the script printed these as ``U-shaped'' and ``monotone'', but $V$ does not test recovery at larger selectivities). A blank label is neither outcome. Chroma was not measured.}}{70}{table.caption.83}\protected@file@percent }
+\newlabel{tab:qual-x2tests}{{12}{70}{X2's pre-registered statistics on MS MARCO at the stores' defaults, with 95\% intervals from a cluster bootstrap over subjects (10,000 resamples). $G$: recall@10 of uncorrelated minus negatively correlated questions at selectivities 2\% to 30\% (``gap'' needs $G \ge 0.05$, an interval above 0 and the same sign in at least four of five seeds; ``none'' $|G| < 0.02$ with the interval inside $\pm 0.03$). $D$: $|\rho _S(\text {recall@10}, \rho _{1000})| - |\rho _S(\text {recall@10}, \sigma _g)|$, Spearman over the 6,200 pairs (``local'' $D \ge 0.05$ with the interval above 0, ``global'' $D < 0$ with it below; n.a.: fewer than 100 pairs with recall below 1). $V$: recall@10 at 0.06\% minus the lowest at 0.5\%, 2\% and 10\%, clustered layouts, negatively correlated questions, one disjunction (``harder'', intermediate filters harder than the smallest, needs $V \ge 0.05$, an interval above 0 and four seeds; ``not harder'' $V \le 0$; the script printed these as ``U-shaped'' and ``monotone'', but $V$ does not test recovery at larger selectivities). A blank label is neither outcome. Chroma was not measured}{table.caption.83}{}}
+\@writefile{toc}{\contentsline {paragraph}{Correlation (H2.1, inconclusive).}{70}{section*.84}\protected@file@percent }
+\citation{qdrant2026search,weaviate2026vectorindex,redis2026vectors}
+\@writefile{toc}{\contentsline {paragraph}{Local or global selectivity (H2.2, falsified).}{71}{section*.85}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Effort and the gap (H2.3, confirmed).}{71}{section*.86}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Intermediate filters harder than the smallest (H2.4, confirmed).}{71}{section*.87}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{pgvector's plans.}{71}{section*.88}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The enterprise corpus.}{71}{section*.89}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {J}Filter size in detail (X3)}{72}{appendix.J}\protected@file@percent }
+\newlabel{sec:qual-size}{{J}{72}{Filter size in detail (X3)}{appendix.J}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {13}{\ignorespaces Filter size (X3): median end-to-end latency of a retrieval through the layer by the number of groups $G$ in the subject's filter, the median over three passes of 30 questions in each of five seeds (levels of 10 and 4,000 groups are in the released report). Ratio: median latency with 40,000 groups over that with one, paired by question. Recall@10 against exact search over the readable set is the same at every level unless a range (one group to 40,000) is given. Chroma's seeds 3 and 4 come from a follow-up run of the same harness on the same data, and it ran 10 questions per level because its first retrieval took more than 2\,s; ``refused'': every retrieval failed with SQLite's expression-depth error; ``crashed'': the process ended with signal 11. Images and clients are those of the conformance campaign (Appendix~\ref {sec:conf-campaign}), at default index settings.}}{73}{table.caption.90}\protected@file@percent }
+\newlabel{tab:qual-size}{{13}{73}{Filter size (X3): median end-to-end latency of a retrieval through the layer by the number of groups $G$ in the subject's filter, the median over three passes of 30 questions in each of five seeds (levels of 10 and 4,000 groups are in the released report). Ratio: median latency with 40,000 groups over that with one, paired by question. Recall@10 against exact search over the readable set is the same at every level unless a range (one group to 40,000) is given. Chroma's seeds 3 and 4 come from a follow-up run of the same harness on the same data, and it ran 10 questions per level because its first retrieval took more than 2\,s; ``refused'': every retrieval failed with SQLite's expression-depth error; ``crashed'': the process ended with signal 11. Images and clients are those of the conformance campaign (Appendix~\ref {sec:conf-campaign}), at default index settings}{table.caption.90}{}}
+\citation{opensearch2026efficient}
+\@writefile{toc}{\contentsline {section}{\numberline {K}Repair in detail (X5)}{74}{appendix.K}\protected@file@percent }
+\newlabel{app:repair}{{K}{74}{Repair in detail (X5)}{appendix.K}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {K.1}Design}{74}{subsection.K.1}\protected@file@percent }
+\newlabel{sec:rep-design}{{K.1}{74}{Design}{subsection.K.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Detection by a bounded count.}{74}{section*.91}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Repair by bounded exact search.}{74}{section*.92}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Security.}{75}{section*.93}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{A sampled recall monitor.}{75}{section*.94}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Reporting.}{75}{section*.95}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {K.2}Evaluation}{75}{subsection.K.2}\protected@file@percent }
+\newlabel{sec:rep-eval}{{K.2}{75}{Evaluation}{subsection.K.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{Detection (H5.1, confirmed).}{75}{section*.97}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {14}{\ignorespaces X5: detecting and repairing under-retrieval (GitHub Actions run 40921769714; three builds per store and corpus; every arm on every question). Recall@$k$ (R@5, R@10) and the rates are means over retrievals with $k = 10$ unless marked. Empty and Short: the answer has no hit, or fewer than $\min (k, R)$, where $R$ is what the subject may read. Trigger: the first search came back with fewer than $k$ hits, which sets off the count. Detect: the share of truly short first searches flagged \emph  {missed}; n/a: there were none; ``--'': the arm does not count. FC: false-completeness rate, the share of results marked complete that are not maximal. Latency: per-question median of three passes, end to end; ``Triggered'' is the time spent on the short result (count and repair) on triggered retrievals. Latency compares arms within one store and corpus only.}}{76}{table.caption.96}\protected@file@percent }
+\newlabel{tab:rep-results}{{14}{76}{X5: detecting and repairing under-retrieval (GitHub Actions run 40921769714; three builds per store and corpus; every arm on every question). Recall@$k$ (R@5, R@10) and the rates are means over retrievals with $k = 10$ unless marked. Empty and Short: the answer has no hit, or fewer than $\min (k, R)$, where $R$ is what the subject may read. Trigger: the first search came back with fewer than $k$ hits, which sets off the count. Detect: the share of truly short first searches flagged \emph {missed}; n/a: there were none; ``--'': the arm does not count. FC: false-completeness rate, the share of results marked complete that are not maximal. Latency: per-question median of three passes, end to end; ``Triggered'' is the time spent on the short result (count and repair) on triggered retrievals. Latency compares arms within one store and corpus only}{table.caption.96}{}}
+\@writefile{toc}{\contentsline {paragraph}{Exact repair (H5.2, confirmed for the unbounded arm).}{77}{section*.98}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Cost on other queries (H5.3, inconclusive).}{77}{section*.99}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Mis-retrieval (H5.4, confirmed).}{77}{section*.100}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The monitor (H5.5, confirmed).}{77}{section*.101}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Widening (H5.6, confirmed).}{77}{section*.102}\protected@file@percent }
+\citation{maia2018www18}
+\citation{thakur2021beir}
+\citation{reimers2019sentencebert,wang2020minilm}
+\@writefile{toc}{\contentsline {paragraph}{Store-native fixes (H5.7, confirmed).}{78}{section*.103}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {L}Side channels in detail (X6)}{78}{appendix.L}\protected@file@percent }
+\newlabel{app:side}{{L}{78}{Side channels in detail (X6)}{appendix.L}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {L.1}Setup}{78}{subsection.L.1}\protected@file@percent }
+\newlabel{sec:side-setup}{{L.1}{78}{Setup}{subsection.L.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Data and probes.}{78}{section*.104}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Configurations.}{78}{section*.105}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Measurement and statistics.}{79}{section*.106}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {L.2}Full results}{79}{subsection.L.2}\protected@file@percent }
+\newlabel{app:side-results}{{L.2}{79}{Full results}{subsection.L.2}{}}
+\@writefile{toc}{\contentsline {paragraph}{The run.}{79}{section*.109}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Guards.}{79}{section*.110}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Widening (H1, falsified).}{79}{section*.111}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {15}{\ignorespaces Pre-registered hypotheses of the side-channel experiment, abbreviated, with the verdicts of the full run (Section~\ref {sec:side-results}); the full rules, including what falsifies each, are in the released pre-registration.}}{80}{table.caption.107}\protected@file@percent }
+\newlabel{tab:side-hyp}{{15}{80}{Pre-registered hypotheses of the side-channel experiment, abbreviated, with the verdicts of the full run (Section~\ref {sec:side-results}); the full rules, including what falsifies each, are in the released pre-registration}{table.caption.107}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {16}{\ignorespaces Paired AUC of the differencing attacker, $W_1$ against $W_0^g$, pooled over the three attackers: 120, 120, 80 and 40 probes for $m = 1$, 10, 100 and 1,000 over five seeds. Above 0.5 the observable moves in the direction predicted for $W_1$ (latency up; count, recall and score down); below 0.5 it moves the other way, which serves an attacker who knows the sign just as well, so the size of a channel is $|\mathrm  {AUC} - 0.5|$. Latency values must be read against the differences between builds of identical content, which reached, per $m$, $|\mathrm  {AUC} - 0.5|$ of 0.16 for FAISS's post-filter, 0.38 for its pre-filter and 0.33 for pgvector's exact search, and 0.08 for Qdrant's exact search (Section~\ref {sec:side-results}); the other configurations were not measured that way. No correction for multiple comparisons is applied: the verdicts rest on the cells the hypotheses name, and the rest of the table is descriptive. Intervals for the cells the hypotheses name are in the text; all are in the released report.}}{81}{table.caption.108}\protected@file@percent }
+\newlabel{tab:side-auc}{{16}{81}{Paired AUC of the differencing attacker, $W_1$ against $W_0^g$, pooled over the three attackers: 120, 120, 80 and 40 probes for $m = 1$, 10, 100 and 1,000 over five seeds. Above 0.5 the observable moves in the direction predicted for $W_1$ (latency up; count, recall and score down); below 0.5 it moves the other way, which serves an attacker who knows the sign just as well, so the size of a channel is $|\mathrm {AUC} - 0.5|$. Latency values must be read against the differences between builds of identical content, which reached, per $m$, $|\mathrm {AUC} - 0.5|$ of 0.16 for FAISS's post-filter, 0.38 for its pre-filter and 0.33 for pgvector's exact search, and 0.08 for Qdrant's exact search (Section~\ref {sec:side-results}); the other configurations were not measured that way. No correction for multiple comparisons is applied: the verdicts rest on the cells the hypotheses name, and the rest of the table is descriptive. Intervals for the cells the hypotheses name are in the text; all are in the released report}{table.caption.108}{}}
+\@writefile{toc}{\contentsline {paragraph}{Constant work (H2, falsified).}{82}{section*.112}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Approximate pre-filtering (H3).}{82}{section*.113}\protected@file@percent }
+\citation{wang2017sidechannel}
+\citation{espiritu2026plaintext}
+\citation{raghuram2026onewayglass}
+\@writefile{toc}{\contentsline {paragraph}{Exact pre-filtering (H4, inconclusive).}{83}{section*.114}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Collection statistics (H5).}{83}{section*.115}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Against prior work.}{83}{section*.116}\protected@file@percent }
+\citation{maia2018www18}
+\citation{thakur2021beir}
+\citation{xiao2024cpack}
+\@writefile{toc}{\contentsline {paragraph}{Padding (H6).}{84}{section*.117}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Costs.}{84}{section*.118}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Summary.}{84}{section*.119}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {M}The end-to-end evaluation in detail (X0 and X8)}{84}{appendix.M}\protected@file@percent }
+\newlabel{app:e2e}{{M}{84}{The end-to-end evaluation in detail (X0 and X8)}{appendix.M}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {M.1}Setup}{84}{subsection.M.1}\protected@file@percent }
+\newlabel{sec:e2e-setup}{{M.1}{84}{Setup}{subsection.M.1}{}}
+\@writefile{toc}{\contentsline {paragraph}{Corpus.}{84}{section*.120}\protected@file@percent }
+\citation{yang2024qwen25}
+\@writefile{toc}{\contentsline {paragraph}{People and questions.}{85}{section*.121}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Policy and stores.}{85}{section*.122}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Runs.}{85}{section*.123}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Leak detection.}{85}{section*.124}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {17}{\ignorespaces End-to-end safety over four runs (seeds 7, 11, 13 and 17). The unit of the bounds in the text is the question and the person; hits are secondary and are counted over both retrievals per question, so about a third of them, the $k = 5$ hits, largely repeat chunks already counted among the $k = 10$ hits of the same question. pgvector and its variants checked fewer hits because some of their answers were short or empty (Section~\ref {sec:quality}). \textsuperscript  {$\ast $}Four further runs with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration reported an error.}}{86}{table.caption.125}\protected@file@percent }
+\newlabel{tab:e2e-safety}{{17}{86}{End-to-end safety over four runs (seeds 7, 11, 13 and 17). The unit of the bounds in the text is the question and the person; hits are secondary and are counted over both retrievals per question, so about a third of them, the $k = 5$ hits, largely repeat chunks already counted among the $k = 10$ hits of the same question. pgvector and its variants checked fewer hits because some of their answers were short or empty (Section~\ref {sec:quality}). \textsuperscript {$\ast $}Four further runs with the same seeds, in which only pgvector and pgvector with OpenFGA ran. No configuration reported an error}{table.caption.125}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {M.2}Safety in detail}{86}{subsection.M.2}\protected@file@percent }
+\newlabel{app:e2e-safety}{{M.2}{86}{Safety in detail}{subsection.M.2}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {M.3}Exposure and the mutation positive control}{87}{subsection.M.3}\protected@file@percent }
+\newlabel{app:e2e-control}{{M.3}{87}{Exposure and the mutation positive control}{subsection.M.3}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {18}{\ignorespaces Exposure over seeds 7, 11, 13 and 17 on the unfiltered exact index: the share of questions with at least one chunk the person may not read, the mean number of such chunks, and the share with such a chunk that carries a canary.}}{88}{table.caption.127}\protected@file@percent }
+\newlabel{tab:e2e-exposure}{{18}{88}{Exposure over seeds 7, 11, 13 and 17 on the unfiltered exact index: the share of questions with at least one chunk the person may not read, the mean number of such chunks, and the share with such a chunk that carries a canary}{table.caption.127}{}}
+\@writefile{toc}{\contentsline {paragraph}{Exposure.}{88}{section*.126}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{The positive control.}{88}{section*.128}\protected@file@percent }
+\citation{greshake2023not,debenedetti2025defeating}
+\@writefile{lot}{\contentsline {table}{\numberline {19}{\ignorespaces The mutation positive control on FAISS, seed 7, 1,105 questions, the main retrievals at $k = 5$ and $k = 10$. Counts are questions, except the violations counted in hits. R@10 is recall@10 against the unmutated readable set.}}{89}{table.caption.129}\protected@file@percent }
+\newlabel{tab:e2e-control}{{19}{89}{The mutation positive control on FAISS, seed 7, 1,105 questions, the main retrievals at $k = 5$ and $k = 10$. Counts are questions, except the violations counted in hits. R@10 is recall@10 against the unmutated readable set}{table.caption.129}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {M.4}What the model did with what it retrieved}{89}{subsection.M.4}\protected@file@percent }
+\newlabel{sec:e2e-model}{{M.4}{89}{What the model did with what it retrieved}{subsection.M.4}{}}
+\citation{buttcher2005security}
+\citation{bailey2006secure}
+\citation{mangtani2006documentlevel}
+\citation{fagin2003searching}
+\citation{wang2017sidechannel}
+\citation{espiritu2026plaintext}
+\citation{raghuram2026onewayglass}
+\citation{zerr2008zerber}
+\citation{zerr2009zerberr}
+\citation{song2000practical,curtmola2006searchable}
+\citation{wong2009secure}
+\citation{griffiths1976authorization}
+\citation{motro1989access}
+\citation{stonebraker1974access}
+\citation{rizvi2004extending,oracle2026using}
+\citation{lefevre2004limiting}
+\citation{wang2007correctness}
+\citation{kabra2006redundancy}
+\citation{guarnieri2014optimal}
+\citation{pappachan2020sieve}
+\citation{postgresql2026row}
+\citation{dar2023rls,rasin2024vulnerability}
+\citation{espiritu2026plaintext}
+\@writefile{toc}{\contentsline {section}{\numberline {N}Related work in full}{90}{appendix.N}\protected@file@percent }
+\newlabel{app:related}{{N}{90}{Related work in full}{appendix.N}{}}
+\@writefile{toc}{\contentsline {paragraph}{Enterprise search and document-level security.}{90}{section*.130}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Database access control.}{90}{section*.131}\protected@file@percent }
+\citation{pang2019zanzibar}
+\citation{fong2011relationshipbaseda}
+\citation{openfga2026search,openfga2026openfga}
+\citation{authzed2026protecting}
+\citation{nvd2025cve202565111}
+\citation{sandall2018write,opa2026evaluating,opa2026writing}
+\citation{cerbos2026cerbos}
+\citation{cutler2024cedar}
+\citation{oasis2013extensible}
+\citation{fisler2005verification}
+\citation{backes2018semanticbased}
+\citation{martin2007fault}
+\citation{disselkoen2024how}
+\citation{cedar2026cedarspec}
+\citation{malkov2020efficient}
+\citation{patel2024acorn}
+\citation{patel2024acorn}
+\citation{li2025attribute}
+\citation{kim2026racorn1}
+\citation{pgvector2026pgvector}
+\citation{wang2023efficient,wu2022hqann}
+\citation{gupta2023caps}
+\citation{cai2024navigating}
+\citation{li2025sieve}
+\citation{zuo2024serf,xu2024irangegraph,engels2024approximate}
+\citation{wei2020analyticdbv,zhang2023vbase}
+\citation{aquino2024filtering,rodriguez2024how,trent2025filtered}
+\citation{opensearch2026efficient}
+\citation{gollapudi2023filtereddiskann}
+\citation{simhadri2025results}
+\citation{li2025attribute,iff2026benchmarking,shi2025filtered}
+\citation{zhang2026vecbench,amanbayev2026filtered,lu2026indepth}
+\citation{lim2026revisiting}
+\citation{zhong2026honeybee}
+\citation{han2026dont}
+\citation{yalamarthi2026policyaware}
+\citation{jin2024curator}
+\citation{das2026recallbounded}
+\@writefile{toc}{\contentsline {paragraph}{Authorization systems and policy-to-filter compilation.}{91}{section*.132}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Filtered ANN search and access-aware vector indexes.}{91}{section*.133}\protected@file@percent }
+\citation{zeng2024good}
+\citation{qi2024follow}
+\citation{naseh2025riddle}
+\citation{liu2026protection}
+\citation{arceo2026securing}
+\citation{budigi2026beyond}
+\citation{thornton2026retrieval}
+\citation{bhatt2025enterprise}
+\citation{sanyal2025orgaccess}
+\citation{owasp2025llm082025}
+\citation{jayaraman2025permissioned}
+\citation{roychowdhury2024confusedpilot}
+\citation{song2020information,li2023sentence,morris2023text,zhang2025universal}
+\citation{hardy1988confused}
+\citation{jones2020oauth}
+\citation{mcp2026model}
+\citation{mitre2026atlas}
+\citation{zhou2026first}
+\citation{zou2025poisonedrag}
+\citation{costa2025securing,wu2024systemlevel}
+\citation{sun2026agentassisted}
+\@writefile{toc}{\contentsline {paragraph}{RAG privacy and agent identity.}{92}{section*.134}\protected@file@percent }
+\citation{goguen1982security}
+\citation{felten2000timing}
+\citation{gelernter2015crosssite}
+\citation{askarov2010predictive}
+\citation{zhang2012languagebased}
+\citation{rigger2020testing}
+\citation{rigger2020detecting,rigger2020finding}
+\citation{ba2023testing,ba2024keep,kamm2023testing}
+\citation{mckeeman1998differential}
+\citation{chen2018metamorphic,segura2016survey}
+\citation{claessen2000quickcheck,maciver2019hypothesis}
+\citation{xie2025toward}
+\citation{wang2025towards}
+\citation{carlini2019secret}
+\citation{aumuller2020annbenchmarks}
+\citation{simhadri2025results,zhong2026honeybee}
+\citation{bouthillier2021accounting,agarwal2021deep}
+\citation{klees2018evaluating,schloegel2024sok}
+\citation{smucker2007comparison,urbano2019statistical}
+\citation{hanley1983if}
+\citation{microsoft2026querytime}
+\citation{elastic2026controlling,opensearch2026documentlevel}
+\citation{milvus2026implement}
+\citation{qdrant2025release}
+\citation{auth02026authorization}
+\citation{cerbos2026implementing}
+\citation{authzed2026langchainspicedb}
+\citation{openfga2026rag}
+\citation{coveo2026coveo}
+\citation{aws2026access}
+\citation{langchain2026pebbloretrieval}
+\citation{gelevanog2026permissionaware}
+\@writefile{toc}{\contentsline {paragraph}{Side channels and information flow.}{93}{section*.135}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Testing methodology.}{93}{section*.136}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Industry systems.}{93}{section*.137}\protected@file@percent }
+\@writefile{toc}{\contentsline {section}{\numberline {O}Limitations in detail}{94}{appendix.O}\protected@file@percent }
+\newlabel{sec:limits-limits}{{O}{94}{Limitations in detail}{appendix.O}{}}
+\@writefile{toc}{\contentsline {paragraph}{Scope of the security claim.}{94}{section*.138}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{What was tested.}{94}{section*.139}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Synthetic permissions.}{94}{section*.140}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{One instrument.}{95}{section*.141}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Versions, settings and hardware.}{95}{section*.142}\protected@file@percent }
+\@writefile{toc}{\contentsline {paragraph}{Baselines and sweeps we did not run.}{95}{section*.143}\protected@file@percent }
+\citation{dar2023rls,rasin2024vulnerability,espiritu2026plaintext}
+\@writefile{toc}{\contentsline {paragraph}{Statistical power.}{96}{section*.144}\protected@file@percent }
+\@writefile{toc}{\contentsline {subsection}{\numberline {O.1}Native enforcement: a side run on FiQA}{96}{subsection.O.1}\protected@file@percent }
+\newlabel{sec:limits-native}{{O.1}{96}{Native enforcement: a side run on FiQA}{subsection.O.1}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {O.2}Licenses of data and models}{96}{subsection.O.2}\protected@file@percent }
+\newlabel{app:licenses}{{O.2}{96}{Licenses of data and models}{subsection.O.2}{}}
+\citation{maia2018www18,bajaj2016ms}
+\@writefile{lot}{\contentsline {table}{\numberline {20}{\ignorespaces Row-level security against the layer's pre-filter on FiQA, as the library's results file reports them. \emph  {Ten results}: the share of the 200 queries that returned ten. Not part of this paper's pre-registered experiments.}}{97}{table.caption.145}\protected@file@percent }
+\newlabel{tab:limits-rls}{{20}{97}{Row-level security against the layer's pre-filter on FiQA, as the library's results file reports them. \emph {Ten results}: the share of the 200 queries that returned ten. Not part of this paper's pre-registered experiments}{table.caption.145}{}}
+\@writefile{toc}{\contentsline {subsection}{\numberline {O.3}Ethics and disclosure in detail}{97}{subsection.O.3}\protected@file@percent }
+\newlabel{app:ethics}{{O.3}{97}{Ethics and disclosure in detail}{subsection.O.3}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {P}Store settings in the enterprise scenario}{97}{appendix.P}\protected@file@percent }
+\newlabel{app:settings}{{P}{97}{Store settings in the enterprise scenario}{appendix.P}{}}
+\@writefile{toc}{\contentsline {paragraph}{Ground truth.}{97}{section*.147}\protected@file@percent }
+\@writefile{lot}{\contentsline {table}{\numberline {21}{\ignorespaces Settings in the end-to-end runs (Sections~\ref {sec:e2e} and~\ref {sec:quality}). Each run is one Kaggle session, two T4 GPUs, four CPUs, 31.3\,GiB of memory; embeddings bge-base-en-v1.5, 768 dimensions, unit length. The setup scripts pin the server versions of Qdrant, Elasticsearch, OpenSearch, Weaviate, PostgreSQL's pgvector, OPA and OpenFGA; Redis comes from its package repository and the embedded stores from PyPI; the logs record the same versions in all four runs, except psycopg (3.3.8 in the seed-7 run, 3.3.6 in the repeats).}}{98}{table.caption.146}\protected@file@percent }
+\newlabel{tab:app-x0-settings}{{21}{98}{Settings in the end-to-end runs (Sections~\ref {sec:e2e} and~\ref {sec:quality}). Each run is one Kaggle session, two T4 GPUs, four CPUs, 31.3\,GiB of memory; embeddings bge-base-en-v1.5, 768 dimensions, unit length. The setup scripts pin the server versions of Qdrant, Elasticsearch, OpenSearch, Weaviate, PostgreSQL's pgvector, OPA and OpenFGA; Redis comes from its package repository and the embedded stores from PyPI; the logs record the same versions in all four runs, except psycopg (3.3.8 in the seed-7 run, 3.3.6 in the repeats)}{table.caption.146}{}}
+\@writefile{toc}{\contentsline {section}{\numberline {Q}Compute}{98}{appendix.Q}\protected@file@percent }
+\newlabel{app:compute}{{Q}{98}{Compute}{appendix.Q}{}}
+\@writefile{lot}{\contentsline {table}{\numberline {22}{\ignorespaces Compute of the paper's experiments; the row-level security side run (4,331\,s on Kaggle) and the vendor reproducers' short runs are not listed. Kaggle sessions have 4 CPUs and 31.3\,GiB of memory; GitHub-hosted runners have 4 virtual CPUs and 16\,GB. Jobs counts every job of the workflow run, including data, plan, report, summary and publish jobs, from GitHub's jobs API (the X7 rerun and the follow-up each include jobs the workflow skipped, one and three). On GitHub, hours sum the run times of the jobs that started; wall clock includes queueing. On Kaggle, hours are session hours, the last time stamp of each kernel log. Smoke runs that tested the harnesses, whose numbers were never analysed, and runs cancelled before they produced results are not listed.}}{98}{table.caption.148}\protected@file@percent }
+\newlabel{tab:app-compute}{{22}{98}{Compute of the paper's experiments; the row-level security side run (4,331\,s on Kaggle) and the vendor reproducers' short runs are not listed. Kaggle sessions have 4 CPUs and 31.3\,GiB of memory; GitHub-hosted runners have 4 virtual CPUs and 16\,GB. Jobs counts every job of the workflow run, including data, plan, report, summary and publish jobs, from GitHub's jobs API (the X7 rerun and the follow-up each include jobs the workflow skipped, one and three). On GitHub, hours sum the run times of the jobs that started; wall clock includes queueing. On Kaggle, hours are session hours, the last time stamp of each kernel log. Smoke runs that tested the harnesses, whose numbers were never analysed, and runs cancelled before they produced results are not listed}{table.caption.148}{}}
+\gdef \@abspage@last{98}

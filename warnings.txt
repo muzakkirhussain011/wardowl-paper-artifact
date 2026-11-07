@@ -1,0 +1,7 @@
+commit: d53c435faabd3551380029f7c57ea4f4269dec37
+compile outcome: success
+Output written on main.pdf (98 pages, 1009784 bytes).
+--- warnings ---
+1111:Overfull \hbox (2.90083pt too wide) in paragraph at lines 55--56
+1116:Overfull \hbox (2.90083pt too wide) in paragraph at lines 56--57
+--- bibtex ---
