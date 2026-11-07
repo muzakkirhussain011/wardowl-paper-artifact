@@ -2,12 +2,12 @@ cff-version: 1.2.0
 message: "If you use this artifact, please cite the paper. REPRODUCE.md maps each table and figure to its data."
 title: "Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
 type: dataset
-version: evidence-v1
-date-released: 2026-11-02
+version: evidence-v2
+date-released: 2026-11-07
 identifiers:
   - type: doi
-    value: 10.5281/zenodo.23874614
-    description: "The archive of the tag evidence-v1 on Zenodo"
+    value: 10.5281/zenodo.23874613
+    description: "The archive on Zenodo, every version (evidence-v1: 10.5281/zenodo.23874614)"
 authors:
   - family-names: Hussain
     given-names: Syed Muzakkir

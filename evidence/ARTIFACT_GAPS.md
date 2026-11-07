@@ -92,9 +92,11 @@ name head commits of the same repository, and `38f4ae7` (run 41114474172) is not
 
 ## Archive and licenses
 
-- **The archive's DOI is 10.5281/zenodo.23874614,** the tag `evidence-v1` as released on 2026-11-02. The commit that adds the DOI,
-  which also dates the paper's sentence on vendor replies to 2026-11-02, and any later commit of `main`, are not in that record.
-  `.github/workflows/evidence-tag.yml` then refuses to move the tag.
+- **The archive's concept DOI is 10.5281/zenodo.23874613,** which lists every version: `evidence-v1`, released on 2026-11-02
+  (10.5281/zenodo.23874614), and `evidence-v2`, which holds X0 and X1 run 1 as executed on 2026-11-07. The commit that adds v1's
+  DOI, which also dates the paper's sentence on vendor replies to 2026-11-02, and any later commit of `main`, are not in v1; the
+  same holds for v2 and `evidence/ARCHIVE_DOI_V2`. `.github/workflows/evidence-tag.yml` and `evidence-tag-v2.yml` refuse to move a
+  published tag.
 - **GitHub reports this repository's license as "other" (NOASSERTION).** That stands: the repository holds material under several
   terms by design (`LICENSE.md`).
 - **MS MARCO text.** We state that the archive holds none, from a sample of the result files and from what the harness writes. We
