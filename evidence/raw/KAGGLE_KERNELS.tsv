@@ -25,3 +25,4 @@ X8 amendment 2	wardowl-x8b-seed17	private	NvidiaTeslaT4	2026-10-30 10:36:15.3730
 X8 amendment 2	wardowl-x8b-control-seed7	private	NvidiaTeslaT4	2026-10-30 10:39:59.147000	363820036	gcr.io/kaggle-private-byod/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435	x8b-control-seed7
 X8 amendment 2	wardowl-x8b-pool	private	CPU	2026-10-30 10:53:14.147000	363823281	gcr.io/kaggle-images/python@sha256:17b2fc7f27c25c6c2fd4230ec8e66097ab2b89fc88e1e4d6f338b72e1ee0bc3e	x8b-pool
 X8 amendment 2, recount	wardowl-x8b-verify	private	CPU	2026-10-30 18:10:06.780000	363989474	gcr.io/kaggle-images/python@sha256:17b2fc7f27c25c6c2fd4230ec8e66097ab2b89fc88e1e4d6f338b72e1ee0bc3e	x8b-verify
+RLS side run	wardowl-rls-side-run	private	NvidiaTeslaT4	2026-11-07 16:00:23.023000		gcr.io/kaggle-private-byod/python@sha256:9a6bcfda6d03b2cd9aa347ee8c1bae62043328ed0f4afe9bda014e4f8bbf9435	rls-side-run

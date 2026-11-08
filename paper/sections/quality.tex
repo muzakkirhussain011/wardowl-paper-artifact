@@ -165,10 +165,10 @@ first run, confirmed in the second, the run that judges it).
 
 \subsection{A native baseline, in a side run}\label{sec:qual-native}
 
-An earlier run of the library's own benchmarks, on 2026-10-22, compared it with native enforcement (Appendix~\ref{sec:limits-native}). On FiQA
+A run of the library's own benchmarks, first executed on 2026-10-22 and again at the same commit on 2026-11-07, compared it with native enforcement (Appendix~\ref{sec:limits-native}). On FiQA
 (57,600 chunks, 200 questions, readable shares of 0.06\% to 100\%), a PostgreSQL row-level security policy on the same table and HNSW index returned
-no unreadable chunk and reached recall@10 of 0.998 to 1.000, with median latency growing with the readable share from 2.1 to 608\,ms; the layer's pre-filter reached 0.948 to
-1.000 at 2.8 to 82.2\,ms. The plans were not captured; the latency's shape is what an exact scan of the admitted rows would give. This is a side run on a different corpus, commit and harness, without tenant copies, and without measuring side channels,
+no unreadable chunk and reached recall@10 of 0.998 to 1.000, with median latency growing with the readable share from 1.9 to 556\,ms; the layer's pre-filter reached 0.950 to
+1.000 at 2.6 to 83.1\,ms. The plans were not captured; the latency's shape is what an exact scan of the admitted rows would give. This is a side run on a different corpus, commit and harness, without tenant copies, and without measuring side channels,
 so it does not say what row-level security would do on the enterprise corpus. Like the exact configurations above, it shows that enforcing permissions need not lose recall, at that latency. Document-level security in Elasticsearch and OpenSearch was not measured.
 
 \subsection{Recall against throughput}\label{sec:qual-frontiers}

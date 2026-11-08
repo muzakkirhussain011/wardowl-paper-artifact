@@ -7,7 +7,7 @@ configurations ($8.0 \times 10^{-4}$ per question and $1.6 \times 10^{-2}$ per p
 Containment is not all that security asks. The checked revision can be stale, and in the code we ran revoked chunks were served for up to 38.4\,s after an invalidation. In forced-choice tests, latency, counts, recall and scores
 told a subject which of two worlds held a group of unreadable chunks that included the query's nearest passages. And the untrusted parts still decide how much of what a subject may
 read it receives: on our synthetic layouts stores dropped matching chunks at size limits, filtered approximate search lost much of a readable set far from the
-question, and the same pgvector configuration was exact in some runs and lost about a quarter of its recall in others. That loss is not a cost of enforcement as such: in a side run on another corpus, PostgreSQL row-level security kept recall@10 at 0.998 or better, with median latency growing with the readable share to 608\,ms. No count sees a full answer
+question, and the same pgvector configuration was exact in some runs and lost about a quarter of its recall in others. That loss is not a cost of enforcement as such: in a side run on another corpus, PostgreSQL row-level security kept recall@10 at 0.998 or better, with median latency growing with the readable share to 556\,ms. No count sees a full answer
 of the wrong chunks.
 
 On this evidence we suggest three practices. Test filter semantics differentially, and measure recall under permission-shaped filters against exact search over the

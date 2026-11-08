@@ -1,0 +1,294 @@
+[{"stream_name":"stderr","time":8.559120388,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":8.559184763,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":8.559191395,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":8.559195245,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stderr","time":9.177444177,"data":"0.00s - Debugger warning: It seems that frozen modules are being used, which may\n"}
+,{"stream_name":"stderr","time":9.177476326,"data":"0.00s - make the debugger miss breakpoints. Please pass -Xfrozen_modules=off\n"}
+,{"stream_name":"stderr","time":9.177481119,"data":"0.00s - to python to disable frozen modules.\n"}
+,{"stream_name":"stderr","time":9.177484865,"data":"0.00s - Note: Debugging will proceed. Set PYDEVD_DISABLE_FILE_VALIDATION=1 to disable this validation.\n"}
+,{"stream_name":"stdout","time":26.655429244,"data":"42fcca6acc720155e77508b2a54dcf8b401b949a 2026-10-22 Merge pull request #116 from muzakkirhussain011/chore/pillow-advisories-2\r\n"}
+,{"stream_name":"stdout","time":30.760453631,"data":"  Installing build dependencies ... \u001b[?25l\u001b[?25hdone\r\n"}
+,{"stream_name":"stdout","time":30.962158472,"data":"  Getting requirements to build wheel ... \u001b[?25l\u001b[?25hdone\r\n"}
+,{"stream_name":"stdout","time":31.164406287,"data":"  Preparing metadata (pyproject.toml) ... \u001b[?25l\u001b[?25hdone\r\n"}
+,{"stream_name":"stdout","time":42.134252964,"data":"  Building wheel for needtoknow (pyproject.toml) ... \u001b[?25l\u001b[?25hdone\r\n"}
+,{"stream_name":"stdout","time":54.875904204,"data":"\u001b[31mERROR: pip's dependency resolver does not currently take into account all the packages that are installed. This behaviour is the source of the following dependency conflicts.\r\n"}
+,{"stream_name":"stdout","time":54.875932839,"data":"bigframes 2.48.0 requires google-cloud-bigquery-storage\u003c3.0.0,\u003e=2.30.0, which is not installed.\r\n"}
+,{"stream_name":"stdout","time":54.875943867,"data":"aiobotocore 2.26.0 requires python-dateutil\u003c3.0.0,\u003e=2.1, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875949528,"data":"botocore 1.41.5 requires python-dateutil\u003c3.0.0,\u003e=2.1, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875954959,"data":"holidays 0.103 requires python-dateutil\u003c3,\u003e=2.9.0.post0, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875960373,"data":"gradio 6.26.0 requires pillow\u003c13.0,\u003e=8.0, but you have pillow 13.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875965694,"data":"ibis-framework 9.5.0 requires python-dateutil\u003c3,\u003e=2.8.2, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875971008,"data":"bigframes 2.48.0 requires python-dateutil\u003c3,\u003e=2.8.2, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875976187,"data":"google-cloud-bigquery 3.44.0 requires python-dateutil\u003c3.0.0,\u003e=2.8.2, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875981684,"data":"tweepy 4.17.0 requires oauthlib\u003c4,\u003e=3.2.0, but you have oauthlib 4.0.1 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.875986725,"data":"betterproto 2.0.0b7 requires python-dateutil\u003c3.0,\u003e=2.8, but you have python-dateutil 4.0.0 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.87600318,"data":"google-adk 2.7.1 requires opentelemetry-api\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-api 1.45.2 which is incompatible.\r\n"}
+,{"stream_name":"stdout","time":54.876007834,"data":"google-adk 2.7.1 requires opentelemetry-sdk\u003c=1.42.1,\u003e=1.39, but you have opentelemetry-sdk 1.45.2 which is incompatible.\u001b[0m\u001b[31m\r\n"}
+,{"stream_name":"stdout","time":61.578428449,"data":"\u001b[0mW: https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2404/x86_64/InRelease: Key is stored in legacy trusted.gpg keyring (/etc/apt/trusted.gpg), see the DEPRECATION section in apt-key(8) for details.\r\n"}
+,{"stream_name":"stdout","time":61.57846232,"data":"W: Skipping acquire of configured file 'main/source/Sources' as repository 'https://r2u.stat.illinois.edu/ubuntu noble InRelease' does not seem to provide it (sources.list entry misspelt?)\r\n"}
+,{"stream_name":"stdout","time":138.301920941,"data":"Note: switching to 'f37c13f68b57d2c3472b2214fbcff699d6d34876'.\r\n"}
+,{"stream_name":"stdout","time":138.301951285,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.301956176,"data":"You are in 'detached HEAD' state. You can look around, make experimental\r\n"}
+,{"stream_name":"stdout","time":138.301960806,"data":"changes and commit them, and you can discard any commits you make in this\r\n"}
+,{"stream_name":"stdout","time":138.301965203,"data":"state without impacting any branches by switching back to a branch.\r\n"}
+,{"stream_name":"stdout","time":138.30196939,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.301973532,"data":"If you want to create a new branch to retain commits you create, you may\r\n"}
+,{"stream_name":"stdout","time":138.301979262,"data":"do so (now or later) by using -c with the switch command. Example:\r\n"}
+,{"stream_name":"stdout","time":138.301988109,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.301991579,"data":"  git switch -c \u003cnew-branch-name\u003e\r\n"}
+,{"stream_name":"stdout","time":138.301994969,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.30199775,"data":"Or undo this operation with:\r\n"}
+,{"stream_name":"stdout","time":138.302000661,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.302003355,"data":"  git switch -\r\n"}
+,{"stream_name":"stdout","time":138.302006187,"data":"\r\n"}
+,{"stream_name":"stdout","time":138.302008938,"data":"Turn off this advice by setting config variable advice.detachedHead to false\r\n"}
+,{"stream_name":"stdout","time":138.302011962,"data":"\r\n"}
+,{"stream_name":"stdout","time":160.291385674,"data":" * Starting PostgreSQL 16 database server       \u001b[80G \r\u001b[74G[ OK ]\r\n"}
+,{"stream_name":"stdout","time":160.34196526,"data":"NOTICE:  database \"bench\" does not exist, skipping\r\n"}
+,{"stream_name":"stdout","time":160.392744749,"data":"NOTICE:  role \"bench\" does not exist, skipping\r\n"}
+,{"stream_name":"stdout","time":160.51565382,"data":"PostgreSQL 16 with pgvector v0.8.7 is running\r\n"}
+,{"stream_name":"stdout","time":165.104169273,"data":"Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.\r\n"}
+,{"stream_name":"stdout","time":165.104197977,"data":"\rREADME.md:   0%|                                    | 0.00/10.4k [00:00\u003c?, ?B/s]\rREADME.md: 100%|███████████████████████████| 10.4k/10.4k [00:00\u003c00:00, 20.2MB/s]\r\n"}
+,{"stream_name":"stdout","time":168.342304518,"data":"\r\n"}
+,{"stream_name":"stdout","time":169.661939639,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:   0%| |  0.00B / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes:    |  0.00B            \r\n"}
+,{"stream_name":"stdout","time":169.763329223,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:   7%| | 1.93MB / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ▎  | 3.03MB            \r\n"}
+,{"stream_name":"stdout","time":169.864841974,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:  14%|▏| 3.76MB / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ▌  | 4.63MB,  293kB/s  \r\n"}
+,{"stream_name":"stdout","time":169.966569253,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:  18%|▏| 4.97MB / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ▉  | 9.20MB,  443kB/s  \r\n"}
+,{"stream_name":"stdout","time":170.170577704,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:  38%|▍| 10.7MB / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes: █▍ | 13.2MB,  878kB/s  \r\n"}
+,{"stream_name":"stdout","time":170.221315101,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file:  65%|▋| 18.0MB / 27.7\u001b[A\rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ██▎| 21.2MB, 1.39MB/s  \rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ███| 27.7MB, 2.60MB/s  \rcorpus/corpus-00000-of-00001.parquet: downloading bytes: ███| 27.7MB, 2.60MB/s  \r\n"}
+,{"stream_name":"stdout","time":170.221344443,"data":"\rcorpus/corpus-00000-of-00001.parquet: reconstructing file: 100%|█| 27.7MB / 27.7\r\n"}
+,{"stream_name":"stdout","time":170.577056784,"data":"\rGenerating corpus split:   0%|                 | 0/57638 [00:00\u003c?, ? examples/s]\rGenerating corpus split: 100%|█| 57638/57638 [00:00\u003c00:00, 177516.83 examples/s]\rGenerating corpus split: 100%|█| 57638/57638 [00:00\u003c00:00, 173892.52 examples/s]\r\n"}
+,{"stream_name":"stdout","time":173.159215222,"data":"\r\n"}
+,{"stream_name":"stdout","time":174.271627175,"data":"\rqueries/queries-00000-of-00001.parquet: reconstructing file:   0%| |  0.00B /  3\u001b[A\rqueries/queries-00000-of-00001.parquet: downloading bytes:  |  0.00B            \r\n"}
+,{"stream_name":"stdout","time":174.271663204,"data":"\rqueries/queries-00000-of-00001.parquet: reconstructing file: 100%|█|  322kB /  3\u001b[A\rqueries/queries-00000-of-00001.parquet: downloading bytes: ▉|  313kB            \rqueries/queries-00000-of-00001.parquet: downloading bytes: █|  313kB, 30.4kB/s  \rqueries/queries-00000-of-00001.parquet: downloading bytes: █|  313kB, 30.4kB/s  \r\n"}
+,{"stream_name":"stdout","time":174.271671774,"data":"\rqueries/queries-00000-of-00001.parquet: reconstructing file: 100%|█|  322kB /  3\r\n"}
+,{"stream_name":"stdout","time":174.271675993,"data":"\rGenerating queries split:   0%|                 | 0/6648 [00:00\u003c?, ? examples/s]\rGenerating queries split: 100%|██| 6648/6648 [00:00\u003c00:00, 836219.31 examples/s]\r\n"}
+,{"stream_name":"stdout","time":212.962855557,"data":"\rmodules.json:   0%|                                   | 0.00/349 [00:00\u003c?, ?B/s]\rmodules.json: 100%|████████████████████████████| 349/349 [00:00\u003c00:00, 1.61MB/s]\r\n"}
+,{"stream_name":"stdout","time":213.214012048,"data":"\rconfig_sentence_transformers.json:   0%|              | 0.00/215 [00:00\u003c?, ?B/s]\rconfig_sentence_transformers.json: 100%|███████| 215/215 [00:00\u003c00:00, 1.42MB/s]\r\n"}
+,{"stream_name":"stdout","time":213.669041127,"data":"\rREADME.md:   0%|                                    | 0.00/17.2k [00:00\u003c?, ?B/s]\rREADME.md: 100%|███████████████████████████| 17.2k/17.2k [00:00\u003c00:00, 29.4MB/s]\r\n"}
+,{"stream_name":"stdout","time":216.04502979,"data":"\rconfig.json:   0%|                                    | 0.00/727 [00:00\u003c?, ?B/s]\rconfig.json: 100%|█████████████████████████████| 727/727 [00:00\u003c00:00, 2.61MB/s]\r\n"}
+,{"stream_name":"stdout","time":216.754044961,"data":"\r\n"}
+,{"stream_name":"stdout","time":218.083085967,"data":"\rmodel.safetensors: reconstructing file:   0%|      |  0.00B / 1.19GB            \u001b[A\rmodel.safetensors: downloading bytes:                       |  0.00B            \rmodel.safetensors: downloading bytes: ▊                     | 42.3MB            \rmodel.safetensors: downloading bytes: █▉                    |  107MB, 4.11MB/s  \r\n"}
+,{"stream_name":"stdout","time":218.186889254,"data":"\rmodel.safetensors: reconstructing file:   3%|▏     | 33.4MB / 1.19GB            \u001b[A\rmodel.safetensors: downloading bytes: ███                   |  168MB, 10.3MB/s  \r\n"}
+,{"stream_name":"stdout","time":218.293592206,"data":"\rmodel.safetensors: reconstructing file:   6%|▎     | 67.1MB / 1.19GB, 3.23MB/s  \u001b[A\rmodel.safetensors: downloading bytes: ████▎                 |  231MB, 16.1MB/s  \r\n"}
+,{"stream_name":"stdout","time":218.401320031,"data":"\rmodel.safetensors: reconstructing file:  11%|▋     |  134MB / 1.19GB, 6.43MB/s  \u001b[A\rmodel.safetensors: downloading bytes: █████▎                |  290MB, 22.0MB/s  \r\n"}
+,{"stream_name":"stdout","time":218.504569838,"data":"\rmodel.safetensors: reconstructing file:  23%|█▎    |  268MB / 1.19GB, 12.8MB/s  \u001b[A\r\n"}
+,{"stream_name":"stdout","time":219.225968532,"data":"\rmodel.safetensors: reconstructing file:  29%|█▋    |  344MB / 1.19GB, 25.5MB/s  \u001b[A\rmodel.safetensors: downloading bytes: ███████▎              |  399MB, 32.0MB/s  \rmodel.safetensors: downloading bytes: ████████▌             |  462MB, 37.2MB/s  \rmodel.safetensors: downloading bytes: █████████▋            |  528MB, 42.9MB/s  \rmodel.safetensors: downloading bytes: ████████████          |  651MB, 53.8MB/s  \rmodel.safetensors: downloading bytes: █████████████▏        |  717MB, 59.4MB/s  \r\n"}
+,{"stream_name":"stdout","time":219.329094987,"data":"\rmodel.safetensors: reconstructing file:  57%|███▍  |  680MB / 1.19GB, 37.9MB/s  \u001b[A\rmodel.safetensors: downloading bytes: ███████████████▏      |  825MB, 70.2MB/s  \r\n"}
+,{"stream_name":"stdout","time":219.740663202,"data":"\rmodel.safetensors: reconstructing file:  68%|████  |  814MB / 1.19GB, 61.6MB/s  \u001b[A\rmodel.safetensors: downloading bytes: █████████████████▎    |  941MB, 77.9MB/s  \rmodel.safetensors: downloading bytes: ██████████████████▌   | 1.01GB, 83.3MB/s  \r\n"}
+,{"stream_name":"stdout","time":219.842778634,"data":"\rmodel.safetensors: reconstructing file: 100%|██████| 1.19GB / 1.19GB, 73.6MB/s  \u001b[A\rmodel.safetensors: downloading bytes: ██████████████████████| 1.04GB, 90.8MB/s  \rmodel.safetensors: downloading bytes: ██████████████████████| 1.04GB, 90.8MB/s  \r\n"}
+,{"stream_name":"stdout","time":219.842805581,"data":"\rmodel.safetensors: reconstructing file: 100%|██████| 1.19GB / 1.19GB,  106MB/s  \r\n"}
+,{"stream_name":"stdout","time":220.654844266,"data":"\rLoading weights:   0%|                                  | 0/310 [00:00\u003c?, ?it/s]\rLoading weights:  81%|█████████████████▊    | 251/310 [00:00\u003c00:00, 2475.71it/s]\rLoading weights: 100%|██████████████████████| 310/310 [00:00\u003c00:00, 2556.06it/s]\r\n"}
+,{"stream_name":"stdout","time":221.870312176,"data":"\rtokenizer_config.json:   0%|                        | 0.00/9.71k [00:00\u003c?, ?B/s]\rtokenizer_config.json: 100%|███████████████| 9.71k/9.71k [00:00\u003c00:00, 29.7MB/s]\r\n"}
+,{"stream_name":"stdout","time":226.942003564,"data":"\rvocab.json:   0%|                                   | 0.00/2.78M [00:00\u003c?, ?B/s]\rvocab.json: 100%|███████████████████████████| 2.78M/2.78M [00:00\u003c00:00, 111MB/s]\r\n"}
+,{"stream_name":"stdout","time":227.196235212,"data":"\rmerges.txt:   0%|                                   | 0.00/1.67M [00:00\u003c?, ?B/s]\rmerges.txt: 100%|███████████████████████████| 1.67M/1.67M [00:00\u003c00:00, 117MB/s]\r\n"}
+,{"stream_name":"stdout","time":227.450746429,"data":"\r\n"}
+,{"stream_name":"stdout","time":228.513140136,"data":"\rtokenizer.json: reconstructing file:   0%|         |  0.00B / 11.4MB            \u001b[A\rtokenizer.json: downloading bytes:                          |  0.00B            \rtokenizer.json: downloading bytes: █████▊                   | 2.63MB            \r\n"}
+,{"stream_name":"stdout","time":228.51318958,"data":"\rtokenizer.json: reconstructing file: 100%|█████████| 11.4MB / 11.4MB            \u001b[A\rtokenizer.json: downloading bytes: █████████████████████████| 3.40MB,  331kB/s  \rtokenizer.json: downloading bytes: █████████████████████████| 3.40MB,  331kB/s  \r\n"}
+,{"stream_name":"stdout","time":228.513197686,"data":"\rtokenizer.json: reconstructing file: 100%|█████████| 11.4MB / 11.4MB, 1.11MB/s  \r\n"}
+,{"stream_name":"stdout","time":230.233453022,"data":"\rconfig.json:   0%|                                    | 0.00/313 [00:00\u003c?, ?B/s]\rconfig.json: 100%|█████████████████████████████| 313/313 [00:00\u003c00:00, 1.26MB/s]\r\n"}
+,{"stream_name":"stdout","time":231.146245109,"data":"embedding 57600 chunks and 200 queries with Qwen/Qwen3-Embedding-0.6B on cuda (Tesla T4)\r\n"}
+,{"stream_name":"stdout","time":327.335410786,"data":"embedded 5000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":434.484376772,"data":"embedded 10000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":548.418864786,"data":"embedded 15000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":666.43036219,"data":"embedded 20000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":780.8954084,"data":"embedded 25000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":901.313608045,"data":"embedded 30000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1020.201429436,"data":"embedded 35000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1138.414733788,"data":"embedded 40000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1257.2621447,"data":"embedded 45000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1371.802356647,"data":"embedded 50000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1482.758446668,"data":"embedded 55000/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1543.830635234,"data":"embedded 57600/57600 chunks\r\n"}
+,{"stream_name":"stdout","time":1544.993123521,"data":"57600 chunks, 200 queries, dim 1024 (1384 s)\r\n"}
+,{"stream_name":"stdout","time":1778.720409792,"data":"backends ready: exact, chroma, pgvector, pgvector, no iterative scan, pgvector row-level security (1618 s)\r\n"}
+,{"stream_name":"stdout","time":1782.484980948,"data":"    random   0.1%                        exact   prefilter: recall 1.000 complete 100% p50 9.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1792.032991921,"data":"    random   0.1%                        exact  postfilter: recall 0.097 complete 0% p50 47.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1793.792368575,"data":"    random   0.1%                        exact naive top-k: recall 0.001 complete 0% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1795.4964008,"data":"    random   0.1%                        exact unprotected: recall 0.001 complete 100% p50 8.4 ms leaks 1998 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1844.988947167,"data":"    random   0.1%                       chroma   prefilter: recall 1.000 complete 100% p50 245.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1891.780572979,"data":"    random   0.1%                       chroma  postfilter: recall 0.096 complete 0% p50 223.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1895.018511031,"data":"    random   0.1%                       chroma naive top-k: recall 0.001 complete 0% p50 16.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1895.677446827,"data":"    random   0.1%                     pgvector   prefilter: recall 1.000 complete 100% p50 3.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1916.434015604,"data":"    random   0.1%                     pgvector  postfilter: recall 0.096 complete 0% p50 99.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1917.296866492,"data":"    random   0.1%                     pgvector naive top-k: recall 0.001 complete 0% p50 4.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1917.904476073,"data":"    random   0.1%  pgvector, no iterative scan   prefilter: recall 1.000 complete 100% p50 2.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1918.515037295,"data":"    random   0.1%                     pgvector row-level security: recall 1.000 complete 100% p50 3.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1922.037267321,"data":"    random   1.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1931.06677215,"data":"    random   1.0%                        exact  postfilter: recall 0.858 complete 52% p50 45.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1932.779548702,"data":"    random   1.0%                        exact naive top-k: recall 0.010 complete 0% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1934.48503077,"data":"    random   1.0%                        exact unprotected: recall 0.010 complete 100% p50 8.4 ms leaks 1980 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":1976.71168078,"data":"    random   1.0%                       chroma   prefilter: recall 1.000 complete 100% p50 210.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2020.812718014,"data":"    random   1.0%                       chroma  postfilter: recall 0.853 complete 54% p50 220.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2024.103011754,"data":"    random   1.0%                       chroma naive top-k: recall 0.010 complete 0% p50 16.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2026.132373626,"data":"    random   1.0%                     pgvector   prefilter: recall 1.000 complete 100% p50 10.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2045.377614895,"data":"    random   1.0%                     pgvector  postfilter: recall 0.850 complete 52% p50 98.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2046.291319121,"data":"    random   1.0%                     pgvector naive top-k: recall 0.010 complete 0% p50 4.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2048.373659059,"data":"    random   1.0%  pgvector, no iterative scan   prefilter: recall 1.000 complete 100% p50 10.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2050.357368719,"data":"    random   1.0%                     pgvector row-level security: recall 1.000 complete 100% p50 9.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2054.298431422,"data":"    random   5.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2060.048663644,"data":"    random   5.0%                        exact  postfilter: recall 1.000 complete 100% p50 32.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2061.80834353,"data":"    random   5.0%                        exact naive top-k: recall 0.047 complete 0% p50 8.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2063.569880953,"data":"    random   5.0%                        exact unprotected: recall 0.047 complete 100% p50 8.4 ms leaks 1906 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2146.375265245,"data":"    random   5.0%                       chroma   prefilter: recall 0.999 complete 100% p50 412.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2166.536392534,"data":"    random   5.0%                       chroma  postfilter: recall 0.986 complete 100% p50 116.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2169.778482796,"data":"    random   5.0%                       chroma naive top-k: recall 0.046 complete 0% p50 15.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2172.365553932,"data":"    random   5.0%                     pgvector   prefilter: recall 0.974 complete 100% p50 12.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2181.307876611,"data":"    random   5.0%                     pgvector  postfilter: recall 0.991 complete 100% p50 51.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2182.164690172,"data":"    random   5.0%                     pgvector naive top-k: recall 0.045 complete 0% p50 4.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2183.129763627,"data":"    random   5.0%  pgvector, no iterative scan   prefilter: recall 0.197 complete 100% p50 4.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2190.849057591,"data":"    random   5.0%                     pgvector row-level security: recall 1.000 complete 100% p50 38.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2194.868878785,"data":"    random  20.0%                        exact   prefilter: recall 1.000 complete 100% p50 9.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2198.176719086,"data":"    random  20.0%                        exact  postfilter: recall 1.000 complete 100% p50 19.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2199.941509441,"data":"    random  20.0%                        exact naive top-k: recall 0.193 complete 0% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2201.695750392,"data":"    random  20.0%                        exact unprotected: recall 0.193 complete 100% p50 8.4 ms leaks 1614 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2259.840567712,"data":"    random  20.0%                       chroma   prefilter: recall 0.997 complete 100% p50 287.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2268.247962952,"data":"    random  20.0%                       chroma  postfilter: recall 0.978 complete 100% p50 47.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2271.491198445,"data":"    random  20.0%                       chroma naive top-k: recall 0.194 complete 0% p50 16.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2272.861976304,"data":"    random  20.0%                     pgvector   prefilter: recall 0.965 complete 100% p50 6.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2275.653513132,"data":"    random  20.0%                     pgvector  postfilter: recall 0.979 complete 100% p50 15.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2276.515069851,"data":"    random  20.0%                     pgvector naive top-k: recall 0.193 complete 0% p50 4.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2277.428480853,"data":"    random  20.0%  pgvector, no iterative scan   prefilter: recall 0.764 complete 100% p50 4.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2308.356116739,"data":"    random  20.0%                     pgvector row-level security: recall 0.998 complete 100% p50 153.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2312.00809336,"data":"    random 100.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2313.863206191,"data":"    random 100.0%                        exact  postfilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2315.565985499,"data":"    random 100.0%                        exact naive top-k: recall 1.000 complete 100% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2317.263701902,"data":"    random 100.0%                        exact unprotected: recall 1.000 complete 100% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2487.216829796,"data":"    random 100.0%                       chroma   prefilter: recall 0.987 complete 100% p50 841.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2490.957927814,"data":"    random 100.0%                       chroma  postfilter: recall 0.987 complete 100% p50 18.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2494.2008425,"data":"    random 100.0%                       chroma naive top-k: recall 0.987 complete 100% p50 15.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2495.317396033,"data":"    random 100.0%                     pgvector   prefilter: recall 0.979 complete 100% p50 5.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2496.383497589,"data":"    random 100.0%                     pgvector  postfilter: recall 0.979 complete 100% p50 5.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2497.194711486,"data":"    random 100.0%                     pgvector naive top-k: recall 0.979 complete 100% p50 4.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2498.158184562,"data":"    random 100.0%  pgvector, no iterative scan   prefilter: recall 0.979 complete 100% p50 4.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2607.718464277,"data":"    random 100.0%                     pgvector row-level security: recall 0.998 complete 100% p50 545.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2611.305892318,"data":"   aligned   0.1%                        exact   prefilter: recall 1.000 complete 100% p50 8.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2615.43355982,"data":"   aligned   0.1%                        exact  postfilter: recall 0.972 complete 91% p50 18.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2617.190755237,"data":"   aligned   0.1%                        exact naive top-k: recall 0.289 complete 4% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2618.842224926,"data":"   aligned   0.1%                        exact unprotected: recall 0.289 complete 100% p50 8.3 ms leaks 1424 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2664.057110775,"data":"   aligned   0.1%                       chroma   prefilter: recall 0.999 complete 100% p50 240.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2678.797839772,"data":"   aligned   0.1%                       chroma  postfilter: recall 0.967 complete 92% p50 48.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2681.9354223,"data":"   aligned   0.1%                       chroma naive top-k: recall 0.290 complete 4% p50 15.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2682.644201624,"data":"   aligned   0.1%                     pgvector   prefilter: recall 0.999 complete 100% p50 3.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2688.583533086,"data":"   aligned   0.1%                     pgvector  postfilter: recall 0.969 complete 92% p50 16.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2689.444148107,"data":"   aligned   0.1%                     pgvector naive top-k: recall 0.290 complete 4% p50 4.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2690.051372662,"data":"   aligned   0.1%  pgvector, no iterative scan   prefilter: recall 0.999 complete 100% p50 2.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2690.662411917,"data":"   aligned   0.1%                     pgvector row-level security: recall 0.999 complete 99% p50 2.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2694.298081118,"data":"   aligned   1.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2698.047346948,"data":"   aligned   1.0%                        exact  postfilter: recall 0.992 complete 98% p50 18.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2699.743322077,"data":"   aligned   1.0%                        exact naive top-k: recall 0.295 complete 4% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2701.451863259,"data":"   aligned   1.0%                        exact unprotected: recall 0.295 complete 100% p50 8.4 ms leaks 1409 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2741.235901101,"data":"   aligned   1.0%                       chroma   prefilter: recall 0.999 complete 100% p50 198.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2753.132828053,"data":"   aligned   1.0%                       chroma  postfilter: recall 0.986 complete 97% p50 47.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2756.321676466,"data":"   aligned   1.0%                       chroma naive top-k: recall 0.296 complete 4% p50 15.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2758.450169406,"data":"   aligned   1.0%                     pgvector   prefilter: recall 0.999 complete 100% p50 10.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2763.474189707,"data":"   aligned   1.0%                     pgvector  postfilter: recall 0.985 complete 97% p50 16.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2764.284613713,"data":"   aligned   1.0%                     pgvector naive top-k: recall 0.296 complete 4% p50 3.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2766.159421378,"data":"   aligned   1.0%  pgvector, no iterative scan   prefilter: recall 0.970 complete 100% p50 9.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2767.98737141,"data":"   aligned   1.0%                     pgvector row-level security: recall 0.999 complete 100% p50 9.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2771.724094766,"data":"   aligned   5.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2773.722940812,"data":"   aligned   5.0%                        exact  postfilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2775.430442516,"data":"   aligned   5.0%                        exact naive top-k: recall 0.641 complete 12% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2777.0757323,"data":"   aligned   5.0%                        exact unprotected: recall 0.641 complete 100% p50 8.2 ms leaks 717 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2857.29660415,"data":"   aligned   5.0%                       chroma   prefilter: recall 0.999 complete 100% p50 398.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2861.487944112,"data":"   aligned   5.0%                       chroma  postfilter: recall 0.989 complete 100% p50 18.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2864.677000135,"data":"   aligned   5.0%                       chroma naive top-k: recall 0.641 complete 12% p50 15.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2867.010376529,"data":"   aligned   5.0%                     pgvector   prefilter: recall 0.977 complete 100% p50 5.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2868.226642926,"data":"   aligned   5.0%                     pgvector  postfilter: recall 0.977 complete 100% p50 5.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2869.037117467,"data":"   aligned   5.0%                     pgvector naive top-k: recall 0.647 complete 13% p50 3.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2871.320114044,"data":"   aligned   5.0%  pgvector, no iterative scan   prefilter: recall 0.963 complete 100% p50 5.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2879.133471145,"data":"   aligned   5.0%                     pgvector row-level security: recall 0.999 complete 100% p50 38.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2883.062511134,"data":"   aligned  20.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2884.978420611,"data":"   aligned  20.0%                        exact  postfilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2886.688666898,"data":"   aligned  20.0%                        exact naive top-k: recall 0.548 complete 7% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2888.351815013,"data":"   aligned  20.0%                        exact unprotected: recall 0.548 complete 100% p50 8.3 ms leaks 903 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2945.014546317,"data":"   aligned  20.0%                       chroma   prefilter: recall 0.998 complete 100% p50 280.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2949.160004681,"data":"   aligned  20.0%                       chroma  postfilter: recall 0.988 complete 100% p50 18.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2952.348126446,"data":"   aligned  20.0%                       chroma naive top-k: recall 0.550 complete 7% p50 15.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2953.36431828,"data":"   aligned  20.0%                     pgvector   prefilter: recall 0.971 complete 100% p50 4.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2954.581115093,"data":"   aligned  20.0%                     pgvector  postfilter: recall 0.976 complete 100% p50 5.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2955.443044024,"data":"   aligned  20.0%                     pgvector naive top-k: recall 0.552 complete 8% p50 4.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2956.303960867,"data":"   aligned  20.0%  pgvector, no iterative scan   prefilter: recall 0.949 complete 100% p50 4.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2987.338473194,"data":"   aligned  20.0%                     pgvector row-level security: recall 0.998 complete 100% p50 155.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2991.041333249,"data":"   aligned 100.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2992.848881198,"data":"   aligned 100.0%                        exact  postfilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2994.604052939,"data":"   aligned 100.0%                        exact naive top-k: recall 1.000 complete 100% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":2996.257066993,"data":"   aligned 100.0%                        exact unprotected: recall 1.000 complete 100% p50 8.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3170.777475121,"data":"   aligned 100.0%                       chroma   prefilter: recall 0.987 complete 100% p50 869.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3174.513445608,"data":"   aligned 100.0%                       chroma  postfilter: recall 0.987 complete 100% p50 18.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3177.804387264,"data":"   aligned 100.0%                       chroma naive top-k: recall 0.987 complete 100% p50 16.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3178.81806034,"data":"   aligned 100.0%                     pgvector   prefilter: recall 0.979 complete 100% p50 5.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3179.883009579,"data":"   aligned 100.0%                     pgvector  postfilter: recall 0.979 complete 100% p50 5.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3180.693442892,"data":"   aligned 100.0%                     pgvector naive top-k: recall 0.979 complete 100% p50 4.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3181.604937987,"data":"   aligned 100.0%  pgvector, no iterative scan   prefilter: recall 0.979 complete 100% p50 4.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3292.07316907,"data":"   aligned 100.0%                     pgvector row-level security: recall 0.998 complete 100% p50 549.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3295.71134132,"data":"misaligned   0.1%                        exact   prefilter: recall 1.000 complete 100% p50 8.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3305.123289704,"data":"misaligned   0.1%                        exact  postfilter: recall 0.000 complete 0% p50 46.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3306.831957676,"data":"misaligned   0.1%                        exact naive top-k: recall 0.000 complete 0% p50 8.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3308.481569501,"data":"misaligned   0.1%                        exact unprotected: recall 0.000 complete 100% p50 8.3 ms leaks 2000 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3357.084331112,"data":"misaligned   0.1%                       chroma   prefilter: recall 1.000 complete 100% p50 241.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3402.67890533,"data":"misaligned   0.1%                       chroma  postfilter: recall 0.000 complete 0% p50 219.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3405.913670315,"data":"misaligned   0.1%                       chroma naive top-k: recall 0.000 complete 0% p50 16.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3406.4715034,"data":"misaligned   0.1%                     pgvector   prefilter: recall 1.000 complete 100% p50 2.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3426.161796229,"data":"misaligned   0.1%                     pgvector  postfilter: recall 0.000 complete 0% p50 98.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3427.076031238,"data":"misaligned   0.1%                     pgvector naive top-k: recall 0.000 complete 0% p50 4.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3427.632618875,"data":"misaligned   0.1%  pgvector, no iterative scan   prefilter: recall 1.000 complete 100% p50 2.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3428.038954838,"data":"misaligned   0.1%                     pgvector row-level security: recall 1.000 complete 92% p50 1.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3431.647219229,"data":"misaligned   1.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3441.199538063,"data":"misaligned   1.0%                        exact  postfilter: recall 0.049 complete 0% p50 47.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3442.931321488,"data":"misaligned   1.0%                        exact naive top-k: recall 0.000 complete 0% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3444.6377611,"data":"misaligned   1.0%                        exact unprotected: recall 0.000 complete 100% p50 8.3 ms leaks 2000 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3490.750472035,"data":"misaligned   1.0%                       chroma   prefilter: recall 0.999 complete 100% p50 229.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3537.261853404,"data":"misaligned   1.0%                       chroma  postfilter: recall 0.046 complete 0% p50 221.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3540.389098073,"data":"misaligned   1.0%                       chroma naive top-k: recall 0.000 complete 0% p50 15.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3544.40045028,"data":"misaligned   1.0%                     pgvector   prefilter: recall 0.984 complete 100% p50 9.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3563.875750202,"data":"misaligned   1.0%                     pgvector  postfilter: recall 0.047 complete 0% p50 97.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3564.738098335,"data":"misaligned   1.0%                     pgvector naive top-k: recall 0.000 complete 0% p50 4.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3566.309622022,"data":"misaligned   1.0%  pgvector, no iterative scan   prefilter: recall 0.914 complete 100% p50 7.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3567.96736621,"data":"misaligned   1.0%                     pgvector row-level security: recall 0.999 complete 100% p50 7.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3571.70609028,"data":"misaligned   5.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.6 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3580.959793404,"data":"misaligned   5.0%                        exact  postfilter: recall 0.325 complete 10% p50 46.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3582.720810591,"data":"misaligned   5.0%                        exact naive top-k: recall 0.000 complete 0% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3584.42518002,"data":"misaligned   5.0%                        exact unprotected: recall 0.000 complete 100% p50 8.3 ms leaks 2000 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3670.162155067,"data":"misaligned   5.0%                       chroma   prefilter: recall 0.995 complete 100% p50 426.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3715.847694833,"data":"misaligned   5.0%                       chroma  postfilter: recall 0.308 complete 8% p50 217.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3719.030214816,"data":"misaligned   5.0%                       chroma naive top-k: recall 0.000 complete 0% p50 15.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3735.67611963,"data":"misaligned   5.0%                     pgvector   prefilter: recall 0.950 complete 100% p50 83.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3755.017731829,"data":"misaligned   5.0%                     pgvector  postfilter: recall 0.313 complete 10% p50 96.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3755.868945578,"data":"misaligned   5.0%                     pgvector naive top-k: recall 0.000 complete 0% p50 4.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3757.643743934,"data":"misaligned   5.0%  pgvector, no iterative scan   prefilter: recall 0.113 complete 100% p50 5.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3764.236342548,"data":"misaligned   5.0%                     pgvector row-level security: recall 1.000 complete 100% p50 32.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3768.05550174,"data":"misaligned  20.0%                        exact   prefilter: recall 1.000 complete 100% p50 8.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3773.069146963,"data":"misaligned  20.0%                        exact  postfilter: recall 1.000 complete 100% p50 19.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3774.726261011,"data":"misaligned  20.0%                        exact naive top-k: recall 0.041 complete 0% p50 8.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3776.426800314,"data":"misaligned  20.0%                        exact unprotected: recall 0.041 complete 100% p50 8.3 ms leaks 1918 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3834.213928423,"data":"misaligned  20.0%                       chroma   prefilter: recall 0.997 complete 100% p50 285.8 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3850.721366731,"data":"misaligned  20.0%                       chroma  postfilter: recall 0.969 complete 100% p50 56.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3854.012471657,"data":"misaligned  20.0%                       chroma naive top-k: recall 0.041 complete 0% p50 16.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3856.298078375,"data":"misaligned  20.0%                     pgvector   prefilter: recall 0.950 complete 100% p50 10.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3863.255986558,"data":"misaligned  20.0%                     pgvector  postfilter: recall 0.974 complete 100% p50 22.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3864.169980675,"data":"misaligned  20.0%                     pgvector naive top-k: recall 0.040 complete 0% p50 4.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3864.988890173,"data":"misaligned  20.0%  pgvector, no iterative scan   prefilter: recall 0.220 complete 100% p50 4.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3897.371328971,"data":"misaligned  20.0%                     pgvector row-level security: recall 0.998 complete 100% p50 160.5 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3901.257848145,"data":"misaligned 100.0%                        exact   prefilter: recall 1.000 complete 100% p50 9.3 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3903.169820648,"data":"misaligned 100.0%                        exact  postfilter: recall 1.000 complete 100% p50 9.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3904.925153689,"data":"misaligned 100.0%                        exact naive top-k: recall 1.000 complete 100% p50 8.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":3906.629778684,"data":"misaligned 100.0%                        exact unprotected: recall 1.000 complete 100% p50 8.4 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4082.195794534,"data":"misaligned 100.0%                       chroma   prefilter: recall 0.987 complete 100% p50 868.7 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4086.089142324,"data":"misaligned 100.0%                       chroma  postfilter: recall 0.987 complete 100% p50 19.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4089.278792976,"data":"misaligned 100.0%                       chroma naive top-k: recall 0.987 complete 100% p50 15.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4090.343892518,"data":"misaligned 100.0%                     pgvector   prefilter: recall 0.979 complete 100% p50 5.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4091.357908385,"data":"misaligned 100.0%                     pgvector  postfilter: recall 0.979 complete 100% p50 5.0 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4092.219724672,"data":"misaligned 100.0%                     pgvector naive top-k: recall 0.979 complete 100% p50 4.2 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4093.233715502,"data":"misaligned 100.0%  pgvector, no iterative scan   prefilter: recall 0.979 complete 100% p50 4.9 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4204.857327254,"data":"misaligned 100.0%                     pgvector row-level security: recall 0.998 complete 100% p50 556.1 ms leaks 0 errors 0 (n=200)\r\n"}
+,{"stream_name":"stdout","time":4204.857358234,"data":"wrote /kaggle/working/results.json (4043.9 s)\r\n"}
+,{"stream_name":"stderr","time":4212.827376393,"data":"/usr/local/lib/python3.13/dist-packages/mistune.py:435: SyntaxWarning: invalid escape sequence '\\|'\n"}
+,{"stream_name":"stderr","time":4212.827399265,"data":"  cells[i][c] = re.sub('\\\\\\\\\\|', '|', cell)\n"}
+,{"stream_name":"stderr","time":4213.001911471,"data":"/usr/local/lib/python3.13/dist-packages/nbconvert/filters/filter_links.py:36: SyntaxWarning: invalid escape sequence '\\_'\n"}
+,{"stream_name":"stderr","time":4213.001943689,"data":"  text = re.sub(r'_', '\\_', text) # Escape underscores in display text\n"}
+,{"stream_name":"stderr","time":4213.810396356,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to notebook\n"}
+,{"stream_name":"stderr","time":4213.918851726,"data":"[NbConvertApp] Writing 56013 bytes to __notebook__.ipynb\n"}
+,{"stream_name":"stderr","time":4216.34444393,"data":"[NbConvertApp] Converting notebook __notebook__.ipynb to html\n"}
+,{"stream_name":"stderr","time":4216.90240375,"data":"[NbConvertApp] Writing 337363 bytes to __results__.html\n"}
+]
