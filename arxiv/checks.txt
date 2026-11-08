@@ -1,0 +1,60 @@
+percent signs starting a comment line:
+0
+evidence/ or plan/ paths left in the source:
+9
+TBD markers left:
+0
+disk free before the image: 106G
+Unable to find image 'texlive/texlive:TL2025-historic' locally
+TL2025-historic: Pulling from texlive/texlive
+d02d55aecd06: Pulling fs layer
+eaf4ec3f1eff: Pulling fs layer
+4319cf4421eb: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+95f19d2723ea: Pulling fs layer
+ac21038460ce: Pulling fs layer
+db87bc469f3c: Pulling fs layer
+71dbc9a2e879: Pulling fs layer
+f7778edb5492: Pulling fs layer
+ac21038460ce: Waiting
+95f19d2723ea: Waiting
+4f4fb700ef54: Waiting
+f7778edb5492: Waiting
+71dbc9a2e879: Waiting
+db87bc469f3c: Waiting
+4319cf4421eb: Verifying Checksum
+4319cf4421eb: Download complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+95f19d2723ea: Verifying Checksum
+95f19d2723ea: Download complete
+d02d55aecd06: Verifying Checksum
+d02d55aecd06: Download complete
+db87bc469f3c: Verifying Checksum
+db87bc469f3c: Download complete
+71dbc9a2e879: Verifying Checksum
+71dbc9a2e879: Download complete
+f7778edb5492: Verifying Checksum
+f7778edb5492: Download complete
+eaf4ec3f1eff: Verifying Checksum
+eaf4ec3f1eff: Download complete
+d02d55aecd06: Pull complete
+ac21038460ce: Verifying Checksum
+ac21038460ce: Download complete
+eaf4ec3f1eff: Pull complete
+4319cf4421eb: Pull complete
+4f4fb700ef54: Pull complete
+95f19d2723ea: Pull complete
+ac21038460ce: Pull complete
+db87bc469f3c: Pull complete
+71dbc9a2e879: Pull complete
+f7778edb5492: Pull complete
+Digest: sha256:dbd65d778eb83de9b45fb0a8deb3afe44cbbaba2272e4e1e644e94dda52c7109
+Status: Downloaded newer image for texlive/texlive:TL2025-historic
+pdfTeX 3.141592653-2.6-1.40.28 (TeX Live 2025)
+/usr/local/texlive/2025/texmf-dist/fonts/type1/public/lm/lmtt9.pfb>
+Output written on main.pdf (98 pages, 1009129 bytes).
+Transcript written on main.log.
+pages: 98
+text lines differing from the main build: 24
+words: 57992 and 57989; differing word lines: 15

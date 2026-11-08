@@ -1,0 +1,22 @@
+Title:           Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines
+Subject:         
+Keywords:        
+Author:          Syed Muzakkir Hussain
+Creator:         LaTeX with hyperref
+Producer:        pdfTeX-1.40.29
+CreationDate:    Sun Nov  8 02:47:40 2026 UTC
+ModDate:         Sun Nov  8 02:47:40 2026 UTC
+Custom Metadata: yes
+Metadata Stream: no
+Tagged:          no
+UserProperties:  no
+Suspects:        no
+Form:            none
+JavaScript:      no
+Pages:           98
+Encrypted:       no
+Page size:       612 x 792 pts (letter)
+Page rot:        0
+File size:       1009686 bytes
+Optimized:       no
+PDF version:     1.7

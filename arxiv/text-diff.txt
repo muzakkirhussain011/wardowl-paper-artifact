@@ -1,0 +1,46 @@
+192c192
+<                                                  (︁                  )︁
+---
+>                                                                      
+202c202
+<                                                       4
+---
+>                                                     4
+293,294c293,294
+<                                           ∃x ∈ m(f ) : x ∈ V ∧ x ∈ V   if m(f ) is a list,
+<                                      {︄
+---
+>                                          ∃x ∈ m(f ) : x ∈ V ∧ x ∈ V    if m(f ) is a list,
+>                                      (
+296c296
+<                                           m(f ) ∈ V ∧ m(f ) ∈ V        otherwise,
+---
+>                                          m(f ) ∈ V ∧ m(f ) ∈ V         otherwise,
+303c303
+<                                                      6
+---
+>                                                     6
+312c312
+< in a release) lets a backend declare exact search;   with e the  declaration, v the violations and H0 the
+---
+> in a release) lets a backend declare exact search; with e the   declaration, v the violations and H0 the
+314c314
+<                                                 (︁            )︁
+---
+>                                                              
+2749c2749
+< reference and FAISS over a flat index (its  default) do.  With e the declaration and v the number of
+---
+> reference and FAISS over a flat index (its default) do.   With e the declaration and v the number of
+2751c2751
+<                                          (︁            )︁
+---
+>                                                        
+2769c2769
+<                                                                  ⋂︁
+---
+>                                                                  T
+2773c2773
+<                            ⋃︁
+---
+>                            S
