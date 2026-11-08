@@ -3,7 +3,7 @@ message: "If you use this artifact, please cite the paper. REPRODUCE.md maps eac
 title: "Testing Permission-Aware Retrieval for RAG across Vector Stores and Authorization Engines"
 type: dataset
 version: evidence-v2
-date-released: 2026-11-07
+date-released: 2026-11-08
 identifiers:
   - type: doi
     value: 10.5281/zenodo.23874613

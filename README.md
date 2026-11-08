@@ -25,7 +25,7 @@ commits those runs used, and `evidence-v2` holds X0 and X1 run 1 as executed aga
 `.github/workflows/evidence-tag.yml` and `evidence-tag-v2.yml`; each refuses to replace its tag once a release, or its
 `evidence/ARCHIVE_DOI` or `evidence/ARCHIVE_DOI_V2`, exists, and without an explicit answer. The archive is at
 https://doi.org/10.5281/zenodo.23874613, which lists every version and resolves to the newest (v1:
-https://doi.org/10.5281/zenodo.23874614). The commit that adds a version's DOI, and any later commit of `main`, are not in that
+https://doi.org/10.5281/zenodo.23874614; v2, released 2026-11-08: https://doi.org/10.5281/zenodo.24047105). The commit that adds a version's DOI, and any later commit of `main`, are not in that
 version.
 
 | Path | What it holds |
