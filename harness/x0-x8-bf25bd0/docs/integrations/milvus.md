@@ -1,0 +1,125 @@
+# Milvus
+
+```bash
+pip install "wardowl[milvus]"
+```
+
+The backend runs Milvus's vector search with the permission filter applied inside the search, so
+the k nearest chunks the subject may read come back however few of the collection's chunks that
+is. It needs `pymilvus` 2.6.2 or newer and Milvus 2.6.2 or newer, for filter templating and
+partial updates. CI runs
+wardowl's [conformance kit](../extending.md#test-it-with-the-conformance-kit) against Milvus
+3.0.2 standalone. Zilliz Cloud serves the same API through the same client, but CI does not test
+it.
+
+```python
+from pymilvus import MilvusClient
+
+from wardowl.backends.milvus import MilvusBackend, create_collection
+
+client = MilvusClient(uri="http://localhost:19530")  # or Zilliz Cloud: uri=..., token=...
+create_collection(client, "docs", dim=768)
+backend = MilvusBackend(client, "docs", embed=embed)  # embed: str -> list[float]
+backend.add(documents)
+```
+
+`create_collection` makes a collection with a string primary key (`id`), the vector (`embedding`,
+HNSW, cosine), the text (`content`), the metadata (`metadata`, JSON) and the permission terms
+(`wardowl_terms`, with an inverted index). Field names, the metric (`COSINE` or `IP`; scores are
+Milvus's similarity, higher is closer) and the HNSW parameters can be changed; pass the same field
+names to `MilvusBackend`.
+
+## Tuning
+
+- **`ef`** (default 100) is HNSW's search breadth: higher finds more of the true nearest chunks and
+  takes longer. It is raised to `k` when `k` is larger, as Milvus requires.
+- **`search_params`** replaces the search parameters entirely, for a collection with another index
+  type, for example `{"params": {"nprobe": 16}}` for IVF.
+- **`consistency_level`** (default `"Strong"`) makes a chunk searchable as soon as `add` returns.
+  `"Bounded"` is faster when a short delay after writes is acceptable; it never affects which
+  chunks a subject may read, only how soon new ones appear.
+- For a native `aretrieve`, pass `async_client=AsyncMilvusClient(...)`; otherwise async calls run
+  in a thread.
+
+## How permissions are indexed
+
+The backend uses the same design as [Elasticsearch and OpenSearch](elasticsearch.md#how-permissions-are-indexed):
+one array field, `wardowl_terms`, holds a type-tagged term for every string and integer in the
+chunk's metadata, so `1` and `"1"` stay apart and booleans, floats, nested lists and objects never
+match. A filter becomes `ARRAY_CONTAINS_ANY` conditions on that field, joined with `AND` and `OR`,
+and an `In` with no values matches nothing without a call to Milvus.
+
+**Values never enter the expression.** Milvus filters are text expressions. wardowl writes only
+placeholders into the expression and passes the values separately, as Milvus's
+[filter templating](https://milvus.io/docs/filtering-templating.md) (`filter_params`) allows:
+
+```python
+from wardowl import In
+from wardowl.backends.milvus import filter_to_expression
+
+filter_to_expression(In("allowed_groups", ["hr", "eng"]))
+# ('ARRAY_CONTAINS_ANY(wardowl_terms, {p0})', {'p0': ['allowed_groups\x1fs:eng', 'allowed_groups\x1fs:hr']})
+```
+
+A group name or user id containing quotes, brackets or operators is therefore only ever a value, and
+cannot change what the filter selects. Chunk ids travel the same way: `delete` and `set_metadata`
+select rows with `id in {ids}` and the ids as a parameter, never with pymilvus's `ids=` argument,
+which writes string ids into the expression between quotes. CI checks both against a real Milvus.
+`filter_to_expression` raises `NothingMatches` for a filter that can match nothing, since Milvus
+reads an empty filter as "match everything".
+
+`set_metadata` looks the ids up and changes the rows found with a partial update of the metadata
+and terms alone: the text and vector are never written back, so a concurrent `add` keeps its text.
+A row deleted between the lookup and the update is not recreated, because Milvus refuses to insert
+a row without its vector; `set_metadata` then raises, and can be repeated.
+
+The metadata itself is stored in the JSON field and returned as written, so the retriever's
+re-check sees the true permissions. The terms field is not consulted by the re-check: if the two
+ever disagree, a chunk can be hidden from a pre-filtered search, never leaked.
+
+## Limits
+
+- `max_terms` (default 4,096) caps the tagged terms per chunk, one per string or integer in its
+  metadata; a chunk shared with more groups than that needs a larger value, within what your Milvus
+  allows for an array field. Inserting a chunk with more fails, so nothing is stored with partial
+  permissions.
+- `max_term_length` (default 1,024) caps one term: the field name, two characters and the value.
+- `max_content_length` (default 65,535, Milvus's largest `VARCHAR`) caps the chunk text.
+- `max_id_length` (default 512) caps document ids.
+
+## Collections written by other tools
+
+A row whose `wardowl_terms` is empty is invisible to a pre-filtered search, though post-filtering
+still finds it and checks its metadata. Fill the field in your ingestion pipeline with
+`permission_terms`:
+
+```python
+from wardowl.backends.milvus import permission_terms
+
+row = {"id": doc_id, "embedding": vector, "content": text, "metadata": metadata}
+row["wardowl_terms"] = permission_terms(metadata)
+client.upsert(collection_name="docs", data=[row])
+```
+
+## Keyword search and hybrid search
+
+`mode="keyword"` searches the chunks' text with BM25, under the same permission filter and its
+parameters. Milvus computes BM25 from a sparse vector it fills from the text itself, which needs a
+function in the schema when the collection is created: `create_collection(..., text_search=True)`
+adds it, with Milvus's standard analyzer, which keeps every word. One collection then serves both
+halves of [hybrid search](../hybrid.md):
+
+```python
+from wardowl import RankFusion
+
+create_collection(client, "docs", dim=768, text_search=True)
+vector = MilvusBackend(client, "docs", embed=embed)
+keyword = MilvusBackend(client, "docs", mode="keyword")
+retriever = PermissionedRetriever(RankFusion(vector, keyword), authorizer)
+```
+
+The query's text is sent as the search data, separate from the filter expression, so it cannot
+change what the filter selects. Scores are Milvus's BM25, higher for better matches. Milvus needs
+every chunk's vector, so write chunks through a backend with `embed`. A collection created without
+`text_search` cannot gain it later; create a new one and load it again. CI runs the conformance kit
+against Milvus 3.0.2 in keyword mode and fused with vector search.

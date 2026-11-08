@@ -1,0 +1,1 @@
+{"requestId":"r","results":[{"resource":{"id":"scalar","kind":"tenant"},"actions":{"read":"EFFECT_ALLOW"}},{"resource":{"id":"list","kind":"tenant"},"actions":{"read":"EFFECT_DENY"}}],"cerbosCallId":"01M6A1STE6D080ZC7S8DAPMA97"}

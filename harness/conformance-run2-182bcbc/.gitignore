@@ -1,0 +1,15 @@
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+.env
+.pytest_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+dist/
+build/
+docs/_build/
+*.local.md
+# The paper conformance campaign writes here (benchmarks/paper/conformance_campaign.py).
+/results/

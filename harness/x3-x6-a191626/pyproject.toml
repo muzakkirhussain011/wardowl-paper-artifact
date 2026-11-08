@@ -1,0 +1,155 @@
+[build-system]
+requires = ["hatchling>=1.24"]
+build-backend = "hatchling.build"
+
+[project]
+name = "wardowl"
+dynamic = ["version"]
+description = "Permission-aware retrieval for RAG: every user gets only the chunks they are allowed to read."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.11"
+authors = [{ name = "Syed Muzakkir Hussain" }]
+keywords = ["rag", "retrieval-augmented-generation", "retrieval", "permission-aware-retrieval", "authorization", "access-control", "document-level-security", "fine-grained-authorization", "rebac", "llm", "vector-search", "pgvector", "pinecone", "openfga", "spicedb", "opa", "langchain", "llamaindex", "haystack", "mcp", "security"]
+classifiers = [
+  "Development Status :: 5 - Production/Stable",
+  "Intended Audience :: Developers",
+  "Intended Audience :: Information Technology",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+  "Programming Language :: Python :: 3.14",
+  "Topic :: Database",
+  "Topic :: Security",
+  "Topic :: Software Development :: Libraries :: Python Modules",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+# The core has no runtime dependencies. Adapters for external systems are optional extras.
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.2", "hypothesis>=6.100", "ruff==0.17.1", "mypy==2.4.0", "pytest-cov==7.1.0"]
+pgvector = ["psycopg[binary,pool]>=3.2"]
+chroma = ["chromadb>=1.5"]
+elasticsearch = ["elasticsearch>=8.12"]
+opensearch = ["opensearch-py>=2.4"]
+qdrant = ["qdrant-client>=1.15"]
+milvus = ["pymilvus>=2.6.2"]
+mongodb = ["pymongo>=4.13"]
+weaviate = ["weaviate-client>=4.16"]
+redis = ["redis>=5"]
+lancedb = ["lancedb>=0.40"]
+langchain = ["langchain-core>=1.3.3"]
+llamaindex = ["llama-index-core>=0.12"]
+haystack = ["haystack-ai>=2.12"]
+mcp = ["mcp>=2.3"]
+otel = ["opentelemetry-api>=1.30"]
+cedar = ["cedarpy>=4.12"]
+faiss = ["faiss-cpu>=1.15"]
+casbin = ["casbin>=1.43"]
+vespa = ["httpx>=0.27"]
+pinecone = ["httpx>=0.27"]
+cassandra = ["cassandra-driver>=3.29"]
+server = ["fastapi>=0.115", "pyjwt[crypto]>=2.14"]
+# Sphinx 9 needs Python 3.12, so the documentation is built on 3.12 or later.
+docs = [
+  "sphinx>=9.1; python_version >= '3.12'",
+  "myst-parser>=5.1; python_version >= '3.12'",
+  "shibuya>=2026.7.12; python_version >= '3.12'",
+  "sphinx-design>=0.7; python_version >= '3.12'",
+  "sphinx-copybutton>=0.5.2; python_version >= '3.12'",
+]
+
+[project.urls]
+Homepage = "https://muzakkirhussain011.github.io/wardowl/"
+Source = "https://github.com/muzakkirhussain011/wardowl"
+Issues = "https://github.com/muzakkirhussain011/wardowl/issues"
+Changelog = "https://github.com/muzakkirhussain011/wardowl/blob/main/CHANGELOG.md"
+Documentation = "https://muzakkirhussain011.github.io/wardowl/"
+FAQ = "https://muzakkirhussain011.github.io/wardowl/faq.html"
+Security = "https://github.com/muzakkirhussain011/wardowl/security/policy"
+
+# Used only by CI and the release workflow, which install everything from uv.lock by hash.
+[dependency-groups]
+integration = ["opentelemetry-sdk>=1.30", "pgvector>=0.3", "elasticsearch[async]>=8.12", "opensearch-py[async]>=2.4"]
+release = ["twine==7.0.0", "cyclonedx-bom==7.5.0", "sigstore==4.5.0"]
+# The FastAPI reference service in examples/fastapi_rag, whose tests CI runs.
+examples = ["fastapi>=0.115", "httpx>=0.27", "pyjwt>=2.14"]
+
+[tool.uv]
+default-groups = []
+
+[tool.hatch.version]
+path = "wardowl/__init__.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["wardowl"]
+
+[tool.hatch.build.targets.sdist]
+# The source distribution carries the library and its tests only, not the example deployments.
+# Patterns follow .gitignore rules, so they are anchored with "/": a bare "tests" would also match
+# examples/gateway/tests.
+include = ["/wardowl", "/tests", "/README.md", "/LICENSE", "/CHANGELOG.md"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM", "S", "RUF"]
+ignore = ["S101"]
+
+[tool.ruff.lint.per-file-ignores]
+# Seeded random test data, not secrets.
+"wardowl/testing.py" = ["S311"]
+# Query text that holds only names checked against a pattern and hex digits: Cassandra binds every
+# value as a parameter, and Vespa's filter values are hex-encoded terms.
+"wardowl/backends/cassandra.py" = ["S608"]
+"wardowl/backends/vespa.py" = ["S608"]
+"tests/test_vespa.py" = ["S608"]
+# Acceptance scenarios drive real servers and CLIs, and check outcomes with plain asserts.
+"acceptance/**" = ["S101", "S104", "S105", "S106", "S108", "S113", "S311", "S603", "S607"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-ra"
+
+[tool.mypy]
+files = ["wardowl"]
+python_version = "3.11"
+strict = true
+warn_unreachable = true
+
+[[tool.mypy.overrides]]
+module = ["pymilvus", "pymilvus.*"]
+ignore_missing_imports = true  # pymilvus has no py.typed marker
+
+[[tool.mypy.overrides]]
+module = ["pyarrow", "pyarrow.*"]
+ignore_missing_imports = true  # pyarrow has no py.typed marker
+
+[[tool.mypy.overrides]]
+module = ["cedarpy", "cedarpy.*"]
+ignore_missing_imports = true  # in case cedarpy has no py.typed marker
+
+[[tool.mypy.overrides]]
+module = ["faiss", "faiss.*"]
+ignore_missing_imports = true  # faiss-cpu has no py.typed marker
+
+[[tool.mypy.overrides]]
+module = ["cassandra", "cassandra.*"]
+ignore_missing_imports = true  # cassandra-driver has no py.typed marker
+
+[tool.coverage.run]
+source = ["wardowl"]
+branch = true
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
+exclude_also = ['if TYPE_CHECKING:', '^\s*\.\.\.$']

@@ -1,0 +1,59 @@
+# Demo principals for the fictional company "Najm Logistics".
+# API keys are never stored, only their HMAC-SHA256 digests under a secret the gateway holds in
+# RAMPART_KEY_SECRET; the file names that secret by its secret_id, never by its value. These demo
+# keys are listed in the README and hashed under a secret published in rampart/identity.py, so the
+# gateway accepts this file only with RAMPART_DEMO=1. For a real deployment, start a new file with
+# `rampart key-hashing` (a new secret), give each user a key from `rampart new-key` (or hash one you
+# have with `rampart hash-key <key>`), and mount the file into the container at run time.
+key_hashing:
+  scheme: hmac-sha256
+  secret_id: ff523d8fa9da0f2b
+
+principals:
+  - user_id: alice
+    name: Alice (HR business partner)
+    team: people-ops
+    department: hr
+    clearance: confidential
+    roles: [employee, pii_reader]
+    key_hmac: eb05634be3a7011877dacf8d4ed7092a268e9ef72a8437d5df98e53321d12ca5  # demo-key-alice
+
+  - user_id: bob
+    name: Bob (platform engineer)
+    team: platform
+    department: engineering
+    clearance: internal
+    roles: [employee]
+    key_hmac: bd6c45b9617dcabe30e21a9d7703370d3a5deee1a620ec0edcb2cf31382dd818  # demo-key-bob
+
+  - user_id: carol
+    name: Carol (treasury lead)
+    team: treasury
+    department: finance
+    clearance: restricted
+    roles: [employee]
+    key_hmac: 46ea48eaedcf08cfe8032f554de014edeba4f7f4880920030811b668ddaa0b61  # demo-key-carol
+
+  - user_id: dave
+    name: Dave (security auditor)
+    team: security
+    department: security
+    clearance: internal
+    roles: [auditor]
+    key_hmac: 84e7f7c417691c2f5cfb41bf7e6d96c4c8201fb642794bfec32f3dfe88139c9d  # demo-key-dave
+
+  - user_id: admin
+    name: Platform admin
+    team: it-admin
+    department: it
+    clearance: restricted
+    roles: [admin]
+    key_hmac: a8dcc15f13cc4b877f0d05a5b9a15e8b63a19e057048ec0e99e20cf94d7fb5dd  # demo-key-admin
+
+  - user_id: intern
+    name: Summer intern
+    team: interns
+    department: engineering
+    clearance: public
+    roles: [employee]
+    key_hmac: 940c6e2fa92af4ca51b169fe51770a74e8754a269cc0c93ba6496cd412979007  # demo-key-intern

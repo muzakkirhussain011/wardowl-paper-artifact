@@ -1,0 +1,28 @@
+value lengths: long 5000 bytes, prefix 4096 bytes
+$ redis-cli FT.CREATE idx ON HASH PREFIX 1 doc: SCHEMA t TAG
+OK
+$ redis-cli HSET doc:long t "$long"
+1
+$ redis-cli HSET doc:prefix t "$prefix"
+1
+$ redis-cli FT.SEARCH idx "@t:{$long}" NOCONTENT DIALECT 2
+0
+$ redis-cli FT.SEARCH idx "@t:{$prefix}" NOCONTENT DIALECT 2
+2
+doc:long
+doc:prefix
+value lengths: b4096 4096 bytes, c4097 4097 bytes
+$ redis-cli HSET doc:b4096 t "$b4096"
+1
+$ redis-cli HSET doc:c4097 t "$c4097"
+1
+$ redis-cli FT.SEARCH idx "@t:{$b4096}" NOCONTENT DIALECT 2
+1
+doc:b4096
+$ redis-cli FT.SEARCH idx "@t:{$c4097}" NOCONTENT DIALECT 2
+0
+RESULT search for the 5,000-byte value: 0
+RESULT search for its first 4,096 bytes: 2 doc:long doc:prefix
+RESULT search for a 4,096-byte value (part 2): 1 doc:b4096
+RESULT search for a 4,097-byte value (part 2): 0
+RESULT verdict: reproduced (the whole value finds nothing; its first 4,096 bytes find both keys)

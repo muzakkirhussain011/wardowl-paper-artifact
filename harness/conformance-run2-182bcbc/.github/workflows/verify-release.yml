@@ -1,0 +1,137 @@
+name: Verify release
+
+# Installs a published version from PyPI, as a user would, and runs the quickstart against it. The
+# install is pinned to the hash of the wheel attached to the signed GitHub release, so it also checks
+# that PyPI serves exactly the file the release workflow built.
+# Runs after every successful Release, and on demand for any version released on GitHub and PyPI.
+
+on:
+  workflow_run:
+    workflows: [Release]
+    types: [completed]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: A version released on GitHub and PyPI, for example 1.3.0
+        required: true
+
+permissions:
+  contents: read
+  attestations: read # to check the source distribution's provenance
+
+jobs:
+  verify:
+    if: github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success'
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.11", "3.14"]
+    steps:
+      - uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with: { python-version: "${{ matrix.python }}" }
+      - name: Install from PyPI, pinned to the release's wheel (retrying while a new release propagates)
+        env:
+          GH_TOKEN: ${{ github.token }}
+          INPUT_VERSION: ${{ inputs.version }}
+          TAG: ${{ github.event.workflow_run.head_branch }}
+        run: |
+          version="${INPUT_VERSION:-${TAG#v}}"
+          if ! [[ "$version" =~ ^[0-9]+\.[0-9]+\.[0-9]+((a|b|rc)[0-9]+)?$ ]]; then
+            echo "::error::not a release version: ${version}"
+            exit 1
+          fi
+          echo "VERSION=${version}" >> "$GITHUB_ENV"
+          wheel="wardowl-${version}-py3-none-any.whl"
+          gh release download "v${version}" --repo "$GITHUB_REPOSITORY" --pattern "$wheel" --dir "$RUNNER_TEMP"
+          digest="$(sha256sum "$RUNNER_TEMP/$wheel" | cut -d' ' -f1)"
+          echo "wardowl==${version} --hash=sha256:${digest}" > "$RUNNER_TEMP/requirements.txt"
+          for attempt in 1 2 3 4 5 6; do
+            pip install --no-cache-dir --require-hashes --no-deps -r "$RUNNER_TEMP/requirements.txt" && exit 0
+            sleep 20
+          done
+          exit 1
+      - name: Run the quickstart against the installed package
+        working-directory: ${{ runner.temp }}
+        run: |
+          python - <<'EOF'
+          import os
+
+          import wardowl
+          from wardowl import Document, InMemoryBackend, MetadataACLAuthorizer, PermissionedRetriever, Subject
+
+          assert wardowl.__version__ == os.environ["VERSION"], wardowl.__version__
+          backend = InMemoryBackend(
+              [
+                  Document("handbook", "Annual leave is 25 days.", {"allowed_groups": ["*"]}),
+                  Document("salaries", "Salary bands for 2026 ...", {"allowed_groups": ["hr"]}),
+              ]
+          )
+          result = PermissionedRetriever(backend, MetadataACLAuthorizer()).retrieve(
+              "leave salary bands", Subject("bob", ["engineering"]), k=3
+          )
+          assert [h.id for h in result.hits] == ["handbook"], result
+          print(f"wardowl {wardowl.__version__} from PyPI works")
+          EOF
+      # The security suites of the released version, run against the installed package rather than
+      # the source. The tests come from the release's source distribution, not from a git checkout of
+      # the tag: the file attached to the GitHub release, which must carry the Release workflow's
+      # provenance attestation for that tag and be the file PyPI serves. So the job runs no code a
+      # moved tag or a branch could supply. The test tools are pinned by hash in this workflow's own
+      # uv.lock (the default branch's, after a release).
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with: { path: workflow, persist-credentials: false }
+      - uses: astral-sh/setup-uv@1c37ad07a6a961277cf70c0d37d6f313000f5884 # v10.3.0
+        with: { version: "0.13.1", enable-cache: false }
+      - name: Fetch the release's source distribution and check where it came from
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          sdist="wardowl-${VERSION}.tar.gz"
+          if ! gh release view "v${VERSION}" --repo "$GITHUB_REPOSITORY" --json assets --jq '.assets[].name' |
+            grep -qx "wardowl-${VERSION}.intoto.jsonl"; then
+            echo "::notice::v${VERSION} has no build provenance; the security tests run from 1.4.0 on"
+            exit 0
+          fi
+          gh release download "v${VERSION}" --repo "$GITHUB_REPOSITORY" --pattern "$sdist" --dir "$RUNNER_TEMP/sdist"
+          gh attestation verify "$RUNNER_TEMP/sdist/$sdist" --repo "$GITHUB_REPOSITORY" \
+            --signer-workflow "$GITHUB_REPOSITORY/.github/workflows/release.yml" --source-ref "refs/tags/v${VERSION}"
+          python - "$(sha256sum "$RUNNER_TEMP/sdist/$sdist" | cut -d' ' -f1)" <<'EOF'
+          import json
+          import os
+          import sys
+          import time
+          import urllib.request
+
+          url = f"https://pypi.org/pypi/wardowl/{os.environ['VERSION']}/json"
+          for attempt in range(6):
+              try:
+                  with urllib.request.urlopen(url, timeout=30) as response:
+                      files = json.load(response)["urls"]
+                  break
+              except OSError:
+                  time.sleep(20)
+          else:
+              sys.exit(f"PyPI did not answer for {url}")
+          served = [f["digests"]["sha256"] for f in files if f["packagetype"] == "sdist"]
+          assert served == [sys.argv[1]], f"PyPI serves {served}, the GitHub release has {sys.argv[1]}"
+          EOF
+          mkdir "$RUNNER_TEMP/src"
+          tar -xzf "$RUNNER_TEMP/sdist/$sdist" -C "$RUNNER_TEMP/src"
+      - name: Run the security tests against the installed package
+        run: |
+          tests="$RUNNER_TEMP/src/wardowl-${VERSION}/tests"
+          if [ ! -d "$tests" ]; then
+            echo "::notice::no released tests to run for v${VERSION}"
+            exit 0
+          fi
+          (cd workflow && uv export --frozen --no-emit-project --extra dev -o "$RUNNER_TEMP/test-requirements.txt")
+          pip install --require-hashes --no-deps -r "$RUNNER_TEMP/test-requirements.txt"
+          cp -r "$tests" "$RUNNER_TEMP/release-tests"
+          cd "$RUNNER_TEMP"
+          python -c "import wardowl; assert 'site-packages' in wardowl.__file__, wardowl.__file__"
+          suites=""
+          for name in test_properties test_invariants test_core test_composition test_caching_events test_shared_cache test_revocation; do
+            if [ -f "release-tests/$name.py" ]; then suites="$suites release-tests/$name.py"; fi
+          done
+          python -m pytest -q -p no:cacheprovider $suites

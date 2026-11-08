@@ -1,0 +1,10 @@
+reproducer: chroma-depth
+version label: latest
+target: chromadb==1.5.9
+commit: 74e897803dc1c36e9baad9e1afcebefbc9464557
+run: 41007779363 attempt 1
+runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64
+started: 2026-10-30T05:19:49Z
+python: Python 3.12.15
+chromadb: Version: 1.5.9
+stack limit (ulimit -s): 16384

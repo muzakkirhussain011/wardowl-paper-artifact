@@ -1,0 +1,16 @@
+reproducer: redis
+version label: tested
+target: redis:8.10.2-alpine
+commit: 74e897803dc1c36e9baad9e1afcebefbc9464557
+run: 41007779363 attempt 1
+runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64
+started: 2026-10-30T05:19:27Z
+image digest: redis@sha256:9f8d2d789b9a1d1e3f283f979aa9cbf393373806472e1ccd460e2f9c869b833b
+image id: sha256:6cfed4c686145bcd5807ef3ac1d2bf3384503cb3da30b0d308b4f25eb50dc373
+image labels: null
+redis-cli: redis-cli 8.10.2
+redis_version:8.10.2
+redis_git_sha1:00000000
+redis_build_id:8d909ac7aa12fd40
+modules:
+name search ver 81001 path /usr/local/lib/redis/modules//redisearch.so args  name vectorset ver 1 path  args  name timeseries ver 81001 path /usr/local/lib/redis/modules//redistimeseries.so args  name bf ver 81001 path /usr/local/lib/redis/modules//redisbloom.so args  name ReJSON ver 81000 path /usr/local/lib/redis/modules//rejson.so args  

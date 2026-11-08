@@ -1,0 +1,35 @@
+{
+  "reproducer": "chroma-crash",
+  "version": "latest",
+  "target": "chromadb==1.5.9",
+  "command": "python disclosure/reproducers/chroma_crash.py",
+  "exit_status": 0,
+  "seconds": 12,
+  "run_id": "41249047470",
+  "commit": "a62ac5285ea40e7cdc936bca7b2c69c28ba2ed96",
+  "versions": [
+    "reproducer: chroma-crash",
+    "version label: latest",
+    "target: chromadb==1.5.9",
+    "commit: a62ac5285ea40e7cdc936bca7b2c69c28ba2ed96",
+    "run: 41249047470 attempt 1",
+    "runner: ubuntu24 20261026.354.1, Linux 7.0.0-1017-azure x86_64",
+    "started: 2026-10-31T22:38:29Z",
+    "python: Python 3.12.15",
+    "chromadb: Version: 1.5.9",
+    "stack limit (ulimit -s): 16384"
+  ],
+  "results": [
+    "1001 clauses: raised, exit status 0, 2.2 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "15500 clauses: raised, exit status 0, 1.0 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "16000 clauses: raised, exit status 0, 1.0 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "16250 clauses: raised, exit status 0, 1.0 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "16375 clauses: raised, exit status 0, 1.0 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "16437 clauses: raised, exit status 0, 1.0 s; raised InternalError Error executing plan: Internal error: error returned from database: (code: 1) Expression tree is too large (maximum depth 1000)",
+    "16500 clauses: crashed, signal SIGSEGV, exit status -11, 2.0 s",
+    "40000 clauses: crashed, signal SIGSEGV, exit status -11, 1.9 s",
+    "threshold: between 16437 clauses (raised) and 16500 clauses (crashed, signal SIGSEGV)",
+    "fault handler (first crash): Fatal Python error: Segmentation fault | File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/chromadb/api/rust.py\", line 582 in _query | File \"/opt/hostedtoolcache/Python/3.12.15/x64/lib/python3.12/site-packages/chromadb/api/models/Collection.py\", line 265 in query | File \"/home/runner/work/wardowl-paper-artifact/wardowl-paper-artifact/disclosure/reproducers/chroma_crash.py\", line 41 in child | File \"/home/runner/work/wardowl-paper-artifact/wardowl-paper-artifact/disclosure/reproducers/chroma_crash.py\", line 117 in <module>",
+    "verdict: as the draft expects (1,001 and 15,500 raised; 16,500 and 40,000 crashed)"
+  ]
+}

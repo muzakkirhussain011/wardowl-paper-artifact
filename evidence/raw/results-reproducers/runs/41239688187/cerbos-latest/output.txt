@@ -1,0 +1,10 @@
+$ curl -s localhost:3592/api/check/resources -d '{"requestId":"r", ... d1 "zoe", d2 ["zoe"] ...}'
+{"requestId":"r","results":[{"resource":{"id":"d1","kind":"document"},"actions":{"read":"EFFECT_DENY"}},{"resource":{"id":"d2","kind":"document"},"actions":{"read":"EFFECT_ALLOW"}}],"cerbosCallId":"01M69TV8PJQ5B87B9GB9SHRCZ8"}
+$ curl -s localhost:3592/api/plan/resources -d '{"requestId":"r","action":"read", ...}'
+{"requestId":"r","action":"read","resourceKind":"document","filter":{"kind":"KIND_CONDITIONAL","condition":{"expression":{"operator":"in","operands":[{"value":"zoe"},{"variable":"request.resource.attr.allowed_users"}]}}},"cerbosCallId":"01M69TV8PZK2G01DFWB21DWC5D"}
+RESULT check d1 (allowed_users "zoe"): EFFECT_DENY
+RESULT check d2 (allowed_users ["zoe"]): EFFECT_ALLOW
+RESULT plan kind: KIND_CONDITIONAL
+RESULT plan condition: {"expression":{"operator":"in","operands":[{"value":"zoe"},{"variable":"request.resource.attr.allowed_users"}]}}
+RESULT plan filterDebug: 
+RESULT verdict: reproduced (check denies d1, allows d2; the plan is a conditional 'in')

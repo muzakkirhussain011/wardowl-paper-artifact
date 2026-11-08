@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use wardowl in your work, please cite it as below."
+type: software
+title: "wardowl: permission-aware retrieval for RAG"
+abstract: >-
+  A Python library that makes retrieval-augmented generation respect permissions: every user gets
+  only the chunks they are allowed to read, whatever vector store, permission system or framework
+  is used. Permission filters run inside the vector search when the permission system can express
+  them, candidates are checked after the search when it cannot, and every failure fails closed.
+authors:
+  - family-names: Hussain
+    given-names: Syed Muzakkir
+version: 2.1.0
+date-released: 2026-10-24
+license: MIT
+repository-code: "https://github.com/muzakkirhussain011/wardowl"
+url: "https://muzakkirhussain011.github.io/wardowl/"
+keywords:
+  - retrieval-augmented generation
+  - access control
+  - authorization
+  - vector search
+  - information retrieval

@@ -1,0 +1,37 @@
+Unable to find image 'redis:8.10.3-alpine' locally
+8.10.3-alpine: Pulling from library/redis
+5e9b4a97f639: Pulling fs layer
+cea19da2b361: Pulling fs layer
+bc92976dd070: Pulling fs layer
+7379ba8f71f2: Pulling fs layer
+232fbf3af8e0: Pulling fs layer
+4f4fb700ef54: Pulling fs layer
+74c3c7a694d3: Pulling fs layer
+7379ba8f71f2: Waiting
+232fbf3af8e0: Waiting
+4f4fb700ef54: Waiting
+cea19da2b361: Download complete
+bc92976dd070: Verifying Checksum
+bc92976dd070: Download complete
+5e9b4a97f639: Verifying Checksum
+5e9b4a97f639: Download complete
+232fbf3af8e0: Verifying Checksum
+232fbf3af8e0: Download complete
+4f4fb700ef54: Verifying Checksum
+4f4fb700ef54: Download complete
+5e9b4a97f639: Pull complete
+74c3c7a694d3: Verifying Checksum
+74c3c7a694d3: Download complete
+7379ba8f71f2: Verifying Checksum
+7379ba8f71f2: Download complete
+cea19da2b361: Pull complete
+bc92976dd070: Pull complete
+7379ba8f71f2: Pull complete
+232fbf3af8e0: Pull complete
+4f4fb700ef54: Pull complete
+74c3c7a694d3: Pull complete
+Digest: sha256:21090af93f8324db2f0f0f4f38a7c60369d47d917e000c3423d89d2ae2883537
+Status: Downloaded newer image for redis:8.10.3-alpine
+1667da23648211d5daa5cd974ac2fa218ab122cfceabe709b5f3af94e7b33377
+the server image's own client is used
+redis answered after about 2 s

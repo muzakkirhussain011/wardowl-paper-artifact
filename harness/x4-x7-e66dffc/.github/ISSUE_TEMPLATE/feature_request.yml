@@ -1,0 +1,20 @@
+name: Feature request
+description: Propose a feature, adapter or change
+labels: [enhancement]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: The problem
+      description: What can you not do today? Which vector store, permission system or framework is involved?
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal
+  - type: textarea
+    id: security
+    attributes:
+      label: Effect on the security guarantees
+      description: Could this change what a subject may see, or how failures are handled?
